@@ -11,10 +11,21 @@
         content="tailwind,tailwindcss,tailwind css,css,starter template,free template,store template, shop layout, minimal, monochrome, minimalistic, theme, nordic">
 
     <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" />
-
-    <link href="https://fonts.googleapis.com/css?family=Work+Sans:200,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
 
     <style>
+        .text-green-gapoktan {
+            color: #16A085;
+        }
+
+        .hover-text-green-gapoktan:hover {
+            color: #16A085;
+        }
+
+        .bg-green-gapoktan {
+            background-color: #16A085;
+        }
+
         .work-sans {
             font-family: 'Work Sans', sans-serif;
         }
@@ -43,6 +54,15 @@
         .bg-green-desa {
             background-color: #16A085;
         }
-    </style>
 
+        .no-spinners {
+            -moz-appearance: textfield;
+        }
+
+        .no-spinners::-webkit-outer-spin-button,
+        .no-spinners::-webkit-inner-spin-button {
+            margin: 0;
+            -webkit-appearance: none;
+        }
+    </style>
 </head>

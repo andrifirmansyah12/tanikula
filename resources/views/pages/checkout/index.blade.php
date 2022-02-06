@@ -1,131 +1,96 @@
-@extends('pages.template1')
-@section('title','Detail Produk')
+@extends('pages.template2')
+@section('title','Checkout')
 
 @section('content')
 
-<div class="container mx-auto px-6 md:px-32 mb-16">
-    <h3 class="text-gray-700 text-2xl font-medium">Checkout</h3>
-    <div class="flex flex-col lg:flex-row mt-8">
-        <div class="w-full lg:w-1/2 order-2">
-            <div class="flex items-center">
-                <button class="flex text-sm text-blue-500 focus:outline-none"><span
-                        class="flex items-center justify-center text-white bg-blue-500 rounded-full h-5 w-5 mr-2">1</span>
-                    Contacts</button>
-                <button class="flex text-sm text-gray-700 ml-8 focus:outline-none"><span
-                        class="flex items-center justify-center border-2 border-blue-500 rounded-full h-5 w-5 mr-2">2</span>
-                    Shipping</button>
-                <button class="flex text-sm text-gray-500 ml-8 focus:outline-none" disabled><span
-                        class="flex items-center justify-center border-2 border-gray-500 rounded-full h-5 w-5 mr-2">3</span>
-                    Payments</button>
-            </div>
-            <form class="mt-8 lg:w-3/4">
-                <div>
-                    <h4 class="text-sm text-gray-500 font-medium">Delivery method</h4>
-                    <div class="mt-6">
-                        <button
-                            class="flex items-center justify-between w-full bg-white rounded-md border-2 border-blue-500 p-4 focus:outline-none">
-                            <label class="flex items-center">
-                                <input type="radio" class="form-radio h-5 w-5 text-blue-600" checked><span
-                                    class="ml-2 text-sm text-gray-700">MS Delivery</span>
-                            </label>
-
-                            <span class="text-gray-600 text-sm">$18</span>
-                        </button>
-                        <button
-                            class="mt-6 flex items-center justify-between w-full bg-white rounded-md border p-4 focus:outline-none">
-                            <label class="flex items-center">
-                                <input type="radio" class="form-radio h-5 w-5 text-blue-600"><span
-                                    class="ml-2 text-sm text-gray-700">DC Delivery</span>
-                            </label>
-
-                            <span class="text-gray-600 text-sm">$26</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="mt-8">
-                    <h4 class="text-sm text-gray-500 font-medium">Delivery address</h4>
-                    <div class="mt-6 flex">
-                        <label class="block w-3/12">
-                            <select
-                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 mt-1">
-                                <option>NY</option>
-                                <option>DC</option>
-                                <option>MH</option>
-                                <option>MD</option>
-                            </select>
-                        </label>
-                        <label class="block flex-1 ml-3">
-                            <input type="text"
-                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 mt-1"
-                                placeholder="Address">
-                        </label>
-                    </div>
-                </div>
-                <div class="mt-8">
-                    <h4 class="text-sm text-gray-500 font-medium">Date</h4>
-                    <div class="mt-6 flex">
-                        <label class="block flex-1">
-                            <input type="date"
-                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 mt-1"
-                                placeholder="Date">
-                        </label>
-                    </div>
-                </div>
-                <div class="flex items-center justify-between mt-8">
-                    <button
-                        class="flex items-center text-gray-700 text-sm font-medium rounded hover:underline focus:outline-none">
-                        <svg class="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path d="M7 16l-4-4m0 0l4-4m-4 4h18"></path>
-                        </svg>
-                        <span class="mx-2">Back step</span>
-                    </button>
-                    <button
-                        class="flex items-center px-3 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
-                        <span>Payment</span>
-                        <svg class="h-5 w-5 mx-2" fill="none" stroke-linecap="round" stroke-linejoin="round"
-                            stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                            <path d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                        </svg>
-                    </button>
-                </div>
-            </form>
+<div class="flex flex-col lg:flex-row p-5 lg:mx-10 lg:mb-10">
+    <a href="{{ url()->previous() }}" class="shadow-md rounded-md px-3 absolute top-36">
+        <div class="flex flex-row-reverse">
+            <p class="pl-2 tracking-widest">
+                Back
+            </p>
+            <img src="{{ asset('img/back.svg') }}" class="w-5" alt="back">
         </div>
-        <div class="w-full mb-8 flex-shrink-0 order-1 lg:w-1/2 lg:mb-0 lg:order-2">
-            <div class="flex justify-center lg:justify-end">
-                <div class="border rounded-md max-w-md w-full px-4 py-3">
-                    <div class="flex items-center justify-between">
-                        <h3 class="text-gray-700 font-medium">Order total (2)</h3>
-                        <span class="text-gray-600 text-sm">Edit</span>
+    </a>
+    <div class="w-full lg:w-2/3 px-5 lg:pl-5 lg:pr-20">
+        <div class="flex justify-between items-center pt-4 lg:pt-0">
+            <h1 class="text-2xl">Your Bag (2)</h1>
+            <div>
+                <button class="flex items-center gap-x-2 px-6 py-1 text-red-800">
+                    <svg class="svg-icon w-5" viewBox="0 0 20 20">
+                        <path fill="none" d="M7.083,8.25H5.917v7h1.167V8.25z M18.75,3h-5.834V1.25c0-0.323-0.262-0.583-0.582-0.583H7.667
+                                    c-0.322,0-0.583,0.261-0.583,0.583V3H1.25C0.928,3,0.667,3.261,0.667,3.583c0,0.323,0.261,0.583,0.583,0.583h1.167v14
+                                    c0,0.644,0.522,1.166,1.167,1.166h12.833c0.645,0,1.168-0.522,1.168-1.166v-14h1.166c0.322,0,0.584-0.261,0.584-0.583
+                                    C19.334,3.261,19.072,3,18.75,3z M8.25,1.833h3.5V3h-3.5V1.833z M16.416,17.584c0,0.322-0.262,0.583-0.582,0.583H4.167
+                                    c-0.322,0-0.583-0.261-0.583-0.583V4.167h12.833V17.584z M14.084,8.25h-1.168v7h1.168V8.25z M10.583,7.083H9.417v8.167h1.167V7.083
+                                    z"></path>
+                    </svg>
+                    <span class="text-sm">
+                        Remove All Cart
+                    </span>
+                </button>
+            </div>
+        </div>
+        <div class="mt-5">
+            <div class="flex flex-col lg:flex-row justify-between gap-x-5 xl:gap-x-0 border-gray-200 border-b border-t">
+                <div class="flex flex-col lg:flex-row items-center space-x-3 space-y-5 lg:space-y-0 py-12  ">
+                    <div>
+                        <img src="{{ asset('img/farmer2.svg') }}"
+                            class="h-32 w-32 object-center object-cover lg:h-16 lg:w-16" alt="product" />
                     </div>
-                    <div class="flex justify-between mt-6">
-                        <div class="flex">
-                            <img class="h-20 w-20 object-cover rounded"
-                                src="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80"
-                                alt="">
-                            <div class="mx-3">
-                                <h3 class="text-sm text-gray-600">Mac Book Pro</h3>
-                                <div class="flex items-center mt-2">
-                                    <button class="text-gray-500 focus:outline-none focus:text-gray-600">
-                                        <svg class="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z">
-                                            </path>
-                                        </svg>
-                                    </button>
-                                    <span class="text-gray-700 mx-2">2</span>
-                                    <button class="text-gray-500 focus:outline-none focus:text-gray-600">
-                                        <svg class="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                        </svg>
-                                    </button>
-                                </div>
+                    <div class="space-y-5 lg:space-y-0 pl-7">
+                        <h1 class="text-sm lg:text-lg lg:text-left truncate w-32 lg:w-auto">Bag</h1>
+                        <div class="flex items-center space-x-3">
+                            <div class="flex gap-y-3 lg:gap-y-0 flex-row items-center gap-x-5">
+                                <button class="text-gray-500 focus:outline-none focus:text-gray-600">
+                                    <svg class="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z">
+                                        </path>
+                                    </svg>
+                                </button>
+                                <span class="text-gray-700 mx-2">2</span>
+                                <button class="text-gray-500 focus:outline-none focus:text-gray-600">
+                                    <svg class="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </button>
                             </div>
                         </div>
-                        <span class="text-gray-600">20$</span>
                     </div>
                 </div>
+                <div class="flex flex-col justify-center lg:justify-end my-auto lg:my-0 pb-10 lg:pb-20">
+                    <div>
+                        <div>
+                            <input type="hidden" value="" name="id">
+                            <button type="submit" class="text-red-600 cursor-pointer text-xs">Remove</button>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="tracking-widest text-lg lg:text-2xl">Rp. 50.000</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="w-full lg:w-1/3 flex pt-12 lg:pt-0 justify-center">
+        <div>
+            <div class="bg-green-gapoktan text-white p-10">
+                <h1 class="font-luxia text-2xl mb-6">Order Summary</h1>
+                <div class=" space-y-4">
+                    <div class="flex justify-between text-md">
+                        <span>Total</span>
+                        <span>Rp. 50.000</span>
+                    </div>
+                    <div class="bg-gray-600 text-white w-full py-1 text-center cursor-pointer">
+                        <a href="/shipping-payment">
+                            Checkout
+                        </a>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

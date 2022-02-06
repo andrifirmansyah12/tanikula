@@ -37,7 +37,7 @@ Route::get('/login', function () {
     return view('pages.login.index');
 });
 
-Route::get('/home', function () {
+Route::get('/beranda', function () {
     return view('pages.home.index');
 });
 
@@ -45,9 +45,22 @@ Route::get('/detail', function () {
     return view('pages.home.detail');
 });
 
+Route::get('/thank-you-purchasing', function () {
+    return view('pages.checkout.purchasing');
+});
+
 Route::get('/checkout', function () {
     return view('pages.checkout.index');
 });
+
+Route::get('/payment', function () {
+    return view('pages.checkout.payment');
+});
+
+Route::get('/edukasi', function () {
+    return view('pages.edukasi.index');
+});
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -83,7 +83,7 @@
 
 <!--Main-->
 <div class="mx-auto">
-    <div class="mx-0 lg:mx-24 mb-8 lg:mb-20 py-16 px-15 shadow-2xl rounded-md">
+    <div class="mx-0 lg:mx-24 mb-8 lg:mb-10 py-16 px-15 shadow-2xl rounded-md">
         <div class="text-center text-gray-600 mb-4 text-2xl">YOUR ACCOUNT</div>
         <div>
             <div class="">

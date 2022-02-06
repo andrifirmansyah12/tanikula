@@ -8,16 +8,9 @@
         {{-- Navbar --}}
         @include('components.pages.navbar')
 
-        {{-- Submenu --}}
-        @include('components.pages.submenu')
-
-        {{-- Submenu --}}
-        @include('components.pages.banner')
-
         <!--Main-->
         <div class="container px-6 mx-auto">
-            
-            {{-- Konten --}}
+
             @yield('content')
 
             <!--Footer-->

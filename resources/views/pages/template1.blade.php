@@ -3,16 +3,25 @@
 
 <body class="leading-normal tracking-normal text-gray-600" style="font-family: 'Source Sans Pro', sans-serif;">
 
-    {{-- Navbar --}}
-    @include('components.pages.navbar')
+    <div class="h-screen pb-14 bg-right bg-cover">
 
-    {{-- Submenu --}}
-    @include('components.pages.submenu')
+        {{-- Navbar --}}
+        @include('components.pages.navbar')
 
-    @yield('content')
+        @include('components.pages.submenu')
 
-    {{-- Footer --}}
-    @include('components.pages.footer')
+        <!--Main-->
+        <div class="container px-6 mx-auto">
+
+            @yield('content')
+
+            <!--Footer-->
+            @include('components.pages.footer')
+
+        </div>
+
+    </div>
+
 
 </body>
 

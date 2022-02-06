@@ -3,7 +3,7 @@
 
 @section('content')
 
-<div class="container mx-auto mt-10 px-6">
+<div class="container mx-auto pt-10 px-6">
     <div class="h-64 rounded-md overflow-hidden bg-cover bg-center"
         style="background-image: url('https://images.unsplash.com/photo-1577655197620-704858b270ac?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1280&q=144')">
         <div class="bg-gray-900 bg-opacity-50 flex items-center h-full">
