@@ -7,7 +7,7 @@
                     <!--change to offline or busy as needed-->
                 </div>
                 <div class="nav-profile-text d-flex ml-0 mb-3 flex-column">
-                    <span class="font-weight-semibold mb-1 mt-2 text-center">Poktan</span>
+                    <span class="font-weight-semibold mb-1 mt-2 text-center">Petani</span>
                 </div>
             </a>
         </li>
@@ -30,56 +30,56 @@
                 <span class="menu-title">Dashboard</span>
             </a>
         </li>
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                 <i class="mdi mdi-crosshairs-gps menu-icon"></i>
-                <span class="menu-title">Laporan</span>
+                <span class="menu-title">UI Elements</span>
                 <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="ui-basic">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item">
-                        <a class="nav-link" href="pages/ui-features/buttons.html">Tandur</a>
+                        <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="pages/ui-features/dropdowns.html">Panen</a>
+                        <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="pages/ui-features/typography.html">Rekap Penjualan</a>
+                        <a class="nav-link" href="pages/ui-features/typography.html">Typography</a>
                     </li>
                 </ul>
             </div>
-        </li>
+        </li> --}}
         <li class="nav-item">
             <a class="nav-link" href="pages/icons/mdi.html">
                 <i class="mdi mdi-contacts menu-icon"></i>
-                <span class="menu-title">Edukasi</span>
+                <span class="menu-title">Tandur</span>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="pages/forms/basic_elements.html">
                 <i class="mdi mdi-format-list-bulleted menu-icon"></i>
-                <span class="menu-title">Kegiatan</span>
-            </a>
-        </li>
-        {{-- <li class="nav-item">
-            <a class="nav-link" href="pages/charts/chartjs.html">
-                <i class="mdi mdi-chart-bar menu-icon"></i>
-                <span class="menu-title">Charts</span>
+                <span class="menu-title">Panen</span>
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" href="pages/charts/chartjs.html">
+                <i class="mdi mdi-chart-bar menu-icon"></i>
+                <span class="menu-title">Produk</span>
+            </a>
+        </li>
+        {{-- <li class="nav-item">
             <a class="nav-link" href="pages/tables/basic-table.html">
                 <i class="mdi mdi-table-large menu-icon"></i>
                 <span class="menu-title">Tables</span>
             </a>
-        </li>
+        </li> --}}
         <li class="nav-item pt-3">
             <a class="nav-link" href="http://bootstrapdash.com/demo/plus-free/documentation/documentation.html"
                 target="_blank">
                 <i class="mdi mdi-file-document-box menu-icon"></i>
-                <span class="menu-title">Documentation</span>
+                <span class="menu-title">Beranda</span>
             </a>
-        </li> --}}
+        </li>
     </ul>
 </nav>

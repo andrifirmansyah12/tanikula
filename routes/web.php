@@ -13,12 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/costumer', function () {
+Route::get('/pembeli', function () {
     return view('costumer.dashboard.index');
 });
 
 Route::get('/gapoktan', function () {
     return view('gapoktan.dashboard.index');
+});
+
+Route::get('/petani', function () {
+    return view('petani.dashboard.index');
 });
 
 Route::get('/poktan', function () {

@@ -6,7 +6,7 @@
         <a class="navbar-brand m-0" href="https://demos.creative-tim.com/soft-ui-dashboard/pages/dashboard.html"
             target="_blank">
             <img src="../assets/img/logo-ct.png" class="navbar-brand-img h-100" alt="main_logo">
-            <span class="ms-1 font-weight-bold">Soft UI Dashboard</span>
+            <span class="ms-1 font-weight-bold">Pembeli</span>
         </a>
     </div>
     <hr class="horizontal dark mt-0">
@@ -61,7 +61,7 @@
                             </g>
                         </svg>
                     </div>
-                    <span class="nav-link-text ms-1">Tables</span>
+                    <span class="nav-link-text ms-1">Alamat</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -87,7 +87,7 @@
                             </g>
                         </svg>
                     </div>
-                    <span class="nav-link-text ms-1">Billing</span>
+                    <span class="nav-link-text ms-1">Review</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -116,7 +116,7 @@
                             </g>
                         </svg>
                     </div>
-                    <span class="nav-link-text ms-1">Virtual Reality</span>
+                    <span class="nav-link-text ms-1">Wishlist</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -145,7 +145,7 @@
                             </g>
                         </svg>
                     </div>
-                    <span class="nav-link-text ms-1">RTL</span>
+                    <span class="nav-link-text ms-1">Order</span>
                 </a>
             </li>
             <li class="nav-item mt-3">
@@ -180,7 +180,7 @@
                     <span class="nav-link-text ms-1">Profile</span>
                 </a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link  " href="../pages/sign-in.html">
                     <div
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -205,7 +205,7 @@
                     </div>
                     <span class="nav-link-text ms-1">Sign In</span>
                 </a>
-            </li>
+            </li> --}}
             <li class="nav-item">
                 <a class="nav-link  " href="../pages/sign-up.html">
                     <div
@@ -235,13 +235,13 @@
                             </g>
                         </svg>
                     </div>
-                    <span class="nav-link-text ms-1">Sign Up</span>
+                    <span class="nav-link-text ms-1">Logout</span>
                 </a>
             </li>
         </ul>
     </div>
     <div class="sidenav-footer mx-3 ">
-        <div class="card card-background shadow-none card-background-mask-secondary" id="sidenavCard">
+        {{-- <div class="card card-background shadow-none card-background-mask-secondary" id="sidenavCard">
             <div class="full-background" style="background-image: url('../assets/img/curved-images/white-curved.jpeg')">
             </div>
             <div class="card-body text-start p-3 w-100">
@@ -257,9 +257,8 @@
                         target="_blank" class="btn btn-white btn-sm w-100 mb-0">Documentation</a>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <a class="btn bg-gradient-primary mt-4 w-100"
-            href="https://www.creative-tim.com/product/soft-ui-dashboard-pro?ref=sidebarfree" type="button">Upgrade to
-            pro</a>
+            href="https://www.creative-tim.com/product/soft-ui-dashboard-pro?ref=sidebarfree" type="button">Store</a>
     </div>
 </aside>

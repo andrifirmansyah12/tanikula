@@ -14,8 +14,8 @@
 
     <p class="text-green-gapoktan font-bold pb-8 lg:pb-6 text-center md:text-left fade-in">Download our app:</p>
     <div class="flex w-full justify-center md:justify-start pb-24 lg:pb-0 fade-in">
-        <img src="{{ asset('img/appStore.svg') }}" class="h-12 pr-4 bounce-top-icons">
-        <img src="{{ asset('img/playStore.svg') }}" class="h-12 bounce-top-icons">
+        <img src="{{ asset('img/appStore.svg') }}" class="h-12 pr-4 bounce-top-icons hover:grow">
+        <img src="{{ asset('img/playStore.svg') }}" class="h-12 bounce-top-icons hover:grow">
     </div>
 
 </div>

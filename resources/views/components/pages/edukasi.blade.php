@@ -89,7 +89,7 @@
                 </a>
 
                 <div class="flex w-1/2 justify-end content-center">
-                    <a class="inline-block text-green-gapoktan no-underline hover:text-green-800 hover:text-underline text-center h-10 p-2 md:h-auto md:p-4"
+                    {{-- <a class="inline-block text-green-gapoktan no-underline hover:text-green-800 hover:text-underline text-center h-10 p-2 md:h-auto md:p-4"
                         data-tippy-content="@twitter_handle" href="https://twitter.com/intent/tweet?url=#">
                         <svg class="fill-current h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                             viewBox="0 0 24 24">
@@ -98,7 +98,7 @@
                             <circle cx="10.5" cy="18.5" r="1.5" />
                             <circle cx="17.5" cy="18.5" r="1.5" />
                         </svg>
-                    </a>
+                    </a> --}}
                     <a class="inline-block text-green-gapoktan no-underline hover:text-green-800 hover:text-underline text-center h-10 p-2 md:h-auto md:p-4 text-lg"
                         href="{{ route('login') }}">
                         Andri Firmansyah
@@ -109,9 +109,9 @@
         </div>
 
         {{-- Banner --}}
-        <div class="pt-14 md:pt-16">
+        <div class="pt-14 md:pt-20">
             <section class="w-full mx-auto bg-nordic-gray-light flex pt-12 md:pt-0 md:items-center bg-cover bg-right"
-                style="max-width:1600px; height: 32rem; background-image: url('https://images.unsplash.com/photo-1534452203293-494d7ddbf7e0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=872&q=80');">
+                style="max-width:1600px; height: 32rem; background-image: url('https://images.unsplash.com/photo-1623211270166-bc232d744d6a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80');">
                 <div class="container mx-auto">
                     <div class="flex flex-col w-full lg:w-1/2 justify-center items-start  px-6 tracking-wide">
                         <h1 class="text-white text-2xl my-4">Stripy Zig Zag Jigsaw Pillow and Duvet Set</h1>

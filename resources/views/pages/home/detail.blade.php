@@ -9,18 +9,18 @@
                 <div class="grid grid-cols-2 gap-4 md:grid-cols-1">
                     <div class="aspect-w-1 aspect-h-1">
                         <img alt="Mobile Phone Stand" class="object-cover rounded-xl"
-                            src="https://images.unsplash.com/photo-1627844541143-a561a1a9b72a" />
+                            src="https://images.unsplash.com/photo-1586201375761-83865001e31c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" />
                     </div>
 
                     <div class="grid grid-cols-2 gap-4 lg:mt-4">
                         <div class="aspect-w-1 aspect-h-1">
                             <img alt="Mobile Phone Stand" class="object-cover rounded-xl"
-                                src="https://images.unsplash.com/photo-1627844541143-a561a1a9b72a" />
+                                src="https://images.unsplash.com/photo-1613728913341-8f29b02b8253?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80" />
                         </div>
 
                         <div class="aspect-w-1 aspect-h-1">
                             <img alt="Mobile Phone Stand" class="object-cover rounded-xl"
-                                src="https://images.unsplash.com/photo-1627844541143-a561a1a9b72a" />
+                                src="https://images.unsplash.com/photo-1502825868325-37569f642e95?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=869&q=80" />
                         </div>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
                     <div class="flex justify-between mt-8">
                         <div class="max-w-[35ch]">
                             <h1 class="text-2xl font-bold">
-                                Fun Product That Does Something Cool
+                                Beras
                             </h1>
 
                             <p class="mt-0.5 text-sm">
@@ -122,7 +122,7 @@
 
                                         <span
                                             class="inline-block px-3 py-1 text-xs font-medium border rounded-full group peer-checked:bg-black peer-checked:text-white">
-                                            Texas Tea
+                                            Putih
                                         </span>
                                     </label>
 
@@ -131,7 +131,7 @@
 
                                         <span
                                             class="inline-block px-3 py-1 text-xs font-medium border rounded-full group peer-checked:bg-black peer-checked:text-white">
-                                            Fiesta Red
+                                            Merah
                                         </span>
                                     </label>
 
@@ -140,14 +140,14 @@
 
                                         <span
                                             class="inline-block px-3 py-1 text-xs font-medium border rounded-full group peer-checked:bg-black peer-checked:text-white">
-                                            Cobalt Blue
+                                            Hitam
                                         </span>
                                     </label>
                                 </div>
                             </div>
                         </fieldset>
 
-                        <fieldset class="mt-4">
+                        {{-- <fieldset class="mt-4">
                             <legend class="mb-1 text-sm font-medium">Size</legend>
 
                             <div class="flow-root">
@@ -198,7 +198,7 @@
                                     </label>
                                 </div>
                             </div>
-                        </fieldset>
+                        </fieldset> --}}
 
                         <div class="flex mt-8">
                             <div>
@@ -223,7 +223,7 @@
         <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
             <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
                 <div class="flex items-end justify-end h-56 w-full bg-cover"
-                    style="background-image: url('https://images.unsplash.com/photo-1563170351-be82bc888aa4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=376&q=80')">
+                    style="background-image: url('https://images.unsplash.com/photo-1613728913293-c99bb00ef39c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80')">
                     <button
                         class="p-2 rounded-full bg-blue-600 text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
                         <svg class="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -235,13 +235,13 @@
                     </button>
                 </div>
                 <div class="px-5 py-3">
-                    <h3 class="text-gray-700 uppercase">Chanel</h3>
+                    <h3 class="text-gray-700 uppercase">Jagung</h3>
                     <span class="text-gray-500 mt-2">$12</span>
                 </div>
             </div>
             <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
                 <div class="flex items-end justify-end h-56 w-full bg-cover"
-                    style="background-image: url('https://images.unsplash.com/photo-1544441893-675973e31985?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80')">
+                    style="background-image: url('https://images.unsplash.com/photo-1613500788522-89c4d55bdd0e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1374&q=80')">
                     <button
                         class="p-2 rounded-full bg-blue-600 text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
                         <svg class="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -253,13 +253,13 @@
                     </button>
                 </div>
                 <div class="px-5 py-3">
-                    <h3 class="text-gray-700 uppercase">Man Mix</h3>
+                    <h3 class="text-gray-700 uppercase">Kuaci</h3>
                     <span class="text-gray-500 mt-2">$12</span>
                 </div>
             </div>
             <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
                 <div class="flex items-end justify-end h-56 w-full bg-cover"
-                    style="background-image: url('https://images.unsplash.com/photo-1532667449560-72a95c8d381b?ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80')">
+                    style="background-image: url('https://images.unsplash.com/photo-1613758235306-69cc0a3f614d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80')">
                     <button
                         class="p-2 rounded-full bg-blue-600 text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
                         <svg class="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -271,13 +271,13 @@
                     </button>
                 </div>
                 <div class="px-5 py-3">
-                    <h3 class="text-gray-700 uppercase">Classic watch</h3>
+                    <h3 class="text-gray-700 uppercase">Kacang</h3>
                     <span class="text-gray-500 mt-2">$12</span>
                 </div>
             </div>
             <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
                 <div class="flex items-end justify-end h-56 w-full bg-cover"
-                    style="background-image: url('https://images.unsplash.com/photo-1590664863685-a99ef05e9f61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=345&q=80')">
+                    style="background-image: url('https://images.unsplash.com/photo-1614373532018-92a75430a0da?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80')">
                     <button
                         class="p-2 rounded-full bg-blue-600 text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
                         <svg class="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -289,7 +289,7 @@
                     </button>
                 </div>
                 <div class="px-5 py-3">
-                    <h3 class="text-gray-700 uppercase">woman mix</h3>
+                    <h3 class="text-gray-700 uppercase">Lainnya</h3>
                     <span class="text-gray-500 mt-2">$12</span>
                 </div>
             </div>

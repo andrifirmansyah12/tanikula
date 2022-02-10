@@ -13,13 +13,13 @@
         <div class="flex flex-wrap -m-4">
             <div class="p-4 md:w-1/2">
                 <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
-                    <img loading="lazy" class="lg:h-80 md:h-36 w-full object-cover object-center"
-                        src="https://dummyimage.com/721x401" alt="blog" style=" ">
+                    <img loading="lazy" class="lg:h-80 md:h-36 w-full object-cover object-bottom"
+                        src="https://images.unsplash.com/photo-1505471768190-275e2ad7b3f9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80" alt="blog" style=" ">
                     <div class="p-6">
                         <h2 class="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
                             CATEGORY</h2>
                         <h1 class="title-font text-lg font-medium text-gray-900 mb-3">
-                            The 400 Blows</h1>
+                            Cara menanam padi yang baik</h1>
                         <p class="leading-relaxed mb-3 line-clamp-2">Photo booth fam kinfolk
                             cold-pressed sriracha leggings jianbing microdosing tousled
                             waistcoat.</p>
@@ -58,14 +58,14 @@
             <div class="p-4 md:w-1/2">
                 <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
                     <iframe class="object-left w-full lg:object-center" width="360" height="320"
-                        src="https://www.youtube.com/embed/cQrjKOZ4rf8/?rel=0" frameborder="0"
+                        src="https://www.youtube.com/embed/nHEaSIr1q4c" frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen=""></iframe>
                     <div class="p-6">
                         <h2 class="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
                             CATEGORY</h2>
                         <h1 class="title-font text-lg font-medium text-gray-900 mb-3">
-                            Shooting Stars</h1>
+                            Manfaat dan cara penggunaan pupuk organik</h1>
                         <p class="leading-relaxed mb-3 line-clamp-2">Photo booth fam kinfolk
                             cold-pressed sriracha leggings jianbing microdosing tousled
                             waistcoat.</p>
@@ -105,22 +105,28 @@
     </div>
 </section>
 
+
 <section class="text-gray-700 body-font">
-    <div class="container flex flex-col items-center px-5 py-16 mx-auto lg:px-20 lg:py-24 md:flex-row">
+    <div class="px-5 pb-7">
+        <p class="text-green-gapoktan w-2xl md:text-4xl font-bold">
+            Video
+        </p>
+    </div>
+    <div class="container flex flex-col items-center px-5 mx-auto lg:px-20 md:flex-row">
         <div class="w-5/6 lg:max-w-lg lg:w-full md:w-1/2 relative">
             <iframe class="object-left w-full mb-10 lg:object-center rounded-lg " width="360" height="300"
-                src="https://www.youtube.com/embed/cQrjKOZ4rf8/?rel=0" frameborder="0"
+                src="https://www.youtube.com/embed/ly54wbcLwuM" frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen=""></iframe>
         </div>
         <div
             class="flex flex-col items-center w-full pt-0 mb-16 text-left lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 md:items-start md:text-left md:mb-0 lg:text-center">
             <h2 class="mb-1 text-xs font-medium tracking-widest text-blue-500 title-font">
-                Your tagline
+                Gapoktan
             </h2>
             <h1
                 class="mb-8 text-2xl font-bold tracking-tighter text-center bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-blue-500 lg:text-left lg:text-7xl title-font">
-                The headline is crystal clear.
+                Kenapa harus pupuk organik?
             </h1>
             <div class="flex justify-center">
                 <a href="#"
