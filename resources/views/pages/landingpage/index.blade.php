@@ -1,5 +1,5 @@
 @extends('components.pages.landing')
-@section('title','Gapoktans')
+@section('title','Gapoktan')
 
 @section('content')
 <!--Left Col-->

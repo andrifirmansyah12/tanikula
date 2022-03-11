@@ -207,7 +207,8 @@
                 </a>
             </li> --}}
             <li class="nav-item">
-                <a class="nav-link  " href="../pages/sign-up.html">
+                <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
                     <div
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                         <svg width="12px" height="20px" viewBox="0 0 40 40" version="1.1"
@@ -236,6 +237,9 @@
                         </svg>
                     </div>
                     <span class="nav-link-text ms-1">Logout</span>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
                 </a>
             </li>
         </ul>
@@ -259,6 +263,6 @@
             </div>
         </div> --}}
         <a class="btn bg-gradient-primary mt-4 w-100"
-            href="https://www.creative-tim.com/product/soft-ui-dashboard-pro?ref=sidebarfree" type="button">Store</a>
+            href="{{ route('market') }}">Store</a>
     </div>
 </aside>

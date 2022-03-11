@@ -20,10 +20,9 @@
                 </svg>
             </a>
             <a class="inline-block text-green-gapoktan no-underline hover:text-green-800 hover:text-underline text-center h-10 p-2 md:h-auto md:p-4 text-lg"
-                href="{{ route('login') }}">
+                href="{{ route('pembeli') }}">
                 Andri Firmansyah
             </a>
         </div>
-
     </div>
 </div>

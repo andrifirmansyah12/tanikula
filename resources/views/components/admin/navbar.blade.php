@@ -127,9 +127,15 @@
                 </div>
             </li>
             <li class="nav-item nav-logout d-none d-lg-block">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
                     <i class="mdi mdi-home-circle"></i>
+
                 </a>
+                
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
             </li>
         </ul>
         <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
