@@ -1,85 +1,37 @@
-<nav class="sidebar sidebar-offcanvas" id="sidebar">
-    <ul class="nav">
-        <li class="nav-item nav-profile border-bottom">
-            <a href="#" class="nav-link flex-column">
-                <div class="nav-profile-image">
-                    <img src="../assets1/images/faces/face1.jpg" alt="profile" />
-                    <!--change to offline or busy as needed-->
-                </div>
-                <div class="nav-profile-text d-flex ml-0 mb-3 flex-column">
-                    <span class="font-weight-semibold mb-1 mt-2 text-center">Petani</span>
-                </div>
-            </a>
-        </li>
-        <li class="nav-item pt-3">
-            <form class="d-flex align-items-center" action="#">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <i class="input-group-text border-0 mdi mdi-magnify"></i>
-                    </div>
-                    <input type="text" class="form-control border-0" placeholder="Search" />
-                </div>
-            </form>
-        </li>
-        <li class="pt-2 pb-1">
-            <span class="nav-item-head">Template Pages</span>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="index.html">
-                <i class="mdi mdi-compass-outline menu-icon"></i>
-                <span class="menu-title">Dashboard</span>
-            </a>
-        </li>
-        {{-- <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                <i class="mdi mdi-crosshairs-gps menu-icon"></i>
-                <span class="menu-title">UI Elements</span>
-                <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="ui-basic">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item">
-                        <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="pages/ui-features/typography.html">Typography</a>
-                    </li>
-                </ul>
-            </div>
-        </li> --}}
-        <li class="nav-item">
-            <a class="nav-link" href="pages/icons/mdi.html">
-                <i class="mdi mdi-contacts menu-icon"></i>
-                <span class="menu-title">Tandur</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="pages/forms/basic_elements.html">
-                <i class="mdi mdi-format-list-bulleted menu-icon"></i>
-                <span class="menu-title">Panen</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="pages/charts/chartjs.html">
-                <i class="mdi mdi-chart-bar menu-icon"></i>
-                <span class="menu-title">Produk</span>
-            </a>
-        </li>
-        {{-- <li class="nav-item">
-            <a class="nav-link" href="pages/tables/basic-table.html">
-                <i class="mdi mdi-table-large menu-icon"></i>
-                <span class="menu-title">Tables</span>
-            </a>
-        </li> --}}
-        <li class="nav-item pt-3">
-            <a class="nav-link" href="http://bootstrapdash.com/demo/plus-free/documentation/documentation.html"
-                target="_blank">
-                <i class="mdi mdi-file-document-box menu-icon"></i>
-                <span class="menu-title">Beranda</span>
-            </a>
-        </li>
-    </ul>
-</nav>
+<div class="main-sidebar">
+    <aside id="sidebar-wrapper">
+        <div class="sidebar-brand">
+            <a href="index.html">Sri Makmur</a>
+        </div>
+        <div class="sidebar-brand sidebar-brand-sm">
+            <a href="index.html">Sm</a>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="nav-item dropdown active">
+                <a href="#" class="nav-link"><i class=""></i><span>Dashboard</span></a>
+            </li>
+            <li class="menu-header">Kotak Masuk</li>
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link" data-toggle="dropdown"><i class=""></i> <span>Chat</span></a>
+            </li>
+            <li class="menu-header">Manajemen</li>
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link"><i class=""></i> <span>Edukasi</span></a>
+                <a href="#" class="nav-link"><i class=""></i> <span>Kegiatan</span></a>
+                <a href="#" class="nav-link"><i class=""></i> <span>Produk</span></a>
+                <a href="#" class="nav-link"><i class=""></i> <span>Kategori
+                        Produk</span></a>
+            </li>
+            <li class="menu-header">Laporan</li>
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link"><i class=""></i> <span>Tandur</span></a>
+                <a href="#" class="nav-link"><i class=""></i> <span>Panen</span></a>
+                <a href="#" class="nav-link"><i class=""></i> <span>Rekap Penjualan</span></a>
+            </li>
+            <li class="menu-header">Profile Saya</li>
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link"><i class=""></i> <span>Pengaturan</span></a>
+            </li>
+        </ul>
+    </aside>
+</div>

@@ -13,37 +13,98 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('admin', function() {
-    return view('admin.dashboard.index');
-})->middleware('role:admin')->name('admin');
+// Admin
+Route::group(['middleware' => ['auth', 'role:admin']], function() {
 
-Route::get('gapoktan', function() {
-    return view('gapoktan.dashboard.index');
-})->middleware('role:gapoktan')->name('gapoktan');
+    Route::get('admin', function() {
+        return view('admin.dashboard.index');
+    })->name('admin');
 
-Route::get('poktan', function() {
-    return view('poktan.dashboard.index');
-})->middleware('role:poktan')->name('poktan');
+});
 
-Route::get('petani', function() {
-    return view('petani.dashboard.index');
-})->middleware('role:petani')->name('petani');
+// Gapoktan
+Route::group(['middleware' => ['auth', 'role:gapoktan']], function() {
 
-Route::get('pembeli', function() {
-    return view('costumer.dashboard.index');
-})->middleware('role:pembeli')->name('pembeli');
+    Route::get('gapoktan', function() {
+        return view('gapoktan.dashboard.index');
+    })->name('gapoktan');
+
+    Route::get('gapoktan/chat', function() {
+        return view('gapoktan.chat.index');
+    })->name('gapoktan.chat');
+
+    Route::get('gapoktan/produk', function() {
+        return view('gapoktan.produk.index');
+    })->name('gapoktan.produk');
+
+    Route::resource('gapoktan/kategori-produk', App\Http\Controllers\Gapoktan\CategoryController::class)->except(['show','update']);
+    Route::resource('gapoktan/kegiatan', App\Http\Controllers\Gapoktan\ActivityController::class)->except(['show','update']);
+
+    Route::get('gapoktan/pengaturan', function() {
+        return view('gapoktan.pengaturan.index');
+    })->name('gapoktan.alamat');
+
+    Route::get('gapoktan/daftar-poktan', function() {
+        return view('gapoktan.poktan.index');
+    })->name('gapoktan.poktan');
+
+    Route::get('gapoktan/daftar-petani', function() {
+        return view('gapoktan.petani.index');
+    })->name('gapoktan.petani');
+});
+
+// Poktan
+Route::group(['middleware' => ['auth', 'role:poktan']], function() {
+
+    Route::get('poktan', function() {
+        return view('poktan.dashboard.index');
+    })->name('poktan');
+
+});
+
+// Petani
+Route::group(['middleware' => ['auth', 'role:petani']], function() {
+
+    Route::get('petani', function() {
+        return view('petani.dashboard.index');
+    })->name('petani');
+
+});
+
+// Pembeli
+Route::group(['middleware' => ['auth', 'role:pembeli']], function() {
+
+    Route::get('pembeli', function() {
+        return view('costumer.pengaturan.index');
+    })->name('pembeli');
+
+    Route::get('pembeli/chat', function() {
+        return view('costumer.chat.index');
+    })->name('pembeli.chat');
+
+    Route::get('pembeli/alamat', function() {
+        return view('costumer.alamat.index');
+    })->name('pembeli.alamat');
+
+});
+
+
+
+// Route::get('/', function () {
+//     return view('pages.landingpage.index');
+// });
+
+// Route::get('/home', function () {
+//     return view('pages.landingpage.index');
+// });
 
 Route::get('/', function () {
-    return view('pages.landingpage.index');
-});
+    return view('pages.home.index');
+})->name('market');
 
 Route::get('/home', function () {
-    return view('pages.landingpage.index');
-});
-
-Route::get('/market', function () {
     return view('pages.home.index');
-})->middleware('role:pembeli')->name('market');
+})->name('market');
 
 Route::get('/detail', function () {
     return view('pages.home.detail');

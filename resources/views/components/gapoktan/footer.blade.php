@@ -1,14 +1,9 @@
-<footer class="footer">
-    <div class="d-sm-flex justify-content-center justify-content-sm-between">
-        <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright ©
-            bootstrapdash.com 2020</span>
-        <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free <a
-                href="https://www.bootstrapdash.com/" target="_blank">Bootstrap dashboard templates</a>
-            from Bootstrapdash.com</span>
+<footer class="main-footer">
+    <div class="footer-left">
+        Copyright &copy; 2018 <div class="bullet"></div> Design By <a href="https://nauval.in/">Muhamad Nauval
+            Azhar</a>
     </div>
-
-    <div>
-        <span class="text-muted d-block text-center text-sm-left d-sm-inline-block"> Distributed By: <a
-                href="https://themewagon.com/" target="_blank">Themewagon</a></span>
+    <div class="footer-right">
+        2.3.0
     </div>
 </footer>
