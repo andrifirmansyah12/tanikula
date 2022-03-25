@@ -1,127 +1,237 @@
-<!-- Navbar -->
-<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur"
-    navbar-scroll="true">
-    <div class="container-fluid py-1 px-3">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-                <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-                <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Dashboard</li>
-            </ol>
-            <h6 class="font-weight-bolder mb-0">Dashboard</h6>
-        </nav>
-        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-            <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-                <div class="input-group">
-                    <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-                    <input type="text" class="form-control" placeholder="Type here...">
+<nav class="navbar navbar-expand-lg main-navbar">
+    <form class="form-inline mr-auto">
+        <ul class="navbar-nav mr-3">
+            <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
+            <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a>
+            </li>
+        </ul>
+        <div class="search-element">
+            <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="250">
+            <button class="btn" type="submit"><i class="fas fa-search"></i></button>
+            <div class="search-backdrop"></div>
+            <div class="search-result">
+                <div class="search-header">
+                    Histories
+                </div>
+                <div class="search-item">
+                    <a href="#">How to hack NASA using CSS</a>
+                    <a href="#" class="search-close"><i class="fas fa-times"></i></a>
+                </div>
+                <div class="search-item">
+                    <a href="#">Kodinger.com</a>
+                    <a href="#" class="search-close"><i class="fas fa-times"></i></a>
+                </div>
+                <div class="search-item">
+                    <a href="#">#Stisla</a>
+                    <a href="#" class="search-close"><i class="fas fa-times"></i></a>
+                </div>
+                <div class="search-header">
+                    Result
+                </div>
+                <div class="search-item">
+                    <a href="#">
+                        <img class="mr-3 rounded" width="30"
+                            src="{{ asset('stisla/assets/img/products/product-3-50.png') }}" alt="product">
+                        oPhone S9 Limited Edition
+                    </a>
+                </div>
+                <div class="search-item">
+                    <a href="#">
+                        <img class="mr-3 rounded" width="30"
+                            src="{{ asset('stisla/assets/img/products/product-2-50.png') }}" alt="product">
+                        Drone X2 New Gen-7
+                    </a>
+                </div>
+                <div class="search-item">
+                    <a href="#">
+                        <img class="mr-3 rounded" width="30"
+                            src="{{ asset('stisla/assets/img/products/product-1-50.png') }}" alt="product">
+                        Headphone Blitz
+                    </a>
+                </div>
+                <div class="search-header">
+                    Projects
+                </div>
+                <div class="search-item">
+                    <a href="#">
+                        <div class="search-icon bg-danger text-white mr-3">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        Stisla Admin Template
+                    </a>
+                </div>
+                <div class="search-item">
+                    <a href="#">
+                        <div class="search-icon bg-primary text-white mr-3">
+                            <i class="fas fa-laptop"></i>
+                        </div>
+                        Create a new Homepage Design
+                    </a>
                 </div>
             </div>
-            <ul class="navbar-nav  justify-content-end">
-                <li class="nav-item d-flex align-items-center">
-                    <a href="javascript:;" class="nav-link text-body font-weight-bold px-0">
-                        <i class="fa fa-user me-sm-1"></i>
-                        <span class="d-sm-inline d-none">Sign In</span>
-                    </a>
-                </li>
-                <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
-                    <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
-                        <div class="sidenav-toggler-inner">
-                            <i class="sidenav-toggler-line"></i>
-                            <i class="sidenav-toggler-line"></i>
-                            <i class="sidenav-toggler-line"></i>
+        </div>
+    </form>
+    <ul class="navbar-nav navbar-right">
+        <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
+                class="nav-link nav-link-lg message-toggle beep"><i class="far fa-envelope"></i></a>
+            <div class="dropdown-menu dropdown-list dropdown-menu-right">
+                <div class="dropdown-header">Messages
+                    <div class="float-right">
+                        <a href="#">Mark All As Read</a>
+                    </div>
+                </div>
+                <div class="dropdown-list-content dropdown-list-message">
+                    <a href="#" class="dropdown-item dropdown-item-unread">
+                        <div class="dropdown-item-avatar">
+                            <img alt="image" src="{{ asset('stisla/assets/img/avatar/avatar-1.png') }}"
+                                class="rounded-circle">
+                            <div class="is-online"></div>
+                        </div>
+                        <div class="dropdown-item-desc">
+                            <b>Kusnaedi</b>
+                            <p>Hello, Bro!</p>
+                            <div class="time">10 Hours Ago</div>
                         </div>
                     </a>
-                </li>
-                <li class="nav-item px-3 d-flex align-items-center">
-                    <a href="javascript:;" class="nav-link text-body p-0">
-                        <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
+                    <a href="#" class="dropdown-item dropdown-item-unread">
+                        <div class="dropdown-item-avatar">
+                            <img alt="image" src="{{ asset('stisla/assets/img/avatar/avatar-2.png') }}"
+                                class="rounded-circle">
+                        </div>
+                        <div class="dropdown-item-desc">
+                            <b>Dedik Sugiharto</b>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
+                            <div class="time">12 Hours Ago</div>
+                        </div>
                     </a>
-                </li>
-                <li class="nav-item dropdown pe-2 d-flex align-items-center">
-                    <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa fa-bell cursor-pointer"></i>
+                    <a href="#" class="dropdown-item dropdown-item-unread">
+                        <div class="dropdown-item-avatar">
+                            <img alt="image" src="{{ asset('stisla/assets/img/avatar/avatar-3.png') }}"
+                                class="rounded-circle">
+                            <div class="is-online"></div>
+                        </div>
+                        <div class="dropdown-item-desc">
+                            <b>Agung Ardiansyah</b>
+                            <p>Sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                            <div class="time">12 Hours Ago</div>
+                        </div>
                     </a>
-                    <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4"
-                        aria-labelledby="dropdownMenuButton">
-                        <li class="mb-2">
-                            <a class="dropdown-item border-radius-md" href="javascript:;">
-                                <div class="d-flex py-1">
-                                    <div class="my-auto">
-                                        <img src="../assets/img/team-2.jpg" class="avatar avatar-sm  me-3 ">
-                                    </div>
-                                    <div class="d-flex flex-column justify-content-center">
-                                        <h6 class="text-sm font-weight-normal mb-1">
-                                            <span class="font-weight-bold">New message</span> from Laur
-                                        </h6>
-                                        <p class="text-xs text-secondary mb-0">
-                                            <i class="fa fa-clock me-1"></i>
-                                            13 minutes ago
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="mb-2">
-                            <a class="dropdown-item border-radius-md" href="javascript:;">
-                                <div class="d-flex py-1">
-                                    <div class="my-auto">
-                                        <img src="../assets/img/small-logos/logo-spotify.svg"
-                                            class="avatar avatar-sm bg-gradient-dark  me-3 ">
-                                    </div>
-                                    <div class="d-flex flex-column justify-content-center">
-                                        <h6 class="text-sm font-weight-normal mb-1">
-                                            <span class="font-weight-bold">New album</span> by Travis Scott
-                                        </h6>
-                                        <p class="text-xs text-secondary mb-0">
-                                            <i class="fa fa-clock me-1"></i>
-                                            1 day
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item border-radius-md" href="javascript:;">
-                                <div class="d-flex py-1">
-                                    <div class="avatar avatar-sm bg-gradient-secondary  me-3  my-auto">
-                                        <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            xmlns:xlink="http://www.w3.org/1999/xlink">
-                                            <title>credit-card</title>
-                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                <g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF"
-                                                    fill-rule="nonzero">
-                                                    <g transform="translate(1716.000000, 291.000000)">
-                                                        <g transform="translate(453.000000, 454.000000)">
-                                                            <path class="color-background"
-                                                                d="M43,10.7482083 L43,3.58333333 C43,1.60354167 41.3964583,0 39.4166667,0 L3.58333333,0 C1.60354167,0 0,1.60354167 0,3.58333333 L0,10.7482083 L43,10.7482083 Z"
-                                                                opacity="0.593633743"></path>
-                                                            <path class="color-background"
-                                                                d="M0,16.125 L0,32.25 C0,34.2297917 1.60354167,35.8333333 3.58333333,35.8333333 L39.4166667,35.8333333 C41.3964583,35.8333333 43,34.2297917 43,32.25 L43,16.125 L0,16.125 Z M19.7083333,26.875 L7.16666667,26.875 L7.16666667,23.2916667 L19.7083333,23.2916667 L19.7083333,26.875 Z M35.8333333,26.875 L28.6666667,26.875 L28.6666667,23.2916667 L35.8333333,23.2916667 L35.8333333,26.875 Z">
-                                                            </path>
-                                                        </g>
-                                                    </g>
-                                                </g>
-                                            </g>
-                                        </svg>
-                                    </div>
-                                    <div class="d-flex flex-column justify-content-center">
-                                        <h6 class="text-sm font-weight-normal mb-1">
-                                            Payment successfully completed
-                                        </h6>
-                                        <p class="text-xs text-secondary mb-0">
-                                            <i class="fa fa-clock me-1"></i>
-                                            2 days
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </div>
+                    <a href="#" class="dropdown-item">
+                        <div class="dropdown-item-avatar">
+                            <img alt="image" src="{{ asset('stisla/assets/img/avatar/avatar-4.png') }}"
+                                class="rounded-circle">
+                        </div>
+                        <div class="dropdown-item-desc">
+                            <b>Ardian Rahardiansyah</b>
+                            <p>Duis aute irure dolor in reprehenderit in voluptate velit ess</p>
+                            <div class="time">16 Hours Ago</div>
+                        </div>
+                    </a>
+                    <a href="#" class="dropdown-item">
+                        <div class="dropdown-item-avatar">
+                            <img alt="image" src="{{ asset('stisla/assets/img/avatar/avatar-5.png') }}"
+                                class="rounded-circle">
+                        </div>
+                        <div class="dropdown-item-desc">
+                            <b>Alfa Zulkarnain</b>
+                            <p>Exercitation ullamco laboris nisi ut aliquip ex ea commodo</p>
+                            <div class="time">Yesterday</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="dropdown-footer text-center">
+                    <a href="#">View All <i class="fas fa-chevron-right"></i></a>
+                </div>
+            </div>
+        </li>
+        <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
+                class="nav-link notification-toggle nav-link-lg beep"><i class="far fa-bell"></i></a>
+            <div class="dropdown-menu dropdown-list dropdown-menu-right">
+                <div class="dropdown-header">Notifications
+                    <div class="float-right">
+                        <a href="#">Mark All As Read</a>
+                    </div>
+                </div>
+                <div class="dropdown-list-content dropdown-list-icons">
+                    <a href="#" class="dropdown-item dropdown-item-unread">
+                        <div class="dropdown-item-icon bg-primary text-white">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="dropdown-item-desc">
+                            Template update is available now!
+                            <div class="time text-primary">2 Min Ago</div>
+                        </div>
+                    </a>
+                    <a href="#" class="dropdown-item">
+                        <div class="dropdown-item-icon bg-info text-white">
+                            <i class="far fa-user"></i>
+                        </div>
+                        <div class="dropdown-item-desc">
+                            <b>You</b> and <b>Dedik Sugiharto</b> are now friends
+                            <div class="time">10 Hours Ago</div>
+                        </div>
+                    </a>
+                    <a href="#" class="dropdown-item">
+                        <div class="dropdown-item-icon bg-success text-white">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="dropdown-item-desc">
+                            <b>Kusnaedi</b> has moved task <b>Fix bug header</b> to <b>Done</b>
+                            <div class="time">12 Hours Ago</div>
+                        </div>
+                    </a>
+                    <a href="#" class="dropdown-item">
+                        <div class="dropdown-item-icon bg-danger text-white">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="dropdown-item-desc">
+                            Low disk space. Let's clean it!
+                            <div class="time">17 Hours Ago</div>
+                        </div>
+                    </a>
+                    <a href="#" class="dropdown-item">
+                        <div class="dropdown-item-icon bg-info text-white">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div class="dropdown-item-desc">
+                            Welcome to Stisla template!
+                            <div class="time">Yesterday</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="dropdown-footer text-center">
+                    <a href="#">View All <i class="fas fa-chevron-right"></i></a>
+                </div>
+            </div>
+        </li>
+        <li class="dropdown"><a href="#" data-toggle="dropdown"
+                class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+                <img alt="image" src="{{ asset('stisla/assets/img/avatar/avatar-1.png') }}"
+                    class="rounded-circle mr-1">
+                <div class="d-sm-none d-lg-inline-block">Hi, Ujang Maman</div>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right">
+                <div class="dropdown-title">Logged in 5 min ago</div>
+                <a href="features-profile.html" class="dropdown-item has-icon">
+                    <i class="far fa-user"></i> Profile
+                </a>
+                <a href="features-activities.html" class="dropdown-item has-icon">
+                    <i class="fas fa-bolt"></i> Activities
+                </a>
+                <a href="features-settings.html" class="dropdown-item has-icon">
+                    <i class="fas fa-cog"></i> Settings
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();"
+                    class="dropdown-item has-icon text-danger">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
+            </div>
+        </li>
+    </ul>
 </nav>
-<!-- End Navbar -->

@@ -1,299 +1,229 @@
 @extends('pages.template1')
-@section('title','Detail Produk')
+@section('title', 'Detail Produk')
 
 @section('content')
-<div class="container mx-auto px-6">
-    <section>
-        <div class="relative max-w-screen-xl px-4 mx-auto">
-            <div class="grid items-start grid-cols-1 gap-8 md:grid-cols-2">
-                <div class="grid grid-cols-2 gap-4 md:grid-cols-1">
-                    <div class="aspect-w-1 aspect-h-1">
-                        <img alt="Mobile Phone Stand" class="object-cover rounded-xl"
-                            src="https://images.unsplash.com/photo-1586201375761-83865001e31c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" />
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-4 lg:mt-4">
-                        <div class="aspect-w-1 aspect-h-1">
-                            <img alt="Mobile Phone Stand" class="object-cover rounded-xl"
-                                src="https://images.unsplash.com/photo-1613728913341-8f29b02b8253?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80" />
-                        </div>
-
-                        <div class="aspect-w-1 aspect-h-1">
-                            <img alt="Mobile Phone Stand" class="object-cover rounded-xl"
-                                src="https://images.unsplash.com/photo-1502825868325-37569f642e95?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=869&q=80" />
-                        </div>
+    <!-- Start Breadcrumbs -->
+    <div class="breadcrumbs">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="breadcrumbs-content">
+                        <h1 class="page-title">Single Product</h1>
                     </div>
                 </div>
-
-                <div class="sticky top-24">
-                    <strong
-                        class="border border-blue-600 rounded-full tracking-wide px-3 font-medium py-0.5 text-xs bg-gray-100 text-blue-600">
-                        Pre Order </strong>
-
-                    <div class="flex justify-between mt-8">
-                        <div class="max-w-[35ch]">
-                            <h1 class="text-2xl font-bold">
-                                Beras
-                            </h1>
-
-                            <p class="mt-0.5 text-sm">
-                                Highest Rated Product
-                            </p>
-
-                            <div class="flex mt-2 -ml-0.5">
-                                <svg class="w-5 h-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20" fill="currentColor">
-                                    <path
-                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                </svg>
-
-                                <svg class="w-5 h-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20" fill="currentColor">
-                                    <path
-                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                </svg>
-
-                                <svg class="w-5 h-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20" fill="currentColor">
-                                    <path
-                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                </svg>
-
-                                <svg class="w-5 h-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20" fill="currentColor">
-                                    <path
-                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                </svg>
-
-                                <svg class="w-5 h-5 text-gray-200" xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20" fill="currentColor">
-                                    <path
-                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                </svg>
-                            </div>
-                        </div>
-
-                        <p class="text-lg font-bold">
-                            $119.99
-                        </p>
-                    </div>
-
-                    <details class="relative mt-4 group">
-                        <summary class="block">
-                            <div>
-                                <div class="prose max-w-none group-open:hidden">
-                                    <p>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa veniam dicta
-                                        beatae eos ex error culpa delectus rem tenetur, architecto quam nesciunt, dolor
-                                        veritatis nisi minus inventore, rerum at recusandae?
-                                    </p>
-                                </div>
-
-                                <span
-                                    class="mt-4 text-sm font-medium underline cursor-pointer group-open:absolute group-open:bottom-0 group-open:left-0 group-open:mt-0">
-                                    Read More
-                                </span>
-                            </div>
-                        </summary>
-
-                        <div class="pb-6 prose max-w-none">
-                            <p>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa veniam dicta beatae eos ex
-                                error culpa delectus rem tenetur, architecto quam nesciunt, dolor veritatis nisi minus
-                                inventore, rerum at recusandae?
-                            </p>
-
-                            <p>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat nam sapiente nobis ea
-                                veritatis error consequatur nisi exercitationem iure laudantium culpa, animi temporibus
-                                non! Maxime et quisquam amet. A, deserunt!
-                            </p>
-                        </div>
-                    </details>
-
-                    <form class="mt-8">
-                        <fieldset>
-                            <legend class="mb-1 text-sm font-medium">Color</legend>
-
-                            <div class="flow-root">
-                                <div class="flex flex-wrap -m-0.5">
-                                    <label for="color_tt" class="cursor-pointer p-0.5">
-                                        <input type="radio" name="color" id="color_tt" class="sr-only peer" />
-
-                                        <span
-                                            class="inline-block px-3 py-1 text-xs font-medium border rounded-full group peer-checked:bg-black peer-checked:text-white">
-                                            Putih
-                                        </span>
-                                    </label>
-
-                                    <label for="color_fr" class="cursor-pointer p-0.5">
-                                        <input type="radio" name="color" id="color_fr" class="sr-only peer" />
-
-                                        <span
-                                            class="inline-block px-3 py-1 text-xs font-medium border rounded-full group peer-checked:bg-black peer-checked:text-white">
-                                            Merah
-                                        </span>
-                                    </label>
-
-                                    <label for="color_cb" class="cursor-pointer p-0.5">
-                                        <input type="radio" name="color" id="color_cb" class="sr-only peer" />
-
-                                        <span
-                                            class="inline-block px-3 py-1 text-xs font-medium border rounded-full group peer-checked:bg-black peer-checked:text-white">
-                                            Hitam
-                                        </span>
-                                    </label>
-                                </div>
-                            </div>
-                        </fieldset>
-
-                        {{-- <fieldset class="mt-4">
-                            <legend class="mb-1 text-sm font-medium">Size</legend>
-
-                            <div class="flow-root">
-                                <div class="flex flex-wrap -m-0.5">
-                                    <label for="size_xs" class="cursor-pointer p-0.5">
-                                        <input type="radio" name="size" id="size_xs" class="sr-only peer" />
-
-                                        <span
-                                            class="inline-flex items-center justify-center w-8 h-8 text-xs font-medium border rounded-full group peer-checked:bg-black peer-checked:text-white">
-                                            XS
-                                        </span>
-                                    </label>
-
-                                    <label for="size_s" class="cursor-pointer p-0.5">
-                                        <input type="radio" name="size" id="size_s" class="sr-only peer" />
-
-                                        <span
-                                            class="inline-flex items-center justify-center w-8 h-8 text-xs font-medium border rounded-full group peer-checked:bg-black peer-checked:text-white">
-                                            S
-                                        </span>
-                                    </label>
-
-                                    <label for="size_m" class="cursor-pointer p-0.5">
-                                        <input type="radio" name="size" id="size_m" class="sr-only peer" />
-
-                                        <span
-                                            class="inline-flex items-center justify-center w-8 h-8 text-xs font-medium border rounded-full group peer-checked:bg-black peer-checked:text-white">
-                                            M
-                                        </span>
-                                    </label>
-
-                                    <label for="size_l" class="cursor-pointer p-0.5">
-                                        <input type="radio" name="size" id="size_l" class="sr-only peer" />
-
-                                        <span
-                                            class="inline-flex items-center justify-center w-8 h-8 text-xs font-medium border rounded-full group peer-checked:bg-black peer-checked:text-white">
-                                            L
-                                        </span>
-                                    </label>
-
-                                    <label for="size_xl" class="cursor-pointer p-0.5">
-                                        <input type="radio" name="size" id="size_xl" class="sr-only peer" />
-
-                                        <span
-                                            class="inline-flex items-center justify-center w-8 h-8 text-xs font-medium border rounded-full group peer-checked:bg-black peer-checked:text-white">
-                                            XL
-                                        </span>
-                                    </label>
-                                </div>
-                            </div>
-                        </fieldset> --}}
-
-                        <div class="flex mt-8">
-                            <div>
-                                <label for="quantity" class="sr-only">Qty</label>
-
-                                <input type="number" id="quantity" min="1" value="1"
-                                    class="shadow w-12 py-3 text-xs text-center border-gray-200 rounded no-spinners" />
-                            </div>
-
-                            <button type="submit"
-                                class="block px-5 py-3 ml-3 text-xs font-medium text-white bg-green-600 rounded hover:bg-green-500">
-                                Add to Cart
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-    <div class="mt-16">
-        <h3 class="text-gray-600 text-2xl font-medium">More Products</h3>
-        <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
-            <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
-                <div class="flex items-end justify-end h-56 w-full bg-cover"
-                    style="background-image: url('https://images.unsplash.com/photo-1613728913293-c99bb00ef39c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80')">
-                    <button
-                        class="p-2 rounded-full bg-blue-600 text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
-                        <svg class="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path
-                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
-                            </path>
-                        </svg>
-                    </button>
-                </div>
-                <div class="px-5 py-3">
-                    <h3 class="text-gray-700 uppercase">Jagung</h3>
-                    <span class="text-gray-500 mt-2">$12</span>
-                </div>
-            </div>
-            <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
-                <div class="flex items-end justify-end h-56 w-full bg-cover"
-                    style="background-image: url('https://images.unsplash.com/photo-1613500788522-89c4d55bdd0e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1374&q=80')">
-                    <button
-                        class="p-2 rounded-full bg-blue-600 text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
-                        <svg class="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path
-                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
-                            </path>
-                        </svg>
-                    </button>
-                </div>
-                <div class="px-5 py-3">
-                    <h3 class="text-gray-700 uppercase">Kuaci</h3>
-                    <span class="text-gray-500 mt-2">$12</span>
-                </div>
-            </div>
-            <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
-                <div class="flex items-end justify-end h-56 w-full bg-cover"
-                    style="background-image: url('https://images.unsplash.com/photo-1613758235306-69cc0a3f614d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80')">
-                    <button
-                        class="p-2 rounded-full bg-blue-600 text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
-                        <svg class="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path
-                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
-                            </path>
-                        </svg>
-                    </button>
-                </div>
-                <div class="px-5 py-3">
-                    <h3 class="text-gray-700 uppercase">Kacang</h3>
-                    <span class="text-gray-500 mt-2">$12</span>
-                </div>
-            </div>
-            <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
-                <div class="flex items-end justify-end h-56 w-full bg-cover"
-                    style="background-image: url('https://images.unsplash.com/photo-1614373532018-92a75430a0da?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80')">
-                    <button
-                        class="p-2 rounded-full bg-blue-600 text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
-                        <svg class="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path
-                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
-                            </path>
-                        </svg>
-                    </button>
-                </div>
-                <div class="px-5 py-3">
-                    <h3 class="text-gray-700 uppercase">Lainnya</h3>
-                    <span class="text-gray-500 mt-2">$12</span>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <ul class="breadcrumb-nav">
+                        <li><a href="index.html"><i class="lni lni-home"></i> Home</a></li>
+                        <li><a href="index.html">Shop</a></li>
+                        <li>Single Product</li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
-</div>
+    <!-- End Breadcrumbs -->
+
+    <!-- Start Item Details -->
+    <section class="item-details section">
+        <div class="container">
+            <div class="top-area">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 col-md-12 col-12">
+                        <div class="product-images">
+                            <main id="gallery">
+                                <div class="main-img">
+                                    <img src="assets/images/product-details/01.jpg" id="current" alt="#">
+                                </div>
+                                <div class="images">
+                                    <img src="assets/images/product-details/01.jpg" class="img" alt="#">
+                                    <img src="assets/images/product-details/02.jpg" class="img" alt="#">
+                                    <img src="assets/images/product-details/03.jpg" class="img" alt="#">
+                                    <img src="assets/images/product-details/04.jpg" class="img" alt="#">
+                                    <img src="assets/images/product-details/05.jpg" class="img" alt="#">
+                                </div>
+                            </main>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12 col-12">
+                        <div class="product-info">
+                            <h2 class="title">GoPro Karma Camera Drone</h2>
+                            <p class="category"><i class="lni lni-tag"></i> Drones:<a
+                                    href="javascript:void(0)">Action
+                                    cameras</a></p>
+                            <h3 class="price">$850<span>$945</span></h3>
+                            <p class="info-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                                eiusmod
+                                tempor incididunt
+                                ut labore et dolore magna aliqua.</p>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-12">
+                                    <div class="form-group color-option">
+                                        <label class="title-label" for="size">Choose color</label>
+                                        <div class="single-checkbox checkbox-style-1">
+                                            <input type="checkbox" id="checkbox-1" checked>
+                                            <label for="checkbox-1"><span></span></label>
+                                        </div>
+                                        <div class="single-checkbox checkbox-style-2">
+                                            <input type="checkbox" id="checkbox-2">
+                                            <label for="checkbox-2"><span></span></label>
+                                        </div>
+                                        <div class="single-checkbox checkbox-style-3">
+                                            <input type="checkbox" id="checkbox-3">
+                                            <label for="checkbox-3"><span></span></label>
+                                        </div>
+                                        <div class="single-checkbox checkbox-style-4">
+                                            <input type="checkbox" id="checkbox-4">
+                                            <label for="checkbox-4"><span></span></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-12">
+                                    <div class="form-group">
+                                        <label for="color">Battery capacity</label>
+                                        <select class="form-control" id="color">
+                                            <option>5100 mAh</option>
+                                            <option>6200 mAh</option>
+                                            <option>8000 mAh</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-12">
+                                    <div class="form-group quantity">
+                                        <label for="color">Quantity</label>
+                                        <select class="form-control">
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bottom-content">
+                                <div class="row align-items-end">
+                                    <div class="col-lg-4 col-md-4 col-12">
+                                        <div class="button cart-button">
+                                            <button class="btn" style="width: 100%;">Add to Cart</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-12">
+                                        <div class="wish-button">
+                                            <button class="btn"><i class="lni lni-reload"></i> Compare</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-12">
+                                        <div class="wish-button">
+                                            <button class="btn"><i class="lni lni-heart"></i> To
+                                                Wishlist</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="product-details-info">
+                <div class="single-block">
+                    <div class="row">
+                        <div class="col-lg-6 col-12">
+                            <div class="info-body custom-responsive-margin">
+                                <h4>Details</h4>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                                    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                                    irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat.</p>
+                                <h4>Features</h4>
+                                <ul class="features">
+                                    <li>Capture 4K30 Video and 12MP Photos</li>
+                                    <li>Game-Style Controller with Touchscreen</li>
+                                    <li>View Live Camera Feed</li>
+                                    <li>Full Control of HERO6 Black</li>
+                                    <li>Use App for Dedicated Camera Operation</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-12">
+                            <div class="info-body">
+                                <h4>Specifications</h4>
+                                <ul class="normal-list">
+                                    <li><span>Weight:</span> 35.5oz (1006g)</li>
+                                    <li><span>Maximum Speed:</span> 35 mph (15 m/s)</li>
+                                    <li><span>Maximum Distance:</span> Up to 9,840ft (3,000m)</li>
+                                    <li><span>Operating Frequency:</span> 2.4GHz</li>
+                                    <li><span>Manufacturer:</span> GoPro, USA</li>
+                                </ul>
+                                <h4>Shipping Options:</h4>
+                                <ul class="normal-list">
+                                    <li><span>Courier:</span> 2 - 4 days, $22.50</li>
+                                    <li><span>Local Shipping:</span> up to one week, $10.00</li>
+                                    <li><span>UPS Ground Shipping:</span> 4 - 6 days, $18.00</li>
+                                    <li><span>Unishop Global Export:</span> 3 - 4 days, $25.00</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Item Details -->
+
+    <!-- Review Modal -->
+    <div class="modal fade review-modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Leave a Review</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="review-name">Your Name</label>
+                                <input class="form-control" type="text" id="review-name" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="review-email">Your Email</label>
+                                <input class="form-control" type="email" id="review-email" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="review-subject">Subject</label>
+                                <input class="form-control" type="text" id="review-subject" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="review-rating">Rating</label>
+                                <select class="form-control" id="review-rating">
+                                    <option>5 Stars</option>
+                                    <option>4 Stars</option>
+                                    <option>3 Stars</option>
+                                    <option>2 Stars</option>
+                                    <option>1 Star</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="review-message">Review</label>
+                        <textarea class="form-control" id="review-message" rows="8" required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer button">
+                    <button type="button" class="btn">Submit Review</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Review Modal -->
 @endsection

@@ -232,7 +232,7 @@
 
 <body class="leading-normal tracking-normal text-gray-600" style="font-family: 'Source Sans Pro', sans-serif;">
 
-    <div class="h-screen pb-14 bg-right bg-cover">
+    <div class="h-full lg:h-screen pb-14 bg-right bg-cover" style="background-image: url('{{ asset('img/bg3.svg') }}')">
         <!--Nav-->
         <div class="w-full container mx-auto p-6">
 

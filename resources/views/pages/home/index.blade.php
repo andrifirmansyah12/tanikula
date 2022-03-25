@@ -1,219 +1,671 @@
 @extends('pages.template')
-@section('title','Home')
+@section('title', 'Home')
 
 @section('content')
+    <section style="background-color: white;">
+        <div class="text-left container py-5">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-title">
+                        <h2>Kategori Produk</h2>
+                    </div>
+                </div>
+            </div>
 
-<div class="container mx-auto pt-10 px-6">
-    <div class="h-64 rounded-md overflow-hidden bg-cover bg-center"
-        style="background-image: url('https://images.unsplash.com/photo-1613728913341-8f29b02b8253?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80')">
-        <div class="bg-gray-900 bg-opacity-50 flex items-center h-full">
-            <div class="px-10 max-w-xl">
-                <h2 class="text-2xl text-white font-semibold">Beras Merah</h2>
-                <p class="mt-2 text-gray-400">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempore
-                    facere provident molestias ipsam sint voluptatum pariatur.</p>
-                <button
-                    class="flex items-center mt-4 px-3 py-2 bg-blue-600 text-white text-sm uppercase font-medium rounded hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
-                    <span>Shop Now</span>
-                    <svg class="h-5 w-5 mx-2" fill="none" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                        <path d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </div>
-    <div class="md:flex mt-8 md:-mx-4">
-        <div class="w-full h-64 md:mx-4 rounded-md overflow-hidden bg-cover bg-center md:w-1/2"
-            style="background-image: url('https://images.unsplash.com/photo-1586201375761-83865001e31c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80')">
-            <div class="bg-gray-900 bg-opacity-50 flex items-center h-full">
-                <div class="px-10 max-w-xl">
-                    <h2 class="text-2xl text-white font-semibold">Beras Putih</h2>
-                    <p class="mt-2 text-gray-400">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempore
-                        facere provident molestias ipsam sint voluptatum pariatur.</p>
-                    <button
-                        class="flex items-center mt-4 text-white text-sm uppercase font-medium rounded hover:underline focus:outline-none">
-                        <span>Shop Now</span>
-                        <svg class="h-5 w-5 mx-2" fill="none" stroke-linecap="round" stroke-linejoin="round"
-                            stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                            <path d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                        </svg>
-                    </button>
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-6">
+                    <div class="card text-center single-product" style="width: 10rem;">
+                        <div class="card-body">
+                            <img src="{{ asset('img/no-image.png') }}" alt="#" class="img-fluid"
+                                style="width: 5rem; height: 5rem;">
+                            <p class="card-title pt-2">Nama Kategori</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="w-full h-64 mt-8 md:mx-4 rounded-md overflow-hidden bg-cover bg-center md:mt-0 md:w-1/2"
-            style="background-image: url('https://images.unsplash.com/photo-1613728913293-c99bb00ef39c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80')">
-            <div class="bg-gray-900 bg-opacity-50 flex items-center h-full">
-                <div class="px-10 max-w-xl">
-                    <h2 class="text-2xl text-white font-semibold">Jagung</h2>
-                    <p class="mt-2 text-gray-400">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempore
-                        facere provident molestias ipsam sint voluptatum pariatur.</p>
-                    <button
-                        class="flex items-center mt-4 text-white text-sm uppercase font-medium rounded hover:underline focus:outline-none">
-                        <span>Shop Now</span>
-                        <svg class="h-5 w-5 mx-2" fill="none" stroke-linecap="round" stroke-linejoin="round"
-                            stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                            <path d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="mt-16">
-        <h3 class="text-gray-600 text-2xl font-medium">Beras</h3>
-        <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
-            <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
-                <div class="flex items-end justify-end h-56 w-full bg-cover"
-                    style="background-image: url('https://images.unsplash.com/photo-1502825868325-37569f642e95?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=869&q=80')">
-                    <button
-                        class="p-2 rounded-full bg-blue-600 text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
-                        <svg class="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path
-                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
-                            </path>
-                        </svg>
-                    </button>
-                </div>
-                <div class="px-5 py-3">
-                    <h3 class="text-gray-700 uppercase">Beras Hitam</h3>
-                    <span class="text-gray-500 mt-2">$12</span>
-                </div>
-            </div>
-            <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
-                <div class="flex items-end justify-end h-56 w-full bg-cover"
-                    style="background-image: url('https://images.unsplash.com/photo-1613728913341-8f29b02b8253?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80')">
-                    <button
-                        class="p-2 rounded-full bg-blue-600 text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
-                        <svg class="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path
-                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
-                            </path>
-                        </svg>
-                    </button>
-                </div>
-                <div class="px-5 py-3">
-                    <h3 class="text-gray-700 uppercase">Beras Merah</h3>
-                    <span class="text-gray-500 mt-2">$12</span>
-                </div>
-            </div>
-            <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
-                <div class="flex items-end justify-end h-56 w-full bg-cover"
-                    style="background-image: url('https://images.unsplash.com/photo-1586201375761-83865001e31c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80')">
-                    <button
-                        class="p-2 rounded-full bg-blue-600 text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
-                        <svg class="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path
-                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
-                            </path>
-                        </svg>
-                    </button>
-                </div>
-                <div class="px-5 py-3">
-                    <h3 class="text-gray-700 uppercase">Beras Putih</h3>
-                    <span class="text-gray-500 mt-2">$12</span>
-                </div>
-            </div>
-            <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
-                <div class="flex items-end justify-end h-56 w-full bg-cover"
-                    style="background-image: url('https://images.unsplash.com/photo-1586201375799-47cd24c3f595?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80')">
-                    <button
-                        class="p-2 rounded-full bg-blue-600 text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
-                        <svg class="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path
-                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
-                            </path>
-                        </svg>
-                    </button>
-                </div>
-                <div class="px-5 py-3">
-                    <h3 class="text-gray-700 uppercase">Beras Mix</h3>
-                    <span class="text-gray-500 mt-2">$12</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="mt-16">
-        <h3 class="text-gray-600 text-2xl font-medium">Lainnya</h3>
-        <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
-            <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
-                <div class="flex items-end justify-end h-56 w-full bg-cover"
-                    style="background-image: url('https://images.unsplash.com/photo-1613728913293-c99bb00ef39c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80')">
-                    <button
-                        class="p-2 rounded-full bg-blue-600 text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
-                        <svg class="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path
-                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
-                            </path>
-                        </svg>
-                    </button>
-                </div>
-                <div class="px-5 py-3">
-                    <h3 class="text-gray-700 uppercase">Jagung</h3>
-                    <span class="text-gray-500 mt-2">$12</span>
-                </div>
-            </div>
-            <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
-                <div class="flex items-end justify-end h-56 w-full bg-cover"
-                    style="background-image: url('https://images.unsplash.com/photo-1613500788522-89c4d55bdd0e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1374&q=80')">
-                    <button
-                        class="p-2 rounded-full bg-blue-600 text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
-                        <svg class="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path
-                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
-                            </path>
-                        </svg>
-                    </button>
-                </div>
-                <div class="px-5 py-3">
-                    <h3 class="text-gray-700 uppercase">Kuaci</h3>
-                    <span class="text-gray-500 mt-2">$12</span>
-                </div>
-            </div>
-            <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
-                <div class="flex items-end justify-end h-56 w-full bg-cover"
-                    style="background-image: url('https://images.unsplash.com/photo-1613758235306-69cc0a3f614d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80')">
-                    <button
-                        class="p-2 rounded-full bg-blue-600 text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
-                        <svg class="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path
-                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
-                            </path>
-                        </svg>
-                    </button>
-                </div>
-                <div class="px-5 py-3">
-                    <h3 class="text-gray-700 uppercase">Kacang</h3>
-                    <span class="text-gray-500 mt-2">$12</span>
-                </div>
-            </div>
-            <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
-                <div class="flex items-end justify-end h-56 w-full bg-cover"
-                    style="background-image: url('https://images.unsplash.com/photo-1614373532018-92a75430a0da?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80')">
-                    <button
-                        class="p-2 rounded-full bg-blue-600 text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
-                        <svg class="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path
-                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
-                            </path>
-                        </svg>
-                    </button>
-                </div>
-                <div class="px-5 py-3">
-                    <h3 class="text-gray-700 uppercase">Lainnya</h3>
-                    <span class="text-gray-500 mt-2">$12</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
+                <div class="col-lg-3 col-md-6 col-6">
+                    <div class="card text-center single-product" style="width: 10rem;">
+                        <div class="card-body">
+                            <img src="{{ asset('img/no-image.png') }}" alt="#" class="img-fluid"
+                                style="width: 5rem; height: 5rem;">
+                            <p class="card-title pt-2">Nama Kategori</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 col-6">
+                    <div class="card text-center single-product" style="width: 10rem;">
+                        <div class="card-body">
+                            <img src="{{ asset('img/no-image.png') }}" alt="#" class="img-fluid"
+                                style="width: 5rem; height: 5rem;">
+                            <p class="card-title pt-2">Nama Kategori</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Start Trending Product Area -->
+    <section class="section" style="margin-top: 12px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-title">
+                        <h2>Produk Terbaru</h2>
+                        {{-- <p>There are many variations of passages of Lorem Ipsum available, but the majority have
+                            suffered alteration in some form.</p> --}}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-12">
+                    <!-- Start Single Product -->
+                    <div class="single-product">
+                        <div class="product-image">
+                            <img src="{{ asset('img/no-image.png') }}" alt="#">
+                            <div class="button">
+                                <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
+                                    Keranjang</a>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <span class="category">Nama Kategori</span>
+                            <h4 class="title">
+                                <a href="product-grids.html">Produk</a>
+                            </h4>
+                            <ul class="review">
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star"></i></li>
+                                <li><span>4.0 Ulasan(40)</span></li>
+                            </ul>
+                            <div class="price">
+                                <span>Rp. 50.000</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Single Product -->
+                </div>
+                <div class="col-lg-3 col-md-6 col-12">
+                    <!-- Start Single Product -->
+                    <div class="single-product">
+                        <div class="product-image">
+                            <img src="{{ asset('img/no-image.png') }}" alt="#">
+                            <div class="button">
+                                <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
+                                    Keranjang</a>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <span class="category">Nama Kategori</span>
+                            <h4 class="title">
+                                <a href="product-grids.html">Produk</a>
+                            </h4>
+                            <ul class="review">
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star"></i></li>
+                                <li><span>4.0 Ulasan(40)</span></li>
+                            </ul>
+                            <div class="price">
+                                <span>Rp. 50.000</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Single Product -->
+                </div>
+                <div class="col-lg-3 col-md-6 col-12">
+                    <!-- Start Single Product -->
+                    <div class="single-product">
+                        <div class="product-image">
+                            <img src="{{ asset('img/no-image.png') }}" alt="#">
+                            <div class="button">
+                                <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
+                                    Keranjang</a>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <span class="category">Nama Kategori</span>
+                            <h4 class="title">
+                                <a href="product-grids.html">Produk</a>
+                            </h4>
+                            <ul class="review">
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star"></i></li>
+                                <li><span>4.0 Ulasan(40)</span></li>
+                            </ul>
+                            <div class="price">
+                                <span>Rp. 50.000</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Single Product -->
+                </div>
+                <div class="col-lg-3 col-md-6 col-12">
+                    <!-- Start Single Product -->
+                    <div class="single-product">
+                        <div class="product-image">
+                            <img src="{{ asset('img/no-image.png') }}" alt="#">
+                            <div class="button">
+                                <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
+                                    Keranjang</a>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <span class="category">Nama Kategori</span>
+                            <h4 class="title">
+                                <a href="product-grids.html">Produk</a>
+                            </h4>
+                            <ul class="review">
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star"></i></li>
+                                <li><span>4.0 Ulasan(40)</span></li>
+                            </ul>
+                            <div class="price">
+                                <span>Rp. 50.000</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Single Product -->
+                </div>
+                <div class="col-lg-3 col-md-6 col-12">
+                    <!-- Start Single Product -->
+                    <div class="single-product">
+                        <div class="product-image">
+                            <img src="{{ asset('img/no-image.png') }}" alt="#">
+                            <div class="button">
+                                <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
+                                    Keranjang</a>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <span class="category">Nama Kategori</span>
+                            <h4 class="title">
+                                <a href="product-grids.html">Produk</a>
+                            </h4>
+                            <ul class="review">
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star"></i></li>
+                                <li><span>4.0 Ulasan(40)</span></li>
+                            </ul>
+                            <div class="price">
+                                <span>Rp. 50.000</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Single Product -->
+                </div>
+                <div class="col-lg-3 col-md-6 col-12">
+                    <!-- Start Single Product -->
+                    <div class="single-product">
+                        <div class="product-image">
+                            <img src="{{ asset('img/no-image.png') }}" alt="#">
+                            <div class="button">
+                                <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
+                                    Keranjang</a>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <span class="category">Nama Kategori</span>
+                            <h4 class="title">
+                                <a href="product-grids.html">Produk</a>
+                            </h4>
+                            <ul class="review">
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star"></i></li>
+                                <li><span>4.0 Ulasan(40)</span></li>
+                            </ul>
+                            <div class="price">
+                                <span>Rp. 50.000</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Single Product -->
+                </div>
+                <div class="col-lg-3 col-md-6 col-12">
+                    <!-- Start Single Product -->
+                    <div class="single-product">
+                        <div class="product-image">
+                            <img src="{{ asset('img/no-image.png') }}" alt="#">
+                            <div class="button">
+                                <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
+                                    Keranjang</a>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <span class="category">Nama Kategori</span>
+                            <h4 class="title">
+                                <a href="product-grids.html">Produk</a>
+                            </h4>
+                            <ul class="review">
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star"></i></li>
+                                <li><span>4.0 Ulasan(40)</span></li>
+                            </ul>
+                            <div class="price">
+                                <span>Rp. 50.000</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Single Product -->
+                </div>
+                <div class="col-lg-3 col-md-6 col-12">
+                    <!-- Start Single Product -->
+                    <div class="single-product">
+                        <div class="product-image">
+                            <img src="{{ asset('img/no-image.png') }}" alt="#">
+                            <div class="button">
+                                <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
+                                    Keranjang</a>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <span class="category">Nama Kategori</span>
+                            <h4 class="title">
+                                <a href="product-grids.html">Produk</a>
+                            </h4>
+                            <ul class="review">
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star"></i></li>
+                                <li><span>4.0 Ulasan(40)</span></li>
+                            </ul>
+                            <div class="price">
+                                <span>Rp. 50.000</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Single Product -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Trending Product Area -->
+
+    <!-- Start Banner Area -->
+    {{-- <section class="banner">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="single-banner"
+                        style="background-image:url('{{ asset('shoping/assets/images/banner/banner-1-bg.jpg') }}')">
+                        <div class="content">
+                            <h2>Smart Watch 2.0</h2>
+                            <p>Space Gray Aluminum Case with <br>Black/Volt Real Sport Band </p>
+                            <div class="button">
+                                <a href="product-grids.html" class="btn">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="single-banner custom-responsive-margin"
+                        style="background-image:url('{{ asset('shoping/assets/images/banner/banner-2-bg.jpg') }}')">
+                        <div class="content">
+                            <h2>Smart Headphone</h2>
+                            <p>Lorem ipsum dolor sit amet, <br>eiusmod tempor
+                                incididunt ut labore.</p>
+                            <div class="button">
+                                <a href="product-grids.html" class="btn">Shop Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> --}}
+    <!-- End Banner Area -->
+
+    <!-- Start Trending Product Area -->
+    <section class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-title">
+                        <h2>Berdasarkan Pencarianmu</h2>
+                        {{-- <p>There are many variations of passages of Lorem Ipsum available, but the majority have
+                            suffered alteration in some form.</p> --}}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-12">
+                    <!-- Start Single Product -->
+                    <div class="single-product">
+                        <div class="product-image">
+                            <img src="{{ asset('img/no-image.png') }}" alt="#">
+                            <div class="button">
+                                <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
+                                    Keranjang</a>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <span class="category">Nama Kategori</span>
+                            <h4 class="title">
+                                <a href="product-grids.html">Produk</a>
+                            </h4>
+                            <ul class="review">
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star"></i></li>
+                                <li><span>4.0 Ulasan(40)</span></li>
+                            </ul>
+                            <div class="price">
+                                <span>Rp. 50.000</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Single Product -->
+                </div>
+                <div class="col-lg-3 col-md-6 col-12">
+                    <!-- Start Single Product -->
+                    <div class="single-product">
+                        <div class="product-image">
+                            <img src="{{ asset('img/no-image.png') }}" alt="#">
+                            <div class="button">
+                                <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
+                                    Keranjang</a>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <span class="category">Nama Kategori</span>
+                            <h4 class="title">
+                                <a href="product-grids.html">Produk</a>
+                            </h4>
+                            <ul class="review">
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star"></i></li>
+                                <li><span>4.0 Ulasan(40)</span></li>
+                            </ul>
+                            <div class="price">
+                                <span>Rp. 50.000</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Single Product -->
+                </div>
+                <div class="col-lg-3 col-md-6 col-12">
+                    <!-- Start Single Product -->
+                    <div class="single-product">
+                        <div class="product-image">
+                            <img src="{{ asset('img/no-image.png') }}" alt="#">
+                            <div class="button">
+                                <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
+                                    Keranjang</a>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <span class="category">Nama Kategori</span>
+                            <h4 class="title">
+                                <a href="product-grids.html">Produk</a>
+                            </h4>
+                            <ul class="review">
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star"></i></li>
+                                <li><span>4.0 Ulasan(40)</span></li>
+                            </ul>
+                            <div class="price">
+                                <span>Rp. 50.000</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Single Product -->
+                </div>
+                <div class="col-lg-3 col-md-6 col-12">
+                    <!-- Start Single Product -->
+                    <div class="single-product">
+                        <div class="product-image">
+                            <img src="{{ asset('img/no-image.png') }}" alt="#">
+                            <div class="button">
+                                <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
+                                    Keranjang</a>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <span class="category">Nama Kategori</span>
+                            <h4 class="title">
+                                <a href="product-grids.html">Produk</a>
+                            </h4>
+                            <ul class="review">
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star"></i></li>
+                                <li><span>4.0 Ulasan(40)</span></li>
+                            </ul>
+                            <div class="price">
+                                <span>Rp. 50.000</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Single Product -->
+                </div>
+                <div class="col-lg-3 col-md-6 col-12">
+                    <!-- Start Single Product -->
+                    <div class="single-product">
+                        <div class="product-image">
+                            <img src="{{ asset('img/no-image.png') }}" alt="#">
+                            <div class="button">
+                                <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
+                                    Keranjang</a>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <span class="category">Nama Kategori</span>
+                            <h4 class="title">
+                                <a href="product-grids.html">Produk</a>
+                            </h4>
+                            <ul class="review">
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star"></i></li>
+                                <li><span>4.0 Ulasan(40)</span></li>
+                            </ul>
+                            <div class="price">
+                                <span>Rp. 50.000</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Single Product -->
+                </div>
+                <div class="col-lg-3 col-md-6 col-12">
+                    <!-- Start Single Product -->
+                    <div class="single-product">
+                        <div class="product-image">
+                            <img src="{{ asset('img/no-image.png') }}" alt="#">
+                            <div class="button">
+                                <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
+                                    Keranjang</a>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <span class="category">Nama Kategori</span>
+                            <h4 class="title">
+                                <a href="product-grids.html">Produk</a>
+                            </h4>
+                            <ul class="review">
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star"></i></li>
+                                <li><span>4.0 Ulasan(40)</span></li>
+                            </ul>
+                            <div class="price">
+                                <span>Rp. 50.000</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Single Product -->
+                </div>
+                <div class="col-lg-3 col-md-6 col-12">
+                    <!-- Start Single Product -->
+                    <div class="single-product">
+                        <div class="product-image">
+                            <img src="{{ asset('img/no-image.png') }}" alt="#">
+                            <div class="button">
+                                <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
+                                    Keranjang</a>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <span class="category">Nama Kategori</span>
+                            <h4 class="title">
+                                <a href="product-grids.html">Produk</a>
+                            </h4>
+                            <ul class="review">
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star"></i></li>
+                                <li><span>4.0 Ulasan(40)</span></li>
+                            </ul>
+                            <div class="price">
+                                <span>Rp. 50.000</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Single Product -->
+                </div>
+                <div class="col-lg-3 col-md-6 col-12">
+                    <!-- Start Single Product -->
+                    <div class="single-product">
+                        <div class="product-image">
+                            <img src="{{ asset('img/no-image.png') }}" alt="#">
+                            <div class="button">
+                                <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
+                                    Keranjang</a>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <span class="category">Nama Kategori</span>
+                            <h4 class="title">
+                                <a href="product-grids.html">Produk</a>
+                            </h4>
+                            <ul class="review">
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star"></i></li>
+                                <li><span>4.0 Ulasan(40)</span></li>
+                            </ul>
+                            <div class="price">
+                                <span>Rp. 50.000</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Single Product -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Trending Product Area -->
+
+    <!-- Start Call Action Area -->
+    {{-- <section class="call-action section">
+        <div class="container">
+            <div class="row ">
+                <div class="col-lg-8 offset-lg-2 col-12">
+                    <div class="inner">
+                        <div class="content">
+                            <h2 class="wow fadeInUp" data-wow-delay=".4s">Currently You are using free<br>
+                                Lite version of ShopGrids</h2>
+                            <p class="wow fadeInUp" data-wow-delay=".6s">Please, purchase full version of the
+                                template
+                                to get all pages,<br> features and commercial license.</p>
+                            <div class="button wow fadeInUp" data-wow-delay=".8s">
+                                <a href="javascript:void(0)" class="btn">Purchase Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> --}}
+    <!-- End Call Action Area -->
+
+    <!-- Start Shipping Info -->
+    {{-- <section class="shipping-info">
+        <div class="container">
+            <ul>
+                <!-- Free Shipping -->
+                <li>
+                    <div class="media-icon">
+                        <i class="lni lni-delivery"></i>
+                    </div>
+                    <div class="media-body">
+                        <h5>Free Shipping</h5>
+                        <span>On order over $99</span>
+                    </div>
+                </li>
+                <!-- Money Return -->
+                <li>
+                    <div class="media-icon">
+                        <i class="lni lni-support"></i>
+                    </div>
+                    <div class="media-body">
+                        <h5>24/7 Support.</h5>
+                        <span>Live Chat Or Call.</span>
+                    </div>
+                </li>
+                <!-- Support 24/7 -->
+                <li>
+                    <div class="media-icon">
+                        <i class="lni lni-credit-cards"></i>
+                    </div>
+                    <div class="media-body">
+                        <h5>Online Payment.</h5>
+                        <span>Secure Payment Services.</span>
+                    </div>
+                </li>
+                <!-- Safe Payment -->
+                <li>
+                    <div class="media-icon">
+                        <i class="lni lni-reload"></i>
+                    </div>
+                    <div class="media-body">
+                        <h5>Easy Return.</h5>
+                        <span>Hassle Free Shopping.</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section> --}}
+    <!-- End Shipping Info -->
 @endsection

@@ -1,28 +1,37 @@
-{{-- Header --}}
 @include('components.pages.header')
 
-<body class="leading-normal tracking-normal text-gray-600" style="font-family: 'Source Sans Pro', sans-serif;">
+<body>
+    <!--[if lte IE 9]>
+      <p class="browserupgrade">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="https://browsehappy.com/">upgrade your browser</a> to improve
+        your experience and security.
+      </p>
+    <![endif]-->
 
-    <div class="h-screen pb-14 bg-right bg-cover">
-
-        {{-- Navbar --}}
-        @include('components.pages.navbar')
-
-        @include('components.pages.submenu')
-
-        <!--Main-->
-        <div class="container px-6 mx-auto">
-
-            @yield('content')
-
-            <!--Footer-->
-            @include('components.pages.footer')
-
+    <!-- Preloader -->
+    {{-- <div class="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-icon">
+                <span></span>
+                <span></span>
+            </div>
         </div>
+    </div> --}}
+    <!-- /End Preloader -->
 
-    </div>
+    @include('components.pages.navbar')
 
+    @yield('content')
 
+    @include('components.pages.footer')
+
+    <!-- ========================= scroll-top ========================= -->
+    <a href="#" class="scroll-top">
+        <i class="lni lni-chevron-up"></i>
+    </a>
+
+    @include('components.pages.footerJS')
 </body>
 
 </html>

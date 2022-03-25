@@ -1,33 +1,73 @@
-<footer class="container mx-auto bg-white mt-16 border-t border-gray-400">
-    <div class="container flex px-3 py-8 ">
-        <div class="w-full mx-auto flex flex-wrap">
-            <div class="flex w-full lg:w-1/2 ">
-                <div class="px-3 md:px-0">
-                    <h3 class="font-bold text-green-gapoktan">About</h3>
-                    <p class="py-4">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel mi ut felis tempus
-                        commodo nec id erat. Suspendisse consectetur dapibus velit ut lacinia.
-                    </p>
-                </div>
-            </div>
-            <div class="flex w-full lg:w-1/2 lg:justify-end lg:text-right">
-                <div class="px-3 md:px-0">
-                    <h3 class="font-bold text-green-gapoktan">Social</h3>
-                    <ul class="list-reset items-center pt-3">
-                        <li>
-                            <a class="inline-block no-underline hover:underline py-1" href="#">
-                                Add social links
-                            </a>
-                        </li>
-                    </ul>
+<!-- Start Footer Area -->
+<footer class="footer" style="border-top: 1px solid #eee;">
+    <!-- Start Footer Middle -->
+    <div class="footer-middle">
+        <div class="container">
+            <div class="bottom-inner">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <!-- Single Widget -->
+                        <div class="single-footer f-link">
+                            <h3>Ikuti Kami</h3>
+                            <ul>
+                                <li><a href="javascript:void(0)"><i class="lni lni-facebook-filled"></i> Facebook</a>
+                                </li>
+                                <li><a href="javascript:void(0)"><i class="lni lni-instagram"></i> Instagram</a></li>
+                                <li><a href="javascript:void(0)"><i class="lni lni-whatsapp"></i> Whatsapp</a></li>
+                            </ul>
+                        </div>
+                        <!-- End Single Widget -->
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <!-- Single Widget -->
+                        <div class="single-footer f-contact">
+                            <h3>Hubungi Kami</h3>
+                            <p class="phone">Sri Makmur, Desa Krasak</p>
+                            <p class="phone">Kec Jatibarang, Kab Indramayu,</p>
+                            <p class="phone">Provinsi Jawa Barat.</p>
+                            <ul>
+                                <li><span>Senin-Minggu: </span> 24 Jam </li>
+                            </ul>
+                            <p class="mail">
+                                <a href="mailto:support@shopgrids.com">srimakmur@gmail.com</a>
+                            </p>
+                        </div>
+                        <!-- End Single Widget -->
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <!-- Single Widget -->
+                        <div class="single-footer f-link">
+                            <h3>Kategori</h3>
+                            <ul>
+                                <li><a href="javascript:void(0)">Nama Kategori 1</a></li>
+                                <li><a href="javascript:void(0)">Nama Kategori 2</a></li>
+                                <li><a href="javascript:void(0)">Nama Kategori 3</a></li>
+                                <li><a href="javascript:void(0)">Nama Kategori 4</a></li>
+                                <li><a href="javascript:void(0)">Nama Kategori 5</a></li>
+                            </ul>
+                        </div>
+                        <!-- End Single Widget -->
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <!-- Single Widget -->
+                        <div class="single-footer our-app">
+                            <h3>Download Aplikasi Mobile Sri Makmur Shop</h3>
+                            <ul class="app-btn">
+                                <li>
+                                    <a href="javascript:void(0)">
+                                        <i class="lni lni-play-store"></i>
+                                        <span class="small-title">Download di</span>
+                                        <span class="big-title">Google Play</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- End Single Widget -->
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <!-- End Footer Middle -->
 </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/line-clamp@0.3.1/src/index.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/line-clamp@0.3.1/CHANGELOG.md"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/line-clamp@0.3.1/LICENSE"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/line-clamp@0.3.1/package.json"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/line-clamp@0.3.1/README.md"></script>
+<!--/ End Footer Area -->
