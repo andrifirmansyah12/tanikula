@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Activity extends Model
+class Education extends Model
 {
     use HasFactory;
 
@@ -15,11 +15,10 @@ class Activity extends Model
     {
         return $this->belongsTo(User::class);
     }
-    // protected $table = 'activities';
-    // protected $fillable = [
-    //     'name',
-    //     'slug',
-    //     'description',
-    //     'image',
-    // ];
+
+    public function education_category()
+    {
+        return $this->belongsTo(EducationCategory::class);
+    }
+
 }
