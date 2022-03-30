@@ -1,140 +1,298 @@
-@extends('components.pages.edukasi')
-@section('title','Edukasi')
+@extends('pages.template2')
+@section('title', 'Home')
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
+<style>
+    /*===== BLOG STYLE ONE =====*/
+    .blog-edukasi {
+        margin-top: 50px;
+        background-color: beige;
+    }
+
+    .blog-edukasi .blog-image-edukasi {
+        overflow: hidden;
+        border-radius: 8px 8px 0 0;
+        position: relative;
+    }
+
+    .blog-edukasi .blog-image-edukasi .category-edukasi {
+        background-color: beige;
+        color: black;
+        font-size: 13px;
+        padding: 7px 20px;
+        position: absolute;
+        right: 20px;
+        top: 20px;
+        border-radius: 30px;
+    }
+
+    .blog-edukasi .blog-image-edukasi .video-content {
+        position: relative;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .blog-edukasi .blog-image-edukasi .video-content img {
+        border-radius: 8px;
+    }
+
+    .blog-edukasi .blog-image-edukasi .video-content a {
+        text-align: center;
+        background-color: var(--primary);
+        color: beige;
+        font-size: 30px;
+        -webkit-transition: all 0.3s ease-out 0s;
+        -moz-transition: all 0.3s ease-out 0s;
+        -ms-transition: all 0.3s ease-out 0s;
+        -o-transition: all 0.3s ease-out 0s;
+        transition: all 0.3s ease-out 0s;
+        padding-left: 3px;
+    }
+
+    .blog-edukasi .blog-image-edukasi .video-content a:hover {
+        background-color: var(--white);
+        color: var(--primary);
+    }
+
+    .blog-edukasi .blog-image-edukasi img {
+        width: 360px;
+        height: 220px;
+        -o-object-fit: cover;
+        object-fit: cover;
+        -o-object-position: center;
+        object-position: center;
+        -webkit-transition: all 0.2s ease-out 0s;
+        -moz-transition: all 0.2s ease-out 0s;
+        -ms-transition: all 0.2s ease-out 0s;
+        -o-transition: all 0.2s ease-out 0s;
+        transition: all 0.2s ease-out 0s;
+    }
+
+    .blog-edukasi .blog-image-edukasi:hover img {
+        -webkit-transform: rotate(1deg) scale(1.1);
+        -moz-transform: rotate(1deg) scale(1.1);
+        -ms-transform: rotate(1deg) scale(1.1);
+        -o-transform: rotate(1deg) scale(1.1);
+        transform: rotate(1deg) scale(1.1);
+    }
+
+    .blog-edukasi .blog-content-edukasi {
+        padding: 30px;
+        border: 1px solid var(--light-1);
+        border-radius: 0 0 8px 8px;
+        border-top: none;
+    }
+
+    @media (max-width: 767px) {
+        .blog-edukasi .blog-image-edukasi img {
+            width: 440px;
+            height: 220px;
+        }
+    }
+
+    @media only screen and (min-width: 768px) and (max-width: 991px) {
+        .blog-edukasi .blog-content-edukasi {
+            padding: 25px;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .blog-edukasi .blog-content-edukasi {
+            padding: 20px;
+        }
+    }
+
+    .blog-edukasi .blog-content-edukasi .blog-title-edukasi {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .blog-edukasi .blog-content-edukasi .blog-title-edukasi a {
+        font-weight: 600;
+        color: var(--black);
+        -webkit-transition: all 0.3s ease-out 0s;
+        -moz-transition: all 0.3s ease-out 0s;
+        -ms-transition: all 0.3s ease-out 0s;
+        -o-transition: all 0.3s ease-out 0s;
+        transition: all 0.3s ease-out 0s;
+        line-height: 30px;
+    }
+
+    @media (max-width: 767px) {
+        .blog-edukasi .blog-content-edukasi .blog-title-edukasi a {
+            line-height: 24px;
+        }
+    }
+
+    .blog-edukasi .blog-content-edukasi .blog-title-edukasi a:hover {
+        color: var(--primary);
+    }
+
+    .blog-edukasi .blog-content-edukasi span {
+        font-size: 14px;
+        line-height: 20px;
+        color: var(--dark-3);
+        margin-top: 8px;
+        margin-right: 12px;
+        display: inline-block;
+    }
+
+    .blog-edukasi .blog-content-edukasi .text-edukasi {
+        color: var(--dark-3);
+        margin-top: 16px;
+    }
+
+    .blog-edukasi .blog-content-edukasi .more-edukasi {
+        text-transform: uppercase;
+        font-weight: 600;
+        color: var(--primary);
+        margin-top: 30px;
+        display: inline-block;
+    }
+
+    .blog-edukasi .blog-content-edukasi .more-edukasi:hover {
+        color: var(--primary-dark);
+    }
+
+    /*# sourceMappingURL=blog-01.css.map */
+</style>
 
 @section('content')
-
-<!-- component -->
-<div class="pt-12 md:pt-16 flex justify-center items-center">
-    <!--- more free and premium Tailwind CSS components at https://tailwinduikit.com/ --->
-    <div class="2xl:mx-auto 2xl:container py-12 px-4 sm:px-6 xl:px-6 2xl:px-0 w-full">
-        <div class="flex flex-col jusitfy-center items-center space-y-10">
-            <div class="flex flex-col justify-center items-center ">
-                <h1 class="text-3xl xl:text-4xl font-semibold leading-7 xl:leading-9 text-green-gapoktan dark:text-white">
-                    Kategori Edukasi</h1>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 md:gap-x-4 md:gap-x-8 w-full">
-                <div class="relative group flex justify-center items-center h-full w-full">
-                    <img class="object-center object-cover h-96 md:h-full w-full"
-                        src="https://images.unsplash.com/photo-1614157606535-2f3990b919a6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80" alt="semua-kategori" />
-                    <a href="semua-kategori"
-                        class="dark:bg-gray-800 text-center dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 bottom-4 z-10 absolute text-base font-medium leading-none text-gray-800 py-3 w-36 bg-white">Semua Kategori</a>
-                    <div
-                        class="absolute opacity-0 group-hover:opacity-100 transition duration-500 bottom-3 py-6 z-0 px-20 w-36 bg-white bg-opacity-50">
+<!--====== BLOG PART START ======-->
+<section class="blog-area pb-5">
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-lg-8 col-md-12 col-sm-12">
+                <div class="row">
+                    @foreach ($educations as $item)
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="single-blog blog-edukasi">
+                            <div class="blog-image-edukasi">
+                                <a href="javascript:void(0)">
+                                    @php
+                                        $ext = pathinfo($item->file, PATHINFO_EXTENSION)
+                                    @endphp
+                                    @if($ext == 'mp4' || $ext == 'mov' || $ext == 'vob' || $ext == 'mpeg' || $ext == '3gp' || $ext == 'avi' || $ext == 'wmv' || $ext == 'mov' || $ext == 'amv' || $ext == 'svi' || $ext == 'flv' || $ext == 'mkv' || $ext == 'webm' || $ext == 'gif' || $ext == 'asf')
+                                    <div class="video-content text-center">
+                                        <img src="https://cdn.ayroui.com/1.0/images/video/video.png" alt="Video" />
+                                        <a class="video-popup glightbox"
+                                            href="https://www.youtube.com/watch?v=NJbXptdalP0">
+                                            <i class="lni lni-play" style="position: absolute; top: 50%; left: 45%;"></i>
+                                        </a>
+                                    </div>
+                                    @elseif ($ext == 'png' || $ext == 'jpg' || $ext == 'jpeg' || $ext == 'svg' || $ext == 'gif' || $ext == 'tiff' || $ext == 'psd' || $ext == 'pdf' || $ext == 'eps' || $ext == 'ai' || $ext == 'indd' || $ext == 'raw')
+                                        @if ($item->file)
+                                            <img src="{{ asset('../storage/edukasi/' . $item->file) }}" class="img-responsive" alt="Edukasi" />
+                                        @else
+                                            <img src="{{ asset('img/no-image.png') }}" class="img-responsive" alt="Edukasi" />
+                                        @endif
+                                    @endif
+                                </a>
+                                <a href="javascript:void(0)" class="category-edukasi">
+                                    @if (empty($item->education_category->name))
+                                    Tidak ada kategori
+                                    @else
+                                    {{ $item->education_category->name }}
+                                    @endif
+                                </a>
+                            </div>
+                            <div class="blog-content-edukasi">
+                                <h5 class="blog-title-edukasi">
+                                    <a href="javascript:void(0)">
+                                        {{$item->title}}
+                                    </a>
+                                </h5>
+                                <span><i class="lni lni-calendar"></i> {{ date("d F Y", strtotime($item->date))}}</span>
+                                <span><i class="lni lni-user"></i> {{Auth::user()->name}}</span>
+                                <p class="text-edukasi"
+                                    style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; overflow: hidden;">
+                                    {{$item->desc}}
+                                </p>
+                                <a class="more-edukasi" href="javascript:void(0)">Baca Selengkapnya</a>
+                            </div>
+                        </div>
+                        <!-- single blog -->
                     </div>
+                    @endforeach
                 </div>
-
-                <div class="flex flex-col space-y-4 md:space-y-8 mt-4 md:mt-0">
-                    <div class="relative group flex justify-center items-center h-full w-full">
-                        <img class="object-center object-cover h-96 md:h-full w-full"
-                            src="https://images.unsplash.com/photo-1545830790-68595959c491?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=435&q=80"
-                            alt="galeri" />
-                        <a href="galeri"
-                            class="dark:bg-gray-800 text-center dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 bottom-4 z-10 absolute text-base font-medium leading-none text-gray-800 py-3 w-36 bg-white">Galeri</a>
-                        <div
-                            class="absolute opacity-0 group-hover:opacity-100 transition duration-500 bottom-3 py-6 z-0 px-20 w-36 bg-white bg-opacity-50">
+            </div>
+            <div class="col-lg-4 col-md-12 col-sm-12">
+                <div class="card" style="margin-top: 50px">
+                    <div class="card-body my-3">
+                        <p class="card-title fw-bold" style="font-size: 15px;">Pencarian</p>
+                        <div class="pt-2 input-group justify-content-center">
+                            <div class="form-outline">
+                                <input type="search" placeholder="Cari edukasi .." id="form1" class="form-control" />
+                            </div>
+                            <button type="button" class="btn btn-primary">
+                                <i class="bi bi-search"></i>
+                            </button>
                         </div>
                     </div>
-                    <div class="relative group flex justify-center items-center h-full w-full">
-                        <img class="object-center object-cover h-96 md:h-full w-full"
-                            src="https://images.unsplash.com/photo-1492496913980-501348b61469?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
-                            alt="edukasi" />
-                        <a href="edukasi"
-                            class="dark:bg-gray-800 text-center dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 bottom-4 z-10 absolute text-base font-medium leading-none text-gray-800 py-3 w-36 bg-white">Edukasi</a>
-                        <div
-                            class="absolute opacity-0 group-hover:opacity-100 transition duration-500 bottom-3 py-6 z-0 px-20 w-36 bg-white bg-opacity-50">
+                </div>
+                <div class="card" style="margin-top: 30px">
+                    <div class="card-body my-3">
+                        <p class="card-title fw-bold" style="font-size: 15px;">Edukasi Lainnya</p>
+                        <div class="pt-2 border-bottom pb-4">
+                            <div class="row justify-content-center">
+                                <div class="col-4">
+                                    <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/182.webp"
+                                        class="img-fluid" alt="Sunset Over the Sea" width="100px" height="150px" />
+                                </div>
+                                <div class="col-8">
+                                    <p class="card-text pb-2">Some quick example text to build on the card title and
+                                        make up the
+                                        bulk of the card's content.</p>
+                                    <small><i class="lni lni-calendar"></i> 19-September-2022</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pt-2 mt-3 pb-4">
+                            <div class="row justify-content-center">
+                                <div class="col-4">
+                                    <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/182.webp"
+                                        class="img-fluid" alt="Sunset Over the Sea" width="100px" height="150px" />
+                                </div>
+                                <div class="col-8">
+                                    <p class="card-text pb-2">Some quick example text to build on the card title and
+                                        make up the
+                                        bulk of the card's content.</p>
+                                    <small><i class="lni lni-calendar"></i> 19-September-2022</small>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="relative group justify-center items-center h-full w-full hidden lg:flex">
-                    <img class="object-center object-cover h-full w-full"
-                        src="https://images.unsplash.com/photo-1505471768190-275e2ad7b3f9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80" alt="kegiatan" />
-                    <a href="kegiatan"
-                        class="dark:bg-gray-800 text-center dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 bottom-4 z-10 absolute text-base font-medium leading-none text-gray-800 py-3 w-36 bg-white">Kegiatan</a>
-                    <div
-                        class="absolute opacity-0 group-hover:opacity-100 transition duration-500 bottom-3 py-6 z-0 px-20 w-36 bg-white bg-opacity-50">
-                    </div>
-                </div>
-                <div
-                    class="relative group flex justify-center items-center h-full w-full mt-4 md:hidden md:mt-8 lg:hidden">
-                    <img class="object-center object-cover h-96 w-full hidden md:block"
-                        src="https://images.unsplash.com/photo-1505471768190-275e2ad7b3f9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80" alt="kegiatan" />
-                    <img class="object-center object-cover h-96 w-full md:hidden"
-                        src="https://images.unsplash.com/photo-1505471768190-275e2ad7b3f9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
-                        alt="kegiatan" />
-                    <a href="kegiatan"
-                        class="dark:bg-gray-800 text-center dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 bottom-4 z-10 absolute text-base font-medium leading-none text-gray-800 py-3 w-36 bg-white">Accessories</a>
-                    <div
-                        class="absolute opacity-0 group-hover:opacity-100 transition duration-500 bottom-3 py-6 z-0 px-20 w-36 bg-white bg-opacity-50">
+                <div class="card" style="margin-top: 30px">
+                    <div class="card-body my-3">
+                        <p class="card-title fw-bold" style="font-size: 15px;">Kategori Edukasi</p>
+                        <div class="pt-2 row justify-content-between">
+                            <p class="col-lg-6 col-md-5 col-6">Pupuk Organik</p>
+                            <p class="col-lg-6 col-md-5 col-6">Pupuk Organik</p>
+                            <p class="col-lg-6 col-md-5 col-6">Pupuk Organik</p>
+                            <p class="col-lg-6 col-md-5 col-6">Pupuk Organik</p>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="relative group hidden md:flex justify-center items-center h-full w-full mt-4 md:mt-8 lg:hidden">
-                <img class="object-center object-cover h-96 w-full hidden md:block"
-                    src="https://images.unsplash.com/photo-1505471768190-275e2ad7b3f9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80" alt="kegiatan" />
-                <img class="object-center object-cover h-96 w-full sm:hidden"
-                    src="https://images.unsplash.com/photo-1505471768190-275e2ad7b3f9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
-                    alt="kegiatan" />
-                <a href="kegiatan"
-                    class="dark:bg-gray-800 text-center dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 bottom-4 z-10 absolute text-base font-medium leading-none text-gray-800 py-3 w-36 bg-white">Accessories</a>
-                <div
-                    class="absolute opacity-0 group-hover:opacity-100 transition duration-500 bottom-3 py-6 z-0 px-20 w-36 bg-white bg-opacity-50">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-{{-- Banner --}}
-<div class="pb-14">
-    <section class="w-full mx-auto bg-nordic-gray-light flex pt-12 md:pt-0 md:items-center bg-cover bg-right"
-        style="max-width:1600px; height: 32rem; background-image: url('https://images.unsplash.com/photo-1623211270166-bc232d744d6a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80');">
-        <div class="container mx-auto">
-            <div class="flex flex-col w-full lg:w-1/2 justify-center items-start  px-6 tracking-wide">
-                <h1 class="text-white text-2xl my-4">Stripy Zig Zag Jigsaw Pillow and Duvet Set</h1>
-                <a class="text-xl text-white inline-block no-underline leading-relaxed" href="#">products</a>
-            </div>
-        </div>
-    </section>
-</div>
-
-<section class="text-gray-700 body-font">
-    <div class="px-5 pb-7">
-        <p class="text-green-gapoktan w-2xl text-2xl md:text-4xl font-bold">
-            Video
-        </p>
-    </div>
-    <div class="container flex flex-col items-center px-5 mx-auto lg:px-20 md:flex-row">
-        <div class="w-5/6 lg:max-w-lg lg:w-full md:w-1/2 relative">
-            <iframe class="object-left w-full mb-10 lg:object-center rounded-lg " width="360" height="300"
-                src="https://www.youtube.com/embed/ly54wbcLwuM" frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen=""></iframe>
-        </div>
-        <div
-            class="flex flex-col items-center w-full pt-0 mb-0 text-left lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 md:items-start md:text-left md:mb-0 lg:text-center">
-            <h2 class="mb-1 text-xs font-medium tracking-widest text-indigo-600 title-font">
-                Selasa 28 Januari 2022
-            </h2>
-            <h1
-                class="mb-8 text-2xl font-bold tracking-tighter text-green-gapoktan text-center bg-clip-text lg:text-left lg:text-7xl title-font">
-                Kenapa harus pupuk organik?
-            </h1>
-            <div class="flex justify-center">
-                <a href="#"
-                    class="inline-flex items-center font-semibold text-indigo-700 md:mb-2 lg:mb-0 hover:text-blue-400 ">
-                    Learn More
-                    <svg class="w-4 h-4 ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20"
-                        height="20" fill="currentColor">
-                        <path fill="none" d="M0 0h24v24H0z"></path>
-                        <path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z">
-                        </path>
-                    </svg>
-                </a>
-            </div>
         </div>
 
+        <!-- row -->
     </div>
+    <!-- container -->
 </section>
+<!--====== BLOG PART ENDS ======-->
 
+<script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
+
+<script>
+    //========= glightbox
+    const videoTwo = GLightbox({
+        selector: ".glightbox",
+        type: "video",
+        source: "youtube", //vimeo, youtube or local
+        width: 900,
+        autoplayVideos: true,
+    });
+</script>
 @endsection

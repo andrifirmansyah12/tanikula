@@ -15,7 +15,6 @@
             </div>
 
             <div class="section-body">
-                <h2 class="section-title">@yield('title')</h2>
                 <div class="card">
                     <div class="mt-4 card-body row align-items-center justify-content-center">
                         <div class="col-12 col-sm-6 col-lg-5">

@@ -9,19 +9,27 @@
             {{-- Navbar --}}
             @include('components.petani.navbar')
 
-            {{-- Sidebar --}}
-            @include('components.petani.sidebar')
+
+            <div class="main-sidebar">
+
+                {{-- Sidebar --}}
+                @include('components.petani.sidebar')
+
+
+            </div>
 
             @yield('content')
 
-            {{-- FooterJS --}}
+            {{-- Footer --}}
             @include('components.petani.footer')
+
 
         </div>
     </div>
 
-    {{-- FooterJS --}}
+    {{-- Footer JS --}}
     @include('components.petani.footerJS')
+
 
 </body>
 

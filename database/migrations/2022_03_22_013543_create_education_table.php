@@ -16,7 +16,7 @@ class CreateEducationTable extends Migration
         Schema::create('education', function (Blueprint $table) {
             $table->id();
             $table->foreignId("user_id")->nullable();
-            $table->foreignId("category_education_id")->nullable();
+            $table->foreignId("education_category_id")->nullable();
             $table->string("title")->nullable();
             $table->string("slug")->unique();
             $table->dateTime("date")->nullable();

@@ -9,19 +9,27 @@
             {{-- Navbar --}}
             @include('components.poktan.navbar')
 
-            {{-- Sidebar --}}
-            @include('components.poktan.sidebar')
+
+            <div class="main-sidebar">
+
+                {{-- Sidebar --}}
+                @include('components.poktan.sidebar')
+
+
+            </div>
 
             @yield('content')
 
-            {{-- FooterJS --}}
+            {{-- Footer --}}
             @include('components.poktan.footer')
+
 
         </div>
     </div>
 
-    {{-- FooterJS --}}
+    {{-- Footer JS --}}
     @include('components.poktan.footerJS')
+
 
 </body>
 

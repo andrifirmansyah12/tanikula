@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class Education extends Model
 {
-    use HasFactory;
+    use Sluggable, HasFactory;
 
     protected $guarded = ['id'];
 
@@ -19,6 +20,20 @@ class Education extends Model
     public function education_category()
     {
         return $this->belongsTo(EducationCategory::class);
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
     }
 
 }

@@ -14,7 +14,9 @@
     <link rel="stylesheet" href="{{ asset('shoping/assets/css/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('shoping/assets/css/LineIcons.3.0.css') }}" />
     <link rel="stylesheet" href="{{ asset('shoping/assets/css/tiny-slider.css') }}" />
+    <link rel='stylesheet'
+        href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css' />
     <link rel="stylesheet" href="{{ asset('shoping/assets/css/glightbox.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('shoping/assets/css/main.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}" />
 
 </head>
