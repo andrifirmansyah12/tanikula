@@ -6,7 +6,7 @@
     /*===== BLOG STYLE ONE =====*/
     .blog-edukasi {
         margin-top: 50px;
-        background-color: beige;
+        /* background-color: beige; */
     }
 
     .blog-edukasi .blog-image-edukasi {
@@ -55,7 +55,7 @@
     }
 
     .blog-edukasi .blog-image-edukasi img {
-        width: 360px;
+        width: 354px;
         height: 220px;
         -o-object-fit: cover;
         object-fit: cover;
@@ -166,7 +166,7 @@
                 <div class="row">
                     @foreach ($educations as $item)
                     <div class="col-lg-6 col-md-6 col-sm-12">
-                        <div class="single-blog blog-edukasi">
+                        <div class="single-blog blog-edukasi border">
                             <div class="blog-image-edukasi">
                                 <a href="javascript:void(0)">
                                     @php
@@ -203,7 +203,12 @@
                                     </a>
                                 </h5>
                                 <span><i class="lni lni-calendar"></i> {{ date("d F Y", strtotime($item->date))}}</span>
-                                <span><i class="lni lni-user"></i> {{Auth::user()->name}}</span>
+                                <span><i class="lni lni-user"></i> @if (empty($item->user->name))
+                                        Tidak ada author
+                                    @else
+                                        {{$item->user->name}}
+                                    @endif
+                                </span>
                                 <p class="text-edukasi"
                                     style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; overflow: hidden;">
                                     {{$item->desc}}
@@ -214,6 +219,9 @@
                         <!-- single blog -->
                     </div>
                     @endforeach
+                </div>
+                <div class="d-flex">
+                    {!! $educations->appends(['sort' => 'department'])->links() !!}
                 </div>
             </div>
             <div class="col-lg-4 col-md-12 col-sm-12">

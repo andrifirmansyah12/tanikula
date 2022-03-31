@@ -10,7 +10,7 @@ use App\Models\EducationCategory;
 class EducationController extends Controller
 {
     public function index() {
-		$educations = Education::with('education_category')->get();
+		$educations = Education::with('education_category', 'user')->paginate(6)->withQueryString();
 		return view('pages.edukasi.index', compact('educations'));
 	}
 
