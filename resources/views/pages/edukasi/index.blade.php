@@ -7,12 +7,14 @@
     .blog-edukasi {
         margin-top: 50px;
         /* background-color: beige; */
+        height: 32rem;
+        border-radius: 10px;
     }
 
     .blog-edukasi .blog-image-edukasi {
         overflow: hidden;
-        border-radius: 8px 8px 0 0;
         position: relative;
+        border-radius: 10px 10px 0 0;
     }
 
     .blog-edukasi .blog-image-edukasi .category-edukasi {
@@ -28,12 +30,12 @@
 
     .blog-edukasi .blog-image-edukasi .video-content {
         position: relative;
-        border-radius: 8px;
+        border-radius: 10px 10px 0 0;
         overflow: hidden;
     }
 
     .blog-edukasi .blog-image-edukasi .video-content img {
-        border-radius: 8px;
+        border-radius: 10px 10px 0 0;
     }
 
     .blog-edukasi .blog-image-edukasi .video-content a {
@@ -46,7 +48,6 @@
         -ms-transition: all 0.3s ease-out 0s;
         -o-transition: all 0.3s ease-out 0s;
         transition: all 0.3s ease-out 0s;
-        padding-left: 3px;
     }
 
     .blog-edukasi .blog-image-edukasi .video-content a:hover {
@@ -85,7 +86,7 @@
 
     @media (max-width: 767px) {
         .blog-edukasi .blog-image-edukasi img {
-            width: 440px;
+            width: 424px;
             height: 220px;
         }
     }
@@ -176,7 +177,7 @@
                                     <div class="video-content text-center">
                                         <img src="https://cdn.ayroui.com/1.0/images/video/video.png" alt="Video" />
                                         <a class="video-popup glightbox"
-                                            href="https://www.youtube.com/watch?v=NJbXptdalP0">
+                                            href="{{ asset('../storage/edukasi/' . $item->file) }}">
                                             <i class="lni lni-play" style="position: absolute; top: 50%; left: 45%;"></i>
                                         </a>
                                     </div>
@@ -198,7 +199,7 @@
                             </div>
                             <div class="blog-content-edukasi">
                                 <h5 class="blog-title-edukasi">
-                                    <a href="javascript:void(0)">
+                                    <a href="javascript:void(0)" style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">
                                         {{$item->title}}
                                     </a>
                                 </h5>
@@ -210,7 +211,7 @@
                                     @endif
                                 </span>
                                 <p class="text-edukasi"
-                                    style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; overflow: hidden;">
+                                    style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;">
                                     {{$item->desc}}
                                 </p>
                                 <a class="more-edukasi" href="javascript:void(0)">Baca Selengkapnya</a>
@@ -241,44 +242,29 @@
                 <div class="card" style="margin-top: 30px">
                     <div class="card-body my-3">
                         <p class="card-title fw-bold" style="font-size: 15px;">Edukasi Lainnya</p>
-                        <div class="pt-2 border-bottom pb-4">
+                        @foreach ($educationsMore as $item)
+                        <div class="pt-2 border-bottom mt-3 pb-4">
                             <div class="row justify-content-center">
                                 <div class="col-4">
                                     <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/182.webp"
                                         class="img-fluid" alt="Sunset Over the Sea" width="100px" height="150px" />
                                 </div>
                                 <div class="col-8">
-                                    <p class="card-text pb-2">Some quick example text to build on the card title and
-                                        make up the
-                                        bulk of the card's content.</p>
+                                    <p class="card-text pb-2">{{$item->title}}</p>
                                     <small><i class="lni lni-calendar"></i> 19-September-2022</small>
                                 </div>
                             </div>
                         </div>
-                        <div class="pt-2 mt-3 pb-4">
-                            <div class="row justify-content-center">
-                                <div class="col-4">
-                                    <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/182.webp"
-                                        class="img-fluid" alt="Sunset Over the Sea" width="100px" height="150px" />
-                                </div>
-                                <div class="col-8">
-                                    <p class="card-text pb-2">Some quick example text to build on the card title and
-                                        make up the
-                                        bulk of the card's content.</p>
-                                    <small><i class="lni lni-calendar"></i> 19-September-2022</small>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
                 <div class="card" style="margin-top: 30px">
                     <div class="card-body my-3">
                         <p class="card-title fw-bold" style="font-size: 15px;">Kategori Edukasi</p>
-                        <div class="pt-2 row justify-content-between">
-                            <p class="col-lg-6 col-md-5 col-6">Pupuk Organik</p>
-                            <p class="col-lg-6 col-md-5 col-6">Pupuk Organik</p>
-                            <p class="col-lg-6 col-md-5 col-6">Pupuk Organik</p>
-                            <p class="col-lg-6 col-md-5 col-6">Pupuk Organik</p>
+                        <div class="pt-2 row">
+                            @foreach ($categories as $item)
+                                <a href="" style="color: var(--primary);"><p>{{$item->name}}</p></a>
+                            @endforeach
                         </div>
                     </div>
                 </div>

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Gapoktan;
+namespace App\Http\Controllers\Poktan;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -14,7 +14,7 @@ class EducationController extends Controller
     // set index page view
 	public function index() {
 		$category = EducationCategory::all();
-		return view('gapoktan.edukasi.index', compact('category'));
+		return view('poktan.edukasi.index', compact('category'));
 	}
 
     // handle fetch all eamployees ajax request
@@ -135,5 +135,4 @@ class EducationController extends Controller
         $slug = SlugService::createSlug(Education::class, 'slug', $request->title);
         return response()->json(['slug' => $slug]);
     }
-
 }
