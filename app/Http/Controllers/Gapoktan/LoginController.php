@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Pembeli;
+namespace App\Http\Controllers\Gapoktan;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -12,10 +12,10 @@ use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
     public function login() {
-        return view('costumer.login.index');
+        return view('gapoktan.login.index');
     }
 
-    public function loginPembeli(Request $request) {
+    public function loginSrimakmur(Request $request) {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email|max:100',
             'password' => 'required|min:6|max:50',
@@ -36,16 +36,32 @@ class LoginController extends Controller
             if($user){
                 if(Hash::check($request->password, $user->password)) {
                     if (auth()->attempt($credentials)) {
-                        if (auth()->check() && $user->hasRole('pembeli')) {
+                        if (auth()->check() && $user->hasRole('gapoktan')) {
+                            $gapoktan = $user->hasRole('gapoktan');
                             return response()->json([
                                 'status' => 200,
-                                'messages' => 'success'
+                                'messages' => 'success',
+                                'gapoktan' => 'gapoktan'
+                            ]);
+                        } else if (auth()->check() && $user->hasRole('poktan')) {
+                            $poktan = $user->hasRole('poktan');
+                            return response()->json([
+                                'status' => 200,
+                                'messages' => 'success',
+                                'poktan' => 'poktan'
+                            ]);
+                        } else if (auth()->check() && $user->hasRole('petani')) {
+                            $petani = $user->hasRole('petani');
+                            return response()->json([
+                                'status' => 200,
+                                'messages' => 'success',
+                                'petani' => 'petani'
                             ]);
                         } else {
                             \Auth::logout();
                             return response()->json([
                                 'status' => 401,
-                                'messages' => 'Hak akses hanya untuk pembeli!'
+                                'messages' => 'Hak akses untuk Gapoktan, Poktan dan Petani!'
                             ]);
                         }
                     } else {
@@ -69,7 +85,7 @@ class LoginController extends Controller
         }
     }
 
-    public function registerPembeli(Request $request) {
+    public function registerSrimakmur(Request $request) {
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:50',
             'email' => 'required|email|unique:users|max:100',
@@ -107,18 +123,9 @@ class LoginController extends Controller
         return view('costumer.register.index');
     }
 
-    public function forgotPassword() {
-        return view('costumer.login.forgot');
-    }
-
-    public function resetPassword() {
-        return view('costumer.login.reset');
-    }
-
     public function logout(Request $request) {
         Auth::logout();
 
         return redirect()->route('home');
     }
-
 }

@@ -222,11 +222,11 @@
                     <i class="fas fa-cog"></i> Pengaturan
                 </a>
                 <div class="dropdown-divider"></div>
-                <a href="{{ route('logout') }}" class="dropdown-item has-icon text-danger" onclick="event.preventDefault();
+                <a href="{{ route('logout-srimakmur') }}" class="dropdown-item has-icon text-danger" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                     <i class="fas fa-sign-out-alt"></i> Keluar
 
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    <form id="logout-form" action="{{ route('logout-srimakmur') }}" method="POST" class="d-none">
                         @csrf
                     </form>
                 </a>

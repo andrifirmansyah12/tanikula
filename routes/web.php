@@ -23,7 +23,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function() {
 });
 
 // Gapoktan
-Route::group(['middleware' => ['auth', 'role:gapoktan']], function() {
+Route::group(['middleware' => ['LoginCheck', 'auth', 'role:gapoktan']], function() {
 
     Route::get('gapoktan', function() {
         return view('gapoktan.dashboard.index');
@@ -70,7 +70,7 @@ Route::group(['middleware' => ['auth', 'role:gapoktan']], function() {
 });
 
 // Poktan
-Route::group(['middleware' => ['auth', 'role:poktan']], function() {
+Route::group(['middleware' => ['LoginCheck', 'auth', 'role:poktan']], function() {
 
     Route::get('poktan', function() {
         return view('poktan.dashboard.index');
@@ -89,7 +89,7 @@ Route::group(['middleware' => ['auth', 'role:poktan']], function() {
 });
 
 // Petani
-Route::group(['middleware' => ['auth', 'role:petani']], function() {
+Route::group(['middleware' => ['LoginCheck', 'auth', 'role:petani']], function() {
 
     Route::get('petani', function() {
         return view('petani.dashboard.index');
@@ -114,6 +114,7 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function(
 
 });
 
+// Login Pembeli
 route::get('/login', [App\Http\Controllers\Pembeli\LoginController::class, 'login'])->name('login');
 route::post('/login', [App\Http\Controllers\Pembeli\LoginController::class, 'loginPembeli'])->name('loginPembeli-pembeli');
 route::get('/register', [App\Http\Controllers\Pembeli\LoginController::class, 'register'])->name('register-pembeli');
@@ -121,6 +122,13 @@ route::post('/register', [App\Http\Controllers\Pembeli\LoginController::class, '
 route::get('/forgot-password', [App\Http\Controllers\Pembeli\LoginController::class, 'forgotPassword'])->name('forgotPassword-pembeli');
 route::get('/reset-password', [App\Http\Controllers\Pembeli\LoginController::class, 'resetPassword'])->name('resetPassword-pembeli');
 route::post('/logout', [App\Http\Controllers\Pembeli\LoginController::class, 'logout'])->name('logout');
+
+// Login Gapoktan Poktan dan Petani
+route::get('/login-srimakmur', [App\Http\Controllers\Gapoktan\LoginController::class, 'login'])->name('login-srimakmur');
+route::post('/login-srimakmur', [App\Http\Controllers\Gapoktan\LoginController::class, 'loginSrimakmur'])->name('login-srimakmur');
+route::get('/register-srimakmur', [App\Http\Controllers\Gapoktan\LoginController::class, 'register'])->name('register-srimakmur');
+route::post('/register-srimakmur', [App\Http\Controllers\Gapoktan\LoginController::class, 'registerSrimakmur'])->name('registerSrimakmur-srimakmur');
+route::post('/logout-srimakmur', [App\Http\Controllers\Gapoktan\LoginController::class, 'logout'])->name('logout-srimakmur');
 
 // Edukasi Page
 Route::get('/edukasi', [App\Http\Controllers\Pages\EducationController::class, 'index']);

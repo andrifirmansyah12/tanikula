@@ -10,8 +10,7 @@
                 <h1>@yield('title')</h1>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                    <div class="breadcrumb-item"><a href="#">Bootstrap Components</a></div>
-                    <div class="breadcrumb-item">@yield('title')</div>
+                    <div class="breadcrumb-item"><a href="#">@yield('title')</a></div>
                 </div>
             </div>
 
@@ -50,8 +49,8 @@
                                             </div>
                                             <div class="card-body">
                                                 <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" id="customFile">
-                                                    <label class="custom-file-label" for="customFile">Choose file</label>
+                                                    <input type="file" class="custom-file-input" id="image" name="image">
+                                                <label class="custom-file-label" for="image">Choose file</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -59,44 +58,57 @@
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-7">
                                     <div class="">
-                                        <form method="post" class="needs-validation" novalidate="">
+                                        <form method="post" action="#" id="profile_form">
+                                        @csrf
                                             <div class="card-header">
                                                 <h4>Ubah Biodata Diri</h4>
                                             </div>
                                             <div class="card-body">
                                                 <div class="row">
                                                     <div class="form-group col-md-12 col-12">
-                                                        <label>Nama</label>
-                                                        <input type="text" class="form-control" value="Ujang" required="">
+                                                        <label for="name">Nama</label>
+                                                        <input type="text" class="form-control" name="name" id="name" value="{{ Auth::user()->name }}" required="">
                                                         <div class="invalid-feedback">
-                                                            Please fill in the first name
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="form-group col-md-12 col-12">
-                                                        <label>Email</label>
-                                                        <input type="email" class="form-control" value="ujang@maman.com"
+                                                        <label for="email">Email</label>
+                                                        <input type="email" class="form-control" id="email" name="email" value="{{ Auth::user()->email }}"
                                                             required="">
                                                         <div class="invalid-feedback">
-                                                            Please fill in the email
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-md-12 col-12">
+                                                        <label for="telp">No Handphone</label>
+                                                        <input type="tel" class="form-control" id="telp" name="telp" value="0"
+                                                            required="">
+                                                        <div class="invalid-feedback">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="form-group col-md-7 col-12">
-                                                        <label>Tanggal Lahir</label>
-                                                        <input type="tel" class="form-control"
-                                                            value="Kamis 23 - januari - 2021">
+                                                        <label for="birth">Tanggal Lahir</label>
+                                                        <input type="date" name="birth" id="birth" class="form-control" value="Kamis 23 - januari - 2021">
                                                     </div>
                                                     <div class="form-group col-md-5 col-12">
-                                                        <label>Jenis Kelamin</label>
-                                                        <input type="tel" class="form-control" value="Laki-laki">
+                                                        <label for="gender">Jenis Kelamin</label>
+                                                        <select name="gender" id="gender" class="form-control select2">
+                                                            <option value="" selected disabled>Pilih Jenis Kelamin</option>
+                                                            <option value="Laki-laki">Laki-Laki</option>
+                                                            <option value="Perempuan">Perempuan</option>
+                                                            {{-- <option value="Laki-laki" {{ Auth::user()->gender == 'Laki-laki' ? 'selected' : '' }}>Laki-Laki</option>
+                                                            <option value="Perempuan" {{ Auth::user()->gender == 'Perempuan' ? 'selected' : '' }}>Perempuan</option> --}}
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="card-footer text-right">
-                                                <button class="btn btn-primary">Save Changes</button>
+                                                <input type="submit" id="profile_btn" value="Update Biodata Diri" class="btn btn-primary">
                                             </div>
                                         </form>
                                     </div>
