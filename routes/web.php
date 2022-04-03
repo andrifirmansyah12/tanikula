@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+// use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -98,7 +98,7 @@ Route::group(['middleware' => ['auth', 'role:petani']], function() {
 });
 
 // Pembeli
-Route::group(['middleware' => ['auth', 'role:pembeli']], function() {
+Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function() {
 
     Route::get('pembeli', function() {
         return view('costumer.pengaturan.index');
@@ -114,6 +114,13 @@ Route::group(['middleware' => ['auth', 'role:pembeli']], function() {
 
 });
 
+route::get('/login', [App\Http\Controllers\Pembeli\LoginController::class, 'login'])->name('login');
+route::post('/login', [App\Http\Controllers\Pembeli\LoginController::class, 'loginPembeli'])->name('loginPembeli-pembeli');
+route::get('/register', [App\Http\Controllers\Pembeli\LoginController::class, 'register'])->name('register-pembeli');
+route::post('/register', [App\Http\Controllers\Pembeli\LoginController::class, 'registerPembeli'])->name('registerPembeli-pembeli');
+route::get('/forgot-password', [App\Http\Controllers\Pembeli\LoginController::class, 'forgotPassword'])->name('forgotPassword-pembeli');
+route::get('/reset-password', [App\Http\Controllers\Pembeli\LoginController::class, 'resetPassword'])->name('resetPassword-pembeli');
+route::post('/logout', [App\Http\Controllers\Pembeli\LoginController::class, 'logout'])->name('logout');
 
 // Edukasi Page
 Route::get('/edukasi', [App\Http\Controllers\Pages\EducationController::class, 'index']);
@@ -121,11 +128,11 @@ Route::get('/edukasi/{blog:slug}', [App\Http\Controllers\Pages\EducationControll
 
 Route::get('/', function () {
     return view('pages.home.index');
-})->name('market');
+})->name('home');
 
 Route::get('/home', function () {
     return view('pages.home.index');
-})->name('market');
+})->name('home');
 
 Route::get('/detail', function () {
     return view('pages.home.detail');
@@ -155,6 +162,6 @@ Route::get('/galeri', function () {
     return view('pages.edukasi.gallery');
 });
 
-Auth::routes();
+// Auth::routes();
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

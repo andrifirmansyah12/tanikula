@@ -54,6 +54,7 @@ class Kernel extends HttpKernel
      * @var array<string, class-string|string>
      */
     protected $routeMiddleware = [
+        'LoginCheck' => \App\Http\Middleware\LoginCheck::class,
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
         'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
         'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
