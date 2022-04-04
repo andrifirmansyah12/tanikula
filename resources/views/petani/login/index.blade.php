@@ -47,6 +47,11 @@
                             <div class="form-group">
                                 <div class="d-block">
                                     <label for="password" class="control-label">Password</label>
+                                    <div class="float-right">
+                                        <a href="{{ route('forgotPassword-pembeli') }}" class="text-small">
+                                            Lupa Password?
+                                        </a>
+                                    </div>
                                 </div>
                                 <input id="password" type="password" class="form-control" name="password" placeholder="Password">
                                 <div class="invalid-feedback">

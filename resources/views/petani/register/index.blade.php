@@ -30,7 +30,7 @@
                         <div class="">
                             <h4>Daftar</h4>
                             <div class="">
-                                Sudah punya akun? <a href="{{ route('login-srimakmur') }}">Masuk</a>
+                                Sudah punya akun? <a href="{{ route('login') }}">Masuk</a>
                             </div>
                         </div>
                     </div>
@@ -107,7 +107,7 @@
             $("#register_btn").val('Silahkan Tunggu...');
             $("#register_btn").prop('disabled', true);
             $.ajax({
-                url: '',
+                url: '{{ route('registerPembeli-pembeli') }}',
                 method: 'POST',
                 data: $(this).serialize(),
                 dataType: 'json',

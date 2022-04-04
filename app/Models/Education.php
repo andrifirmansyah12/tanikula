@@ -27,7 +27,7 @@ class Education extends Model
         return 'slug';
     }
 
-    public function sluggable(): array
+    public function sluggable()
     {
         return [
             'slug' => [

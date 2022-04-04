@@ -17,7 +17,7 @@ class EducationCategory extends Model
         return $this->hasMany(Education::class);
     }
 
-    public function sluggable(): array
+    public function sluggable()
     {
         return [
             'slug' => [

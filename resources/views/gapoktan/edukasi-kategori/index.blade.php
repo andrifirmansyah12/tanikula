@@ -62,11 +62,11 @@
                         <div class="row">
                             <div class="col-lg">
                                 <label for="name">Nama</label>
-                                <input type="text" name="name" id="nameCheck" class="form-control" placeholder="Nama" required>
+                                <input type="text" name="name" class="nameCheck form-control" placeholder="Nama" required>
                             </div>
                             <div class="col-lg">
                                 <label for="slug">Slug</label>
-                                <input type="text" name="slug" id="slugCheck" class="form-control" placeholder="Slug" readonly required>
+                                <input disabled type="text" name="slug" class="slugCheck form-control" placeholder="Slug" readonly required>
                             </div>
                         </div>
                     </div>
@@ -96,11 +96,11 @@
                         <div class="row">
                             <div class="col-lg">
                                 <label for="name">Nama</label>
-                                <input type="text" name="name" id="name" class="form-control" placeholder="Nama" required>
+                                <input type="text" name="name" id="name" class="form-control nameCheck" placeholder="Nama" required>
                             </div>
                             <div class="col-lg">
                                 <label for="slug">Slug</label>
-                                <input type="text" name="slug" id="slug" class="form-control" placeholder="Slug" required>
+                                <input disabled type="text" name="slug" id="slug" class="form-control slugCheck" placeholder="Slug" required>
                             </div>
                         </div>
                     </div>
@@ -135,13 +135,13 @@
 
     <!-- JAVASCRIPT -->
     <script>
-        const name = document.querySelector('#nameCheck');
-        const slug = document.querySelector('#slugCheck');
-
-        name.addEventListener('change', function() {
-            fetch('/gapoktan/kategori-edukasi/checkSlug?name=' + name.value)
-                .then(response => response.json())
-                .then(data => slug.value = data.slug)
+        $('.nameCheck').change(function(e) {
+            $.get('{{ route('gapoktan-kategoriEdukasi-checkSlug') }}',
+            { 'name': $(this).val() },
+                function( data ) {
+                    $('.slugCheck').val(data.slug);
+                }
+            );
         });
 
         //CSRF TOKEN PADA HEADER

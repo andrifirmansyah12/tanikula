@@ -88,7 +88,12 @@ class EducationCategoryController extends Controller
 
     public function checkSlug(Request $request)
     {
+        // Old version: without uniqueness
+        $slug = $request->name;
+
+        // New version: to generate unique slugs
         $slug = SlugService::createSlug(EducationCategory::class, 'slug', $request->name);
+
         return response()->json(['slug' => $slug]);
     }
 }
