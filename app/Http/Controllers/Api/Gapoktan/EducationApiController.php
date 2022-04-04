@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api\Gapoktan;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Gapoktan\EducationResource;
 use App\Models\Education;
+use App\Models\EducationCategory;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -16,23 +18,14 @@ class EducationApiController extends Controller
         $data = Education::latest()->get();
         return response()->json([EducationResource::collection($data), 'Data fetched.']);
     }
- 
-    public function create()
-    {
-        
-    }
-
    
     public function store(Request $request)
     {
          $validator = Validator::make($request->all(),[
-            // 'user_id' => 'required',
+            'user_id' => 'required',
             'category_education_id' => 'required',
             'title' => 'required',
-            'slug' => 'required',
-            // 'date' => 'required',
             'file' => 'required',
-            // 'name' => 'required|string|max:255',
             'desc' => 'required'
         ]);
 
@@ -45,7 +38,7 @@ class EducationApiController extends Controller
             'category_education_id' => $request->category_education_id,
             'title' => $request->title,
             'slug' => Str::slug($request->title),
-            'date' => $request->date,
+            'date' => Carbon::now()->format('Y-m-d H:i:s'),
             'file' => $request->file,
             'desc' => $request->desc,
          ]);
@@ -63,23 +56,13 @@ class EducationApiController extends Controller
         return response()->json([new EducationResource($data)]);
     }
 
-   
-    public function edit($id)
-    {
-        //
-    }
-
   
     public function update(Request $request, $id)
     {
          $validator = Validator::make($request->all(),[
-              // 'user_id' => 'required',
             'category_education_id' => 'required',
             'title' => 'required',
-            // 'slug' => 'required',
-            // 'date' => 'required',
             'file' => 'required',
-            // 'name' => 'required|string|max:255',
             'desc' => 'required'
         ]);
 
@@ -94,22 +77,12 @@ class EducationApiController extends Controller
             'category_education_id' => $request->category_education_id,
             'title' => $request->title,
             'slug' => Str::slug($request->title),
-            'date' => $request->date,
             'file' => $request->file,
             'desc' => $request->desc,
-            // 'slug' => Str::slug($request->title)
         ]);
        
         $data->update();
         
         return response()->json(['Data updated successfully.', new EducationResource($data)]);
-    }
- 
-    public function destroy($id)
-    {
-        $data = Education::findOrFail($id);
-        $data->delete();
-
-        return response()->json('Program deleted successfully');
     }
 }

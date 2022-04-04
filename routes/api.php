@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\Gapoktan\EducationApiController;
+use App\Http\Controllers\Api\Gapoktan\EducationCategoryApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,3 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::resource('education', EducationApiController::class);
+Route::resource('education-category', EducationCategoryApiController::class);

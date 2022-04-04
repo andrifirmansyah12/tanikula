@@ -23,7 +23,13 @@ class EducationCategorySeeder extends Seeder
                 "slug" => "pupuk-organik",
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            ]
+            ],
+             [
+                "name" => "Olahan Buah",
+                "slug" => "olahan-buah",
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            ],
         ];
 
         EducationCategory::insert($datas);
