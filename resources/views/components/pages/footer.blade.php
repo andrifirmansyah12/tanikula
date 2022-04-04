@@ -25,9 +25,9 @@
                             <p class="phone">Sri Makmur, Desa Krasak</p>
                             <p class="phone">Kec Jatibarang, Kab Indramayu,</p>
                             <p class="phone">Provinsi Jawa Barat.</p>
-                            <ul>
+                            {{-- <ul>
                                 <li><span>Senin-Minggu: </span> 24 Jam </li>
-                            </ul>
+                            </ul> --}}
                             <p class="mail">
                                 <a href="mailto:support@shopgrids.com">srimakmur@gmail.com</a>
                             </p>

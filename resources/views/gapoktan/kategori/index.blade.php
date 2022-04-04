@@ -25,8 +25,6 @@
             </div>
 
             <div class="section-body">
-                <h2 class="section-title">@yield('title')</h2>
-
                 <div class="row">
                     <div class="col-12">
                         <div class="card">

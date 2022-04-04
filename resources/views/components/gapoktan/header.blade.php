@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>General Dashboard &mdash; Stisla</title>
+    <title>Gapoktan | @yield('title')</title>
 
     @yield('style')
 
@@ -22,6 +22,6 @@
     <link rel="stylesheet" href="../node_modules/summernote/dist/summernote-bs4.css"> --}}
 
     <!-- Template CSS -->
-    <link rel="stylesheet" href="{{ asset('stisla/assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('stisla/assets/css/components.css') }}">
 </head>

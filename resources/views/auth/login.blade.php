@@ -228,7 +228,7 @@ Register
         integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
     <!-- Template CSS -->
-    <link rel="stylesheet" href="{{ asset('stisla/assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('stisla/assets/css/components.css') }}">
 </head>
 
@@ -274,7 +274,7 @@ Register
                                             <label for="password" class="control-label">Password</label>
                                             <div class="float-right">
                                                 <a href="{{ route('password.request') }}" class="text-small">
-                                                    Forgot Password?
+                                                    Lupa Password?
                                                 </a>
                                             </div>
                                         </div>

@@ -18,6 +18,10 @@
         </li>
         <li class="menu-header">Manajemen</li>
         <li class="nav-item dropdown">
+            <a href="{{ url('gapoktan/kategori-edukasi') }}" class="nav-link "><i class=""></i>
+                <span>Kategori Edukasi</span></a>
+        </li>
+        <li class="nav-item dropdown">
             <a href="{{ url('gapoktan/edukasi') }}" class="nav-link "><i class=""></i>
                 <span>Edukasi</span></a>
         </li>
@@ -26,12 +30,12 @@
                 <span>Kegiatan</span></a>
         </li>
         <li class="nav-item dropdown">
-            <a href="{{ url('gapoktan/produk') }}" class="nav-link "><i class=""></i>
-                <span>Produk</span></a>
-        </li>
-        <li class="nav-item dropdown">
             <a href="{{ url('gapoktan/kategori-produk') }}" class="nav-link "><i class=""></i>
                 <span>Kategori Produk</span></a>
+        </li>
+        <li class="nav-item dropdown">
+            <a href="{{ url('gapoktan/produk') }}" class="nav-link "><i class=""></i>
+                <span>Produk</span></a>
         </li>
         <li class="menu-header">Laporan</li>
         <li class="nav-item dropdown">
