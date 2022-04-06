@@ -1,18 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Gapoktan;
+namespace App\Http\Controllers\Poktan;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
     public function login() {
-        return view('gapoktan.login.index');
+        return view('poktan.login.index');
     }
 
     public function loginSrimakmur(Request $request) {
@@ -36,32 +32,16 @@ class LoginController extends Controller
             if($user){
                 if(Hash::check($request->password, $user->password)) {
                     if (auth()->attempt($credentials)) {
-                        if (auth()->check() && $user->hasRole('gapoktan')) {
-                            $gapoktan = $user->hasRole('gapoktan');
+                        if (auth()->check() && $user->hasRole('poktan')) {
                             return response()->json([
                                 'status' => 200,
                                 'messages' => 'success',
-                                'gapoktan' => 'gapoktan'
-                            ]);
-                        } else if (auth()->check() && $user->hasRole('poktan')) {
-                            $poktan = $user->hasRole('poktan');
-                            return response()->json([
-                                'status' => 200,
-                                'messages' => 'success',
-                                'poktan' => 'poktan'
-                            ]);
-                        } else if (auth()->check() && $user->hasRole('petani')) {
-                            $petani = $user->hasRole('petani');
-                            return response()->json([
-                                'status' => 200,
-                                'messages' => 'success',
-                                'petani' => 'petani'
                             ]);
                         } else {
                             \Auth::logout();
                             return response()->json([
                                 'status' => 401,
-                                'messages' => 'Hak akses untuk Gapoktan, Poktan dan Petani!'
+                                'messages' => 'Hak akses untuk Poktan!'
                             ]);
                         }
                     } else {
@@ -110,7 +90,7 @@ class LoginController extends Controller
             $user->name = $request->name;
             $user->email = $request->email;
             $user->password = Hash::make($request->password);
-            $user->assignRole('pembeli');
+            $user->assignRole('poktan');
             $user->save();
             return response()->json([
                 'status' => 200,

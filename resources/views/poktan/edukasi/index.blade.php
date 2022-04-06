@@ -20,7 +20,7 @@
             <div class="section-header">
                 <h1>@yield('title')</h1>
                 <div class="section-header-breadcrumb">
-                    <div class="breadcrumb-item">Poktan</div>
+                    <div class="breadcrumb-item">Gapoktan</div>
                     <div class="breadcrumb-item active"><a href="#">@yield('title')</a></div>
                 </div>
             </div>
@@ -62,17 +62,17 @@
                         <div class="row">
                             <div class="col-lg">
                                 <label for="title">Judul</label>
-                                <input type="text" name="title" id="titleCheck" class="form-control" placeholder="Judul" required>
+                                <input type="text" name="title" class="titleCheck form-control" placeholder="Judul" required>
                             </div>
                             <div class="col-lg">
                                 <label for="slug">Slug</label>
-                                <input type="text" name="slug" id="slugCheck" class="form-control" placeholder="Slug" readonly required>
+                                <input type="text" name="slug" class="slugCheck form-control" placeholder="Slug" readonly required>
                             </div>
                         </div>
                         <div class="form-group my-2">
                             <label>Kategori Edukasi</label>
                             <select class="form-control select2" name="education_category_id" required>
-                                <option>Pilih Kategori</option>
+                                <option selected disabled>Pilih Kategori</option>
                                 @foreach ($category as $item)
                                     @if ( old('education_category_id') == $item->id )
                                         <option value="{{ $item->id }}" selected>{{ $item->name }}</option>
@@ -84,7 +84,7 @@
                         </div>
                         <div class="my-2 form-group">
                             <label for="date">Tanggal</label>
-                            <input type="date" name="date" class="form-control" placeholder="Tanggal" required>
+                            <input type="date" name="date" class="form-control" required>
                         </div>
                         <div class="my-2 form-group">
                             <label for="desc">Deskripsi</label>
@@ -93,7 +93,8 @@
                         <div class="my-2 form-group">
                             <label for="file">Unggah File</label>
                             <small class="d-flex text-danger pb-1">*Unggah berupa foto, video dan document</small>
-                            <input type="file" name="file" class="form-control" required>
+                            <img alt="image" src="{{ asset('stisla/assets/img/example-image.jpg') }}" class="mb-2 img-preview img-fluid img-thumbnail" class="img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                            <input type="file" name="file" id="files" class="form-control" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -127,13 +128,13 @@
                             </div>
                             <div class="col-lg">
                                 <label for="slug">Slug</label>
-                                <input type="text" name="slug" id="slug" class="form-control slugCheck" placeholder="Slug" required>
+                                <input disabled type="text" name="slug" id="slug" class="form-control slugCheck" placeholder="Slug" required>
                             </div>
                         </div>
                         <div class="form-group my-2">
                             <label>Kategori Edukasi</label>
                             <select class="form-control select2" id="education_category_id" name="education_category_id">
-                                <option>Pilih Kategori</option>
+                                <option selected disabled>Pilih Kategori</option>
                                 @foreach ($category as $item)
                                     @if ( old('education_category_id') == $item->id )
                                         <option value="{{ $item->id }}" selected>{{ $item->name }}</option>
@@ -145,7 +146,9 @@
                         </div>
                         <div class="my-2 form-group">
                             <label for="date">Tanggal</label>
-                            <input type="date" name="date" id="date" class="form-control" placeholder="Tanggal" required>
+                            <div id="date">
+
+                            </div>
                         </div>
                         <div class="my-2 form-group">
                             <label for="desc">Deskripsi</label>
@@ -154,10 +157,10 @@
                         <div class="my-2 form-group">
                             <label for="file">Unggah File</label>
                             <small class="d-flex text-danger pb-1">*Unggah berupa foto, video dan document</small>
-                            <input type="file" name="file" class="form-control">
-                        </div>
-                        <div class="mt-2" id="file">
+                            <div class="mt-2" id="file">
 
+                            </div>
+                            <input type="file" name="file" id="files" class="form-control">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -191,13 +194,28 @@
 
     <!-- JAVASCRIPT -->
     <script>
-        const title = document.querySelector('#titleCheck');
-        const slug = document.querySelector('#slugCheck');
+        $('.titleCheck').change(function(e) {
+            $.get('{{ route('poktan-edukasi-checkSlug') }}',
+            { 'title': $(this).val() },
+                function( data ) {
+                    $('.slugCheck').val(data.slug);
+                }
+            );
+        });
 
-        title.addEventListener('change', function() {
-            fetch('/poktan/edukasi/checkSlug?title=' + title.value)
-                .then(response => response.json())
-                .then(data => slug.value = data.slug)
+        $(document).ready(()=>{
+            $('#files').change(function(){
+                const file = this.files[0];
+                console.log(file);
+                if (file){
+                let reader = new FileReader();
+                reader.onload = function(event){
+                    console.log(event.target.result);
+                    $('.img-preview').attr('src', event.target.result);
+                }
+                reader.readAsDataURL(file);
+                }
+            });
         });
 
         //CSRF TOKEN PADA HEADER
@@ -217,6 +235,7 @@
                 e.preventDefault();
                 const fd = new FormData(this);
                 $("#add_employee_btn").text('Tunggu..');
+                $("#add_employee_btn").prop('disabled', true);
                 $.ajax({
                 url: '{{ route('poktan-edukasi-store') }}',
                 method: 'post',
@@ -234,6 +253,7 @@
                     )
                     fetchAllEmployees();
                     }
+                    $("#add_employee_btn").prop('disabled', false);
                     $("#add_employee_btn").text('Add Employee');
                     $("#add_employee_form")[0].reset();
                     $("#addEmployeeModal").modal('hide');
@@ -256,10 +276,16 @@
                     $("#title").val(response.title);
                     $("#slug").val(response.slug);
                     $("#education_category_id").val(response.education_category_id);
-                    $("#date").val(response.date);
+                    $("#date").html(
+                        `<input type="date" name="date" value="${response.date}" class="form-control" required>`);
                     $("#desc").val(response.desc);
-                    $("#file").html(
-                    `<img src="../storage/edukasi/${response.file}" width="100" class="img-fluid img-thumbnail">`);
+                    if (response.file) {
+                        $("#file").html(
+                            `<img alt="edukasi" src="../storage/edukasi/${response.file}" class="mb-2 img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">`);
+                    } else {
+                        $("#file").html(
+                            `<img alt="edukasi" src="{{ asset('stisla/assets/img/example-image.jpg') }}" class="mb-2 img-fluid img-thumbnail" class="img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">`);
+                    }
                     $("#emp_id").val(response.id);
                     $("#emp_avatar").val(response.file);
                 }
@@ -271,6 +297,7 @@
                 e.preventDefault();
                 const fd = new FormData(this);
                 $("#edit_employee_btn").text('Tunggu..');
+                $("#edit_employee_btn").prop('disabled', true);
                 $.ajax({
                 url: '{{ route('poktan-edukasi-update') }}',
                 method: 'post',
@@ -288,6 +315,7 @@
                     )
                     fetchAllEmployees();
                     }
+                    $("#edit_employee_btn").prop('disabled', false);
                     $("#edit_employee_btn").text('Update Employee');
                     $("#edit_employee_form")[0].reset();
                     $("#editEmployeeModal").modal('hide');
