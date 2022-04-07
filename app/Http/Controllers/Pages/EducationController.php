@@ -18,7 +18,10 @@ class EducationController extends Controller
 
     public function show(Education $education)
     {
-        $education = $education;
-        return view('pages.edukasi.detail', compact('$education'));
+        return view('pages.edukasi.detail', [
+            'education' => $education,
+            'educationsMore' => Education::orderByRaw('RAND()')->take(3)->get(),
+            'categories' => EducationCategory::all()
+        ]);
     }
 }

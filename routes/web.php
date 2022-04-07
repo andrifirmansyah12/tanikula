@@ -132,7 +132,7 @@ route::post('/logout-srimakmur', [App\Http\Controllers\Gapoktan\LoginController:
 
 // Edukasi Page
 Route::get('/edukasi', [App\Http\Controllers\Pages\EducationController::class, 'index']);
-Route::get('/edukasi/{blog:slug}', [App\Http\Controllers\Pages\EducationController::class, 'show']);
+Route::get('/edukasi/{education:slug}', [App\Http\Controllers\Pages\EducationController::class, 'show']);
 
 Route::get('/', function () {
     return view('pages.home.index');
@@ -150,8 +150,8 @@ Route::get('/thank-you-purchasing', function () {
     return view('pages.checkout.purchasing');
 });
 
-Route::get('/checkout', function () {
-    return view('pages.checkout.index');
+Route::get('/keranjang', function () {
+    return view('pages.bag.index');
 });
 
 Route::get('/payment', function () {
