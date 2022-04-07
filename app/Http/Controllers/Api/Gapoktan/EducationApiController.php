@@ -48,7 +48,7 @@ class EducationApiController extends Controller
             'category_education_id' => $request->category_education_id,
             'title' => $request->title,
             'slug' => Str::slug($request->title),
-            'date' => Carbon::now()->format('Y-m-d H:i:s'),
+            'date' => Carbon::now()->format('Y-m-d'),
             'file' => $image_uploaded_path,
             'desc' => $request->desc,
          ]);
@@ -69,7 +69,7 @@ class EducationApiController extends Controller
   
     public function update(Request $request, $id)
     {
-         $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(),[
             'category_education_id' => 'required',
             'title' => 'required',
             'file' => 'required|image:jpeg,png,jpg,gif,svg|max:2048',
@@ -94,5 +94,14 @@ class EducationApiController extends Controller
         $data->update();
         
         return response()->json(['Data updated successfully.', new EducationResource($data)]);
+    }
+
+    
+    public function destroy($id)
+    {
+        $data = Education::findOrFail($id);
+        $data->delete();
+
+        return response()->json('Data deleted successfully');
     }
 }

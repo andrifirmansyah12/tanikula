@@ -18,7 +18,7 @@ class Activity extends Model
 
     public function activity_category()
     {
-        return $this->belongsTo(EducationCategory::class, 'category_education_id');
+        return $this->belongsTo(ActivityCategory::class, 'category_activity_id');
     }
     // protected $table = 'activities';
     // protected $fillable = [

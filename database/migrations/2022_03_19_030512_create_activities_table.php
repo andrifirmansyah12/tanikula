@@ -21,6 +21,7 @@ class CreateActivitiesTable extends Migration
             // $table->string('image')->nullable();
 
             $table->foreignId("user_id")->nullable();
+            $table->foreignId("category_activity_id")->nullable();
             $table->string("title")->nullable();
             $table->string("slug")->unique();
             $table->dateTime("date")->nullable();
