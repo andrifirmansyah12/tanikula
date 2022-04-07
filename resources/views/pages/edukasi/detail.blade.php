@@ -17,8 +17,8 @@
     }
 
     .blog-edukasi .blog-image-edukasi .category-edukasi {
-        background-color: beige;
-        color: black;
+        background-color: #16A085;
+        color: white;
         font-size: 13px;
         padding: 7px 20px;
         position: absolute;
@@ -46,7 +46,7 @@
     .blog-edukasi .blog-image-edukasi .video-content a {
         text-align: center;
         background-color: var(--primary);
-        color: beige;
+        color: #16A085;
         font-size: 30px;
         -webkit-transition: all 0.3s ease-out 0s;
         -moz-transition: all 0.3s ease-out 0s;
@@ -245,7 +245,7 @@
                             <div class="form-outline">
                                 <input type="search" placeholder="Cari edukasi .." id="form1" class="form-control" />
                             </div>
-                            <button type="button" class="btn btn-primary">
+                            <button type="button" class="btn" style="background-color: #16A085; color: white">
                                 <i class="bi bi-search"></i>
                             </button>
                         </div>
