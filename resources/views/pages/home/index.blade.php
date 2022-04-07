@@ -103,7 +103,7 @@
                         <div class="product-info">
                             <span class="category">Nama Kategori</span>
                             <h4 class="title">
-                                <a href="product-grids.html">Produk</a>
+                                <a href="{{url('detail')}}">Produk</a>
                             </h4>
                             <ul class="review">
                                 <li><i class="lni lni-star-filled"></i></li>
@@ -311,7 +311,7 @@
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-12">
                     <div class="single-banner"
-                        style="background-image:url('{{ asset('shoping/assets/images/banner/banner-1-bg.jpg') }}')">
+                        style="background-image:url('{{ asset('assets/images/banner/banner-1-bg.jpg') }}')">
                         <div class="content">
                             <h2>Smart Watch 2.0</h2>
                             <p>Space Gray Aluminum Case with <br>Black/Volt Real Sport Band </p>
@@ -323,7 +323,7 @@
                 </div>
                 <div class="col-lg-6 col-md-6 col-12">
                     <div class="single-banner custom-responsive-margin"
-                        style="background-image:url('{{ asset('shoping/assets/images/banner/banner-2-bg.jpg') }}')">
+                        style="background-image:url('{{ asset('assets/images/banner/banner-2-bg.jpg') }}')">
                         <div class="content">
                             <h2>Smart Headphone</h2>
                             <p>Lorem ipsum dolor sit amet, <br>eiusmod tempor

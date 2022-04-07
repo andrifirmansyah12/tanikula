@@ -18,8 +18,8 @@
     }
 
     .blog-edukasi .blog-image-edukasi .category-edukasi {
-        background-color: beige;
-        color: black;
+        background-color: #16A085;
+        color: white;
         font-size: 13px;
         padding: 7px 20px;
         position: absolute;
@@ -34,14 +34,20 @@
         overflow: hidden;
     }
 
-    .blog-edukasi .blog-image-edukasi .video-content img {
+    .blog-edukasi .blog-image-edukasi .video-content video {
         border-radius: 10px 10px 0 0;
+        width: 354px;
+        height: 220px;
+        -o-object-fit: cover;
+        object-fit: cover;
+        -o-object-position: center;
+        object-position: center;
     }
 
     .blog-edukasi .blog-image-edukasi .video-content a {
         text-align: center;
         background-color: var(--primary);
-        color: beige;
+        color: #16A085;
         font-size: 30px;
         -webkit-transition: all 0.3s ease-out 0s;
         -moz-transition: all 0.3s ease-out 0s;
@@ -86,6 +92,11 @@
 
     @media (max-width: 767px) {
         .blog-edukasi .blog-image-edukasi img {
+            width: 424px;
+            height: 220px;
+        }
+
+        .blog-edukasi .blog-image-edukasi .video-content video {
             width: 424px;
             height: 220px;
         }
@@ -169,24 +180,22 @@
                     <div class="col-lg-6 col-md-6 col-sm-12">
                         <div class="single-blog blog-edukasi border">
                             <div class="blog-image-edukasi">
-                                <a href="javascript:void(0)">
+                                <a href="/edukasi/{{ $item->slug }}">
                                     @php
                                         $ext = pathinfo($item->file, PATHINFO_EXTENSION)
                                     @endphp
                                     @if($ext == 'mp4' || $ext == 'mov' || $ext == 'vob' || $ext == 'mpeg' || $ext == '3gp' || $ext == 'avi' || $ext == 'wmv' || $ext == 'mov' || $ext == 'amv' || $ext == 'svi' || $ext == 'flv' || $ext == 'mkv' || $ext == 'webm' || $ext == 'gif' || $ext == 'asf')
                                     <div class="video-content text-center">
-                                        <img src="https://cdn.ayroui.com/1.0/images/video/video.png" alt="Video" />
+                                        <video src="{{ asset('../storage/edukasi/' . $item->file) }}" alt="Video"/>
                                         <a class="video-popup glightbox"
                                             href="{{ asset('../storage/edukasi/' . $item->file) }}">
                                             <i class="lni lni-play" style="position: absolute; top: 50%; left: 45%;"></i>
                                         </a>
                                     </div>
                                     @elseif ($ext == 'png' || $ext == 'jpg' || $ext == 'jpeg' || $ext == 'svg' || $ext == 'gif' || $ext == 'tiff' || $ext == 'psd' || $ext == 'pdf' || $ext == 'eps' || $ext == 'ai' || $ext == 'indd' || $ext == 'raw')
-                                        @if ($item->file)
-                                            <img src="{{ asset('../storage/edukasi/' . $item->file) }}" class="img-responsive" alt="Edukasi" />
-                                        @else
-                                            <img src="{{ asset('img/no-image.png') }}" class="img-responsive" alt="Edukasi" />
-                                        @endif
+                                        <img src="{{ asset('../storage/edukasi/' . $item->file) }}" class="img-responsive" alt="Edukasi" />
+                                    @elseif (empty($item->file))
+                                        <img src="{{ asset('img/no-image.png') }}" class="img-responsive" alt="Edukasi" />
                                     @endif
                                 </a>
                                 <a href="javascript:void(0)" class="category-edukasi">
@@ -198,8 +207,8 @@
                                 </a>
                             </div>
                             <div class="blog-content-edukasi">
-                                <h5 class="blog-title-edukasi">
-                                    <a href="javascript:void(0)" style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">
+                                <h5 class="blog-title-edukasi text-capitalize">
+                                    <a href="/edukasi/{{ $item->slug }}" style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">
                                         {{$item->title}}
                                     </a>
                                 </h5>
@@ -214,7 +223,7 @@
                                     style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;">
                                     {{$item->desc}}
                                 </p>
-                                <a class="more-edukasi" href="javascript:void(0)">Baca Selengkapnya</a>
+                                <a class="more-edukasi" href="/edukasi/{{ $item->slug }}">Baca Selengkapnya</a>
                             </div>
                         </div>
                         <!-- single blog -->
@@ -222,7 +231,7 @@
                     @endforeach
                 </div>
                 <div class="d-flex">
-                    {!! $educations->appends(['sort' => 'department'])->links() !!}
+                    {!! $educations->appends(['menyortir' => 'edukasi'])->links() !!}
                 </div>
             </div>
             <div class="col-lg-4 col-md-12 col-sm-12">
@@ -233,7 +242,7 @@
                             <div class="form-outline">
                                 <input type="search" placeholder="Cari edukasi .." id="form1" class="form-control" />
                             </div>
-                            <button type="button" class="btn btn-primary">
+                            <button type="button" class="btn" style="background-color: #16A085; color: white">
                                 <i class="bi bi-search"></i>
                             </button>
                         </div>
@@ -246,12 +255,24 @@
                         <div class="pt-2 border-bottom mt-3 pb-4">
                             <div class="row justify-content-center">
                                 <div class="col-4">
-                                    <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/182.webp"
-                                        class="img-fluid" alt="Sunset Over the Sea" width="100px" height="150px" />
+                                    <a href="/edukasi/{{ $item->slug }}">
+                                        @php
+                                            $extMore = pathinfo($item->file, PATHINFO_EXTENSION)
+                                        @endphp
+                                        @if($extMore == 'mp4' || $extMore == 'mov' || $extMore == 'vob' || $extMore == 'mpeg' || $extMore == '3gp' || $extMore == 'avi' || $extMore == 'wmv' || $extMore == 'mov' || $extMore == 'amv' || $extMore == 'svi' || $extMore == 'flv' || $extMore == 'mkv' || $extMore == 'webm' || $extMore == 'gif' || $extMore == 'asf')
+                                        <div class="text-center">
+                                            <video src="{{ asset('../storage/edukasi/' . $item->file) }}" alt="Video" style="width: 92px; height: 60px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"/>
+                                        </div>
+                                        @elseif ($extMore == 'png' || $extMore == 'jpg' || $extMore == 'jpeg' || $extMore == 'svg' || $extMore == 'gif' || $extMore == 'tiff' || $extMore == 'psd' || $extMore == 'pdf' || $extMore == 'eps' || $extMore == 'ai' || $extMore == 'indd' || $extMore == 'raw')
+                                            <img src="{{ asset('../storage/edukasi/' . $item->file) }}" class="img-responsive" alt="Edukasi" />
+                                        @elseif (empty($item->file))
+                                            <img src="{{ asset('img/no-image.png') }}" class="img-responsive" alt="Edukasi" />
+                                        @endif
+                                    </a>
                                 </div>
                                 <div class="col-8">
-                                    <p class="card-text pb-2">{{$item->title}}</p>
-                                    <small><i class="lni lni-calendar"></i> 19-September-2022</small>
+                                    <p class="card-text pb-2 text-capitalize">{{$item->title}}</p>
+                                    <small><i class="lni lni-calendar"></i> {{ date("d-F-Y", strtotime($item->date))}}</small>
                                 </div>
                             </div>
                         </div>

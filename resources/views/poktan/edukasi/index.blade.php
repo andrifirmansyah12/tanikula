@@ -20,7 +20,7 @@
             <div class="section-header">
                 <h1>@yield('title')</h1>
                 <div class="section-header-breadcrumb">
-                    <div class="breadcrumb-item">Gapoktan</div>
+                    <div class="breadcrumb-item">Poktan</div>
                     <div class="breadcrumb-item active"><a href="#">@yield('title')</a></div>
                 </div>
             </div>
@@ -62,11 +62,13 @@
                         <div class="row">
                             <div class="col-lg">
                                 <label for="title">Judul</label>
-                                <input type="text" name="title" class="titleCheck form-control" placeholder="Judul" required>
+                                <input type="text" name="title" class="titleCheck form-control" placeholder="Judul"
+                                    required>
                             </div>
                             <div class="col-lg">
                                 <label for="slug">Slug</label>
-                                <input type="text" name="slug" class="slugCheck form-control" placeholder="Slug" readonly required>
+                                <input type="text" name="slug" class="slugCheck form-control" placeholder="Slug"
+                                    readonly required>
                             </div>
                         </div>
                         <div class="form-group my-2">
@@ -74,11 +76,11 @@
                             <select class="form-control select2" name="education_category_id" required>
                                 <option selected disabled>Pilih Kategori</option>
                                 @foreach ($category as $item)
-                                    @if ( old('education_category_id') == $item->id )
-                                        <option value="{{ $item->id }}" selected>{{ $item->name }}</option>
-                                    @else
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                    @endif
+                                @if ( old('education_category_id') == $item->id )
+                                <option value="{{ $item->id }}" selected>{{ $item->name }}</option>
+                                @else
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                @endif
                                 @endforeach
                             </select>
                         </div>
@@ -93,7 +95,32 @@
                         <div class="my-2 form-group">
                             <label for="file">Unggah File</label>
                             <small class="d-flex text-danger pb-1">*Unggah berupa foto, video dan document</small>
-                            <img alt="image" src="{{ asset('stisla/assets/img/example-image.jpg') }}" class="mb-2 img-preview img-fluid img-thumbnail" class="img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                            <div>
+                                <ul class="nav nav-pills" id="myTab3" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="home-tab3" data-toggle="tab" href="#home3"
+                                            role="tab" aria-controls="home" aria-selected="true">Foto</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="profile-tab3" data-toggle="tab" href="#profile3"
+                                            role="tab" aria-controls="profile" aria-selected="false">Video</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content" id="myTabContent2">
+                                    <div class="tab-pane fade show active" id="home3" role="tabpanel"
+                                        aria-labelledby="home-tab3">
+                                        <img id="preview" class="img-fluid img-thumbnail image"
+                                        src="{{ asset('stisla/assets/img/example-image.jpg') }}" alt="edukasi"
+                                        style="width: 20rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                    </div>
+                                    <div class="tab-pane fade" id="profile3" role="tabpanel"
+                                        aria-labelledby="profile-tab3">
+                                        <video id="videoPreview" class="img-fluid img-thumbnail image" src=""
+                                        style="width: 20rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
+                                        controls></video>
+                                    </div>
+                                </div>
+                            </div>
                             <input type="file" name="file" id="files" class="form-control" required>
                         </div>
                     </div>
@@ -146,9 +173,7 @@
                         </div>
                         <div class="my-2 form-group">
                             <label for="date">Tanggal</label>
-                            <div id="date">
-
-                            </div>
+                            <input type="date" name="date" id="date" class="form-control" required>
                         </div>
                         <div class="my-2 form-group">
                             <label for="desc">Deskripsi</label>
@@ -157,8 +182,31 @@
                         <div class="my-2 form-group">
                             <label for="file">Unggah File</label>
                             <small class="d-flex text-danger pb-1">*Unggah berupa foto, video dan document</small>
-                            <div class="mt-2" id="file">
-
+                            <div class="mt-2">
+                                <ul class="nav nav-pills" id="myTab3" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="home-tab2" data-toggle="tab" href="#home2"
+                                            role="tab" aria-controls="home" aria-selected="true">Foto</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="profile-tab2" data-toggle="tab" href="#profile2"
+                                            role="tab" aria-controls="profile" aria-selected="false">Video</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content editFile" id="myTabContent2">
+                                    <div class="tab-pane fade show active" id="home2" role="tabpanel"
+                                        aria-labelledby="home-tab2">
+                                        <img id="preview" class="img-fluid img-thumbnail image"
+                                        src="{{ asset('stisla/assets/img/example-image.jpg') }}" alt="edukasi"
+                                        style="width: 20rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                    </div>
+                                    <div class="tab-pane fade" id="profile2" role="tabpanel"
+                                        aria-labelledby="profile-tab2">
+                                        <video id="videoPreview" class="img-fluid img-thumbnail image" src=""
+                                        style="width: 20rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
+                                        controls></video>
+                                    </div>
+                                </div>
                             </div>
                             <input type="file" name="file" id="files" class="form-control">
                         </div>
@@ -203,20 +251,21 @@
             );
         });
 
-        $(document).ready(()=>{
-            $('#files').change(function(){
-                const file = this.files[0];
-                console.log(file);
-                if (file){
-                let reader = new FileReader();
-                reader.onload = function(event){
-                    console.log(event.target.result);
-                    $('.img-preview').attr('src', event.target.result);
-                }
+        $(function() {
+            $('#files').on('change', function() {
+                var file = this.files[0];
+                var reader = new FileReader();
+                reader.onload = viewer.load;
                 reader.readAsDataURL(file);
-                }
             });
-        });
+
+            var viewer = {
+                load : function(e) {
+                    $('#preview').attr('src', e.target.result)
+                    $('#videoPreview').attr('src', e.target.result)
+                }
+            }
+        })
 
         //CSRF TOKEN PADA HEADER
         //Script ini wajib krn kita butuh csrf token setiap kali mengirim request post, patch, put dan delete ke server
@@ -276,15 +325,22 @@
                     $("#title").val(response.title);
                     $("#slug").val(response.slug);
                     $("#education_category_id").val(response.education_category_id);
-                    $("#date").html(
-                        `<input type="date" name="date" value="${response.date}" class="form-control" required>`);
+                    $("#date").val(response.date);
                     $("#desc").val(response.desc);
                     if (response.file) {
-                        $("#file").html(
-                            `<img alt="edukasi" src="../storage/edukasi/${response.file}" class="mb-2 img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">`);
-                    } else {
-                        $("#file").html(
-                            `<img alt="edukasi" src="{{ asset('stisla/assets/img/example-image.jpg') }}" class="mb-2 img-fluid img-thumbnail" class="img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">`);
+                        $(".editFile").html(
+                            `<div class="tab-pane fade show active" id="home2" role="tabpanel"
+                                aria-labelledby="home-tab2">
+                                <img id="preview" class="img-fluid img-thumbnail image"
+                                src="../storage/edukasi/${response.file}" alt="edukasi"
+                                style="width: 20rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                            </div>
+                            <div class="tab-pane fade" id="profile2" role="tabpanel"
+                                aria-labelledby="profile-tab2">
+                                <video id="videoPreview" class="img-fluid img-thumbnail image" src="../storage/edukasi/${response.file}"
+                                style="width: 20rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
+                                controls></video>
+                            </div>`);
                     }
                     $("#emp_id").val(response.id);
                     $("#emp_avatar").val(response.file);

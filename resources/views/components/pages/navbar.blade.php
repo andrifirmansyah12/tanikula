@@ -106,7 +106,7 @@
                             </div>
                             <div class="wishlist">
                                 <a href="javascript:void(0)">
-                                    <i class="lni lni-heart"></i>
+                                    <i class="lni lni-alarm"></i>
                                     <span class="total-items">0</span>
                                 </a>
                             </div>
@@ -127,7 +127,7 @@
                                                 title="Remove this item"><i class="lni lni-close"></i></a>
                                             <div class="cart-img-head">
                                                 <a class="cart-img" href="product-details.html"><img
-                                                        src="{{ asset('shoping/assets/images/header/cart-items/item1.jpg') }}"
+                                                        src="{{ asset('assets/images/header/cart-items/item1.jpg') }}"
                                                         alt="#"></a>
                                             </div>
 
@@ -143,7 +143,7 @@
                                                 title="Remove this item"><i class="lni lni-close"></i></a>
                                             <div class="cart-img-head">
                                                 <a class="cart-img" href="product-details.html"><img
-                                                        src="{{ asset('shoping/assets/images/header/cart-items/item2.jpg') }}"
+                                                        src="{{ asset('assets/images/header/cart-items/item2.jpg') }}"
                                                         alt="#"></a>
                                             </div>
                                             <div class="content">

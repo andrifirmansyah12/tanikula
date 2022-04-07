@@ -1,6 +1,60 @@
 @extends('pages.template1')
 @section('title', 'Detail Produk')
 
+@section('style')
+    <style>
+
+        /* rating */
+        .rating-produk div {
+            color: #f0d800;
+            font-size: 30px;
+            font-family: sans-serif;
+            font-weight: 800;
+            text-align: center;
+            text-transform: uppercase;
+            padding: 0 0 50px;
+        }
+
+        .rating-produk input {
+            display: none;
+        }
+
+        .rating-produk input + label {
+            font-size: 60px;
+            text-shadow: 1px 1px 0 #8f8420;
+            cursor: pointer;
+        }
+
+        .rating-produk input:checked + label ~ label {
+            color: #b4afaf;
+        }
+
+        .rating-produk label:active {
+            transform: scale(0.8);
+            transition: 0.3s ease;
+        }
+
+        /* rating */
+        .ratings div {
+            color: #f0d800;
+            font-family: sans-serif;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .ratings input {
+            display: none;
+        }
+
+        .ratings input + label {
+            font-size: 20px;
+            text-shadow: 1px 1px 0 #8f8420;
+            cursor: pointer;
+        }
+
+    </style>
+@endsection
+
 @section('content')
     <!-- Start Breadcrumbs -->
     <div class="breadcrumbs">
@@ -8,14 +62,14 @@
             <div class="row align-items-center">
                 <div class="col-lg-6 col-md-6 col-12">
                     <div class="breadcrumbs-content">
-                        <h1 class="page-title">Single Product</h1>
+                        <h1 class="page-title">Nama Produk</h1>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-12">
                     <ul class="breadcrumb-nav">
                         <li><a href="index.html"><i class="lni lni-home"></i> Home</a></li>
-                        <li><a href="index.html">Shop</a></li>
-                        <li>Single Product</li>
+                        <li><a href="index.html">Detail</a></li>
+                        <li>Nama Produk</li>
                     </ul>
                 </div>
             </div>
@@ -24,7 +78,7 @@
     <!-- End Breadcrumbs -->
 
     <!-- Start Item Details -->
-    <section class="item-details section">
+    <section class="item-details section bg-white">
         <div class="container">
             <div class="top-area">
                 <div class="row align-items-center">
@@ -32,64 +86,44 @@
                         <div class="product-images">
                             <main id="gallery">
                                 <div class="main-img">
-                                    <img src="assets/images/product-details/01.jpg" id="current" alt="#">
+                                    <img src="{{ asset('assets/images/product-details/01.jpg') }}" id="current" alt="#">
                                 </div>
                                 <div class="images">
-                                    <img src="assets/images/product-details/01.jpg" class="img" alt="#">
-                                    <img src="assets/images/product-details/02.jpg" class="img" alt="#">
-                                    <img src="assets/images/product-details/03.jpg" class="img" alt="#">
-                                    <img src="assets/images/product-details/04.jpg" class="img" alt="#">
-                                    <img src="assets/images/product-details/05.jpg" class="img" alt="#">
+                                    <img src="{{ asset('assets/images/product-details/01.jpg') }}" class="img" alt="#">
+                                    <img src="{{ asset('assets/images/product-details/02.jpg') }}" class="img" alt="#">
+                                    <img src="{{ asset('assets/images/product-details/03.jpg') }}" class="img" alt="#">
+                                    <img src="{{ asset('assets/images/product-details/04.jpg') }}" class="img" alt="#">
+                                    <img src="{{ asset('assets/images/product-details/05.jpg') }}" class="img" alt="#">
                                 </div>
                             </main>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-12 col-12">
                         <div class="product-info">
-                            <h2 class="title">GoPro Karma Camera Drone</h2>
-                            <p class="category"><i class="lni lni-tag"></i> Drones:<a
-                                    href="javascript:void(0)">Action
-                                    cameras</a></p>
-                            <h3 class="price">$850<span>$945</span></h3>
+                            <h2 class="title">Nama Produk</h2>
+                            <p class="category">Terjual 40</p>
+                            <p class="category"><i class="lni lni-tag"></i> Kategori:<a
+                                    href="javascript:void(0)">Nama
+                                    Kategori</a></p>
+                            <h3 class="price">Rp0<span>Rp0</span></h3>
                             <p class="info-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                                 eiusmod
                                 tempor incididunt
                                 ut labore et dolore magna aliqua.</p>
                             <div class="row">
                                 <div class="col-lg-4 col-md-4 col-12">
-                                    <div class="form-group color-option">
-                                        <label class="title-label" for="size">Choose color</label>
-                                        <div class="single-checkbox checkbox-style-1">
-                                            <input type="checkbox" id="checkbox-1" checked>
-                                            <label for="checkbox-1"><span></span></label>
-                                        </div>
-                                        <div class="single-checkbox checkbox-style-2">
-                                            <input type="checkbox" id="checkbox-2">
-                                            <label for="checkbox-2"><span></span></label>
-                                        </div>
-                                        <div class="single-checkbox checkbox-style-3">
-                                            <input type="checkbox" id="checkbox-3">
-                                            <label for="checkbox-3"><span></span></label>
-                                        </div>
-                                        <div class="single-checkbox checkbox-style-4">
-                                            <input type="checkbox" id="checkbox-4">
-                                            <label for="checkbox-4"><span></span></label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-12">
                                     <div class="form-group">
-                                        <label for="color">Battery capacity</label>
+                                        <label for="color">Tipe</label>
                                         <select class="form-control" id="color">
-                                            <option>5100 mAh</option>
-                                            <option>6200 mAh</option>
-                                            <option>8000 mAh</option>
+                                            <option>Tipe A</option>
+                                            <option>Tipe B</option>
+                                            <option>Tipe C</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-12">
                                     <div class="form-group quantity">
-                                        <label for="color">Quantity</label>
+                                        <label for="color">Kuantitas</label>
                                         <select class="form-control">
                                             <option>1</option>
                                             <option>2</option>
@@ -99,23 +133,30 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="col-lg-4 col-md-4 col-12">
+                                    <div class="form-group">
+                                        <label for="color">Lainnya</label>
+                                        <div class="wish-button">
+                                            <button class="btn"><i class="lni lni-envelope"></i> Chat</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="bottom-content">
                                 <div class="row align-items-end">
                                     <div class="col-lg-4 col-md-4 col-12">
                                         <div class="button cart-button">
-                                            <button class="btn" style="width: 100%;">Add to Cart</button>
+                                            <button class="btn" style="width: 100%;">+ Keranjang</button>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-12">
                                         <div class="wish-button">
-                                            <button class="btn"><i class="lni lni-reload"></i> Compare</button>
+                                            <button class="btn">Beli Langsung</button>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-12">
                                         <div class="wish-button">
-                                            <button class="btn"><i class="lni lni-heart"></i> To
-                                                Wishlist</button>
+                                            <button class="btn"><i class="lni lni-heart"></i> Favorit</button>
                                         </div>
                                     </div>
                                 </div>
@@ -166,64 +207,90 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <!-- End Item Details -->
-
-    <!-- Review Modal -->
-    <div class="modal fade review-modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Leave a Review</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
+            <div class="product-details-info">
+                <div class="single-block">
                     <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="review-name">Your Name</label>
-                                <input class="form-control" type="text" id="review-name" required>
+                        <div class="col-lg-6 col-12">
+                            <div class="info-body custom-responsive-margin">
+                                <h4>Ulasan</h4>
+                                <p>Nama Produk</p>
+                                <div class="rating-produk">
+                                    <div class="star-icon">
+                                        <input type="radio" value="1" name="product_rating" checked id="rating1">
+                                        <label for="rating1" class="lni lni-star-filled"></label>
+                                        <input type="radio" value="2" name="product_rating" id="rating2">
+                                        <label for="rating2" class="lni lni-star-filled"></label>
+                                        <input type="radio" value="3" name="product_rating" id="rating3">
+                                        <label for="rating3" class="lni lni-star-filled"></label>
+                                        <input type="radio" value="4" name="product_rating" id="rating4">
+                                        <label for="rating4" class="lni lni-star-filled"></label>
+                                        <input type="radio" value="5" name="product_rating" id="rating5">
+                                        <label for="rating5" class="lni lni-star-filled"></label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="review-email">Your Email</label>
-                                <input class="form-control" type="email" id="review-email" required>
+                        <div class="col-lg-12 col-12">
+                            <div class="info-body">
+                                <h4>Semua Ulasan</h4>
+                                <div class="mt-3 d-lg-flex justify-content-start">
+                                    <div class="col-8 col-lg-3 col-xl-2">
+                                        <div>
+                                            <img src="{{ asset('stisla/assets/img/avatar/avatar-1.png') }}" style="max-width: 4rem;" class="img-fluid img-thumbnail rounded-circle" alt="">
+                                            <span class="ms-1">Nama Pembeli</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-lg-8 col-xl-10 mt-2 mt-lg-0 ms-0 ms-lg-5">
+                                        <ul class="normal-list">
+                                            <li><div class="ratings">
+                                                <div class="star-icon">
+                                                    <input type="radio" value="1" checked>
+                                                    <label class="lni lni-star-filled"></label>
+                                                    <input type="radio" value="2">
+                                                    <label class="lni lni-star-filled"></label>
+                                                    <input type="radio" value="3">
+                                                    <label class="lni lni-star-filled"></label>
+                                                    <input type="radio" value="4">
+                                                    <label class="lni lni-star-filled"></label>
+                                                    <input type="radio" value="5">
+                                                    <label class="lni lni-star-filled"></label>
+                                                </div>
+                                            </div></li>
+                                            <span class="me-md-5">
+                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...
+                                            </span>
+                                            <li></li>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="review-subject">Subject</label>
-                                <input class="form-control" type="text" id="review-subject" required>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="review-rating">Rating</label>
-                                <select class="form-control" id="review-rating">
-                                    <option>5 Stars</option>
-                                    <option>4 Stars</option>
-                                    <option>3 Stars</option>
-                                    <option>2 Stars</option>
-                                    <option>1 Star</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="review-message">Review</label>
-                        <textarea class="form-control" id="review-message" rows="8" required></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer button">
-                    <button type="button" class="btn">Submit Review</button>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- End Review Modal -->
+    </section>
+
+@endsection
+
+@section('script')
+    <script type="text/javascript">
+        const current = document.getElementById("current");
+        const opacity = 0.6;
+        const imgs = document.querySelectorAll(".img");
+        imgs.forEach(img => {
+            img.addEventListener("click", (e) => {
+                //reset opacity
+                imgs.forEach(img => {
+                    img.style.opacity = 1;
+                });
+                current.src = e.target.src;
+                //adding class
+                //current.classList.add("fade-in");
+                //opacity
+                e.target.style.opacity = opacity;
+            });
+        });
+    </script>
 @endsection
