@@ -15,10 +15,17 @@ class CreateActivitiesTable extends Migration
     {
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('slug')->nullable();
-            $table->longText('description');
-            $table->string('image')->nullable();
+            // $table->string('name');
+            // $table->string('slug')->nullable();
+            // $table->longText('description');
+            // $table->string('image')->nullable();
+
+            $table->foreignId("user_id")->nullable();
+            $table->foreignId("category_activity_id")->nullable();
+            $table->string("title")->nullable();
+            $table->string("slug")->unique();
+            $table->dateTime("date")->nullable();
+            $table->text("desc")->nullable();
             $table->timestamps();
         });
     }

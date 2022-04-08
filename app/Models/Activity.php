@@ -15,6 +15,11 @@ class Activity extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function activity_category()
+    {
+        return $this->belongsTo(ActivityCategory::class, 'category_activity_id');
+    }
     // protected $table = 'activities';
     // protected $fillable = [
     //     'name',
