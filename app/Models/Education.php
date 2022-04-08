@@ -19,7 +19,7 @@ class Education extends Model
 
     public function education_category()
     {
-        return $this->belongsTo(EducationCategory::class);
+        return $this->belongsTo(EducationCategory::class, 'category_education_id');
     }
 
     public function getRouteKeyName()

@@ -20,7 +20,7 @@ class EducationSeeder extends Seeder
         $datas = [
             [
                 "user_id" => null,
-                "education_category_id" => 1,
+                "category_education_id" => 1,
                 "title" => "Lorem Ipsum",
                 "slug" => "lorem-ipsum",
                 "date" => Carbon::now()->format('Y-m-d'),
@@ -29,7 +29,7 @@ class EducationSeeder extends Seeder
             ],
              [
                 "user_id" => null,
-                "education_category_id" => 1,
+                "category_education_id" => 1,
                 "title" => "Lorem Ipsum 2",
                 "slug" => "lorem-ipsum-2",
                 "date" => Carbon::now()->format('Y-m-d'),
