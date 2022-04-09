@@ -17,22 +17,23 @@ class EducationCategoryController extends Controller
     // handle fetch all eamployees ajax request
 	public function fetchAll()
     {
-		$emps = EducationCategory::all();
+		$emps = EducationCategory::latest()->get();
 		$output = '';
 		if ($emps->count() > 0) {
 			$output .= '<table class="table table-striped table-sm text-center align-middle">
             <thead>
               <tr>
+                <th>No</th>
                 <th>Nama Kategori</th>
-                <th>Slug</th>
-                <th>Action</th>
+                <th>Aksi</th>
               </tr>
             </thead>
             <tbody>';
+            $nomor=1;
 			foreach ($emps as $emp) {
 				$output .= '<tr>
+                <td>' . $nomor++ . '</td>
                 <td>' . $emp->name . '</td>
-                <td>' . $emp->slug . '</td>
                 <td>
                   <a href="#" id="' . $emp->id . '" class="text-success mx-1 editIcon" data-toggle="modal" data-target="#editEmployeeModal"><i class="bi-pencil-square h4"></i></a>
                   <a href="#" id="' . $emp->id . '" class="text-danger mx-1 deleteIcon"><i class="bi-trash h4"></i></a>

@@ -47,7 +47,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(Education::class);
     }
-    
+
     public function activity()
     {
         return $this->hasMany(Activity::class);

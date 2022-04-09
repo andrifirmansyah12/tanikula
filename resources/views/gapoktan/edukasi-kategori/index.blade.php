@@ -64,10 +64,6 @@
                                 <label for="name">Nama</label>
                                 <input type="text" name="name" class="nameCheck form-control" placeholder="Nama" required>
                             </div>
-                            <div class="col-lg">
-                                <label for="slug">Slug</label>
-                                <input disabled type="text" name="slug" class="slugCheck form-control" placeholder="Slug" readonly required>
-                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -97,10 +93,6 @@
                             <div class="col-lg">
                                 <label for="name">Nama</label>
                                 <input type="text" name="name" id="name" class="form-control nameCheck" placeholder="Nama" required>
-                            </div>
-                            <div class="col-lg">
-                                <label for="slug">Slug</label>
-                                <input disabled type="text" name="slug" id="slug" class="form-control slugCheck" placeholder="Slug" required>
                             </div>
                         </div>
                     </div>
@@ -161,6 +153,7 @@
                 e.preventDefault();
                 const fd = new FormData(this);
                 $("#add_employee_btn").text('Tunggu..');
+                $("#add_employee_btn").prop('disabled', true);
                 $.ajax({
                 url: '{{ route('gapoktan-kategoriEdukasi-store') }}',
                 method: 'post',
@@ -179,6 +172,7 @@
                     fetchAllEmployees();
                     }
                     $("#add_employee_btn").text('Add Employee');
+                    $("#add_employee_btn").prop('disabled', false);
                     $("#add_employee_form")[0].reset();
                     $("#addEmployeeModal").modal('hide');
                 }
@@ -198,7 +192,6 @@
                 },
                 success: function(response) {
                     $("#name").val(response.name);
-                    $("#slug").val(response.slug);
                     $("#emp_id").val(response.id);
                 }
                 });
@@ -209,6 +202,7 @@
                 e.preventDefault();
                 const fd = new FormData(this);
                 $("#edit_employee_btn").text('Tunggu..');
+                $("#edit_employee_btn").prop('disabled', true);
                 $.ajax({
                 url: '{{ route('gapoktan-kategoriEdukasi-update') }}',
                 method: 'post',
@@ -227,6 +221,7 @@
                     fetchAllEmployees();
                     }
                     $("#edit_employee_btn").text('Update Employee');
+                    $("#edit_employee_btn").prop('disabled', false);
                     $("#edit_employee_form")[0].reset();
                     $("#editEmployeeModal").modal('hide');
                 }
@@ -259,8 +254,8 @@
                     success: function(response) {
                         console.log(response);
                         Swal.fire(
-                        'Deleted!',
-                        'Your file has been deleted.',
+                        'Dihapus!',
+                        'File Anda telah dihapus.',
                         'success'
                         )
                         fetchAllEmployees();
@@ -280,7 +275,7 @@
                 success: function(response) {
                     $("#show_all_employees").html(response);
                     $("table").DataTable({
-                    order: [0, 'desc']
+                    order: [0, 'asc']
                     });
                 }
                 });
