@@ -190,7 +190,7 @@
                                             <i class="lni lni-play" style="position: absolute; top: 50%; left: 45%;"></i>
                                         </a>
                                     </div>
-                                    @elseif ($ext == 'png' || $ext == 'jpg' || $ext == 'jpeg' || $ext == 'svg' || $ext == 'gif' || $ext == 'tiff' || $ext == 'psd' || $ext == 'pdf' || $ext == 'eps' || $ext == 'ai' || $ext == 'indd' || $ext == 'raw')
+                                    @elseif ($ext == 'PNG' || $ext == 'png' || $ext == 'jpg' || $ext == 'jpeg' || $ext == 'svg' || $ext == 'gif' || $ext == 'tiff' || $ext == 'psd' || $ext == 'pdf' || $ext == 'eps' || $ext == 'ai' || $ext == 'indd' || $ext == 'raw')
                                         <img src="{{ asset('../storage/edukasi/' . $education->file) }}" class="img-responsive" alt="Edukasi" />
                                     @elseif (empty($education->file))
                                         <img src="{{ asset('img/no-image.png') }}" class="img-responsive" alt="Edukasi" />
@@ -266,7 +266,7 @@
                                         <div class="text-center">
                                             <video src="{{ asset('../storage/edukasi/' . $item->file) }}" alt="Video" style="width: 92px; height: 60px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"/>
                                         </div>
-                                        @elseif ($extMore == 'png' || $extMore == 'jpg' || $extMore == 'jpeg' || $extMore == 'svg' || $extMore == 'gif' || $extMore == 'tiff' || $extMore == 'psd' || $extMore == 'pdf' || $extMore == 'eps' || $extMore == 'ai' || $extMore == 'indd' || $extMore == 'raw')
+                                        @elseif ($extMore == 'PNG' || $extMore == 'png' || $extMore == 'jpg' || $extMore == 'jpeg' || $extMore == 'svg' || $extMore == 'gif' || $extMore == 'tiff' || $extMore == 'psd' || $extMore == 'pdf' || $extMore == 'eps' || $extMore == 'ai' || $extMore == 'indd' || $extMore == 'raw')
                                             <img src="{{ asset('../storage/edukasi/' . $item->file) }}" class="img-responsive" alt="Edukasi" />
                                         @elseif (empty($item->file))
                                             <img src="{{ asset('img/no-image.png') }}" class="img-responsive" alt="Edukasi" />
