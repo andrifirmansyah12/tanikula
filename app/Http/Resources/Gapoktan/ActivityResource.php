@@ -2,10 +2,9 @@
 
 namespace App\Http\Resources\Gapoktan;
 
-use App\Models\EducationCategory;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class EducationResource extends JsonResource
+class ActivityResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,11 +17,10 @@ class EducationResource extends JsonResource
         return [
             "id" => $this->id,
             "user_id" => $this->user_id,
-            "category_education_id" => new EducationCategoryResource($this->education_category),
+            "category_activity_id" => new ActivityCategoryResource($this->activity_category),
             "title" => $this->title,
             "slug" => $this->slug,
             "date" => $this->date,
-            "file" => $this->file,
             "desc" =>  $this->desc,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

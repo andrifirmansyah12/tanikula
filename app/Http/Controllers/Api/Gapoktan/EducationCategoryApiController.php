@@ -3,15 +3,17 @@
 namespace App\Http\Controllers\Api\Gapoktan;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\EducationResource;
-use App\Models\Education;
+use App\Http\Resources\Gapoktan\EducationCategoryResource;
+use App\Models\EducationCategory;
 use Illuminate\Http\Request;
 
-class EdukasiApiController extends Controller
+class EducationCategoryApiController extends Controller
 {
-    public function index()
+   public function index()
     {
-
+        // print("response");
+        $data = EducationCategory::latest()->get();
+        return response()->json([EducationCategoryResource::collection($data), 'Data fetched.']);
     }
 
     public function create()
