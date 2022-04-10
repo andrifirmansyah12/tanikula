@@ -4,13 +4,17 @@ namespace App\Http\Controllers\Pembeli;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Mail\ForgotPassword;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use App\Models\UserVerify;
 use Illuminate\Support\Str;
+use Illuminate\Support\Carbon;
 use Session;
-use Mail;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
@@ -25,6 +29,9 @@ class LoginController extends Controller
             'password' => 'required|min:6|max:50',
         ], [
             'email.required' => 'Email diperlukan!',
+            'email.max' => 'Email maksimal 100 karakter!',
+            'password.min' => 'Kata sandi harus minimal 6 karakter!',
+            'password.max' => 'Kata sandi maksimal 50 karakter!',
             'password.required' => 'Kata sandi diperlukan!',
         ]);
 
@@ -90,10 +97,16 @@ class LoginController extends Controller
         ], [
             'cpassword.same' => 'Kata sandi tidak cocok!',
             'name.required' => 'Nama diperlukan!',
+            'name.max' => 'Nama maksimal 50 karakter!',
             'email.required' => 'Email diperlukan!',
             'email.unique' => 'Email yang anda masukkan sudah ada!',
+            'email.max' => 'Email maksimal 100 karakter!',
             'password.required' => 'Kata sandi diperlukan!',
+            'password.min' => 'Kata sandi harus minimal 6 karakter!',
+            'password.max' => 'Kata sandi maksimal 50 karakter!',
             'cpassword.required' => 'Konfirmasi kata sandi diperlukan!',
+            'cpassword.min' => 'Kata sandi harus minimal 6 karakter!',
+            'cpassword.max' => 'Kata sandi maksimal 50 karakter!',
         ]);
 
         if($validator->fails()) {
@@ -135,7 +148,7 @@ class LoginController extends Controller
     {
         $verifyUser = UserVerify::where('token', $token)->first();
 
-        $message = 'Sorry your email cannot be identified.';
+        $messageDanger = 'Maaf email Anda tidak dapat diidentifikasi.';
 
         if(!is_null($verifyUser) ){
             $user = $verifyUser->user;
@@ -143,21 +156,108 @@ class LoginController extends Controller
             if(!$user->is_email_verified) {
                 $verifyUser->user->is_email_verified = 1;
                 $verifyUser->user->save();
-                $message = "Your e-mail is verified. You can now login.";
+                $message = "Email Anda telah diverifikasi. Anda sekarang dapat masuk.";
             } else {
-                $message = "Your e-mail is already verified. You can now login.";
+                $message = "Email Anda sudah diverifikasi. Anda sekarang dapat masuk.";
             }
         }
 
-      return redirect()->route('login')->with('message', $message);
+      return redirect()->route('login')->with('message', $message, 'messageDanger', $messageDanger);
     }
 
     public function forgotPassword() {
-        return view('costumer.login.forgot');
+        return view('costumer.login.password.forgot');
     }
 
-    public function resetPassword() {
-        return view('costumer.login.reset');
+    public function forgotPasswordEmail(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|max:100',
+        ]);
+
+        if($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'messages' => $validator->getMessageBag()
+            ]);
+        } else {
+            $token = Str::uuid();
+            $user = DB::table('users')->where('email', $request->email)->first();
+            $details = [
+                'body' => route('resetPassword-pembeli', ['email' => $request->email, 'token' => $token])
+            ];
+
+            if ($user) {
+                User::where('email', $request->email)->update([
+                    'token' => $token,
+                    'token_expire' => Carbon::now()->addMinutes(10)->toDateTimeString()
+                ]);
+
+                Mail::to($request->email)->send(new ForgotPassword($details));
+                return response()->json([
+                    'status' => 200,
+                    'messages' => 'Tautan Atur Ulang Kata Sandi telah dikirim ke email Anda!'
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 401,
+                    'messages' => 'Email ini tidak terdaftar pada kami!'
+                ]);
+            }
+        }
+    }
+
+    public function reset(Request $request) {
+        $email = $request->email;
+        $token = $request->token;
+        return view('costumer.login.password.reset', [
+            'email' => $email,
+            'token' => $token
+        ]);
+    }
+
+    public function resetPassword(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'npass' => 'required|min:6|max:50',
+            'cnpass' => 'required|min:6|max:50|same:npass',
+        ], [
+            'cnpass.same' => 'Kata sandi tidak cocok!',
+            'npass.required' => 'Kata sandi diperlukan!',
+            'npass.min' => 'Kata sandi harus minimal 6 karakter!',
+            'npass.max' => 'Kata sandi maksimal 50 karakter!',
+            'cnpass.required' => 'Konfirmasi kata sandi diperlukan!',
+            'cnpass.min' => 'Kata sandi harus minimal 6 karakter!',
+            'cnpass.max' => 'Kata sandi maksimal 50 karakter!',
+        ]);
+
+        if($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'messages' => $validator->getMessageBag()
+            ]);
+        } else {
+            $user = DB::table('users')->where('email', $request->email)
+                ->whereNotNull('token')
+                ->where('token', $request->token)
+                ->where('token_expire', '>', Carbon::now())->exists();
+
+            if ($user) {
+                User::where('email', $request->email)->update([
+                    'password' => Hash::make($request->npass),
+                    'token' => null,
+                    'token_expire' => null
+                ]);
+
+                return response()->json([
+                    'status' => 200,
+                    'messages' => 'Kata Sandi Baru Diperbarui!&nbsp;&nbsp;<a href="/login" class="text-decoration-none">Masuk Sekarang</a>'
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 401,
+                    'messages' => 'Tautan atur ulang kedaluwarsa, Minta tautan atur ulang kata sandi baru!'
+                ]);
+            }
+        }
     }
 
     public function logout(Request $request) {

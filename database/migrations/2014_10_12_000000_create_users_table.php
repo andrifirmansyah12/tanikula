@@ -23,6 +23,8 @@ class CreateUsersTable extends Migration
             $table->dateTime('birth')->nullable();
             $table->bigInteger('telp')->nullable();
             $table->string('image')->nullable();
+            $table->string('token')->nullable();
+            $table->dateTime('token_expire')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

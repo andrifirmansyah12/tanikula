@@ -33,11 +33,14 @@
                     </div>
 
                     <div class="card-body">
+                        <div id="reset_alert"></div>
                         <form method="POST" action="#" id="reset_form">
                             @csrf
+                            <input type="hidden" name="email" value="{{ $email }}">
+                            <input type="hidden" name="token" value="{{ $token }}">
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input id="email" type="email" class="form-control" name="email" placeholder="E-mail"
+                                <input id="email" type="email" class="form-control" name="email" disabled value="{{ $email }}" placeholder="E-mail"
                                     required autofocus>
                                 <div class="invalid-feedback">
                                 </div>
@@ -82,7 +85,37 @@
 
 <!-- JAVASCRIPT -->
 <script>
-
+    $(function() {
+        $("#reset_form").submit(function(e) {
+            e.preventDefault();
+            $("#reset_btn").val('Silahkan Tunggu..');
+            $("#reset_btn").prop('disabled', true);
+            $.ajax({
+                url: '{{ route('resetPassword') }}',
+                method: 'POST',
+                data: $(this).serialize(),
+                dataType: 'json',
+                success: function(res){
+                    if (res.status == 400) {
+                        showError('npass', res.messages.npass);
+                        showError('cnpass', res.messages.cnpass);
+                        $("#reset_btn").val("Update Password");
+                        $("#reset_btn").prop('disabled', false);
+                    } else if (res.status == 401){
+                        $("#forgot_alert").html(showMessage('danger', res.messages));
+                        $("#reset_btn").val("Update Password");
+                        $("#reset_btn").prop('disabled', false);
+                        removeValidationClasses("#reset_form");
+                    } else {
+                        $("#reset_form")[0].reset();
+                        $("#reset_alert").html(showMessage('success', res.messages));
+                        $("#reset_btn").val("Update Password");
+                        $("#reset_btn").prop('disabled', false);
+                    }
+                }
+            });
+        });
+    });
 
 </script>
 @endsection

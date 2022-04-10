@@ -33,7 +33,23 @@
                     </div>
 
                     <div class="card-body">
-                        <div id="login_alert"></div>
+                        @if(session()->has('message'))
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>{{ session('message') }}</strong>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @elseif(session()->has('messageDanger'))
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>{{ session('messageDanger') }}</strong>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @else
+                            <div id="login_alert"></div>
+                        @endif
                         <form method="POST" action="#" id="login_form">
                             @csrf
                             <div class="form-group">
