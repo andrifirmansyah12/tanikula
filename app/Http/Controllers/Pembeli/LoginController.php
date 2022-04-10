@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
+use App\Models\UserVerify;
+use Illuminate\Support\Str;
+use Session;
+use Mail;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
@@ -37,10 +41,18 @@ class LoginController extends Controller
                 if(Hash::check($request->password, $user->password)) {
                     if (auth()->attempt($credentials)) {
                         if (auth()->check() && $user->hasRole('pembeli')) {
-                            return response()->json([
-                                'status' => 200,
-                                'messages' => 'success'
-                            ]);
+                            if (!Auth::user()->is_email_verified) {
+                                auth()->logout();
+                                return response()->json([
+                                    'status' => 401,
+                                    'messages' => 'Anda perlu mengkonfirmasi akun Anda. Kami telah mengirimkan kode aktivasi, silakan periksa email Anda!'
+                                ]);
+                            } else {
+                                return response()->json([
+                                    'status' => 200,
+                                    'messages' => 'success'
+                                ]);
+                            }
                         } else {
                             \Auth::logout();
                             return response()->json([
@@ -96,6 +108,18 @@ class LoginController extends Controller
             $user->password = Hash::make($request->password);
             $user->assignRole('pembeli');
             $user->save();
+
+            $token = Str::random(64);
+            UserVerify::create([
+              'user_id' => $user->id,
+              'token' => $token
+            ]);
+
+            Mail::send('costumer.register.emailVerificationEmail', ['token' => $token], function($message) use($request){
+                $message->to($request->email);
+                $message->subject('Verifikasi Email');
+            });
+
             return response()->json([
                 'status' => 200,
                 'messages' => 'Akun Anda Berhasil Terdaftar'
@@ -105,6 +129,27 @@ class LoginController extends Controller
 
     public function register() {
         return view('costumer.register.index');
+    }
+
+    public function verifyAccount($token)
+    {
+        $verifyUser = UserVerify::where('token', $token)->first();
+
+        $message = 'Sorry your email cannot be identified.';
+
+        if(!is_null($verifyUser) ){
+            $user = $verifyUser->user;
+
+            if(!$user->is_email_verified) {
+                $verifyUser->user->is_email_verified = 1;
+                $verifyUser->user->save();
+                $message = "Your e-mail is verified. You can now login.";
+            } else {
+                $message = "Your e-mail is already verified. You can now login.";
+            }
+        }
+
+      return redirect()->route('login')->with('message', $message);
     }
 
     public function forgotPassword() {
