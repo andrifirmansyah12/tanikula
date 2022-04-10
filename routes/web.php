@@ -115,20 +115,21 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function(
 });
 
 // Login Pembeli
-route::get('/login', [App\Http\Controllers\Pembeli\LoginController::class, 'login'])->name('login');
-route::post('/login', [App\Http\Controllers\Pembeli\LoginController::class, 'loginPembeli'])->name('loginPembeli-pembeli');
-route::get('/register', [App\Http\Controllers\Pembeli\LoginController::class, 'register'])->name('register-pembeli');
-route::post('/register', [App\Http\Controllers\Pembeli\LoginController::class, 'registerPembeli'])->name('registerPembeli-pembeli');
-route::get('/forgot-password', [App\Http\Controllers\Pembeli\LoginController::class, 'forgotPassword'])->name('forgotPassword-pembeli');
-route::get('/reset-password', [App\Http\Controllers\Pembeli\LoginController::class, 'resetPassword'])->name('resetPassword-pembeli');
-route::post('/logout', [App\Http\Controllers\Pembeli\LoginController::class, 'logout'])->name('logout');
+Route::get('/login', [App\Http\Controllers\Pembeli\LoginController::class, 'login'])->name('login');
+Route::post('/login', [App\Http\Controllers\Pembeli\LoginController::class, 'loginPembeli'])->name('loginPembeli-pembeli');
+Route::get('/register', [App\Http\Controllers\Pembeli\LoginController::class, 'register'])->name('register-pembeli');
+Route::post('/register', [App\Http\Controllers\Pembeli\LoginController::class, 'registerPembeli'])->name('registerPembeli-pembeli');
+Route::get('/forgot-password', [App\Http\Controllers\Pembeli\LoginController::class, 'forgotPassword'])->name('forgotPassword-pembeli');
+Route::get('/reset-password', [App\Http\Controllers\Pembeli\LoginController::class, 'resetPassword'])->name('resetPassword-pembeli');
+Route::post('/logout', [App\Http\Controllers\Pembeli\LoginController::class, 'logout'])->name('logout');
+Route::get('account/verify/{token}', [App\Http\Controllers\Pembeli\LoginController::class, 'verifyAccount'])->name('user.verify');
 
 // Login Gapoktan Poktan dan Petani
-route::get('/login-srimakmur', [App\Http\Controllers\Gapoktan\LoginController::class, 'login'])->name('login-srimakmur');
-route::post('/login-srimakmur', [App\Http\Controllers\Gapoktan\LoginController::class, 'loginSrimakmur'])->name('login-srimakmur');
-route::get('/register-srimakmur', [App\Http\Controllers\Gapoktan\LoginController::class, 'register'])->name('register-srimakmur');
-route::post('/register-srimakmur', [App\Http\Controllers\Gapoktan\LoginController::class, 'registerSrimakmur'])->name('registerSrimakmur-srimakmur');
-route::post('/logout-srimakmur', [App\Http\Controllers\Gapoktan\LoginController::class, 'logout'])->name('logout-srimakmur');
+Route::get('/login-srimakmur', [App\Http\Controllers\Gapoktan\LoginController::class, 'login'])->name('login-srimakmur');
+Route::post('/login-srimakmur', [App\Http\Controllers\Gapoktan\LoginController::class, 'loginSrimakmur'])->name('login-srimakmur');
+Route::get('/register-srimakmur', [App\Http\Controllers\Gapoktan\LoginController::class, 'register'])->name('register-srimakmur');
+Route::post('/register-srimakmur', [App\Http\Controllers\Gapoktan\LoginController::class, 'registerSrimakmur'])->name('registerSrimakmur-srimakmur');
+Route::post('/logout-srimakmur', [App\Http\Controllers\Gapoktan\LoginController::class, 'logout'])->name('logout-srimakmur');
 
 // Edukasi Page
 Route::get('/edukasi', [App\Http\Controllers\Pages\EducationController::class, 'index']);
