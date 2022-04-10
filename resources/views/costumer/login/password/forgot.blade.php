@@ -25,9 +25,10 @@
                     </div>
 
                     <div class="card-body">
-                        <p class="text-muted">We will send a link to reset your password</p>
+                        <div id="forgot_alert"></div>
                         <form method="POST" action="#" id="forgot_form">
                         @csrf
+                            <p class="text-muted">Kami akan mengirimkan tautan untuk mengatur ulang kata sandi Anda</p>
                             <div class="form-group">
                                 <label for="email">Email</label>
                                 <input id="email" type="email" class="form-control" name="email" placeholder="E-mail" tabindex="1" required
@@ -39,7 +40,7 @@
                             </div>
                         </form>
                         <div class="mt-3 text-muted text-center">
-                            Kembali ke <a href="{{ route('login-pembeli') }}" class="text-decoration-none">Halaman Masuk</a>
+                            Kembali ke <a href="{{ route('login') }}" class="text-decoration-none">Halaman Masuk</a>
                         </div>
                     </div>
                 </div>
@@ -59,7 +60,35 @@
 
 <!-- JAVASCRIPT -->
 <script>
-
-
+    $(function() {
+        $("#forgot_form").submit(function(e) {
+            e.preventDefault();
+            $("#forgot_btn").val('Silahkan Tunggu..');
+            $("#forgot_btn").prop('disabled', true);
+            $.ajax({
+                url: '{{ route('forgotPasswordEmail-pembeli') }}',
+                method: 'POST',
+                data: $(this).serialize(),
+                dataType: 'json',
+                success: function(res){
+                    if (res.status == 400) {
+                        showError('email', res.messages.email);
+                        $("#forgot_btn").val("Reset Password");
+                        $("#forgot_btn").prop('disabled', false);
+                    } else if (res.status == 200){
+                        $("#forgot_alert").html(showMessage('success', res.messages));
+                        $("#forgot_btn").val("Reset Password");
+                        $("#forgot_btn").prop('disabled', false);
+                        removeValidationClasses("#forgot_form");
+                        $("#forgot_form")[0].reset();
+                    } else {
+                        $("#forgot_btn").val("Reset Password");
+                        $("#forgot_btn").prop('disabled', false);
+                        $("#forgot_alert").html(showMessage('danger', res.messages));
+                    }
+                }
+            });
+        });
+    });
 </script>
 @endsection

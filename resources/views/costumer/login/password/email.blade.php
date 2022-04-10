@@ -1,5 +1,5 @@
 @extends('components.auth.template')
-@section('title', 'Verifikasi Email')
+@section('title', 'Password Reset')
 
 @section('style')
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -15,13 +15,13 @@
             <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h1>Verifikasi Email</h1>
+                        <h1>Reset password Anda</h1>
                     </div>
 
                     <div class="card-body">
-                        <p class="text-muted">Silakan verifikasi email Anda dengan tautan di bawah ini: </p>
+                        <p class="text-muted">Klik tautan di bawah ini untuk mengatur ulang kata sandi Anda: </p>
                         <div class="form-group">
-                            <a href="{{ route('user.verify', $token) }}" class="btn btn-primary btn-lg btn-block">Verifikasi Email</a>
+                            <a href="{{ $details['body'] }}" class="btn btn-primary btn-lg btn-block">Reset Password</a>
                         </div>
                     </div>
                 </div>
