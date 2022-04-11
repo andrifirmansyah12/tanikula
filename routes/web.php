@@ -53,7 +53,30 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:gapoktan']], function
     Route::post('gapoktan/kategori-edukasi/update', [App\Http\Controllers\Gapoktan\EducationCategoryController::class, 'update'])->name('gapoktan-kategoriEdukasi-update');
     Route::get('gapoktan/kategori-edukasi/checkSlug', [App\Http\Controllers\Gapoktan\EducationCategoryController::class, 'checkSlug'])->name('gapoktan-kategoriEdukasi-checkSlug');
 
-    Route::resource('gapoktan/kategori-produk', App\Http\Controllers\Gapoktan\CategoryController::class)->except(['show','update']);
+    Route::get('gapoktan/kegiatan', [App\Http\Controllers\Gapoktan\ActivityController::class, 'index'])->name('gapoktan-kegiatan');
+    Route::post('gapoktan/kegiatan/store', [App\Http\Controllers\Gapoktan\ActivityController::class, 'store'])->name('gapoktan-kegiatan-store');
+    Route::get('gapoktan/kegiatan/fetchall', [App\Http\Controllers\Gapoktan\ActivityController::class, 'fetchAll'])->name('gapoktan-kegiatan-fetchAll');
+    Route::delete('gapoktan/kegiatan/delete', [App\Http\Controllers\Gapoktan\ActivityController::class, 'delete'])->name('gapoktan-kegiatan-delete');
+    Route::get('gapoktan/kegiatan/edit', [App\Http\Controllers\Gapoktan\ActivityController::class, 'edit'])->name('gapoktan-kegiatan-edit');
+    Route::post('gapoktan/kegiatan/update', [App\Http\Controllers\Gapoktan\ActivityController::class, 'update'])->name('gapoktan-kegiatan-update');
+    Route::get('gapoktan/kegiatan/checkSlug', [App\Http\Controllers\Gapoktan\ActivityController::class, 'checkSlug'])->name('gapoktan-kegiatan-checkSlug');
+
+    Route::get('gapoktan/kategori-kegiatan', [App\Http\Controllers\Gapoktan\ActivityCategoryController::class, 'index'])->name('gapoktan-kategoriKegiatan');
+    Route::post('gapoktan/kategori-kegiatan/store', [App\Http\Controllers\Gapoktan\ActivityCategoryController::class, 'store'])->name('gapoktan-kategoriKegiatan-store');
+    Route::get('gapoktan/kategori-kegiatan/fetchall', [App\Http\Controllers\Gapoktan\ActivityCategoryController::class, 'fetchAll'])->name('gapoktan-kategoriKegiatan-fetchAll');
+    Route::delete('gapoktan/kategori-kegiatan/delete', [App\Http\Controllers\Gapoktan\ActivityCategoryController::class, 'delete'])->name('gapoktan-kategoriKegiatan-delete');
+    Route::get('gapoktan/kategori-kegiatan/edit', [App\Http\Controllers\Gapoktan\ActivityCategoryController::class, 'edit'])->name('gapoktan-kategoriKegiatan-edit');
+    Route::post('gapoktan/kategori-kegiatan/update', [App\Http\Controllers\Gapoktan\ActivityCategoryController::class, 'update'])->name('gapoktan-kategoriKegiatan-update');
+    Route::get('gapoktan/kategori-kegiatan/checkSlug', [App\Http\Controllers\Gapoktan\ActivityCategoryController::class, 'checkSlug'])->name('gapoktan-kategoriKegiatan-checkSlug');
+
+    Route::get('gapoktan/kategori-produk', [App\Http\Controllers\Gapoktan\ProductCategoryController::class, 'index'])->name('gapoktan-kategoriProduk');
+    Route::post('gapoktan/kategori-produk/store', [App\Http\Controllers\Gapoktan\ProductCategoryController::class, 'store'])->name('gapoktan-kategoriProduk-store');
+    Route::get('gapoktan/kategori-produk/fetchall', [App\Http\Controllers\Gapoktan\ProductCategoryController::class, 'fetchAll'])->name('gapoktan-kategoriProduk-fetchAll');
+    Route::delete('gapoktan/kategori-produk/delete', [App\Http\Controllers\Gapoktan\ProductCategoryController::class, 'delete'])->name('gapoktan-kategoriProduk-delete');
+    Route::get('gapoktan/kategori-produk/edit', [App\Http\Controllers\Gapoktan\ProductCategoryController::class, 'edit'])->name('gapoktan-kategoriProduk-edit');
+    Route::post('gapoktan/kategori-produk/update', [App\Http\Controllers\Gapoktan\ProductCategoryController::class, 'update'])->name('gapoktan-kategoriProduk-update');
+    Route::get('gapoktan/kategori-produk/checkSlug', [App\Http\Controllers\Gapoktan\ProductCategoryController::class, 'checkSlug'])->name('gapoktan-kategoriProduk-checkSlug');
+
     Route::resource('gapoktan/kegiatan', App\Http\Controllers\Gapoktan\ActivityController::class)->except(['show','update']);
 
     Route::get('gapoktan/pengaturan', function() {
@@ -127,11 +150,11 @@ Route::post('/logout', [App\Http\Controllers\Pembeli\LoginController::class, 'lo
 Route::get('/account/verify/{token}', [App\Http\Controllers\Pembeli\LoginController::class, 'verifyAccount'])->name('user.verify');
 
 // Login Gapoktan Poktan dan Petani
-Route::get('/login-srimakmur', [App\Http\Controllers\Gapoktan\LoginController::class, 'login'])->name('login-srimakmur');
-Route::post('/login-srimakmur', [App\Http\Controllers\Gapoktan\LoginController::class, 'loginSrimakmur'])->name('login-srimakmur');
-Route::get('/register-srimakmur', [App\Http\Controllers\Gapoktan\LoginController::class, 'register'])->name('register-srimakmur');
-Route::post('/register-srimakmur', [App\Http\Controllers\Gapoktan\LoginController::class, 'registerSrimakmur'])->name('registerSrimakmur-srimakmur');
-Route::post('/logout-srimakmur', [App\Http\Controllers\Gapoktan\LoginController::class, 'logout'])->name('logout-srimakmur');
+Route::get('/srimakmur/login', [App\Http\Controllers\Gapoktan\LoginController::class, 'login'])->name('login-srimakmur');
+Route::post('/srimakmur/login', [App\Http\Controllers\Gapoktan\LoginController::class, 'loginSrimakmur'])->name('login-srimakmur');
+Route::get('/srimakmur/register', [App\Http\Controllers\Gapoktan\LoginController::class, 'register'])->name('register-srimakmur');
+Route::post('/srimakmur/register', [App\Http\Controllers\Gapoktan\LoginController::class, 'registerSrimakmur'])->name('registerSrimakmur-srimakmur');
+Route::post('/srimakmur/logout', [App\Http\Controllers\Gapoktan\LoginController::class, 'logout'])->name('logout-srimakmur');
 
 // Edukasi Page
 Route::get('/edukasi', [App\Http\Controllers\Pages\EducationController::class, 'index']);

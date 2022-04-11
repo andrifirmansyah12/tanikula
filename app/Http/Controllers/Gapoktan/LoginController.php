@@ -110,7 +110,7 @@ class LoginController extends Controller
             $user->name = $request->name;
             $user->email = $request->email;
             $user->password = Hash::make($request->password);
-            $user->assignRole('pembeli');
+            $user->assignRole('gapoktan');
             $user->save();
             return response()->json([
                 'status' => 200,
