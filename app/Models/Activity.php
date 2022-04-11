@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class Activity extends Model
 {
-    use HasFactory;
+    use Sluggable, HasFactory;
 
     protected $guarded = ['id'];
 
@@ -19,6 +20,20 @@ class Activity extends Model
     public function activity_category()
     {
         return $this->belongsTo(ActivityCategory::class, 'category_activity_id');
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    public function sluggable()
+    {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
     }
     // protected $table = 'activities';
     // protected $fillable = [

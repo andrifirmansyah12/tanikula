@@ -26,6 +26,10 @@
                 <span>Edukasi</span></a>
         </li>
         <li class="nav-item dropdown">
+            <a href="{{ url('gapoktan/kategori-kegiatan') }}" class="nav-link "><i class=""></i>
+                <span>Kategori Kegiatan</span></a>
+        </li>
+        <li class="nav-item dropdown">
             <a href="{{ url('gapoktan/kegiatan') }}" class="nav-link "><i class=""></i>
                 <span>Kegiatan</span></a>
         </li>

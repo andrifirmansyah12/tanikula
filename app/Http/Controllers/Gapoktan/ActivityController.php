@@ -5,111 +5,113 @@ namespace App\Http\Controllers\Gapoktan;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Activity;
+use App\Models\ActivityCategory;
+use Illuminate\Support\Facades\Storage;
+use \Cviebrock\EloquentSluggable\Services\SlugService;
+use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class ActivityController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
+    // set index page view
+	public function index() {
+		$category = ActivityCategory::all();
+		return view('gapoktan.kegiatan.index', compact('category'));
+	}
+
+    // handle fetch all eamployees ajax request
+	public function fetchAll() {
+		$emps = Activity::where('user_id', auth()->user()->id)->with('activity_category')->latest()->get();
+		$output = '';
+		if ($emps->count() > 0) {
+			$output .= '<table class="table table-striped table-sm text-center align-middle">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Judul</th>
+                <th>Kategori Kegiatan</th>
+                <th>Tanggal</th>
+                <th>Deskripsi</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody>';
+            $nomor=1;
+			foreach ($emps as $emp) {
+				$output .= '<tr>';
+                $output .= '<td>' . $nomor++ . '</td>';
+                $output .= '<td>' . $emp->title . '</td>';
+                if (empty($emp->activity_category->name)) {
+                    $output .= '<td><a class="text-danger">Tidak ada kategori</a></p>';
+                } else {
+                    $output .= '<td>' . $emp->activity_category->name . '</td>';
+                }
+                $output .= '<td>' . date("d F Y", strtotime($emp->date)) . '</td>
+                <td>' . $emp->desc . '</td>
+                <td>
+                  <a href="#" id="' . $emp->id . '" class="text-success mx-1 editIcon" data-toggle="modal" data-target="#editEmployeeModal"><i class="bi-pencil-square h4"></i></a>
+                  <a href="#" id="' . $emp->id . '" class="text-danger mx-1 deleteIcon"><i class="bi-trash h4"></i></a>
+                </td>
+              </tr>';
+			}
+			$output .= '</tbody></table>';
+			echo $output;
+		} else {
+			echo '<h1 class="text-center text-secondary my-5">Tidak ada data kegiatan!</h1>';
+		}
+	}
+
+    // handle insert a new employee ajax request
+	public function store(Request $request) {
+
+        $empData = ['title' => $request->title, 'slug' => $request->slug, 'category_activity_id' => $request->category_activity_id, 'desc' => $request->desc];
+
+        $empData['date'] = Carbon::now()->format('Y-m-d');
+        $empData['user_id'] = auth()->user()->id;
+		Activity::create($empData);
+		return response()->json([
+			'status' => 200,
+		]);
+	}
+
+    // handle edit an employee ajax request
+	public function edit(Request $request) {
+		$id = $request->id;
+		$emp = Activity::find($id);
+		return response()->json($emp);
+	}
+
+	// handle update an employee ajax request
+	public function update(Request $request)
     {
-        $activities = Activity::latest()->get();
-        if($request->ajax()){
-            return datatables()->of($activities)
-            ->addColumn('action', function($data){
-                            $button = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$data->id.'" data-original-title="Edit" class="edit btn btn-info btn-sm edit-post"><i class="far fa-edit"></i> Edit</a>';
-                            $button .= '&nbsp;&nbsp;';
-                            $button .= '<button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-danger btn-sm"><i class="far fa-trash-alt"></i> Delete</button>';
-                            return $button;
-                        })
-                        ->rawColumns(['action'])
-                        ->addIndexColumn()
-            ->make(true);
-        }
-        return view('gapoktan.kegiatan.index');
-    }
+        $emp = Activity::find($request->emp_id);
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+        $empData = ['title' => $request->title, 'slug' => $request->slug, 'category_activity_id' => $request->category_activity_id, 'desc' => $request->desc];
+
+        $empData['date'] = Carbon::now()->format('Y-m-d');
+        $empData['user_id'] = auth()->user()->id;
+		$emp->update($empData);
+		return response()->json([
+			'status' => 200,
+		]);
+	}
+
+    // handle delete an employee ajax request
+	public function delete(Request $request)
     {
-        return view('gapoktan.kegiatan.add');
-    }
+		$id = $request->id;
+		$emp = Activity::find($id);
+        $emp->delete();
+	}
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function checkSlug(Request $request)
     {
+        // Old version: without uniqueness
+        $slug = $request->title;
 
-        $validateData = $request->validate([
-            'name' => 'required|max:255',
-            'slug' => 'required|unique:activities',
-            'description' => 'required',
-            'image' => 'image|file|max:10000',
-        ]);
+        // New version: to generate unique slugs
+        $slug = SlugService::createSlug(Activity::class, 'slug', $request->title);
 
-        if($request->file('image')) {
-            $validateData['image'] = $request->file('image')->store('activity-images');
-        }
-
-        $validateData['user_id'] = auth()->user()->id;
-
-        Activity::create($validateData);
-
-        return view('gapoktan.kegiatan.index')->with('success', 'Kegiatan ditambahkan!');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return response()->json(['slug' => $slug]);
     }
 }

@@ -1,5 +1,5 @@
 @extends('gapoktan.template')
-@section('title', 'Kategori Edukasi')
+@section('title', 'Kategori Produk')
 
 @section('style')
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -51,7 +51,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tambah Kategori Edukasi</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Kategori Produk</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -80,7 +80,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tambah Kategori Edukasi</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Kategori Produk</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -128,7 +128,7 @@
     <!-- JAVASCRIPT -->
     <script>
         $('.nameCheck').change(function(e) {
-            $.get('{{ route('gapoktan-kategoriEdukasi-checkSlug') }}',
+            $.get('{{ route('gapoktan-kategoriProduk-checkSlug') }}',
             { 'name': $(this).val() },
                 function( data ) {
                     $('.slugCheck').val(data.slug);
@@ -155,7 +155,7 @@
                 $("#add_employee_btn").text('Tunggu..');
                 $("#add_employee_btn").prop('disabled', true);
                 $.ajax({
-                url: '{{ route('gapoktan-kategoriEdukasi-store') }}',
+                url: '{{ route('gapoktan-kategoriProduk-store') }}',
                 method: 'post',
                 data: fd,
                 cache: false,
@@ -166,7 +166,7 @@
                     if (response.status == 200) {
                     Swal.fire(
                         'Menambahkan!',
-                        'Kategori Edukasi Berhasil Ditambahkan!',
+                        'Kategori Produk Berhasil Ditambahkan!',
                         'success'
                     )
                     fetchAllEmployees();
@@ -184,7 +184,7 @@
                 e.preventDefault();
                 let id = $(this).attr('id');
                 $.ajax({
-                url: '{{ route('gapoktan-kategoriEdukasi-edit') }}',
+                url: '{{ route('gapoktan-kategoriProduk-edit') }}',
                 method: 'get',
                 data: {
                     id: id,
@@ -204,7 +204,7 @@
                 $("#edit_employee_btn").text('Tunggu..');
                 $("#edit_employee_btn").prop('disabled', true);
                 $.ajax({
-                url: '{{ route('gapoktan-kategoriEdukasi-update') }}',
+                url: '{{ route('gapoktan-kategoriProduk-update') }}',
                 method: 'post',
                 data: fd,
                 cache: false,
@@ -215,7 +215,7 @@
                     if (response.status == 200) {
                     Swal.fire(
                         'Memperbarui!',
-                        'Kategori Edukasi Berhasil Diperbarui!',
+                        'Kategori Produk Berhasil Diperbarui!',
                         'success'
                     )
                     fetchAllEmployees();
@@ -245,7 +245,7 @@
                 }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                    url: '{{ route('gapoktan-kategoriEdukasi-delete') }}',
+                    url: '{{ route('gapoktan-kategoriProduk-delete') }}',
                     method: 'delete',
                     data: {
                         id: id,
@@ -270,7 +270,7 @@
 
             function fetchAllEmployees() {
                 $.ajax({
-                url: '{{ route('gapoktan-kategoriEdukasi-fetchAll') }}',
+                url: '{{ route('gapoktan-kategoriProduk-fetchAll') }}',
                 method: 'get',
                 success: function(response) {
                     $("#show_all_employees").html(response);
