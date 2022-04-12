@@ -116,11 +116,21 @@
                         $("#login_btn").val('Masuk');
                         $("#login_btn").prop('disabled', false);
                     } else if (res.status == 401) {
-                        $("#login_alert").html(showMessage('danger', res.messages));
+                        // $("#login_alert").html(showMessage('danger', res.messages));
+                        iziToast.warning({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                            title: 'Peringatan',
+                            message: res.messages,
+                            position: 'topRight'
+                        });
                         $("#login_btn").val('Masuk');
                         $("#login_btn").prop('disabled', false);
                     } else {
-                        if(res.status == 200 && res.messages == 'success') {
+                        if(res.status == 200) {
+                            iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                                title: 'Berhasil',
+                                message: res.messages,
+                                position: 'topRight'
+                            });
                             window.location = '{{ route('pembeli') }}';
                         }
                     }

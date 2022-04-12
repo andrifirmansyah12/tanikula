@@ -102,13 +102,23 @@
                         $("#reset_btn").val("Update Password");
                         $("#reset_btn").prop('disabled', false);
                     } else if (res.status == 401){
-                        $("#forgot_alert").html(showMessage('danger', res.messages));
+                        // $("#forgot_alert").html(showMessage('danger', res.messages));
+                        iziToast.warning({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                            title: 'Peringatan',
+                            message: res.messages,
+                            position: 'topRight'
+                        });
                         $("#reset_btn").val("Update Password");
                         $("#reset_btn").prop('disabled', false);
                         removeValidationClasses("#reset_form");
                     } else {
                         $("#reset_form")[0].reset();
-                        $("#reset_alert").html(showMessage('success', res.messages));
+                        $("#reset_alert").html(showMessage('success', res.success));
+                        iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                            title: 'Berhasil',
+                            message: res.messages,
+                            position: 'topRight'
+                        });
                         $("#reset_btn").val("Update Password");
                         $("#reset_btn").prop('disabled', false);
                     }

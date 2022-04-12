@@ -30,7 +30,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <button type="button" class="btn btn-outline-success" data-toggle="modal"
+                                <button type="button" class="btn py-1 btn-success" data-toggle="modal"
                                     data-target="#addEmployeeModal">Tambah
                                     @yield('title')</button>
                             </div>
@@ -109,7 +109,7 @@
 
 @section('script')
     <!-- LIBARARY JS -->
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
+    {{-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script> --}}
     <script type="text/javascript" language="javascript"
         src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 
