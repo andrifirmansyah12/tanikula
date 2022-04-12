@@ -76,7 +76,12 @@
                         $("#forgot_btn").val("Reset Password");
                         $("#forgot_btn").prop('disabled', false);
                     } else if (res.status == 200){
-                        $("#forgot_alert").html(showMessage('success', res.messages));
+                        // $("#forgot_alert").html(showMessage('success', res.messages));
+                        iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                            title: 'Berhasil',
+                            message: res.messages,
+                            position: 'topRight'
+                        });
                         $("#forgot_btn").val("Reset Password");
                         $("#forgot_btn").prop('disabled', false);
                         removeValidationClasses("#forgot_form");
@@ -84,7 +89,12 @@
                     } else {
                         $("#forgot_btn").val("Reset Password");
                         $("#forgot_btn").prop('disabled', false);
-                        $("#forgot_alert").html(showMessage('danger', res.messages));
+                        // $("#forgot_alert").html(showMessage('danger', res.messages));
+                        iziToast.warning({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                            title: 'Peringatan',
+                            message: res.messages,
+                            position: 'topRight'
+                        });
                     }
                 }
             });

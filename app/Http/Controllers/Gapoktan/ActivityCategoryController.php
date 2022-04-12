@@ -43,7 +43,7 @@ class ActivityCategoryController extends Controller
 			$output .= '</tbody></table>';
 			echo $output;
 		} else {
-			echo '<h1 class="text-center text-secondary my-5">Tidak ada data Edukasi!</h1>';
+			echo '<h1 class="text-center text-secondary my-5">Tidak ada data Kategori Kegiatan!</h1>';
 		}
 	}
 
