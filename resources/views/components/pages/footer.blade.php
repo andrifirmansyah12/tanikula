@@ -10,10 +10,11 @@
                         <div class="single-footer f-link">
                             <h3>Ikuti Kami</h3>
                             <ul>
-                                <li><a href="javascript:void(0)"><i class="lni lni-facebook-filled"></i> Facebook</a>
+                                <li>
+                                    <a href="javascript:void(0)" class="mx-1"><i class="bi bi-facebook h4"></i></a>
+                                    <a href="javascript:void(0)" class="mx-1"><i class="bi bi-instagram h4"></i></a>
+                                    <a href="javascript:void(0)" class="mx-1"><i class="bi bi-whatsapp h4"></i></a>
                                 </li>
-                                <li><a href="javascript:void(0)"><i class="lni lni-instagram"></i> Instagram</a></li>
-                                <li><a href="javascript:void(0)"><i class="lni lni-whatsapp"></i> Whatsapp</a></li>
                             </ul>
                         </div>
                         <!-- End Single Widget -->

@@ -10,7 +10,7 @@
 
 @section('content')
 <section class="section">
-    <div class="container mt-5 mb-5">
+    <div class="container" style="margin-top: 80px; margin-bottom: 70px;">
         <div class="login-brand mb-5">
             <a href="{{ url('home') }}">
                 <h4>Sri Makmur</h4>
@@ -95,16 +95,36 @@
                         $("#login_btn").val('Masuk');
                         $("#login_btn").prop('disabled', false);
                     } else if (res.status == 401) {
-                        $("#login_alert").html(showMessage('danger', res.messages));
+                        // $("#login_alert").html(showMessage('danger', res.messages));
+                        iziToast.warning({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                            title: 'Peringatan',
+                            message: res.messages,
+                            position: 'topRight'
+                        });
                         $("#login_btn").val('Masuk');
                         $("#login_btn").prop('disabled', false);
                     } else {
-                        if(res.status == 200 && res.messages == 'success' && res.gapoktan == 'gapoktan') {
+                        if(res.status == 200 && res.gapoktan == 'gapoktan') {
+                            iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                                title: 'Berhasil',
+                                message: res.messages,
+                                position: 'topRight'
+                            });
                             window.location = '{{ route('gapoktan') }}';
-                        } else if(res.status == 200 && res.messages == 'success' && res.poktan == 'poktan') {
+                        } else if(res.status == 200 && res.poktan == 'poktan') {
+                            iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                                title: 'Berhasil',
+                                message: res.messages,
+                                position: 'topRight'
+                            });
                             window.location = '{{ route('poktan') }}';
-                        } else if(res.status == 200 && res.messages == 'success' && res.petani == 'petani') {
-                            window.location = '{{ route('poktan') }}';
+                        } else if(res.status == 200 && res.petani == 'petani') {
+                            iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                                title: 'Berhasil',
+                                message: res.messages,
+                                position: 'topRight'
+                            });
+                            window.location = '{{ route('petani') }}';
                         }
                     }
                 }
