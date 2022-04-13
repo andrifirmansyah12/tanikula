@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\Customer\LoginCustomerApiController;
+use App\Http\Controllers\Api\Customer\RegisterCustomerApiController;
 use App\Http\Controllers\Api\Gapoktan\ActivityApiController;
 use App\Http\Controllers\Api\Gapoktan\ActivityCategoryApiController;
 use App\Http\Controllers\Api\Gapoktan\EducationApiController;
@@ -22,6 +24,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// ------ Customer -----------
+Route::post('register-customer', [RegisterCustomerApiController::class, 'register']);
+Route::post('login-customer', [LoginCustomerApiController::class, 'login']);
+
+// ------ Gapoktan -----------
 // Education
 Route::resource('education', EducationApiController::class);
 Route::resource('education-category', EducationCategoryApiController::class);
