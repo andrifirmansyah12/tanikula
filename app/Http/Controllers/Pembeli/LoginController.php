@@ -52,12 +52,12 @@ class LoginController extends Controller
                                 auth()->logout();
                                 return response()->json([
                                     'status' => 401,
-                                    'messages' => 'Anda perlu mengkonfirmasi akun Anda. Kami telah mengirimkan kode aktivasi, silakan periksa email Anda!'
+                                    'messages' => 'Akun anda belum teraktivasi, silakan periksa email Anda!'
                                 ]);
                             } else {
                                 return response()->json([
                                     'status' => 200,
-                                    'messages' => 'success'
+                                    'messages' => 'Berhasil Masuk'
                                 ]);
                             }
                         } else {
@@ -249,7 +249,8 @@ class LoginController extends Controller
 
                 return response()->json([
                     'status' => 200,
-                    'messages' => 'Kata Sandi Baru Diperbarui!&nbsp;&nbsp;<a href="/login" class="text-decoration-none">Masuk Sekarang</a>'
+                    'success' => '<a href="/login" class="text-decoration-none">Masuk Sekarang</a>',
+                    'messages' => 'Kata Sandi Baru Diperbarui!'
                 ]);
             } else {
                 return response()->json([

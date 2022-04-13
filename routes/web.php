@@ -123,9 +123,13 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:petani']], function()
 // Pembeli
 Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function() {
 
-    Route::get('pembeli', function() {
-        return view('costumer.pengaturan.index');
-    })->name('pembeli');
+    Route::get('pembeli', [App\Http\Controllers\Pembeli\PengaturanController::class, 'pengaturan'])->name('pembeli');
+    Route::post('pembeli-image', [App\Http\Controllers\Pembeli\PengaturanController::class, 'pengaturanImage'])->name('pembeli.pengaturan.image');
+    Route::post('pembeli-update', [App\Http\Controllers\Pembeli\PengaturanController::class, 'pengaturanUpdate'])->name('pembeli.pengaturan.update');
+
+    // Route::get('pembeli', function() {
+    //     return view('costumer.pengaturan.index');
+    // })->name('pembeli');
 
     Route::get('pembeli/chat', function() {
         return view('costumer.chat.index');

@@ -113,7 +113,12 @@
                         $("#register_btn").val('Daftar');
                         $("#register_btn").prop('disabled', false);
                     } else if (res.status == 200) {
-                        $("#show_success_alert").html(showMessage('success', res.messages));
+                        // $("#show_success_alert").html(showMessage('success', res.messages));
+                        iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                            title: 'Berhasil',
+                            message: res.messages,
+                            position: 'topRight'
+                        });
                         $("#register_form")[0].reset();
                         removeValidationClasses("#register_form");
                         $("#register_btn").val('Daftar');
