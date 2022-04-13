@@ -40,21 +40,21 @@ class LoginController extends Controller
                             $gapoktan = $user->hasRole('gapoktan');
                             return response()->json([
                                 'status' => 200,
-                                'messages' => 'success',
+                                'messages' => 'Berhasil Masuk',
                                 'gapoktan' => 'gapoktan'
                             ]);
                         } else if (auth()->check() && $user->hasRole('poktan')) {
                             $poktan = $user->hasRole('poktan');
                             return response()->json([
                                 'status' => 200,
-                                'messages' => 'success',
+                                'messages' => 'Berhasil Masuk',
                                 'poktan' => 'poktan'
                             ]);
                         } else if (auth()->check() && $user->hasRole('petani')) {
                             $petani = $user->hasRole('petani');
                             return response()->json([
                                 'status' => 200,
-                                'messages' => 'success',
+                                'messages' => 'Berhasil Masuk',
                                 'petani' => 'petani'
                             ]);
                         } else {
@@ -73,7 +73,7 @@ class LoginController extends Controller
                 } else {
                     return response()->json([
                         'status' => 401,
-                        'messages' => 'Gagal Masuk!'
+                        'messages' => 'Email atau Kata Sandi salah!',
                     ]);
                 }
             } else {

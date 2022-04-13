@@ -249,7 +249,7 @@ class LoginController extends Controller
 
                 return response()->json([
                     'status' => 200,
-                    'success' => '<a href="/login" class="text-decoration-none">Masuk Sekarang</a>',
+                    'success' => '<span>Klik disini untuk <a href="/login" class="text-decoration" style="font-weight: bold; color: black;">Masuk Sekarang!</a></span>',
                     'messages' => 'Kata Sandi Baru Diperbarui!'
                 ]);
             } else {

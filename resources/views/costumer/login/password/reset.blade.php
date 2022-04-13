@@ -1,5 +1,5 @@
 @extends('components.auth.template')
-@section('title', 'Masuk')
+@section('title', 'Reset Password')
 
 @section('style')
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -11,7 +11,7 @@
 @section('content')
 
 <section class="section">
-    <div class="container mt-5">
+    <div class="container" style="margin-top: 80px; margin-bottom: 70px;">
         <div class="login-brand mb-5">
             <a href="{{ url('home') }}">
                 <h4>Sri Makmur</h4>
