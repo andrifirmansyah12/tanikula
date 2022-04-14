@@ -33,10 +33,6 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:gapoktan']], function
         return view('gapoktan.chat.index');
     })->name('gapoktan.chat');
 
-    Route::get('gapoktan/produk', function() {
-        return view('gapoktan.produk.index');
-    })->name('gapoktan.produk');
-
     Route::get('gapoktan/edukasi', [App\Http\Controllers\Gapoktan\EducationController::class, 'index'])->name('gapoktan-edukasi');
     Route::post('gapoktan/edukasi/store', [App\Http\Controllers\Gapoktan\EducationController::class, 'store'])->name('gapoktan-edukasi-store');
     Route::get('gapoktan/edukasi/fetchall', [App\Http\Controllers\Gapoktan\EducationController::class, 'fetchAll'])->name('gapoktan-edukasi-fetchAll');
@@ -76,6 +72,14 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:gapoktan']], function
     Route::get('gapoktan/kategori-produk/edit', [App\Http\Controllers\Gapoktan\ProductCategoryController::class, 'edit'])->name('gapoktan-kategoriProduk-edit');
     Route::post('gapoktan/kategori-produk/update', [App\Http\Controllers\Gapoktan\ProductCategoryController::class, 'update'])->name('gapoktan-kategoriProduk-update');
     Route::get('gapoktan/kategori-produk/checkSlug', [App\Http\Controllers\Gapoktan\ProductCategoryController::class, 'checkSlug'])->name('gapoktan-kategoriProduk-checkSlug');
+
+    Route::get('gapoktan/produk', [App\Http\Controllers\Gapoktan\ProductController::class, 'index'])->name('gapoktan-produk');
+    Route::post('gapoktan/produk/store', [App\Http\Controllers\Gapoktan\ProductController::class, 'store'])->name('gapoktan-produk-store');
+    Route::get('gapoktan/produk/fetchall', [App\Http\Controllers\Gapoktan\ProductController::class, 'fetchAll'])->name('gapoktan-produk-fetchAll');
+    Route::delete('gapoktan/produk/delete', [App\Http\Controllers\Gapoktan\ProductController::class, 'delete'])->name('gapoktan-produk-delete');
+    Route::get('gapoktan/produk/edit', [App\Http\Controllers\Gapoktan\ProductController::class, 'edit'])->name('gapoktan-produk-edit');
+    Route::post('gapoktan/produk/update', [App\Http\Controllers\Gapoktan\ProductController::class, 'update'])->name('gapoktan-produk-update');
+    Route::get('gapoktan/produk/checkSlug', [App\Http\Controllers\Gapoktan\ProductController::class, 'checkSlug'])->name('gapoktan-produk-checkSlug');
 
     Route::resource('gapoktan/kegiatan', App\Http\Controllers\Gapoktan\ActivityController::class)->except(['show','update']);
 

@@ -4,34 +4,37 @@ namespace App\Http\Controllers\Gapoktan;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Education;
-use App\Models\EducationCategory;
+use App\Models\ProductCategory;
+use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use Image;
 
-class EducationController extends Controller
+class ProductController extends Controller
 {
     // set index page view
 	public function index() {
-		$category = EducationCategory::all();
-		return view('gapoktan.edukasi.index', compact('category'));
+		$category = ProductCategory::all();
+		return view('gapoktan.produk.index', compact('category'));
 	}
 
     // handle fetch all eamployees ajax request
 	public function fetchAll() {
-		$emps = Education::where('user_id', auth()->user()->id)->with('education_category')->latest()->get();
+		$emps = Product::where('user_id', auth()->user()->id)->with('product_category')->latest()->get();
 		$output = '';
 		if ($emps->count() > 0) {
 			$output .= '<table class="table table-striped table-sm text-center align-middle">
             <thead>
               <tr>
                 <th>No</th>
-                <th>File</th>
-                <th>Judul</th>
-                <th>Kategori Edukasi</th>
-                <th>Tanggal</th>
+                <th>Foto</th>
+                <th>Kode</th>
+                <th>Nama</th>
+                <th>Kategori Produk</th>
+                <th>Stok</th>
+                <th>Harga</th>
                 <th>Deskripsi</th>
                 <th>Aksi</th>
               </tr>
@@ -41,21 +44,20 @@ class EducationController extends Controller
 			foreach ($emps as $emp) {
 				$output .= '<tr>';
                 $output .= '<td>' . $nomor++ . '</td>';
-                $ext = pathinfo($emp->file, PATHINFO_EXTENSION);
-                if ($ext == 'mp4' || $ext == 'mov' || $ext == 'vob' || $ext == 'mpeg' || $ext == '3gp' || $ext == 'avi' || $ext == 'wmv' || $ext == 'mov' || $ext == 'amv' || $ext == 'svi' || $ext == 'flv' || $ext == 'mkv' || $ext == 'webm' || $ext == 'gif' || $ext == 'asf') {
-                    $output .= '<td><video src="../storage/edukasi/' . $emp->file . '" frameborder="0" class="img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"></video></td>';
-                } elseif ($ext == 'PNG' || $ext == 'png' || $ext == 'jpg' || $ext == 'jpeg' || $ext == 'svg' || $ext == 'gif' || $ext == 'tiff' || $ext == 'psd' || $ext == 'pdf' || $ext == 'eps' || $ext == 'ai' || $ext == 'indd' || $ext == 'raw') {
-                    $output .= '<td><img src="../storage/edukasi/' . $emp->file . '" class="img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"></td>';
-                } elseif(empty($emp->file)) {
+                if (empty($emp->image)) {
                     $output .= '<td><img src="../stisla/assets/img/example-image.jpg" class="img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"></td>';
+                } else {
+                    $output .= '<td><img src="../storage/produk/' . $emp->image . '" class="img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"></td>';
                 }
-                $output .= '<td>' . $emp->title . '</td>';
-                if (empty($emp->education_category->name)) {
+                $output .= '<td>' . $emp->code . '</td>
+                <td>' . $emp->name . '</td>';
+                if (empty($emp->product_category->name)) {
                     $output .= '<td><a class="text-danger">Tidak ada kategori</a></p>';
                 } else {
-                    $output .= '<td>' . $emp->education_category->name . '</td>';
+                    $output .= '<td>' . $emp->product_category->name . '</td>';
                 }
-                $output .= '<td>' . date("d F Y", strtotime($emp->date)) . '</td>
+                $output .= '<td>' . $emp->stoke . '</td>
+                <td>' . $emp->price . '</td>
                 <td>' . $emp->desc . '</td>
                 <td>
                   <a href="#" id="' . $emp->id . '" class="text-success mx-1 editIcon" data-toggle="modal" data-target="#editEmployeeModal"><i class="bi-pencil-square h4"></i></a>
@@ -66,27 +68,27 @@ class EducationController extends Controller
 			$output .= '</tbody></table>';
 			echo $output;
 		} else {
-			echo '<h1 class="text-center text-secondary my-5">Tidak ada data Edukasi!</h1>';
+			echo '<h1 class="text-center text-secondary my-5">Tidak ada data Produk!</h1>';
 		}
 	}
 
     // handle insert a new employee ajax request
 	public function store(Request $request) {
-        if ($request->file('file')) {
-            $file = $request->file('file');
-		    $fileName = time() . '.' . $file->getClientOriginalExtension();
-		    $file->storeAs('edukasi', $fileName);
+        if ($request->file('image')) {
+            $image = $request->file('image');
+		    $fileName = time() . '.' . $image->getClientOriginalExtension();
+		    $image->storeAs('produk', $fileName);
 
-		    $empData = ['title' => $request->title, 'slug' => $request->slug, 'category_education_id' => $request->category_education_id, 'desc' => $request->desc, 'file' => $fileName];
+		    $empData = ['name' => $request->name, 'slug' => $request->slug, 'category_product_id' => $request->category_product_id, 'stoke' => $request->stoke, 'price' => $request->price, 'desc' => $request->desc, 'image' => $fileName];
         } else {
 
-		    $empData = ['title' => $request->title, 'slug' => $request->slug, 'category_education_id' => $request->category_education_id, 'desc' => $request->desc];
+		    $empData = ['name' => $request->name, 'slug' => $request->slug, 'category_product_id' => $request->category_product_id, 'stoke' => $request->stoke, 'price' => $request->price, 'desc' => $request->desc];
 
         }
 
-        $empData['date'] = Carbon::now()->format('Y-m-d');
+        $empData['code'] = random_int(1000, 9999);
         $empData['user_id'] = auth()->user()->id;
-		Education::create($empData);
+		Product::create($empData);
 		return response()->json([
 			'status' => 200,
 		]);
@@ -95,14 +97,14 @@ class EducationController extends Controller
     // handle edit an employee ajax request
 	public function edit(Request $request) {
 		$id = $request->id;
-		$emp = Education::find($id);
+		$emp = Product::find($id);
 		return response()->json($emp);
 	}
 
 	// handle update an employee ajax request
 	public function update(Request $request) {
 		$fileName = '';
-		$emp = Education::find($request->emp_id);
+		$emp = Product::find($request->emp_id);
 		if ($request->hasFile('file')) {
 			$file = $request->file('file');
 			$fileName = time() . '.' . $file->getClientOriginalExtension();
@@ -127,9 +129,9 @@ class EducationController extends Controller
     // handle delete an employee ajax request
 	public function delete(Request $request) {
 		$id = $request->id;
-		$emp = Education::find($id);
+		$emp = Product::find($id);
 		if (Storage::delete('edukasi/' . $emp->file)) {
-			Education::destroy($id);
+			Product::destroy($id);
 		} else {
             $emp->delete();
         }
@@ -138,12 +140,11 @@ class EducationController extends Controller
     public function checkSlug(Request $request)
     {
         // Old version: without uniqueness
-        $slug = $request->title;
+        $slug = $request->name;
 
         // New version: to generate unique slugs
-        $slug = SlugService::createSlug(Education::class, 'slug', $request->title);
+        $slug = SlugService::createSlug(Product::class, 'slug', $request->name);
 
         return response()->json(['slug' => $slug]);
     }
-
 }
