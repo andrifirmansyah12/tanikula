@@ -270,7 +270,7 @@
                     )
                     fetchAllEmployees();
                     }
-                    $("#add_employee_btn").text('Add Employee');
+                    $("#add_employee_btn").text('Simpan');
                     $("#add_employee_btn").prop('disabled', false);
                     $("#add_employee_form")[0].reset();
                     $("#addEmployeeModal").modal('hide');
@@ -338,7 +338,7 @@
                     )
                     fetchAllEmployees();
                     }
-                    $("#edit_employee_btn").text('Update Employee');
+                    $("#edit_employee_btn").text('Simpan');
                     $("#edit_employee_btn").prop('disabled', false);
                     $("#edit_employee_form")[0].reset();
                     $("#editEmployeeModal").modal('hide');
