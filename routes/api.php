@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Gapoktan\ActivityApiController;
 use App\Http\Controllers\Api\Gapoktan\ActivityCategoryApiController;
 use App\Http\Controllers\Api\Gapoktan\EducationApiController;
 use App\Http\Controllers\Api\Gapoktan\EducationCategoryApiController;
+use App\Http\Controllers\Api\ProductApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// All
+Route::resource('product', ProductApiController::class);
+
 
 // ------ Customer -----------
 Route::post('register-customer', [RegisterCustomerApiController::class, 'register']);

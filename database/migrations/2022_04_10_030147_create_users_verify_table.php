@@ -13,6 +13,7 @@ class CreateUsersVerifyTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('users_verify');
         Schema::create('users_verify', function (Blueprint $table) {
             $table->integer('user_id');
             $table->string('token');
