@@ -1,5 +1,5 @@
 @extends('components.auth.template')
-@section('title', 'Masuk')
+@section('title', 'Poktan | Masuk')
 
 @section('style')
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -10,7 +10,7 @@
 
 @section('content')
 <section class="section">
-    <div class="container mt-5 mb-5">
+    <div class="container" style="margin-top: 80px; margin-bottom: 70px;">
         <div class="login-brand mb-5">
             <a href="{{ url('home') }}">
                 <h4>Sri Makmur</h4>
@@ -47,11 +47,6 @@
                             <div class="form-group">
                                 <div class="d-block">
                                     <label for="password" class="control-label">Password</label>
-                                    <div class="float-right">
-                                        <a href="{{ route('forgotPassword-pembeli') }}" class="text-small">
-                                            Lupa Password?
-                                        </a>
-                                    </div>
                                 </div>
                                 <input id="password" type="password" class="form-control" name="password" placeholder="Password">
                                 <div class="invalid-feedback">
@@ -63,7 +58,7 @@
                             </div>
                         </form>
                         <div class="mt-3 text-muted text-center">
-                            Belum punya akun? <a href="{{ route('register-srimakmur') }}">Daftar</a>
+                            Belum punya akun? <a href="{{ route('register-poktan') }}">Daftar</a>
                         </div>
                     </div>
                 </div>
@@ -89,7 +84,7 @@
             $("#login_btn").val('Silahkan Tunggu...');
             $("#login_btn").prop('disabled', true);
             $.ajax({
-                url: '{{ route('login-srimakmur') }}',
+                url: '{{ route('login-poktan') }}',
                 method: 'POST',
                 data: $(this).serialize(),
                 dataType: 'json',
@@ -100,15 +95,21 @@
                         $("#login_btn").val('Masuk');
                         $("#login_btn").prop('disabled', false);
                     } else if (res.status == 401) {
-                        $("#login_alert").html(showMessage('danger', res.messages));
+                        // $("#login_alert").html(showMessage('danger', res.messages));
+                        iziToast.warning({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                            title: 'Peringatan',
+                            message: res.messages,
+                            position: 'topRight'
+                        });
                         $("#login_btn").val('Masuk');
                         $("#login_btn").prop('disabled', false);
                     } else {
-                        if(res.status == 200 && res.messages == 'success' && res.gapoktan == 'gapoktan') {
-                            window.location = '{{ route('gapoktan') }}';
-                        } else if(res.status == 200 && res.messages == 'success' && res.poktan == 'poktan') {
-                            window.location = '{{ route('poktan') }}';
-                        } else if(res.status == 200 && res.messages == 'success' && res.petani == 'petani') {
+                        if(res.status == 200) {
+                            iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                                title: 'Berhasil',
+                                message: res.messages,
+                                position: 'topRight'
+                            });
                             window.location = '{{ route('poktan') }}';
                         }
                     }

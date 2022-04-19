@@ -22,6 +22,9 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             UserSeeder::class,
             ProductCategorySeeder::class,
+            GapoktanSeeder::class,
+            PoktanSeeder::class,
+            FarmerSeeder::class,
             ProductSeeder::class
         ]);
 

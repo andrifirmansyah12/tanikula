@@ -1,5 +1,5 @@
 @extends('components.auth.template')
-@section('title', 'Daftar')
+@section('title', 'Gapoktan | Daftar')
 
 @section('style')
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -30,7 +30,7 @@
                         <div class="">
                             <h4>Daftar</h4>
                             <div class="">
-                                Sudah punya akun? <a href="{{ route('login-srimakmur') }}">Masuk</a>
+                                Sudah punya akun? <a href="{{ route('login-gapoktan') }}">Masuk</a>
                             </div>
                         </div>
                     </div>
@@ -41,14 +41,14 @@
                             @csrf
                             <div class="form-group">
                                 <label for="name">Nama Gapoktan</label>
-                                <input id="name" type="name" class="form-control" name="name" placeholder="Nama" autofocus>
+                                <input id="name" type="text" class="form-control" name="name" placeholder="Nama" autofocus>
                                 <div class="invalid-feedback">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="name">Nama Ketua</label>
-                                <input id="name" type="name" class="form-control" name="name" placeholder="Nama" autofocus>
+                                <label for="chairman">Nama Ketua</label>
+                                <input id="chairman" type="text" class="form-control" name="chairman" placeholder="Nama Ketua" autofocus>
                                 <div class="invalid-feedback">
                                 </div>
                             </div>
@@ -107,7 +107,7 @@
             $("#register_btn").val('Silahkan Tunggu...');
             $("#register_btn").prop('disabled', true);
             $.ajax({
-                url: '',
+                url: '{{ route('registerGapoktan-gapoktan') }}',
                 method: 'POST',
                 data: $(this).serialize(),
                 dataType: 'json',
@@ -115,12 +115,18 @@
                     if (res.status == 400) {
                         showError('name', res.messages.name);
                         showError('email', res.messages.email);
+                        showError('chairman', res.messages.chairman);
                         showError('password', res.messages.password);
                         showError('cpassword', res.messages.cpassword);
                         $("#register_btn").val('Daftar');
                         $("#register_btn").prop('disabled', false);
                     } else if (res.status == 200) {
-                        $("#show_success_alert").html(showMessage('success', res.messages));
+                        // $("#show_success_alert").html(showMessage('success', res.messages));
+                        iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                            title: 'Berhasil',
+                            message: res.messages,
+                            position: 'topRight'
+                        });
                         $("#register_form")[0].reset();
                         removeValidationClasses("#register_form");
                         $("#register_btn").val('Daftar');
