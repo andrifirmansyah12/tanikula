@@ -6,20 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Api\BaseApiController as BaseController;
 
-class ProductApiController extends Controller
+
+class ProductApiController extends BaseController
 {
     public function index()
     {
-        $data = Product::latest()->get();
+        $datas = Product::latest()->get();
 
-        $response = [
-            'success' => true,
-            'data'    => ProductResource::collection($data),
-            'message' => "Data fetched",
-        ];
-
-        return response()->json($response, 200);
+        $result = ProductResource::collection($datas);
+        return $this->sendResponse($result, 'Data fetched');
     }
 
     public function create()
@@ -34,9 +31,10 @@ class ProductApiController extends Controller
     }
 
 
-    public function show($id)
+    public function show($slug)
     {
-        //
+        $product = Product::where('slug',$slug)->firstOrfail();
+        return $this->sendResponse($product, 'Data fetched');
     }
 
 
