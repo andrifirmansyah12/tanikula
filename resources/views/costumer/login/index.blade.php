@@ -1,5 +1,5 @@
 @extends('components.auth.template')
-@section('title', 'Masuk')
+@section('title', 'Sri Makmur | Masuk')
 
 @section('style')
 <meta name="csrf-token" content="{{ csrf_token() }}">

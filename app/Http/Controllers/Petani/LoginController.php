@@ -4,6 +4,12 @@ namespace App\Http\Controllers\Petani;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use App\Models\User;
+use App\Models\Poktan;
+use App\Models\Farmer;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -11,7 +17,7 @@ class LoginController extends Controller
         return view('petani.login.index');
     }
 
-    public function loginSrimakmur(Request $request) {
+    public function loginPetani(Request $request) {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email|max:100',
             'password' => 'required|min:6|max:50',
@@ -35,13 +41,13 @@ class LoginController extends Controller
                         if (auth()->check() && $user->hasRole('petani')) {
                             return response()->json([
                                 'status' => 200,
-                                'messages' => 'success',
+                                'messages' => 'Berhasil Masuk',
                             ]);
                         } else {
                             \Auth::logout();
                             return response()->json([
                                 'status' => 401,
-                                'messages' => 'Hak akses untuk Petani!'
+                                'messages' => 'Hak akses hanya untuk Petani!'
                             ]);
                         }
                     } else {
@@ -53,7 +59,7 @@ class LoginController extends Controller
                 } else {
                     return response()->json([
                         'status' => 401,
-                        'messages' => 'Gagal Masuk!'
+                        'messages' => 'Email atau Kata Sandi salah!',
                     ]);
                 }
             } else {
@@ -65,7 +71,7 @@ class LoginController extends Controller
         }
     }
 
-    public function registerSrimakmur(Request $request) {
+    public function registerPetani(Request $request) {
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:50',
             'email' => 'required|email|unique:users|max:100',
@@ -92,6 +98,12 @@ class LoginController extends Controller
             $user->password = Hash::make($request->password);
             $user->assignRole('petani');
             $user->save();
+
+            $poktan_id = $request->poktan_id;
+            Farmer::create([
+              'user_id' => $user->id,
+              'poktan_id' => $poktan_id,
+            ]);
             return response()->json([
                 'status' => 200,
                 'messages' => 'Akun Anda Berhasil Terdaftar'
@@ -100,7 +112,8 @@ class LoginController extends Controller
     }
 
     public function register() {
-        return view('gapoktan.register.index');
+        $poktan = Poktan::all();
+        return view('petani.register.index', compact('poktan'));
     }
 
     public function logout(Request $request) {

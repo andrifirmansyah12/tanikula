@@ -1,5 +1,5 @@
 @extends('components.auth.template')
-@section('title', 'Masuk')
+@section('title', 'Gapoktan | Masuk')
 
 @section('style')
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -58,7 +58,7 @@
                             </div>
                         </form>
                         <div class="mt-3 text-muted text-center">
-                            Belum punya akun? <a href="{{ route('register-srimakmur') }}">Daftar</a>
+                            Belum punya akun? <a href="{{ route('register-gapoktan') }}">Daftar</a>
                         </div>
                     </div>
                 </div>
@@ -84,7 +84,7 @@
             $("#login_btn").val('Silahkan Tunggu...');
             $("#login_btn").prop('disabled', true);
             $.ajax({
-                url: '{{ route('login-srimakmur') }}',
+                url: '{{ route('login-gapoktan') }}',
                 method: 'POST',
                 data: $(this).serialize(),
                 dataType: 'json',
@@ -104,27 +104,13 @@
                         $("#login_btn").val('Masuk');
                         $("#login_btn").prop('disabled', false);
                     } else {
-                        if(res.status == 200 && res.gapoktan == 'gapoktan') {
+                        if(res.status == 200) {
                             iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
                                 title: 'Berhasil',
                                 message: res.messages,
                                 position: 'topRight'
                             });
                             window.location = '{{ route('gapoktan') }}';
-                        } else if(res.status == 200 && res.poktan == 'poktan') {
-                            iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
-                                title: 'Berhasil',
-                                message: res.messages,
-                                position: 'topRight'
-                            });
-                            window.location = '{{ route('poktan') }}';
-                        } else if(res.status == 200 && res.petani == 'petani') {
-                            iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
-                                title: 'Berhasil',
-                                message: res.messages,
-                                position: 'topRight'
-                            });
-                            window.location = '{{ route('petani') }}';
                         }
                     }
                 }

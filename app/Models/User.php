@@ -73,4 +73,19 @@ class User extends Authenticatable
     {
         return $this->hasMany(Wishlist::class);
     }
+
+    public function gapoktan()
+    {
+        return $this->hasMany(Gapoktan::class);
+    }
+
+    public function poktan()
+    {
+        return $this->hasMany(Poktan::class);
+    }
+
+    public function farmer()
+    {
+        return $this->hasMany(Farmer::class);
+    }
 }

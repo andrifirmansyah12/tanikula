@@ -1,5 +1,5 @@
 @extends('components.auth.template')
-@section('title', 'Daftar')
+@section('title', 'Poktan | Daftar')
 
 @section('style')
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -30,7 +30,7 @@
                         <div class="">
                             <h4>Daftar</h4>
                             <div class="">
-                                Sudah punya akun? <a href="{{ route('login') }}">Masuk</a>
+                                Sudah punya akun? <a href="{{ route('login-poktan') }}">Masuk</a>
                             </div>
                         </div>
                     </div>
@@ -40,15 +40,31 @@
                         <form method="POST" action="#" id="register_form">
                             @csrf
                             <div class="form-group">
-                                <label for="name">Nama Gapoktan</label>
-                                <input id="name" type="name" class="form-control" name="name" placeholder="Nama" autofocus>
+                                <label for="gapoktan_id">Nama Gapoktan</label>
+                                <select class="form-control select2" id="gapoktan_id" name="gapoktan_id" autofocus>
+                                    <option selected disabled>Pilih Gapoktan</option>
+                                    @foreach ($gapoktan as $item)
+                                        @if ( old('gapoktan_id') == $item->id )
+                                            <option value="{{ $item->id }}" selected>{{ $item->user->name }}</option>
+                                        @else
+                                            <option value="{{ $item->id }}">{{ $item->user->name }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
                                 <div class="invalid-feedback">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="name">Nama Ketua</label>
-                                <input id="name" type="name" class="form-control" name="name" placeholder="Nama" autofocus>
+                                <label for="name">Nama Poktan</label>
+                                <input id="name" type="text" class="form-control" name="name" placeholder="Nama" autofocus>
+                                <div class="invalid-feedback">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="chairman">Nama Ketua</label>
+                                <input id="chairman" type="text" class="form-control" name="chairman" placeholder="Nama Ketua" autofocus>
                                 <div class="invalid-feedback">
                                 </div>
                             </div>
@@ -107,7 +123,7 @@
             $("#register_btn").val('Silahkan Tunggu...');
             $("#register_btn").prop('disabled', true);
             $.ajax({
-                url: '{{ route('registerPembeli-pembeli') }}',
+                url: '{{ route('registerPoktan-poktan') }}',
                 method: 'POST',
                 data: $(this).serialize(),
                 dataType: 'json',
@@ -115,12 +131,19 @@
                     if (res.status == 400) {
                         showError('name', res.messages.name);
                         showError('email', res.messages.email);
+                        showError('gapoktan_id', res.messages.gapoktan_id);
+                        showError('chairman', res.messages.chairman);
                         showError('password', res.messages.password);
                         showError('cpassword', res.messages.cpassword);
                         $("#register_btn").val('Daftar');
                         $("#register_btn").prop('disabled', false);
                     } else if (res.status == 200) {
-                        $("#show_success_alert").html(showMessage('success', res.messages));
+                        // $("#show_success_alert").html(showMessage('success', res.messages));
+                        iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                            title: 'Berhasil',
+                            message: res.messages,
+                            position: 'topRight'
+                        });
                         $("#register_form")[0].reset();
                         removeValidationClasses("#register_form");
                         $("#register_btn").val('Daftar');

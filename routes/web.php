@@ -81,15 +81,18 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:gapoktan']], function
     Route::post('gapoktan/produk/update', [App\Http\Controllers\Gapoktan\ProductController::class, 'update'])->name('gapoktan-produk-update');
     Route::get('gapoktan/produk/checkSlug', [App\Http\Controllers\Gapoktan\ProductController::class, 'checkSlug'])->name('gapoktan-produk-checkSlug');
 
+    Route::get('gapoktan/daftar-poktan', [App\Http\Controllers\Gapoktan\PoktanController::class, 'index'])->name('gapoktan-poktan');
+    Route::post('gapoktan/daftar-poktan/store', [App\Http\Controllers\Gapoktan\PoktanController::class, 'store'])->name('gapoktan-poktan-store');
+    Route::get('gapoktan/daftar-poktan/fetchall', [App\Http\Controllers\Gapoktan\PoktanController::class, 'fetchAll'])->name('gapoktan-poktan-fetchAll');
+    Route::delete('gapoktan/daftar-poktan/delete', [App\Http\Controllers\Gapoktan\PoktanController::class, 'delete'])->name('gapoktan-poktan-delete');
+    Route::get('gapoktan/daftar-poktan/edit', [App\Http\Controllers\Gapoktan\PoktanController::class, 'edit'])->name('gapoktan-poktan-edit');
+    Route::post('gapoktan/daftar-poktan/update', [App\Http\Controllers\Gapoktan\PoktanController::class, 'update'])->name('gapoktan-poktan-update');
+
     Route::resource('gapoktan/kegiatan', App\Http\Controllers\Gapoktan\ActivityController::class)->except(['show','update']);
 
     Route::get('gapoktan/pengaturan', function() {
         return view('gapoktan.pengaturan.index');
     })->name('gapoktan.alamat');
-
-    Route::get('gapoktan/daftar-poktan', function() {
-        return view('gapoktan.poktan.index');
-    })->name('gapoktan.poktan');
 
     Route::get('gapoktan/daftar-petani', function() {
         return view('gapoktan.petani.index');
@@ -157,12 +160,26 @@ Route::post('/reset-password', [App\Http\Controllers\Pembeli\LoginController::cl
 Route::post('/logout', [App\Http\Controllers\Pembeli\LoginController::class, 'logout'])->name('logout');
 Route::get('/account/verify/{token}', [App\Http\Controllers\Pembeli\LoginController::class, 'verifyAccount'])->name('user.verify');
 
-// Login Gapoktan Poktan dan Petani
-Route::get('/srimakmur/login', [App\Http\Controllers\Gapoktan\LoginController::class, 'login'])->name('login-srimakmur');
-Route::post('/srimakmur/login', [App\Http\Controllers\Gapoktan\LoginController::class, 'loginSrimakmur'])->name('login-srimakmur');
-Route::get('/srimakmur/register', [App\Http\Controllers\Gapoktan\LoginController::class, 'register'])->name('register-srimakmur');
-Route::post('/srimakmur/register', [App\Http\Controllers\Gapoktan\LoginController::class, 'registerSrimakmur'])->name('registerSrimakmur-srimakmur');
-Route::post('/srimakmur/logout', [App\Http\Controllers\Gapoktan\LoginController::class, 'logout'])->name('logout-srimakmur');
+// Login Gapoktan
+Route::get('/gapoktan/login', [App\Http\Controllers\Gapoktan\LoginController::class, 'login'])->name('login-gapoktan');
+Route::post('/gapoktan/login', [App\Http\Controllers\Gapoktan\LoginController::class, 'loginGapoktan'])->name('login-gapoktan');
+Route::get('/gapoktan/register', [App\Http\Controllers\Gapoktan\LoginController::class, 'register'])->name('register-gapoktan');
+Route::post('/gapoktan/register', [App\Http\Controllers\Gapoktan\LoginController::class, 'registerGapoktan'])->name('registerGapoktan-gapoktan');
+Route::post('/gapoktan/logout', [App\Http\Controllers\Gapoktan\LoginController::class, 'logout'])->name('logout-gapoktan');
+
+// Login Poktan
+Route::get('/poktan/login', [App\Http\Controllers\Poktan\LoginController::class, 'login'])->name('login-poktan');
+Route::post('/poktan/login', [App\Http\Controllers\Poktan\LoginController::class, 'loginPoktan'])->name('login-poktan');
+Route::get('/poktan/register', [App\Http\Controllers\Poktan\LoginController::class, 'register'])->name('register-poktan');
+Route::post('/poktan/register', [App\Http\Controllers\Poktan\LoginController::class, 'registerPoktan'])->name('registerPoktan-poktan');
+Route::post('/poktan/logout', [App\Http\Controllers\Poktan\LoginController::class, 'logout'])->name('logout-poktan');
+
+// Login Petani
+Route::get('/petani/login', [App\Http\Controllers\Petani\LoginController::class, 'login'])->name('login-petani');
+Route::post('/petani/login', [App\Http\Controllers\Petani\LoginController::class, 'loginPetani'])->name('login-petani');
+Route::get('/petani/register', [App\Http\Controllers\Petani\LoginController::class, 'register'])->name('register-petani');
+Route::post('/petani/register', [App\Http\Controllers\Petani\LoginController::class, 'registerPetani'])->name('registerPetani-petani');
+Route::post('/petani/logout', [App\Http\Controllers\Petani\LoginController::class, 'logout'])->name('logout-petani');
 
 // Edukasi Page
 Route::get('/edukasi', [App\Http\Controllers\Pages\EducationController::class, 'index']);

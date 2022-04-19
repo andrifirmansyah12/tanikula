@@ -51,7 +51,7 @@ class EducationController extends Controller
                 }
                 $output .= '<td>' . $emp->title . '</td>';
                 if (empty($emp->education_category->name)) {
-                    $output .= '<td><a class="text-danger">Tidak ada kategori</a></p>';
+                    $output .= '<td><span class="text-danger">Tidak ada kategori</span></td>';
                 } else {
                     $output .= '<td>' . $emp->education_category->name . '</td>';
                 }
