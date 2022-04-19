@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\Customer\CartApiController;
 use App\Http\Controllers\Api\Customer\LoginCustomerApiController;
 use App\Http\Controllers\Api\Customer\RegisterCustomerApiController;
+use App\Http\Controllers\Api\Customer\WishlistApiController;
 use App\Http\Controllers\Api\Gapoktan\ActivityApiController;
 use App\Http\Controllers\Api\Gapoktan\ActivityCategoryApiController;
 use App\Http\Controllers\Api\Gapoktan\EducationApiController;
@@ -38,6 +39,9 @@ Route::post('login-customer', [LoginCustomerApiController::class, 'login']);
 // Cart
 Route::resource('cart', CartApiController::class);
 Route::get('cart/user_id/{user_id}', [CartApiController::class, 'indexByid']);
+// Wishlist
+Route::resource('wishlist', WishlistApiController::class);
+Route::get('wishlist/user_id/{user_id}', [WishlistApiController::class, 'indexByid']);
 
 // ------ Gapoktan -----------
 // Education
