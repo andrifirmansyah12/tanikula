@@ -61,7 +61,7 @@
                     <div class="modal-body p-4">
                         <div class="form-group my-2">
                             <label for="name">Nama</label>
-                            <input type="text" name="name" id="name" class="nameCheck form-control" placeholder="Nama" required>
+                            <input type="text" name="name" class="nameCheck form-control" placeholder="Nama" required>
                         </div>
                         <div class="form-group my-2">
                             <label>Kategori Produk</label>
@@ -132,7 +132,7 @@
                     <div class="modal-body p-4">
                         <div class="form-group my-2">
                             <label for="name">Nama</label>
-                            <input type="text" name="name" class="nameCheck form-control" placeholder="Nama" required>
+                            <input type="text" name="name" id="name" class="nameCheck form-control" placeholder="Nama" required>
                         </div>
                         <div class="form-group my-2">
                             <label>Kategori Produk</label>
@@ -169,7 +169,7 @@
 
                                 </div>
                             </div>
-                            <input type="file" name="file" id="files" accept="image/*, video/*" class="form-control">
+                            <input type="file" name="image" id="files" accept="image/*" class="form-control">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -298,7 +298,7 @@
                             </div>`);
                     }
                     $("#emp_id").val(response.id);
-                    $("#emp_avatar").val(response.file);
+                    $("#emp_avatar").val(response.image);
                 }
                 });
             });

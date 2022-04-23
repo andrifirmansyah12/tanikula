@@ -90,9 +90,13 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:gapoktan']], function
 
     Route::resource('gapoktan/kegiatan', App\Http\Controllers\Gapoktan\ActivityController::class)->except(['show','update']);
 
-    Route::get('gapoktan/pengaturan', function() {
-        return view('gapoktan.pengaturan.index');
-    })->name('gapoktan.alamat');
+    Route::get('gapoktan/pengaturan', [App\Http\Controllers\Gapoktan\PengaturanController::class, 'pengaturan'])->name('gapoktan-pengaturan');
+    Route::post('gapoktan/pengaturan-image', [App\Http\Controllers\Gapoktan\PengaturanController::class, 'pengaturanImage'])->name('gapoktan.pengaturan.image');
+    Route::post('gapoktan/pengaturan-update', [App\Http\Controllers\Gapoktan\PengaturanController::class, 'pengaturanUpdate'])->name('gapoktan.pengaturan.update');
+
+    // Route::get('gapoktan/pengaturan', function() {
+    //     return view('gapoktan.pengaturan.index');
+    // })->name('gapoktan.alamat');
 
     Route::get('gapoktan/daftar-petani', function() {
         return view('gapoktan.petani.index');
@@ -114,8 +118,6 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:poktan']], function()
     Route::get('poktan/edukasi/edit', [App\Http\Controllers\Poktan\EducationController::class, 'edit'])->name('poktan-edukasi-edit');
     Route::post('poktan/edukasi/update', [App\Http\Controllers\Poktan\EducationController::class, 'update'])->name('poktan-edukasi-update');
     Route::get('poktan/edukasi/checkSlug', [App\Http\Controllers\Poktan\EducationController::class, 'checkSlug'])->name('poktan-edukasi-checkSlug');
-
-
 });
 
 // Petani
@@ -185,41 +187,38 @@ Route::post('/petani/logout', [App\Http\Controllers\Petani\LoginController::clas
 Route::get('/edukasi', [App\Http\Controllers\Pages\EducationController::class, 'index']);
 Route::get('/edukasi/{education:slug}', [App\Http\Controllers\Pages\EducationController::class, 'show']);
 
-Route::get('/', function () {
-    return view('pages.home.index');
-})->name('home');
+Route::get('/', [App\Http\Controllers\Pages\ProductController::class, 'index']);
+Route::get('/home', [App\Http\Controllers\Pages\ProductController::class, 'index'])->name('home');
+Route::get('/product-category/{slug}', [App\Http\Controllers\Pages\ProductController::class, 'viewCategory'])->name('view.category');
+Route::get('/product-category/{category_slug}/{product_slug}', [App\Http\Controllers\Pages\ProductController::class, 'productView'])->name('view.product');
+Route::post('/add-to-cart', [App\Http\Controllers\Pembeli\CartController::class, 'addProduct']);
+Route::get('/cart', [App\Http\Controllers\Pembeli\CartController::class, 'viewCart']);
+Route::post('/delete-cart-item', [App\Http\Controllers\Pembeli\CartController::class, 'deleteCartItem']);
+Route::post('/update-cart-item', [App\Http\Controllers\Pembeli\CartController::class, 'updateCartItem']);
 
-Route::get('/home', function () {
-    return view('pages.home.index');
-})->name('home');
+// Route::get('/thank-you-purchasing', function () {
+//     return view('pages.checkout.purchasing');
+// });
 
-Route::get('/detail', function () {
-    return view('pages.home.detail');
-});
+// Route::get('/keranjang', function () {
+//     return view('pages.bag.index');
+// });
 
-Route::get('/thank-you-purchasing', function () {
-    return view('pages.checkout.purchasing');
-});
+// Route::get('/payment', function () {
+//     return view('pages.checkout.payment');
+// });
 
-Route::get('/keranjang', function () {
-    return view('pages.bag.index');
-});
+// Route::get('/kategori-edukasi', function () {
+//     return view('pages.edukasi.index');
+// });
 
-Route::get('/payment', function () {
-    return view('pages.checkout.payment');
-});
+// Route::get('/semua-kategori', function () {
+//     return view('pages.edukasi.allcategory');
+// });
 
-Route::get('/kategori-edukasi', function () {
-    return view('pages.edukasi.index');
-});
-
-Route::get('/semua-kategori', function () {
-    return view('pages.edukasi.allcategory');
-});
-
-Route::get('/galeri', function () {
-    return view('pages.edukasi.gallery');
-});
+// Route::get('/galeri', function () {
+//     return view('pages.edukasi.gallery');
+// });
 
 // Auth::routes();
 
