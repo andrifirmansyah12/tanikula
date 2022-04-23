@@ -2,47 +2,29 @@
 @section('title', 'Home')
 
 @section('content')
-    <section style="background-color: white;">
-        <div class="text-left container py-5">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section-title">
-                        <h2>Kategori Produk</h2>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-3 col-md-6 col-6">
-                    <div class="card text-center single-product" style="width: 10rem;">
-                        <div class="card-body">
-                            <img src="{{ asset('img/no-image.png') }}" alt="#" class="img-fluid"
-                                style="width: 5rem; height: 5rem;">
-                            <p class="card-title pt-2">Nama Kategori</p>
+    <section class="section" style="background-color: white;">
+        <div class="container pt-5">
+            <div class="card shadow bg-body rounded-full">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="section-title" style="margin-top: 30px; margin-left: 30px">
+                            <h2>Kategori Produk</h2>
                         </div>
                     </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6 col-6">
-                    <div class="card text-center single-product" style="width: 10rem;">
-                        <div class="card-body">
-                            <img src="{{ asset('img/no-image.png') }}" alt="#" class="img-fluid"
-                                style="width: 5rem; height: 5rem;">
-                            <p class="card-title pt-2">Nama Kategori</p>
-                        </div>
+                    @foreach ($category_product as $item)
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-12">
+                        <a style="color: #081828" href="{{ url('product-category/'.$item->slug) }}">
+                            <div class="card text-center single-product mx-5" style="margin-bottom: 30px;">
+                                <div class="card-body product-image">
+                                    <img src="{{ asset('img/Fibers.svg') }}" alt="#" class="img-fluid"
+                                        style="width: 5rem; height: 5rem;">
+                                    <p class="card-title pt-2">{{ $item->name }}</p>
+                                </div>
+                            </div>
+                        </a>
                     </div>
+                    @endforeach
                 </div>
-
-                <div class="col-lg-3 col-md-6 col-6">
-                    <div class="card text-center single-product" style="width: 10rem;">
-                        <div class="card-body">
-                            <img src="{{ asset('img/no-image.png') }}" alt="#" class="img-fluid"
-                                style="width: 5rem; height: 5rem;">
-                            <p class="card-title pt-2">Nama Kategori</p>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </div>
     </section>
@@ -52,28 +34,36 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <div class="section-title">
+                    <div class="d-flex align-items-center section-title">
                         <h2>Produk Terbaru</h2>
-                        {{-- <p>There are many variations of passages of Lorem Ipsum available, but the majority have
-                            suffered alteration in some form.</p> --}}
+                        <a href="">Lihat semua</a>
                     </div>
                 </div>
             </div>
             <div class="row">
+                @foreach ($product_new as $item)
                 <div class="col-lg-3 col-md-6 col-12">
                     <!-- Start Single Product -->
                     <div class="single-product">
                         <div class="product-image">
-                            <img src="{{ asset('img/no-image.png') }}" alt="#">
+                            <a href="">
+                                @if ($item->image)
+                                <img src="{{ asset('../storage/produk/'.$item->image) }}" alt="{{ $item->name }}"
+                                    style="width: 27rem; height: 15rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                @else
+                                <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->name }}"
+                                    style="width: 27rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                @endif
+                            </a>
                             <div class="button">
                                 <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
                                     Keranjang</a>
                             </div>
                         </div>
                         <div class="product-info">
-                            <span class="category">Nama Kategori</span>
+                            <span class="category">{{ $item->product_category->name }}</span>
                             <h4 class="title">
-                                <a href="product-grids.html">Produk</a>
+                                <a href="">{{ $item->name }}</a>
                             </h4>
                             <ul class="review">
                                 <li><i class="lni lni-star-filled"></i></li>
@@ -84,222 +74,13 @@
                                 <li><span>4.0 Ulasan(40)</span></li>
                             </ul>
                             <div class="price">
-                                <span>Rp. 50.000</span>
+                                <span>Rp. {{ number_format($item->price, 0) }}</span>
                             </div>
                         </div>
                     </div>
                     <!-- End Single Product -->
                 </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <!-- Start Single Product -->
-                    <div class="single-product">
-                        <div class="product-image">
-                            <img src="{{ asset('img/no-image.png') }}" alt="#">
-                            <div class="button">
-                                <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
-                                    Keranjang</a>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <span class="category">Nama Kategori</span>
-                            <h4 class="title">
-                                <a href="{{url('detail')}}">Produk</a>
-                            </h4>
-                            <ul class="review">
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star"></i></li>
-                                <li><span>4.0 Ulasan(40)</span></li>
-                            </ul>
-                            <div class="price">
-                                <span>Rp. 50.000</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Product -->
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <!-- Start Single Product -->
-                    <div class="single-product">
-                        <div class="product-image">
-                            <img src="{{ asset('img/no-image.png') }}" alt="#">
-                            <div class="button">
-                                <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
-                                    Keranjang</a>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <span class="category">Nama Kategori</span>
-                            <h4 class="title">
-                                <a href="product-grids.html">Produk</a>
-                            </h4>
-                            <ul class="review">
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star"></i></li>
-                                <li><span>4.0 Ulasan(40)</span></li>
-                            </ul>
-                            <div class="price">
-                                <span>Rp. 50.000</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Product -->
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <!-- Start Single Product -->
-                    <div class="single-product">
-                        <div class="product-image">
-                            <img src="{{ asset('img/no-image.png') }}" alt="#">
-                            <div class="button">
-                                <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
-                                    Keranjang</a>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <span class="category">Nama Kategori</span>
-                            <h4 class="title">
-                                <a href="product-grids.html">Produk</a>
-                            </h4>
-                            <ul class="review">
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star"></i></li>
-                                <li><span>4.0 Ulasan(40)</span></li>
-                            </ul>
-                            <div class="price">
-                                <span>Rp. 50.000</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Product -->
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <!-- Start Single Product -->
-                    <div class="single-product">
-                        <div class="product-image">
-                            <img src="{{ asset('img/no-image.png') }}" alt="#">
-                            <div class="button">
-                                <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
-                                    Keranjang</a>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <span class="category">Nama Kategori</span>
-                            <h4 class="title">
-                                <a href="product-grids.html">Produk</a>
-                            </h4>
-                            <ul class="review">
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star"></i></li>
-                                <li><span>4.0 Ulasan(40)</span></li>
-                            </ul>
-                            <div class="price">
-                                <span>Rp. 50.000</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Product -->
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <!-- Start Single Product -->
-                    <div class="single-product">
-                        <div class="product-image">
-                            <img src="{{ asset('img/no-image.png') }}" alt="#">
-                            <div class="button">
-                                <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
-                                    Keranjang</a>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <span class="category">Nama Kategori</span>
-                            <h4 class="title">
-                                <a href="product-grids.html">Produk</a>
-                            </h4>
-                            <ul class="review">
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star"></i></li>
-                                <li><span>4.0 Ulasan(40)</span></li>
-                            </ul>
-                            <div class="price">
-                                <span>Rp. 50.000</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Product -->
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <!-- Start Single Product -->
-                    <div class="single-product">
-                        <div class="product-image">
-                            <img src="{{ asset('img/no-image.png') }}" alt="#">
-                            <div class="button">
-                                <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
-                                    Keranjang</a>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <span class="category">Nama Kategori</span>
-                            <h4 class="title">
-                                <a href="product-grids.html">Produk</a>
-                            </h4>
-                            <ul class="review">
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star"></i></li>
-                                <li><span>4.0 Ulasan(40)</span></li>
-                            </ul>
-                            <div class="price">
-                                <span>Rp. 50.000</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Product -->
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <!-- Start Single Product -->
-                    <div class="single-product">
-                        <div class="product-image">
-                            <img src="{{ asset('img/no-image.png') }}" alt="#">
-                            <div class="button">
-                                <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
-                                    Keranjang</a>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <span class="category">Nama Kategori</span>
-                            <h4 class="title">
-                                <a href="product-grids.html">Produk</a>
-                            </h4>
-                            <ul class="review">
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star"></i></li>
-                                <li><span>4.0 Ulasan(40)</span></li>
-                            </ul>
-                            <div class="price">
-                                <span>Rp. 50.000</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Product -->
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -344,28 +125,32 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <div class="section-title">
+                    <div class="d-flex align-items-center section-title">
                         <h2>Berdasarkan Pencarianmu</h2>
-                        {{-- <p>There are many variations of passages of Lorem Ipsum available, but the majority have
-                            suffered alteration in some form.</p> --}}
+                        <a href="">Lihat semua</a>
                     </div>
                 </div>
             </div>
             <div class="row">
+                @foreach ($product_search as $item)
                 <div class="col-lg-3 col-md-6 col-12">
                     <!-- Start Single Product -->
                     <div class="single-product">
                         <div class="product-image">
-                            <img src="{{ asset('img/no-image.png') }}" alt="#">
+                            @if ($item->image)
+                                <img src="{{ asset('../storage/produk/'.$item->image) }}" alt="{{ $item->name }}" style="width: 27rem; height: 15rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                            @else
+                                <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->name }}" style="width: 27rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                            @endif
                             <div class="button">
                                 <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
                                     Keranjang</a>
                             </div>
                         </div>
                         <div class="product-info">
-                            <span class="category">Nama Kategori</span>
+                            <span class="category">{{ $item->product_category->name }}</span>
                             <h4 class="title">
-                                <a href="product-grids.html">Produk</a>
+                                <a href="product-grids.html">{{ $item->name }}</a>
                             </h4>
                             <ul class="review">
                                 <li><i class="lni lni-star-filled"></i></li>
@@ -376,222 +161,13 @@
                                 <li><span>4.0 Ulasan(40)</span></li>
                             </ul>
                             <div class="price">
-                                <span>Rp. 50.000</span>
+                                <span>Rp. {{ number_format($item->price, 0) }}</span>
                             </div>
                         </div>
                     </div>
                     <!-- End Single Product -->
                 </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <!-- Start Single Product -->
-                    <div class="single-product">
-                        <div class="product-image">
-                            <img src="{{ asset('img/no-image.png') }}" alt="#">
-                            <div class="button">
-                                <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
-                                    Keranjang</a>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <span class="category">Nama Kategori</span>
-                            <h4 class="title">
-                                <a href="product-grids.html">Produk</a>
-                            </h4>
-                            <ul class="review">
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star"></i></li>
-                                <li><span>4.0 Ulasan(40)</span></li>
-                            </ul>
-                            <div class="price">
-                                <span>Rp. 50.000</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Product -->
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <!-- Start Single Product -->
-                    <div class="single-product">
-                        <div class="product-image">
-                            <img src="{{ asset('img/no-image.png') }}" alt="#">
-                            <div class="button">
-                                <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
-                                    Keranjang</a>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <span class="category">Nama Kategori</span>
-                            <h4 class="title">
-                                <a href="product-grids.html">Produk</a>
-                            </h4>
-                            <ul class="review">
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star"></i></li>
-                                <li><span>4.0 Ulasan(40)</span></li>
-                            </ul>
-                            <div class="price">
-                                <span>Rp. 50.000</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Product -->
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <!-- Start Single Product -->
-                    <div class="single-product">
-                        <div class="product-image">
-                            <img src="{{ asset('img/no-image.png') }}" alt="#">
-                            <div class="button">
-                                <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
-                                    Keranjang</a>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <span class="category">Nama Kategori</span>
-                            <h4 class="title">
-                                <a href="product-grids.html">Produk</a>
-                            </h4>
-                            <ul class="review">
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star"></i></li>
-                                <li><span>4.0 Ulasan(40)</span></li>
-                            </ul>
-                            <div class="price">
-                                <span>Rp. 50.000</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Product -->
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <!-- Start Single Product -->
-                    <div class="single-product">
-                        <div class="product-image">
-                            <img src="{{ asset('img/no-image.png') }}" alt="#">
-                            <div class="button">
-                                <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
-                                    Keranjang</a>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <span class="category">Nama Kategori</span>
-                            <h4 class="title">
-                                <a href="product-grids.html">Produk</a>
-                            </h4>
-                            <ul class="review">
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star"></i></li>
-                                <li><span>4.0 Ulasan(40)</span></li>
-                            </ul>
-                            <div class="price">
-                                <span>Rp. 50.000</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Product -->
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <!-- Start Single Product -->
-                    <div class="single-product">
-                        <div class="product-image">
-                            <img src="{{ asset('img/no-image.png') }}" alt="#">
-                            <div class="button">
-                                <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
-                                    Keranjang</a>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <span class="category">Nama Kategori</span>
-                            <h4 class="title">
-                                <a href="product-grids.html">Produk</a>
-                            </h4>
-                            <ul class="review">
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star"></i></li>
-                                <li><span>4.0 Ulasan(40)</span></li>
-                            </ul>
-                            <div class="price">
-                                <span>Rp. 50.000</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Product -->
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <!-- Start Single Product -->
-                    <div class="single-product">
-                        <div class="product-image">
-                            <img src="{{ asset('img/no-image.png') }}" alt="#">
-                            <div class="button">
-                                <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
-                                    Keranjang</a>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <span class="category">Nama Kategori</span>
-                            <h4 class="title">
-                                <a href="product-grids.html">Produk</a>
-                            </h4>
-                            <ul class="review">
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star"></i></li>
-                                <li><span>4.0 Ulasan(40)</span></li>
-                            </ul>
-                            <div class="price">
-                                <span>Rp. 50.000</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Product -->
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <!-- Start Single Product -->
-                    <div class="single-product">
-                        <div class="product-image">
-                            <img src="{{ asset('img/no-image.png') }}" alt="#">
-                            <div class="button">
-                                <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
-                                    Keranjang</a>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <span class="category">Nama Kategori</span>
-                            <h4 class="title">
-                                <a href="product-grids.html">Produk</a>
-                            </h4>
-                            <ul class="review">
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star"></i></li>
-                                <li><span>4.0 Ulasan(40)</span></li>
-                            </ul>
-                            <div class="price">
-                                <span>Rp. 50.000</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Product -->
-                </div>
+                @endforeach
             </div>
         </div>
     </section>

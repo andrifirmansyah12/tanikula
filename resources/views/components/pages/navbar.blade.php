@@ -116,47 +116,45 @@
                                     <span class="total-items">2</span>
                                 </a>
                                 <!-- Shopping Item -->
+                                @php
+                                    $cartItem = App\Models\Cart::where('user_id', Auth::id())->get();
+                                @endphp
                                 <div class="shopping-item">
                                     <div class="dropdown-cart-header">
                                         <span>2 Items</span>
-                                        <a href="cart.html">View Cart</a>
+                                        <a href="{{ url('cart') }}">Lihat Keranjang</a>
                                     </div>
-                                    <ul class="shopping-list">
+                                    @php
+                                        $total = 0;
+                                    @endphp
+                                    @foreach ($cartItem as $item)
+                                    <ul class="shopping-list" id="product_data">
                                         <li>
-                                            <a href="javascript:void(0)" class="remove"
-                                                title="Remove this item"><i class="lni lni-close"></i></a>
+                                            <input type="hidden" value="{{ $item->product_id }}" id="prod_id">
+                                            <button class="remove delete-cart-item"
+                                                title="Remove this item"><i class="lni lni-close"></i></button>
                                             <div class="cart-img-head">
                                                 <a class="cart-img" href="product-details.html"><img
-                                                        src="{{ asset('assets/images/header/cart-items/item1.jpg') }}"
-                                                        alt="#"></a>
+                                                        src="{{ asset('../storage/produk/'.$item->product->image) }}"
+                                                        alt="#" style="width: 10rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"></a>
                                             </div>
 
                                             <div class="content">
                                                 <h4><a href="product-details.html">
-                                                        Apple Watch Series 6</a></h4>
-                                                <p class="quantity">1x - <span
-                                                        class="amount">$99.00</span></p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)" class="remove"
-                                                title="Remove this item"><i class="lni lni-close"></i></a>
-                                            <div class="cart-img-head">
-                                                <a class="cart-img" href="product-details.html"><img
-                                                        src="{{ asset('assets/images/header/cart-items/item2.jpg') }}"
-                                                        alt="#"></a>
-                                            </div>
-                                            <div class="content">
-                                                <h4><a href="product-details.html">Wi-Fi Smart Camera</a></h4>
-                                                <p class="quantity">1x - <span
-                                                        class="amount">$35.00</span></p>
+                                                        {{ $item->product->name }}</a></h4>
+                                                <p class="quantity">{{ $item->product_qty }}x - <span
+                                                        class="amount">Rp. {{ number_format($item->product->price, 0) }}</span></p>
                                             </div>
                                         </li>
                                     </ul>
+                                    @php
+                                        $total += $item->product->price * $item->product_qty;
+                                    @endphp
+                                    @endforeach
                                     <div class="bottom">
                                         <div class="total">
                                             <span>Total</span>
-                                            <span class="total-amount">$134.00</span>
+                                            <span class="total-amount">Rp. {{ number_format($total, 0) }}</span>
                                         </div>
                                         <div class="button">
                                             <a href="checkout.html" class="btn animate">Checkout</a>

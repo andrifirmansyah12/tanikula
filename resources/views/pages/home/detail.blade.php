@@ -62,14 +62,14 @@
             <div class="row align-items-center">
                 <div class="col-lg-6 col-md-6 col-12">
                     <div class="breadcrumbs-content">
-                        <h1 class="page-title">Nama Produk</h1>
+                        <h1 class="page-title">{{ $product->name }}</h1>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-12">
                     <ul class="breadcrumb-nav">
                         <li><a href="index.html"><i class="lni lni-home"></i> Home</a></li>
-                        <li><a href="index.html">Detail</a></li>
-                        <li>Nama Produk</li>
+                        <li><a href="index.html">{{ $product->product_category->name }}</a></li>
+                        <li>{{ $product->name }}</li>
                     </ul>
                 </div>
             </div>
@@ -80,16 +80,16 @@
     <!-- Start Item Details -->
     <section class="item-details section bg-white">
         <div class="container">
-            <div class="top-area">
+            <div class="top-area" id="product_data">
                 <div class="row align-items-center">
                     <div class="col-lg-6 col-md-12 col-12">
                         <div class="product-images">
-                            <main id="gallery">
+                            <main id="">
                                 <div class="main-img">
-                                    <img src="{{ asset('assets/images/product-details/01.jpg') }}" id="current" alt="#">
+                                    <img src="{{ asset('../storage/produk/'.$product->image) }}" id="current" alt="{{ $product->name }}">
                                 </div>
                                 <div class="images">
-                                    <img src="{{ asset('assets/images/product-details/01.jpg') }}" class="img" alt="#">
+                                    <img src="{{ asset('../storage/produk/'.$product->image) }}" class="img" alt="#">
                                     <img src="{{ asset('assets/images/product-details/02.jpg') }}" class="img" alt="#">
                                     <img src="{{ asset('assets/images/product-details/03.jpg') }}" class="img" alt="#">
                                     <img src="{{ asset('assets/images/product-details/04.jpg') }}" class="img" alt="#">
@@ -100,16 +100,12 @@
                     </div>
                     <div class="col-lg-6 col-md-12 col-12">
                         <div class="product-info">
-                            <h2 class="title">Nama Produk</h2>
+                            <h2 class="title">{{ $product->name }}</h2>
                             <p class="category">Terjual 40</p>
                             <p class="category"><i class="lni lni-tag"></i> Kategori:<a
-                                    href="javascript:void(0)">Nama
-                                    Kategori</a></p>
-                            <h3 class="price">Rp0<span>Rp0</span></h3>
-                            <p class="info-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                eiusmod
-                                tempor incididunt
-                                ut labore et dolore magna aliqua.</p>
+                                    href="javascript:void(0)">{{ $product->product_category->name }}</a></p>
+                            <h3 class="price">Rp. {{ number_format($product->price, 0) }}<span>Rp. {{ number_format(0, 0) }}</span></h3>
+                            <p class="info-text">{{ $product->desc }}</p>
                             <div class="row">
                                 <div class="col-lg-4 col-md-4 col-12">
                                     <div class="form-group">
@@ -122,15 +118,14 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-12">
-                                    <div class="form-group quantity">
-                                        <label for="color">Kuantitas</label>
-                                        <select class="form-control">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
-                                        </select>
+                                    <div class="form-group">
+                                        <input type="hidden" value="{{ $product->id }}" id="prod_id">
+                                        <label for="quantity">Kuantitas</label>
+                                        <div class="d-flex">
+                                            <button class="input-group-text decrement-btn me-1">-</button>
+                                            <input type="text" name="quantity" class="form-control qty-input text-center" value="1">
+                                            <button class="input-group-text increment-btn ms-1">+</button>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-12">
@@ -146,7 +141,7 @@
                                 <div class="row align-items-end">
                                     <div class="col-lg-4 col-md-4 col-12">
                                         <div class="button cart-button">
-                                            <button class="btn" style="width: 100%;">+ Keranjang</button>
+                                            <button class="btn" id="addToCartBtn" style="width: 100%;">+ Keranjang</button>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-12">

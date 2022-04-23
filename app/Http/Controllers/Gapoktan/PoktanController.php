@@ -41,7 +41,7 @@ class PoktanController extends Controller
                 <th>Kota</th>
                 <th>Alamat</th>
                 <th>No.Telp</th>
-                <th>Aktif</th>
+                <th>Status Akun</th>
                 <th>Aksi</th>
               </tr>
             </thead>
@@ -74,8 +74,12 @@ class PoktanController extends Controller
                     } else {
                         $output .= '<td><span class="text-danger">Belum diisi</span></td>';
                     }
-                    $output .= '<td>' . $emp->is_active . '</td>
-                    <td>
+                    if ($emp->is_active == 1) {
+                        $output .= '<td><div class="badge badge-success">Aktif</div></td>';
+                    } elseif ($emp->is_active == 0) {
+                        $output .= '<td><div class="badge badge-danger">Belum Aktif</div></td>';
+                    }
+                    $output .= '<td>
                     <a href="#" id="' . $emp->id . '" class="text-success mx-1 editIcon" data-toggle="modal" data-target="#editEmployeeModal"><i class="bi-pencil-square h4"></i></a>
                     <a href="#" id="' . $emp->user->id . '" class="text-danger mx-1 deleteIcon"><i class="bi-trash h4"></i></a>
                     </td>
@@ -104,10 +108,12 @@ class PoktanController extends Controller
 
         $gapoktan_id = $request->gapoktan_id;
         $chairman = $request->chairman;
+        $is_active = $request->is_active ? 1 : 0;
         Poktan::create([
             'user_id' => $user->id,
             'gapoktan_id' => $gapoktan_id,
             'chairman' => $chairman,
+            'is_active' => $is_active,
         ]);
 		return response()->json([
 			'status' => 200,
@@ -133,6 +139,11 @@ class PoktanController extends Controller
         $emp = Poktan::with('user', 'gapoktan')->find($request->emp_id);
         $emp->gapoktan_id = $request->input('gapoktan_id');
         $emp->chairman = $request->input('chairman');
+        if ($request->is_active == 0) {
+            $emp->is_active = $request->is_active ? 1 : 0;
+        } elseif ($request->is_active == 1) {
+            $emp->is_active = $request->is_active ? 0 : 1;
+        }
         $emp->save();
 
 		return response()->json([

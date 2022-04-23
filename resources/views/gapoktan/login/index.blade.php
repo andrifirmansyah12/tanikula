@@ -4,14 +4,34 @@
 @section('style')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <!-- MULAI STYLE CSS -->
+<style>
+    .register {
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    }
 
+    .registerInput {
+        margin-top: 55px;
+        margin-bottom: 55px;
+    }
+
+    @media (max-width: 767px) {
+        .register {
+            box-shadow: none;
+        }
+
+        .registerInput {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+    }
+</style>
 <!-- AKHIR STYLE CSS -->
 @endsection
 
 @section('content')
 <section class="section">
-    <div class="container" style="margin-top: 80px; margin-bottom: 70px;">
-        <div class="login-brand mb-5">
+    <div class="card register container" style="margin-top: 80px; margin-bottom: 70px;">
+        <div class="login-brand d-block d-md-none">
             <a href="{{ url('home') }}">
                 <h4>Sri Makmur</h4>
             </a>
@@ -20,11 +40,16 @@
             <div class="col-lg-7 col-md-6 col-12">
                 <div class="">
                     <div class="card-body">
-                        <img src="{{ asset('img/image-login.jpg') }}" alt="#" class="img-fluid">
+                        <img src="{{ asset('img/DrawKit Vector Illustration Black Friday & Online Shopping (6).svg') }}" alt="#" class="img-fluid">
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6 col-12">
+            <div class="col-lg-4 registerInput col-md-6 col-12">
+                <div class="login-brand d-none d-md-block">
+                    <a href="{{ url('home') }}">
+                        <h4>Sri Makmur</h4>
+                    </a>
+                </div>
                 <div class="card card-primary">
                     <div class="d-flex card-header">
                         <div class="">
@@ -105,11 +130,6 @@
                         $("#login_btn").prop('disabled', false);
                     } else {
                         if(res.status == 200) {
-                            iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
-                                title: 'Berhasil',
-                                message: res.messages,
-                                position: 'topRight'
-                            });
                             window.location = '{{ route('gapoktan') }}';
                         }
                     }
