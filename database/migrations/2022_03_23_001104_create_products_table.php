@@ -18,7 +18,7 @@ class CreateProductsTable extends Migration
             $table->foreignId("category_product_id")->nullable();
             $table->foreignId("user_id")->nullable();
             $table->string("name")->nullable();
-            $table->string("slug")->unique()->nullable();
+            $table->string("slug")->unique();
             $table->string("image")->nullable();
             $table->string("code")->unique();
             $table->bigInteger("stoke")->nullable();

@@ -11,8 +11,14 @@ class ProductCategoryApiController extends Controller
 {
     public function index()
     {
-        $data = ProductCategory::latest()->get();
-        return response()->json([ProductCategoryResource::collection($data), 'Data fetched.']);
+        $datas = ProductCategory::latest()->get();
+          $response = [
+            'success' => true,
+            'data'    => ProductCategoryResource::collection($datas),
+            'message' => "Data fetched",
+        ];
+
+        return response()->json($response, 200);
     }
 
     public function create()
