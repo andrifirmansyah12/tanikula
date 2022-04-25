@@ -105,20 +105,19 @@ class ProductController extends Controller
 	public function update(Request $request) {
 		$fileName = '';
 		$emp = Product::find($request->emp_id);
-		if ($request->hasFile('file')) {
-			$file = $request->file('file');
-			$fileName = time() . '.' . $file->getClientOriginalExtension();
-			$file->storeAs('edukasi', $fileName);
-			if ($emp->file) {
-				Storage::delete('edukasi/' . $emp->file);
+		if ($request->hasFile('image')) {
+			$image = $request->file('image');
+			$fileName = time() . '.' . $image->getClientOriginalExtension();
+			$image->storeAs('produk', $fileName);
+			if ($emp->image) {
+				Storage::delete('produk/' . $emp->image);
 			}
 		} else {
 			$fileName = $request->emp_avatar;
 		}
 
-		$empData = ['title' => $request->title, 'slug' => $request->slug, 'category_education_id' => $request->category_education_id, 'desc' => $request->desc, 'file' => $fileName];
+        $empData = ['name' => $request->name, 'slug' => $request->slug, 'category_product_id' => $request->category_product_id, 'stoke' => $request->stoke, 'price' => $request->price, 'desc' => $request->desc, 'image' => $fileName];
 
-        $empData['date'] = Carbon::now()->format('Y-m-d');
         $empData['user_id'] = auth()->user()->id;
 		$emp->update($empData);
 		return response()->json([

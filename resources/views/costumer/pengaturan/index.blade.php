@@ -68,7 +68,7 @@
                                         </div>
                                         <div class="pt-3">
                                             <div class="custom-file">
-                                                <input type="file" class="custom-file-input" id="image" name="image">
+                                                <input type="file" class="custom-file-input" accept="image/*" id="image" name="image">
                                                 <label class="custom-file-label" for="image">Ubah Profile</label>
                                             </div>
                                         </div>
@@ -190,7 +190,7 @@
                             iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
                                 title: 'Berhasil',
                                 message: res.messages,
-                                position: 'bottomRight'
+                                position: 'topRight'
                             });
                             $("#image").val('');
                         }
@@ -214,7 +214,7 @@
                             iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
                                 title: 'Berhasil',
                                 message: res.messages,
-                                position: 'bottomRight'
+                                position: 'topRight'
                             });
                             $("#profile_btn").val('Update Biodata Diri');
                             $("#profile_btn").prop('disabled', false);

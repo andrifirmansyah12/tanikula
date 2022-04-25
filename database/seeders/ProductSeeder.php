@@ -23,17 +23,30 @@ class ProductSeeder extends Seeder
                 "slug" => "beras-organik",
                 "image" => "image.jpg",
                 "category_product_id" => 1,
-                "code" => "uqtewfde",
+                "code" => "1234",
                 "stoke" => 6,
                 "price" => 100000,
                 "desc" => "Ini adalah contoh kalimat untuk deskripsi",
-                "user_id" => 1,
+                "user_id" => 2,
                 "is_active" => true,
                 'created_at' => Carbon::now()->format('Y-m-d'),
                 'updated_at' => Carbon::now()->format('Y-m-d'),
-            ],       
+            ],
+            [
+                "name" => "Beras Organik 2",
+                "slug" => "beras-organik-2",
+                "image" => "image.jpg",
+                "category_product_id" => 1,
+                "code" => "1235",
+                "stoke" => 6,
+                "price" => 1000000,
+                "desc" => " 2 Ini adalah contoh kalimat untuk deskripsi",
+                "user_id" => 2,
+                "is_active" => true,
+                'created_at' => Carbon::now()->format('Y-m-d'),
+                'updated_at' => Carbon::now()->format('Y-m-d'),
+            ],
         ];
-
         Product::insert($datas);
     }
 }

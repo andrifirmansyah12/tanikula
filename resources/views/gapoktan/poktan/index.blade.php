@@ -95,6 +95,15 @@
                             <label for="password">Password</label>
                             <input type="password" name="password" class="form-control" placeholder="Password" required>
                         </div>
+                        <div class="my-2 form-group">
+                            <label for="is_active">Status Akun</label>
+                            <div>
+                                <label class="custom-switch">
+                                    <input type="checkbox" name="is_active" class="custom-switch-input">
+                                    <span class="custom-switch-indicator"></span>
+                                </label>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
@@ -140,6 +149,12 @@
                         <div class="my-2 form-group">
                             <label for="password">Password</label>
                             <div id="password">
+
+                            </div>
+                        </div>
+                        <div class="my-2 form-group">
+                            <label for="is_active">Status Akun</label>
+                            <div id="is_active">
 
                             </div>
                         </div>
@@ -235,6 +250,11 @@
                     $("#email").val(response.user.email);
                     $("#password").html(
                         `<input type="password" name="password" class="form-control" value="${response.user.password}" required>`);
+                    $("#is_active").html(
+                        `<label class="custom-switch">
+                            <input type="checkbox" name="is_active" ${response.is_active ? 'checked' : ''} class="custom-switch-input">
+                            <span class="custom-switch-indicator"></span>
+                        </label>`);
                     $("#emp_id").val(response.id);
                     $("#user_id").val(response.user.id);
                 }
