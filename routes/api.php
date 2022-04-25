@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\Gapoktan\ActivityApiController;
 use App\Http\Controllers\Api\Gapoktan\ActivityCategoryApiController;
 use App\Http\Controllers\Api\Gapoktan\EducationApiController;
 use App\Http\Controllers\Api\Gapoktan\EducationCategoryApiController;
+use App\Http\Controllers\Api\Gapoktan\LoginGapoktanApiController;
 use App\Http\Controllers\Api\ProductApiController;
 use App\Http\Controllers\Api\ProductCategoryApiController;
 use Illuminate\Http\Request;
@@ -30,8 +31,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // All
 Route::resource('product', ProductApiController::class);
+Route::get('product/search/{name}', [ProductApiController::class, 'search']);
 Route::resource('product-category', ProductCategoryApiController::class);
-
 
 // ------ Customer -----------
 Route::post('register-customer', [RegisterCustomerApiController::class, 'register']);
@@ -44,6 +45,7 @@ Route::resource('wishlist', WishlistApiController::class);
 Route::get('wishlist/user_id/{user_id}', [WishlistApiController::class, 'indexByid']);
 
 // ------ Gapoktan -----------
+Route::post('login-gapoktan', [LoginGapoktanApiController::class, 'login']);
 // Education
 Route::resource('education', EducationApiController::class);
 Route::resource('education-category', EducationCategoryApiController::class);

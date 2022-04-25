@@ -34,14 +34,17 @@ class EducationApiController extends Controller
             return response()->json($validator->errors());
         }
 
-        $uploadFolder = 'education';
-        $image = $request->file('file');
-        $image_uploaded_path = $image->store($uploadFolder, 'public');
-        $uploadedImageResponse = array(
-            "image_name" => basename($image_uploaded_path),
-            "image_url" => Storage::disk('public')->url($image_uploaded_path),
-            "mime" => $image->getClientMimeType()
-        );
+        // $uploadFolder = 'edukasi';
+        // $image = $request->file('edukasi');
+        // $image_uploaded_path = $image->store($uploadFolder, 'public');
+        // $uploadedImageResponse = array(
+        //     "image_name" => basename($image_uploaded_path),
+        //     "image_url" => Storage::disk('public')->url($image_uploaded_path),
+        //     "mime" => time() . '.' . $image->getClientOriginalExtension()
+        // );
+        $file = $request->file('file');
+        $fileName = time() . '.' . $file->getClientOriginalExtension();
+        $file->storeAs('edukasi', $fileName);
 
         $datas = Education::create([
             'user_id' => $request->user_id,
@@ -49,11 +52,11 @@ class EducationApiController extends Controller
             'title' => $request->title,
             'slug' => Str::slug($request->title),
             'date' => Carbon::now()->format('Y-m-d'),
-            'file' => $image_uploaded_path,
+            'file' => $fileName,
             'desc' => $request->desc,
          ]);
 
-        return response()->json(['Data created successfully.', new EducationResource($datas), $uploadedImageResponse]);
+        return response()->json(['Data created successfully.', new EducationResource($datas)]);
     }
 
 

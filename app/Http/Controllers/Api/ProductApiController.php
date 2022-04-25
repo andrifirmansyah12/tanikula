@@ -53,4 +53,19 @@ class ProductApiController extends BaseController
     {
         //
     }
+
+    public function search($name)
+    {
+        $datas = Product::where('name', 'LIKE', '%'. $name. '%')->get();
+        if(count($datas)){
+            // return Response()->json($datas);
+            // return response()->json(['Data Found.', $datas]);
+            $result = ProductResource::collection($datas);
+            return $this->sendResponse($result, 'Data fetched');
+        }
+        else
+        {
+            return response()->json(['Result' => 'No Data not found'], 404);
+      }
+    }
 }

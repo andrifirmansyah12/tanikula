@@ -101,7 +101,6 @@ class ActivityApiController extends Controller
 
     public function search($name)
     {
-
         $datas = Activity::where('title', 'LIKE', '%'. $name. '%')->get();
         if(count($datas)){
             // return Response()->json($datas);
