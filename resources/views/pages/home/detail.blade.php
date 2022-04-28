@@ -103,7 +103,7 @@
                             <h2 class="title">{{ $product->name }}</h2>
                             <p class="category">Terjual 40</p>
                             <p class="category"><i class="lni lni-tag"></i> Kategori:<a
-                                    href="javascript:void(0)">{{ $product->product_category->name }}</a></p>
+                                    href="{{ url('product-category/'.$product->product_category->slug) }}">{{ $product->product_category->name }}</a></p>
                             <h3 class="price">Rp. {{ number_format($product->price, 0) }}<span>Rp. {{ number_format(0, 0) }}</span></h3>
                             <p class="info-text">{{ $product->desc }}</p>
                             <div class="row">

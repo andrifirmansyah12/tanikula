@@ -1,29 +1,28 @@
 <?php
 
-namespace App\Http\Controllers\Pembeli;
+namespace App\Http\Controllers\Petani;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Carbon\Carbon;
 use App\Models\User;
-use App\Models\Costumer;
+use App\Models\Farmer;
 
 class PengaturanController extends Controller
 {
     public function pengaturan() {
-        $data = ['userInfo' => Costumer::with('user')
-            ->where('user_id', '=', auth()->user()->id)
+        $data = ['userInfo' => Farmer::with('user')
+            ->where('user_id', auth()->user()->id)
             ->first()
         ];
-        return view('costumer.pengaturan.index', $data);
+        return view('petani.pengaturan.index', $data);
     }
 
     public function pengaturanImage(Request $request) {
-        $id = $request->id;
-        $user = Costumer::find($id);
+        $user_id = $request->user_id;
+        $user = Farmer::find($user_id);
 
         if($request->hasFile('image')) {
             $file = $request->file('image');
@@ -35,7 +34,7 @@ class PengaturanController extends Controller
             }
         }
 
-        Costumer::where('id', $id)->update([
+        Farmer::where('id', $user_id)->update([
             'image' => $fileName
         ]);
 
@@ -51,15 +50,15 @@ class PengaturanController extends Controller
             'email' => $request->email,
         ]);
 
-        Costumer::with('user')->where('id', $request->id)->update([
+        Farmer::where('id', $request->id)->update([
             'telp' => $request->telp,
-            'birth' => Carbon::createFromFormat('d-M-Y', $request->birth)->format('Y-m-d h:i:s'),
-            'gender' => $request->gender,
+            'city' => $request->city,
+            'address' => $request->address,
         ]);
 
         return response()->json([
             'status' => 200,
-            'messages' => 'Biodata diri berhasil diupdate!'
+            'messages' => 'Biodata Petani berhasil diupdate!'
         ]);
     }
 }

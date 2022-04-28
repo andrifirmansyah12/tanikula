@@ -17,6 +17,16 @@ class ProductController extends Controller
         return view('pages.home.index', compact('category_product', 'product_new', 'product_search'));
     }
 
+    public function detailProduct($slug)
+    {
+        if (Product::where('slug', $slug)->exists()) {
+            $product = Product::where('slug', $slug)->first();
+            return view('pages.home.detail', compact('product'));
+        } else {
+            return redirect('/')->with('status', 'Produk tidak ditemukan');
+        }
+    }
+
     public function viewCategory($slug)
     {
         if (ProductCategory::where('slug', $slug)->exists()) {

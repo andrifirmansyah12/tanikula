@@ -224,7 +224,7 @@
 
 @section('script')
     <!-- LIBARARY JS -->
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
+    {{-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script> --}}
     <script type="text/javascript" language="javascript"
         src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 

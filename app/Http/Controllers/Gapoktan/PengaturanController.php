@@ -59,7 +59,7 @@ class PengaturanController extends Controller
 
         return response()->json([
             'status' => 200,
-            'messages' => 'Biodata diri berhasil diupdate!'
+            'messages' => 'Biodata Gapoktan berhasil diupdate!'
         ]);
     }
 }

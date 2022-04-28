@@ -46,7 +46,7 @@
                     <!-- Start Single Product -->
                     <div class="single-product">
                         <div class="product-image">
-                            <a href="">
+                            <a href="{{ url('home/'.$item->slug) }}">
                                 @if ($item->image)
                                 <img src="{{ asset('../storage/produk/'.$item->image) }}" alt="{{ $item->name }}"
                                     style="width: 27rem; height: 15rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">

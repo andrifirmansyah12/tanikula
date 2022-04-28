@@ -5,19 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Plant extends Model
+class Costumer extends Model
 {
     use HasFactory;
 
     protected $guarded = ['id'];
 
-    public function poktan()
+    public function user()
     {
-        return $this->belongsTo(Poktan::class);
+        return $this->belongsTo(User::class);
     }
 
-    public function farmer()
+    public function address()
     {
-        return $this->belongsTo(Farmer::class);
+        return $this->belongsTo(Address::class);
     }
 }
