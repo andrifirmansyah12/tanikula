@@ -15,7 +15,8 @@ class CreatePlantsTable extends Migration
     {
         Schema::create('plants', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("user_id")->nullable();
+            $table->foreignId("farmer_id")->nullable();
+            $table->foreignId("poktan_id")->nullable();
             $table->string("plant_tanaman")->nullable();
             $table->string("surface_area")->nullable();
             $table->dateTime("plating_date")->nullable();

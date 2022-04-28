@@ -118,6 +118,18 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:poktan']], function()
     Route::get('poktan/edukasi/edit', [App\Http\Controllers\Poktan\EducationController::class, 'edit'])->name('poktan-edukasi-edit');
     Route::post('poktan/edukasi/update', [App\Http\Controllers\Poktan\EducationController::class, 'update'])->name('poktan-edukasi-update');
     Route::get('poktan/edukasi/checkSlug', [App\Http\Controllers\Poktan\EducationController::class, 'checkSlug'])->name('poktan-edukasi-checkSlug');
+
+    Route::get('poktan/daftar-petani', [App\Http\Controllers\Poktan\FarmerController::class, 'index'])->name('poktan-petani');
+    Route::post('poktan/daftar-petani/store', [App\Http\Controllers\Poktan\FarmerController::class, 'store'])->name('poktan-petani-store');
+    Route::get('poktan/daftar-petani/fetchall', [App\Http\Controllers\Poktan\FarmerController::class, 'fetchAll'])->name('poktan-petani-fetchAll');
+    Route::delete('poktan/daftar-petani/delete', [App\Http\Controllers\Poktan\FarmerController::class, 'delete'])->name('poktan-petani-delete');
+    Route::get('poktan/daftar-petani/edit', [App\Http\Controllers\Poktan\FarmerController::class, 'edit'])->name('poktan-petani-edit');
+    Route::post('poktan/daftar-petani/update', [App\Http\Controllers\Poktan\FarmerController::class, 'update'])->name('poktan-petani-update');
+
+    Route::get('poktan/pengaturan', [App\Http\Controllers\Poktan\PengaturanController::class, 'pengaturan'])->name('poktan-pengaturan');
+    Route::post('poktan/pengaturan-image', [App\Http\Controllers\Poktan\PengaturanController::class, 'pengaturanImage'])->name('poktan.pengaturan.image');
+    Route::post('poktan/pengaturan-update', [App\Http\Controllers\Poktan\PengaturanController::class, 'pengaturanUpdate'])->name('poktan.pengaturan.update');
+
 });
 
 // Petani
@@ -126,6 +138,24 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:petani']], function()
     Route::get('petani', function() {
         return view('petani.dashboard.index');
     })->name('petani');
+
+    Route::get('petani/tandur', [App\Http\Controllers\Petani\PlantController::class, 'index'])->name('petani-tandur');
+    Route::post('petani/tandur/store', [App\Http\Controllers\Petani\PlantController::class, 'store'])->name('petani-tandur-store');
+    Route::get('petani/tandur/fetchall', [App\Http\Controllers\Petani\PlantController::class, 'fetchAll'])->name('petani-tandur-fetchAll');
+    Route::delete('petani/tandur/delete', [App\Http\Controllers\Petani\PlantController::class, 'delete'])->name('petani-tandur-delete');
+    Route::get('petani/tandur/edit', [App\Http\Controllers\Petani\PlantController::class, 'edit'])->name('petani-tandur-edit');
+    Route::post('petani/tandur/update', [App\Http\Controllers\Petani\PlantController::class, 'update'])->name('petani-tandur-update');
+
+    Route::get('petani/panen', [App\Http\Controllers\Petani\HarvestController::class, 'index'])->name('petani-panen');
+    Route::post('petani/panen/store', [App\Http\Controllers\Petani\HarvestController::class, 'store'])->name('petani-panen-store');
+    Route::get('petani/panen/fetchall', [App\Http\Controllers\Petani\HarvestController::class, 'fetchAll'])->name('petani-panen-fetchAll');
+    Route::delete('petani/panen/delete', [App\Http\Controllers\Petani\HarvestController::class, 'delete'])->name('petani-panen-delete');
+    Route::get('petani/panen/edit', [App\Http\Controllers\Petani\HarvestController::class, 'edit'])->name('petani-panen-edit');
+    Route::post('petani/panen/update', [App\Http\Controllers\Petani\HarvestController::class, 'update'])->name('petani-panen-update');
+
+    Route::get('petani/pengaturan', [App\Http\Controllers\Petani\PengaturanController::class, 'pengaturan'])->name('petani-pengaturan');
+    Route::post('petani/pengaturan-image', [App\Http\Controllers\Petani\PengaturanController::class, 'pengaturanImage'])->name('petani.pengaturan.image');
+    Route::post('petani/pengaturan-update', [App\Http\Controllers\Petani\PengaturanController::class, 'pengaturanUpdate'])->name('petani.pengaturan.update');
 
 });
 
@@ -189,6 +219,7 @@ Route::get('/edukasi/{education:slug}', [App\Http\Controllers\Pages\EducationCon
 
 Route::get('/', [App\Http\Controllers\Pages\ProductController::class, 'index']);
 Route::get('/home', [App\Http\Controllers\Pages\ProductController::class, 'index'])->name('home');
+Route::get('/home/{product_slug}', [App\Http\Controllers\Pages\ProductController::class, 'detailProduct']);
 Route::get('/product-category/{slug}', [App\Http\Controllers\Pages\ProductController::class, 'viewCategory'])->name('view.category');
 Route::get('/product-category/{category_slug}/{product_slug}', [App\Http\Controllers\Pages\ProductController::class, 'productView'])->name('view.product');
 Route::post('/add-to-cart', [App\Http\Controllers\Pembeli\CartController::class, 'addProduct']);

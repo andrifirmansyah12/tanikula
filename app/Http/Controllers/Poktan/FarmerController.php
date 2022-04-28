@@ -1,32 +1,32 @@
 <?php
 
-namespace App\Http\Controllers\Gapoktan;
+namespace App\Http\Controllers\Poktan;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Poktan;
-use App\Models\Gapoktan;
+use App\Models\Farmer;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 
-class PoktanController extends Controller
+class FarmerController extends Controller
 {
     // set index page view
 	public function index() {
-        $gapoktan = Gapoktan::all();
-		return view('gapoktan.poktan.index', compact('gapoktan'));
+        $poktan = Poktan::all();
+		return view('poktan.petani.index', compact('poktan'));
 	}
 
     // handle fetch all eamployees ajax request
 	public function fetchAll(Request $request) {
 		// $emps = Poktan::with('user', 'gapoktan')->latest()->get();
-        $emps = Poktan::join('gapoktans', 'poktans.gapoktan_id', '=', 'gapoktans.id')
-                    ->join('users', 'poktans.user_id', '=', 'users.id')
-                    ->select('poktans.*', 'users.name as poktan_name')
-                    ->where('gapoktans.user_id', '=', auth()->user()->id)
+        $emps = Farmer::join('poktans', 'farmers.poktan_id', '=', 'poktans.id')
+                    ->join('users', 'farmers.user_id', '=', 'users.id')
+                    ->select('farmers.*', 'users.name as farmer_name')
+                    ->where('poktans.user_id', '=', auth()->user()->id)
                     ->orderBy('updated_at', 'desc')
                     ->get();
 		$output = '';
@@ -36,9 +36,8 @@ class PoktanController extends Controller
               <tr>
                 <th>No</th>
                 <th>Foto</th>
-                <th>Nama Gapoktan</th>
                 <th>Nama Poktan</th>
-                <th>Ketua Poktan</th>
+                <th>Nama Petani</th>
                 <th>Kota</th>
                 <th>Alamat</th>
                 <th>No.Telp</th>
@@ -57,9 +56,8 @@ class PoktanController extends Controller
                     } else {
                         $output .= '<td><img alt="image" src="../assets/img/avatar/avatar-5.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Wildan Ahdian"></td>';
                     }
-                    $output .= '<td>' . $emp->gapoktan->user->name . '</td>
-                    <td>' . $emp->poktan_name . '</td>
-                    <td>' . $emp->chairman . '</td>';
+                    $output .= '<td>' . $emp->poktan->user->name . '</td>
+                    <td>' . $emp->farmer_name . '</td>';
                     if ($emp->city) {
                         $output .= '<td>' . $emp->city . '</td>';
                     } else {
@@ -104,16 +102,14 @@ class PoktanController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
-        $user->assignRole('poktan');
+        $user->assignRole('petani');
         $user->save();
 
-        $gapoktan_id = $request->gapoktan_id;
-        $chairman = $request->chairman;
+        $poktan_id = $request->poktan_id;
         $is_active = $request->is_active ? 1 : 0;
-        Poktan::create([
+        Farmer::create([
             'user_id' => $user->id,
-            'gapoktan_id' => $gapoktan_id,
-            'chairman' => $chairman,
+            'poktan_id' => $poktan_id,
             'is_active' => $is_active,
         ]);
 		return response()->json([
@@ -124,7 +120,7 @@ class PoktanController extends Controller
     // handle edit an employee ajax request
 	public function edit(Request $request) {
 		$id = $request->id;
-		$emp = Poktan::with('user', 'gapoktan')->where('id', $id)->first();
+		$emp = Farmer::with('user', 'poktan')->where('id', $id)->first();
 		return response()->json($emp);
 	}
 
@@ -142,9 +138,8 @@ class PoktanController extends Controller
         }
         $user->save();
 
-        $emp = Poktan::with('user', 'gapoktan')->find($request->emp_id);
-        $emp->gapoktan_id = $request->input('gapoktan_id');
-        $emp->chairman = $request->input('chairman');
+        $emp = Farmer::with('user', 'poktan')->find($request->emp_id);
+        $emp->poktan_id = $request->input('poktan_id');
         if ($request->is_active == 0) {
             $emp->is_active = $request->is_active ? 1 : 0;
         } elseif ($request->is_active == 1) {

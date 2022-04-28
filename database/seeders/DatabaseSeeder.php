@@ -25,7 +25,9 @@ class DatabaseSeeder extends Seeder
             GapoktanSeeder::class,
             PoktanSeeder::class,
             FarmerSeeder::class,
-            ProductSeeder::class
+            ProductSeeder::class,
+            CostumerSeeder::class,
+            AddressSeeder::class
         ]);
 
         // $this->call(CategorySeeder::class);

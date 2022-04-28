@@ -1,15 +1,21 @@
-@extends('gapoktan.template')
-@section('title', 'Daftar Poktan')
+@extends('petani.template')
+@section('title', 'Tandur')
 
 @section('style')
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- MULAI STYLE CSS -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
     <link rel='stylesheet'
         href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css' />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.css"
         integrity="sha256-pODNVtK3uOhL8FUNWWvFQK0QoQoV3YA9wGGng6mbZ0E=" crossorigin="anonymous" />
     <!-- AKHIR STYLE CSS -->
+    <style>
+        .datepicker {
+            z-index: 1600 !important; /* has to be larger than 1050 */
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -20,30 +26,15 @@
             <div class="section-header">
                 <h1>@yield('title')</h1>
                 <div class="section-header-breadcrumb">
-                    <div class="breadcrumb-item">Gapoktan</div>
+                    <div class="breadcrumb-item">Petani</div>
                     <div class="breadcrumb-item active"><a href="#">@yield('title')</a></div>
                 </div>
             </div>
+
             <div class="section-body">
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-body">
-                                <ul class="nav nav-tabs">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" href="{{ url('gapoktan/pengaturan') }}">Biodata
-                                            Diri</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{ url('gapoktan/daftar-poktan') }}">Daftar
-                                            Poktan</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{ url('gapoktan/daftar-petani') }}">Daftar
-                                            Petani</a>
-                                    </li>
-                                </ul>
-                            </div>
                             <div class="card-header">
                                 <button type="button" class="btn py-1 btn-success" data-toggle="modal"
                                     data-target="#addEmployeeModal">Tambah
@@ -66,7 +57,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tambah Daftar Poktan</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Tandur</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -74,34 +65,27 @@
                 <form action="#" method="POST" id="add_employee_form" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body p-4">
-                        @foreach ($gapoktan as $item)
-                            @if ($item->user->name == auth()->user()->name)
-                                <input type="hidden" autofocus name="gapoktan_id" class="form-control" value="{{ $item->id }}" required>
-                            @endif
+                        @foreach ($farmer as $farmer)
+                            <input type="hidden" autofocus name="poktan_id" class="form-control" value="{{ $farmer->poktan_id }}" required>
+                            <input type="hidden" autofocus name="farmer_id" class="form-control" value="{{ $farmer->id }}" required>
                         @endforeach
                         <div class="form-group my-2">
-                            <label for="name">Nama Poktan</label>
-                            <input type="text" name="name" class="form-control" placeholder="Nama Poktan" required>
+                            <label for="plant_tanaman">Nama Tanaman</label>
+                            <input type="text" name="plant_tanaman" class="form-control" placeholder="Nama Tanaman" required>
                         </div>
                         <div class="form-group my-2">
-                            <label for="chairman">Ketua Poktan</label>
-                            <input type="text" name="chairman" class="form-control" placeholder="Ketua Poktan" required>
+                            <label for="surface_area">Area</label>
+                            <input type="text" name="surface_area" class="form-control" placeholder="Area" required>
                         </div>
                         <div class="my-2 form-group">
-                            <label for="email">Email</label>
-                            <input type="email" name="email" class="form-control" placeholder="Email" required>
-                        </div>
-                        <div class="my-2 form-group">
-                            <label for="password">Password</label>
-                            <input type="password" name="password" class="form-control" placeholder="Password" required>
-                        </div>
-                        <div class="my-2 form-group">
-                            <label for="is_active">Status Akun</label>
-                            <div>
-                                <label class="custom-switch">
-                                    <input type="checkbox" name="is_active" class="custom-switch-input">
-                                    <span class="custom-switch-indicator"></span>
-                                </label>
+                            <label for="plating_date">Tanggal Tanam</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="bi bi-calendar"></i>
+                                    </div>
+                                </div>
+                                <input type="text" name="plating_date" class="form-control datepicker">
                             </div>
                         </div>
                     </div>
@@ -119,7 +103,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit Daftar Poktan</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Tandur</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -127,35 +111,26 @@
                 <form action="#" method="POST" id="edit_employee_form" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="emp_id" id="emp_id">
-                    <input type="hidden" name="user_id" id="user_id">
                     <div class="modal-body p-4">
-                        @foreach ($gapoktan as $item)
-                            @if ($item->user->name == auth()->user()->name)
-                                <input type="hidden" autofocus name="gapoktan_id" class="form-control" value="{{ $item->id }}" required>
-                            @endif
-                        @endforeach
+                        <input type="hidden" autofocus name="poktan_id" id="poktan_id"class="form-control" value="{{ $farmer->poktan_id }}" required>
+                        <input type="hidden" autofocus name="farmer_id" id="farmer_id" class="form-control" value="{{ $farmer->id }}" required>
                         <div class="form-group my-2">
-                            <label for="name">Nama Poktan</label>
-                            <input type="text" name="name" id="name" class="form-control" placeholder="Nama Poktan" required>
+                            <label for="plant_tanaman">Nama Tanaman</label>
+                            <input type="text" name="plant_tanaman" id="plant_tanaman" class="form-control" placeholder="Nama Tanaman" required>
                         </div>
                         <div class="form-group my-2">
-                            <label for="chairman">Ketua Poktan</label>
-                            <input type="text" name="chairman" id="chairman" class="form-control" placeholder="Ketua Poktan" required>
+                            <label for="surface_area">Area</label>
+                            <input type="text" name="surface_area" id="surface_area" class="form-control" placeholder="Area" required>
                         </div>
                         <div class="my-2 form-group">
-                            <label for="email">Email</label>
-                            <input type="email" name="email" id="email" class="form-control" placeholder="Email" required>
-                        </div>
-                        <div class="my-2 form-group">
-                            <label for="password">Password</label>
-                            <div id="password_edit">
-
-                            </div>
-                        </div>
-                        <div class="my-2 form-group">
-                            <label for="is_active">Status Akun</label>
-                            <div id="is_active">
-
+                            <label for="plating_date">Tanggal Panen</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="bi bi-calendar"></i>
+                                    </div>
+                                </div>
+                                <input type="text" name="harvest_date" id="harvest_date" class="form-control datepicker">
                             </div>
                         </div>
                     </div>
@@ -173,6 +148,7 @@
 @section('script')
     <!-- LIBARARY JS -->
     {{-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script> --}}
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     <script type="text/javascript" language="javascript"
         src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 
@@ -190,6 +166,12 @@
 
     <!-- JAVASCRIPT -->
     <script>
+        $( function() {
+            $( ".datepicker" ).datepicker({
+                dateFormat: 'dd-M-yy'
+            });
+        });
+
         //CSRF TOKEN PADA HEADER
         //Script ini wajib krn kita butuh csrf token setiap kali mengirim request post, patch, put dan delete ke server
         $(document).ready(function() {
@@ -209,7 +191,7 @@
                 $("#add_employee_btn").text('Tunggu..');
                 $("#add_employee_btn").prop('disabled', true);
                 $.ajax({
-                url: '{{ route('gapoktan-poktan-store') }}',
+                url: '{{ route('petani-tandur-store') }}',
                 method: 'post',
                 data: fd,
                 cache: false,
@@ -220,7 +202,7 @@
                     if (response.status == 200) {
                     Swal.fire(
                         'Menambahkan!',
-                        'Poktan Berhasil Ditambahkan!',
+                        'Tandur Berhasil Ditambahkan!',
                         'success'
                     )
                     fetchAllEmployees();
@@ -238,29 +220,18 @@
                 e.preventDefault();
                 let id = $(this).attr('id');
                 $.ajax({
-                url: '{{ route('gapoktan-poktan-edit') }}',
+                url: '{{ route('petani-tandur-edit') }}',
                 method: 'get',
                 data: {
                     id: id,
                     _token: '{{ csrf_token() }}'
                 },
                 success: function(response) {
-                    $("#name").val(response.user.name);
-                    $("#chairman").val(response.chairman);
-                    $("#email").val(response.user.email);
-                    $("#password_edit").html(
-                        `<small class="d-flex text-danger pb-1">*Catatan:
-                            <br>1. Jika tidak ingin ubah password biarkan kosong,
-                            <br>2. Dan jika ingin ubah password, silahkan masukkan password.
-                        </small>
-                        <input type="password" name="password" class="form-control" placeholder="Password">`);
-                    $("#is_active").html(
-                        `<label class="custom-switch">
-                            <input type="checkbox" name="is_active" ${response.is_active ? 'checked' : ''} class="custom-switch-input">
-                            <span class="custom-switch-indicator"></span>
-                        </label>`);
+                    $("#poktan_id").val(response.poktan_id);
+                    $("#farmer_id").val(response.farmer_id);
+                    $("#plant_tanaman").val(response.plant_tanaman);
+                    $("#surface_area").val(response.surface_area);
                     $("#emp_id").val(response.id);
-                    $("#user_id").val(response.user.id);
                 }
                 });
             });
@@ -272,7 +243,7 @@
                 $("#edit_employee_btn").text('Tunggu..');
                 $("#edit_employee_btn").prop('disabled', true);
                 $.ajax({
-                url: '{{ route('gapoktan-poktan-update') }}',
+                url: '{{ route('petani-tandur-update') }}',
                 method: 'post',
                 data: fd,
                 cache: false,
@@ -283,7 +254,7 @@
                     if (response.status == 200) {
                     Swal.fire(
                         'Memperbarui!',
-                        'Poktan Berhasil Diperbarui!',
+                        'Tandur Berhasil Diperbarui!',
                         'success'
                     )
                     fetchAllEmployees();
@@ -313,7 +284,7 @@
                 }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                    url: '{{ route('gapoktan-poktan-delete') }}',
+                    url: '{{ route('petani-tandur-delete') }}',
                     method: 'delete',
                     data: {
                         id: id,
@@ -338,13 +309,11 @@
 
             function fetchAllEmployees() {
                 $.ajax({
-                url: '{{ route('gapoktan-poktan-fetchAll') }}',
+                url: '{{ route('petani-tandur-fetchAll') }}',
                 method: 'get',
                 success: function(response) {
                     $("#show_all_employees").html(response);
-                    $("table").DataTable({
-                        order: [0, 'asc']
-                    });
+                    $("table").DataTable();
                 }
                 });
             }

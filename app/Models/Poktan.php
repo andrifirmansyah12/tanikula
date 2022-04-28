@@ -25,4 +25,9 @@ class Poktan extends Model
     {
         return $this->hasMany(Farmer::class);
     }
+
+    public function plant()
+    {
+        return $this->hasMany(Plant::class);
+    }
 }

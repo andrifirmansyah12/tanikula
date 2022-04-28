@@ -20,4 +20,9 @@ class Farmer extends Model
     {
         return $this->belongsTo(Poktan::class);
     }
+
+    public function plant()
+    {
+        return $this->hasMany(Plant::class);
+    }
 }

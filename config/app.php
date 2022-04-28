@@ -67,8 +67,9 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
-
+    // 'timezone' => 'UTC',
+    'timezone' => 'Asia/Jakarta',
+    // 'date_format_js' => 'dd-M-yy',
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration

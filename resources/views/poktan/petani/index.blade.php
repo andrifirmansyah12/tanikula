@@ -1,5 +1,5 @@
-@extends('gapoktan.template')
-@section('title', 'Daftar Poktan')
+@extends('poktan.template')
+@section('title', 'Daftar Petani')
 
 @section('style')
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -31,15 +31,11 @@
                             <div class="card-body">
                                 <ul class="nav nav-tabs">
                                     <li class="nav-item">
-                                        <a class="nav-link active" href="{{ url('gapoktan/pengaturan') }}">Biodata
-                                            Diri</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{ url('gapoktan/daftar-poktan') }}">Daftar
+                                        <a class="nav-link active" href="{{ url('poktan/pengaturan') }}">Biodata
                                             Poktan</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="{{ url('gapoktan/daftar-petani') }}">Daftar
+                                        <a class="nav-link" href="{{ url('poktan/daftar-petani') }}">Daftar
                                             Petani</a>
                                     </li>
                                 </ul>
@@ -66,7 +62,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tambah Daftar Poktan</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Daftar Petani</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -74,18 +70,14 @@
                 <form action="#" method="POST" id="add_employee_form" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body p-4">
-                        @foreach ($gapoktan as $item)
+                        @foreach ($poktan as $item)
                             @if ($item->user->name == auth()->user()->name)
-                                <input type="hidden" autofocus name="gapoktan_id" class="form-control" value="{{ $item->id }}" required>
+                                <input type="hidden" autofocus name="poktan_id" class="form-control" value="{{ $item->id }}" required>
                             @endif
                         @endforeach
                         <div class="form-group my-2">
-                            <label for="name">Nama Poktan</label>
-                            <input type="text" name="name" class="form-control" placeholder="Nama Poktan" required>
-                        </div>
-                        <div class="form-group my-2">
-                            <label for="chairman">Ketua Poktan</label>
-                            <input type="text" name="chairman" class="form-control" placeholder="Ketua Poktan" required>
+                            <label for="name">Nama Petani</label>
+                            <input type="text" name="name" class="form-control" placeholder="Nama Petani" required>
                         </div>
                         <div class="my-2 form-group">
                             <label for="email">Email</label>
@@ -119,7 +111,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit Daftar Poktan</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Daftar Petani</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -129,18 +121,14 @@
                     <input type="hidden" name="emp_id" id="emp_id">
                     <input type="hidden" name="user_id" id="user_id">
                     <div class="modal-body p-4">
-                        @foreach ($gapoktan as $item)
+                        @foreach ($poktan as $item)
                             @if ($item->user->name == auth()->user()->name)
-                                <input type="hidden" autofocus name="gapoktan_id" class="form-control" value="{{ $item->id }}" required>
+                                <input type="hidden" autofocus name="poktan_id" class="form-control" value="{{ $item->id }}" required>
                             @endif
                         @endforeach
                         <div class="form-group my-2">
-                            <label for="name">Nama Poktan</label>
+                            <label for="name">Nama Petani</label>
                             <input type="text" name="name" id="name" class="form-control" placeholder="Nama Poktan" required>
-                        </div>
-                        <div class="form-group my-2">
-                            <label for="chairman">Ketua Poktan</label>
-                            <input type="text" name="chairman" id="chairman" class="form-control" placeholder="Ketua Poktan" required>
                         </div>
                         <div class="my-2 form-group">
                             <label for="email">Email</label>
@@ -209,7 +197,7 @@
                 $("#add_employee_btn").text('Tunggu..');
                 $("#add_employee_btn").prop('disabled', true);
                 $.ajax({
-                url: '{{ route('gapoktan-poktan-store') }}',
+                url: '{{ route('poktan-petani-store') }}',
                 method: 'post',
                 data: fd,
                 cache: false,
@@ -220,7 +208,7 @@
                     if (response.status == 200) {
                     Swal.fire(
                         'Menambahkan!',
-                        'Poktan Berhasil Ditambahkan!',
+                        'Petani Berhasil Ditambahkan!',
                         'success'
                     )
                     fetchAllEmployees();
@@ -238,7 +226,7 @@
                 e.preventDefault();
                 let id = $(this).attr('id');
                 $.ajax({
-                url: '{{ route('gapoktan-poktan-edit') }}',
+                url: '{{ route('poktan-petani-edit') }}',
                 method: 'get',
                 data: {
                     id: id,
@@ -272,7 +260,7 @@
                 $("#edit_employee_btn").text('Tunggu..');
                 $("#edit_employee_btn").prop('disabled', true);
                 $.ajax({
-                url: '{{ route('gapoktan-poktan-update') }}',
+                url: '{{ route('poktan-petani-update') }}',
                 method: 'post',
                 data: fd,
                 cache: false,
@@ -283,7 +271,7 @@
                     if (response.status == 200) {
                     Swal.fire(
                         'Memperbarui!',
-                        'Poktan Berhasil Diperbarui!',
+                        'Petani Berhasil Diperbarui!',
                         'success'
                     )
                     fetchAllEmployees();
@@ -313,7 +301,7 @@
                 }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                    url: '{{ route('gapoktan-poktan-delete') }}',
+                    url: '{{ route('poktan-petani-delete') }}',
                     method: 'delete',
                     data: {
                         id: id,
@@ -338,7 +326,7 @@
 
             function fetchAllEmployees() {
                 $.ajax({
-                url: '{{ route('gapoktan-poktan-fetchAll') }}',
+                url: '{{ route('poktan-petani-fetchAll') }}',
                 method: 'get',
                 success: function(response) {
                     $("#show_all_employees").html(response);

@@ -11,11 +11,11 @@
             <a href="{{ url('poktan') }}" class="nav-link"><i
                     class=""></i><span>Dashboard</span></a>
         </li>
-        <li class="menu-header">Kotak Masuk</li>
+        {{-- <li class="menu-header">Kotak Masuk</li>
         <li class="nav-item dropdown">
             <a href="{{ url('poktan/chat') }}" class="nav-link"><i class=""></i>
                 <span>Chat</span></a>
-        </li>
+        </li> --}}
         <li class="menu-header">Manajemen</li>
         <li class="nav-item dropdown">
             <a href="{{ url('poktan/edukasi') }}" class="nav-link "><i class=""></i>
@@ -25,14 +25,6 @@
             <a href="{{ url('poktan/kegiatan') }}" class="nav-link "><i class=""></i>
                 <span>Kegiatan</span></a>
         </li>
-        <li class="nav-item dropdown">
-            <a href="{{ url('poktan/produk') }}" class="nav-link "><i class=""></i>
-                <span>Produk</span></a>
-        </li>
-        <li class="nav-item dropdown">
-            <a href="{{ url('poktan/kategori-produk') }}" class="nav-link "><i class=""></i>
-                <span>Kategori Produk</span></a>
-        </li>
         <li class="menu-header">Laporan</li>
         <li class="nav-item dropdown">
             <a href="{{ url('poktan/tandur') }}" class="nav-link"><i class=""></i>
@@ -41,10 +33,6 @@
         <li class="nav-item dropdown">
             <a href="{{ url('poktan/panen') }}" class="nav-link"><i class=""></i>
                 <span>Panen</span></a>
-        </li>
-        <li class="nav-item dropdown">
-            <a href="{{ url('poktan/rekap-penjualan') }}" class="nav-link"><i class=""></i>
-                <span>Rekap Penjualan</span></a>
         </li>
         <li class="menu-header">Profile Saya</li>
         <li class="nav-item dropdown">

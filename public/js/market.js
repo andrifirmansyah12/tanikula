@@ -19,6 +19,7 @@ $(document).ready(function () {
                 'product_qty': product_qty,
             },
             success: function (response) {
+                window.location.reload();
                 iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
                     title: 'Berhasil',
                     message: response.status,

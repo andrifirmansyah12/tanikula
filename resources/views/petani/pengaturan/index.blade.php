@@ -1,13 +1,14 @@
-@extends('costumer.template')
-@section('title','Biodata Diri')
+@extends('petani.template')
+@section('title', 'Biodata Petani')
 
 @section('style')
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- MULAI STYLE CSS -->
+    <!-- include summernote css/js -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
     <link rel='stylesheet'
-        href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css' />
+        href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css'/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.css"
         integrity="sha256-pODNVtK3uOhL8FUNWWvFQK0QoQoV3YA9wGGng6mbZ0E=" crossorigin="anonymous" />
     <!-- AKHIR STYLE CSS -->
@@ -21,7 +22,7 @@
         <div class="section-header">
             <h1>@yield('title')</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="#">Pembeli</a></div>
+                <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
                 <div class="breadcrumb-item"><a href="#">@yield('title')</a></div>
             </div>
         </div>
@@ -33,13 +34,8 @@
                         <div class="card-body">
                             <ul class="nav nav-tabs">
                                 <li class="nav-item">
-                                    <a class="nav-link active" href="/pembeli">Biodata Diri</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/pembeli/alamat">Alamat</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Notifikasi</a>
+                                    <a class="nav-link active" href="{{ url('petani/pengaturan') }}">Biodata
+                                        Petani</a>
                                 </li>
                             </ul>
                         </div>
@@ -52,17 +48,14 @@
                                             <a href="" class="chocolat-image" title="Just an example">
                                                 <div>
                                                     @if ($userInfo->image)
-                                                        <img alt="image"
-                                                            id="image_preview"
-                                                            src="../storage/profile/{{ $userInfo->image }}"
-                                                            class="img-fluid img-thumbnail">
+                                                    <img alt="image" id="image_preview"
+                                                        src="../storage/profile/{{ $userInfo->image }}"
+                                                        class="img-fluid img-thumbnail">
                                                     @else
-                                                        <img alt="image"
-                                                            id="image_preview"
-                                                            src="{{ asset('stisla/assets/img/example-image.jpg') }}"
-                                                            class="img-fluid img-thumbnail">
+                                                    <img alt="image" id="image_preview"
+                                                        src="{{ asset('stisla/assets/img/example-image.jpg') }}"
+                                                        class="img-fluid img-thumbnail">
                                                     @endif
-
                                                 </div>
                                             </a>
                                         </div>
@@ -75,19 +68,20 @@
                                     </div>
                                 </div>
                             </div>
-                            <input type="hidden" name="id" id="id" value="{{ $userInfo->id }}">
+                            <input type="hidden" name="user_id" id="user_id" value="{{ $userInfo->id }}">
                             <div class="col-12 col-md-12 col-lg-7">
                                 <div class="">
                                     <form method="post" action="#" id="profile_form">
-                                    @csrf
+                                        @csrf
                                         <div class="card-header">
-                                            <h4>Ubah Biodata Diri</h4>
+                                            <h4>Ubah Biodata Petani</h4>
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="form-group col-md-12 col-12">
-                                                    <label for="name">Nama</label>
-                                                    <input type="text" class="form-control" name="name" id="name" value="{{ $userInfo->user->name }}" required="">
+                                                    <label for="name">Nama Petani</label>
+                                                    <input type="text" class="form-control" name="name" id="name"
+                                                        value="{{ $userInfo->user->name }}" required="">
                                                     <div class="invalid-feedback">
                                                     </div>
                                                 </div>
@@ -95,14 +89,14 @@
                                             <div class="row">
                                                 <div class="form-group col-md-12 col-12">
                                                     <label for="email">Email</label>
-                                                    <input type="email" class="form-control" id="email" name="email" value="{{ $userInfo->user->email }}"
-                                                        required="">
+                                                    <input type="email" class="form-control" id="email" name="email"
+                                                        value="{{ $userInfo->user->email }}" required="">
                                                     <div class="invalid-feedback">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="form-group col-md-12 col-12">
+                                                <div class="form-group col-md-7 col-12">
                                                     <label for="telp">No Handphone</label>
                                                     <div class="input-group">
                                                         <div class="input-group-prepend">
@@ -115,33 +109,27 @@
                                                     <div class="invalid-feedback">
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="form-group col-md-7 col-12">
-                                                    <label for="birth">Tanggal Lahir</label>
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                        <div class="input-group-text">
-                                                            <i class="bi bi-calendar"></i>
-                                                        </div>
-                                                        </div>
-                                                        <input type="text" name="birth" id="birth" class="form-control datepicker" value="{{ date("d-F-Y", strtotime($userInfo->birth)) }}">
-                                                    </div>
+                                                <div class="form-group col-md-5 col-12">
+                                                    <label for="city">Kota</label>
+                                                    <input type="text" class="form-control" name="city" id="city"
+                                                        value="{{ $userInfo->city }}" required="">
                                                     <div class="invalid-feedback">
                                                     </div>
                                                 </div>
-                                                <div class="form-group col-md-5 col-12">
-                                                    <label for="gender">Jenis Kelamin</label>
-                                                    <select name="gender" id="gender" class="form-control select2">
-                                                        <option value="" selected disabled>Pilih Jenis Kelamin</option>
-                                                        <option value="Laki-laki" {{ $userInfo->gender == 'Laki-laki' ? 'selected' : '' }}>Laki-Laki</option>
-                                                        <option value="Perempuan" {{ $userInfo->gender == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
-                                                    </select>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-12 col-12">
+                                                    <label for="address">Alamat</label>
+                                                    <input type="text" class="form-control" name="address" id="address"
+                                                        value="{{ $userInfo->address }}" required="">
+                                                    <div class="invalid-feedback">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="card-footer text-right">
-                                            <input type="submit" id="profile_btn" value="Update Biodata Diri" class="btn btn-primary">
+                                            <input type="submit" id="profile_btn" value="Update Biodata Diri"
+                                                class="btn btn-primary">
                                         </div>
                                     </form>
                                 </div>
@@ -176,13 +164,6 @@
 
     <!-- JAVASCRIPT -->
     <script>
-        $( function() {
-            $( ".datepicker" ).datepicker({
-                dayNames: [ "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu" ],
-                dateFormat: 'dd-MM-yy'
-            });
-        });
-
         $(function() {
             $("#image").change(function(e) {
                 const file = e.target.files[0];
@@ -190,10 +171,10 @@
                 $("#image_preview").attr('src', url);
                 let fd = new FormData();
                 fd.append('image', file);
-                fd.append('id', $("#id").val());
+                fd.append('user_id', $("#user_id").val());
                 fd.append('_token', '{{ csrf_token() }}');
                 $.ajax({
-                    url: '{{ route('pembeli.pengaturan.image') }}',
+                    url: '{{ route('petani.pengaturan.image') }}',
                     method: 'POST',
                     data: fd,
                     cache: false,
@@ -216,11 +197,11 @@
 
             $("#profile_form").submit(function(e) {
                 e.preventDefault();
-                let id = $("#id").val();
+                let id = $("#user_id").val();
                 $("#profile_btn").val('Silahkan tunggu..');
                 $("#profile_btn").prop('disabled', true);
                 $.ajax({
-                    url: '{{ route('pembeli.pengaturan.update') }}',
+                    url: '{{ route('petani.pengaturan.update') }}',
                     method: 'POST',
                     data: $(this).serialize()+ `&id=${id}`,
                     dataType: 'json',

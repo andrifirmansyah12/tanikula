@@ -82,7 +82,7 @@
                                     <form method="post" action="#" id="profile_form">
                                         @csrf
                                         <div class="card-header">
-                                            <h4>Ubah Biodata Diri</h4>
+                                            <h4>Ubah Biodata Gapoktan</h4>
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
@@ -115,8 +115,16 @@
                                             <div class="row">
                                                 <div class="form-group col-md-7 col-12">
                                                     <label for="telp">No Handphone</label>
-                                                    <input type="tel" class="form-control" id="telp" name="telp"
-                                                        value="+62 {{ $userInfo->telp }}" required="">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                        <div class="input-group-text">
+                                                            <span>+62</span>
+                                                        </div>
+                                                        </div>
+                                                        <input type="tel" name="telp" id="telp" value="{{ $userInfo->telp}}" class="form-control phone-number">
+                                                    </div>
+                                                    <div class="invalid-feedback">
+                                                    </div>
                                                     <div class="invalid-feedback">
                                                     </div>
                                                 </div>
@@ -232,6 +240,7 @@
                             });
                             $("#profile_btn").val('Update Biodata Diri');
                             $("#profile_btn").prop('disabled', false);
+                            window.location.reload();
                         }
                     }
                 });
