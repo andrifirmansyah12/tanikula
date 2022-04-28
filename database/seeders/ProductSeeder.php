@@ -25,7 +25,7 @@ class ProductSeeder extends Seeder
                 "category_product_id" => 1,
                 "code" => "1234",
                 "stoke" => 6,
-                "price" => 1000000,
+                "price" => 100000,
                 "desc" => "Ini adalah contoh kalimat untuk deskripsi",
                 "user_id" => 2,
                 "is_active" => true,
@@ -46,9 +46,7 @@ class ProductSeeder extends Seeder
                 'created_at' => Carbon::now()->format('Y-m-d'),
                 'updated_at' => Carbon::now()->format('Y-m-d'),
             ],
-
         ];
-
         Product::insert($datas);
     }
 }
