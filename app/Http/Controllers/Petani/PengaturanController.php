@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Farmer;
 
@@ -58,7 +59,17 @@ class PengaturanController extends Controller
 
         return response()->json([
             'status' => 200,
-            'messages' => 'Biodata Petani berhasil diupdate!'
+            'messages' => 'Biodata Petani berhasil diperbarui!'
+        ]);
+    }
+
+     public function pengaturanUpdatePassword(Request $request){
+        User::where('id', auth()->user()->id)->update([
+            'password' => Hash::make($request->password)
+        ]);
+        return response()->json([
+            'status' => 200,
+            'messages' => 'Password berhasil diperbarui!'
         ]);
     }
 }

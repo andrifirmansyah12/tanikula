@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
+use App\Models\Costumer;
 use App\Models\UserVerify;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
@@ -121,6 +122,10 @@ class LoginController extends Controller
             $user->password = Hash::make($request->password);
             $user->assignRole('pembeli');
             $user->save();
+
+            $costumer = new Costumer();
+            $costumer->user_id = $user->id;
+            $costumer->save();
 
             $token = Str::random(64);
             UserVerify::create([

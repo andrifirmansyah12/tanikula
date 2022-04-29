@@ -110,7 +110,11 @@
                                                             <span>+62</span>
                                                         </div>
                                                         </div>
-                                                        <input type="tel" name="telp" id="telp" value="{{ $userInfo->telp}}" class="form-control phone-number">
+                                                        @if ($userInfo->telp)
+                                                            <input type="tel" name="telp" id="telp" value="{{ $userInfo->telp }}" class="form-control phone-number">
+                                                        @else
+                                                            <input type="tel" name="telp" id="telp" placeholder="81*******" class="form-control phone-number">
+                                                        @endif
                                                     </div>
                                                     <div class="invalid-feedback">
                                                     </div>
@@ -125,7 +129,11 @@
                                                             <i class="bi bi-calendar"></i>
                                                         </div>
                                                         </div>
-                                                        <input type="text" name="birth" id="birth" class="form-control datepicker" value="{{ date("d-F-Y", strtotime($userInfo->birth)) }}">
+                                                        @if ($userInfo->birth)
+                                                            <input type="text" name="birth" id="birth" class="form-control datepicker" value="{{ date("d-F-Y", strtotime($userInfo->birth)) }}">
+                                                        @else
+                                                            <input type="text" name="birth" id="birth" class="form-control datepicker" placeholder="Tanggal lahir">
+                                                        @endif
                                                     </div>
                                                     <div class="invalid-feedback">
                                                     </div>

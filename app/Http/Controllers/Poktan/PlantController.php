@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Petani;
+namespace App\Http\Controllers\Poktan;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -12,11 +12,11 @@ use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 
-class HarvestController extends Controller
+class PlantController extends Controller
 {
     // set index page view
 	public function index() {
-		return view('petani.panen.index');
+		return view('poktan.tandur.index');
 	}
 
     // handle fetch all eamployees ajax request
@@ -25,8 +25,8 @@ class HarvestController extends Controller
         $emps = Plant::join('farmers', 'plants.farmer_id', '=', 'farmers.id')
                     ->join('poktans', 'plants.poktan_id', '=', 'poktans.id')
                     ->select('plants.*', 'surface_area as area')
-                    ->where('farmers.user_id', '=', auth()->user()->id)
-                    ->whereNotNull('plants.harvest_date')
+                    ->where('poktans.user_id', '=', auth()->user()->id)
+                    ->where('plants.harvest_date', '=', null)
                     ->orderBy('updated_at', 'desc')
                     ->get();
 		$output = '';
@@ -69,7 +69,7 @@ class HarvestController extends Controller
                     $output .= '<td><span class="text-danger">Belum diisi</span></td>';
                 }
                 if (empty($emp->harvest_date)) {
-                    $output .= '<td><div class="badge badge-warning">Tanam</div></td>';
+                    $output .= '<td><div class="badge badge-warning">Tandur</div></td>';
                 } else {
                     $output .= '<td><div class="badge badge-success">Panen</div></td>';
                 }
@@ -81,7 +81,7 @@ class HarvestController extends Controller
 			$output .= '</tbody></table>';
 			echo $output;
 		} else {
-			echo '<h1 class="text-center text-secondary my-5">Tidak ada data Panen!</h1>';
+			echo '<h1 class="text-center text-secondary my-5">Tidak ada data Tandur!</h1>';
 		}
 	}
 
@@ -91,5 +91,4 @@ class HarvestController extends Controller
 		$emp = Plant::with('poktan', 'farmer')->where('id', $id)->first();
 		return response()->json($emp);
 	}
-
 }

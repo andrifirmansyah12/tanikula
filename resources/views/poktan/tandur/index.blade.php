@@ -1,5 +1,5 @@
-@extends('petani.template')
-@section('title', 'Panen')
+@extends('poktan.template')
+@section('title', 'Laporan Tandur')
 
 @section('style')
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -26,7 +26,7 @@
             <div class="section-header">
                 <h1>@yield('title')</h1>
                 <div class="section-header-breadcrumb">
-                    <div class="breadcrumb-item">Petani</div>
+                    <div class="breadcrumb-item">Poktan</div>
                     <div class="breadcrumb-item active"><a href="#">@yield('title')</a></div>
                 </div>
             </div>
@@ -52,7 +52,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Detail Panen</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Detail Tandur</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -133,12 +133,43 @@
 
         $(function() {
 
+            // add new employee ajax request
+            $("#add_employee_form").submit(function(e) {
+                e.preventDefault();
+                const fd = new FormData(this);
+                $("#add_employee_btn").text('Tunggu..');
+                $("#add_employee_btn").prop('disabled', true);
+                $.ajax({
+                url: '{{ route('poktan-tandur-store') }}',
+                method: 'post',
+                data: fd,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status == 200) {
+                    Swal.fire(
+                        'Menambahkan!',
+                        'Tandur Berhasil Ditambahkan!',
+                        'success'
+                    )
+                    fetchAllEmployees();
+                    }
+                    $("#add_employee_btn").text('Simpan');
+                    $("#add_employee_btn").prop('disabled', false);
+                    $("#add_employee_form")[0].reset();
+                    $("#addEmployeeModal").modal('hide');
+                }
+                });
+            });
+
             // edit employee ajax request
             $(document).on('click', '.editIcon', function(e) {
                 e.preventDefault();
                 let id = $(this).attr('id');
                 $.ajax({
-                url: '{{ route('petani-panen-edit') }}',
+                url: '{{ route('poktan-tandur-edit') }}',
                 method: 'get',
                 data: {
                     id: id,
@@ -175,7 +206,7 @@
 
             function fetchAllEmployees() {
                 $.ajax({
-                url: '{{ route('petani-panen-fetchAll') }}',
+                url: '{{ route('poktan-tandur-fetchAll') }}',
                 method: 'get',
                 success: function(response) {
                     $("#show_all_employees").html(response);

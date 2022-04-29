@@ -15,6 +15,37 @@
 
 @section('content')
 
+<!-- Modal -->
+    <div class="modal fade" id="editEmployeeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ganti Password</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="#" method="POST" id="editPasswordForm" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body p-4">
+                        <div class="form-group my-2">
+                            <label for="password">Password</label>
+                            <small class="d-flex text-danger pb-1">*Catatan:
+                                <br>1. Jika tidak ingin ubah password biarkan kosong,
+                                <br>2. Dan jika ingin ubah password, silahkan masukkan password.
+                            </small>
+                            <input type="password"  id="password" name="password" class="form-control" placeholder="Password" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
+                        <button type="submit" id="password_btn" class="btn btn-primary">Ubah Password</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 <!-- Main Content -->
 <div class="main-content">
     <section class="section">
@@ -140,9 +171,11 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-footer text-right">
-                                            <input type="submit" id="profile_btn" value="Update Biodata Diri"
-                                                class="btn btn-primary">
+                                        <div class="card-footer row align-items-center justify-content-end mb-3">
+                                            <input type="button" value="Ubah Password"
+                                                class="btn btn-light m-1" data-toggle="modal" data-target="#editEmployeeModal">
+                                            <input type="submit" id="profile_btn" value="Ubah Biodata Diri"
+                                                class="btn btn-primary m-1">
                                         </div>
                                     </form>
                                 </div>
@@ -233,6 +266,32 @@
                                 position: 'topRight'
                             });
                             $("#profile_btn").val('Update Biodata Diri');
+                            $("#profile_btn").prop('disabled', false);
+                            window.location.reload();
+                        }
+                    }
+                });
+            });
+
+            $("#editPasswordForm").submit(function(e) {
+                e.preventDefault();
+                let id = $("#user_id").val();
+                $("#password_btn").val('Silahkan tunggu..');
+                $("#password_btn").prop('disabled', true);
+                $.ajax({
+                    url: '{{ route('poktan.pengaturan.updatePassword') }}',
+                    method: 'POST',
+                    data: $(this).serialize()+ `&id=${id}`,
+                    dataType: 'json',
+                    success: function(res){
+                        if (res.status == 200) {
+                            // $("#profile_alert").html(showMessage('success', res.messages));
+                            iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                                title: 'Berhasil',
+                                message: res.messages,
+                                position: 'topRight'
+                            });
+                            $("#profile_btn").val('Ubah Password');
                             $("#profile_btn").prop('disabled', false);
                             window.location.reload();
                         }

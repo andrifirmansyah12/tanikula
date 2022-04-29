@@ -93,6 +93,7 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:gapoktan']], function
     Route::get('gapoktan/pengaturan', [App\Http\Controllers\Gapoktan\PengaturanController::class, 'pengaturan'])->name('gapoktan-pengaturan');
     Route::post('gapoktan/pengaturan-image', [App\Http\Controllers\Gapoktan\PengaturanController::class, 'pengaturanImage'])->name('gapoktan.pengaturan.image');
     Route::post('gapoktan/pengaturan-update', [App\Http\Controllers\Gapoktan\PengaturanController::class, 'pengaturanUpdate'])->name('gapoktan.pengaturan.update');
+    Route::post('gapoktan/pengaturan-updatePassword', [App\Http\Controllers\Gapoktan\PengaturanController::class, 'pengaturanUpdatePassword'])->name('gapoktan.pengaturan.updatePassword');
 
     // Route::get('gapoktan/pengaturan', function() {
     //     return view('gapoktan.pengaturan.index');
@@ -126,9 +127,22 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:poktan']], function()
     Route::get('poktan/daftar-petani/edit', [App\Http\Controllers\Poktan\FarmerController::class, 'edit'])->name('poktan-petani-edit');
     Route::post('poktan/daftar-petani/update', [App\Http\Controllers\Poktan\FarmerController::class, 'update'])->name('poktan-petani-update');
 
+    Route::get('poktan/tandur', [App\Http\Controllers\Poktan\PlantController::class, 'index'])->name('poktan-tandur');
+    Route::post('poktan/tandur/store', [App\Http\Controllers\Poktan\PlantController::class, 'store'])->name('poktan-tandur-store');
+    Route::get('poktan/tandur/fetchall', [App\Http\Controllers\Poktan\PlantController::class, 'fetchAll'])->name('poktan-tandur-fetchAll');
+    Route::delete('poktan/tandur/delete', [App\Http\Controllers\Poktan\PlantController::class, 'delete'])->name('poktan-tandur-delete');
+    Route::get('poktan/tandur/edit', [App\Http\Controllers\Poktan\PlantController::class, 'edit'])->name('poktan-tandur-edit');
+    Route::post('poktan/tandur/update', [App\Http\Controllers\Poktan\PlantController::class, 'update'])->name('poktan-tandur-update');
+
+    Route::get('poktan/panen', [App\Http\Controllers\Poktan\HarvestController::class, 'index'])->name('poktan-panen');
+    Route::post('poktan/panen/store', [App\Http\Controllers\Poktan\HarvestController::class, 'store'])->name('poktan-panen-store');
+    Route::get('poktan/panen/fetchall', [App\Http\Controllers\Poktan\HarvestController::class, 'fetchAll'])->name('poktan-panen-fetchAll');
+    Route::get('poktan/panen/edit', [App\Http\Controllers\Poktan\HarvestController::class, 'edit'])->name('poktan-panen-edit');
+
     Route::get('poktan/pengaturan', [App\Http\Controllers\Poktan\PengaturanController::class, 'pengaturan'])->name('poktan-pengaturan');
     Route::post('poktan/pengaturan-image', [App\Http\Controllers\Poktan\PengaturanController::class, 'pengaturanImage'])->name('poktan.pengaturan.image');
     Route::post('poktan/pengaturan-update', [App\Http\Controllers\Poktan\PengaturanController::class, 'pengaturanUpdate'])->name('poktan.pengaturan.update');
+    Route::post('poktan/pengaturan-updatePassword', [App\Http\Controllers\Poktan\PengaturanController::class, 'pengaturanUpdatePassword'])->name('poktan.pengaturan.updatePassword');
 
 });
 
@@ -149,14 +163,12 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:petani']], function()
     Route::get('petani/panen', [App\Http\Controllers\Petani\HarvestController::class, 'index'])->name('petani-panen');
     Route::post('petani/panen/store', [App\Http\Controllers\Petani\HarvestController::class, 'store'])->name('petani-panen-store');
     Route::get('petani/panen/fetchall', [App\Http\Controllers\Petani\HarvestController::class, 'fetchAll'])->name('petani-panen-fetchAll');
-    Route::delete('petani/panen/delete', [App\Http\Controllers\Petani\HarvestController::class, 'delete'])->name('petani-panen-delete');
     Route::get('petani/panen/edit', [App\Http\Controllers\Petani\HarvestController::class, 'edit'])->name('petani-panen-edit');
-    Route::post('petani/panen/update', [App\Http\Controllers\Petani\HarvestController::class, 'update'])->name('petani-panen-update');
 
     Route::get('petani/pengaturan', [App\Http\Controllers\Petani\PengaturanController::class, 'pengaturan'])->name('petani-pengaturan');
     Route::post('petani/pengaturan-image', [App\Http\Controllers\Petani\PengaturanController::class, 'pengaturanImage'])->name('petani.pengaturan.image');
     Route::post('petani/pengaturan-update', [App\Http\Controllers\Petani\PengaturanController::class, 'pengaturanUpdate'])->name('petani.pengaturan.update');
-
+    Route::post('petani/pengaturan-updatePassword', [App\Http\Controllers\Petani\PengaturanController::class, 'pengaturanUpdatePassword'])->name('petani.pengaturan.updatePassword');
 });
 
 // Pembeli
