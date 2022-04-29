@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Petani;
+namespace App\Http\Controllers\Poktan;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -16,7 +16,7 @@ class HarvestController extends Controller
 {
     // set index page view
 	public function index() {
-		return view('petani.panen.index');
+		return view('poktan.panen.index');
 	}
 
     // handle fetch all eamployees ajax request
@@ -25,7 +25,7 @@ class HarvestController extends Controller
         $emps = Plant::join('farmers', 'plants.farmer_id', '=', 'farmers.id')
                     ->join('poktans', 'plants.poktan_id', '=', 'poktans.id')
                     ->select('plants.*', 'surface_area as area')
-                    ->where('farmers.user_id', '=', auth()->user()->id)
+                    ->where('poktans.user_id', '=', auth()->user()->id)
                     ->whereNotNull('plants.harvest_date')
                     ->orderBy('updated_at', 'desc')
                     ->get();
@@ -91,5 +91,4 @@ class HarvestController extends Controller
 		$emp = Plant::with('poktan', 'farmer')->where('id', $id)->first();
 		return response()->json($emp);
 	}
-
 }

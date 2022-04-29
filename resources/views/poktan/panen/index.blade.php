@@ -1,5 +1,5 @@
-@extends('petani.template')
-@section('title', 'Panen')
+@extends('poktan.template')
+@section('title', 'Laporan Panen')
 
 @section('style')
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -26,7 +26,7 @@
             <div class="section-header">
                 <h1>@yield('title')</h1>
                 <div class="section-header-breadcrumb">
-                    <div class="breadcrumb-item">Petani</div>
+                    <div class="breadcrumb-item">Poktan</div>
                     <div class="breadcrumb-item active"><a href="#">@yield('title')</a></div>
                 </div>
             </div>
@@ -138,7 +138,7 @@
                 e.preventDefault();
                 let id = $(this).attr('id');
                 $.ajax({
-                url: '{{ route('petani-panen-edit') }}',
+                url: '{{ route('poktan-panen-edit') }}',
                 method: 'get',
                 data: {
                     id: id,
@@ -175,7 +175,7 @@
 
             function fetchAllEmployees() {
                 $.ajax({
-                url: '{{ route('petani-panen-fetchAll') }}',
+                url: '{{ route('poktan-panen-fetchAll') }}',
                 method: 'get',
                 success: function(response) {
                     $("#show_all_employees").html(response);
