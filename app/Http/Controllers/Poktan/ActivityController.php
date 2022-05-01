@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Gapoktan;
+namespace App\Http\Controllers\Poktan;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -16,7 +16,7 @@ class ActivityController extends Controller
     // set index page view
 	public function index() {
 		$category = ActivityCategory::all();
-		return view('gapoktan.kegiatan.index', compact('category'));
+		return view('poktan.kegiatan.index', compact('category'));
 	}
 
     // handle fetch all eamployees ajax request
@@ -100,8 +100,7 @@ class ActivityController extends Controller
 	public function delete(Request $request)
     {
 		$id = $request->id;
-		// $emp = Activity::find($id);
-		$emp = Activity::with('activity_category')->where('id', $id);
+		$emp = Activity::find($id);
         $emp->delete();
 	}
 
