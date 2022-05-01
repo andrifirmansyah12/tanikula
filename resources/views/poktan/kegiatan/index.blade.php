@@ -1,4 +1,4 @@
-@extends('gapoktan.template')
+@extends('poktan.template')
 @section('title', 'Kegiatan')
 
 @section('style')
@@ -26,7 +26,7 @@
             <div class="section-header">
                 <h1>@yield('title')</h1>
                 <div class="section-header-breadcrumb">
-                    <div class="breadcrumb-item">Gapoktan</div>
+                    <div class="breadcrumb-item">Poktan</div>
                     <div class="breadcrumb-item active"><a href="#">@yield('title')</a></div>
                 </div>
             </div>
@@ -194,7 +194,7 @@
         });
 
         $('.titleCheck').change(function(e) {
-            $.get('{{ route('gapoktan-kegiatan-checkSlug') }}',
+            $.get('{{ route('poktan-kegiatan-checkSlug') }}',
             { 'title': $(this).val() },
                 function( data ) {
                     $('.slugCheck').val(data.slug);
@@ -221,7 +221,7 @@
                 $("#add_employee_btn").text('Tunggu..');
                 $("#add_employee_btn").prop('disabled', true);
                 $.ajax({
-                url: '{{ route('gapoktan-kegiatan-store') }}',
+                url: '{{ route('poktan-kegiatan-store') }}',
                 method: 'post',
                 data: fd,
                 cache: false,
@@ -250,7 +250,7 @@
                 e.preventDefault();
                 let id = $(this).attr('id');
                 $.ajax({
-                url: '{{ route('gapoktan-kegiatan-edit') }}',
+                url: '{{ route('poktan-kegiatan-edit') }}',
                 method: 'get',
                 data: {
                     id: id,
@@ -273,7 +273,7 @@
                 $("#edit_employee_btn").text('Tunggu..');
                 $("#edit_employee_btn").prop('disabled', true);
                 $.ajax({
-                url: '{{ route('gapoktan-kegiatan-update') }}',
+                url: '{{ route('poktan-kegiatan-update') }}',
                 method: 'post',
                 data: fd,
                 cache: false,
@@ -314,7 +314,7 @@
                 }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                    url: '{{ route('gapoktan-kegiatan-delete') }}',
+                    url: '{{ route('poktan-kegiatan-delete') }}',
                     method: 'delete',
                     data: {
                         id: id,
@@ -339,7 +339,7 @@
 
             function fetchAllEmployees() {
                 $.ajax({
-                url: '{{ route('gapoktan-kegiatan-fetchAll') }}',
+                url: '{{ route('poktan-kegiatan-fetchAll') }}',
                 method: 'get',
                 success: function(response) {
                     $("#show_all_employees").html(response);
