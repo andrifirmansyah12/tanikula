@@ -25,9 +25,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function() {
 // Gapoktan
 Route::group(['middleware' => ['LoginCheck', 'auth', 'role:gapoktan']], function() {
 
-    Route::get('gapoktan', function() {
-        return view('gapoktan.dashboard.index');
-    })->name('gapoktan');
+    Route::get('gapoktan', [App\Http\Controllers\Gapoktan\DashboardController::class, 'index'])->name('gapoktan');
 
     Route::get('gapoktan/chat', function() {
         return view('gapoktan.chat.index');
@@ -88,6 +86,13 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:gapoktan']], function
     Route::get('gapoktan/daftar-poktan/edit', [App\Http\Controllers\Gapoktan\PoktanController::class, 'edit'])->name('gapoktan-poktan-edit');
     Route::post('gapoktan/daftar-poktan/update', [App\Http\Controllers\Gapoktan\PoktanController::class, 'update'])->name('gapoktan-poktan-update');
 
+    Route::get('gapoktan/daftar-petani', [App\Http\Controllers\Gapoktan\FarmerController::class, 'index'])->name('gapoktan-petani');
+    Route::post('gapoktan/daftar-petani/store', [App\Http\Controllers\Gapoktan\FarmerController::class, 'store'])->name('gapoktan-petani-store');
+    Route::get('gapoktan/daftar-petani/fetchall', [App\Http\Controllers\Gapoktan\FarmerController::class, 'fetchAll'])->name('gapoktan-petani-fetchAll');
+    Route::delete('gapoktan/daftar-petani/delete', [App\Http\Controllers\Gapoktan\FarmerController::class, 'delete'])->name('gapoktan-petani-delete');
+    Route::get('gapoktan/daftar-petani/edit', [App\Http\Controllers\Gapoktan\FarmerController::class, 'edit'])->name('gapoktan-petani-edit');
+    Route::post('gapoktan/daftar-petani/update', [App\Http\Controllers\Gapoktan\FarmerController::class, 'update'])->name('gapoktan-petani-update');
+
     Route::get('gapoktan/tandur', [App\Http\Controllers\Gapoktan\PlantController::class, 'index'])->name('gapoktan-tandur');
     Route::post('gapoktan/tandur/store', [App\Http\Controllers\Gapoktan\PlantController::class, 'store'])->name('gapoktan-tandur-store');
     Route::get('gapoktan/tandur/fetchall', [App\Http\Controllers\Gapoktan\PlantController::class, 'fetchAll'])->name('gapoktan-tandur-fetchAll');
@@ -110,10 +115,6 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:gapoktan']], function
     // Route::get('gapoktan/pengaturan', function() {
     //     return view('gapoktan.pengaturan.index');
     // })->name('gapoktan.alamat');
-
-    Route::get('gapoktan/daftar-petani', function() {
-        return view('gapoktan.petani.index');
-    })->name('gapoktan.petani');
 });
 
 // Poktan

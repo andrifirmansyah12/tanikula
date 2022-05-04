@@ -4,16 +4,48 @@
 @section('style')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <!-- MULAI STYLE CSS -->
+<style>
+    .register {
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    }
 
+    .registerInput {
+        margin-top: 55px;
+        margin-bottom: 55px;
+    }
+
+    @media (max-width: 767px) {
+        .register {
+            box-shadow: none;
+        }
+
+        .registerInput {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+    }
+</style>
 <!-- AKHIR STYLE CSS -->
 @endsection
 
 @section('content')
 <section class="section">
-    <div class="container" style="margin-top: 75px; margin-bottom: 65px;">
-        <div class="row">
-            <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
-                <div class="login-brand">
+    <div class="card register container" style="margin-top: 80px; margin-bottom: 70px;">
+        <div class="login-brand d-block d-md-none">
+            <a href="{{ url('home') }}">
+                <h4>Sri Makmur</h4>
+            </a>
+        </div>
+        <div class="row align-items-center">
+            <div class="col-lg-7 col-md-6 col-12">
+                <div class="">
+                    <div class="card-body">
+                        <img src="{{ asset('img/DrawKit Vector Illustration Black Friday & Online Shopping (6).svg') }}" alt="#" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 registerInput col-md-6 col-12">
+                <div class="login-brand d-none d-md-block">
                     <a href="{{ url('home') }}">
                         <h4>Sri Makmur</h4>
                     </a>
