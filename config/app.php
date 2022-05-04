@@ -179,7 +179,7 @@ return [
         Yajra\DataTables\DataTablesServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
-
+        LaraIzitoast\LaraIzitoastServiceProvider::class,
     ],
 
     /*
