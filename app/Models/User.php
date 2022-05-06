@@ -84,6 +84,11 @@ class User extends Authenticatable
         return $this->hasMany(Gapoktan::class);
     }
 
+    public function admin()
+    {
+        return $this->hasMany(Admin::class);
+    }
+
     public function poktan()
     {
         return $this->hasMany(Poktan::class);
