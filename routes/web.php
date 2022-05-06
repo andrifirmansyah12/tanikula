@@ -13,14 +13,30 @@
 |
 */
 
+// Login Admin
+Route::get('/administrator/login', [App\Http\Controllers\Admin\LoginController::class, 'login'])->name('login-admin');
+Route::post('/administrator/login', [App\Http\Controllers\Admin\LoginController::class, 'loginAdmin'])->name('login-admin');
+Route::post('/administrator/logout', [App\Http\Controllers\Admin\LoginController::class, 'logout'])->name('logout-admin');
+Route::get('/administrator/forgot-password', [App\Http\Controllers\Admin\LoginController::class, 'forgotPassword'])->name('forgotPassword-admin');
+Route::post('/administrator/forgot-password', [App\Http\Controllers\Admin\LoginController::class, 'forgotPasswordEmail'])->name('forgotPasswordEmail-admin');
+Route::get('/administrator/reset-password/{email}/{token}', [App\Http\Controllers\Admin\LoginController::class, 'reset'])->name('resetPass-admin');
+Route::post('/administrator/reset-password', [App\Http\Controllers\Admin\LoginController::class, 'resetPassword'])->name('resetPassword-admin');
+
 // Admin
-Route::group(['middleware' => ['auth', 'role:admin']], function() {
+Route::group(['middleware' => ['LoginCheck', 'auth', 'role:admin']], function() {
 
     Route::get('admin', function() {
         return view('admin.dashboard.index');
     })->name('admin');
 
 });
+
+// Login Gapoktan
+Route::get('/gapoktan/login', [App\Http\Controllers\Gapoktan\LoginController::class, 'login'])->name('login-gapoktan');
+Route::post('/gapoktan/login', [App\Http\Controllers\Gapoktan\LoginController::class, 'loginGapoktan'])->name('login-gapoktan');
+Route::get('/gapoktan/register', [App\Http\Controllers\Gapoktan\LoginController::class, 'register'])->name('register-gapoktan');
+Route::post('/gapoktan/register', [App\Http\Controllers\Gapoktan\LoginController::class, 'registerGapoktan'])->name('registerGapoktan-gapoktan');
+Route::post('/gapoktan/logout', [App\Http\Controllers\Gapoktan\LoginController::class, 'logout'])->name('logout-gapoktan');
 
 // Gapoktan
 Route::group(['middleware' => ['LoginCheck', 'auth', 'role:gapoktan']], function() {
@@ -105,17 +121,19 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:gapoktan']], function
     Route::get('gapoktan/panen/fetchall', [App\Http\Controllers\Gapoktan\HarvestController::class, 'fetchAll'])->name('gapoktan-panen-fetchAll');
     Route::get('gapoktan/panen/edit', [App\Http\Controllers\Gapoktan\HarvestController::class, 'edit'])->name('gapoktan-panen-edit');
 
-    // Route::resource('gapoktan/kegiatan', App\Http\Controllers\Gapoktan\ActivityController::class)->except(['show','update']);
-
     Route::get('gapoktan/pengaturan', [App\Http\Controllers\Gapoktan\PengaturanController::class, 'pengaturan'])->name('gapoktan-pengaturan');
     Route::post('gapoktan/pengaturan-image', [App\Http\Controllers\Gapoktan\PengaturanController::class, 'pengaturanImage'])->name('gapoktan.pengaturan.image');
     Route::post('gapoktan/pengaturan-update', [App\Http\Controllers\Gapoktan\PengaturanController::class, 'pengaturanUpdate'])->name('gapoktan.pengaturan.update');
     Route::post('gapoktan/pengaturan-updatePassword', [App\Http\Controllers\Gapoktan\PengaturanController::class, 'pengaturanUpdatePassword'])->name('gapoktan.pengaturan.updatePassword');
 
-    // Route::get('gapoktan/pengaturan', function() {
-    //     return view('gapoktan.pengaturan.index');
-    // })->name('gapoktan.alamat');
 });
+
+// Login Poktan
+Route::get('/poktan/login', [App\Http\Controllers\Poktan\LoginController::class, 'login'])->name('login-poktan');
+Route::post('/poktan/login', [App\Http\Controllers\Poktan\LoginController::class, 'loginPoktan'])->name('login-poktan');
+Route::get('/poktan/register', [App\Http\Controllers\Poktan\LoginController::class, 'register'])->name('register-poktan');
+Route::post('/poktan/register', [App\Http\Controllers\Poktan\LoginController::class, 'registerPoktan'])->name('registerPoktan-poktan');
+Route::post('/poktan/logout', [App\Http\Controllers\Poktan\LoginController::class, 'logout'])->name('logout-poktan');
 
 // Poktan
 Route::group(['middleware' => ['LoginCheck', 'auth', 'role:poktan']], function() {
@@ -167,6 +185,13 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:poktan']], function()
 
 });
 
+// Login Petani
+Route::get('/petani/login', [App\Http\Controllers\Petani\LoginController::class, 'login'])->name('login-petani');
+Route::post('/petani/login', [App\Http\Controllers\Petani\LoginController::class, 'loginPetani'])->name('login-petani');
+Route::get('/petani/register', [App\Http\Controllers\Petani\LoginController::class, 'register'])->name('register-petani');
+Route::post('/petani/register', [App\Http\Controllers\Petani\LoginController::class, 'registerPetani'])->name('registerPetani-petani');
+Route::post('/petani/logout', [App\Http\Controllers\Petani\LoginController::class, 'logout'])->name('logout-petani');
+
 // Petani
 Route::group(['middleware' => ['LoginCheck', 'auth', 'role:petani']], function() {
 
@@ -200,6 +225,18 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:petani']], function()
     Route::post('petani/pengaturan-updatePassword', [App\Http\Controllers\Petani\PengaturanController::class, 'pengaturanUpdatePassword'])->name('petani.pengaturan.updatePassword');
 });
 
+// Login Pembeli
+Route::get('/login', [App\Http\Controllers\Pembeli\LoginController::class, 'login'])->name('login');
+Route::post('/login', [App\Http\Controllers\Pembeli\LoginController::class, 'loginPembeli'])->name('loginPembeli-pembeli');
+Route::get('/register', [App\Http\Controllers\Pembeli\LoginController::class, 'register'])->name('register-pembeli');
+Route::post('/register', [App\Http\Controllers\Pembeli\LoginController::class, 'registerPembeli'])->name('registerPembeli-pembeli');
+Route::get('/forgot-password', [App\Http\Controllers\Pembeli\LoginController::class, 'forgotPassword'])->name('forgotPassword-pembeli');
+Route::post('/forgot-password', [App\Http\Controllers\Pembeli\LoginController::class, 'forgotPasswordEmail'])->name('forgotPasswordEmail-pembeli');
+Route::get('/reset-password/{email}/{token}', [App\Http\Controllers\Pembeli\LoginController::class, 'reset'])->name('resetPassword-pembeli');
+Route::post('/reset-password', [App\Http\Controllers\Pembeli\LoginController::class, 'resetPassword'])->name('resetPassword');
+Route::post('/logout', [App\Http\Controllers\Pembeli\LoginController::class, 'logout'])->name('logout');
+Route::get('/account/verify/{token}', [App\Http\Controllers\Pembeli\LoginController::class, 'verifyAccount'])->name('user.verify');
+
 // Pembeli
 Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function() {
 
@@ -220,39 +257,6 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function(
     })->name('pembeli.alamat');
 
 });
-
-// Login Pembeli
-Route::get('/login', [App\Http\Controllers\Pembeli\LoginController::class, 'login'])->name('login');
-Route::post('/login', [App\Http\Controllers\Pembeli\LoginController::class, 'loginPembeli'])->name('loginPembeli-pembeli');
-Route::get('/register', [App\Http\Controllers\Pembeli\LoginController::class, 'register'])->name('register-pembeli');
-Route::post('/register', [App\Http\Controllers\Pembeli\LoginController::class, 'registerPembeli'])->name('registerPembeli-pembeli');
-Route::get('/forgot-password', [App\Http\Controllers\Pembeli\LoginController::class, 'forgotPassword'])->name('forgotPassword-pembeli');
-Route::post('/forgot-password', [App\Http\Controllers\Pembeli\LoginController::class, 'forgotPasswordEmail'])->name('forgotPasswordEmail-pembeli');
-Route::get('/reset-password/{email}/{token}', [App\Http\Controllers\Pembeli\LoginController::class, 'reset'])->name('resetPassword-pembeli');
-Route::post('/reset-password', [App\Http\Controllers\Pembeli\LoginController::class, 'resetPassword'])->name('resetPassword');
-Route::post('/logout', [App\Http\Controllers\Pembeli\LoginController::class, 'logout'])->name('logout');
-Route::get('/account/verify/{token}', [App\Http\Controllers\Pembeli\LoginController::class, 'verifyAccount'])->name('user.verify');
-
-// Login Gapoktan
-Route::get('/gapoktan/login', [App\Http\Controllers\Gapoktan\LoginController::class, 'login'])->name('login-gapoktan');
-Route::post('/gapoktan/login', [App\Http\Controllers\Gapoktan\LoginController::class, 'loginGapoktan'])->name('login-gapoktan');
-Route::get('/gapoktan/register', [App\Http\Controllers\Gapoktan\LoginController::class, 'register'])->name('register-gapoktan');
-Route::post('/gapoktan/register', [App\Http\Controllers\Gapoktan\LoginController::class, 'registerGapoktan'])->name('registerGapoktan-gapoktan');
-Route::post('/gapoktan/logout', [App\Http\Controllers\Gapoktan\LoginController::class, 'logout'])->name('logout-gapoktan');
-
-// Login Poktan
-Route::get('/poktan/login', [App\Http\Controllers\Poktan\LoginController::class, 'login'])->name('login-poktan');
-Route::post('/poktan/login', [App\Http\Controllers\Poktan\LoginController::class, 'loginPoktan'])->name('login-poktan');
-Route::get('/poktan/register', [App\Http\Controllers\Poktan\LoginController::class, 'register'])->name('register-poktan');
-Route::post('/poktan/register', [App\Http\Controllers\Poktan\LoginController::class, 'registerPoktan'])->name('registerPoktan-poktan');
-Route::post('/poktan/logout', [App\Http\Controllers\Poktan\LoginController::class, 'logout'])->name('logout-poktan');
-
-// Login Petani
-Route::get('/petani/login', [App\Http\Controllers\Petani\LoginController::class, 'login'])->name('login-petani');
-Route::post('/petani/login', [App\Http\Controllers\Petani\LoginController::class, 'loginPetani'])->name('login-petani');
-Route::get('/petani/register', [App\Http\Controllers\Petani\LoginController::class, 'register'])->name('register-petani');
-Route::post('/petani/register', [App\Http\Controllers\Petani\LoginController::class, 'registerPetani'])->name('registerPetani-petani');
-Route::post('/petani/logout', [App\Http\Controllers\Petani\LoginController::class, 'logout'])->name('logout-petani');
 
 // Edukasi Page
 Route::get('/edukasi', [App\Http\Controllers\Pages\EducationController::class, 'index']);

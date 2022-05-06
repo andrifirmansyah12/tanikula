@@ -123,7 +123,7 @@
                     if (res.status == 400) {
                         showError('npass', res.messages.npass);
                         showError('cnpass', res.messages.cnpass);
-                        $("#reset_btn").val("Update Password");
+                        $("#reset_btn").val("Perbarui Password");
                         $("#reset_btn").prop('disabled', false);
                     } else if (res.status == 401){
                         // $("#forgot_alert").html(showMessage('danger', res.messages));
@@ -132,7 +132,7 @@
                             message: res.messages,
                             position: 'topRight'
                         });
-                        $("#reset_btn").val("Update Password");
+                        $("#reset_btn").val("Perbarui Password");
                         $("#reset_btn").prop('disabled', false);
                         removeValidationClasses("#reset_form");
                     } else {
@@ -143,7 +143,7 @@
                             message: res.messages,
                             position: 'topRight'
                         });
-                        $("#reset_btn").val("Update Password");
+                        $("#reset_btn").val("Perbarui Password");
                         $("#reset_btn").prop('disabled', false);
                     }
                 }

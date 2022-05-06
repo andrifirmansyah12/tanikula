@@ -27,7 +27,8 @@ class DatabaseSeeder extends Seeder
             FarmerSeeder::class,
             ProductSeeder::class,
             CostumerSeeder::class,
-            AddressSeeder::class
+            AddressSeeder::class,
+            AdminSeeder::class
         ]);
 
         // $this->call(CategorySeeder::class);

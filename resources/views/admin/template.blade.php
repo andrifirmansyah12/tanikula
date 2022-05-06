@@ -1,26 +1,51 @@
-{{-- Header --}}
+<!-- Header -->
 @include('components.admin.header')
 
 <body>
-    <div id="app">
-        <div class="main-wrapper">
-            <div class="navbar-bg"></div>
+    <div class="container-scroller">
 
-            {{-- Navbar --}}
+        <!-- Sidebar -->
+        @include('components.admin.sidebar')
+
+        <div class="container-fluid page-body-wrapper">
+            <div id="settings-trigger"><i class="mdi mdi-settings"></i></div>
+            <div id="theme-settings" class="settings-panel">
+                <i class="settings-close mdi mdi-close"></i>
+                <p class="settings-heading">SIDEBAR SKINS</p>
+                <div class="sidebar-bg-options selected" id="sidebar-default-theme">
+                    <div class="img-ss rounded-circle bg-light border mr-3"></div>Default
+                </div>
+                <div class="sidebar-bg-options" id="sidebar-dark-theme">
+                    <div class="img-ss rounded-circle bg-dark border mr-3"></div>Dark
+                </div>
+                <p class="settings-heading mt-2">HEADER SKINS</p>
+                <div class="color-tiles mx-0 px-4">
+                    <div class="tiles default primary"></div>
+                    <div class="tiles success"></div>
+                    <div class="tiles warning"></div>
+                    <div class="tiles danger"></div>
+                    <div class="tiles info"></div>
+                    <div class="tiles dark"></div>
+                    <div class="tiles light"></div>
+                </div>
+            </div>
+
+            <!-- Navbar -->
             @include('components.admin.navbar')
 
-            {{-- Sidebar --}}
-            @include('components.admin.sidebar')
+            <div class="main-panel">
 
-            @yield('content')
+                {{-- Content --}}
+                @yield('content')
 
-            {{-- FooterJS --}}
-            @include('components.admin.footer')
+                <!-- Footer -->
+                @include('components.admin.footer')
 
+            </div>
         </div>
     </div>
 
-    {{-- FooterJS --}}
+    <!-- Footer JS -->
     @include('components.admin.footerJS')
 
 </body>
