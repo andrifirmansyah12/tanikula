@@ -25,8 +25,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::middleware('auth:api')->group(function () {
+    // Route::get('get-user', [PassportAuthController::class, 'userInfo']);
+    // Route::resource('products', [ProductController::class]);
+
+    // Cart
+    Route::resource('cart', CartApiController::class);
+    Route::get('cart/user_id/{user_id}', [CartApiController::class, 'indexByid']);
+
+ 
 });
 
 // All
@@ -37,9 +48,9 @@ Route::resource('product-category', ProductCategoryApiController::class);
 // ------ Customer -----------
 Route::post('register-customer', [RegisterCustomerApiController::class, 'register']);
 Route::post('login-customer', [LoginCustomerApiController::class, 'login']);
-// Cart
-Route::resource('cart', CartApiController::class);
-Route::get('cart/user_id/{user_id}', [CartApiController::class, 'indexByid']);
+// // Cart
+// Route::resource('cart', CartApiController::class);
+// Route::get('cart/user_id/{user_id}', [CartApiController::class, 'indexByid']);
 // Wishlist
 Route::resource('wishlist', WishlistApiController::class);
 Route::get('wishlist/user_id/{user_id}', [WishlistApiController::class, 'indexByid']);

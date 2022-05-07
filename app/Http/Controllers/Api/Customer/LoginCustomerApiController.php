@@ -15,9 +15,16 @@ class LoginCustomerApiController  extends BaseController
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){ 
             $user = Auth::user(); 
             $success['token'] =  $user->createToken('MyApp')->accessToken; 
-            $success['name'] =  $user->name;
-   
-            return $this->sendResponse($success, 'User login successfully.');
+            $success['id'] =  $user->id;
+            $success['email'] =  $user->email;
+            $success['password'] =  $user->password;
+            $success['hasRole'] =  $user->hasRole('pembeli');
+
+            if ($success['hasRole'] == 'pembeli') {
+                return $this->sendResponse($success, 'User login successfully.');
+            } else {
+                return $this->sendError('Unauthorised.', ['error'=>'Unauthorised']);
+            }
         } 
         else{ 
             return $this->sendError('Unauthorised.', ['error'=>'Unauthorised']);
