@@ -9,6 +9,9 @@ use App\Http\Controllers\Api\Gapoktan\ActivityCategoryApiController;
 use App\Http\Controllers\Api\Gapoktan\EducationApiController;
 use App\Http\Controllers\Api\Gapoktan\EducationCategoryApiController;
 use App\Http\Controllers\Api\Gapoktan\LoginGapoktanApiController;
+use App\Http\Controllers\Api\Petani\LoginPetaniApiController;
+use App\Http\Controllers\Api\Petani\PlantApiController;
+use App\Http\Controllers\Api\Poktan\LoginPoktanApiController;
 use App\Http\Controllers\Api\ProductApiController;
 use App\Http\Controllers\Api\ProductCategoryApiController;
 use Illuminate\Http\Request;
@@ -33,10 +36,19 @@ Route::middleware('auth:api')->group(function () {
     // Route::get('get-user', [PassportAuthController::class, 'userInfo']);
     // Route::resource('products', [ProductController::class]);
 
+    // ------ Customer -----------
     // Cart
     Route::resource('cart', CartApiController::class);
     Route::get('cart/user_id/{user_id}', [CartApiController::class, 'indexByid']);
 
+    // ------ Gapoktan -----------
+    // Activity
+    Route::resource('activity', ActivityApiController::class);
+    Route::get('activity/search/{name}', [ActivityApiController::class, 'search']);
+    Route::resource('activity-category', ActivityCategoryApiController::class);
+
+    //Petani
+    Route::resource('plant', PlantApiController::class);
  
 });
 
@@ -60,7 +72,11 @@ Route::post('login-gapoktan', [LoginGapoktanApiController::class, 'login']);
 // Education
 Route::resource('education', EducationApiController::class);
 Route::resource('education-category', EducationCategoryApiController::class);
-// Activity
-Route::resource('activity', ActivityApiController::class);
-Route::get('activity/search/{name}', [ActivityApiController::class, 'search']);
-Route::resource('activity-category', ActivityCategoryApiController::class);
+
+
+// ------ Gapoktan -----------
+Route::post('login-poktan', [LoginPoktanApiController::class, 'login']);
+
+
+// ------ Petani -----------
+Route::post('login-petani', [LoginPetaniApiController::class, 'login']);

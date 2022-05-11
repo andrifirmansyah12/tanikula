@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Gapoktan;
 
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ActivityResource extends JsonResource
@@ -16,7 +17,7 @@ class ActivityResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            "user_id" => $this->user_id,
+            "user_id" =>new UserResource($this->user),
             "category_activity_id" => new ActivityCategoryResource($this->activity_category),
             "title" => $this->title,
             "slug" => $this->slug,

@@ -2,28 +2,45 @@
 
 namespace App\Http\Controllers\Api\Gapoktan;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\Gapoktan\ActivityCategoryResource;
+ 
 use App\Models\ActivityCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use App\Http\Controllers\Api\BaseApiController as BaseController;
+use Illuminate\Support\Facades\Validator;
 
-class ActivityCategoryApiController extends Controller
+class ActivityCategoryApiController extends BaseController
 {
     public function index()
     {
-        $data = ActivityCategory::latest()->get();
-        return response()->json([ActivityCategoryResource::collection($data), 'Data fetched.']);
+        $datas = ActivityCategory::latest()->get();
+        return $this->sendResponse($datas, 'Data fetched');
+
     }
 
     public function create()
     {
-        //
+      
     }
 
 
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'name' => 'required',
+             
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors());
+        }
+
+        $datas = ActivityCategory::create([
+            'name' => $request->name,
+            'slug' => Str::slug($request->title),
+         ]);
+ 
+        return $this->sendResponse($datas, 'Data Strored');
     }
 
 
@@ -41,11 +58,32 @@ class ActivityCategoryApiController extends Controller
 
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'name' => 'required'
+        ]);
+
+        if($validator->fails()){
+        return $this->sendError("Validation Error", $validator->errors());
+        }
+
+        $datas = ActivityCategory::findOrFail($id);
+
+        $datas->update([
+            'name' => $request->name,
+            'slug' => Str::slug($request->name),
+        ]);
+
+        $datas->update();
+
+        return $this->sendResponse($datas, 'Data Updated');
+
     }
 
     public function destroy($id)
     {
-        //
+        $data = ActivityCategory::findOrFail($id);
+        $data->delete();
+
+        return $this->sendResponse($data, 'Data deleted');
     }
 }

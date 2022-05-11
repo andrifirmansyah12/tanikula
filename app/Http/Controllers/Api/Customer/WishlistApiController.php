@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\Customer;
 
-use App\Http\Controllers\Controller;
 use App\Http\Resources\WishlistResource;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
@@ -43,7 +42,7 @@ class WishlistApiController extends BaseController
          ]);
  
         // $result = WishlistResource::collection($datas);
-        return $this->sendResponse($datas, 'Data fetched');
+        return $this->sendResponse($datas, 'Data Strored');
     }
 
 
