@@ -39,8 +39,8 @@ class CartApiController extends BaseController
         $datas = Cart::create([
             'user_id' => $request->user_id,
             'product_id' => $request->product_id,
+            'product_qty' => $request->product_qty,
             'session_id' => $request->session_id,
-            'quantity' => $request->quantity,
 
          ]);
  

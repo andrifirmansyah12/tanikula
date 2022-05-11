@@ -7,15 +7,16 @@ use App\Http\Resources\Gapoktan\ActivityResource;
 use Illuminate\Support\Str;
 use App\Models\Activity;
 use Carbon\Carbon;
-use Database\Seeders\ActivitySeeder;
+use App\Http\Controllers\Api\BaseApiController as BaseController;
 use Illuminate\Http\Request;
 
-class ActivityApiController extends Controller
+class ActivityApiController extends BaseController
 {
     public function index()
     {
-        $data = Activity::latest()->get();
-        return response()->json([ActivityResource::collection($data), 'Data fetched.']);
+        $datas = Activity::latest()->get();
+        $result = ActivityResource::collection($datas);
+        return $this->sendResponse($result, 'Data fetched');
     }
 
     public function create()
@@ -40,11 +41,12 @@ class ActivityApiController extends Controller
             'category_activity_id' => $request->category_activity_id,
             'title' => $request->title,
             'slug' => Str::slug($request->title),
-            'date' => Carbon::now()->format('Y-m-d'),
+            'date' => $request->date,
             'desc' => $request->desc,
          ]);
 
-        return response()->json(['Data created successfully.', new ActivityResource($datas)]);
+        $result = ActivityResource::make($datas);
+        return $this->sendResponse($result, 'Data Stored');
     }
 
 
@@ -79,16 +81,17 @@ class ActivityApiController extends Controller
         $datas = Activity::findOrFail($id);
 
         $datas->update([
-            'user_id' => $request->user_id,
             'category_activity_id' => $request->category_activity_id,
             'title' => $request->title,
+            'date' => $request->date,
             'slug' => Str::slug($request->title),
             'desc' => $request->desc,
         ]);
 
         $datas->update();
 
-        return response()->json(['Data updated successfully.', new ActivityResource($datas)]);
+        $result = ActivityResource::make($datas);
+        return $this->sendResponse($result, 'Data Updated');
     }
 
     public function destroy($id)
@@ -101,7 +104,6 @@ class ActivityApiController extends Controller
 
     public function search($name)
     {
-
         $datas = Activity::where('title', 'LIKE', '%'. $name. '%')->get();
         if(count($datas)){
             // return Response()->json($datas);
