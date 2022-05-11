@@ -67,8 +67,9 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
-
+    // 'timezone' => 'UTC',
+    'timezone' => 'Asia/Jakarta',
+    // 'date_format_js' => 'dd-M-yy',
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration
@@ -178,7 +179,7 @@ return [
         Yajra\DataTables\DataTablesServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
-
+        LaraIzitoast\LaraIzitoastServiceProvider::class,
     ],
 
     /*

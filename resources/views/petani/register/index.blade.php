@@ -40,7 +40,7 @@
             <div class="col-lg-7 col-md-6 col-12">
                 <div class="">
                     <div class="card-body">
-                        <img src="{{ asset('img/DrawKit Vector Illustration Black Friday & Online Shopping (6).svg') }}" alt="#" class="img-fluid">
+                        <img src="{{ asset('img/undraw_my_password_re_ydq7.svg') }}" alt="#" class="img-fluid">
                     </div>
                 </div>
             </div>

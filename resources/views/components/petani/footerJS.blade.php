@@ -1,5 +1,3 @@
-@yield('script')
-
 <!-- General JS Scripts -->
 {{-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"
 integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script> --}}
@@ -20,3 +18,7 @@ integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifw
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/index-0.js') }}"></script>
+
+<script src="{{ asset('js/function.js') }}"></script>
+
+@yield('script')

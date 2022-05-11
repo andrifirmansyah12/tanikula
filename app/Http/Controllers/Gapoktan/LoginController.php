@@ -72,7 +72,7 @@ class LoginController extends Controller
 
     public function registerGapoktan(Request $request) {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|max:50',
+            'name' => 'required|unique:users|max:50',
             'chairman' => 'required|max:255',
             'email' => 'required|email|unique:users|max:100',
             'password' => 'required|min:6|max:50',
@@ -81,6 +81,7 @@ class LoginController extends Controller
             'cpassword.same' => 'Kata sandi tidak cocok!',
             'name.required' => 'Nama diperlukan!',
             'name.max' => 'Nama maksimal 50 karakter!',
+            'name.unique' => 'Nama Gapoktan yang anda masukkan sudah ada!',
             'chairman.required' => 'Nama Ketua diperlukan!',
             'chairman.max' => 'Nama Ketua maksimal 255 karakter!',
             'email.required' => 'Email diperlukan!',

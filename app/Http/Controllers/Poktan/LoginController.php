@@ -34,15 +34,27 @@ class LoginController extends Controller
                 'messages' => $validator->getMessageBag()
             ]);
         } else {
-            $user = User::where('email', $request->email)->first();
-            if($user){
-                if(Hash::check($request->password, $user->password)) {
+            // $user = Poktan::where('email', $request->email)->first();
+            $poktan = Poktan::join('users', 'poktans.user_id', '=', 'users.id')
+                    ->select('poktans.*', 'users.password as password')
+                    ->where('users.email', $request->email)
+                    ->first();
+            if($poktan){
+                if(Hash::check($request->password, $poktan->password)) {
                     if (auth()->attempt($credentials)) {
-                        if (auth()->check() && $user->hasRole('poktan')) {
-                            return response()->json([
-                                'status' => 200,
-                                'messages' => 'Berhasil Masuk',
-                            ]);
+                        if (auth()->check() && $poktan->user->hasRole('poktan')) {
+                            if (!$poktan->is_active) {
+                                auth()->logout();
+                                return response()->json([
+                                    'status' => 401,
+                                    'messages' => 'Akun anda belum diverifikasi oleh Gapoktan!'
+                                ]);
+                            } else {
+                                return response()->json([
+                                    'status' => 200,
+                                    'messages' => 'Berhasil Masuk'
+                                ]);
+                            }
                         } else {
                             \Auth::logout();
                             return response()->json([
@@ -74,7 +86,7 @@ class LoginController extends Controller
     public function registerPoktan(Request $request) {
         $validator = Validator::make($request->all(), [
             'gapoktan_id' => 'required',
-            'name' => 'required|max:50',
+            'name' => 'required|unique:users|max:50',
             'chairman' => 'required|max:255',
             'email' => 'required|email|unique:users|max:100',
             'password' => 'required|min:6|max:50',
@@ -84,6 +96,7 @@ class LoginController extends Controller
             'cpassword.same' => 'Kata sandi tidak cocok!',
             'name.required' => 'Nama diperlukan!',
             'name.max' => 'Nama maksimal 50 karakter!',
+            'name.unique' => 'Nama Poktan yang anda masukkan sudah ada!',
             'chairman.required' => 'Nama Ketua diperlukan!',
             'chairman.max' => 'Nama Ketua maksimal 255 karakter!',
             'email.required' => 'Email diperlukan!',

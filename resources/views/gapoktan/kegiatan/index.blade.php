@@ -4,12 +4,18 @@
 @section('style')
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- MULAI STYLE CSS -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
     <link rel='stylesheet'
         href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css' />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.css"
         integrity="sha256-pODNVtK3uOhL8FUNWWvFQK0QoQoV3YA9wGGng6mbZ0E=" crossorigin="anonymous" />
     <!-- AKHIR STYLE CSS -->
+    <style>
+        .datepicker {
+            z-index: 1600 !important; /* has to be larger than 1050 */
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -78,6 +84,17 @@
                             </select>
                         </div>
                         <div class="my-2 form-group">
+                            <label for="date">Tanggal Kegiatan</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="bi bi-calendar"></i>
+                                    </div>
+                                </div>
+                                <input type="text" name="date" v-model="plating_date" class="form-control datepicker">
+                            </div>
+                        </div>
+                        <div class="my-2 form-group">
                             <label for="desc">Deskripsi</label>
                             <input type="text" name="desc" class="form-control" placeholder="Deskripsi" required>
                         </div>
@@ -123,6 +140,17 @@
                             </select>
                         </div>
                         <div class="my-2 form-group">
+                            <label for="date">Tanggal Kegiatan</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="bi bi-calendar"></i>
+                                    </div>
+                                </div>
+                                <input type="text" name="date" id="date" v-model="plating_date" class="form-control datepicker">
+                            </div>
+                        </div>
+                        <div class="my-2 form-group">
                             <label for="desc">Deskripsi</label>
                             <input type="text" name="desc" id="desc" class="form-control" placeholder="Deskripsi" required>
                         </div>
@@ -141,6 +169,7 @@
 @section('script')
     <!-- LIBARARY JS -->
     {{-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script> --}}
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     <script type="text/javascript" language="javascript"
         src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 
@@ -158,6 +187,12 @@
 
     <!-- JAVASCRIPT -->
     <script>
+        $( function() {
+            $( ".datepicker" ).datepicker({
+                dateFormat: 'dd-M-yy'
+            });
+        });
+
         $('.titleCheck').change(function(e) {
             $.get('{{ route('gapoktan-kegiatan-checkSlug') }}',
             { 'title': $(this).val() },
@@ -224,6 +259,7 @@
                 success: function(response) {
                     $("#title").val(response.title);
                     $("#category_activity_id").val(response.category_activity_id);
+                    $("#date").val(moment(response.date).format('DD-MMM-YYYY'));
                     $("#desc").val(response.desc);
                     $("#emp_id").val(response.id);
                 }
@@ -307,9 +343,7 @@
                 method: 'get',
                 success: function(response) {
                     $("#show_all_employees").html(response);
-                    $("table").DataTable({
-                        order: [0, 'asc']
-                    });
+                    $("table").DataTable();
                 }
                 });
             }

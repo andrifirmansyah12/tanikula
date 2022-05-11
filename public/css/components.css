@@ -65,7 +65,7 @@
       background-size: cover;
       background-repeat: no-repeat;
       width: 100%;
-      height: 100%;
+      /* height: 100%; */
       z-index: -1; }
     .article .article-header .article-title {
       position: absolute;

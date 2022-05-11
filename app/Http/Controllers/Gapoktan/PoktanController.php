@@ -22,12 +22,13 @@ class PoktanController extends Controller
 
     // handle fetch all eamployees ajax request
 	public function fetchAll(Request $request) {
-		$emps = Poktan::with('user', 'gapoktan')->latest()->get();
-        // $emps = Poktan::join('users', 'poktans.user_id', '=', 'users.id')
-        //              ->select('poktans.*', 'users.name as poktan_name')
-        //              ->where('gapoktan_id', '=', '1')
-        //              ->orderBy('updated_at', 'desc')
-        //              ->get();
+		// $emps = Poktan::with('user', 'gapoktan')->latest()->get();
+        $emps = Poktan::join('gapoktans', 'poktans.gapoktan_id', '=', 'gapoktans.id')
+                    ->join('users', 'poktans.user_id', '=', 'users.id')
+                    ->select('poktans.*', 'users.name as poktan_name')
+                    ->where('gapoktans.user_id', '=', auth()->user()->id)
+                    ->orderBy('updated_at', 'desc')
+                    ->get();
 		$output = '';
 		if ($emps->count() > 0) {
 			$output .= '<table class="table table-striped table-sm text-center align-middle">
@@ -48,7 +49,7 @@ class PoktanController extends Controller
             <tbody>';
             $nomor=1;
 			foreach ($emps as $emp) {
-                if ($emp->gapoktan->user->name == auth()->user()->name) {
+                // if ($emp->gapoktan->user->name == auth()->user()->name) {
                     $output .= '<tr>';
                     $output .= '<td>' . $nomor++ . '</td>';
                     if (empty($emp->image)) {
@@ -57,7 +58,7 @@ class PoktanController extends Controller
                         $output .= '<td><img alt="image" src="../assets/img/avatar/avatar-5.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Wildan Ahdian"></td>';
                     }
                     $output .= '<td>' . $emp->gapoktan->user->name . '</td>
-                    <td>' . $emp->user->name . '</td>
+                    <td>' . $emp->poktan_name . '</td>
                     <td>' . $emp->chairman . '</td>';
                     if ($emp->city) {
                         $output .= '<td>' . $emp->city . '</td>';
@@ -84,10 +85,10 @@ class PoktanController extends Controller
                     <a href="#" id="' . $emp->user->id . '" class="text-danger mx-1 deleteIcon"><i class="bi-trash h4"></i></a>
                     </td>
                 </tr>';
-                }
-                elseif ($emp->gapoktan->user->name == !auth()->user()->name) {
-                    $output .= '<h1 class="text-center text-secondary my-5">Tidak ada data Poktan!</h1>';
-                }
+                // }
+                // elseif ($emp->gapoktan->user->name == !auth()->user()->name) {
+                //     $output .= '<h1 class="text-center text-secondary my-5">Tidak ada data Poktan!</h1>';
+                // }
 			}
 			$output .= '</tbody></table>';
 			echo $output;
@@ -123,7 +124,7 @@ class PoktanController extends Controller
     // handle edit an employee ajax request
 	public function edit(Request $request) {
 		$id = $request->id;
-		$emp = Poktan::with('user', 'gapoktan')->where('id',$id)->first();
+		$emp = Poktan::with('user', 'gapoktan')->where('id', $id)->first();
 		return response()->json($emp);
 	}
 
@@ -131,9 +132,14 @@ class PoktanController extends Controller
 	public function update(Request $request) {
 
         $user = User::find($request->user_id);
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-        $user->password =  Hash::make($request->input('password'));
+        if($request->password) {
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = Hash::make($request->password);
+        } else {
+            $user->name = $request->name;
+            $user->email = $request->email;
+        }
         $user->save();
 
         $emp = Poktan::with('user', 'gapoktan')->find($request->emp_id);

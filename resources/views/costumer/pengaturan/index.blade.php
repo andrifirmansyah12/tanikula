@@ -75,7 +75,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <input type="hidden" name="user_id" id="user_id" value="{{ $userInfo->id }}">
+                            <input type="hidden" name="id" id="id" value="{{ $userInfo->id }}">
                             <div class="col-12 col-md-12 col-lg-7">
                                 <div class="">
                                     <form method="post" action="#" id="profile_form">
@@ -87,7 +87,7 @@
                                             <div class="row">
                                                 <div class="form-group col-md-12 col-12">
                                                     <label for="name">Nama</label>
-                                                    <input type="text" class="form-control" name="name" id="name" value="{{ $userInfo->name }}" required="">
+                                                    <input type="text" class="form-control" name="name" id="name" value="{{ $userInfo->user->name }}" required="">
                                                     <div class="invalid-feedback">
                                                     </div>
                                                 </div>
@@ -95,7 +95,7 @@
                                             <div class="row">
                                                 <div class="form-group col-md-12 col-12">
                                                     <label for="email">Email</label>
-                                                    <input type="email" class="form-control" id="email" name="email" value="{{ $userInfo->email }}"
+                                                    <input type="email" class="form-control" id="email" name="email" value="{{ $userInfo->user->email }}"
                                                         required="">
                                                     <div class="invalid-feedback">
                                                     </div>
@@ -104,8 +104,18 @@
                                             <div class="row">
                                                 <div class="form-group col-md-12 col-12">
                                                     <label for="telp">No Handphone</label>
-                                                    <input type="tel" class="form-control" id="telp" name="telp" value="{{ $userInfo->telp }}"
-                                                        required="">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                        <div class="input-group-text">
+                                                            <span>+62</span>
+                                                        </div>
+                                                        </div>
+                                                        @if ($userInfo->telp)
+                                                            <input type="tel" name="telp" id="telp" value="{{ $userInfo->telp }}" class="form-control phone-number">
+                                                        @else
+                                                            <input type="tel" name="telp" id="telp" placeholder="81*******" class="form-control phone-number">
+                                                        @endif
+                                                    </div>
                                                     <div class="invalid-feedback">
                                                     </div>
                                                 </div>
@@ -113,7 +123,20 @@
                                             <div class="row">
                                                 <div class="form-group col-md-7 col-12">
                                                     <label for="birth">Tanggal Lahir</label>
-                                                    <input type="text" name="birth" id="birth" class="form-control datepicker" value="{{ date("d-F-Y", strtotime($userInfo->birth)) }}">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                        <div class="input-group-text">
+                                                            <i class="bi bi-calendar"></i>
+                                                        </div>
+                                                        </div>
+                                                        @if ($userInfo->birth)
+                                                            <input type="text" name="birth" id="birth" class="form-control datepicker" value="{{ date("d-F-Y", strtotime($userInfo->birth)) }}">
+                                                        @else
+                                                            <input type="text" name="birth" id="birth" class="form-control datepicker" placeholder="Tanggal lahir">
+                                                        @endif
+                                                    </div>
+                                                    <div class="invalid-feedback">
+                                                    </div>
                                                 </div>
                                                 <div class="form-group col-md-5 col-12">
                                                     <label for="gender">Jenis Kelamin</label>
@@ -163,9 +186,10 @@
     <script>
         $( function() {
             $( ".datepicker" ).datepicker({
-                dateFormat: 'yy-mm-dd'
+                dayNames: [ "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu" ],
+                dateFormat: 'dd-MM-yy'
             });
-        } );
+        });
 
         $(function() {
             $("#image").change(function(e) {
@@ -174,7 +198,7 @@
                 $("#image_preview").attr('src', url);
                 let fd = new FormData();
                 fd.append('image', file);
-                fd.append('user_id', $("#user_id").val());
+                fd.append('id', $("#id").val());
                 fd.append('_token', '{{ csrf_token() }}');
                 $.ajax({
                     url: '{{ route('pembeli.pengaturan.image') }}',
@@ -200,7 +224,7 @@
 
             $("#profile_form").submit(function(e) {
                 e.preventDefault();
-                let id = $("#user_id").val();
+                let id = $("#id").val();
                 $("#profile_btn").val('Silahkan tunggu..');
                 $("#profile_btn").prop('disabled', true);
                 $.ajax({
@@ -218,6 +242,7 @@
                             });
                             $("#profile_btn").val('Update Biodata Diri');
                             $("#profile_btn").prop('disabled', false);
+                            window.location.reload();
                         }
                     }
                 });

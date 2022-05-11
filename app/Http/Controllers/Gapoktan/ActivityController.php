@@ -66,7 +66,7 @@ class ActivityController extends Controller
 
         $empData = ['title' => $request->title, 'slug' => $request->slug, 'category_activity_id' => $request->category_activity_id, 'desc' => $request->desc];
 
-        $empData['date'] = Carbon::now()->format('Y-m-d');
+        $empData['date'] = Carbon::createFromFormat('d-M-Y', $request->date)->format('Y-m-d h:i:s');
         $empData['user_id'] = auth()->user()->id;
 		Activity::create($empData);
 		return response()->json([
@@ -88,7 +88,7 @@ class ActivityController extends Controller
 
         $empData = ['title' => $request->title, 'slug' => $request->slug, 'category_activity_id' => $request->category_activity_id, 'desc' => $request->desc];
 
-        $empData['date'] = Carbon::now()->format('Y-m-d');
+        $empData['date'] = Carbon::createFromFormat('d-M-Y', $request->date)->format('Y-m-d h:i:s');
         $empData['user_id'] = auth()->user()->id;
 		$emp->update($empData);
 		return response()->json([
@@ -100,7 +100,8 @@ class ActivityController extends Controller
 	public function delete(Request $request)
     {
 		$id = $request->id;
-		$emp = Activity::find($id);
+		// $emp = Activity::find($id);
+		$emp = Activity::with('activity_category')->where('id', $id);
         $emp->delete();
 	}
 

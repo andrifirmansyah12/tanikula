@@ -11,8 +11,13 @@ class Plant extends Model
 
     protected $guarded = ['id'];
 
-    public function user()
+    public function poktan()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Poktan::class);
+    }
+
+    public function farmer()
+    {
+        return $this->belongsTo(Farmer::class);
     }
 }

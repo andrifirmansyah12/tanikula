@@ -148,7 +148,7 @@
                         </div>
                         <div class="my-2 form-group">
                             <label for="password">Password</label>
-                            <div id="password">
+                            <div id="password_edit">
 
                             </div>
                         </div>
@@ -220,7 +220,7 @@
                     if (response.status == 200) {
                     Swal.fire(
                         'Menambahkan!',
-                        'Edukasi Berhasil Ditambahkan!',
+                        'Poktan Berhasil Ditambahkan!',
                         'success'
                     )
                     fetchAllEmployees();
@@ -248,8 +248,12 @@
                     $("#name").val(response.user.name);
                     $("#chairman").val(response.chairman);
                     $("#email").val(response.user.email);
-                    $("#password").html(
-                        `<input type="password" name="password" class="form-control" value="${response.user.password}" required>`);
+                    $("#password_edit").html(
+                        `<small class="d-flex text-danger pb-1">*Catatan:
+                            <br>1. Jika tidak ingin ubah password biarkan kosong,
+                            <br>2. Dan jika ingin ubah password, silahkan masukkan password.
+                        </small>
+                        <input type="password" name="password" class="form-control" placeholder="Password">`);
                     $("#is_active").html(
                         `<label class="custom-switch">
                             <input type="checkbox" name="is_active" ${response.is_active ? 'checked' : ''} class="custom-switch-input">
@@ -279,7 +283,7 @@
                     if (response.status == 200) {
                     Swal.fire(
                         'Memperbarui!',
-                        'Edukasi Berhasil Diperbarui!',
+                        'Poktan Berhasil Diperbarui!',
                         'success'
                     )
                     fetchAllEmployees();

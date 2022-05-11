@@ -54,10 +54,10 @@ class User extends Authenticatable
         return $this->hasMany(Activity::class);
     }
 
-     public function plant()
-    {
-        return $this->hasMany(Plant::class);
-    }
+    // public function plant()
+    // {
+    //     return $this->hasMany(Plant::class);
+    // }
 
     public function product()
     {
@@ -74,9 +74,19 @@ class User extends Authenticatable
         return $this->hasMany(Wishlist::class);
     }
 
+    public function costumer()
+    {
+        return $this->hasMany(Costumer::class);
+    }
+
     public function gapoktan()
     {
         return $this->hasMany(Gapoktan::class);
+    }
+
+    public function admin()
+    {
+        return $this->hasMany(Admin::class);
     }
 
     public function poktan()

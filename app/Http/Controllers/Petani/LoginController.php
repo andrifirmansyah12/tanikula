@@ -34,15 +34,27 @@ class LoginController extends Controller
                 'messages' => $validator->getMessageBag()
             ]);
         } else {
-            $user = User::where('email', $request->email)->first();
-            if($user){
-                if(Hash::check($request->password, $user->password)) {
+            // $user = User::where('email', $request->email)->first();
+            $farmer = Farmer::join('users', 'farmers.user_id', '=', 'users.id')
+                    ->select('farmers.*', 'users.password as password')
+                    ->where('users.email', $request->email)
+                    ->first();
+            if($farmer){
+                if(Hash::check($request->password, $farmer->password)) {
                     if (auth()->attempt($credentials)) {
-                        if (auth()->check() && $user->hasRole('petani')) {
-                            return response()->json([
-                                'status' => 200,
-                                'messages' => 'Berhasil Masuk',
-                            ]);
+                        if (auth()->check() && $farmer->user->hasRole('petani')) {
+                            if (!$farmer->is_active) {
+                                auth()->logout();
+                                return response()->json([
+                                    'status' => 401,
+                                    'messages' => 'Akun anda belum diverifikasi oleh Poktan!'
+                                ]);
+                            } else {
+                                return response()->json([
+                                    'status' => 200,
+                                    'messages' => 'Berhasil Masuk'
+                                ]);
+                            }
                         } else {
                             \Auth::logout();
                             return response()->json([

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
+use App\Models\Costumer;
 use App\Models\UserVerify;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
@@ -76,7 +77,7 @@ class LoginController extends Controller
                 } else {
                     return response()->json([
                         'status' => 401,
-                        'messages' => 'Gagal Masuk!'
+                        'messages' => 'Gagal Masuk, Pastikan Email dan Password anda benar!'
                     ]);
                 }
             } else {
@@ -122,6 +123,10 @@ class LoginController extends Controller
             $user->assignRole('pembeli');
             $user->save();
 
+            $costumer = new Costumer();
+            $costumer->user_id = $user->id;
+            $costumer->save();
+
             $token = Str::random(64);
             UserVerify::create([
               'user_id' => $user->id,
@@ -135,7 +140,7 @@ class LoginController extends Controller
 
             return response()->json([
                 'status' => 200,
-                'messages' => 'Akun Anda Berhasil Terdaftar'
+                'messages' => 'Akun Anda Berhasil Terdaftar, Silahkan verifikasi email anda!'
             ]);
         }
     }
@@ -148,7 +153,8 @@ class LoginController extends Controller
     {
         $verifyUser = UserVerify::where('token', $token)->first();
 
-        $messageDanger = 'Maaf email Anda tidak dapat diidentifikasi.';
+        // notify()->warning("Maaf email Anda tidak dapat diidentifikasi.", "Warning", "topRight");
+        // $messageDanger = 'Maaf email Anda tidak dapat diidentifikasi.';
 
         if(!is_null($verifyUser) ){
             $user = $verifyUser->user;
@@ -156,13 +162,15 @@ class LoginController extends Controller
             if(!$user->is_email_verified) {
                 $verifyUser->user->is_email_verified = 1;
                 $verifyUser->user->save();
-                $message = "Email Anda telah diverifikasi. Anda sekarang dapat masuk.";
+                notify()->success("Email Anda telah diverifikasi. Anda sekarang dapat masuk.", "Success", "topRight");
+                // $message = "Email Anda telah diverifikasi. Anda sekarang dapat masuk.";
             } else {
-                $message = "Email Anda sudah diverifikasi. Anda sekarang dapat masuk.";
+                notify()->success("Email Anda sudah diverifikasi. Anda sekarang dapat masuk.", "Success", "topRight");
+                // $message = "Email Anda sudah diverifikasi. Anda sekarang dapat masuk.";
             }
         }
 
-      return redirect()->route('login')->with('message', $message, 'messageDanger', $messageDanger);
+        return redirect()->route('login');
     }
 
     public function forgotPassword() {

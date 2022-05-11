@@ -7,21 +7,23 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Costumer;
 
 class PengaturanController extends Controller
 {
     public function pengaturan() {
-        $data = ['userInfo' => DB::table('users')
-            ->where('id', auth()->user()->id)
+        $data = ['userInfo' => Costumer::with('user')
+            ->where('user_id', '=', auth()->user()->id)
             ->first()
         ];
         return view('costumer.pengaturan.index', $data);
     }
 
     public function pengaturanImage(Request $request) {
-        $user_id = $request->user_id;
-        $user = User::find($user_id);
+        $id = $request->id;
+        $user = Costumer::find($id);
 
         if($request->hasFile('image')) {
             $file = $request->file('image');
@@ -33,7 +35,7 @@ class PengaturanController extends Controller
             }
         }
 
-        User::where('id', $user_id)->update([
+        Costumer::where('id', $id)->update([
             'image' => $fileName
         ]);
 
@@ -44,13 +46,17 @@ class PengaturanController extends Controller
     }
 
     public function pengaturanUpdate(Request $request){
-        User::where('id', $request->id)->update([
+        User::where('id', auth()->user()->id)->update([
             'name' => $request->name,
             'email' => $request->email,
+        ]);
+
+        Costumer::with('user')->where('id', $request->id)->update([
             'telp' => $request->telp,
-            'birth' => $request->birth,
+            'birth' => Carbon::createFromFormat('d-M-Y', $request->birth)->format('Y-m-d h:i:s'),
             'gender' => $request->gender,
         ]);
+
         return response()->json([
             'status' => 200,
             'messages' => 'Biodata diri berhasil diupdate!'

@@ -30,7 +30,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <button type="button" class="btn btn-outline-success" data-toggle="modal"
+                                <button type="button" class="btn py-1 btn-success" data-toggle="modal"
                                     data-target="#addEmployeeModal">Tambah
                                     @yield('title')</button>
                             </div>
@@ -59,34 +59,23 @@
                 <form action="#" method="POST" id="add_employee_form" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body p-4">
-                        <div class="row">
-                            <div class="col-lg">
-                                <label for="title">Judul</label>
-                                <input type="text" name="title" class="titleCheck form-control" placeholder="Judul"
-                                    required>
-                            </div>
-                            <div class="col-lg">
-                                <label for="slug">Slug</label>
-                                <input type="text" name="slug" class="slugCheck form-control" placeholder="Slug"
-                                    readonly required>
-                            </div>
+                        <div class="form-group my-2">
+                            <label for="title">Judul</label>
+                            <input type="text" name="title" class="titleCheck form-control" placeholder="Judul"
+                                required>
                         </div>
                         <div class="form-group my-2">
                             <label>Kategori Edukasi</label>
-                            <select class="form-control select2" name="education_category_id" required>
+                            <select class="form-control select2" name="category_education_id" required>
                                 <option selected disabled>Pilih Kategori</option>
                                 @foreach ($category as $item)
-                                @if ( old('education_category_id') == $item->id )
-                                <option value="{{ $item->id }}" selected>{{ $item->name }}</option>
-                                @else
-                                <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                @endif
+                                    @if ( old('category_education_id') == $item->id )
+                                        <option value="{{ $item->id }}" selected>{{ $item->name }}</option>
+                                    @else
+                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    @endif
                                 @endforeach
                             </select>
-                        </div>
-                        <div class="my-2 form-group">
-                            <label for="date">Tanggal</label>
-                            <input type="date" name="date" class="form-control" required>
                         </div>
                         <div class="my-2 form-group">
                             <label for="desc">Deskripsi</label>
@@ -94,7 +83,7 @@
                         </div>
                         <div class="my-2 form-group">
                             <label for="file">Unggah File</label>
-                            <small class="d-flex text-danger pb-1">*Unggah berupa foto, video dan document</small>
+                            <small class="d-flex text-danger pb-1">*Unggah berupa foto dan video</small>
                             <div>
                                 <ul class="nav nav-pills" id="myTab3" role="tablist">
                                     <li class="nav-item">
@@ -121,7 +110,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <input type="file" name="file" id="files" class="form-control" required>
+                            <input type="file" name="file" id="files" class="form-control" accept="image/*, video/*" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -148,22 +137,16 @@
                     <input type="hidden" name="emp_id" id="emp_id">
                     <input type="hidden" name="emp_avatar" id="emp_avatar">
                     <div class="modal-body p-4">
-                        <div class="row">
-                            <div class="col-lg">
-                                <label for="title">Judul</label>
-                                <input type="text" name="title" id="title" class="form-control titleCheck" placeholder="Judul" required>
-                            </div>
-                            <div class="col-lg">
-                                <label for="slug">Slug</label>
-                                <input disabled type="text" name="slug" id="slug" class="form-control slugCheck" placeholder="Slug" required>
-                            </div>
+                        <div class="form-group my-2">
+                            <label for="title">Judul</label>
+                            <input type="text" name="title" id="title" class="form-control titleCheck" placeholder="Judul" required>
                         </div>
                         <div class="form-group my-2">
                             <label>Kategori Edukasi</label>
-                            <select class="form-control select2" id="education_category_id" name="education_category_id">
+                            <select class="form-control select2" id="category_education_id" name="category_education_id">
                                 <option selected disabled>Pilih Kategori</option>
                                 @foreach ($category as $item)
-                                    @if ( old('education_category_id') == $item->id )
+                                    @if ( old('category_education_id') == $item->id )
                                         <option value="{{ $item->id }}" selected>{{ $item->name }}</option>
                                     @else
                                         <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -172,16 +155,12 @@
                             </select>
                         </div>
                         <div class="my-2 form-group">
-                            <label for="date">Tanggal</label>
-                            <input type="date" name="date" id="date" class="form-control" required>
-                        </div>
-                        <div class="my-2 form-group">
                             <label for="desc">Deskripsi</label>
                             <input type="text" name="desc" id="desc" class="form-control" placeholder="Deskripsi" required>
                         </div>
                         <div class="my-2 form-group">
                             <label for="file">Unggah File</label>
-                            <small class="d-flex text-danger pb-1">*Unggah berupa foto, video dan document</small>
+                            <small class="d-flex text-danger pb-1">*Unggah berupa foto dan video</small>
                             <div class="mt-2">
                                 <ul class="nav nav-pills" id="myTab3" role="tablist">
                                     <li class="nav-item">
@@ -194,26 +173,15 @@
                                     </li>
                                 </ul>
                                 <div class="tab-content editFile" id="myTabContent2">
-                                    <div class="tab-pane fade show active" id="home2" role="tabpanel"
-                                        aria-labelledby="home-tab2">
-                                        <img id="preview" class="img-fluid img-thumbnail image"
-                                        src="{{ asset('stisla/assets/img/example-image.jpg') }}" alt="edukasi"
-                                        style="width: 20rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
-                                    </div>
-                                    <div class="tab-pane fade" id="profile2" role="tabpanel"
-                                        aria-labelledby="profile-tab2">
-                                        <video id="videoPreview" class="img-fluid img-thumbnail image" src=""
-                                        style="width: 20rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
-                                        controls></video>
-                                    </div>
+
                                 </div>
                             </div>
-                            <input type="file" name="file" id="files" class="form-control">
+                            <input type="file" name="file" id="files" accept="image/*, video/*" class="form-control">
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
-                        <button type="submit" id="add_employee_btn" class="btn btn-primary">Simpan</button>
+                        <button type="submit" id="edit_employee_btn" class="btn btn-primary">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -224,7 +192,7 @@
 
 @section('script')
     <!-- LIBARARY JS -->
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
+    {{-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script> --}}
     <script type="text/javascript" language="javascript"
         src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 
@@ -302,8 +270,8 @@
                     )
                     fetchAllEmployees();
                     }
+                    $("#add_employee_btn").text('Simpan');
                     $("#add_employee_btn").prop('disabled', false);
-                    $("#add_employee_btn").text('Add Employee');
                     $("#add_employee_form")[0].reset();
                     $("#addEmployeeModal").modal('hide');
                 }
@@ -323,8 +291,7 @@
                 },
                 success: function(response) {
                     $("#title").val(response.title);
-                    $("#slug").val(response.slug);
-                    $("#education_category_id").val(response.education_category_id);
+                    $("#category_education_id").val(response.category_education_id);
                     $("#date").val(response.date);
                     $("#desc").val(response.desc);
                     if (response.file) {
@@ -371,8 +338,8 @@
                     )
                     fetchAllEmployees();
                     }
+                    $("#edit_employee_btn").text('Simpan');
                     $("#edit_employee_btn").prop('disabled', false);
-                    $("#edit_employee_btn").text('Update Employee');
                     $("#edit_employee_form")[0].reset();
                     $("#editEmployeeModal").modal('hide');
                 }
@@ -405,8 +372,8 @@
                     success: function(response) {
                         console.log(response);
                         Swal.fire(
-                        'Deleted!',
-                        'Your file has been deleted.',
+                        'Dihapus!',
+                        'File Anda telah dihapus.',
                         'success'
                         )
                         fetchAllEmployees();
@@ -426,7 +393,7 @@
                 success: function(response) {
                     $("#show_all_employees").html(response);
                     $("table").DataTable({
-                    order: [0, 'desc']
+                        order: [0, 'asc']
                     });
                 }
                 });
