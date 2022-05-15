@@ -2,25 +2,20 @@
 <html lang="en">
 
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Admin | @yield('title')</title>
-    <!-- plugins:css -->
-    <link rel="stylesheet" href="../plus-admin/assets/vendors/mdi/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="../plus-admin/assets/vendors/flag-icon-css/css/flag-icon.min.css">
-    <link rel="stylesheet" href="../plus-admin/assets/vendors/css/vendor.bundle.base.css">
-    <!-- endinject -->
-    <!-- Plugin css for this page -->
-    <link rel="stylesheet" href="../plus-admin/assets/vendors/jquery-bar-rating/css-stars.css" />
-    <link rel="stylesheet" href="../plus-admin/assets/vendors/font-awesome/css/font-awesome.min.css" />
-    <!-- End plugin css for this page -->
-    <!-- inject:css -->
-    <!-- endinject -->
-    <!-- Layout styles -->
-    <link rel="stylesheet" href="../plus-admin/assets/css/demo_1/style.css" />
-    <!-- End layout styles -->
-    <link rel="shortcut icon" href="../plus-admin/assets/images/favicon.png" />
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ asset('plus-admin/plugins/fontawesome-free/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plus-admin/plugins/mdi/css/materialdesignicons.min.css') }}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ asset('plus-admin/dist/css/adminlte.min.css') }}">
 
     @yield('style')
 </head>
