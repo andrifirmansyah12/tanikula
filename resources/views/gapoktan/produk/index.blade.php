@@ -60,8 +60,8 @@
                     @csrf
                     <div class="modal-body p-4">
                         <div class="form-group my-2">
-                            <label for="name">Nama</label>
-                            <input type="text" name="name" class="nameCheck form-control" placeholder="Nama" required>
+                            <label for="name">Nama Produk</label>
+                            <input type="text" name="name" class="nameCheck form-control" placeholder="Nama Produk" required>
                         </div>
                         <div class="form-group my-2">
                             <label>Kategori Produk</label>

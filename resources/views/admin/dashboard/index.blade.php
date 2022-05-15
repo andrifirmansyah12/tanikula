@@ -3,605 +3,551 @@
 
 @section('style')
 <style>
-/*  */
+    /*  */
 </style>
 @endsection
 
 @section('content')
 
-<!-- Main Content -->
-<div class="content-wrapper pb-0">
-    <div class="page-header flex-wrap">
-        <div class="header-left">
-            <button class="btn btn-primary mb-2 mb-md-0 mr-2"> Create new document </button>
-            <button class="btn btn-outline-primary bg-white mb-2 mb-md-0"> Import documents </button>
-        </div>
-        <div class="header-right d-flex flex-wrap mt-2 mt-sm-0">
-            <div class="d-flex align-items-center">
-                <a href="#">
-                    <p class="m-0 pr-3">Dashboard</p>
-                </a>
-                <a class="pl-3 mr-4" href="#">
-                    <p class="m-0">ADE-00234</p>
-                </a>
+<section class="content">
+    <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>150</h3>
+
+                        <p>New Orders</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-bag"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
             </div>
-            <button type="button" class="btn btn-primary mt-2 mt-sm-0 btn-icon-text">
-                <i class="mdi mdi-plus-circle"></i> Add Prodcut </button>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>53<sup style="font-size: 20px">%</sup></h3>
+
+                        <p>Bounce Rate</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-stats-bars"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>44</h3>
+
+                        <p>User Registrations</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person-add"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        <h3>65</h3>
+
+                        <p>Unique Visitors</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-pie-graph"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
         </div>
-    </div>
-    <div class="row">
-        <div class="col-xl-9 stretch-card grid-margin">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between flex-wrap">
-                        <div>
-                            <div class="card-title mb-0">Sales Revenue</div>
-                            <h3 class="font-weight-bold mb-0">$32,409</h3>
+        <!-- /.row -->
+        <!-- Main row -->
+        <div class="row">
+            <!-- Left col -->
+            <section class="col-lg-7 connectedSortable">
+                <!-- Custom tabs (Charts with tabs)-->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-chart-pie mr-1"></i>
+                            Sales
+                        </h3>
+                        <div class="card-tools">
+                            <ul class="nav nav-pills ml-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Area</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
+                                </li>
+                            </ul>
                         </div>
-                        <div>
-                            <div class="d-flex flex-wrap pt-2 justify-content-between sales-header-right">
-                                <div class="d-flex mr-5">
-                                    <button type="button" class="btn btn-social-icon btn-outline-sales">
-                                        <i class="mdi mdi-inbox-arrow-down"></i>
-                                    </button>
-                                    <div class="pl-2">
-                                        <h4 class="mb-0 font-weight-semibold head-count"> $8,217 </h4>
-                                        <span class="font-10 font-weight-semibold text-muted">TOTAL
-                                            SALES</span>
-                                    </div>
+                    </div><!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="tab-content p-0">
+                            <!-- Morris chart - Sales -->
+                            <div class="chart tab-pane active" id="revenue-chart"
+                                style="position: relative; height: 300px;">
+                                <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas>
+                            </div>
+                            <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
+                                <canvas id="sales-chart-canvas" height="300" style="height: 300px;"></canvas>
+                            </div>
+                        </div>
+                    </div><!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+
+                <!-- DIRECT CHAT -->
+                <div class="card direct-chat direct-chat-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Direct Chat</h3>
+
+                        <div class="card-tools">
+                            <span title="3 New Messages" class="badge badge-primary">3</span>
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" title="Contacts" data-widget="chat-pane-toggle">
+                                <i class="fas fa-comments"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <!-- Conversations are loaded here -->
+                        <div class="direct-chat-messages">
+                            <!-- Message. Default to the left -->
+                            <div class="direct-chat-msg">
+                                <div class="direct-chat-infos clearfix">
+                                    <span class="direct-chat-name float-left">Alexander Pierce</span>
+                                    <span class="direct-chat-timestamp float-right">23 Jan 2:00 pm</span>
                                 </div>
-                                <div class="d-flex mr-3 mt-2 mt-sm-0">
-                                    <button type="button" class="btn btn-social-icon btn-outline-sales profit">
-                                        <i class="mdi mdi-cash text-info"></i>
-                                    </button>
-                                    <div class="pl-2">
-                                        <h4 class="mb-0 font-weight-semibold head-count"> 2,804 </h4>
-                                        <span class="font-10 font-weight-semibold text-muted">TOTAL
-                                            PROFIT</span>
-                                    </div>
+                                <!-- /.direct-chat-infos -->
+                                <img class="direct-chat-img" src="{{ asset('plus-admin/dist/img/user1-128x128.jpg') }}" alt="message user image">
+                                <!-- /.direct-chat-img -->
+                                <div class="direct-chat-text">
+                                    Is this template really for free? That's unbelievable!
+                                </div>
+                                <!-- /.direct-chat-text -->
+                            </div>
+                            <!-- /.direct-chat-msg -->
+
+                            <!-- Message to the right -->
+                            <div class="direct-chat-msg right">
+                                <div class="direct-chat-infos clearfix">
+                                    <span class="direct-chat-name float-right">Sarah Bullock</span>
+                                    <span class="direct-chat-timestamp float-left">23 Jan 2:05 pm</span>
+                                </div>
+                                <!-- /.direct-chat-infos -->
+                                <img class="direct-chat-img" src="{{ asset('plus-admin/dist/img/user3-128x128.jpg') }}" alt="message user image">
+                                <!-- /.direct-chat-img -->
+                                <div class="direct-chat-text">
+                                    You better believe it!
+                                </div>
+                                <!-- /.direct-chat-text -->
+                            </div>
+                            <!-- /.direct-chat-msg -->
+
+                            <!-- Message. Default to the left -->
+                            <div class="direct-chat-msg">
+                                <div class="direct-chat-infos clearfix">
+                                    <span class="direct-chat-name float-left">Alexander Pierce</span>
+                                    <span class="direct-chat-timestamp float-right">23 Jan 5:37 pm</span>
+                                </div>
+                                <!-- /.direct-chat-infos -->
+                                <img class="direct-chat-img" src="{{ asset('plus-admin/dist/img/user1-128x128.jpg') }}" alt="message user image">
+                                <!-- /.direct-chat-img -->
+                                <div class="direct-chat-text">
+                                    Working with AdminLTE on a great new app! Wanna join?
+                                </div>
+                                <!-- /.direct-chat-text -->
+                            </div>
+                            <!-- /.direct-chat-msg -->
+
+                            <!-- Message to the right -->
+                            <div class="direct-chat-msg right">
+                                <div class="direct-chat-infos clearfix">
+                                    <span class="direct-chat-name float-right">Sarah Bullock</span>
+                                    <span class="direct-chat-timestamp float-left">23 Jan 6:10 pm</span>
+                                </div>
+                                <!-- /.direct-chat-infos -->
+                                <img class="direct-chat-img" src="{{ asset('plus-admin/dist/img/user3-128x128.jpg') }}" alt="message user image">
+                                <!-- /.direct-chat-img -->
+                                <div class="direct-chat-text">
+                                    I would love to.
+                                </div>
+                                <!-- /.direct-chat-text -->
+                            </div>
+                            <!-- /.direct-chat-msg -->
+
+                        </div>
+                        <!--/.direct-chat-messages-->
+
+                        <!-- Contacts are loaded here -->
+                        <div class="direct-chat-contacts">
+                            <ul class="contacts-list">
+                                <li>
+                                    <a href="#">
+                                        <img class="contacts-list-img" src="{{ asset('plus-admin/dist/img/user1-128x128.jpg') }}"
+                                            alt="User Avatar">
+
+                                        <div class="contacts-list-info">
+                                            <span class="contacts-list-name">
+                                                Count Dracula
+                                                <small class="contacts-list-date float-right">2/28/2015</small>
+                                            </span>
+                                            <span class="contacts-list-msg">How have you been? I was...</span>
+                                        </div>
+                                        <!-- /.contacts-list-info -->
+                                    </a>
+                                </li>
+                                <!-- End Contact Item -->
+                                <li>
+                                    <a href="#">
+                                        <img class="contacts-list-img" src="{{ asset('plus-admin/dist/img/user7-128x128.jpg') }}"
+                                            alt="User Avatar">
+
+                                        <div class="contacts-list-info">
+                                            <span class="contacts-list-name">
+                                                Sarah Doe
+                                                <small class="contacts-list-date float-right">2/23/2015</small>
+                                            </span>
+                                            <span class="contacts-list-msg">I will be waiting for...</span>
+                                        </div>
+                                        <!-- /.contacts-list-info -->
+                                    </a>
+                                </li>
+                                <!-- End Contact Item -->
+                                <li>
+                                    <a href="#">
+                                        <img class="contacts-list-img" src="{{ asset('plus-admin/dist/img/user3-128x128.jpg') }}"
+                                            alt="User Avatar">
+
+                                        <div class="contacts-list-info">
+                                            <span class="contacts-list-name">
+                                                Nadia Jolie
+                                                <small class="contacts-list-date float-right">2/20/2015</small>
+                                            </span>
+                                            <span class="contacts-list-msg">I'll call you back at...</span>
+                                        </div>
+                                        <!-- /.contacts-list-info -->
+                                    </a>
+                                </li>
+                                <!-- End Contact Item -->
+                                <li>
+                                    <a href="#">
+                                        <img class="contacts-list-img" src="{{ asset('plus-admin/dist/img/user5-128x128.jpg') }}"
+                                            alt="User Avatar">
+
+                                        <div class="contacts-list-info">
+                                            <span class="contacts-list-name">
+                                                Nora S. Vans
+                                                <small class="contacts-list-date float-right">2/10/2015</small>
+                                            </span>
+                                            <span class="contacts-list-msg">Where is your new...</span>
+                                        </div>
+                                        <!-- /.contacts-list-info -->
+                                    </a>
+                                </li>
+                                <!-- End Contact Item -->
+                                <li>
+                                    <a href="#">
+                                        <img class="contacts-list-img" src="{{ asset('plus-admin/dist/img/user6-128x128.jpg') }}"
+                                            alt="User Avatar">
+
+                                        <div class="contacts-list-info">
+                                            <span class="contacts-list-name">
+                                                John K.
+                                                <small class="contacts-list-date float-right">1/27/2015</small>
+                                            </span>
+                                            <span class="contacts-list-msg">Can I take a look at...</span>
+                                        </div>
+                                        <!-- /.contacts-list-info -->
+                                    </a>
+                                </li>
+                                <!-- End Contact Item -->
+                                <li>
+                                    <a href="#">
+                                        <img class="contacts-list-img" src="{{ asset('plus-admin/dist/img/user8-128x128.jpg') }}"
+                                            alt="User Avatar">
+
+                                        <div class="contacts-list-info">
+                                            <span class="contacts-list-name">
+                                                Kenneth M.
+                                                <small class="contacts-list-date float-right">1/4/2015</small>
+                                            </span>
+                                            <span class="contacts-list-msg">Never mind I found...</span>
+                                        </div>
+                                        <!-- /.contacts-list-info -->
+                                    </a>
+                                </li>
+                                <!-- End Contact Item -->
+                            </ul>
+                            <!-- /.contacts-list -->
+                        </div>
+                        <!-- /.direct-chat-pane -->
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer">
+                        <form action="#" method="post">
+                            <div class="input-group">
+                                <input type="text" name="message" placeholder="Type Message ..." class="form-control">
+                                <span class="input-group-append">
+                                    <button type="button" class="btn btn-primary">Send</button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.card-footer-->
+                </div>
+                <!--/.direct-chat -->
+
+                <!-- TO DO List -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="ion ion-clipboard mr-1"></i>
+                            To Do List
+                        </h3>
+
+                        <div class="card-tools">
+                            <ul class="pagination pagination-sm">
+                                <li class="page-item"><a href="#" class="page-link">&laquo;</a></li>
+                                <li class="page-item"><a href="#" class="page-link">1</a></li>
+                                <li class="page-item"><a href="#" class="page-link">2</a></li>
+                                <li class="page-item"><a href="#" class="page-link">3</a></li>
+                                <li class="page-item"><a href="#" class="page-link">&raquo;</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <ul class="todo-list" data-widget="todo-list">
+                            <li>
+                                <!-- drag handle -->
+                                <span class="handle">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </span>
+                                <!-- checkbox -->
+                                <div class="icheck-primary d-inline ml-2">
+                                    <input type="checkbox" value="" name="todo1" id="todoCheck1">
+                                    <label for="todoCheck1"></label>
+                                </div>
+                                <!-- todo text -->
+                                <span class="text">Design a nice theme</span>
+                                <!-- Emphasis label -->
+                                <small class="badge badge-danger"><i class="far fa-clock"></i> 2 mins</small>
+                                <!-- General tools such as edit or delete-->
+                                <div class="tools">
+                                    <i class="fas fa-edit"></i>
+                                    <i class="fas fa-trash-o"></i>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="handle">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </span>
+                                <div class="icheck-primary d-inline ml-2">
+                                    <input type="checkbox" value="" name="todo2" id="todoCheck2" checked>
+                                    <label for="todoCheck2"></label>
+                                </div>
+                                <span class="text">Make the theme responsive</span>
+                                <small class="badge badge-info"><i class="far fa-clock"></i> 4 hours</small>
+                                <div class="tools">
+                                    <i class="fas fa-edit"></i>
+                                    <i class="fas fa-trash-o"></i>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="handle">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </span>
+                                <div class="icheck-primary d-inline ml-2">
+                                    <input type="checkbox" value="" name="todo3" id="todoCheck3">
+                                    <label for="todoCheck3"></label>
+                                </div>
+                                <span class="text">Let theme shine like a star</span>
+                                <small class="badge badge-warning"><i class="far fa-clock"></i> 1 day</small>
+                                <div class="tools">
+                                    <i class="fas fa-edit"></i>
+                                    <i class="fas fa-trash-o"></i>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="handle">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </span>
+                                <div class="icheck-primary d-inline ml-2">
+                                    <input type="checkbox" value="" name="todo4" id="todoCheck4">
+                                    <label for="todoCheck4"></label>
+                                </div>
+                                <span class="text">Let theme shine like a star</span>
+                                <small class="badge badge-success"><i class="far fa-clock"></i> 3 days</small>
+                                <div class="tools">
+                                    <i class="fas fa-edit"></i>
+                                    <i class="fas fa-trash-o"></i>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="handle">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </span>
+                                <div class="icheck-primary d-inline ml-2">
+                                    <input type="checkbox" value="" name="todo5" id="todoCheck5">
+                                    <label for="todoCheck5"></label>
+                                </div>
+                                <span class="text">Check your messages and notifications</span>
+                                <small class="badge badge-primary"><i class="far fa-clock"></i> 1 week</small>
+                                <div class="tools">
+                                    <i class="fas fa-edit"></i>
+                                    <i class="fas fa-trash-o"></i>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="handle">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </span>
+                                <div class="icheck-primary d-inline ml-2">
+                                    <input type="checkbox" value="" name="todo6" id="todoCheck6">
+                                    <label for="todoCheck6"></label>
+                                </div>
+                                <span class="text">Let theme shine like a star</span>
+                                <small class="badge badge-secondary"><i class="far fa-clock"></i> 1 month</small>
+                                <div class="tools">
+                                    <i class="fas fa-edit"></i>
+                                    <i class="fas fa-trash-o"></i>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer clearfix">
+                        <button type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Add
+                            item</button>
+                    </div>
+                </div>
+                <!-- /.card -->
+            </section>
+            <!-- /.Left col -->
+            <!-- right col (We are only adding the ID to make the widgets sortable)-->
+            <section class="col-lg-5 connectedSortable">
+
+                <!-- Map card -->
+                <div class="card bg-gradient-primary">
+                    <div class="card-header border-0">
+                        <h3 class="card-title">
+                            <i class="fas fa-map-marker-alt mr-1"></i>
+                            Visitors
+                        </h3>
+                        <!-- card tools -->
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-primary btn-sm daterange" title="Date range">
+                                <i class="far fa-calendar-alt"></i>
+                            </button>
+                            <button type="button" class="btn btn-primary btn-sm" data-card-widget="collapse"
+                                title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                        <!-- /.card-tools -->
+                    </div>
+                    <div class="card-body">
+                        <div id="world-map" style="height: 250px; width: 100%;"></div>
+                    </div>
+                    <!-- /.card-body-->
+                    <div class="card-footer bg-transparent">
+                        <div class="row">
+                            <div class="col-4 text-center">
+                                <div id="sparkline-1"></div>
+                                <div class="text-white">Visitors</div>
+                            </div>
+                            <!-- ./col -->
+                            <div class="col-4 text-center">
+                                <div id="sparkline-2"></div>
+                                <div class="text-white">Online</div>
+                            </div>
+                            <!-- ./col -->
+                            <div class="col-4 text-center">
+                                <div id="sparkline-3"></div>
+                                <div class="text-white">Sales</div>
+                            </div>
+                            <!-- ./col -->
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                </div>
+                <!-- /.card -->
+
+                <!-- Calendar -->
+                <div class="card bg-gradient-success">
+                    <div class="card-header border-0">
+
+                        <h3 class="card-title">
+                            <i class="far fa-calendar-alt"></i>
+                            Calendar
+                        </h3>
+                        <!-- tools card -->
+                        <div class="card-tools">
+                            <!-- button with a dropdown -->
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-success btn-sm dropdown-toggle"
+                                    data-toggle="dropdown" data-offset="-52">
+                                    <i class="fas fa-bars"></i>
+                                </button>
+                                <div class="dropdown-menu" role="menu">
+                                    <a href="#" class="dropdown-item">Add new event</a>
+                                    <a href="#" class="dropdown-item">Clear events</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a href="#" class="dropdown-item">View calendar</a>
                                 </div>
                             </div>
+                            <button type="button" class="btn btn-success btn-sm" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-success btn-sm" data-card-widget="remove">
+                                <i class="fas fa-times"></i>
+                            </button>
                         </div>
+                        <!-- /. tools -->
                     </div>
-                    <p class="text-muted font-13 mt-2 mt-sm-0"> Your sales monitoring dashboard
-                        template. <a class="text-muted font-13" href="#"><u>Learn more</u></a>
-                    </p>
-                    <div class="flot-chart-wrapper">
-                        <div id="flotChart" class="flot-chart">
-                            <canvas class="flot-base"></canvas>
-                        </div>
+                    <!-- /.card-header -->
+                    <div class="card-body pt-0">
+                        <!--The calendar -->
+                        <div id="calendar" style="width: 100%"></div>
                     </div>
+                    <!-- /.card-body -->
                 </div>
-            </div>
+                <!-- /.card -->
+            </section>
+            <!-- right col -->
         </div>
-        <div class="col-xl-3 stretch-card grid-margin">
-            <div class="card card-img">
-                <div class="card-body d-flex align-items-center">
-                    <div class="text-white">
-                        <h1 class="font-20 font-weight-semibold mb-0"> Get premium </h1>
-                        <h1 class="font-20 font-weight-semibold">account!</h1>
-                        <p>to optimize your selling prodcut</p>
-                        <p class="font-10 font-weight-semibold"> Enjoy the advantage of premium. </p>
-                        <button class="btn bg-white font-12">Get Premium</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- chart row starts here -->
-    <div class="row">
-        <div class="col-sm-6 stretch-card grid-margin">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div class="card-title"> Customers <small class="d-block text-muted">August 01 -
-                                August 31</small>
-                        </div>
-                        <div class="d-flex text-muted font-20">
-                            <i class="mdi mdi-printer mouse-pointer"></i>
-                            <i class="mdi mdi-help-circle-outline ml-2 mouse-pointer"></i>
-                        </div>
-                    </div>
-                    <h3 class="font-weight-bold mb-0"> 2,409 <span class="text-success h5">4,5%<i
-                                class="mdi mdi-arrow-up"></i></span>
-                    </h3>
-                    <span class="text-muted font-13">Avg customers/Day</span>
-                    <div class="line-chart-wrapper">
-                        <canvas id="linechart" height="80"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 stretch-card grid-margin">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div class="card-title"> Conversions <small class="d-block text-muted">August 01
-                                - August 31</small>
-                        </div>
-                        <div class="d-flex text-muted font-20">
-                            <i class="mdi mdi-printer mouse-pointer"></i>
-                            <i class="mdi mdi-help-circle-outline ml-2 mouse-pointer"></i>
-                        </div>
-                    </div>
-                    <h3 class="font-weight-bold mb-0"> 0.40% <span class="text-success h5">0.20%<i
-                                class="mdi mdi-arrow-up"></i></span>
-                    </h3>
-                    <span class="text-muted font-13">Avg customers/Day</span>
-                    <div class="bar-chart-wrapper">
-                        <canvas id="barchart" height="80"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- image card row starts here -->
-    <div class="row">
-        <div class="col-sm-4 stretch-card grid-margin">
-            <div class="card">
-                <div class="card-body p-0">
-                    <img class="img-fluid w-100" src="../plus-admin/assets/images/dashboard/img_1.jpg" alt="" />
-                </div>
-                <div class="card-body px-3 text-dark">
-                    <div class="d-flex justify-content-between">
-                        <p class="text-muted font-13 mb-0">ENTIRE APARTMENT</p>
-                        <i class="mdi mdi-heart-outline"></i>
-                    </div>
-                    <h5 class="font-weight-semibold"> Cosy Studio flat in London </h5>
-                    <div class="d-flex justify-content-between font-weight-semibold">
-                        <p class="mb-0">
-                            <i class="mdi mdi-star star-color pr-1"></i>4.60 (35) </p>
-                        <p class="mb-0">$5,267/night</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4 stretch-card grid-margin">
-            <div class="card">
-                <div class="card-body p-0">
-                    <img class="img-fluid w-100" src="../plus-admin/assets/images/dashboard/img_2.jpg" alt="" />
-                </div>
-                <div class="card-body px-3 text-dark">
-                    <div class="d-flex justify-content-between">
-                        <p class="text-muted font-13 mb-0">ENTIRE APARTMENT</p>
-                        <i class="mdi mdi-heart-outline"></i>
-                    </div>
-                    <h5 class="font-weight-semibold"> Victoria Bedsit Studio Ensuite </h5>
-                    <div class="d-flex justify-content-between font-weight-semibold">
-                        <p class="mb-0">
-                            <i class="mdi mdi-star star-color pr-1"></i>4.83 (12) </p>
-                        <p class="mb-0">$6,144/night</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4 stretch-card grid-margin">
-            <div class="card">
-                <div class="card-body p-0">
-                    <img class="img-fluid w-100" src="../plus-admin/assets/images/dashboard/img_3.jpg" alt="" />
-                </div>
-                <div class="card-body px-3 text-dark">
-                    <div class="d-flex justify-content-between">
-                        <p class="text-muted font-13 mb-0">ENTIRE APARTMENT</p>
-                        <i class="mdi mdi-heart-outline"></i>
-                    </div>
-                    <h5 class="font-weight-semibold">Fabulous Huge Room</h5>
-                    <div class="d-flex justify-content-between font-weight-semibold">
-                        <p class="mb-0">
-                            <i class="mdi mdi-star star-color pr-1"></i>3.83 (15) </p>
-                        <p class="mb-0">$5,267/night</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- table row starts here -->
-    <div class="row">
-        <div class="col-xl-4 grid-margin">
-            <div class="card card-stat stretch-card mb-3">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div class="text-white">
-                            <h3 class="font-weight-bold mb-0">$168.90</h3>
-                            <h6>This Month</h6>
-                            <div class="badge badge-danger">23%</div>
-                        </div>
-                        <div class="flot-bar-wrapper">
-                            <div id="column-chart" class="flot-chart"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card stretch-card mb-3">
-                <div class="card-body d-flex flex-wrap justify-content-between">
-                    <div>
-                        <h4 class="font-weight-semibold mb-1 text-black"> Member Profit </h4>
-                        <h6 class="text-muted">Average Weekly Profit</h6>
-                    </div>
-                    <h3 class="text-success font-weight-bold">+168.900</h3>
-                </div>
-            </div>
-            <div class="card stretch-card mb-3">
-                <div class="card-body d-flex flex-wrap justify-content-between">
-                    <div>
-                        <h4 class="font-weight-semibold mb-1 text-black"> Total Profit </h4>
-                        <h6 class="text-muted">Weekly Customer Orders</h6>
-                    </div>
-                    <h3 class="text-success font-weight-bold">+6890.00</h3>
-                </div>
-            </div>
-            <div class="card mt-3">
-                <div class="card-body d-flex flex-wrap justify-content-between">
-                    <div>
-                        <h4 class="font-weight-semibold mb-1 text-black"> Issue Reports </h4>
-                        <h6 class="text-muted">System bugs and issues</h6>
-                    </div>
-                    <h3 class="text-danger font-weight-bold">-8380.00</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-8 stretch-card grid-margin">
-            <div class="card">
-                <div class="card-body pb-0">
-                    <h4 class="card-title mb-0">Financial management review</h4>
-                </div>
-                <div class="card-body p-0">
-                    <div class="table-responsive">
-                        <table class="table custom-table text-dark">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Sale Rate</th>
-                                    <th>Actual</th>
-                                    <th>Variance</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <img src="../plus-admin/assets/images/faces/face2.jpg" class="mr-2" alt="image" /> Jacob
-                                        Jensen </td>
-                                    <td>
-                                        <div class="d-flex">
-                                            <span class="pr-2 d-flex align-items-center">85%</span>
-                                            <select id="star-1" name="rating" autocomplete="off">
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                            </select>
-                                        </div>
-                                    </td>
-                                    <td>32,435</td>
-                                    <td>40,234</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <img src="../plus-admin/assets/images/faces/face3.jpg" class="mr-2" alt="image" /> Cecelia
-                                        Bradley </td>
-                                    <td>
-                                        <div class="d-flex">
-                                            <span class="pr-2 d-flex align-items-center">55%</span>
-                                            <select id="star-2" name="rating" autocomplete="off">
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                            </select>
-                                        </div>
-                                    </td>
-                                    <td>4,36780</td>
-                                    <td>765728</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <img src="../plus-admin/assets/images/faces/face4.jpg" class="mr-2" alt="image" /> Leah
-                                        Sherman </td>
-                                    <td>
-                                        <div class="d-flex">
-                                            <span class="pr-2 d-flex align-items-center">23%</span>
-                                            <select id="star-3" name="rating" autocomplete="off">
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                            </select>
-                                        </div>
-                                    </td>
-                                    <td>2300</td>
-                                    <td>22437</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <img src="../plus-admin/assets/images/faces/face5.jpg" class="mr-2" alt="image" /> Ina
-                                        Curry </td>
-                                    <td>
-                                        <div class="d-flex">
-                                            <span class="pr-2 d-flex align-items-center">44%</span>
-                                            <select id="star-4" name="rating" autocomplete="off">
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                            </select>
-                                        </div>
-                                    </td>
-                                    <td>53462</td>
-                                    <td>1,75938</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <img src="../plus-admin/assets/images/faces/face7.jpg" class="mr-2" alt="image" /> Lida
-                                        Fitzgerald </td>
-                                    <td>
-                                        <div class="d-flex">
-                                            <span class="pr-2 d-flex align-items-center">65%</span>
-                                            <select id="star-5" name="rating" autocomplete="off">
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                            </select>
-                                        </div>
-                                    </td>
-                                    <td>67453</td>
-                                    <td>765377</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <img src="../plus-admin/assets/images/faces/face2.jpg" class="mr-2" alt="image" /> Stella
-                                        Johnson </td>
-                                    <td>
-                                        <div class="d-flex">
-                                            <span class="pr-2 d-flex align-items-center">49%</span>
-                                            <select id="star-6" name="rating" autocomplete="off">
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                            </select>
-                                        </div>
-                                    </td>
-                                    <td>43662</td>
-                                    <td>96535</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <img src="../plus-admin/assets/images/faces/face9.jpg" class="mr-2" alt="image" /> Maria
-                                        Ortiz </td>
-                                    <td>
-                                        <div class="d-flex">
-                                            <span class="pr-2 d-flex align-items-center">65%</span>
-                                            <select id="star-7" name="rating" autocomplete="off">
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                            </select>
-                                        </div>
-                                    </td>
-                                    <td>76555</td>
-                                    <td>258546</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <a class="text-black font-13 d-block pt-2 pb-2 pb-lg-0 font-weight-bold pl-4" href="#">Show more</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- doughnut chart row starts -->
-    <div class="row">
-        <div class="col-sm-12 stretch-card grid-margin">
-            <div class="card">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="card border-0">
-                            <div class="card-body">
-                                <div class="card-title">Channel Sessions</div>
-                                <div class="d-flex flex-wrap">
-                                    <div class="doughnut-wrapper w-50">
-                                        <canvas id="doughnutChart1" width="100" height="100"></canvas>
-                                    </div>
-                                    <div id="doughnut-chart-legend"
-                                        class="pl-lg-3 rounded-legend align-self-center flex-grow legend-vertical legend-bottom-left">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card border-0">
-                            <div class="card-body">
-                                <div class="card-title">News Sessions</div>
-                                <div class="d-flex flex-wrap">
-                                    <div class="doughnut-wrapper w-50">
-                                        <canvas id="doughnutChart2" width="100" height="100"></canvas>
-                                    </div>
-                                    <div id="doughnut-chart-legend2"
-                                        class="pl-lg-3 rounded-legend align-self-center flex-grow legend-vertical legend-bottom-left">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card border-0">
-                            <div class="card-body">
-                                <div class="card-title">Device Sessions</div>
-                                <div class="d-flex flex-wrap">
-                                    <div class="doughnut-wrapper w-50">
-                                        <canvas id="doughnutChart3" width="100" height="100"></canvas>
-                                    </div>
-                                    <div id="doughnut-chart-legend3"
-                                        class="pl-lg-3 rounded-legend align-self-center flex-grow legend-vertical legend-bottom-left">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- last row starts here -->
-    <div class="row">
-        <div class="col-sm-6 col-xl-4 stretch-card grid-margin">
-            <div class="card">
-                <div class="card-body">
-                    <div class="card-title mb-2">Upcoming events (3)</div>
-                    <h3 class="mb-3">23 september 2019</h3>
-                    <div class="d-flex border-bottom border-top py-3">
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" checked /></label>
-                        </div>
-                        <div class="pl-2">
-                            <span class="font-12 text-muted">Tue, Mar 5, 9.30am</span>
-                            <p class="m-0 text-black"> Hey I attached some new PSD files… </p>
-                        </div>
-                    </div>
-                    <div class="d-flex border-bottom py-3">
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" /></label>
-                        </div>
-                        <div class="pl-2">
-                            <span class="font-12 text-muted">Mon, Mar 11, 4.30 PM</span>
-                            <p class="m-0 text-black"> Discuss performance with manager </p>
-                        </div>
-                    </div>
-                    <div class="d-flex border-bottom py-3">
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" /></label>
-                        </div>
-                        <div class="pl-2">
-                            <span class="font-12 text-muted">Tue, Mar 5, 9.30am</span>
-                            <p class="m-0 text-black">Meeting with Alisa</p>
-                        </div>
-                    </div>
-                    <div class="d-flex pt-3">
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" /></label>
-                        </div>
-                        <div class="pl-2">
-                            <span class="font-12 text-muted">Mon, Mar 11, 4.30 PM</span>
-                            <p class="m-0 text-black"> Hey I attached some new PSD files… </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-xl-4 stretch-card grid-margin">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex border-bottom mb-4 pb-2">
-                        <div class="hexagon">
-                            <div class="hex-mid hexagon-warning">
-                                <i class="mdi mdi-clock-outline"></i>
-                            </div>
-                        </div>
-                        <div class="pl-4">
-                            <h4 class="font-weight-bold text-warning mb-0"> 12.45 </h4>
-                            <h6 class="text-muted">Schedule Meeting</h6>
-                        </div>
-                    </div>
-                    <div class="d-flex border-bottom mb-4 pb-2">
-                        <div class="hexagon">
-                            <div class="hex-mid hexagon-danger">
-                                <i class="mdi mdi-account-outline"></i>
-                            </div>
-                        </div>
-                        <div class="pl-4">
-                            <h4 class="font-weight-bold text-danger mb-0">34568</h4>
-                            <h6 class="text-muted">Profile visits</h6>
-                        </div>
-                    </div>
-                    <div class="d-flex border-bottom mb-4 pb-2">
-                        <div class="hexagon">
-                            <div class="hex-mid hexagon-success">
-                                <i class="mdi mdi-laptop-chromebook"></i>
-                            </div>
-                        </div>
-                        <div class="pl-4">
-                            <h4 class="font-weight-bold text-success mb-0"> 33.50% </h4>
-                            <h6 class="text-muted">Bounce Rate</h6>
-                        </div>
-                    </div>
-                    <div class="d-flex border-bottom mb-4 pb-2">
-                        <div class="hexagon">
-                            <div class="hex-mid hexagon-info">
-                                <i class="mdi mdi-clock-outline"></i>
-                            </div>
-                        </div>
-                        <div class="pl-4">
-                            <h4 class="font-weight-bold text-info mb-0">12.45</h4>
-                            <h6 class="text-muted">Schedule Meeting</h6>
-                        </div>
-                    </div>
-                    <div class="d-flex">
-                        <div class="hexagon">
-                            <div class="hex-mid hexagon-primary">
-                                <i class="mdi mdi-timer-sand"></i>
-                            </div>
-                        </div>
-                        <div class="pl-4">
-                            <h4 class="font-weight-bold text-primary mb-0"> 12.45 </h4>
-                            <h6 class="text-muted mb-0">Browser Usage</h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-xl-4 stretch-card grid-margin">
-            <div class="card color-card-wrapper">
-                <div class="card-body">
-                    <img class="img-fluid card-top-img w-100" src="../plus-admin/assets/images/dashboard/img_5.jpg" alt="" />
-                    <div class="d-flex flex-wrap justify-content-around color-card-outer">
-                        <div class="col-6 p-0 mb-4">
-                            <div class="color-card primary m-auto">
-                                <i class="mdi mdi-clock-outline"></i>
-                                <p class="font-weight-semibold mb-0">Delivered</p>
-                                <span class="small">15 Packages</span>
-                            </div>
-                        </div>
-                        <div class="col-6 p-0 mb-4">
-                            <div class="color-card bg-success m-auto">
-                                <i class="mdi mdi-tshirt-crew"></i>
-                                <p class="font-weight-semibold mb-0">Ordered</p>
-                                <span class="small">72 Items</span>
-                            </div>
-                        </div>
-                        <div class="col-6 p-0">
-                            <div class="color-card bg-info m-auto">
-                                <i class="mdi mdi-trophy-outline"></i>
-                                <p class="font-weight-semibold mb-0">Arrived</p>
-                                <span class="small">34 Upgraded</span>
-                            </div>
-                        </div>
-                        <div class="col-6 p-0">
-                            <div class="color-card bg-danger m-auto">
-                                <i class="mdi mdi-presentation"></i>
-                                <p class="font-weight-semibold mb-0">Reported</p>
-                                <span class="small">72 Support</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+        <!-- /.row (main row) -->
+    </div><!-- /.container-fluid -->
+</section>
 
 @endsection
 
