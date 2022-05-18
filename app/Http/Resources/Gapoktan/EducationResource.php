@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Gapoktan;
 
+use App\Http\Resources\UserResource;
 use App\Models\EducationCategory;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -17,7 +18,7 @@ class EducationResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            "user_id" => $this->user_id,
+            "user_id" => new UserResource($this->user),
             "category_education_id" => new EducationCategoryResource($this->education_category),
             "title" => $this->title,
             "slug" => $this->slug,

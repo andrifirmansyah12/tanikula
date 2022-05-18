@@ -9,12 +9,12 @@ use App\Http\Controllers\Api\Gapoktan\ActivityCategoryApiController;
 use App\Http\Controllers\Api\Gapoktan\EducationApiController;
 use App\Http\Controllers\Api\Gapoktan\EducationCategoryApiController;
 use App\Http\Controllers\Api\Gapoktan\LoginGapoktanApiController;
+use App\Http\Controllers\Api\Petani\FarmerApiController;
 use App\Http\Controllers\Api\Petani\LoginPetaniApiController;
 use App\Http\Controllers\Api\Petani\PlantApiController;
 use App\Http\Controllers\Api\Poktan\LoginPoktanApiController;
 use App\Http\Controllers\Api\ProductApiController;
 use App\Http\Controllers\Api\ProductCategoryApiController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,9 +46,19 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('activity', ActivityApiController::class);
     Route::get('activity/search/{name}', [ActivityApiController::class, 'search']);
     Route::resource('activity-category', ActivityCategoryApiController::class);
+    //Education
+    Route::resource('education-category', EducationCategoryApiController::class);
+    Route::resource('education', EducationApiController::class);
+    Route::post('education/update/file', [EducationApiController::class, 'updateWFile']);
 
+    
     //Petani
     Route::resource('plant', PlantApiController::class);
+    Route::get('plant/farmer/{id}', [PlantApiController::class, 'indexByIdUser']);
+    Route::put('plant/harvest-date/{id}', [PlantApiController::class, 'addHarvestDate']);
+    Route::resource('farmer', FarmerApiController::class);
+
+
  
 });
 
@@ -69,10 +79,6 @@ Route::get('wishlist/user_id/{user_id}', [WishlistApiController::class, 'indexBy
 
 // ------ Gapoktan -----------
 Route::post('login-gapoktan', [LoginGapoktanApiController::class, 'login']);
-// Education
-Route::resource('education', EducationApiController::class);
-Route::resource('education-category', EducationCategoryApiController::class);
-
 
 // ------ Gapoktan -----------
 Route::post('login-poktan', [LoginPoktanApiController::class, 'login']);

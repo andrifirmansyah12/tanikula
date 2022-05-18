@@ -16,7 +16,8 @@ class PlantResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'user_id' => $this->user_id,
+            'farmer_id' => new FarmerResource($this->farmer),
+            'poktan_id' =>  new PoktanResource($this->poktan),
             "plant_tanaman" => $this->plant_tanaman,
             'surface_area' => $this->surface_area,
             'plating_date' => $this->plating_date,

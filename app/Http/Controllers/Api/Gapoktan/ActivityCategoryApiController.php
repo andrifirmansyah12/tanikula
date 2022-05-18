@@ -7,6 +7,7 @@ use App\Models\ActivityCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Api\BaseApiController as BaseController;
+use App\Http\Resources\Gapoktan\ActivityCategoryResource;
 use Illuminate\Support\Facades\Validator;
 
 class ActivityCategoryApiController extends BaseController
@@ -14,8 +15,8 @@ class ActivityCategoryApiController extends BaseController
     public function index()
     {
         $datas = ActivityCategory::latest()->get();
-        return $this->sendResponse($datas, 'Data fetched');
-
+        $result = ActivityCategoryResource::collection($datas);
+        return $this->sendResponse($result, 'Data fetched');
     }
 
     public function create()
@@ -63,7 +64,7 @@ class ActivityCategoryApiController extends BaseController
         ]);
 
         if($validator->fails()){
-        return $this->sendError("Validation Error", $validator->errors());
+            return $this->sendError("Validation Error", $validator->errors());
         }
 
         $datas = ActivityCategory::findOrFail($id);
@@ -76,7 +77,6 @@ class ActivityCategoryApiController extends BaseController
         $datas->update();
 
         return $this->sendResponse($datas, 'Data Updated');
-
     }
 
     public function destroy($id)
