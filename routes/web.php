@@ -285,6 +285,11 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:petani']], function()
         return view('petani.dashboard.index');
     })->name('petani');
 
+    // Edukasi Page
+    Route::get('/edukasi', [App\Http\Controllers\Pages\EducationController::class, 'index']);
+    Route::get('/edukasi/{education:slug}', [App\Http\Controllers\Pages\EducationController::class, 'show']);
+    Route::get('/autocomplete', [App\Http\Controllers\Pages\EducationController::class, 'autocomplete'])->name('autocomplete');
+
     Route::get('petani/tandur', [App\Http\Controllers\Petani\PlantController::class, 'index'])->name('petani-tandur');
     Route::post('petani/tandur/store', [App\Http\Controllers\Petani\PlantController::class, 'store'])->name('petani-tandur-store');
     Route::get('petani/tandur/fetchall', [App\Http\Controllers\Petani\PlantController::class, 'fetchAll'])->name('petani-tandur-fetchAll');
@@ -343,10 +348,6 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function(
     })->name('pembeli.alamat');
 
 });
-
-// Edukasi Page
-Route::get('/edukasi', [App\Http\Controllers\Pages\EducationController::class, 'index']);
-Route::get('/edukasi/{education:slug}', [App\Http\Controllers\Pages\EducationController::class, 'show']);
 
 Route::get('/', [App\Http\Controllers\Pages\ProductController::class, 'index']);
 Route::get('/home', [App\Http\Controllers\Pages\ProductController::class, 'index'])->name('home');

@@ -61,22 +61,6 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-body">
-                            <ul class="nav nav-tabs">
-                                <li class="nav-item">
-                                    <a class="nav-link active" href="{{ url('gapoktan/pengaturan') }}">Biodata
-                                        Gapoktan</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('gapoktan/daftar-poktan') }}">Daftar
-                                        Poktan</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('gapoktan/daftar-petani') }}">Daftar
-                                        Petani</a>
-                                </li>
-                            </ul>
-                        </div>
                         <div class="card-body row">
                             <div class="col-12 col-md-12 col-lg-5">
                                 <div id="profile_alert"></div>
