@@ -61,18 +61,6 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-body">
-                            <ul class="nav nav-tabs">
-                                <li class="nav-item">
-                                    <a class="nav-link active" href="{{ url('poktan/pengaturan') }}">Biodata
-                                        Poktan</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('poktan/daftar-petani') }}">Daftar
-                                        Petani</a>
-                                </li>
-                            </ul>
-                        </div>
                         <div class="card-body row">
                             <div class="col-12 col-md-12 col-lg-5">
                                 <div id="profile_alert"></div>
@@ -174,7 +162,7 @@
                                         <div class="card-footer row align-items-center justify-content-end mb-3">
                                             <input type="button" value="Ubah Password"
                                                 class="btn btn-light m-1" data-toggle="modal" data-target="#editEmployeeModal">
-                                            <input type="submit" id="profile_btn" value="Ubah Biodata Diri"
+                                            <input type="submit" id="profile_btn" value="Ubah Biodata Poktan"
                                                 class="btn btn-primary m-1">
                                         </div>
                                     </form>

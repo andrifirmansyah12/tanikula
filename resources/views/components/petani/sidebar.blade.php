@@ -7,32 +7,44 @@
     </div>
     <ul class="sidebar-menu">
         <li class="menu-header">Dashboard</li>
-        <li class="nav-item dropdown active">
-            <a href="{{ url('petani') }}" class="nav-link"><i
-                    class=""></i><span>Dashboard</span></a>
+        <li class="nav-item dropdown {{ Request::is('petani') ? 'active' : '' }}">
+            <a href="{{ url('petani') }}" class="nav-link">
+                <i class="fas fa-thin fa-gauge"></i>
+                <span>Dashboard</span>
+            </a>
         </li>
         <li class="menu-header">Manajamen</li>
-        <li class="nav-item dropdown">
-            <a href="{{ url('petani/edukasi') }}" class="nav-link "><i class=""></i>
-                <span>Edukasi</span></a>
+        <li class="nav-item dropdown {{ Request::is('edukasi*') ? 'active' : '' }}">
+            <a href="{{ url('edukasi') }}" class="nav-link">
+                <i class="fas fa-solid fa-clapperboard"></i>
+                <span>Edukasi</span>
+            </a>
         </li>
-        <li class="nav-item dropdown">
-            <a href="{{ url('petani/kegiatan') }}" class="nav-link "><i class=""></i>
-                <span>Kegiatan</span></a>
+        <li class="nav-item dropdown {{ Request::is('petani/kegiatan*') ? 'active' : '' }}">
+            <a href="{{ url('petani/kegiatan') }}" class="nav-link ">
+                <i class="fas fa-solid fa-clipboard"></i>
+                <span>Kegiatan</span>
+            </a>
         </li>
         <li class="menu-header">Melaporkan</li>
-        <li class="nav-item dropdown">
-            <a href="{{ url('petani/tandur') }}" class="nav-link"><i class=""></i>
-                <span>Tandur</span></a>
+        <li class="nav-item dropdown {{ Request::is('petani/tandur*') ? 'active' : '' }}">
+            <a href="{{ url('petani/tandur') }}" class="nav-link">
+                <i class="fas fa-solid fa-calendar-days"></i>
+                <span>Tandur</span>
+            </a>
         </li>
-        <li class="nav-item dropdown">
-            <a href="{{ url('petani/panen') }}" class="nav-link"><i class=""></i>
-                <span>Panen</span></a>
+        <li class="nav-item dropdown {{ Request::is('petani/panen*') ? 'active' : '' }}">
+            <a href="{{ url('petani/panen') }}" class="nav-link">
+                <i class="fas fa-solid fa-calendar-check"></i>
+                <span>Panen</span>
+            </a>
         </li>
         <li class="menu-header">Profile Saya</li>
-        <li class="nav-item dropdown">
-            <a href="{{ url('petani/pengaturan') }}" class="nav-link"><i class=""></i>
-                <span>Pengaturan</span></a>
+        <li class="nav-item dropdown {{ Request::is('petani/pengaturan*') ? 'active' : '' }}">
+            <a href="{{ url('petani/pengaturan') }}" class="nav-link">
+                <i class="fas fa-solid fa-gear"></i>
+                <span>Pengaturan</span>
+            </a>
         </li>
 
     </ul>

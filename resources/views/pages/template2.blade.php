@@ -2,60 +2,41 @@
 
 <body>
     <!-- Preloader -->
-    {{-- <div class="preloader">
+    <div class="preloader">
         <div class="preloader-inner">
             <div class="preloader-icon">
                 <span></span>
                 <span></span>
             </div>
         </div>
-    </div> --}}
+    </div>
     <!-- /End Preloader -->
 
     <!-- Start Header Area -->
     <header class="header navbar-area">
-        <!-- Start Topbar -->
-        <div class="topbar" style="border-bottom: 1px solid #eee;">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-4 col-md-4 col-12">
-                        <div class="top-left">
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-12">
-                        <div class="top-middle">
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-12">
-                        <div class="top-end">
-                            <div class="user">
-                                <i class="lni lni-user"></i>
-                                Hello
-                            </div>
-                            <ul class="user-login">
-                                <li>
-                                    <a href="{{ route('login') }}">Masuk</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('login') }}">Daftar</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- End Topbar -->
         <!-- Start Header Middle -->
         <div class="header-middle">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-3 col-7">
                         <!-- Start Header Logo -->
-                        <a class="navbar-brand" href="index.html">
-                            <h3>Sri Makmur</h3>
+                        <a class="navbar-brand" href="{{ url('edukasi') }}">
+                            <h3> <span style="color: #16A085">Edukasi</span>Petani</h3>
                         </a>
                         <!-- End Header Logo -->
+                    </div>
+                    <div class="col-lg-5 col-md-7 d-xs-none">
+                    </div>
+                    <div class="col-lg-4 col-md-2 col-5">
+                        <div class="middle-right-area">
+                            <div class="user">
+                            </div>
+                            <ul class="d-flex p-3 user-login">
+                                <li>
+                                    <a style="color: var(--primary); font-weight: bold; font-size: 15px" href="{{ url('petani') }}" class="text-capitalize"><i class="fas fa-solid fa-house"></i> Dashboard</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -112,7 +93,7 @@
                         <div class="col-lg-3 col-md-6 col-12">
                             <!-- Single Widget -->
                             <div class="single-footer our-app">
-                                <h3>Edukasi SRI MAKMUR</h3>
+                                <h3 style="font-size: 32px"> <span style="color: #16A085">Edukasi</span>Petani</h3>
                             </div>
                             <!-- End Single Widget -->
                         </div>

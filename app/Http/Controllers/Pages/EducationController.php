@@ -11,8 +11,9 @@ class EducationController extends Controller
 {
     public function index() {
         $categories = EducationCategory::all();
-        $educationsMore = Education::orderByRaw('RAND()')->take(3)->get();
-		$educations = Education::with('education_category', 'user')->latest()->paginate(6)->withQueryString();
+        $educationsMore = Education::with('education_category', 'user')->orderByRaw('RAND()')->take(3)->get();
+		$educations = Education::with('education_category', 'user')->latest()->filter(request(['kategori-edukasi', 'diposting-oleh', 'pencarian']))
+                ->paginate(6)->withQueryString();
 		return view('pages.edukasi.index', compact('educations', 'categories', 'educationsMore'));
 	}
 
@@ -23,5 +24,12 @@ class EducationController extends Controller
             'educationsMore' => Education::orderByRaw('RAND()')->take(3)->get(),
             'categories' => EducationCategory::all()
         ]);
+    }
+
+    public function autocomplete(Request $request)
+    {
+        return Education::select('title')
+        ->where('title', 'like', "%{$request->term}%")
+        ->pluck('title');
     }
 }

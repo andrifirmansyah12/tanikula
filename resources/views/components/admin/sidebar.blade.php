@@ -29,7 +29,7 @@
                with font-awesome or any other icon font library -->
             <li class="nav-item menu-open">
                 <a href="{{ url('admin') }}" class="nav-link active">
-                    <i class="nav-icon mdi mdi-compass-outline"></i>
+                    <i class="nav-icon fas fa-thin fa-gauge"></i>
                     <p>
                         Dashboard
                     </p>
@@ -38,7 +38,7 @@
             <li class="nav-header">MANAJEMEN</li>
             <li class="nav-item">
                 <a href="#" class="nav-link">
-                    <i class="nav-icon mdi mdi-bookmark-outline"></i>
+                    <i class="nav-icon fas fa-solid fa-bookmark"></i>
                     <p>
                         Kategori
                         <i class="fas fa-angle-left right"></i>
@@ -75,7 +75,7 @@
             </li>
             <li class="nav-item">
                 <a href="{{ url('admin/edukasi') }}" class="nav-link">
-                    <i class="nav-icon mdi mdi-movie"></i>
+                    <i class="nav-icon fas fa-solid fa-clapperboard"></i>
                     <p>
                         Edukasi
                     </p>
@@ -83,7 +83,7 @@
             </li>
             <li class="nav-item">
                 <a href="{{ url('admin/kegiatan') }}" class="nav-link">
-                    <i class="nav-icon mdi mdi-clipboard-text"></i>
+                    <i class="nav-icon fas fa-solid fa-clipboard"></i>
                     <p>
                         Kegiatan
                     </p>
@@ -91,7 +91,7 @@
             </li>
             <li class="nav-item">
                 <a href="#" class="nav-link">
-                    <i class="nav-icon mdi mdi-account-circle"></i>
+                    <i class="nav-icon fas fa-solid fa-user"></i>
                     <p>
                         Akun
                         <i class="fas fa-angle-left right"></i>
@@ -121,7 +121,7 @@
             <li class="nav-header">Laporan</li>
             <li class="nav-item">
                 <a href="{{ url('admin/tandur') }}" class="nav-link">
-                    <i class="nav-icon mdi mdi-calendar-text"></i>
+                    <i class="nav-icon fas fa-solid fa-calendar-days"></i>
                     <p>
                         Tandur
                         <span class="badge badge-info right">2</span>
@@ -130,7 +130,7 @@
             </li>
             <li class="nav-item">
                 <a href="{{ url('admin/panen') }}" class="nav-link">
-                    <i class="nav-icon mdi mdi-calendar-multiple-check"></i>
+                    <i class="nav-icon fas fa-solid fa-calendar-check"></i>
                     <p>
                         Panen
                     </p>
@@ -138,7 +138,7 @@
             </li>
             <li class="nav-item">
                 <a href="{{ url('admin/rekap-penjualan') }}" class="nav-link">
-                    <i class="nav-icon mdi mdi-chart-bar"></i>
+                    <i class="nav-icon fas fa-solid fa-chart-line"></i>
                     <p>
                         Rekap Penjualan
                     </p>
@@ -147,7 +147,7 @@
             <li class="nav-header">Profile Saya</li>
             <li class="nav-item">
                 <a href="{{ url('admin/pengaturan') }}" class="nav-link">
-                    <i class="nav-icon mdi mdi-settings"></i>
+                    <i class="nav-icon fas fa-solid fa-gear"></i>
                     <p>Pengaturan</p>
                 </a>
             </li>

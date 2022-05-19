@@ -178,7 +178,7 @@
                     <div class="col-lg-12 col-md-6 col-sm-12">
                         <div class="single-blog blog-edukasi border">
                             <div class="blog-image-edukasi">
-                                <a href="/edukasi/{{ $education->slug }}">
+                                <a href="{{ url('/edukasi'.'/'.$education->slug) }}">
                                     @php
                                         $ext = pathinfo($education->file, PATHINFO_EXTENSION)
                                     @endphp
@@ -196,7 +196,7 @@
                                         <img src="{{ asset('img/no-image.png') }}" class="img-responsive" alt="Edukasi" />
                                     @endif
                                 </a>
-                                <a href="javascript:void(0)" class="category-edukasi">
+                                <a href="{{ url('/edukasi?kategori-edukasi='.$education->education_category->slug) }}" class="category-edukasi">
                                     @if (empty($education->education_category->name))
                                     Tidak ada kategori
                                     @else
@@ -209,23 +209,27 @@
                                     {{$education->title}}
                                 </h5>
                                 <div class="d-flex flex-row justify-content-between">
-                                    <p><i class="lni lni-calendar"></i> {{ date("d F Y", strtotime($education->date))}}</p>
-                                    <p><i class="lni lni-user"></i> @if (empty($education->user->name))
-                                            Tidak ada author
-                                        @else
-                                            {{$education->user->name}}
-                                        @endif
+                                    <p><i class="fas fa-solid fa-calendar-day"></i> {{ date("d F Y", strtotime($education->date))}}</p>
+                                    <p>
+                                        <a href="{{ url('/edukasi?diposting-oleh='.$education->user->name) }}" style="color: var(--primary);">
+                                            <i class="fa-solid fa-user"></i>
+                                            @if (empty($education->user->name))
+                                                Tidak ada author
+                                            @else
+                                                {{$education->user->name}}
+                                            @endif
+                                        </a>
                                     </p>
                                     @if (empty($education->created_at))
                                         <p>
-                                            <i class="lni lni-timer"></i>
+                                            <i class="fas fa-solid fa-clock"></i>
                                             Tidak diketahui
                                         </p>
                                     @else
-                                    <p>
-                                        <i class="lni lni-timer"></i>
-                                        {{$education->created_at->diffForHumans()}}
-                                    </p>
+                                        <p>
+                                            <i class="fas fa-solid fa-clock"></i>
+                                            {{$education->created_at->diffForHumans()}}
+                                        </p>
                                     @endif
                                 </div>
                                 <p class="text-edukasi">
@@ -241,14 +245,16 @@
                 <div class="card" style="margin-top: 50px">
                     <div class="card-body my-3">
                         <p class="card-title fw-bold" style="font-size: 15px;">Pencarian</p>
-                        <div class="pt-2 input-group justify-content-center">
-                            <div class="form-outline">
-                                <input type="search" placeholder="Cari edukasi .." id="form1" class="form-control" />
+                        <form action="{{ url('edukasi') }}">
+                            <div class="pt-2 input-group justify-content-center">
+                                <div class="form-outline">
+                                    <input class="typeahead form-control" value="{{ request('pencarian') }}" name="pencarian" placeholder="Cari edukasi ..." style="font-size: 15px; border-color: #16A085;" type="search" autocomplete="off">
+                                </div>
+                                <button type="submit" class="btn" style="background-color: #16A085; color: white">
+                                    <i class="bi bi-search"></i>
+                                </button>
                             </div>
-                            <button type="button" class="btn" style="background-color: #16A085; color: white">
-                                <i class="bi bi-search"></i>
-                            </button>
-                        </div>
+                        </form>
                     </div>
                 </div>
                 <div class="card" style="margin-top: 30px">
@@ -258,7 +264,7 @@
                         <div class="pt-2 border-bottom mt-3 pb-4">
                             <div class="row justify-content-center">
                                 <div class="col-4">
-                                    <a href="/edukasi/{{ $item->slug }}">
+                                    <a href="{{ url('/edukasi'.'/'.$item->slug) }}">
                                         @php
                                             $extMore = pathinfo($item->file, PATHINFO_EXTENSION)
                                         @endphp
@@ -267,15 +273,17 @@
                                             <video src="{{ asset('../storage/edukasi/' . $item->file) }}" alt="Video" style="width: 92px; height: 60px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"/>
                                         </div>
                                         @elseif ($extMore == 'PNG' || $extMore == 'png' || $extMore == 'jpg' || $extMore == 'jpeg' || $extMore == 'svg' || $extMore == 'gif' || $extMore == 'tiff' || $extMore == 'psd' || $extMore == 'pdf' || $extMore == 'eps' || $extMore == 'ai' || $extMore == 'indd' || $extMore == 'raw')
-                                            <img src="{{ asset('../storage/edukasi/' . $item->file) }}" class="img-responsive" alt="Edukasi" />
+                                            <img src="{{ asset('../storage/edukasi/' . $item->file) }}" class="img-responsive" alt="Edukasi" style="width: 92px; height: 60px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"/>
                                         @elseif (empty($item->file))
-                                            <img src="{{ asset('img/no-image.png') }}" class="img-responsive" alt="Edukasi" />
+                                            <img src="{{ asset('img/no-image.png') }}" class="img-responsive" alt="Edukasi" style="width: 92px; height: 60px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"/>
                                         @endif
                                     </a>
                                 </div>
                                 <div class="col-8">
-                                    <p class="card-text pb-2 text-capitalize">{{$item->title}}</p>
-                                    <small><i class="lni lni-calendar"></i> {{ date("d-F-Y", strtotime($item->date))}}</small>
+                                    <a href="{{ url('/edukasi'.'/'.$item->slug) }}" class="d-flex" style="color: var(--primary);">
+                                        <p class="card-text pb-2 text-capitalize">{{$item->title}}</p>
+                                    </a>
+                                    <small><i class="fas fa-solid fa-calendar-day"></i> {{ date("d-F-Y", strtotime($item->date))}}</small>
                                 </div>
                             </div>
                         </div>
@@ -285,9 +293,14 @@
                 <div class="card" style="margin-top: 30px">
                     <div class="card-body my-3">
                         <p class="card-title fw-bold" style="font-size: 15px;">Kategori Edukasi</p>
-                        <div class="pt-2 row">
+                        <div class="mt-2 row">
                             @foreach ($categories as $item)
-                                <a href="" style="color: var(--primary);"><p>{{$item->name}}</p></a>
+                            <div class="col-6 mt-1">
+                                <a href="{{ url('/edukasi?kategori-edukasi='.$item->slug) }}"
+                                    style="color: var(--primary);">
+                                    <p>{{$item->name}}</p>
+                                </a>
+                            </div>
                             @endforeach
                         </div>
                     </div>
@@ -302,7 +315,8 @@
 <!--====== BLOG PART ENDS ======-->
 
 <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
-
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
 <script>
     //========= glightbox
     const videoTwo = GLightbox({
@@ -311,6 +325,15 @@
         source: "youtube", //vimeo, youtube or local
         width: 900,
         autoplayVideos: true,
+    });
+
+    var path = "{{ route('autocomplete')  }}";
+    $('input.typeahead').typeahead({
+        source:  function (query, process) {
+        return $.get(path, { term: query }, function (data) {
+                return process(data);
+            });
+        }
     });
 </script>
 @endsection
