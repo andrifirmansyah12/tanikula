@@ -1,87 +1,158 @@
-<!-- partial:partials/_sidebar.html -->
-<nav class="sidebar sidebar-offcanvas" id="sidebar">
-    <ul class="nav">
-        <li class="nav-item nav-profile border-bottom">
-            <a href="#" class="nav-link flex-column">
-                <div class="nav-profile-image">
-                    <img src="../plus-admin/assets/images/faces/face1.jpg" alt="profile" />
-                    <!--change to offline or busy as needed-->
-                </div>
-                <div class="nav-profile-text d-flex ml-0 mb-3 flex-column">
-                    <span class="font-weight-semibold mb-1 mt-2 text-center">Antonio Olson</span>
-                </div>
-            </a>
-        </li>
-        {{-- <li class="nav-item pt-3">
-            <form class="d-flex align-items-center" action="#">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <i class="input-group-text border-0 mdi mdi-magnify"></i>
-                    </div>
-                    <input type="text" class="form-control border-0" placeholder="Search" />
-                </div>
-            </form>
-        </li> --}}
-        <li class="pt-2 pb-1">
-            <span class="nav-item-head">Template Pages</span>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="index.html">
-                <i class="mdi mdi-compass-outline menu-icon"></i>
-                <span class="menu-title">Dashboard</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                <i class="mdi mdi-crosshairs-gps menu-icon"></i>
-                <span class="menu-title">UI Elements</span>
-                <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="ui-basic">
-                <ul class="nav flex-column sub-menu">
+<!-- Sidebar -->
+<div class="sidebar">
+    <!-- Sidebar user panel (optional) -->
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+            <img src="{{ asset('plus-admin/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+            <a href="#" class="d-block">{{ auth()->user()->name }}</a>
+        </div>
+    </div>
+
+    <!-- SidebarSearch Form -->
+    <div class="form-inline">
+        <div class="input-group" data-widget="sidebar-search">
+            <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+            <div class="input-group-append">
+                <button class="btn btn-sidebar">
+                    <i class="fas fa-search fa-fw"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+            <li class="nav-item menu-open">
+                <a href="{{ url('admin') }}" class="nav-link active">
+                    <i class="nav-icon fas fa-thin fa-gauge"></i>
+                    <p>
+                        Dashboard
+                    </p>
+                </a>
+            </li>
+            <li class="nav-header">MANAJEMEN</li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-solid fa-bookmark"></i>
+                    <p>
+                        Kategori
+                        <i class="fas fa-angle-left right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a>
+                        <a href="{{ url('admin/kategori-produk') }}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Produk</p>
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a>
+                        <a href="{{ url('admin/kategori-edukasi') }}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Edukasi</p>
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="pages/ui-features/typography.html">Typography</a>
+                        <a href="{{ url('admin/kategori-kegiatan') }}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Kegiatan</p>
+                        </a>
                     </li>
                 </ul>
-            </div>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="pages/icons/mdi.html">
-                <i class="mdi mdi-contacts menu-icon"></i>
-                <span class="menu-title">Icons</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="pages/forms/basic_elements.html">
-                <i class="mdi mdi-format-list-bulleted menu-icon"></i>
-                <span class="menu-title">Forms</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="pages/charts/chartjs.html">
-                <i class="mdi mdi-chart-bar menu-icon"></i>
-                <span class="menu-title">Charts</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="pages/tables/basic-table.html">
-                <i class="mdi mdi-table-large menu-icon"></i>
-                <span class="menu-title">Tables</span>
-            </a>
-        </li>
-        <li class="nav-item pt-3">
-            <a class="nav-link" href="http://bootstrapdash.com/demo/plus-free/documentation/documentation.html"
-                target="_blank">
-                <i class="mdi mdi-file-document-box menu-icon"></i>
-                <span class="menu-title">Documentation</span>
-            </a>
-        </li>
-    </ul>
-</nav>
-<!-- partial -->
+            </li>
+            <li class="nav-item">
+                <a href="{{ url('admin/produk') }}" class="nav-link">
+                    <i class="nav-icon mdi mdi-shopping"></i>
+                    <p>
+                        Produk
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ url('admin/edukasi') }}" class="nav-link">
+                    <i class="nav-icon fas fa-solid fa-clapperboard"></i>
+                    <p>
+                        Edukasi
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ url('admin/kegiatan') }}" class="nav-link">
+                    <i class="nav-icon fas fa-solid fa-clipboard"></i>
+                    <p>
+                        Kegiatan
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-solid fa-user"></i>
+                    <p>
+                        Akun
+                        <i class="fas fa-angle-left right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{ url('admin/daftar-gapoktan') }}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Gapoktan</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url('admin/daftar-poktan') }}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Poktan</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url('admin/daftar-petani') }}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Petani</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-header">Laporan</li>
+            <li class="nav-item">
+                <a href="{{ url('admin/tandur') }}" class="nav-link">
+                    <i class="nav-icon fas fa-solid fa-calendar-days"></i>
+                    <p>
+                        Tandur
+                        <span class="badge badge-info right">2</span>
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ url('admin/panen') }}" class="nav-link">
+                    <i class="nav-icon fas fa-solid fa-calendar-check"></i>
+                    <p>
+                        Panen
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ url('admin/rekap-penjualan') }}" class="nav-link">
+                    <i class="nav-icon fas fa-solid fa-chart-line"></i>
+                    <p>
+                        Rekap Penjualan
+                    </p>
+                </a>
+            </li>
+            <li class="nav-header">Profile Saya</li>
+            <li class="nav-item">
+                <a href="{{ url('admin/pengaturan') }}" class="nav-link">
+                    <i class="nav-icon fas fa-solid fa-gear"></i>
+                    <p>Pengaturan</p>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
+</div>
+<!-- /.sidebar -->

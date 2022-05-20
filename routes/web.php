@@ -29,6 +29,92 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:admin']], function() 
         return view('admin.dashboard.index');
     })->name('admin');
 
+    Route::get('admin/edukasi', [App\Http\Controllers\Admin\EducationController::class, 'index'])->name('admin-edukasi');
+    Route::post('admin/edukasi/store', [App\Http\Controllers\Admin\EducationController::class, 'store'])->name('admin-edukasi-store');
+    Route::get('admin/edukasi/fetchall', [App\Http\Controllers\Admin\EducationController::class, 'fetchAll'])->name('admin-edukasi-fetchAll');
+    Route::delete('admin/edukasi/delete', [App\Http\Controllers\Admin\EducationController::class, 'delete'])->name('admin-edukasi-delete');
+    Route::get('admin/edukasi/edit', [App\Http\Controllers\Admin\EducationController::class, 'edit'])->name('admin-edukasi-edit');
+    Route::post('admin/edukasi/update', [App\Http\Controllers\Admin\EducationController::class, 'update'])->name('admin-edukasi-update');
+    Route::get('admin/edukasi/checkSlug', [App\Http\Controllers\Admin\EducationController::class, 'checkSlug'])->name('admin-edukasi-checkSlug');
+
+    Route::get('admin/kategori-edukasi', [App\Http\Controllers\Admin\EducationCategoryController::class, 'index'])->name('admin-kategoriEdukasi');
+    Route::post('admin/kategori-edukasi/store', [App\Http\Controllers\Admin\EducationCategoryController::class, 'store'])->name('admin-kategoriEdukasi-store');
+    Route::get('admin/kategori-edukasi/fetchall', [App\Http\Controllers\Admin\EducationCategoryController::class, 'fetchAll'])->name('admin-kategoriEdukasi-fetchAll');
+    Route::delete('admin/kategori-edukasi/delete', [App\Http\Controllers\Admin\EducationCategoryController::class, 'delete'])->name('admin-kategoriEdukasi-delete');
+    Route::get('admin/kategori-edukasi/edit', [App\Http\Controllers\Admin\EducationCategoryController::class, 'edit'])->name('admin-kategoriEdukasi-edit');
+    Route::post('admin/kategori-edukasi/update', [App\Http\Controllers\Admin\EducationCategoryController::class, 'update'])->name('admin-kategoriEdukasi-update');
+    Route::get('admin/kategori-edukasi/checkSlug', [App\Http\Controllers\Admin\EducationCategoryController::class, 'checkSlug'])->name('admin-kategoriEdukasi-checkSlug');
+
+    Route::get('admin/kegiatan', [App\Http\Controllers\Admin\ActivityController::class, 'index'])->name('admin-kegiatan');
+    Route::post('admin/kegiatan/store', [App\Http\Controllers\Admin\ActivityController::class, 'store'])->name('admin-kegiatan-store');
+    Route::get('admin/kegiatan/fetchall', [App\Http\Controllers\Admin\ActivityController::class, 'fetchAll'])->name('admin-kegiatan-fetchAll');
+    Route::delete('admin/kegiatan/delete', [App\Http\Controllers\Admin\ActivityController::class, 'delete'])->name('admin-kegiatan-delete');
+    Route::get('admin/kegiatan/edit', [App\Http\Controllers\Admin\ActivityController::class, 'edit'])->name('admin-kegiatan-edit');
+    Route::post('admin/kegiatan/update', [App\Http\Controllers\Admin\ActivityController::class, 'update'])->name('admin-kegiatan-update');
+    Route::get('admin/kegiatan/checkSlug', [App\Http\Controllers\Admin\ActivityController::class, 'checkSlug'])->name('admin-kegiatan-checkSlug');
+
+    Route::get('admin/kategori-kegiatan', [App\Http\Controllers\Admin\ActivityCategoryController::class, 'index'])->name('admin-kategoriKegiatan');
+    Route::post('admin/kategori-kegiatan/store', [App\Http\Controllers\Admin\ActivityCategoryController::class, 'store'])->name('admin-kategoriKegiatan-store');
+    Route::get('admin/kategori-kegiatan/fetchall', [App\Http\Controllers\Admin\ActivityCategoryController::class, 'fetchAll'])->name('admin-kategoriKegiatan-fetchAll');
+    Route::delete('admin/kategori-kegiatan/delete', [App\Http\Controllers\Admin\ActivityCategoryController::class, 'delete'])->name('admin-kategoriKegiatan-delete');
+    Route::get('admin/kategori-kegiatan/edit', [App\Http\Controllers\Admin\ActivityCategoryController::class, 'edit'])->name('admin-kategoriKegiatan-edit');
+    Route::post('admin/kategori-kegiatan/update', [App\Http\Controllers\Admin\ActivityCategoryController::class, 'update'])->name('admin-kategoriKegiatan-update');
+    Route::get('admin/kategori-kegiatan/checkSlug', [App\Http\Controllers\Admin\ActivityCategoryController::class, 'checkSlug'])->name('admin-kategoriKegiatan-checkSlug');
+
+    Route::get('admin/kategori-produk', [App\Http\Controllers\Admin\ProductCategoryController::class, 'index'])->name('admin-kategoriProduk');
+    Route::post('admin/kategori-produk/store', [App\Http\Controllers\Admin\ProductCategoryController::class, 'store'])->name('admin-kategoriProduk-store');
+    Route::get('admin/kategori-produk/fetchall', [App\Http\Controllers\Admin\ProductCategoryController::class, 'fetchAll'])->name('admin-kategoriProduk-fetchAll');
+    Route::delete('admin/kategori-produk/delete', [App\Http\Controllers\Admin\ProductCategoryController::class, 'delete'])->name('admin-kategoriProduk-delete');
+    Route::get('admin/kategori-produk/edit', [App\Http\Controllers\Admin\ProductCategoryController::class, 'edit'])->name('admin-kategoriProduk-edit');
+    Route::post('admin/kategori-produk/update', [App\Http\Controllers\Admin\ProductCategoryController::class, 'update'])->name('admin-kategoriProduk-update');
+    Route::get('admin/kategori-produk/checkSlug', [App\Http\Controllers\Admin\ProductCategoryController::class, 'checkSlug'])->name('admin-kategoriProduk-checkSlug');
+
+    Route::get('admin/produk', [App\Http\Controllers\Admin\ProductController::class, 'index'])->name('admin-produk');
+    Route::post('admin/produk/store', [App\Http\Controllers\Admin\ProductController::class, 'store'])->name('admin-produk-store');
+    Route::get('admin/produk/fetchall', [App\Http\Controllers\Admin\ProductController::class, 'fetchAll'])->name('admin-produk-fetchAll');
+    Route::delete('admin/produk/delete', [App\Http\Controllers\Admin\ProductController::class, 'delete'])->name('admin-produk-delete');
+    Route::get('admin/produk/edit', [App\Http\Controllers\Admin\ProductController::class, 'edit'])->name('admin-produk-edit');
+    Route::post('admin/produk/update', [App\Http\Controllers\Admin\ProductController::class, 'update'])->name('admin-produk-update');
+    Route::get('admin/produk/checkSlug', [App\Http\Controllers\Admin\ProductController::class, 'checkSlug'])->name('admin-produk-checkSlug');
+
+    Route::get('admin/daftar-gapoktan', [App\Http\Controllers\Admin\GapoktanController::class, 'index'])->name('admin-gapoktan');
+    Route::post('admin/daftar-gapoktan/store', [App\Http\Controllers\Admin\GapoktanController::class, 'store'])->name('admin-gapoktan-store');
+    Route::get('admin/daftar-gapoktan/fetchall', [App\Http\Controllers\Admin\GapoktanController::class, 'fetchAll'])->name('admin-gapoktan-fetchAll');
+    Route::delete('admin/daftar-gapoktan/delete', [App\Http\Controllers\Admin\GapoktanController::class, 'delete'])->name('admin-gapoktan-delete');
+    Route::get('admin/daftar-gapoktan/edit', [App\Http\Controllers\Admin\GapoktanController::class, 'edit'])->name('admin-gapoktan-edit');
+    Route::post('admin/daftar-gapoktan/update', [App\Http\Controllers\Admin\GapoktanController::class, 'update'])->name('admin-gapoktan-update');
+
+    Route::get('admin/daftar-poktan', [App\Http\Controllers\Admin\PoktanController::class, 'index'])->name('admin-poktan');
+    Route::post('admin/daftar-poktan/store', [App\Http\Controllers\Admin\PoktanController::class, 'store'])->name('admin-poktan-store');
+    Route::get('admin/daftar-poktan/fetchall', [App\Http\Controllers\Admin\PoktanController::class, 'fetchAll'])->name('admin-poktan-fetchAll');
+    Route::delete('admin/daftar-poktan/delete', [App\Http\Controllers\Admin\PoktanController::class, 'delete'])->name('admin-poktan-delete');
+    Route::get('admin/daftar-poktan/edit', [App\Http\Controllers\Admin\PoktanController::class, 'edit'])->name('admin-poktan-edit');
+    Route::post('admin/daftar-poktan/update', [App\Http\Controllers\Admin\PoktanController::class, 'update'])->name('admin-poktan-update');
+
+    Route::get('admin/daftar-petani', [App\Http\Controllers\Admin\FarmerController::class, 'index'])->name('admin-petani');
+    Route::post('admin/daftar-petani/store', [App\Http\Controllers\Admin\FarmerController::class, 'store'])->name('admin-petani-store');
+    Route::get('admin/daftar-petani/fetchall', [App\Http\Controllers\Admin\FarmerController::class, 'fetchAll'])->name('admin-petani-fetchAll');
+    Route::delete('admin/daftar-petani/delete', [App\Http\Controllers\Admin\FarmerController::class, 'delete'])->name('admin-petani-delete');
+    Route::get('admin/daftar-petani/edit', [App\Http\Controllers\Admin\FarmerController::class, 'edit'])->name('admin-petani-edit');
+    Route::post('admin/daftar-petani/update', [App\Http\Controllers\Admin\FarmerController::class, 'update'])->name('admin-petani-update');
+
+    Route::get('admin/tandur', [App\Http\Controllers\Admin\PlantController::class, 'index'])->name('admin-tandur');
+    Route::post('admin/tandur/store', [App\Http\Controllers\Admin\PlantController::class, 'store'])->name('admin-tandur-store');
+    Route::get('admin/tandur/fetchall', [App\Http\Controllers\Admin\PlantController::class, 'fetchAll'])->name('admin-tandur-fetchAll');
+    Route::delete('admin/tandur/delete', [App\Http\Controllers\Admin\PlantController::class, 'delete'])->name('admin-tandur-delete');
+    Route::get('admin/tandur/edit', [App\Http\Controllers\Admin\PlantController::class, 'edit'])->name('admin-tandur-edit');
+    Route::post('admin/tandur/update', [App\Http\Controllers\Admin\PlantController::class, 'update'])->name('admin-tandur-update');
+
+    Route::get('admin/panen', [App\Http\Controllers\Admin\HarvestController::class, 'index'])->name('admin-panen');
+    Route::post('admin/panen/store', [App\Http\Controllers\Admin\HarvestController::class, 'store'])->name('admin-panen-store');
+    Route::get('admin/panen/fetchall', [App\Http\Controllers\Admin\HarvestController::class, 'fetchAll'])->name('admin-panen-fetchAll');
+    Route::get('admin/panen/edit', [App\Http\Controllers\Admin\HarvestController::class, 'edit'])->name('admin-panen-edit');
+
+    Route::get('admin/pengaturan', [App\Http\Controllers\Admin\PengaturanController::class, 'pengaturan'])->name('admin-pengaturan');
+    Route::post('admin/pengaturan-image', [App\Http\Controllers\Admin\PengaturanController::class, 'pengaturanImage'])->name('admin.pengaturan.image');
+    Route::post('admin/pengaturan-update', [App\Http\Controllers\Admin\PengaturanController::class, 'pengaturanUpdate'])->name('admin.pengaturan.update');
+    Route::post('admin/pengaturan-updatePassword', [App\Http\Controllers\Admin\PengaturanController::class, 'pengaturanUpdatePassword'])->name('admin.pengaturan.updatePassword');
+
 });
 
 // Login Gapoktan
@@ -199,6 +285,11 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:petani']], function()
         return view('petani.dashboard.index');
     })->name('petani');
 
+    // Edukasi Page
+    Route::get('/edukasi', [App\Http\Controllers\Pages\EducationController::class, 'index']);
+    Route::get('/edukasi/{education:slug}', [App\Http\Controllers\Pages\EducationController::class, 'show']);
+    Route::get('/autocomplete', [App\Http\Controllers\Pages\EducationController::class, 'autocomplete'])->name('autocomplete');
+
     Route::get('petani/tandur', [App\Http\Controllers\Petani\PlantController::class, 'index'])->name('petani-tandur');
     Route::post('petani/tandur/store', [App\Http\Controllers\Petani\PlantController::class, 'store'])->name('petani-tandur-store');
     Route::get('petani/tandur/fetchall', [App\Http\Controllers\Petani\PlantController::class, 'fetchAll'])->name('petani-tandur-fetchAll');
@@ -257,10 +348,6 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function(
     })->name('pembeli.alamat');
 
 });
-
-// Edukasi Page
-Route::get('/edukasi', [App\Http\Controllers\Pages\EducationController::class, 'index']);
-Route::get('/edukasi/{education:slug}', [App\Http\Controllers\Pages\EducationController::class, 'show']);
 
 Route::get('/', [App\Http\Controllers\Pages\ProductController::class, 'index']);
 Route::get('/home', [App\Http\Controllers\Pages\ProductController::class, 'index'])->name('home');

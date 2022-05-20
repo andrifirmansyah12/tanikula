@@ -24,22 +24,11 @@
                     <div class="breadcrumb-item active"><a href="#">@yield('title')</a></div>
                 </div>
             </div>
+
             <div class="section-body">
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-body">
-                                <ul class="nav nav-tabs">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" href="{{ url('poktan/pengaturan') }}">Biodata
-                                            Poktan</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{ url('poktan/daftar-petani') }}">Daftar
-                                            Petani</a>
-                                    </li>
-                                </ul>
-                            </div>
                             <div class="card-header">
                                 <button type="button" class="btn py-1 btn-success" data-toggle="modal"
                                     data-target="#addEmployeeModal">Tambah

@@ -1,24 +1,24 @@
-<!-- plugins:js -->
-<script src="../plus-admin/assets/vendors/js/vendor.bundle.base.js"></script>
-<!-- endinject -->
-<!-- Plugin js for this page -->
-<script src="../plus-admin/assets/vendors/jquery-bar-rating/jquery.barrating.min.js"></script>
-<script src="../plus-admin/assets/vendors/chart.js/Chart.min.js"></script>
-<script src="../plus-admin/assets/vendors/flot/jquery.flot.js"></script>
-<script src="../plus-admin/assets/vendors/flot/jquery.flot.resize.js"></script>
-<script src="../plus-admin/assets/vendors/flot/jquery.flot.categories.js"></script>
-<script src="../plus-admin/assets/vendors/flot/jquery.flot.fillbetween.js"></script>
-<script src="../plus-admin/assets/vendors/flot/jquery.flot.stack.js"></script>
-<!-- End plugin js for this page -->
-<!-- inject:js -->
-<script src="../plus-admin/assets/js/off-canvas.js"></script>
-<script src="../plus-admin/assets/js/hoverable-collapse.js"></script>
-<script src="../plus-admin/assets/js/misc.js"></script>
-<script src="../plus-admin/assets/js/settings.js"></script>
-<script src="../plus-admin/assets/js/todolist.js"></script>
-<!-- endinject -->
-<!-- Custom js for this page -->
-<script src="../plus-admin/assets/js/dashboard.js"></script>
-<!-- End custom js for this page -->
+<!-- jQuery -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
+<!-- Bootstrap 4 -->
+<script src="{{ asset('plus-admin/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<!-- DataTables  & Plugins -->
+<script src="{{ asset('plus-admin/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('plus-admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('plus-admin/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+<script src="{{ asset('plus-admin/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('plus-admin/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('plus-admin/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('plus-admin/plugins/jszip/jszip.min.js') }}"></script>
+<script src="{{ asset('plus-admin/plugins/pdfmake/pdfmake.min.js') }}"></script>
+<script src="{{ asset('plus-admin/plugins/pdfmake/vfs_fonts.js') }}"></script>
+<script src="{{ asset('plus-admin/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('plus-admin/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
+<script src="{{ asset('plus-admin/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+<!-- AdminLTE App -->
+<script src="{{ asset('plus-admin/dist/js/adminlte.min.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{{ asset('plus-admin/dist/js/demo.js') }}"></script>
 
 @yield('script')

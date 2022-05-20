@@ -7,59 +7,85 @@
     </div>
     <ul class="sidebar-menu">
         <li class="menu-header">Dashboard</li>
-        <li class="nav-item dropdown active">
-            <a href="{{ url('gapoktan') }}" class="nav-link"><i
-                    class=""></i><span>Dashboard</span></a>
+        <li class="nav-item dropdown {{ Request::is('gapoktan') ? 'active' : '' }}">
+            <a href="{{ url('gapoktan') }}" class="nav-link">
+                <i class="fas fa-thin fa-gauge"></i>
+                <span>Dashboard</span>
+            </a>
         </li>
         <li class="menu-header">Kotak Masuk</li>
-        <li class="nav-item dropdown">
-            <a href="{{ url('gapoktan/chat') }}" class="nav-link"><i class=""></i>
-                <span>Chat</span></a>
+        <li class="nav-item dropdown {{ Request::is('gapoktan/chat*') ? 'active' : '' }}">
+            <a href="{{ url('gapoktan/chat') }}" class="nav-link">
+                <i class="fas fa-solid fa-comment-dots"></i>
+                <span>Chat</span>
+            </a>
         </li>
         <li class="menu-header">Manajemen</li>
-        <li class="nav-item dropdown">
-            <a href="{{ url('gapoktan/kategori-edukasi') }}" class="nav-link "><i class=""></i>
-                <span>Kategori Edukasi</span></a>
+        <li class="nav-item dropdown {{ Request::is('gapoktan/kategori*') ? 'active' : '' }}">
+            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
+                <i class="fas fa-solid fa-bookmark"></i>
+                <span>Kategori</span>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a class="nav-link" href="{{ url('gapoktan/kategori-produk') }}">Kategori Produk</a></li>
+                <li><a class="nav-link" href="{{ url('gapoktan/kategori-edukasi') }}">Kategori Edukasi</a></li>
+                <li><a class="nav-link" href="{{ url('gapoktan/kategori-kegiatan') }}">Kategori Kegiatan</a></li>
+            </ul>
         </li>
-        <li class="nav-item dropdown">
-            <a href="{{ url('gapoktan/edukasi') }}" class="nav-link "><i class=""></i>
-                <span>Edukasi</span></a>
+        <li class="nav-item dropdown {{ Request::is('gapoktan/produk*') ? 'active' : '' }}">
+            <a href="{{ url('gapoktan/produk') }}" class="nav-link ">
+                <i class="fas fa-solid fa-cart-plus"></i>
+                <span>Produk</span>
+            </a>
         </li>
-        <li class="nav-item dropdown">
-            <a href="{{ url('gapoktan/kategori-kegiatan') }}" class="nav-link "><i class=""></i>
-                <span>Kategori Kegiatan</span></a>
+        <li class="nav-item dropdown {{ Request::is('gapoktan/edukasi*') ? 'active' : '' }}">
+            <a href="{{ url('gapoktan/edukasi') }}" class="nav-link ">
+                <i class="fas fa-solid fa-clapperboard"></i>
+                <span>Edukasi</span>
+            </a>
         </li>
-        <li class="nav-item dropdown">
-            <a href="{{ url('gapoktan/kegiatan') }}" class="nav-link "><i class=""></i>
-                <span>Kegiatan</span></a>
+        <li class="nav-item dropdown {{ Request::is('gapoktan/kegiatan*') ? 'active' : '' }}">
+            <a href="{{ url('gapoktan/kegiatan') }}" class="nav-link ">
+                <i class="fas fa-solid fa-clipboard"></i>
+                <span>Kegiatan</span>
+            </a>
         </li>
-        <li class="nav-item dropdown">
-            <a href="{{ url('gapoktan/kategori-produk') }}" class="nav-link "><i class=""></i>
-                <span>Kategori Produk</span></a>
-        </li>
-        <li class="nav-item dropdown">
-            <a href="{{ url('gapoktan/produk') }}" class="nav-link "><i class=""></i>
-                <span>Produk</span></a>
+        <li class="nav-item dropdown {{ Request::is('gapoktan/daftar*') ? 'active' : '' }}">
+            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
+                <i class="fas fa-solid fa-user"></i>
+                <span>Akun</span>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a class="nav-link" href="{{ url('gapoktan/daftar-poktan') }}">Daftar Poktan</a></li>
+                <li><a class="nav-link" href="{{ url('gapoktan/daftar-petani') }}">Daftar Petani</a></li>
+            </ul>
         </li>
         <li class="menu-header">Laporan</li>
-        <li class="nav-item dropdown">
-            <a href="{{ url('gapoktan/tandur') }}" class="nav-link"><i class=""></i>
-                <span>Tandur</span></a>
+        <li class="nav-item dropdown {{ Request::is('gapoktan/tandur*') ? 'active' : '' }}">
+            <a href="{{ url('gapoktan/tandur') }}" class="nav-link">
+                <i class="fas fa-solid fa-calendar-days"></i>
+                <span>Tandur</span>
+            </a>
         </li>
-        <li class="nav-item dropdown">
-            <a href="{{ url('gapoktan/panen') }}" class="nav-link"><i class=""></i>
-                <span>Panen</span></a>
+        <li class="nav-item dropdown {{ Request::is('gapoktan/panen*') ? 'active' : '' }}">
+            <a href="{{ url('gapoktan/panen') }}" class="nav-link">
+                <i class="fas fa-solid fa-calendar-check"></i>
+                <span>Panen</span>
+            </a>
         </li>
-        <li class="nav-item dropdown">
-            <a href="{{ url('gapoktan/rekap-penjualan') }}" class="nav-link"><i class=""></i>
-                <span>Rekap Penjualan</span></a>
+        <li class="nav-item dropdown {{ Request::is('gapoktan/rekap-penjualan*') ? 'active' : '' }}">
+            <a href="{{ url('gapoktan/rekap-penjualan') }}" class="nav-link">
+                <i class="fas fa-solid fa-chart-line"></i>
+                <span>Rekap Penjualan</span>
+            </a>
         </li>
         <li class="menu-header">Profile Saya</li>
-        <li class="nav-item dropdown">
-            <a href="{{ url('gapoktan/pengaturan') }}" class="nav-link"><i class=""></i>
-                <span>Pengaturan</span></a>
+        <li class="nav-item dropdown {{ Request::is('gapoktan/pengaturan*') ? 'active' : '' }}">
+            <a href="{{ url('gapoktan/pengaturan') }}" class="nav-link">
+                <i class="fas fa-solid fa-gear"></i>
+                <span>Pengaturan</span>
+            </a>
         </li>
-
     </ul>
 
     <div class="mt-4 mb-4 p-3 hide-sidebar-mini">

@@ -105,7 +105,7 @@
                                     <form method="post" action="#" id="profile_form">
                                         @csrf
                                         <div class="card-header">
-                                            <h4>Ubah Biodata Petani</h4>
+                                            <h4>Ubah Biodata Diri</h4>
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
