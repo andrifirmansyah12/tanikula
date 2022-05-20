@@ -6,9 +6,9 @@ namespace App\Http\Controllers\Api\Gapoktan;
 use App\Models\ActivityCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Api\BaseApiController as BaseController;
 use App\Http\Resources\Gapoktan\ActivityCategoryResource;
-use Illuminate\Support\Facades\Validator;
 
 class ActivityCategoryApiController extends BaseController
 {

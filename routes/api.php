@@ -36,11 +36,15 @@ Route::middleware('auth:api')->group(function () {
     // Route::get('get-user', [PassportAuthController::class, 'userInfo']);
     // Route::resource('products', [ProductController::class]);
 
+        // All
+        Route::get('product/search/{name}', [ProductApiController::class, 'search']);
+    Route::resource('product-category', ProductCategoryApiController::class);
+    
     // ------ Customer -----------
     // Cart
     Route::resource('cart', CartApiController::class);
     Route::get('cart/user_id/{user_id}', [CartApiController::class, 'indexByid']);
-
+    
     // ------ Gapoktan -----------
     // Activity
     Route::resource('activity', ActivityApiController::class);
@@ -62,12 +66,10 @@ Route::middleware('auth:api')->group(function () {
  
 });
 
-// All
-Route::resource('product', ProductApiController::class);
-Route::get('product/search/{name}', [ProductApiController::class, 'search']);
-Route::resource('product-category', ProductCategoryApiController::class);
+
 
 // ------ Customer -----------
+    Route::resource('product', ProductApiController::class);
 Route::post('register-customer', [RegisterCustomerApiController::class, 'register']);
 Route::post('login-customer', [LoginCustomerApiController::class, 'login']);
 // // Cart
