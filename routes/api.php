@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Customer\CartApiController;
 use App\Http\Controllers\Api\Customer\LoginCustomerApiController;
+use App\Http\Controllers\Api\Customer\ProductCustomerApiController;
 use App\Http\Controllers\Api\Customer\RegisterCustomerApiController;
 use App\Http\Controllers\Api\Customer\WishlistApiController;
 use App\Http\Controllers\Api\Gapoktan\ActivityApiController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\Api\Gapoktan\LoginGapoktanApiController;
 use App\Http\Controllers\Api\Petani\FarmerApiController;
 use App\Http\Controllers\Api\Petani\LoginPetaniApiController;
 use App\Http\Controllers\Api\Petani\PlantApiController;
+use App\Http\Controllers\Api\PhotoProductApiControlller;
 use App\Http\Controllers\Api\Poktan\LoginPoktanApiController;
 use App\Http\Controllers\Api\ProductApiController;
 use App\Http\Controllers\Api\ProductCategoryApiController;
@@ -35,10 +37,13 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->group(function () {
     // Route::get('get-user', [PassportAuthController::class, 'userInfo']);
     // Route::resource('products', [ProductController::class]);
-
-        // All
-        Route::get('product/search/{name}', [ProductApiController::class, 'search']);
+    
+    // All
+    Route::resource('product', ProductApiController::class);
+    Route::get('product/search/{name}', [ProductApiController::class, 'search']);
     Route::resource('product-category', ProductCategoryApiController::class);
+    Route::resource('product-photo', PhotoProductApiControlller::class);
+    Route::post('product-photo/delete-where-id-product', [PhotoProductApiControlller::class, 'deleteWhereProductId']);
     
     // ------ Customer -----------
     // Cart
@@ -61,15 +66,12 @@ Route::middleware('auth:api')->group(function () {
     Route::get('plant/farmer/{id}', [PlantApiController::class, 'indexByIdUser']);
     Route::put('plant/harvest-date/{id}', [PlantApiController::class, 'addHarvestDate']);
     Route::resource('farmer', FarmerApiController::class);
-
-
- 
 });
 
 
 
 // ------ Customer -----------
-    Route::resource('product', ProductApiController::class);
+Route::resource('product-customer', ProductCustomerApiController::class);
 Route::post('register-customer', [RegisterCustomerApiController::class, 'register']);
 Route::post('login-customer', [LoginCustomerApiController::class, 'login']);
 // // Cart

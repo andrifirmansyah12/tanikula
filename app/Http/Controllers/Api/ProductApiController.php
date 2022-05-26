@@ -39,12 +39,14 @@ class ProductApiController extends BaseController
             'name' => $request->name,
             'slug' => Str::slug($request->name),
             'category_product_id' => $request->category_product_id, 
+            'code' => $request->code, 
             'stoke' => $request->stoke, 
             'price' => $request->price, 
+            'user_id' => $request->user_id, 
             'desc' => $request->desc, 
         ]);
 
-        $result = ProductResource::collection($datas);
+        $result = ProductResource::make($datas);
         return $this->sendResponse($result, 'Data Strored');
     }
 
