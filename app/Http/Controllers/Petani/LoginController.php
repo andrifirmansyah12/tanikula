@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use App\Models\Poktan;
 use App\Models\Farmer;
+use App\Models\NotificationUser;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
@@ -116,6 +117,11 @@ class LoginController extends Controller
               'user_id' => $user->id,
               'poktan_id' => $poktan_id,
             ]);
+
+            $notification = new NotificationUser();
+            $notification->user_id = $user->id;
+            $notification->save();
+
             return response()->json([
                 'status' => 200,
                 'messages' => 'Akun Anda Berhasil Terdaftar'

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <title>Poktan | @yield('title')</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     @yield('style')
 
@@ -21,6 +22,40 @@
     <link rel="stylesheet" href="../node_modules/weathericons/css/weather-icons.min.css">
     <link rel="stylesheet" href="../node_modules/weathericons/css/weather-icons-wind.min.css">
     <link rel="stylesheet" href="../node_modules/summernote/dist/summernote-bs4.css"> --}}
+
+    <style>
+        /* 4.3 Page */
+        .page-error-notification {
+            height: 100%;
+            width: 100%;
+            padding-top: 60px;
+            text-align: center;
+            display: table;
+        }
+
+        .page-error-notification .page-inner-notification {
+            display: table-cell;
+            width: 100%;
+            vertical-align: middle;
+        }
+
+        .page-error-notification img {
+            width: 10rem;
+        }
+
+        .page-error-notification .page-description-notification {
+            padding-top: 30px;
+            font-size: 18px;
+            font-weight: 400;
+            color: color: var(--primary);;
+        }
+
+        @media (max-width: 575.98px) {
+            .page-error-notification {
+                padding-top: 0px;
+            }
+        }
+    </style>
 
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">

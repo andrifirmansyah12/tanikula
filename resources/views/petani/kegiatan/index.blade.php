@@ -61,9 +61,9 @@
                     @csrf
                     <div class="row m-2">
                         <div class="col-12">
-                            <article class="article article-style-b">
+                            <article class="article article-style-b shadow-none">
                                 <div class="article-header">
-                                    <div class="article-image" style="height: 300px;" data-background="{{ asset('img/undraw_schedule_meeting_52nu.svg') }}">
+                                    <div class="article-image rounded-lg" style="height: 300px;" data-background="{{ asset('img/undraw_schedule_meeting_52nu.svg') }}">
                                     </div>
                                     <div class="article-badge">
                                         <div class="article-badge-item bg-danger" id="category_activity_id">
@@ -160,7 +160,7 @@
                 },
                 success: function(response) {
                     $("#title").html(`
-                        <h6>
+                        <h6 class="text-capitalize">
                             ${response.title}
                         </h6>
                     `);
@@ -180,7 +180,7 @@
                         </span>
                     `);
                     $("#desc").html(`
-                        <p>
+                        <p class="text-justify text-capitalize">
                             ${response.desc}
                         </p>
                     `);

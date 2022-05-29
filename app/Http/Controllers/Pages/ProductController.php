@@ -11,7 +11,11 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $category_product = ProductCategory::all();
+        $category_product = ProductCategory::where('is_active', '=', 1)->get();
+        $product_new = Product::join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
+                    ->join('users', 'products.user_id', '=', 'users.id')
+                    ->where('product_categories.is_active', '=', 1)
+                    ->where('products.is_active', '=', 1);
         $product_new = Product::with('product_category')->latest()->get();
         $product_search = Product::with('product_category')->orderByRaw('RAND()')->latest()->get();
         return view('pages.home.index', compact('category_product', 'product_new', 'product_search'));

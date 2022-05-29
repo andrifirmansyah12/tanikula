@@ -54,6 +54,15 @@
                                 <input type="text" name="name" class="nameCheck form-control" placeholder="Nama" required>
                             </div>
                         </div>
+                        <div class="my-2 form-group">
+                            <label for="is_active">Status Kategori</label>
+                            <div>
+                                <label class="custom-switch">
+                                    <input type="checkbox" name="is_active" class="custom-switch-input">
+                                    <span class="custom-switch-indicator"></span>
+                                </label>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
@@ -82,6 +91,12 @@
                             <div class="col-lg">
                                 <label for="name">Nama</label>
                                 <input type="text" name="name" id="name" class="form-control nameCheck" placeholder="Nama" required>
+                            </div>
+                        </div>
+                        <div class="my-2 form-group">
+                            <label for="is_active">Status Kategori</label>
+                            <div id="is_active">
+
                             </div>
                         </div>
                     </div>
@@ -181,6 +196,11 @@
                 },
                 success: function(response) {
                     $("#name").val(response.name);
+                    $("#is_active").html(
+                        `<label class="custom-switch">
+                            <input type="checkbox" name="is_active" ${response.is_active ? 'checked' : ''} class="custom-switch-input">
+                            <span class="custom-switch-indicator"></span>
+                        </label>`);
                     $("#emp_id").val(response.id);
                 }
                 });

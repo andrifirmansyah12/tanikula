@@ -22,3 +22,64 @@ integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifw
 <script src="{{ asset('js/function.js') }}"></script>
 
 @yield('script')
+
+<script>
+    $(document).ready(function () {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+            $(document).on('click', '.notifUser', function(e) {
+                e.preventDefault();
+                let id = $(this).attr('id');
+                let csrf = '{{ csrf_token() }}';
+                    $.ajax({
+                    url: '{{ route('markas.read.user') }}',
+                    method: 'POST',
+                    data: {
+                        id: id,
+                        _token: csrf
+                    },
+                    success: function(response) {
+                        window.location = '{{ route('poktan-petani') }}';
+                    }
+                });
+            });
+
+            $(document).on('click', '.notifPlant', function(e) {
+                e.preventDefault();
+                let id = $(this).attr('id');
+                let csrf = '{{ csrf_token() }}';
+                    $.ajax({
+                    url: '{{ route('markas.read.plant') }}',
+                    method: 'POST',
+                    data: {
+                        id: id,
+                        _token: csrf
+                    },
+                    success: function(response) {
+                        window.location = '{{ route('poktan-tandur') }}';
+                    }
+                });
+            });
+
+            $(document).on('click', '.notifHarvest', function(e) {
+                e.preventDefault();
+                let id = $(this).attr('id');
+                let csrf = '{{ csrf_token() }}';
+                    $.ajax({
+                    url: '{{ route('markas.read.harvest') }}',
+                    method: 'POST',
+                    data: {
+                        id: id,
+                        _token: csrf
+                    },
+                    success: function(response) {
+                        window.location = '{{ route('poktan-panen') }}';
+                    }
+                });
+            });
+    });
+</script>

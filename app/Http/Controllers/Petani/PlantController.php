@@ -8,6 +8,7 @@ use App\Models\Plant;
 use App\Models\Poktan;
 use Illuminate\Support\Facades\DB;
 use App\Models\Farmer;
+use App\Models\NotificationPlant;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
@@ -97,6 +98,11 @@ class PlantController extends Controller
         $plant->surface_area = $request->surface_area;
         $plant->plating_date = Carbon::createFromFormat('d-M-Y', $request->plating_date)->format('Y-m-d h:i:s');
         $plant->save();
+
+        $notification = new NotificationPlant();
+        $notification->plant_id = $plant->id;
+        $notification->save();
+
 		return response()->json([
 			'status' => 200,
 		]);
@@ -119,6 +125,26 @@ class PlantController extends Controller
         $plant->surface_area = $request->surface_area;
         $plant->harvest_date = Carbon::createFromFormat('d-M-Y', $request->harvest_date)->format('Y-m-d h:i:s');
         $plant->save();
+
+        $notificationExists = NotificationPlant::with('plant')->where('read_at', null)->first();
+        if($notificationExists){
+            $notificationPlant = NotificationPlant::with('plant')->where('plant_id', $request->emp_id)->update([
+                'read_at' => null,
+            ]);
+        } else {
+            $notificationPlant = NotificationPlant::with('plant')->where('plant_id', $request->emp_id)->update([
+                'read_at' => Carbon::now(),
+            ]);
+        }
+
+        // $notificationExists = NotificationPlant::with('plant')->where('plant_id', $request->emp_id)->exists();
+        // if($notificationExists){
+        //     $notificationPlant = NotificationPlant::with('plant')->where('plant_id', $request->emp_id)->delete();
+
+        //     $notification = new NotificationPlant();
+        //     $notification->plant_id = $plant->id;
+        //     $notification->save();
+        // }
 
 		return response()->json([
 			'status' => 200,

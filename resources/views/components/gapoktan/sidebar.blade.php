@@ -22,14 +22,14 @@
         </li>
         <li class="menu-header">Manajemen</li>
         <li class="nav-item dropdown {{ Request::is('gapoktan/kategori*') ? 'active' : '' }}">
-            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
+            <a href="#" class="nav-link has-dropdown bg-white" data-toggle="dropdown">
                 <i class="fas fa-solid fa-bookmark"></i>
                 <span>Kategori</span>
             </a>
             <ul class="dropdown-menu">
-                <li><a class="nav-link" href="{{ url('gapoktan/kategori-produk') }}">Kategori Produk</a></li>
-                <li><a class="nav-link" href="{{ url('gapoktan/kategori-edukasi') }}">Kategori Edukasi</a></li>
-                <li><a class="nav-link" href="{{ url('gapoktan/kategori-kegiatan') }}">Kategori Kegiatan</a></li>
+                <li class="{{ Request::is('gapoktan/kategori-produk*') ? 'active' : '' }}"><a class="nav-link {{ Request::is('gapoktan/kategori-produk*') ? '' : 'bg-white' }}" href="{{ url('gapoktan/kategori-produk') }}">Kategori Produk</a></li>
+                <li class="{{ Request::is('gapoktan/kategori-edukasi*') ? 'active' : '' }}"><a class="nav-link {{ Request::is('gapoktan/kategori-edukasi*') ? '' : 'bg-white' }}" href="{{ url('gapoktan/kategori-edukasi') }}">Kategori Edukasi</a></li>
+                <li class="{{ Request::is('gapoktan/kategori-kegiatan*') ? 'active' : '' }}"><a class="nav-link {{ Request::is('gapoktan/kategori-kegiatan*') ? '' : 'bg-white' }}" href="{{ url('gapoktan/kategori-kegiatan') }}">Kategori Kegiatan</a></li>
             </ul>
         </li>
         <li class="nav-item dropdown {{ Request::is('gapoktan/produk*') ? 'active' : '' }}">
@@ -51,13 +51,13 @@
             </a>
         </li>
         <li class="nav-item dropdown {{ Request::is('gapoktan/daftar*') ? 'active' : '' }}">
-            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
+            <a href="#" class="nav-link has-dropdown bg-white" data-toggle="dropdown">
                 <i class="fas fa-solid fa-user"></i>
                 <span>Akun</span>
             </a>
             <ul class="dropdown-menu">
-                <li><a class="nav-link" href="{{ url('gapoktan/daftar-poktan') }}">Daftar Poktan</a></li>
-                <li><a class="nav-link" href="{{ url('gapoktan/daftar-petani') }}">Daftar Petani</a></li>
+                <li class="{{ Request::is('gapoktan/daftar-poktan*') ? 'active' : '' }}"><a class="nav-link {{ Request::is('gapoktan/daftar-poktan*') ? '' : 'bg-white' }}" href="{{ url('gapoktan/daftar-poktan') }}">Daftar Poktan</a></li>
+                <li class="{{ Request::is('gapoktan/daftar-petani*') ? 'active' : '' }}"><a class="nav-link {{ Request::is('gapoktan/daftar-petani*') ? '' : 'bg-white' }}" href="{{ url('gapoktan/daftar-petani') }}">Daftar Petani</a></li>
             </ul>
         </li>
         <li class="menu-header">Laporan</li>
