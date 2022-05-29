@@ -21,7 +21,11 @@ class ActivityController extends Controller
 
     // handle fetch all eamployees ajax request
 	public function fetchAll() {
-		$emps = Activity::with('activity_category')->latest()->get();
+		$emps = Activity::join('activity_categories', 'activities.category_activity_id', '=', 'activity_categories.id')
+                    ->join('users', 'activities.user_id', '=', 'users.id')
+                    ->where('activity_categories.is_active', '=', 1)
+                    ->orderBy('activities.updated_at', 'desc')
+                    ->get();
 		$output = '';
 		if ($emps->count() > 0) {
 			$output .= '<table class="table table-striped table-sm text-center align-middle">

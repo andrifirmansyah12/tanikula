@@ -48,7 +48,7 @@
     @include('components.pages.footer')
 
     <!-- ========================= scroll-top ========================= -->
-    <a href="#" class="scroll-top">
+    <a href="#" class="scroll-top border border-white">
         <i class="lni lni-chevron-up"></i>
     </a>
 

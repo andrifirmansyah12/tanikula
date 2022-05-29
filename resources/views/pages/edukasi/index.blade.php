@@ -8,6 +8,7 @@
         height: 100%;
         width: 100%;
         padding-top: 60px;
+        padding-bottom: 60px;
         text-align: center;
         display: table;
     }
@@ -289,7 +290,7 @@
                                     <div class="page-inner">
                                         <img src="{{ asset('img/undraw_empty_re_opql.svg') }}" alt="">
                                         <div class="page-description">
-                                            Whoopps, edukasi yang anda cari tidak ada!
+                                            Edukasi yang anda cari tidak ada!
                                         </div>
                                     </div>
                                 </div>
@@ -304,7 +305,7 @@
                                     <div class="page-inner">
                                         <img src="{{ asset('img/undraw_empty_re_opql.svg') }}" alt="">
                                         <div class="page-description">
-                                            Whoopps, belum ada edukasi dikategori <span class="text-capitalize" style="font-weight: bold;">{{ request('kategori-edukasi') }}</span>!
+                                            Tidak ada edukasi dikategori <span class="text-capitalize" style="font-weight: bold;">{{ request('kategori-edukasi') }}</span>!
                                         </div>
                                     </div>
                                 </div>
@@ -319,7 +320,7 @@
                                     <div class="page-inner">
                                         <img src="{{ asset('img/undraw_empty_re_opql.svg') }}" alt="">
                                         <div class="page-description">
-                                            Whoopps, belum ada edukasi yang diposting!
+                                            Tidak ada edukasi yang diposting!
                                         </div>
                                     </div>
                                 </div>
@@ -355,6 +356,7 @@
                 <div class="card" style="margin-top: 30px">
                     <div class="card-body my-3">
                         <p class="card-title fw-bold" style="font-size: 15px;">Edukasi Lainnya</p>
+                        @if ($educationsMore->count() > 0)
                         @foreach ($educationsMore as $item)
                         <div class="pt-2 border-bottom mt-3 pb-4">
                             <div class="row justify-content-center">
@@ -396,20 +398,31 @@
                             </div>
                         </div>
                         @endforeach
+                        @else
+                        <div class="row justify-content-center">
+                            <small class="text-center m-5">Tidak ada edukasi!</small>
+                        </div>
+                        @endif
                     </div>
                 </div>
                 <div class="card" style="margin-top: 30px">
                     <div class="card-body my-3">
                         <p class="card-title fw-bold" style="font-size: 15px;">Kategori Edukasi</p>
                         <div class="mt-2 row">
-                            @foreach ($categories as $item)
-                            <div class="col-6 mt-1">
-                                <a href="{{ url('/edukasi?kategori-edukasi='.$item->slug) }}"
-                                    style="color: var(--primary);">
-                                    <p>{{$item->name}}</p>
-                                </a>
+                            @if ($categories->count() > 0)
+                                @foreach ($categories as $item)
+                                <div class="col-6 mt-1">
+                                    <a href="{{ url('/edukasi?kategori-edukasi='.$item->slug) }}"
+                                        style="color: var(--primary);">
+                                        <p>{{$item->name}}</p>
+                                    </a>
+                                </div>
+                                @endforeach
+                            @else
+                            <div class="row justify-content-center">
+                                <small class="text-center m-5">Tidak ada kategori edukasi!</small>
                             </div>
-                            @endforeach
+                            @endif
                         </div>
                     </div>
                 </div>

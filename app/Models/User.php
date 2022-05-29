@@ -98,4 +98,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Farmer::class);
     }
+
+    public function notificationUser()
+    {
+        return $this->hasMany(NotificationUser::class);
+    }
 }

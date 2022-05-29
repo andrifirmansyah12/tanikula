@@ -10,10 +10,20 @@ use App\Models\EducationCategory;
 class EducationController extends Controller
 {
     public function index() {
-        $categories = EducationCategory::all();
-        $educationsMore = Education::with('education_category', 'user')->orderByRaw('RAND()')->take(3)->get();
-		$educations = Education::with('education_category', 'user')->latest()->filter(request(['kategori-edukasi', 'diposting-oleh', 'pencarian']))
-                ->paginate(6)->withQueryString();
+        $categories = EducationCategory::where('is_active', '=', 1)->get();
+        $educations = Education::join('education_categories', 'education.category_education_id', '=', 'education_categories.id')
+                    ->join('users', 'education.user_id', '=', 'users.id')
+                    ->where('education_categories.is_active', '=', 1)
+                    ->orderBy('education.updated_at', 'desc')
+                    ->get();
+        $educations = Education::filter(request(['kategori-edukasi', 'diposting-oleh', 'pencarian']))
+                    ->paginate(6)->withQueryString();
+        $educationsMore = Education::join('education_categories', 'education.category_education_id', '=', 'education_categories.id')
+                    ->join('users', 'education.user_id', '=', 'users.id')
+                    ->where('education_categories.is_active', '=', 1)
+                    ->orderByRaw('RAND()')
+                    ->take(3)
+                    ->get();
 		return view('pages.edukasi.index', compact('educations', 'categories', 'educationsMore'));
 	}
 
@@ -21,8 +31,13 @@ class EducationController extends Controller
     {
         return view('pages.edukasi.detail', [
             'education' => $education,
-            'educationsMore' => Education::orderByRaw('RAND()')->take(3)->get(),
-            'categories' => EducationCategory::all()
+            'educationsMore' => Education::join('education_categories', 'education.category_education_id', '=', 'education_categories.id')
+                    ->join('users', 'education.user_id', '=', 'users.id')
+                    ->where('education_categories.is_active', '=', 1)
+                    ->orderByRaw('RAND()')
+                    ->take(3)
+                    ->get(),
+            'categories' => EducationCategory::where('is_active', '=', 1)->get()
         ]);
     }
 
