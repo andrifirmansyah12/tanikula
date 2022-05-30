@@ -22,6 +22,7 @@ class PlantResource extends JsonResource
             'surface_area' => $this->surface_area,
             'plating_date' => $this->plating_date,
             'harvest_date' => $this->harvest_date,
+            'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

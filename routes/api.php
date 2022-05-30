@@ -9,7 +9,9 @@ use App\Http\Controllers\Api\Gapoktan\ActivityApiController;
 use App\Http\Controllers\Api\Gapoktan\ActivityCategoryApiController;
 use App\Http\Controllers\Api\Gapoktan\EducationApiController;
 use App\Http\Controllers\Api\Gapoktan\EducationCategoryApiController;
+use App\Http\Controllers\Api\Gapoktan\GapoktanApiController;
 use App\Http\Controllers\Api\Gapoktan\LoginGapoktanApiController;
+use App\Http\Controllers\Api\Gapoktan\PoktanApiController;
 use App\Http\Controllers\Api\Petani\FarmerApiController;
 use App\Http\Controllers\Api\Petani\LoginPetaniApiController;
 use App\Http\Controllers\Api\Petani\PlantApiController;
@@ -59,6 +61,10 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('education-category', EducationCategoryApiController::class);
     Route::resource('education', EducationApiController::class);
     Route::post('education/update/file', [EducationApiController::class, 'updateWFile']);
+    // Poktan
+    Route::resource('poktan', PoktanApiController::class);
+    //Gapoktan
+    Route::resource('gapoktan', GapoktanApiController::class);
 
     
     //Petani

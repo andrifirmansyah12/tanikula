@@ -16,7 +16,14 @@ class PoktanResource extends JsonResource
     {
         return [
             "id" => $this->id, 
+            "user_id" => new UserResource($this->user), 
+            "gapoktan_id" => new GapoktanResource($this->gapoktan), 
             "chairman" => $this->chairman, 
+            "city" => $this->city, 
+            "address" => $this->address, 
+            "telp" => $this->telp, 
+            "image" => $this->image, 
+            "is_active" => $this->is_active, 
         ];
     }
 }

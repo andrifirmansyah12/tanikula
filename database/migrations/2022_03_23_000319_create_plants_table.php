@@ -21,6 +21,7 @@ class CreatePlantsTable extends Migration
             $table->string("surface_area")->nullable();
             $table->dateTime("plating_date")->nullable();
             $table->dateTime("harvest_date")->nullable();
+            $table->string("status")->nullable();
             $table->timestamps();
         });
     }
