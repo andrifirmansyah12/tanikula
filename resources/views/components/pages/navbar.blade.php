@@ -73,7 +73,7 @@
                 <div class="col-lg-3 col-md-3 col-7">
                     <!-- Start Header Logo -->
                     <a class="navbar-brand" href="{{ url('home') }}">
-                        <h3> <span style="color: #16A085">Shop</span>Srimakmur</h3>
+                        <h3> <span style="color: #16A085">Shop</span>TaniKula</h3>
                     </a>
                     <!-- End Header Logo -->
                 </div>

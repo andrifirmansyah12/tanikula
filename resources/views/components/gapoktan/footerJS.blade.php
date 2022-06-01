@@ -22,3 +22,122 @@ integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifw
 <script src="{{ asset('js/function.js') }}"></script>
 
 @yield('script')
+
+<script>
+    // <-- Route Link -->
+    // Dashboard
+    function gapoktan_dashboard(url) {
+        window.location = url;
+    }
+    // Chat
+    function gapoktan_chat(url) {
+        window.location = url;
+    }
+    // Kategori Produk
+    function gapoktan_kategori_produk(url) {
+        window.location = url;
+    }
+    // Kategori Edukasi
+    function gapoktan_kategori_edukasi(url) {
+        window.location = url;
+    }
+    // Kategori Kegiatan
+    function gapoktan_kategori_kegiatan(url) {
+        window.location = url;
+    }
+    // Produk
+    function gapoktan_produk(url) {
+        window.location = url;
+    }
+    // Edukasi
+    function gapoktan_edukasi(url) {
+        window.location = url;
+    }
+    // Kegiatan
+    function gapoktan_kegiatan(url) {
+        window.location = url;
+    }
+    // Akun Poktan
+    function gapoktan_daftar_poktan(url) {
+        window.location = url;
+    }
+    // Akun Petani
+    function gapoktan_daftar_petani(url) {
+        window.location = url;
+    }
+    // Tandur
+    function gapoktan_tandur(url) {
+        window.location = url;
+    }
+    // Panen
+    function gapoktan_panen(url) {
+        window.location = url;
+    }
+    // Rekap Penjualan
+    function gapoktan_rekap_penjualan(url) {
+        window.location = url;
+    }
+    // Pengaturan
+    function gapoktan_pengaturan(url) {
+        window.location = url;
+    }
+
+    $(document).ready(function () {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+            $(document).on('click', '.notifUser', function(e) {
+                e.preventDefault();
+                let id = $(this).attr('id');
+                let csrf = '{{ csrf_token() }}';
+                    $.ajax({
+                    url: '{{ route('gapoktan.markas.read.user') }}',
+                    method: 'POST',
+                    data: {
+                        id: id,
+                        _token: csrf
+                    },
+                    success: function(response) {
+                        window.location = '{{ route('gapoktan-poktan') }}';
+                    }
+                });
+            });
+
+            $(document).on('click', '.notifPlant', function(e) {
+                e.preventDefault();
+                let id = $(this).attr('id');
+                let csrf = '{{ csrf_token() }}';
+                    $.ajax({
+                    url: '{{ route('gapoktan.markas.read.plant') }}',
+                    method: 'POST',
+                    data: {
+                        id: id,
+                        _token: csrf
+                    },
+                    success: function(response) {
+                        window.location = '{{ route('gapoktan-tandur') }}';
+                    }
+                });
+            });
+
+            $(document).on('click', '.notifHarvest', function(e) {
+                e.preventDefault();
+                let id = $(this).attr('id');
+                let csrf = '{{ csrf_token() }}';
+                    $.ajax({
+                    url: '{{ route('gapoktan.markas.read.harvest') }}',
+                    method: 'POST',
+                    data: {
+                        id: id,
+                        _token: csrf
+                    },
+                    success: function(response) {
+                        window.location = '{{ route('gapoktan-panen') }}';
+                    }
+                });
+            });
+    });
+</script>

@@ -42,7 +42,6 @@ class ActivityCategoryController extends Controller
                 }
                 $output .= '<td>
                   <a href="#" id="' . $emp->id . '" class="text-success mx-1 editIcon" data-toggle="modal" data-target="#editEmployeeModal"><i class="bi-pencil-square h4"></i></a>
-                  <a href="#" id="' . $emp->id . '" class="text-danger mx-1 deleteIcon"><i class="bi-trash h4"></i></a>
                 </td>
               </tr>';
 			}
@@ -90,14 +89,6 @@ class ActivityCategoryController extends Controller
 		return response()->json([
 			'status' => 200,
 		]);
-	}
-
-    // handle delete an employee ajax request
-	public function delete(Request $request)
-    {
-		$id = $request->id;
-		$emp = ActivityCategory::find($id);
-        $emp->delete();
 	}
 
     public function checkSlug(Request $request)

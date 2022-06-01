@@ -22,3 +22,56 @@ integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifw
 <script src="{{ asset('js/function.js') }}"></script>
 
 @yield('script')
+
+<script>
+    // <-- Route Link -->
+    // Dashboard
+    function petani_dashboard(url) {
+        window.location = url;
+    }
+    // Edukasi
+    function petani_edukasi(url) {
+        window.location = url;
+    }
+    // Kegiatan
+    function petani_kegiatan(url) {
+        window.location = url;
+    }
+    // Tandur
+    function petani_tandur(url) {
+        window.location = url;
+    }
+    // Panen
+    function petani_panen(url) {
+        window.location = url;
+    }
+    // Pengaturan
+    function petani_pengaturan(url) {
+        window.location = url;
+    }
+
+    $(document).ready(function () {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+            $(document).on('click', '.notifActivity', function(e) {
+                e.preventDefault();
+                let id = $(this).attr('id');
+                let csrf = '{{ csrf_token() }}';
+                    $.ajax({
+                    url: '{{ route('petani.markas.read.activity') }}',
+                    method: 'POST',
+                    data: {
+                        id: id,
+                        _token: csrf
+                    },
+                    success: function(response) {
+                        window.location = '{{ route('petani-kegiatan') }}';
+                    }
+                });
+            });
+    });
+</script>

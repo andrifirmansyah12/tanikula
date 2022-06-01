@@ -16,7 +16,7 @@ class EducationController extends Controller
                     ->where('education_categories.is_active', '=', 1)
                     ->orderBy('education.updated_at', 'desc')
                     ->get();
-        $educations = Education::filter(request(['kategori-edukasi', 'diposting-oleh', 'pencarian']))
+        $educations = Education::with('education_category', 'user')->latest()->filter(request(['kategori-edukasi', 'diposting-oleh', 'pencarian']))
                     ->paginate(6)->withQueryString();
         $educationsMore = Education::join('education_categories', 'education.category_education_id', '=', 'education_categories.id')
                     ->join('users', 'education.user_id', '=', 'users.id')
