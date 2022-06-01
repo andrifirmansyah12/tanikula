@@ -19,6 +19,7 @@ use App\Http\Controllers\Api\PhotoProductApiControlller;
 use App\Http\Controllers\Api\Poktan\LoginPoktanApiController;
 use App\Http\Controllers\Api\ProductApiController;
 use App\Http\Controllers\Api\ProductCategoryApiController;
+use App\Http\Controllers\Api\UserApiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -65,13 +66,17 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('poktan', PoktanApiController::class);
     //Gapoktan
     Route::resource('gapoktan', GapoktanApiController::class);
+    Route::post('gapoktan/update/image', [GapoktanApiController::class, 'updatePhoto']);
 
-    
     //Petani
     Route::resource('plant', PlantApiController::class);
     Route::get('plant/farmer/{id}', [PlantApiController::class, 'indexByIdUser']);
     Route::put('plant/harvest-date/{id}', [PlantApiController::class, 'addHarvestDate']);
     Route::resource('farmer', FarmerApiController::class);
+    
+    // user
+    Route::resource('user', UserApiController::class);
+    
 });
 
 
