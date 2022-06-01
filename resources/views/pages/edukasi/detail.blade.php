@@ -260,6 +260,7 @@
                 <div class="card" style="margin-top: 30px">
                     <div class="card-body my-3">
                         <p class="card-title fw-bold" style="font-size: 15px;">Edukasi Lainnya</p>
+                        @if ($educationsMore->count() > 0)
                         @foreach ($educationsMore as $item)
                         <div class="pt-2 border-bottom mt-3 pb-4">
                             <div class="row justify-content-center">
@@ -288,12 +289,18 @@
                             </div>
                         </div>
                         @endforeach
+                        @else
+                        <div class="row justify-content-center">
+                            <small class="text-center m-5">Tidak ada edukasi!</small>
+                        </div>
+                        @endif
                     </div>
                 </div>
                 <div class="card" style="margin-top: 30px">
                     <div class="card-body my-3">
                         <p class="card-title fw-bold" style="font-size: 15px;">Kategori Edukasi</p>
                         <div class="mt-2 row">
+                            @if ($categories->count() > 0)
                             @foreach ($categories as $item)
                             <div class="col-6 mt-1">
                                 <a href="{{ url('/edukasi?kategori-edukasi='.$item->slug) }}"
@@ -302,6 +309,11 @@
                                 </a>
                             </div>
                             @endforeach
+                            @else
+                            <div class="row justify-content-center">
+                                <small class="text-center m-5">Tidak ada Kategori Edukasi!</small>
+                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>

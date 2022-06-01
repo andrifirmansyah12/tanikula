@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Api\Petani;
- 
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Api\BaseApiController as BaseController;
@@ -21,8 +21,8 @@ class LoginPetaniApiController extends BaseController
             } else {
                 return $this->sendError('Unauthorised.', ['error'=>'Unauthorised']);
             }
-        } else { 
+        } else {
             return $this->sendError('Unauthorised.', ['error'=>'Unauthorised']);
-        } 
+        }
     }
 }

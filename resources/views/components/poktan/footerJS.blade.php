@@ -22,3 +22,94 @@ integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifw
 <script src="{{ asset('js/function.js') }}"></script>
 
 @yield('script')
+
+<script>
+    // <-- Route Link -->
+    // Dashboard
+    function poktan_dashboard(url) {
+        window.location = url;
+    }
+    // Edukasi
+    function poktan_edukasi(url) {
+        window.location = url;
+    }
+    // Kegiatan
+    function poktan_kegiatan(url) {
+        window.location = url;
+    }
+    // Akun Petani
+    function poktan_daftar_petani(url) {
+        window.location = url;
+    }
+    // Tandur
+    function poktan_tandur(url) {
+        window.location = url;
+    }
+    // Panen
+    function poktan_panen(url) {
+        window.location = url;
+    }
+    // Pengaturan
+    function poktan_pengaturan(url) {
+        window.location = url;
+    }
+
+    $(document).ready(function () {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+            $(document).on('click', '.notifUser', function(e) {
+                e.preventDefault();
+                let id = $(this).attr('id');
+                let csrf = '{{ csrf_token() }}';
+                    $.ajax({
+                    url: '{{ route('markas.read.user') }}',
+                    method: 'POST',
+                    data: {
+                        id: id,
+                        _token: csrf
+                    },
+                    success: function(response) {
+                        window.location = '{{ route('poktan-petani') }}';
+                    }
+                });
+            });
+
+            $(document).on('click', '.notifPlant', function(e) {
+                e.preventDefault();
+                let id = $(this).attr('id');
+                let csrf = '{{ csrf_token() }}';
+                    $.ajax({
+                    url: '{{ route('markas.read.plant') }}',
+                    method: 'POST',
+                    data: {
+                        id: id,
+                        _token: csrf
+                    },
+                    success: function(response) {
+                        window.location = '{{ route('poktan-tandur') }}';
+                    }
+                });
+            });
+
+            $(document).on('click', '.notifHarvest', function(e) {
+                e.preventDefault();
+                let id = $(this).attr('id');
+                let csrf = '{{ csrf_token() }}';
+                    $.ajax({
+                    url: '{{ route('markas.read.harvest') }}',
+                    method: 'POST',
+                    data: {
+                        id: id,
+                        _token: csrf
+                    },
+                    success: function(response) {
+                        window.location = '{{ route('poktan-panen') }}';
+                    }
+                });
+            });
+    });
+</script>

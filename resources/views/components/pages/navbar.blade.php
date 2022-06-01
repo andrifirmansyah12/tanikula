@@ -2,12 +2,12 @@
 <header class="header navbar-area">
     <!-- Start Topbar -->
     @if (Request::is('/', 'home'))
-        <div class="topbar" style="border-bottom: 1px solid #eee;">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-4 col-md-4 col-12">
-                        <div class="top-left">
-                            {{-- <ul class="menu-top-link">
+    <div class="topbar" style="border-bottom: 1px solid #eee;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-4 col-md-4 col-12">
+                    <div class="top-left">
+                        {{-- <ul class="menu-top-link">
                             <li>
                                 <div class="select-position">
                                     <select id="select4">
@@ -34,36 +34,36 @@
                                 </div>
                             </li>
                         </ul> --}}
-                        </div>
                     </div>
-                    <div class="col-lg-4 col-md-4 col-12">
-                        <div class="top-middle">
-                            {{-- <ul class="useful-links">
+                </div>
+                <div class="col-lg-4 col-md-4 col-12">
+                    <div class="top-middle">
+                        {{-- <ul class="useful-links">
                             <li><a href="index.html">Home</a></li>
                             <li><a href="about-us.html">About Us</a></li>
                             <li><a href="contact.html">Contact Us</a></li>
                         </ul> --}}
-                        </div>
                     </div>
-                    <div class="col-lg-4 col-md-4 col-12">
-                        <div class="top-end">
-                            <div class="user">
-                                <i class="lni lni-user"></i>
-                                Hello
-                            </div>
-                            <ul class="user-login">
-                                <li>
-                                    <a href="{{ route('login') }}">Masuk</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('login') }}">Daftar</a>
-                                </li>
-                            </ul>
+                </div>
+                <div class="col-lg-4 col-md-4 col-12">
+                    <div class="top-end">
+                        <div class="user">
+                            <i class="lni lni-user"></i>
+                            Hello
                         </div>
+                        <ul class="user-login">
+                            <li>
+                                <a href="{{ route('login') }}">Masuk</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('login') }}">Daftar</a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     @endif
     <!-- End Topbar -->
     <!-- Start Header Middle -->
@@ -72,8 +72,8 @@
             <div class="row align-items-center">
                 <div class="col-lg-3 col-md-3 col-7">
                     <!-- Start Header Logo -->
-                    <a class="navbar-brand" href="index.html">
-                        <h3>Sri Makmur</h3>
+                    <a class="navbar-brand" href="{{ url('home') }}">
+                        <h3> <span style="color: #16A085">Shop</span>TaniKula</h3>
                     </a>
                     <!-- End Header Logo -->
                 </div>
@@ -96,14 +96,12 @@
                 <div class="col-lg-4 col-md-2 col-5">
                     <div class="middle-right-area">
                         <div class="nav-hotline">
+                            <i class="lni lni-phone"></i>
+                            <h3>Hotline:
+                                <span>(+62) 123 456 7890</span>
+                            </h3>
                         </div>
                         <div class="navbar-cart">
-                            <div class="wishlist">
-                                <a href="javascript:void(0)">
-                                    <i class="lni lni-envelope"></i>
-                                    <span class="total-items">0</span>
-                                </a>
-                            </div>
                             <div class="wishlist">
                                 <a href="javascript:void(0)">
                                     <i class="lni lni-alarm"></i>
@@ -117,7 +115,7 @@
                                 </a>
                                 <!-- Shopping Item -->
                                 @php
-                                    $cartItem = App\Models\Cart::where('user_id', Auth::id())->get();
+                                $cartItem = App\Models\Cart::where('user_id', Auth::id())->get();
                                 @endphp
                                 <div class="shopping-item">
                                     <div class="dropdown-cart-header">
@@ -125,30 +123,31 @@
                                         <a href="{{ url('cart') }}">Lihat Keranjang</a>
                                     </div>
                                     @php
-                                        $total = 0;
+                                    $total = 0;
                                     @endphp
                                     @foreach ($cartItem as $item)
                                     <ul class="shopping-list" id="product_data">
                                         <li>
                                             <input type="hidden" value="{{ $item->product_id }}" id="prod_id">
-                                            <button class="remove delete-cart-item"
-                                                title="Remove this item"><i class="lni lni-close"></i></button>
+                                            <button class="remove delete-cart-item" title="Remove this item"><i
+                                                    class="lni lni-close"></i></button>
                                             <div class="cart-img-head">
                                                 <a class="cart-img" href="product-details.html"><img
                                                         src="{{ asset('../storage/produk/'.$item->product->image) }}"
-                                                        alt="#" style="width: 10rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"></a>
+                                                        alt="#"
+                                                        style="width: 10rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"></a>
                                             </div>
 
                                             <div class="content">
                                                 <h4><a href="product-details.html">
                                                         {{ $item->product->name }}</a></h4>
-                                                <p class="quantity">{{ $item->product_qty }}x - <span
-                                                        class="amount">Rp. {{ number_format($item->product->price, 0) }}</span></p>
+                                                <p class="quantity">{{ $item->product_qty }}x - <span class="amount">Rp.
+                                                        {{ number_format($item->product->price, 0) }}</span></p>
                                             </div>
                                         </li>
                                     </ul>
                                     @php
-                                        $total += $item->product->price * $item->product_qty;
+                                    $total += $item->product->price * $item->product_qty;
                                     @endphp
                                     @endforeach
                                     <div class="bottom">
@@ -170,5 +169,65 @@
         </div>
     </div>
     <!-- End Header Middle -->
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8 col-md-6 col-12">
+                <div class="nav-inner">
+                    <!-- Start Mega Category Menu -->
+                    <div class="mega-category-menu">
+                        <span class="cat-button"><i class="lni lni-menu"></i>Semua Kategori</span>
+                        @php
+                        $category_product = App\Models\ProductCategory::take(5)->get();
+                        @endphp
+                        <ul class="sub-category">
+                            @foreach ($category_product as $item)
+                            <li><a href="{{ url('product-category/'.$item->slug) }}">{{ $item->name }} </a></li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    <!-- End Mega Category Menu -->
+                    <!-- Start Navbar -->
+                    <nav class="navbar navbar-expand-lg">
+                        <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="toggler-icon"></span>
+                            <span class="toggler-icon"></span>
+                            <span class="toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+                            <ul id="nav" class="navbar-nav ms-auto">
+                                <li class="nav-item">
+                                    <a href="{{ url('home') }}" class="active" aria-label="Toggle navigation">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ url('hubungi-kami') }}" aria-label="Toggle navigation">Hubungi kami</a>
+                                </li>
+                            </ul>
+                        </div> <!-- navbar collapse -->
+                    </nav>
+                    <!-- End Navbar -->
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-12">
+                <!-- Start Nav Social -->
+                <div class="nav-social">
+                    <h5 class="title">Ikuti Kami:</h5>
+                    <ul>
+                        <li>
+                            <a href="javascript:void(0)"><i class="lni lni-facebook-filled"></i></a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)"><i class="lni lni-instagram"></i></a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)"><i class="lni lni-whatsapp"></i></a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- End Nav Social -->
+            </div>
+        </div>
+    </div>
 </header>
 <!-- End Header Area -->

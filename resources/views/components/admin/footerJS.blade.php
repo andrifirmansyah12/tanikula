@@ -22,3 +22,67 @@
 <script src="{{ asset('plus-admin/dist/js/demo.js') }}"></script>
 
 @yield('script')
+
+<script>
+    // <-- Route Link -->
+    // Dashboard
+    function admin_dashboard(url) {
+        window.location = url;
+    }
+    // Chat
+    function admin_chat(url) {
+        window.location = url;
+    }
+    // Kategori Produk
+    function admin_kategori_produk(url) {
+        window.location = url;
+    }
+    // Kategori Edukasi
+    function admin_kategori_edukasi(url) {
+        window.location = url;
+    }
+    // Kategori Kegiatan
+    function admin_kategori_kegiatan(url) {
+        window.location = url;
+    }
+    // Produk
+    function admin_produk(url) {
+        window.location = url;
+    }
+    // Edukasi
+    function admin_edukasi(url) {
+        window.location = url;
+    }
+    // Kegiatan
+    function admin_kegiatan(url) {
+        window.location = url;
+    }
+    // Akun Gapoktan
+    function admin_daftar_gapoktan(url) {
+        window.location = url;
+    }
+    // Akun Poktan
+    function admin_daftar_poktan(url) {
+        window.location = url;
+    }
+    // Akun Petani
+    function admin_daftar_petani(url) {
+        window.location = url;
+    }
+    // Tandur
+    function admin_tandur(url) {
+        window.location = url;
+    }
+    // Panen
+    function admin_panen(url) {
+        window.location = url;
+    }
+    // Rekap Penjualan
+    function admin_rekap_penjualan(url) {
+        window.location = url;
+    }
+    // Pengaturan
+    function admin_pengaturan(url) {
+        window.location = url;
+    }
+</script>

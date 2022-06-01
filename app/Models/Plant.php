@@ -20,4 +20,9 @@ class Plant extends Model
     {
         return $this->belongsTo(Farmer::class);
     }
+
+    public function notificationPlant()
+    {
+        return $this->hasMany(NotificationPlant::class);
+    }
 }
