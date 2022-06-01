@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Activity;
 use App\Models\ActivityCategory;
+use App\Models\NotificationActivity;
 use Illuminate\Support\Facades\Storage;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
 use Carbon\Carbon;
@@ -21,7 +22,12 @@ class ActivityController extends Controller
 
     // handle fetch all eamployees ajax request
 	public function fetchAll() {
-		$emps = Activity::where('user_id', auth()->user()->id)->with('activity_category')->latest()->get();
+		$emps = Activity::join('activity_categories', 'activities.category_activity_id', '=', 'activity_categories.id')
+                    ->join('users', 'activities.user_id', '=', 'users.id')
+                    ->where('activity_categories.is_active', '=', 1)
+                    ->where('user_id', auth()->user()->id)
+                    ->orderBy('activities.updated_at', 'desc')
+                    ->get();
 		$output = '';
 		if ($emps->count() > 0) {
 			$output .= '<table class="table table-striped table-sm text-center align-middle">
@@ -64,11 +70,19 @@ class ActivityController extends Controller
     // handle insert a new employee ajax request
 	public function store(Request $request) {
 
-        $empData = ['title' => $request->title, 'slug' => $request->slug, 'category_activity_id' => $request->category_activity_id, 'desc' => $request->desc];
+        $activity = new Activity();
+        $activity->title = $request->title;
+        $activity->slug = $request->slug;
+        $activity->category_activity_id = $request->category_activity_id;
+        $activity->desc = $request->desc;
+        $activity->date = Carbon::createFromFormat('d-M-Y', $request->date)->format('Y-m-d h:i:s');
+        $activity->user_id = auth()->user()->id;
+        $activity->save();
 
-        $empData['date'] = Carbon::createFromFormat('d-M-Y', $request->date)->format('Y-m-d h:i:s');
-        $empData['user_id'] = auth()->user()->id;
-		Activity::create($empData);
+        $notification = new NotificationActivity();
+        $notification->activity_id = $activity->id;
+        $notification->save();
+
 		return response()->json([
 			'status' => 200,
 		]);

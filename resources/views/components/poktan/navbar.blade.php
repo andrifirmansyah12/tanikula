@@ -74,6 +74,13 @@
     <ul class="navbar-nav navbar-right">
         @php
             $countNotificationUser = App\Models\NotificationUser::join('users', 'notification_users.user_id', '=', 'users.id')
+                                                                    ->leftJoin('farmers', function ($join) {
+                                                                            $join->on('users.id', '=', 'farmers.user_id');
+                                                                        })
+                                                                    ->leftJoin('poktans', function ($join) {
+                                                                            $join->on('farmers.poktan_id', '=', 'poktans.id');
+                                                                        })
+                                                                    ->where('poktans.user_id', '=', auth()->user()->id)
                                                                     ->select('notification_users.*', 'users.name as name')
                                                                     ->where('notification_users.read_at', '=', null)
                                                                     ->orderBy('notification_users.updated_at', 'desc')

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Api\Petani;
- 
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Api\BaseApiController as BaseController;
@@ -10,9 +10,9 @@ class LoginPetaniApiController extends BaseController
 {
     public function login(Request $request)
     {
-        if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){ 
-            $user = Auth::user(); 
-            $success['token'] =  $user->createToken('MyApp')->accessToken; 
+        if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
+            $user = Auth::user();
+            $success['token'] =  $user->createToken('MyApp')->accessToken;
             $success['name'] =  $user->name;
             $success['hasRole'] =  $user->hasRole('petani');
 
@@ -21,8 +21,8 @@ class LoginPetaniApiController extends BaseController
             } else {
                 return $this->sendError('Unauthorised.', ['error'=>'Unauthorised']);
             }
-        } else { 
+        } else {
             return $this->sendError('Unauthorised.', ['error'=>'Unauthorised']);
-        } 
+        }
     }
 }

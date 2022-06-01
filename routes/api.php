@@ -49,7 +49,7 @@ Route::middleware('auth:api')->group(function () {
 
     //Petani
     Route::resource('plant', PlantApiController::class);
- 
+
 });
 
 // All

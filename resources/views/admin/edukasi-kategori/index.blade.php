@@ -237,43 +237,6 @@
                 });
             });
 
-            // delete employee ajax request
-            $(document).on('click', '.deleteIcon', function(e) {
-                e.preventDefault();
-                let id = $(this).attr('id');
-                let csrf = '{{ csrf_token() }}';
-                Swal.fire({
-                title: 'Apa kamu yakin?',
-                text: "Anda tidak akan dapat mengembalikan ini!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, Hapus!',
-                cancelButtonText: 'Cancel!'
-                }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                    url: '{{ route('admin-kategoriEdukasi-delete') }}',
-                    method: 'delete',
-                    data: {
-                        id: id,
-                        _token: csrf
-                    },
-                    success: function(response) {
-                        console.log(response);
-                        Swal.fire(
-                        'Dihapus!',
-                        'File Anda telah dihapus.',
-                        'success'
-                        )
-                        fetchAllEmployees();
-                    }
-                    });
-                }
-                })
-            });
-
             // fetch all employees ajax request
             fetchAllEmployees();
 

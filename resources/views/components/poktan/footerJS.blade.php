@@ -24,6 +24,36 @@ integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifw
 @yield('script')
 
 <script>
+    // <-- Route Link -->
+    // Dashboard
+    function poktan_dashboard(url) {
+        window.location = url;
+    }
+    // Edukasi
+    function poktan_edukasi(url) {
+        window.location = url;
+    }
+    // Kegiatan
+    function poktan_kegiatan(url) {
+        window.location = url;
+    }
+    // Akun Petani
+    function poktan_daftar_petani(url) {
+        window.location = url;
+    }
+    // Tandur
+    function poktan_tandur(url) {
+        window.location = url;
+    }
+    // Panen
+    function poktan_panen(url) {
+        window.location = url;
+    }
+    // Pengaturan
+    function poktan_pengaturan(url) {
+        window.location = url;
+    }
+
     $(document).ready(function () {
         $.ajaxSetup({
             headers: {

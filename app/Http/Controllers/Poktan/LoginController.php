@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use App\Models\Gapoktan;
 use App\Models\Poktan;
+use App\Models\NotificationUser;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
@@ -129,6 +130,10 @@ class LoginController extends Controller
               'gapoktan_id' => $gapoktan_id,
               'chairman' => $chairman,
             ]);
+
+            $notification = new NotificationUser();
+            $notification->user_id = $user->id;
+            $notification->save();
 
             return response()->json([
                 'status' => 200,

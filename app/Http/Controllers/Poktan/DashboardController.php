@@ -57,6 +57,16 @@ class DashboardController extends Controller
                     ->join('users', 'farmers.user_id', '=', 'users.id')
                     ->where('poktans.user_id', '=', auth()->user()->id)
                     ->count();
+        $countFarmerActive = Farmer::join('poktans', 'farmers.poktan_id', '=', 'poktans.id')
+                    ->join('users', 'farmers.user_id', '=', 'users.id')
+                    ->where('farmers.is_active', '=', 1)
+                    ->where('poktans.user_id', '=', auth()->user()->id)
+                    ->count();
+        $countFarmerDeactive = Farmer::join('poktans', 'farmers.poktan_id', '=', 'poktans.id')
+                    ->join('users', 'farmers.user_id', '=', 'users.id')
+                    ->where('farmers.is_active', '=', 0)
+                    ->where('poktans.user_id', '=', auth()->user()->id)
+                    ->count();
         $countEducation = Education::where('user_id', auth()->user()->id)->count();
         $countActivity = Activity::where('user_id', auth()->user()->id)->count();
 
@@ -72,7 +82,15 @@ class DashboardController extends Controller
                                 <h4>Akun Petani</h4>
                             </div>
                             <div class="card-body">
-                                '.$countFarmer.'
+                                <div class="d-flex flex-row">
+                                    <div>
+                                        '.$countFarmer.'
+                                    </div>
+                                    <div class="mt-2 pl-2">
+                                        <div style="font-size: 9px"><i class="fas fa-circle text-success" style="font-size: 9px"></i> Aktif('.$countFarmerActive.')</div>
+                                        <div style="font-size: 9px"><i class="fas fa-circle text-danger" style="font-size: 9px"></i> Belum aktif('.$countFarmerDeactive.')</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -130,21 +130,14 @@ class PlantController extends Controller
         if($notificationExists){
             $notificationPlant = NotificationPlant::with('plant')->where('plant_id', $request->emp_id)->update([
                 'read_at' => null,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ]);
         } else {
             $notificationPlant = NotificationPlant::with('plant')->where('plant_id', $request->emp_id)->update([
                 'read_at' => Carbon::now(),
             ]);
         }
-
-        // $notificationExists = NotificationPlant::with('plant')->where('plant_id', $request->emp_id)->exists();
-        // if($notificationExists){
-        //     $notificationPlant = NotificationPlant::with('plant')->where('plant_id', $request->emp_id)->delete();
-
-        //     $notification = new NotificationPlant();
-        //     $notification->plant_id = $plant->id;
-        //     $notification->save();
-        // }
 
 		return response()->json([
 			'status' => 200,
