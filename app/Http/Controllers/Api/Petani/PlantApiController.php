@@ -19,6 +19,13 @@ class PlantApiController extends BaseController
         return $this->sendResponse($result, 'Data fetched');
     }
 
+    public function indexByIdUser($id)
+    {
+        $datas = Plant::where('farmer_id', $id)->latest()->get();
+        $result = PlantResource::collection($datas);
+        return $this->sendResponse($result, 'Data fetched');
+    }
+
     public function create()
     {
         //
@@ -28,8 +35,9 @@ class PlantApiController extends BaseController
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
-        'name' => 'required',
-             
+            'plant_tanaman' => 'required',
+            'surface_area' => 'required',
+            'plating_date' => 'required',
         ]);
 
         if($validator->fails()){
@@ -38,16 +46,15 @@ class PlantApiController extends BaseController
 
         $datas = Plant::create([
             'id' => $request->id,
-            'user_id' => $request->user_id,
+            'farmer_id' => $request->farmer_id,
+            'poktan_id' => $request->poktan_id,
             "plant_tanaman" => $request->plant_tanaman,
             'surface_area' => $request->surface_area,
             'plating_date' => $request->plating_date,
             'harvest_date' => $request->harvest_date,
-            'created_at' => $request->created_at,
-            'updated_at' => $request->updated_at,
         ]);
- 
-        return $this->sendResponse($datas, 'Data Strored');
+        $result = PlantResource::make($datas);
+        return $this->sendResponse($result, 'Data Strored');
     }
 
 
@@ -65,7 +72,51 @@ class PlantApiController extends BaseController
 
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'plant_tanaman' => 'required',
+            'surface_area' => 'required',
+            'plating_date' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors());
+        }
+
+        $datas = Plant::findOrFail($id);
+
+        $datas->update([
+            "plant_tanaman" => $request->plant_tanaman,
+            'surface_area' => $request->surface_area,
+            'plating_date' => $request->plating_date, 
+            'harvest_date' => $request->harvest_date, 
+        ]);
+
+        $datas->update();
+
+        return $this->sendResponse($datas, 'Data Updated');
+
+    }
+
+    public function addHarvestDate(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(),[
+            'harvest_date' => 'required'
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors());
+        }
+
+        $datas = Plant::findOrFail($id);
+
+        $datas->update([
+            'harvest_date' => $request->harvest_date, 
+        ]);
+
+        $datas->update();
+
+        return $this->sendResponse($datas, 'Data Updated');
+
     }
 
     public function destroy($id)

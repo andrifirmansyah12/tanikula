@@ -32,6 +32,11 @@ class Product extends Model
         return $this->hasMany(Wishlist::class);
     }
 
+    public function photo_product()
+    {
+        return $this->hasMany(PhotoProduct::class);
+    }
+
     public function sluggable()
     {
         return [
