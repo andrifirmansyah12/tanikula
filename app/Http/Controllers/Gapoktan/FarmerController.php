@@ -160,7 +160,7 @@ class FarmerController extends Controller
                 $emp->is_active = $request->is_active ? 0 : 1;
             }
         }
-        
+
         $emp->save();
 
 		return response()->json([
@@ -171,7 +171,7 @@ class FarmerController extends Controller
     // handle delete an employee ajax request
 	public function delete(Request $request) {
 		$id = $request->id;
-		Poktan::where('user_id', $id)->delete();
+		Farmer::where('user_id', $id)->delete();
         User::where('id', $id)->delete();
 	}
 }

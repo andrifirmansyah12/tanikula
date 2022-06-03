@@ -233,7 +233,7 @@
                 <a href="features-activities.html" class="dropdown-item has-icon">
                     <i class="fas fa-bolt"></i> Activities
                 </a> --}}
-                <a href="{{ url('gapoktan/pengaturan') }}" class="dropdown-item has-icon">
+                <a href="#" onclick="poktan_pengaturan('{{ url('poktan/pengaturan') }}')" class="dropdown-item has-icon">
                     <i class="fas fa-cog"></i> Pengaturan
                 </a>
                 <div class="dropdown-divider"></div>

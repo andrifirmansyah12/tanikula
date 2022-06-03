@@ -85,7 +85,7 @@
                                         <i class="bi bi-calendar"></i>
                                     </div>
                                 </div>
-                                <input type="text" name="plating_date" class="form-control datepicker">
+                                <input type="text" name="plating_date" class="form-control datepicker" autocomplete="off">
                             </div>
                         </div>
                     </div>
@@ -130,7 +130,7 @@
                                         <i class="bi bi-calendar"></i>
                                     </div>
                                 </div>
-                                <input type="text" name="harvest_date" id="harvest_date" class="form-control datepicker">
+                                <input type="text" name="harvest_date" id="harvest_date" class="form-control datepicker" autocomplete="off">
                             </div>
                         </div>
                     </div>

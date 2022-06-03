@@ -29,10 +29,6 @@
     function admin_dashboard(url) {
         window.location = url;
     }
-    // Chat
-    function admin_chat(url) {
-        window.location = url;
-    }
     // Kategori Produk
     function admin_kategori_produk(url) {
         window.location = url;

@@ -23,12 +23,14 @@ class DashboardController extends Controller
         foreach ($year as $key => $value) {
             $plant[] = Plant::join('farmers', 'plants.farmer_id', '=', 'farmers.id')
                     ->join('poktans', 'plants.poktan_id', '=', 'poktans.id')
+                    ->select('plants.*', 'surface_area as area')
                     ->where('farmers.user_id', '=', auth()->user()->id)
                     ->where('plants.harvest_date', '=', null)
                     ->where(\DB::raw("DATE_FORMAT(plants.created_at, '%Y')"),$value)
                     ->count();
             $harvest[] = Plant::join('farmers', 'plants.farmer_id', '=', 'farmers.id')
                     ->join('poktans', 'plants.poktan_id', '=', 'poktans.id')
+                    ->select('plants.*', 'surface_area as area')
                     ->where('farmers.user_id', '=', auth()->user()->id)
                     ->whereNotNull('plants.harvest_date')
                     ->where(\DB::raw("DATE_FORMAT(plants.created_at, '%Y')"),$value)
@@ -45,10 +47,12 @@ class DashboardController extends Controller
 	public function fetchAll(Request $request) {
         $countEducation = Education::join('education_categories', 'education.category_education_id', '=', 'education_categories.id')
                     ->join('users', 'education.user_id', '=', 'users.id')
+                    ->select('education.*', 'education_categories.name as name')
                     ->where('education_categories.is_active', '=', 1)
                     ->count();
         $countActivity = Activity::join('activity_categories', 'activities.category_activity_id', '=', 'activity_categories.id')
                     ->join('users', 'activities.user_id', '=', 'users.id')
+                    ->select('activities.*', 'activity_categories.name as name')
                     ->where('activity_categories.is_active', '=', 1)
                     ->count();
 
