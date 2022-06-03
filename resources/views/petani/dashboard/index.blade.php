@@ -11,6 +11,10 @@
         <section class="section">
             <div class="section-header">
                 <h1>Dashboard</h1>
+                <div class="section-header-breadcrumb">
+                    <div class="breadcrumb-item">Petani</div>
+                    <div class="breadcrumb-item active"><a href="#">@yield('title')</a></div>
+                </div>
             </div>
             <div class="row" id="show_all_employees">
                 {{-- Content --}}

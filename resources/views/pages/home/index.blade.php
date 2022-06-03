@@ -122,9 +122,9 @@
                         </div>
                     </div>
                     <div class="product-info">
-                        <span class="category">{{ $item->product_category->name }}</span>
+                        <span class="category">{{ $item->category_name }}</span>
                         <h4 class="title">
-                            <a href="">{{ $item->name }}</a>
+                            <a href="{{ url('home/'.$item->slug) }}">{{ $item->name }}</a>
                         </h4>
                         <ul class="review">
                             <li><i class="lni lni-star-filled"></i></li>
@@ -198,22 +198,24 @@
                 <!-- Start Single Product -->
                 <div class="single-product">
                     <div class="product-image">
-                        @if ($item->image)
-                        <img src="{{ asset('../storage/produk/'.$item->image) }}" alt="{{ $item->name }}"
-                            style="width: 27rem; height: 15rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
-                        @else
-                        <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->name }}"
-                            style="width: 27rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
-                        @endif
+                        <a href="{{ url('home/'.$item->slug) }}">
+                            @if ($item->image)
+                            <img src="{{ asset('../storage/produk/'.$item->image) }}" alt="{{ $item->name }}"
+                                style="width: 27rem; height: 15rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                            @else
+                            <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->name }}"
+                                style="width: 27rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                            @endif
+                        </a>
                         <div class="button">
                             <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
                                 Keranjang</a>
                         </div>
                     </div>
                     <div class="product-info">
-                        <span class="category">{{ $item->product_category->name }}</span>
+                        <span class="category">{{ $item->category_name }}</span>
                         <h4 class="title">
-                            <a href="product-grids.html">{{ $item->name }}</a>
+                            <a href="{{ url('home/'.$item->slug) }}">{{ $item->name }}</a>
                         </h4>
                         <ul class="review">
                             <li><i class="lni lni-star-filled"></i></li>

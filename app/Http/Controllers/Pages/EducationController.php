@@ -13,13 +13,15 @@ class EducationController extends Controller
         $categories = EducationCategory::where('is_active', '=', 1)->get();
         $educations = Education::join('education_categories', 'education.category_education_id', '=', 'education_categories.id')
                     ->join('users', 'education.user_id', '=', 'users.id')
+                    ->select('education.*', 'education_categories.name as name')
                     ->where('education_categories.is_active', '=', 1)
                     ->orderBy('education.updated_at', 'desc')
-                    ->get();
-        $educations = Education::with('education_category', 'user')->latest()->filter(request(['kategori-edukasi', 'diposting-oleh', 'pencarian']))
-                    ->paginate(6)->withQueryString();
+                    ->filter(request(['kategori-edukasi', 'diposting-oleh', 'pencarian']))
+                    ->paginate(6)
+                    ->withQueryString();
         $educationsMore = Education::join('education_categories', 'education.category_education_id', '=', 'education_categories.id')
                     ->join('users', 'education.user_id', '=', 'users.id')
+                    ->select('education.*', 'education_categories.name as name')
                     ->where('education_categories.is_active', '=', 1)
                     ->orderByRaw('RAND()')
                     ->take(3)
@@ -33,6 +35,7 @@ class EducationController extends Controller
             'education' => $education,
             'educationsMore' => Education::join('education_categories', 'education.category_education_id', '=', 'education_categories.id')
                     ->join('users', 'education.user_id', '=', 'users.id')
+                    ->select('education.*', 'education_categories.name as name')
                     ->where('education_categories.is_active', '=', 1)
                     ->orderByRaw('RAND()')
                     ->take(3)

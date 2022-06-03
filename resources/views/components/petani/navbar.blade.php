@@ -119,10 +119,10 @@
                     @foreach ($notificationActivity as $item)
                         <div class="dropdown-item {{ $item->read_at == null ? 'dropdown-item-unread' : '' }}">
                             <div class="dropdown-item-icon bg-info text-white">
-                                <i class="fas fa-user-plus"></i>
+                                <i class="fas fa-clipboard"></i>
                             </div>
                             <div class="dropdown-item-desc">
-                                <b>{{ $item->name }}</b> telah mendaftarkan akun sebagai anggota anda.
+                                <b>Kegiatan {{ $item->name }}</b> yang akan dilaksanakan pada tanggal {{ date("d F Y", strtotime($item->activity->date)) }}.
                                 <div class="time">{{$item->created_at->diffForHumans()}}</div>
                                 <a href="#" id="{{ $item->id }}" class="notifActivity float-right mx-1">Lihat</a>
                             </div>
@@ -165,7 +165,7 @@
                 <a href="features-activities.html" class="dropdown-item has-icon">
                     <i class="fas fa-bolt"></i> Activities
                 </a> --}}
-                <a href="{{ url('gapoktan/pengaturan') }}" class="dropdown-item has-icon">
+                <a href="#" onclick="petani_pengaturan('{{ url('petani/pengaturan') }}')" class="dropdown-item has-icon">
                     <i class="fas fa-cog"></i> Pengaturan
                 </a>
                 <div class="dropdown-divider"></div>

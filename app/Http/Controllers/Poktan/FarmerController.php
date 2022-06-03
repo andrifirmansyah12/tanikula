@@ -91,7 +91,7 @@ class FarmerController extends Controller
 			$output .= '</tbody></table>';
 			echo $output;
 		} else {
-			echo '<h1 class="text-center text-secondary my-5">Tidak ada data Poktan!</h1>';
+			echo '<h1 class="text-center text-secondary my-5">Tidak ada data Petani!</h1>';
 		}
 	}
 
@@ -155,7 +155,7 @@ class FarmerController extends Controller
     // handle delete an employee ajax request
 	public function delete(Request $request) {
 		$id = $request->id;
-		Poktan::where('user_id', $id)->delete();
+		Farmer::where('user_id', $id)->delete();
         User::where('id', $id)->delete();
 	}
 }
