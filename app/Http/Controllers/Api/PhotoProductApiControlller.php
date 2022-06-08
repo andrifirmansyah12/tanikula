@@ -32,6 +32,7 @@ class PhotoProductApiControlller extends BaseController
         } 
 
         $file = $request->file('name');
+        sleep(2);
         $fileName = time() . '.' . $file->getClientOriginalExtension();
         $file->storeAs('produk', $fileName);
 

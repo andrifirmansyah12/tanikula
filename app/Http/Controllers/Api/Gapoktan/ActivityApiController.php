@@ -107,7 +107,8 @@ class ActivityApiController extends BaseController
         $datas = Activity::where('title', 'LIKE', '%'. $name. '%')->get();
         if(count($datas)){
             // return Response()->json($datas);
-            return response()->json(['Data Found.', new ActivityResource($datas)]);
+            $result = ActivityResource::collection($datas);
+            return $this->sendResponse($result, 'Data fetched');
         }
         else
         {

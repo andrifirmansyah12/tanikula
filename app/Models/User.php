@@ -100,4 +100,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Farmer::class);
     }
+
+    public function address()
+    {
+        return $this->hasMany(Address::class);
+    }
 }

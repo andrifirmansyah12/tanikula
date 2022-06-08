@@ -34,7 +34,7 @@ class ProductApiController extends BaseController
         if($validator->fails()){
             return response()->json($validator->errors());
         } 
-
+ 
         $datas = Product::create([
             'name' => $request->name,
             'slug' => Str::slug($request->name),
@@ -42,12 +42,14 @@ class ProductApiController extends BaseController
             'code' => $request->code, 
             'stoke' => $request->stoke, 
             'price' => $request->price, 
+            // 'image' => $fileName,
             'user_id' => $request->user_id, 
             'desc' => $request->desc, 
         ]);
 
         $result = ProductResource::make($datas);
         return $this->sendResponse($result, 'Data Strored');
+        // return $result;
     }
 
 
@@ -66,13 +68,13 @@ class ProductApiController extends BaseController
 
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(),[
-            'name' => 'required'
-        ]);
+        // $validator = Validator::make($request->all(),[
+        //     'name' => 'required'
+        // ]);
 
-        if($validator->fails()){
-            return $this->sendError("Validation Error", $validator->errors());
-        }
+        // if($validator->fails()){
+        //     return $this->sendError("Validation Error", $validator->errors());
+        // }
 
         $datas = Product::findOrFail($id);
 

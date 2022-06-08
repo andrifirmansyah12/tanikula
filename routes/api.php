@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\Customer\CartApiController;
+use App\Http\Controllers\Api\Customer\CustomerApiController;
 use App\Http\Controllers\Api\Customer\LoginCustomerApiController;
 use App\Http\Controllers\Api\Customer\ProductCustomerApiController;
 use App\Http\Controllers\Api\Customer\RegisterCustomerApiController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\Api\Petani\FarmerApiController;
 use App\Http\Controllers\Api\Petani\LoginPetaniApiController;
 use App\Http\Controllers\Api\Petani\PlantApiController;
 use App\Http\Controllers\Api\PhotoProductApiControlller;
+use App\Http\Controllers\Api\Poktan\AkunPoktanApiController;
 use App\Http\Controllers\Api\Poktan\LoginPoktanApiController;
 use App\Http\Controllers\Api\ProductApiController;
 use App\Http\Controllers\Api\ProductCategoryApiController;
@@ -51,8 +53,12 @@ Route::middleware('auth:api')->group(function () {
     // ------ Customer -----------
     // Cart
     Route::resource('cart', CartApiController::class);
+    Route::resource('customer', CustomerApiController::class);
+    Route::post('customer/update/image', [CustomerApiController::class, 'updatePhoto']);
     Route::get('cart/user_id/{user_id}', [CartApiController::class, 'indexByid']);
-    
+    Route::resource('wishlist', WishlistApiController::class);
+    Route::get('wishlist/user_id/{user_id}', [WishlistApiController::class, 'indexByid']);
+
     // ------ Gapoktan -----------
     // Activity
     Route::resource('activity', ActivityApiController::class);
@@ -64,6 +70,9 @@ Route::middleware('auth:api')->group(function () {
     Route::post('education/update/file', [EducationApiController::class, 'updateWFile']);
     // Poktan
     Route::resource('poktan', PoktanApiController::class);
+    Route::resource('akun-poktan', AkunPoktanApiController::class);
+    Route::post('akun-poktan/update/image', [AkunPoktanApiController::class, 'updatePhoto']);
+
     //Gapoktan
     Route::resource('gapoktan', GapoktanApiController::class);
     Route::post('gapoktan/update/image', [GapoktanApiController::class, 'updatePhoto']);
@@ -85,12 +94,13 @@ Route::middleware('auth:api')->group(function () {
 Route::resource('product-customer', ProductCustomerApiController::class);
 Route::post('register-customer', [RegisterCustomerApiController::class, 'register']);
 Route::post('login-customer', [LoginCustomerApiController::class, 'login']);
+Route::resource('product-photo-customer', PhotoProductApiControlller::class);
+
 // // Cart
 // Route::resource('cart', CartApiController::class);
 // Route::get('cart/user_id/{user_id}', [CartApiController::class, 'indexByid']);
 // Wishlist
-Route::resource('wishlist', WishlistApiController::class);
-Route::get('wishlist/user_id/{user_id}', [WishlistApiController::class, 'indexByid']);
+
 
 // ------ Gapoktan -----------
 Route::post('login-gapoktan', [LoginGapoktanApiController::class, 'login']);

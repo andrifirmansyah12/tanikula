@@ -14,7 +14,7 @@ class LoginPoktanApiController extends BaseController
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){ 
             $user = Auth::user(); 
             $success['token'] =  $user->createToken('MyApp')->accessToken; 
-            $success['name'] =  $user->name;
+            $success['id'] =  $user->id;
             $success['hasRole'] =  $user->hasRole('poktan');
 
             if ($success['hasRole'] == 'poktan') {

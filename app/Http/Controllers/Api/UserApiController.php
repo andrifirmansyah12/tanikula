@@ -42,7 +42,15 @@ class UserApiController extends BaseController
 
     public function update(Request $request, $id)
     {
-        //
+        $datas = User::findOrFail($id);
+
+        $datas->update([
+            'password' => bcrypt($request->password),
+        ]);
+
+        $datas->update();
+
+        return $this->sendResponse($datas, 'Data Updated');
     }
 
     public function destroy($id)

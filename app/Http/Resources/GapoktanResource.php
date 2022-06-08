@@ -17,6 +17,7 @@ class GapoktanResource extends JsonResource
         return [
             "id" => $this->id,
             "user_id" =>new UserResource($this->user),
+            "chairman" => $this->chairman,
             "city" => $this->city,
             "address" => $this->address,
             "telp" => $this->telp,

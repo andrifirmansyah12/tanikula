@@ -14,19 +14,19 @@ class AddressSeeder extends Seeder
      */
     public function run()
     {
-        Address::truncate();
+        // Address::truncate();
 
-        $datas = [
-            [
-                "address1" => "Jl. Rengasdengklok Desa Babadan Pangampu Rt.35 Rw.04",
-                "city" => "Indramayu",
-                "state" => "Jawa Barat",
-                "country" => "Indonesia",
-                "postal_code" => 1,
-            ],
+        // $datas = [
+        //     [
+        //         "address1" => "Jl. Rengasdengklok Desa Babadan Pangampu Rt.35 Rw.04",
+        //         "city" => "Indramayu",
+        //         "state" => "Jawa Barat",
+        //         "country" => "Indonesia",
+        //         "postal_code" => 1,
+        //     ],
 
-        ];
+        // ];
 
-        Address::insert($datas);
+        // Address::insert($datas);
     }
 }
