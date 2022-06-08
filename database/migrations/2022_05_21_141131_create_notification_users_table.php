@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateActivityCategoriesTable extends Migration
+class CreateNotificationUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateActivityCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('activity_categories', function (Blueprint $table) {
+        Schema::create('notification_users', function (Blueprint $table) {
             $table->id();
-            $table->string("name")->nullable();
-            $table->string("slug")->unique();
-            $table->boolean('is_active')->default(0);
+            $table->foreignId("user_id")->nullable();
+            $table->timestamp('read_at')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateActivityCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('activity_categories');
+        Schema::dropIfExists('notification_users');
     }
 }

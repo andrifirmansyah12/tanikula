@@ -22,6 +22,11 @@ class Activity extends Model
         return $this->belongsTo(ActivityCategory::class, 'category_activity_id');
     }
 
+    public function notificationActivity()
+    {
+        return $this->hasMany(NotificationActivity::class);
+    }
+
     public function getRouteKeyName()
     {
         return 'slug';

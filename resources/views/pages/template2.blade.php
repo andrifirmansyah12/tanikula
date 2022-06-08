@@ -2,14 +2,14 @@
 
 <body>
     <!-- Preloader -->
-    <div class="preloader">
+    {{-- <div class="preloader">
         <div class="preloader-inner">
             <div class="preloader-icon">
                 <span></span>
                 <span></span>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- /End Preloader -->
 
     <!-- Start Header Area -->
@@ -25,15 +25,20 @@
                         </a>
                         <!-- End Header Logo -->
                     </div>
-                    <div class="col-lg-5 col-md-7 d-xs-none">
+                    <div class="col-lg-5 col-md-5 d-xs-none">
                     </div>
-                    <div class="col-lg-4 col-md-2 col-5">
+                    <div class="col-lg-4 col-md-3 col-5">
                         <div class="middle-right-area">
                             <div class="user">
                             </div>
                             <ul class="d-flex p-3 user-login">
                                 <li>
-                                    <a style="color: var(--primary); font-weight: bold; font-size: 15px" href="{{ url('petani') }}" class="text-capitalize"><i class="fas fa-solid fa-house"></i> Dashboard</a>
+                                    <a style="color: var(--primary); font-weight: bold; font-size: 15px" href="{{ url('petani') }}" class="text-capitalize d-block d-sm-none">
+                                        <i class="fas fa-solid fa-house"></i> Dasbor {{ Illuminate\Support\Str::limit(auth()->user()->name, '1') }}
+                                    </a>
+                                    <a style="color: var(--primary); font-weight: bold; font-size: 15px" href="{{ url('petani') }}" class="text-capitalize d-none d-sm-block">
+                                        <i class="fas fa-solid fa-house"></i> Dasbor {{ strtok(auth()->user()->name, ' ') }}
+                                    </a>
                                 </li>
                             </ul>
                         </div>

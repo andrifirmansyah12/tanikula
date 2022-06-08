@@ -66,6 +66,7 @@
                         </div>
                         <div class="form-group my-2">
                             <label>Kategori Edukasi</label>
+                            @if ($category->count() > 0)
                             <select class="form-control select2" name="category_education_id" required>
                                 <option selected disabled>Pilih Kategori</option>
                                 @foreach ($category as $item)
@@ -76,6 +77,11 @@
                                     @endif
                                 @endforeach
                             </select>
+                            @else
+                            <select class="form-control select2" disabled required>
+                                    <option selected disabled>Tidak ada kategori</option>
+                            </select>
+                            @endif
                         </div>
                         <div class="my-2 form-group">
                             <label for="desc">Deskripsi</label>
@@ -143,6 +149,7 @@
                         </div>
                         <div class="form-group my-2">
                             <label>Kategori Edukasi</label>
+                            @if ($category->count() > 0)
                             <select class="form-control select2" id="category_education_id" name="category_education_id">
                                 <option selected disabled>Pilih Kategori</option>
                                 @foreach ($category as $item)
@@ -153,6 +160,11 @@
                                     @endif
                                 @endforeach
                             </select>
+                            @else
+                            <select class="form-control select2" disabled required>
+                                    <option selected disabled>Tidak ada kategori</option>
+                            </select>
+                            @endif
                         </div>
                         <div class="my-2 form-group">
                             <label for="desc">Deskripsi</label>
@@ -262,18 +274,24 @@
                 processData: false,
                 dataType: 'json',
                 success: function(response) {
-                    if (response.status == 200) {
-                    Swal.fire(
-                        'Menambahkan!',
-                        'Edukasi Berhasil Ditambahkan!',
-                        'success'
-                    )
-                    fetchAllEmployees();
+                    if (response.status == 400) {
+                        showError('title', response.messages.title);
+                        showError('category_education_id', response.messages.category_education_id);
+                        showError('desc', response.messages.desc);
+                        showError('file', response.messages.file);
+                    }
+                    else if (response.status == 200) {
+                        Swal.fire(
+                            'Menambahkan!',
+                            'Edukasi Berhasil Ditambahkan!',
+                            'success'
+                        )
+                        fetchAllEmployees();
+                        $("#add_employee_form")[0].reset();
+                        $("#addEmployeeModal").modal('hide');
                     }
                     $("#add_employee_btn").text('Simpan');
                     $("#add_employee_btn").prop('disabled', false);
-                    $("#add_employee_form")[0].reset();
-                    $("#addEmployeeModal").modal('hide');
                 }
                 });
             });
@@ -330,18 +348,24 @@
                 processData: false,
                 dataType: 'json',
                 success: function(response) {
-                    if (response.status == 200) {
-                    Swal.fire(
-                        'Memperbarui!',
-                        'Edukasi Berhasil Diperbarui!',
-                        'success'
-                    )
-                    fetchAllEmployees();
+                    if (response.status == 400) {
+                        showError('title', response.messages.title);
+                        showError('category_education_id', response.messages.category_education_id);
+                        showError('desc', response.messages.desc);
+                        showError('file', response.messages.file);
+                    }
+                    else if (response.status == 200) {
+                        Swal.fire(
+                            'Memperbarui!',
+                            'Edukasi Berhasil Diperbarui!',
+                            'success'
+                        )
+                        fetchAllEmployees();
+                        $("#edit_employee_form")[0].reset();
+                        $("#editEmployeeModal").modal('hide');
                     }
                     $("#edit_employee_btn").text('Simpan');
                     $("#edit_employee_btn").prop('disabled', false);
-                    $("#edit_employee_form")[0].reset();
-                    $("#editEmployeeModal").modal('hide');
                 }
                 });
             });

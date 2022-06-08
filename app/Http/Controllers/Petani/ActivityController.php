@@ -15,13 +15,17 @@ class ActivityController extends Controller
 {
     // set index page view
 	public function index() {
-		$category = ActivityCategory::all();
-		return view('petani.kegiatan.index', compact('category'));
+		return view('petani.kegiatan.index');
 	}
 
     // handle fetch all eamployees ajax request
 	public function fetchAll() {
-		$emps = Activity::with('activity_category')->latest()->get();
+		$emps = Activity::join('activity_categories', 'activities.category_activity_id', '=', 'activity_categories.id')
+                    ->join('users', 'activities.user_id', '=', 'users.id')
+                    ->select('activities.*', 'activity_categories.name as name')
+                    ->where('activity_categories.is_active', '=', 1)
+                    ->orderBy('activities.updated_at', 'desc')
+                    ->get();
 		$output = '';
 		if ($emps->count() > 0) {
 			$output .= '<table class="table table-striped table-sm text-center align-middle">

@@ -65,16 +65,22 @@
                         </div>
                         <div class="form-group my-2">
                             <label>Kategori Produk</label>
+                            @if ($category->count() > 0)
                             <select class="form-control select2" name="category_product_id" required>
                                 <option selected value="" disabled>Pilih Kategori</option>
-                                @foreach ($category as $item)
-                                    @if ( old('category_product_id') == $item->id )
-                                        <option value="{{ $item->id }}" selected>{{ $item->name }}</option>
-                                    @else
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                    @endif
-                                @endforeach
+                                    @foreach ($category as $item)
+                                        @if ( old('category_product_id') == $item->id )
+                                            <option value="{{ $item->id }}" selected>{{ $item->name }}</option>
+                                        @else
+                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                        @endif
+                                    @endforeach
                             </select>
+                            @else
+                            <select class="form-control select2" disabled required>
+                                    <option selected disabled>Tidak ada kategori</option>
+                            </select>
+                            @endif
                         </div>
                         <div class="d-lg-flex justify-content-between my-2 form-group">
                             <div>
@@ -136,6 +142,7 @@
                         </div>
                         <div class="form-group my-2">
                             <label>Kategori Produk</label>
+                            @if ($category->count() > 0)
                             <select class="form-control select2" id="category_product_id" name="category_product_id">
                                 <option selected disabled>Pilih Kategori</option>
                                 @foreach ($category as $item)
@@ -146,6 +153,11 @@
                                     @endif
                                 @endforeach
                             </select>
+                            @else
+                            <select class="form-control select2" disabled required>
+                                    <option selected disabled>Tidak ada kategori</option>
+                            </select>
+                            @endif
                         </div>
                         <div class="d-lg-flex justify-content-between my-2 form-group">
                             <div>
@@ -255,18 +267,26 @@
                 processData: false,
                 dataType: 'json',
                 success: function(response) {
-                    if (response.status == 200) {
-                    Swal.fire(
-                        'Menambahkan!',
-                        'Produk Berhasil Ditambahkan!',
-                        'success'
-                    )
-                    fetchAllEmployees();
+                    if (response.status == 400) {
+                        showError('name', response.messages.name);
+                        showError('category_product_id', response.messages.category_product_id);
+                        showError('stoke', response.messages.stoke);
+                        showError('price', response.messages.price);
+                        showError('desc', response.messages.desc);
+                        showError('image', response.messages.image);
+                    }
+                    else if (response.status == 200) {
+                        Swal.fire(
+                            'Menambahkan!',
+                            'Produk Berhasil Ditambahkan!',
+                            'success'
+                        )
+                        fetchAllEmployees();
+                        $("#addEmployeeModal").modal('hide');
+                        $("#add_employee_form")[0].reset();
                     }
                     $("#add_employee_btn").text('Simpan');
                     $("#add_employee_btn").prop('disabled', false);
-                    $("#add_employee_form")[0].reset();
-                    $("#addEmployeeModal").modal('hide');
                 }
                 });
             });
@@ -318,18 +338,25 @@
                 processData: false,
                 dataType: 'json',
                 success: function(response) {
-                    if (response.status == 200) {
-                    Swal.fire(
-                        'Memperbarui!',
-                        'Produk Berhasil Diperbarui!',
-                        'success'
-                    )
-                    fetchAllEmployees();
+                    if (response.status == 400) {
+                        showError('name', response.messages.name);
+                        showError('category_product_id', response.messages.category_product_id);
+                        showError('stoke', response.messages.stoke);
+                        showError('price', response.messages.price);
+                        showError('desc', response.messages.desc);
+                    }
+                    else if (response.status == 200) {
+                        Swal.fire(
+                            'Memperbarui!',
+                            'Produk Berhasil Diperbarui!',
+                            'success'
+                        )
+                        fetchAllEmployees();
+                        $("#edit_employee_form")[0].reset();
+                        $("#editEmployeeModal").modal('hide');
                     }
                     $("#edit_employee_btn").text('Simpan');
                     $("#edit_employee_btn").prop('disabled', false);
-                    $("#edit_employee_form")[0].reset();
-                    $("#editEmployeeModal").modal('hide');
                 }
                 });
             });

@@ -230,7 +230,7 @@ body {
         </div>
     </div>
     <div class="simple-footer">
-        Copyright &copy; Sri Makmur @if(date('Y') == '2022') {{ date('Y') }} @else 2022 - {{ date('Y') }} @endif
+        Copyright &copy; Tanikula @if(date('Y') == '2022') {{ date('Y') }} @else 2022 - {{ date('Y') }} @endif
     </div>
 @endsection
 

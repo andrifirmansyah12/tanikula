@@ -81,9 +81,9 @@ class PoktanController extends Controller
                         $output .= '<td><div class="badge badge-danger">Belum Aktif</div></td>';
                     }
                     $output .= '<td>
-                    <a href="#" id="' . $emp->id . '" class="text-success mx-1 editIcon" data-toggle="modal" data-target="#editEmployeeModal"><i class="bi-pencil-square h4"></i></a>
-                    <a href="#" id="' . $emp->user->id . '" class="text-danger mx-1 deleteIcon"><i class="bi-trash h4"></i></a>
-                    </td>
+                    <a href="#" id="' . $emp->id . '" class="text-success mx-1 editIcon" data-toggle="modal" data-target="#editEmployeeModal"><i class="bi-pencil-square h4"></i></a>';
+                    // $output .= '<a href="#" id="' . $emp->user->id . '" class="text-danger mx-1 deleteIcon"><i class="bi-trash h4"></i></a>
+                    $output .= '</td>
                 </tr>';
                 // }
                 // elseif ($emp->gapoktan->user->name == !auth()->user()->name) {

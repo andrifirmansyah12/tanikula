@@ -144,8 +144,49 @@
                 </div>
             </div>
         </li>
+        @php
+            $countNotificationUser = App\Models\NotificationUser::join('users', 'notification_users.user_id', '=', 'users.id')
+                                                                    ->leftJoin('poktans', function ($join) {
+                                                                            $join->on('users.id', '=', 'poktans.user_id');
+                                                                        })
+                                                                    ->leftJoin('gapoktans', function ($join) {
+                                                                            $join->on('poktans.gapoktan_id', '=', 'gapoktans.id');
+                                                                        })
+                                                                    ->where('gapoktans.user_id', '=', auth()->user()->id)
+                                                                    ->where('notification_users.read_at', '=', null)
+                                                                    ->orderBy('notification_users.updated_at', 'desc')
+                                                                    ->count();
+
+            $countNotificationPlant = App\Models\NotificationPlant::join('plants', 'notification_plants.plant_id', '=', 'plants.id')
+                                                                    ->join('farmers', 'plants.farmer_id', '=', 'farmers.id')
+                                                                    ->join('poktans', 'farmers.poktan_id', '=', 'poktans.id')
+                                                                    ->join('gapoktans', 'poktans.gapoktan_id', '=', 'gapoktans.id')
+                                                                    ->join('users', 'farmers.user_id', '=', 'users.id')
+                                                                    ->select('notification_plants.*', 'plants.plant_tanaman as name')
+                                                                    ->where('gapoktans.user_id', '=', auth()->user()->id)
+                                                                    ->where('notification_plants.read_at', '=', null)
+                                                                    ->where('plants.harvest_date', '=', null)
+                                                                    ->orderBy('notification_plants.updated_at', 'desc')
+                                                                    ->count();
+
+            $countNotificationHarvest = App\Models\NotificationPlant::join('plants', 'notification_plants.plant_id', '=', 'plants.id')
+                                                                    ->join('farmers', 'plants.farmer_id', '=', 'farmers.id')
+                                                                    ->join('poktans', 'farmers.poktan_id', '=', 'poktans.id')
+                                                                    ->join('gapoktans', 'poktans.gapoktan_id', '=', 'gapoktans.id')
+                                                                    ->join('users', 'farmers.user_id', '=', 'users.id')
+                                                                    ->select('notification_plants.*', 'plants.plant_tanaman as name')
+                                                                    ->where('gapoktans.user_id', '=', auth()->user()->id)
+                                                                    ->where('notification_plants.read_at', '=', null)
+                                                                    ->whereNotNull('plants.harvest_date')
+                                                                    ->orderBy('notification_plants.updated_at', 'desc')
+                                                                    ->get();
+            $countNotificationHarvest = $countNotificationHarvest->unique('plant_id');
+            $countNotificationHarvest = $countNotificationHarvest->count();
+
+            $allCount = $countNotificationUser + $countNotificationPlant + $countNotificationHarvest;
+        @endphp
         <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
-                class="nav-link notification-toggle nav-link-lg beep"><i class="far fa-bell"></i></a>
+                class="nav-link notification-toggle nav-link-lg {{ $allCount == null ? '' : 'beep' }}"><i class="far fa-bell"></i><span class="position-absolute">{{ $allCount }}</span></a>
             <div class="dropdown-menu dropdown-list dropdown-menu-right">
                 <div class="dropdown-header">Notifications
                     <div class="float-right">
@@ -153,51 +194,100 @@
                     </div>
                 </div>
                 <div class="dropdown-list-content dropdown-list-icons">
-                    <a href="#" class="dropdown-item dropdown-item-unread">
-                        <div class="dropdown-item-icon bg-primary text-white">
-                            <i class="fas fa-code"></i>
+                    @php
+                        $notificationUser = App\Models\NotificationUser::join('users', 'notification_users.user_id', '=', 'users.id')
+                                                                ->leftJoin('poktans', function ($join) {
+                                                                        $join->on('users.id', '=', 'poktans.user_id');
+                                                                    })
+                                                                ->leftJoin('gapoktans', function ($join) {
+                                                                        $join->on('poktans.gapoktan_id', '=', 'gapoktans.id');
+                                                                    })
+                                                                ->where('gapoktans.user_id', '=', auth()->user()->id)
+                                                                ->select('notification_users.*', 'users.name as name')
+                                                                ->orderBy('notification_users.updated_at', 'desc')
+                                                                ->get();
+
+                        $notificationPlant = App\Models\NotificationPlant::join('plants', 'notification_plants.plant_id', '=', 'plants.id')
+                                                                ->join('farmers', 'plants.farmer_id', '=', 'farmers.id')
+                                                                ->join('poktans', 'plants.poktan_id', '=', 'poktans.id')
+                                                                ->join('gapoktans', 'poktans.gapoktan_id', '=', 'gapoktans.id')
+                                                                ->join('users', 'farmers.user_id', '=', 'users.id')
+                                                                ->select('notification_plants.*', 'plants.plant_tanaman as name')
+                                                                ->where('gapoktans.user_id', '=', auth()->user()->id)
+                                                                ->where('plants.harvest_date', '=', null)
+                                                                ->orderBy('notification_plants.updated_at', 'desc')
+                                                                ->get();
+                        $notificationPlant = $notificationPlant->unique('plant_id');
+
+                        $notificationHarvest = App\Models\NotificationPlant::join('plants', 'notification_plants.plant_id', '=', 'plants.id')
+                                                                ->join('farmers', 'plants.farmer_id', '=', 'farmers.id')
+                                                                ->join('poktans', 'farmers.poktan_id', '=', 'poktans.id')
+                                                                ->join('gapoktans', 'poktans.gapoktan_id', '=', 'gapoktans.id')
+                                                                ->join('users', 'farmers.user_id', '=', 'users.id')
+                                                                ->select('notification_plants.*', 'plants.plant_tanaman as name')
+                                                                ->where('gapoktans.user_id', '=', auth()->user()->id)
+                                                                ->whereNotNull('plants.harvest_date')
+                                                                ->orderBy('notification_plants.updated_at', 'desc')
+                                                                ->get();
+                        $notificationHarvest = $notificationHarvest->unique('plant_id');
+                    @endphp
+
+                    @if ($notificationUser->count() || $notificationPlant->count() || $notificationHarvest->count() > 0)
+
+                    @foreach ($notificationUser as $item)
+                        <div class="dropdown-item {{ $item->read_at == null ? 'dropdown-item-unread' : '' }}">
+                            <div class="dropdown-item-icon bg-info text-white">
+                                <i class="fas fa-user-plus"></i>
+                            </div>
+                            <div class="dropdown-item-desc" id="notif_user">
+                                <b>{{ $item->name }}</b> telah mendaftarkan akun sebagai anggota anda.
+                                <div class="time">{{$item->created_at->diffForHumans()}}</div>
+                                <a href="#" id="{{ $item->id }}" class="notifUser float-right mx-1">Lihat</a>
+                            </div>
                         </div>
-                        <div class="dropdown-item-desc">
-                            Template update is available now!
-                            <div class="time text-primary">2 Min Ago</div>
+                    @endforeach
+
+                    @foreach ($notificationPlant as $item)
+                        <div class="dropdown-item {{ $item->read_at == null ? 'dropdown-item-unread' : '' }}">
+                            <div class="dropdown-item-icon bg-info text-white">
+                                <i class="fas fa-bell"></i>
+                            </div>
+                            <div class="dropdown-item-desc">
+                                <b>{{ $item->plant->farmer->user->name }}</b> telah melakukan tandur <b> {{ $item->name }} </b> di <b> {{ $item->plant->surface_area }} </b>
+                                <div class="time">{{$item->created_at->diffForHumans()}}</div>
+                                <a href="#" id="{{ $item->id }}" class="notifPlant float-right mx-1">Lihat</a>
+                            </div>
                         </div>
-                    </a>
-                    <a href="#" class="dropdown-item">
-                        <div class="dropdown-item-icon bg-info text-white">
-                            <i class="far fa-user"></i>
+                    @endforeach
+
+                    @foreach ($notificationHarvest as $item)
+                        <div class="dropdown-item {{ $item->read_at == null ? 'dropdown-item-unread' : '' }}">
+                            <div class="dropdown-item-icon bg-success text-white">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div class="dropdown-item-desc">
+                                <b>{{ $item->plant->farmer->user->name }}</b> telah melakukan panen <b> {{ $item->name }} </b> di <b> {{ $item->plant->surface_area }} </b>
+                                <div class="time">{{$item->created_at->diffForHumans()}}</div>
+                                <a href="#" id="{{ $item->id }}" class="notifHarvest float-right mx-1">Lihat</a>
+                            </div>
                         </div>
-                        <div class="dropdown-item-desc">
-                            <b>You</b> and <b>Dedik Sugiharto</b> are now friends
-                            <div class="time">10 Hours Ago</div>
+                    @endforeach
+                    @else
+                        <div id="app">
+                            <section class="section">
+                                <div class="container">
+                                    <div class="page-error-notification">
+                                        <div class="page-inner-notification">
+                                            <img src="{{ asset('img/undraw_empty_re_opql.svg') }}" alt="">
+                                            <div class="page-description-notification">
+                                                Tidak ada notifikasi!
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
                         </div>
-                    </a>
-                    <a href="#" class="dropdown-item">
-                        <div class="dropdown-item-icon bg-success text-white">
-                            <i class="fas fa-check"></i>
-                        </div>
-                        <div class="dropdown-item-desc">
-                            <b>Kusnaedi</b> has moved task <b>Fix bug header</b> to <b>Done</b>
-                            <div class="time">12 Hours Ago</div>
-                        </div>
-                    </a>
-                    <a href="#" class="dropdown-item">
-                        <div class="dropdown-item-icon bg-danger text-white">
-                            <i class="fas fa-exclamation-triangle"></i>
-                        </div>
-                        <div class="dropdown-item-desc">
-                            Low disk space. Let's clean it!
-                            <div class="time">17 Hours Ago</div>
-                        </div>
-                    </a>
-                    <a href="#" class="dropdown-item">
-                        <div class="dropdown-item-icon bg-info text-white">
-                            <i class="fas fa-bell"></i>
-                        </div>
-                        <div class="dropdown-item-desc">
-                            Welcome to Stisla template!
-                            <div class="time">Yesterday</div>
-                        </div>
-                    </a>
+                    @endif
                 </div>
                 <div class="dropdown-footer text-center">
                     <a href="#">View All <i class="fas fa-chevron-right"></i></a>

@@ -6,7 +6,7 @@
             <img src="{{ asset('plus-admin/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-            <a href="#" class="d-block">{{ auth()->user()->name }}</a>
+            <a href="{{ url('admin') }}" class="d-block">{{ auth()->user()->name }}</a>
         </div>
     </div>
 
@@ -28,7 +28,7 @@
             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
             <li class="nav-item menu-open">
-                <a href="{{ url('admin') }}" class="nav-link active">
+                <a href="#" onclick="admin_dashboard('{{ url('admin') }}')" class="nav-link {{ Request::is('admin') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-thin fa-gauge"></i>
                     <p>
                         Dashboard
@@ -37,7 +37,7 @@
             </li>
             <li class="nav-header">MANAJEMEN</li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="#" class="nav-link {{ Request::is('admin/kategori*') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-solid fa-bookmark"></i>
                     <p>
                         Kategori
@@ -46,19 +46,19 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="{{ url('admin/kategori-produk') }}" class="nav-link">
+                        <a href="#" onclick="admin_kategori_produk('{{ url('admin/kategori-produk') }}')" class="nav-link {{ Request::is('admin/kategori-produk*') ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Produk</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ url('admin/kategori-edukasi') }}" class="nav-link">
+                        <a href="#" onclick="admin_kategori_edukasi('{{ url('admin/kategori-edukasi') }}')" class="nav-link {{ Request::is('admin/kategori-edukasi*') ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Edukasi</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ url('admin/kategori-kegiatan') }}" class="nav-link">
+                        <a href="#" onclick="admin_kategori_kegiatan('{{ url('admin/kategori-kegiatan') }}')" class="nav-link {{ Request::is('admin/kategori-kegiatan*') ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Kegiatan</p>
                         </a>
@@ -66,7 +66,7 @@
                 </ul>
             </li>
             <li class="nav-item">
-                <a href="{{ url('admin/produk') }}" class="nav-link">
+                <a href="#" onclick="admin_produk('{{ url('admin/produk') }}')" class="nav-link {{ Request::is('admin/produk*') ? 'active' : '' }}">
                     <i class="nav-icon mdi mdi-shopping"></i>
                     <p>
                         Produk
@@ -74,7 +74,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ url('admin/edukasi') }}" class="nav-link">
+                <a href="#" onclick="admin_edukasi('{{ url('admin/edukasi') }}')" class="nav-link {{ Request::is('admin/edukasi*') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-solid fa-clapperboard"></i>
                     <p>
                         Edukasi
@@ -82,7 +82,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ url('admin/kegiatan') }}" class="nav-link">
+                <a href="#" onclick="admin_kegiatan('{{ url('admin/kegiatan') }}')" class="nav-link {{ Request::is('admin/kegiatan*') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-solid fa-clipboard"></i>
                     <p>
                         Kegiatan
@@ -90,7 +90,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="#" class="nav-link {{ Request::is('admin/daftar*') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-solid fa-user"></i>
                     <p>
                         Akun
@@ -99,19 +99,19 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="{{ url('admin/daftar-gapoktan') }}" class="nav-link">
+                        <a href="#" onclick="admin_daftar_gapoktan('{{ url('admin/daftar-gapoktan') }}')" class="nav-link {{ Request::is('admin/daftar-admin*') ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Gapoktan</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ url('admin/daftar-poktan') }}" class="nav-link">
+                        <a href="#" onclick="admin_daftar_poktan('{{ url('admin/daftar-poktan') }}')" class="nav-link {{ Request::is('admin/daftar-poktan*') ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Poktan</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ url('admin/daftar-petani') }}" class="nav-link">
+                        <a href="#" onclick="admin_daftar_petani('{{ url('admin/daftar-petani') }}')" class="nav-link {{ Request::is('admin/daftar-petani*') ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Petani</p>
                         </a>
@@ -120,16 +120,16 @@
             </li>
             <li class="nav-header">Laporan</li>
             <li class="nav-item">
-                <a href="{{ url('admin/tandur') }}" class="nav-link">
+                <a href="#" onclick="admin_tandur('{{ url('admin/tandur') }}')" class="nav-link {{ Request::is('admin/tandur*') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-solid fa-calendar-days"></i>
                     <p>
                         Tandur
-                        <span class="badge badge-info right">2</span>
+                        {{-- <span class="badge badge-info right">2</span> --}}
                     </p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ url('admin/panen') }}" class="nav-link">
+                <a href="#" onclick="admin_panen('{{ url('admin/panen') }}')" class="nav-link {{ Request::is('admin/panen*') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-solid fa-calendar-check"></i>
                     <p>
                         Panen
@@ -137,7 +137,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ url('admin/rekap-penjualan') }}" class="nav-link">
+                <a href="#" onclick="admin_rekap_penjualan('{{ url('admin/rekap-penjualan') }}')" class="nav-link {{ Request::is('admin/rekap-penjualan*') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-solid fa-chart-line"></i>
                     <p>
                         Rekap Penjualan
@@ -146,7 +146,7 @@
             </li>
             <li class="nav-header">Profile Saya</li>
             <li class="nav-item">
-                <a href="{{ url('admin/pengaturan') }}" class="nav-link">
+                <a href="#" onclick="admin_pengaturan('{{ url('admin/pengaturan') }}')" class="nav-link {{ Request::is('admin/pengaturan*') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-solid fa-gear"></i>
                     <p>Pengaturan</p>
                 </a>

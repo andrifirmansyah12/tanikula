@@ -1,5 +1,21 @@
-<!-- Start Footer Area -->
-<footer class="footer" style="border-top: 1px solid #eee;">
+<footer class="footer">
+    <!-- Start Footer Top -->
+    <div class="footer-top border" style="border-color: #16A085">
+        <div class="container">
+            <div class="inner-content">
+                <div class="row">
+                    <div class="col-lg-3 col-md-4 col-12">
+                        <div class="footer-logo">
+                            <a href="index.html">
+                                <h3> <span style="color: #16A085">Shop</span>TaniKula</h3>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Footer Top -->
     <!-- Start Footer Middle -->
     <div class="footer-middle">
         <div class="container">
@@ -7,30 +23,15 @@
                 <div class="row">
                     <div class="col-lg-3 col-md-6 col-12">
                         <!-- Single Widget -->
-                        <div class="single-footer f-link">
-                            <h3>Ikuti Kami</h3>
-                            <ul>
-                                <li>
-                                    <a href="javascript:void(0)" class="mx-1"><i class="bi bi-facebook h4"></i></a>
-                                    <a href="javascript:void(0)" class="mx-1"><i class="bi bi-instagram h4"></i></a>
-                                    <a href="javascript:void(0)" class="mx-1"><i class="bi bi-whatsapp h4"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- End Single Widget -->
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-12">
-                        <!-- Single Widget -->
                         <div class="single-footer f-contact">
                             <h3>Hubungi Kami</h3>
-                            <p class="phone">Sri Makmur, Desa Krasak</p>
-                            <p class="phone">Kec Jatibarang, Kab Indramayu,</p>
-                            <p class="phone">Provinsi Jawa Barat.</p>
-                            {{-- <ul>
-                                <li><span>Senin-Minggu: </span> 24 Jam </li>
-                            </ul> --}}
+                            <p class="phone">Telp: (+62) 33 169 7720</p>
+                            <ul>
+                                <li><span>Senin-Sabtu: </span> 9.00 am - 8.00 pm</li>
+                                <li><span>Minggu: </span> 10.00 am - 6.00 pm</li>
+                            </ul>
                             <p class="mail">
-                                <a href="mailto:support@shopgrids.com">srimakmur@gmail.com</a>
+                                <a href="mailto:support@shopgrids.com">Srimakmur3@gmail.com</a>
                             </p>
                         </div>
                         <!-- End Single Widget -->
@@ -38,13 +39,25 @@
                     <div class="col-lg-3 col-md-6 col-12">
                         <!-- Single Widget -->
                         <div class="single-footer f-link">
-                            <h3>Kategori</h3>
+                            <h3>Informasi</h3>
                             <ul>
-                                <li><a href="javascript:void(0)">Nama Kategori 1</a></li>
-                                <li><a href="javascript:void(0)">Nama Kategori 2</a></li>
-                                <li><a href="javascript:void(0)">Nama Kategori 3</a></li>
-                                <li><a href="javascript:void(0)">Nama Kategori 4</a></li>
-                                <li><a href="javascript:void(0)">Nama Kategori 5</a></li>
+                                <li><a href="javascript:void(0)">Tentang Kami</a></li>
+                                <li><a href="javascript:void(0)">Hubungi Kami</a></li>
+                            </ul>
+                        </div>
+                        <!-- End Single Widget -->
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <!-- Single Widget -->
+                        <div class="single-footer f-link">
+                            <h3>Kategori Produk</h3>
+                            @php
+                                $category_product = App\Models\ProductCategory::take(5)->get();
+                            @endphp
+                            <ul>
+                                @foreach ($category_product as $item)
+                                    <li><a href="{{ url('product-category/'.$item->slug) }}">{{ $item->name }} </a></li>
+                                @endforeach
                             </ul>
                         </div>
                         <!-- End Single Widget -->
@@ -52,12 +65,12 @@
                     <div class="col-lg-3 col-md-6 col-12">
                         <!-- Single Widget -->
                         <div class="single-footer our-app">
-                            <h3>Download Aplikasi Mobile Sri Makmur Shop</h3>
+                            <h3>Aplikasi Seluler Kami</h3>
                             <ul class="app-btn">
                                 <li>
                                     <a href="javascript:void(0)">
                                         <i class="lni lni-play-store"></i>
-                                        <span class="small-title">Download di</span>
+                                        <span class="small-title">Download on the</span>
                                         <span class="big-title">Google Play</span>
                                     </a>
                                 </li>
@@ -70,5 +83,5 @@
         </div>
     </div>
     <!-- End Footer Middle -->
+    <!-- Start Footer Bottom -->
 </footer>
-<!--/ End Footer Area -->
