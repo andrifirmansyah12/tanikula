@@ -13,4 +13,9 @@ class Address extends Model
     {
         return $this->hasMany(Costumer::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -15,13 +15,13 @@ class CreateAddressesTable extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
-            $table->string('address1');
-            $table->string('address2')->nullable();
-            $table->string('address3')->nullable();
-            $table->string('city')->nullable();
-            $table->string('state')->nullable();
-            $table->string('country')->nullable();
-            $table->string('postal_code')->nullable();
+            $table->foreignId("user_id")->nullable();
+            $table->string('recipients_name')->nullable(); // nama penerima
+            $table->string('telp')->nullable(); // telepon penerima
+            $table->string('address_label')->nullable(); // label alamat (contoh rumah, kantor)
+            $table->string('city')->nullable(); // kota kabupaten
+            $table->string('complete_address')->nullable(); // alamat lengkap 
+            $table->string('note_for_courier')->nullable(); // catatan untuk kurir(contoh warna rumah, patokan, catatan khusus, )
             $table->timestamps();
         });
     }

@@ -1,25 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Api\Gapoktan;
+namespace App\Http\Controllers\Api\Petani;
 
-use App\Models\Gapoktan;
-use App\Http\Controllers\Api\BaseApiController as BaseController;
-use App\Http\Resources\GapoktanResource;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\FarmerResource;
+use App\Models\Farmer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class GapoktanApiController extends BaseController
+class AkunPetaniApiController extends Controller
 {
-    public function index()
-    {
-        $datas = Gapoktan::latest()->get();
-        $result = GapoktanResource::collection($datas);
-        return $this->sendResponse($result, 'Data fetched');
-    }
+     
 
     public function update(Request $request, $id)
     {
-        $datas = Gapoktan::findOrFail($id);
+        $datas = Farmer::findOrFail($id);
 
         $datas->update([
             'chairman' => $request->chairman,
@@ -34,7 +29,7 @@ class GapoktanApiController extends BaseController
     }
     
     public function updatePhoto(Request $request){
-        $data = Gapoktan::findOrFail($request->id);
+        $data = Farmer::findOrFail($request->id);
 
         $image = $request->file('image');
         $imageName = time() . '.' . $image->getClientOriginalExtension();
@@ -50,5 +45,4 @@ class GapoktanApiController extends BaseController
         $data->update();
         return $this->sendResponse($data, 'Data Updated');
     }
-
 }
