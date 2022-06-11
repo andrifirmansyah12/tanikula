@@ -6,20 +6,23 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ProductCategory;
 use App\Models\Product;
+use App\Models\PhotoProduct;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        $category_product = ProductCategory::where('is_active', '=', 1)->get();
-        $product_new = Product::join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
+        $category_product = ProductCategory::where('is_active', '=', 1)->latest()->get();
+        $product_new = Product::with('photo_product')
+                    ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
                     ->join('users', 'products.user_id', '=', 'users.id')
                     ->select('products.*', 'product_categories.name as category_name')
                     ->where('product_categories.is_active', '=', 1)
                     ->where('products.is_active', '=', 1)
                     ->orderBy('products.updated_at', 'desc')
                     ->get();
-        $product_search = Product::join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
+        $product_search = Product::with('photo_product')
+                    ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
                     ->join('users', 'products.user_id', '=', 'users.id')
                     ->select('products.*', 'product_categories.name as category_name')
                     ->where('product_categories.is_active', '=', 1)
@@ -33,7 +36,14 @@ class ProductController extends Controller
     public function detailProduct($slug)
     {
         if (Product::where('slug', $slug)->exists()) {
-            $product = Product::where('slug', $slug)->first();
+            $product = Product::with('photo_product')
+                    ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
+                    ->join('users', 'products.user_id', '=', 'users.id')
+                    ->select('products.*', 'product_categories.name as category_name')
+                    ->where('products.slug', $slug)
+                    ->orderBy('products.updated_at', 'desc')
+                    ->first();
+            // $photoProduct = PhotoProduct::where('product_id', $product->id)->get();
             return view('pages.home.detail', compact('product'));
         } else {
             return redirect('/')->with('status', 'Produk tidak ditemukan');
@@ -44,7 +54,13 @@ class ProductController extends Controller
     {
         if (ProductCategory::where('slug', $slug)->exists()) {
             $category_product = ProductCategory::where('slug', $slug)->first();
-            $product = Product::where('category_product_id', $category_product->id)->get();
+            $product = Product::with('photo_product')
+                    ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
+                    ->join('users', 'products.user_id', '=', 'users.id')
+                    ->select('products.*', 'product_categories.name as category_name')
+                    ->where('category_product_id', $category_product->id)
+                    ->orderBy('products.updated_at', 'desc')
+                    ->get();
             return view('pages.category.index', compact('category_product', 'product'));
         } else {
             return redirect('/')->with('status', 'Kategori Produk tidak ditemukan');

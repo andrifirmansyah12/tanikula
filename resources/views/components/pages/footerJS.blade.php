@@ -49,3 +49,48 @@
         }
     });
 </script>
+<script>
+    $(document).ready(function () {
+
+        $('#dynamic_content').html(make_skeleton())
+
+        // jalankan fungsi load content setelah 2 detik
+        setTimeout(function(){
+            load_content()
+        }, 2000);
+
+        function make_skeleton() {
+            var output = '';
+            for (var count = 0; count < 6; count++) {
+                output += '<div class="col-4">';
+                output += '<div class="ph-item">';
+                output += '<div class="ph-col-12">';
+                output += '<div class="ph-picture"></div>';
+                output += '<div class="ph-row">';
+                output += '<div class="ph-col-6 big"></div>';
+                output += '<div class="ph-col-4 empty big"></div>';
+                output += '<div class="ph-col-12"></div>'
+                output += '<div class="ph-col-12"></div>'
+                output += '</div>';
+                output += '</div>';
+                output += '</div>';
+                output += '</div>';
+            }
+            return output;
+        }
+
+        //membuat fungsi load data dari data.php
+        function load_content(limit){
+            $.ajax({
+                url: 'data.php',
+                method: 'POST',
+                data:{limit:limit},
+
+                //jika sukses maka gantilah skeleton loader dengan data.php
+                success:function(data){
+                    $('#dynamic_content').html(data);
+                }
+            })
+        }
+    })
+</script>

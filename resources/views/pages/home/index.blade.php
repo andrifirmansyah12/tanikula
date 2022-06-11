@@ -75,9 +75,14 @@
             @foreach ($category_product as $item)
             <div class="col-lg-4 col-md-6 col-12">
                 <div class="single-category">
-                    <h3 class="heading"><a href="{{ url('product-category/'.$item->slug) }}"> {{ $item->name }}</a></h3>
+                    <h3 class="heading"><a class="text-black" href="{{ url('product-category/'.$item->slug) }}"> {{ $item->name }}</a></h3>
                     <ul>
-                        <li><a href="product-grids.html">Smart Television</a></li>
+                        @foreach ($product_new->take(3) as $product_category)
+                            @if ($product_category->category_product_id == $item->id)
+                                <li><a href="{{ url('home/'.$item->slug) }}">{{ $product_category->name }}</a></li>
+                            @endif
+                        @endforeach
+                        <li><a href="{{ url('product-category/'.$item->slug) }}">Lainnya</a></li>
                     </ul>
                     <div class="images d-block">
                         <img src="{{ asset('img/Fibers.svg') }}" class="img-fluid" style="width: 10rem; height: 6rem;"
@@ -108,21 +113,25 @@
                 <div class="single-product">
                     <div class="product-image">
                         <a href="{{ url('home/'.$item->slug) }}">
-                            @if ($item->image)
-                            <img src="{{ asset('../storage/produk/'.$item->image) }}" alt="{{ $item->name }}"
-                                style="width: 27rem; height: 15rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
-                            @else
-                            <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->name }}"
-                                style="width: 27rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
-                            @endif
+                            @foreach ($item->photo_product->take(1) as $photos)
+                                @if ($photos->name)
+                                <img src="{{ asset('../storage/produk/'.$photos->name) }}" alt="{{ $item->name }}"
+                                    style="width: 27rem; height: 15rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                @else
+                                <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->name }}"
+                                    style="width: 27rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                @endif
+                            @endforeach
                         </a>
-                        <div class="button">
-                            <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
-                                Keranjang</a>
-                        </div>
+                        {{-- <div class="button">
+                            <button id="addToCartBtn" class="btn"><i class="lni lni-cart"></i>
+                                Keranjang</button>
+                        </div> --}}
                     </div>
                     <div class="product-info">
-                        <span class="category">{{ $item->category_name }}</span>
+                        <a href="{{ url('product-category/'.$item->product_category->slug) }}">
+                            <span class="category">{{ $item->category_name }}</span>
+                        </a>
                         <h4 class="title">
                             <a href="{{ url('home/'.$item->slug) }}">{{ $item->name }}</a>
                         </h4>
@@ -199,21 +208,25 @@
                 <div class="single-product">
                     <div class="product-image">
                         <a href="{{ url('home/'.$item->slug) }}">
-                            @if ($item->image)
-                            <img src="{{ asset('../storage/produk/'.$item->image) }}" alt="{{ $item->name }}"
-                                style="width: 27rem; height: 15rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
-                            @else
-                            <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->name }}"
-                                style="width: 27rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
-                            @endif
+                            @foreach ($item->photo_product->take(1) as $photos)
+                                @if ($photos->name)
+                                <img src="{{ asset('../storage/produk/'.$photos->name) }}" alt="{{ $item->name }}"
+                                    style="width: 27rem; height: 15rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                @else
+                                <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->name }}"
+                                    style="width: 27rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                @endif
+                            @endforeach
                         </a>
-                        <div class="button">
+                        {{-- <div class="button">
                             <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
                                 Keranjang</a>
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="product-info">
-                        <span class="category">{{ $item->category_name }}</span>
+                        <a href="{{ url('product-category/'.$item->product_category->slug) }}">
+                            <span class="category">{{ $item->category_name }}</span>
+                        </a>
                         <h4 class="title">
                             <a href="{{ url('home/'.$item->slug) }}">{{ $item->name }}</a>
                         </h4>
