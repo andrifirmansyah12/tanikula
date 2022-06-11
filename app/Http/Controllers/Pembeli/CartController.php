@@ -20,24 +20,24 @@ class CartController extends Controller
 
             if ($prod_check) {
                 if (Cart::where('product_id', $product_id)->where('user_id', Auth::id())->exists()) {
-                    return response()->json(['status' => $prod_check->name." already added to Cart"]);
+                    return response()->json(['status' => $prod_check->name." Sudah ditambahkan ke Keranjang"]);
                 } else {
                     $cartItem = new Cart();
                     $cartItem->product_id = $product_id;
                     $cartItem->user_id = Auth::id();
                     $cartItem->product_qty = $product_qty;
                     $cartItem->save();
-                    return response()->json(['status' => $prod_check->name." added to Cart"]);
+                    return response()->json(['status' => $prod_check->name." Ditambahkan ke Keranjang"]);
                 }
             }
         } else {
-            return response()->json(['status' => "login To Continue"]);
+            return response()->json(['status' => "Silahkan login!"]);
         }
     }
 
     public function viewCart()
     {
-        $cartItem = Cart::where('user_id', Auth::id())->latest()->get();
+        $cartItem = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
         return view('pages.bag.index', compact('cartItem'));
     }
 

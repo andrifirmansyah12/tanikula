@@ -39,19 +39,23 @@
                     <div class="single-product">
                         <div class="product-image">
                             <a href="{{ url('product-category/'.$category_product->slug.'/'.$item->slug) }}">
-                                @if ($item->image)
-                                    <img src="{{ asset('../storage/produk/'.$item->image) }}" alt="{{ $item->name }}" style="width: 27rem; height: 15rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
-                                @else
-                                    <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->name }}" style="width: 27rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
-                                @endif
+                                @foreach ($item->photo_product->take(1) as $photos)
+                                    @if ($photos->name)
+                                        <img src="{{ asset('../storage/produk/'.$photos->name) }}" alt="{{ $item->name }}" style="width: 27rem; height: 15rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                    @else
+                                        <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->name }}" style="width: 27rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                    @endif
+                                @endforeach
                             </a>
-                            <div class="button">
+                            {{-- <div class="button">
                                 <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
                                     Keranjang</a>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="product-info">
-                            <span class="category">{{ $item->product_category->name }}</span>
+                            <a href="{{ url('product-category/'.$item->product_category->slug) }}">
+                                <span class="category">{{ $item->category_name }}</span>
+                            </a>
                             <h4 class="title">
                                 <a href="{{ url('product-category/'.$category_product->slug.'/'.$item->slug) }}">{{ $item->name }}</a>
                             </h4>

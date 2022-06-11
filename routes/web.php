@@ -73,6 +73,11 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:admin']], function() 
     Route::get('admin/produk/edit', [App\Http\Controllers\Admin\ProductController::class, 'edit'])->name('admin-produk-edit');
     Route::post('admin/produk/update', [App\Http\Controllers\Admin\ProductController::class, 'update'])->name('admin-produk-update');
     Route::get('admin/produk/checkSlug', [App\Http\Controllers\Admin\ProductController::class, 'checkSlug'])->name('admin-produk-checkSlug');
+    Route::get('admin/produk/viewPhoto', [App\Http\Controllers\Admin\ProductController::class, 'viewPhoto'])->name('admin-produk-viewPhoto');
+    Route::delete('admin/produk/deletePhoto', [App\Http\Controllers\Admin\ProductController::class, 'deletePhoto'])->name('admin-produk-deletePhoto');
+    Route::get('admin/produk/addPhoto', [App\Http\Controllers\Admin\ProductController::class, 'addPhoto'])->name('admin-produk-addPhoto');
+    Route::post('admin/produk/addPhotoProduct', [App\Http\Controllers\Admin\ProductController::class, 'addPhotoProduct'])->name('admin-produk-addPhotoProduct');
+
 
     Route::get('admin/daftar-gapoktan', [App\Http\Controllers\Admin\GapoktanController::class, 'index'])->name('admin-gapoktan');
     Route::post('admin/daftar-gapoktan/store', [App\Http\Controllers\Admin\GapoktanController::class, 'store'])->name('admin-gapoktan-store');
@@ -180,6 +185,10 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:gapoktan']], function
     Route::get('gapoktan/produk/edit', [App\Http\Controllers\Gapoktan\ProductController::class, 'edit'])->name('gapoktan-produk-edit');
     Route::post('gapoktan/produk/update', [App\Http\Controllers\Gapoktan\ProductController::class, 'update'])->name('gapoktan-produk-update');
     Route::get('gapoktan/produk/checkSlug', [App\Http\Controllers\Gapoktan\ProductController::class, 'checkSlug'])->name('gapoktan-produk-checkSlug');
+    Route::get('gapoktan/produk/viewPhoto', [App\Http\Controllers\Gapoktan\ProductController::class, 'viewPhoto'])->name('gapoktan-produk-viewPhoto');
+    Route::delete('gapoktan/produk/deletePhoto', [App\Http\Controllers\Gapoktan\ProductController::class, 'deletePhoto'])->name('gapoktan-produk-deletePhoto');
+    Route::get('gapoktan/produk/addPhoto', [App\Http\Controllers\Gapoktan\ProductController::class, 'addPhoto'])->name('gapoktan-produk-addPhoto');
+    Route::post('gapoktan/produk/addPhotoProduct', [App\Http\Controllers\Gapoktan\ProductController::class, 'addPhotoProduct'])->name('gapoktan-produk-addPhotoProduct');
 
     Route::get('gapoktan/daftar-poktan', [App\Http\Controllers\Gapoktan\PoktanController::class, 'index'])->name('gapoktan-poktan');
     Route::post('gapoktan/daftar-poktan/store', [App\Http\Controllers\Gapoktan\PoktanController::class, 'store'])->name('gapoktan-poktan-store');
@@ -361,13 +370,17 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function(
 
 });
 
+Route::group(['middleware' => ['LoginCheck', 'auth']], function() {
+    Route::get('/cart', [App\Http\Controllers\Pembeli\CartController::class, 'viewCart']);
+    Route::get('/cart/shipment', [App\Http\Controllers\Pembeli\CheckoutController::class, 'index']);
+});
+
 Route::get('/', [App\Http\Controllers\Pages\ProductController::class, 'index']);
 Route::get('/home', [App\Http\Controllers\Pages\ProductController::class, 'index'])->name('home');
-Route::get('/home/{product_slug}', [App\Http\Controllers\Pages\ProductController::class, 'detailProduct']);
+Route::get('/home/{product:slug}', [App\Http\Controllers\Pages\ProductController::class, 'detailProduct']);
 Route::get('/product-category/{slug}', [App\Http\Controllers\Pages\ProductController::class, 'viewCategory'])->name('view.category');
 Route::get('/product-category/{category_slug}/{product_slug}', [App\Http\Controllers\Pages\ProductController::class, 'productView'])->name('view.product');
 Route::post('/add-to-cart', [App\Http\Controllers\Pembeli\CartController::class, 'addProduct']);
-Route::get('/cart', [App\Http\Controllers\Pembeli\CartController::class, 'viewCart']);
 Route::post('/delete-cart-item', [App\Http\Controllers\Pembeli\CartController::class, 'deleteCartItem']);
 Route::post('/update-cart-item', [App\Http\Controllers\Pembeli\CartController::class, 'updateCartItem']);
 

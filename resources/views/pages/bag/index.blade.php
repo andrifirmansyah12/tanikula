@@ -31,6 +31,8 @@
                 <div class="col-12 col-xl-8 mb-3 mb-xl-0">
                     @php
                         $total = 0;
+                        $totalPrice = 0;
+                        $totalQty = 0;
                     @endphp
                     @foreach ($cartItem as $item)
                         <div class="mb-12 py-3 mt-3 border-top border-bottom" id="product_data">
@@ -43,12 +45,14 @@
                                         <div class="col-12 col-md-3 col-lg-3">
                                             <div class="d-flex align-items-center justify-content-center bg-light"
                                                 style="width: 160px; height: 150px;">
+                                                @foreach ($item->product->photo_product->take(1) as $photos)
                                                 <img class="img-fluid" style="object-fit: contain;"
-                                                    src="{{ asset('../storage/produk/'.$item->product->image) }}" alt="">
+                                                    src="{{ asset('../storage/produk/'.$photos->name) }}" alt="{{ $item->product->name }}">
+                                                @endforeach
                                             </div>
                                         </div>
                                         <div class="col-6 mt-2 mt-md-0">
-                                            <h3 class="mb-2 fs-6 fw-bold">{{ $item->product->name }}</h3>
+                                            <h3 class="mb-2 fs-6 fw-bold"><a class="text-black" href="{{ url('home/'.$item->product->slug) }}">{{ $item->product->name }}</a></h3>
                                             <label for="color">Tipe</label>
                                             <div class="dropdown mt-1">
                                                 <button class="btn border dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -73,23 +77,29 @@
                                                         <input type="button" value="+" class="button-plus border rounded-circle icon-shape icon-sm" data-field="quantity">
                                                     </div>
                                                 </div> --}}
-                                                <div class="col-6 col-md-3 form-group" style="margin-left: 10px">
-                                                    <input type="hidden" value="{{ $item->product_id }}" id="prod_id">
-                                                    <div class="d-flex justify-content-between">
-                                                        <button class="input-group-text changeQuantity decrement-btn me-1">-</button>
-                                                        <input type="text" name="quantity" class="form-control qty-input text-center" value="{{ $item->product_qty }}">
-                                                        <button class="input-group-text changeQuantity increment-btn ms-1">+</button>
+                                                @if ($item->product->stoke >= $item->product_qty)
+                                                    <div class="col-6 col-md-3 form-group" style="margin-left: 10px">
+                                                        <input type="hidden" value="{{ $item->product_id }}" id="prod_id">
+                                                        <div class="d-flex justify-content-between">
+                                                            <button class="input-group-text changeQuantity decrement-btn me-1">-</button>
+                                                            <input type="text" name="quantity" class="form-control qty-input text-center" value="{{ $item->product_qty }}">
+                                                            <button class="input-group-text changeQuantity increment-btn ms-1">+</button>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                    @php
+                                                        $total += $item->product->price * $item->product_qty;
+                                                        $totalQty += $item->product_qty;
+                                                        $totalPrice += $item->product->price;
+                                                    @endphp
+                                                @else
+                                                    <h4 class="m-3">Habis</h4>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        @php
-                            $total += $item->product->price * $item->product_qty;
-                        @endphp
                     @endforeach
                 </div>
                 <div class="col-12 col-xl-4">
@@ -97,14 +107,14 @@
                         <h3 class="mb-3 fs-4">Ringkasan Belanja</h3>
                         <div
                             class="d-flex mb-8 align-items-center justify-content-between pb-3 border-bottom border-info-light">
-                            <span class="">Total Harga(0 Barang)</span>
-                            <span class="fs-6 fw-bold">Rp0</span>
+                            <span class="">Total Harga({{$totalQty}} Barang)</span>
+                            <span class="fs-6 fw-bold">Rp. {{ number_format($totalPrice, 0) }}</span>
                         </div>
                         <div class="d-flex mb-10 mt-3 justify-content-between align-items-center">
                             <span class="fw-bold">Total Harga</span>
                             <span class="fs-6 fw-bold">Rp. {{ number_format($total, 0) }}</span>
                         </div>
-                        <a class="btn w-100 text-uppercase text-white" style="background: #16A085;" href="#">Beli (0)</a>
+                        <a class="btn w-100 text-uppercase text-white" style="background: #16A085;" href="{{ url('cart/shipment') }}">Beli ({{$totalQty}})</a>
                     </div>
                 </div>
             </div>
