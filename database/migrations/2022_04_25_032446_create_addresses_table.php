@@ -20,7 +20,9 @@ class CreateAddressesTable extends Migration
             $table->string('telp')->nullable(); // telepon penerima
             $table->string('address_label')->nullable(); // label alamat (contoh rumah, kantor)
             $table->string('city')->nullable(); // kota kabupaten
-            $table->string('complete_address')->nullable(); // alamat lengkap 
+            $table->integer('postal_code')->nullable(); // kode pos
+            $table->boolean('main_address')->default(0); // Alamat Utama
+            $table->string('complete_address')->nullable(); // alamat lengkap
             $table->string('note_for_courier')->nullable(); // catatan untuk kurir(contoh warna rumah, patokan, catatan khusus, )
             $table->timestamps();
         });

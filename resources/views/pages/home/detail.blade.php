@@ -103,7 +103,9 @@
                             <h2 class="title">{{ $product->name }}
                                 <span>
                                     @if ($product->stoke < 1)
-                                        <label class="badge bg-danger">Habis</label>
+                                        <label class="mx-3 badge bg-danger">Habis</label>
+                                    @elseif($product->stoke < 10)
+                                        <label class="mx-3 badge bg-danger">Tersisa {{ $product->stoke }}</label>
                                     @endif
                                 </span>
                             </h2>

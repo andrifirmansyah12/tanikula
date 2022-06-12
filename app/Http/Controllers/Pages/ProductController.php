@@ -50,6 +50,19 @@ class ProductController extends Controller
         }
     }
 
+    public function allCategory()
+    {
+        $product_new = Product::with('photo_product')
+                    ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
+                    ->join('users', 'products.user_id', '=', 'users.id')
+                    ->select('products.*', 'product_categories.name as category_name')
+                    ->where('product_categories.is_active', '=', 1)
+                    ->where('products.is_active', '=', 1)
+                    ->orderBy('products.updated_at', 'desc')
+                    ->get();
+        return view('pages.category.allCategory', compact('product_new'));
+    }
+
     public function viewCategory($slug)
     {
         if (ProductCategory::where('slug', $slug)->exists()) {
