@@ -105,7 +105,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Address::class);
     }
-    
+
+    public function order()
+    {
+        return $this->hasMany(Order::class);
+    }
+
     public function notificationUser()
     {
         return $this->hasMany(NotificationUser::class);

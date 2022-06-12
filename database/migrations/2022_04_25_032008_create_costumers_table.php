@@ -16,7 +16,6 @@ class CreateCostumersTable extends Migration
         Schema::create('costumers', function (Blueprint $table) {
             $table->id();
             $table->foreignId("user_id")->nullable();
-            $table->foreignId("address_id")->nullable();
             $table->string('gender')->nullable();
             $table->dateTime('birth')->nullable();
             $table->bigInteger('telp')->nullable();

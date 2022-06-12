@@ -126,6 +126,7 @@
                                     @php
                                     $total = 0;
                                     @endphp
+                                    @if ($cartItem->count())
                                     @foreach ($cartItem as $item)
                                     <ul class="shopping-list" id="product_data">
                                         <li>
@@ -153,13 +154,31 @@
                                     $total += $item->product->price * $item->product_qty;
                                     @endphp
                                     @endforeach
+                                    @else
+                                        <div id="app">
+                                            <div class="container">
+                                                <div class="page-error-notification">
+                                                    <div class="page-inner-notification">
+                                                        <img src="{{ asset('img/undraw_empty_re_opql.svg') }}" alt="">
+                                                        <div class="page-description-notification">
+                                                            Tidak ada produk dikeranjang!
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
                                     <div class="bottom">
                                         <div class="total">
                                             <span>Total</span>
                                             <span class="total-amount">Rp. {{ number_format($total, 0) }}</span>
                                         </div>
                                         <div class="button">
-                                            <a href="{{ url('cart/shipment') }}" class="btn animate">Checkout</a>
+                                            @if ($cartItem->count())
+                                                <a href="{{ url('cart/shipment') }}" class="btn animate">Checkout</a>
+                                            @else
+                                                <a href="{{ url('product-category/allCategory') }}" class="btn animate">Belanja Sekarang</a>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>

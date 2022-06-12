@@ -59,12 +59,14 @@ class ProductController extends Controller
 			foreach ($emps as $emp) {
 				$output .= '<tr>';
                 $output .= '<td>' . $nomor++ . '</td>';
+                $output .= '<td>';
                 foreach ($emp->photo_product->take(1) as $photos)
                 if (empty($photos->name)) {
-                    $output .= '<td><img src="../stisla/assets/img/example-image.jpg" class="img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"></td>';
+                    $output .= '<img src="../stisla/assets/img/example-image.jpg" class="img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
                 } else {
-                    $output .= '<td><img src="../storage/produk/' . $photos->name . '" class="img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"></td>';
+                    $output .= '<img src="../storage/produk/' . $photos->name . '" class="img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
                 }
+                $output .= '</td>';
                 $output .= '<td>' . $emp->code . '</td>
                 <td>' . $emp->name . '</td>';
                 if (empty($emp->product_category->name)) {

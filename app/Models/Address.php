@@ -8,11 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Address extends Model
 {
     use HasFactory;
-
-    public function costumer()
-    {
-        return $this->hasMany(Costumer::class);
-    }
+    protected $guarded = ["id"];
 
     public function user()
     {

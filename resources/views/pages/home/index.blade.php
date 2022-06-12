@@ -102,7 +102,7 @@
             <div class="col-12">
                 <div class="d-flex align-items-center section-title">
                     <h2>Produk Terbaru</h2>
-                    <a class="text-white" href="">Lihat semua</a>
+                    <a class="text-white" href="{{ url('product-category/allCategory') }}">Lihat semua</a>
                 </div>
             </div>
         </div>
@@ -197,7 +197,7 @@
             <div class="col-12">
                 <div class="d-flex align-items-center section-title">
                     <h2>Berdasarkan Pencarianmu</h2>
-                    <a href="">Lihat semua</a>
+                    <a href="{{ url('product-category/allCategory') }}">Lihat semua</a>
                 </div>
             </div>
         </div>
