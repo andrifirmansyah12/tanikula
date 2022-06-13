@@ -37,6 +37,7 @@ class PlantApiController extends BaseController
         $validator = Validator::make($request->all(),[
             'plant_tanaman' => 'required',
             'surface_area' => 'required',
+            'address' => 'required',
             'plating_date' => 'required',
         ]);
 
@@ -50,8 +51,10 @@ class PlantApiController extends BaseController
             'poktan_id' => $request->poktan_id,
             "plant_tanaman" => $request->plant_tanaman,
             'surface_area' => $request->surface_area,
+            'address' => $request->address,
             'plating_date' => $request->plating_date,
             'harvest_date' => $request->harvest_date,
+            'status' => "tandur",
         ]);
         $result = PlantResource::make($datas);
         return $this->sendResponse($result, 'Data Strored');
@@ -76,6 +79,7 @@ class PlantApiController extends BaseController
             'plant_tanaman' => 'required',
             'surface_area' => 'required',
             'plating_date' => 'required',
+            'address' => 'required',
         ]);
 
         if($validator->fails()){
@@ -87,6 +91,7 @@ class PlantApiController extends BaseController
         $datas->update([
             "plant_tanaman" => $request->plant_tanaman,
             'surface_area' => $request->surface_area,
+            'address' => $request->address,
             'plating_date' => $request->plating_date, 
             'harvest_date' => $request->harvest_date, 
         ]);
@@ -111,6 +116,21 @@ class PlantApiController extends BaseController
 
         $datas->update([
             'harvest_date' => $request->harvest_date, 
+            'status' => "panen",
+        ]);
+
+        $datas->update();
+
+        return $this->sendResponse($datas, 'Data Updated');
+
+    }
+
+    public function updateStatus($id)
+    {
+        $datas = Plant::findOrFail($id);
+
+        $datas->update([
+            'status' => "selesai",
         ]);
 
         $datas->update();

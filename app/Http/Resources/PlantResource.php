@@ -20,6 +20,7 @@ class PlantResource extends JsonResource
             'poktan_id' =>  new PoktanResource($this->poktan),
             "plant_tanaman" => $this->plant_tanaman,
             'surface_area' => $this->surface_area,
+            'address' => $this->address,
             'plating_date' => $this->plating_date,
             'harvest_date' => $this->harvest_date,
             'status' => $this->status,

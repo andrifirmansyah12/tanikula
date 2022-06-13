@@ -19,6 +19,7 @@ class CreatePlantsTable extends Migration
             $table->foreignId("poktan_id")->nullable();
             $table->string("plant_tanaman")->nullable();
             $table->string("surface_area")->nullable();
+            $table->string("address")->nullable();
             $table->dateTime("plating_date")->nullable();
             $table->dateTime("harvest_date")->nullable();
             $table->string("status")->nullable();

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Customer\AddressApiController;
 use App\Http\Controllers\Api\Customer\CartApiController;
 use App\Http\Controllers\Api\Customer\CustomerApiController;
 use App\Http\Controllers\Api\Customer\LoginCustomerApiController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\Api\Gapoktan\EducationCategoryApiController;
 use App\Http\Controllers\Api\Gapoktan\GapoktanApiController;
 use App\Http\Controllers\Api\Gapoktan\LoginGapoktanApiController;
 use App\Http\Controllers\Api\Gapoktan\PoktanApiController;
+use App\Http\Controllers\Api\Petani\AkunPetaniApiController;
 use App\Http\Controllers\Api\Petani\FarmerApiController;
 use App\Http\Controllers\Api\Petani\LoginPetaniApiController;
 use App\Http\Controllers\Api\Petani\PlantApiController;
@@ -58,7 +60,8 @@ Route::middleware('auth:api')->group(function () {
     Route::get('cart/user_id/{user_id}', [CartApiController::class, 'indexByid']);
     Route::resource('wishlist', WishlistApiController::class);
     Route::get('wishlist/user_id/{user_id}', [WishlistApiController::class, 'indexByid']);
-
+    Route::resource('address', AddressApiController::class);
+    Route::get('address/user_id/{user_id}', [AddressApiController::class, 'indexByid']);
     // ------ Gapoktan -----------
     // Activity
     Route::resource('activity', ActivityApiController::class);
@@ -81,8 +84,10 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('plant', PlantApiController::class);
     Route::get('plant/farmer/{id}', [PlantApiController::class, 'indexByIdUser']);
     Route::put('plant/harvest-date/{id}', [PlantApiController::class, 'addHarvestDate']);
+    Route::put('plant/status/{id}', [PlantApiController::class, 'updateStatus']);
     Route::resource('farmer', FarmerApiController::class);
-    
+    Route::resource('akun-petani', AkunPetaniApiController::class);
+    Route::post('akun-petani/update/image', [AkunPetaniApiController::class, 'updatePhoto']);
     // user
     Route::resource('user', UserApiController::class);
     
