@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Customer;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Http\Controllers\Api\BaseApiController as BaseController;
+use App\Models\Costumer;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -29,6 +30,9 @@ class RegisterCustomerApiController extends BaseController
         $user->assignRole('pembeli');
         $success['token'] =  $user->createToken('MyApp')->accessToken;
         $success['name'] =  $user->name;
+        $datas = Costumer::create([
+            'user_id' => $user->id, 
+        ]);
    
         return $this->sendResponse($success, 'User register successfully.');
     }

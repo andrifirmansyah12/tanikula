@@ -21,6 +21,7 @@ class AddressResource extends JsonResource
             "telp" => $this->telp,
             "address_label" => $this->address_label,
             "city" => $this->city,
+            "postal_code" => $this->postal_code,
             "complete_address" => $this->complete_address,
             "note_for_courier" => $this->note_for_courier,
         ];

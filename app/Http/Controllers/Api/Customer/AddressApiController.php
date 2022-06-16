@@ -27,6 +27,7 @@ class AddressApiController extends BaseController
             "telp" => $request->telp,
             "address_label" => $request->address_label,
             "city" => $request->city,
+            "postal_code" => $request->postal_code,
             "complete_address" => $request->complete_address,
             "note_for_courier" => $request->note_for_courier,
          ]);
@@ -45,6 +46,7 @@ class AddressApiController extends BaseController
             "telp" => $request->telp,
             "address_label" => $request->address_label,
             "city" => $request->city,
+            "postal_code" => $request->postal_code,
             "complete_address" => $request->complete_address,
             "note_for_courier" => $request->note_for_courier,
         ]);
