@@ -10,6 +10,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.css"
         integrity="sha256-pODNVtK3uOhL8FUNWWvFQK0QoQoV3YA9wGGng6mbZ0E=" crossorigin="anonymous" />
     <!-- AKHIR STYLE CSS -->
+    <style>
+        .preview-image img
+        {
+            padding: 10px;
+            max-width: 100px;
+        }
+
+        .preview-image-edit img
+        {
+            padding: 10px;
+            max-width: 100px;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -56,7 +69,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="#" method="POST" id="add_employee_form" enctype="multipart/form-data">
+                <form action="#" method="POST" id="add_employee_form" accept-charset="utf-8" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body p-4">
                         <div class="form-group my-2">
@@ -85,32 +98,33 @@
                         <div class="d-lg-flex justify-content-between my-2 form-group">
                             <div>
                                 <label for="stoke" style="font-size: 12px">Stok</label>
-                                <input type="text" name="stoke" class="form-control" placeholder="Stok" required>
+                                <input type="number" name="stoke" class="form-control" placeholder="Stok" required>
                             </div>
                             <div class="pt-2 pt-lg-0">
                                 <label for="price" style="font-size: 12px">Harga</label>
-                                <input type="text" name="price" class="form-control" placeholder="Harga" required>
+                                <input type="number" name="price" class="form-control" placeholder="Harga" required>
                             </div>
                         </div>
                         <div class="my-2 form-group">
                             <label for="desc">Deskripsi</label>
                             <input type="text" name="desc" class="form-control" placeholder="Deskripsi" required>
                         </div>
-                        <div class="my-2 form-group">
+                        {{-- <div class="my-2 form-group">
                             <label for="image">Unggah Foto</label>
                             <small class="d-flex text-danger pb-1">*Unggah berupa foto produk</small>
                             <div>
                                 <div class="tab-content" id="myTabContent2">
                                     <div class="tab-pane fade show active" id="home3" role="tabpanel"
                                         aria-labelledby="home-tab3">
-                                        <img id="preview" class="img-fluid img-thumbnail image"
+                                        <div class="preview-image"> </div> --}}
+                                        {{-- <img id="preview" class="img-fluid img-thumbnail image"
                                         src="{{ asset('stisla/assets/img/example-image.jpg') }}" alt="edukasi"
-                                        style="width: 20rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
-                                    </div>
+                                        style="width: 20rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"> --}}
+                                    {{-- </div>
                                 </div>
                             </div>
-                            <input type="file" name="image" id="files" class="form-control" accept="image/*" required>
-                        </div>
+                            <input type="file" id="images" name="images[]" multiple class="form-control" accept="image/*" required>
+                        </div> --}}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
@@ -162,33 +176,110 @@
                         <div class="d-lg-flex justify-content-between my-2 form-group">
                             <div>
                                 <label for="stoke" style="font-size: 12px">Stok</label>
-                                <input type="text" name="stoke" id="stoke" class="form-control" placeholder="Stok" required>
+                                <input type="number" name="stoke" id="stoke" class="form-control" placeholder="Stok" required>
                             </div>
                             <div class="pt-2 pt-lg-0">
                                 <label for="price" style="font-size: 12px">Harga</label>
-                                <input type="text" name="price" id="price" class="form-control" placeholder="Harga" required>
+                                <input type="number" name="price" id="price" class="form-control" placeholder="Harga" required>
                             </div>
                         </div>
                         <div class="my-2 form-group">
                             <label for="desc">Deskripsi</label>
                             <input type="text" name="desc" id="desc" class="form-control" placeholder="Deskripsi" required>
                         </div>
-                        <div class="my-2 form-group">
-                            <label for="file">Unggah File</label>
+                        {{-- <div class="my-2 form-group">
+                            <label for="image">Unggah Foto</label>
                             <small class="d-flex text-danger pb-1">*Unggah berupa foto produk</small>
-                            <div class="mt-2">
-                                <div class="editFile">
+                            <div>
+                                <div class="tab-content" id="myTabContent2">
+                                    <div class="tab-pane fade show active" id="home3" role="tabpanel"
+                                        aria-labelledby="home-tab3">
+                                        <div class="preview-image-edit"> </div>
+                                        <div class="tab-content editFile" id="myTabContent2">
 
+                                        </div>
+                                        {{-- <img id="preview" class="img-fluid img-thumbnail image"
+                                        src="{{ asset('stisla/assets/img/example-image.jpg') }}" alt="edukasi"
+                                        style="width: 20rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"> --}}
+                                    {{-- </div>
                                 </div>
                             </div>
-                            <input type="file" name="image" id="files" accept="image/*" class="form-control">
-                        </div>
+                            <input type="file" id="imagesEdit" name="images[]" multiple class="form-control" accept="image/*">
+                        </div> --}}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
                         <button type="submit" id="edit_employee_btn" class="btn btn-primary">Simpan</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addPhotoProduct" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Foto Produk</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="#" method="POST" id="addPhotoProductForm" enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" name="id" id="id">
+                    <input type="hidden" name="photoProduct" id="photoProduct">
+                    <div class="modal-body p-4">
+                        <input hidden type="text" name="name" id="namaProduct" class="form-control" placeholder="Nama" required>
+                        <div class="form-group">
+                            <label for="image">Unggah Foto</label>
+                            <small class="d-flex text-danger pb-1">*Unggah berupa foto produk</small>
+                            <div>
+                                <div class="tab-content" id="myTabContent2">
+                                    <div class="tab-pane fade show active" id="home3" role="tabpanel"
+                                        aria-labelledby="home-tab3">
+                                        <div class="preview-image-edit"> </div>
+                                        {{-- <img id="preview" class="img-fluid img-thumbnail image"
+                                        src="{{ asset('stisla/assets/img/example-image.jpg') }}" alt="edukasi"
+                                        style="width: 20rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"> --}}
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="file" id="imagesEdit" name="images[]" multiple class="form-control" accept="image/*">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
+                        <button type="submit" id="addPhotoProductBtn" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="viewPhotoProduct" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Kelola Foto Produk</h5>
+                    <button type="button" id="closeBtnPhoto" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="form-group">
+                        <div class="tab-content" id="myTabContent2">
+                            <div class="tab-pane fade show active" id="home3" role="tabpanel"
+                                aria-labelledby="home-tab3">
+                                <div class="editFile"> </div>
+                                {{-- <img id="preview" class="img-fluid img-thumbnail image"
+                                        src="{{ asset('stisla/assets/img/example-image.jpg') }}" alt="edukasi"
+                                style="width: 20rem; height: 10rem; -o-object-fit: cover; object-fit: cover;
+                                -o-object-position: center; object-position: center;"> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -210,7 +301,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.js"
         integrity="sha256-siqh9650JHbYFKyZeTEAhq+3jvkFCG8Iz+MHdr9eKrw=" crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
     <!-- AKHIR LIBARARY JS -->
 
     <!-- JAVASCRIPT -->
@@ -224,22 +314,6 @@
             );
         });
 
-        $(function() {
-            $('#files').on('change', function() {
-                var file = this.files[0];
-                var reader = new FileReader();
-                reader.onload = viewer.load;
-                reader.readAsDataURL(file);
-            });
-
-            var viewer = {
-                load : function(e) {
-                    $('#preview').attr('src', e.target.result)
-                    $('#videoPreview').attr('src', e.target.result)
-                }
-            }
-        })
-
         //CSRF TOKEN PADA HEADER
         //Script ini wajib krn kita butuh csrf token setiap kali mengirim request post, patch, put dan delete ke server
         $(document).ready(function() {
@@ -251,17 +325,58 @@
         });
 
         $(function() {
+            // Multiple images preview with JavaScript
+            var multiImgPreview = function(input, imgPreviewPlaceholder) {
+                if (input.files) {
+                    var filesAmount = input.files.length;
+                    for (i = 0; i < filesAmount; i++) {
+                        var reader = new FileReader();
+                        reader.onload = function(event) {
+                            $($.parseHTML('<img>')).attr('src', event.target.result).appendTo(imgPreviewPlaceholder)
+                        }
+                        reader.readAsDataURL(input.files[i]);
+                    }
+                }
+            };
+            $('#images').on('change', function() {
+                multiImgPreview(this, 'div.preview-image');
+            });
+
+            // Multiple images preview with JavaScript
+            var multiImgPreviewEdit = function(input, imgPreviewPlaceholder) {
+                if (input.files) {
+                    var filesAmount = input.files.length;
+                    for (i = 0; i < filesAmount; i++) {
+                        var reader = new FileReader();
+                        reader.onload = function(event) {
+                            $($.parseHTML('<img>')).attr('src', event.target.result).appendTo(imgPreviewPlaceholder);
+                        }
+                        reader.readAsDataURL(input.files[i]);
+                    }
+                }
+            };
+            $('#imagesEdit').on('change', function() {
+                multiImgPreviewEdit(this, 'div.preview-image-edit');
+            });
+        });
+
+        $(function() {
+
+            $("#viewPhotoProduct").on("hidden.bs.modal", function (e) {
+                console.log("Modal hidden");
+                $(".editFile").html("");
+            });
 
             // add new employee ajax request
             $("#add_employee_form").submit(function(e) {
                 e.preventDefault();
-                const fd = new FormData(this);
+                var formData = new FormData(this);
                 $("#add_employee_btn").text('Tunggu..');
                 $("#add_employee_btn").prop('disabled', true);
                 $.ajax({
                 url: '{{ route('gapoktan-produk-store') }}',
                 method: 'post',
-                data: fd,
+                data: formData,
                 cache: false,
                 contentType: false,
                 processData: false,
@@ -273,9 +388,7 @@
                         showError('stoke', response.messages.stoke);
                         showError('price', response.messages.price);
                         showError('desc', response.messages.desc);
-                        showError('image', response.messages.image);
-                    }
-                    else if (response.status == 200) {
+                    } else if (response.status == 200){
                         Swal.fire(
                             'Menambahkan!',
                             'Produk Berhasil Ditambahkan!',
@@ -308,17 +421,18 @@
                     $("#stoke").val(response.stoke);
                     $("#price").val(response.price);
                     $("#desc").val(response.desc);
-                    if (response.image) {
-                        $(".editFile").html(
-                            `<div class="tab-pane fade show active" id="home2" role="tabpanel"
-                                aria-labelledby="home-tab2">
-                                <img id="preview" class="img-fluid img-thumbnail image"
-                                src="../storage/produk/${response.image}" alt="produk"
-                                style="width: 20rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
-                            </div>`);
-                    }
+                    // if (response.file) {
+                    //     $(".editFile").html(
+                    //         `<div class="tab-pane fade show active" id="home2" role="tabpanel"
+                    //             aria-labelledby="home-tab2">
+                    //             <img id="preview" class="img-fluid img-thumbnail image"
+                    //             src="../storage/edukasi/${response.photo_product}" alt="edukasi"
+                    //             style="width: 20rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                    //         </div>
+                    //         `);
+                    // }
                     $("#emp_id").val(response.id);
-                    $("#emp_avatar").val(response.image);
+                    $("#emp_avatar").val(response.photo_product);
                 }
                 });
             });
@@ -326,13 +440,14 @@
             // update employee ajax request
             $("#edit_employee_form").submit(function(e) {
                 e.preventDefault();
-                const fd = new FormData(this);
+
+                var formData = new FormData(this);
                 $("#edit_employee_btn").text('Tunggu..');
                 $("#edit_employee_btn").prop('disabled', true);
                 $.ajax({
                 url: '{{ route('gapoktan-produk-update') }}',
                 method: 'post',
-                data: fd,
+                data: formData,
                 cache: false,
                 contentType: false,
                 processData: false,
@@ -344,16 +459,16 @@
                         showError('stoke', response.messages.stoke);
                         showError('price', response.messages.price);
                         showError('desc', response.messages.desc);
-                    }
-                    else if (response.status == 200) {
+                        showError('images', response.messages.images);
+                    } else if (response.status == 200){
                         Swal.fire(
-                            'Memperbarui!',
-                            'Produk Berhasil Diperbarui!',
+                            'Menambahkan!',
+                            'Produk Berhasil diperbarui!',
                             'success'
                         )
                         fetchAllEmployees();
-                        $("#edit_employee_form")[0].reset();
                         $("#editEmployeeModal").modal('hide');
+                        $("#edit_employee_form")[0].reset();
                     }
                     $("#edit_employee_btn").text('Simpan');
                     $("#edit_employee_btn").prop('disabled', false);
@@ -396,6 +511,144 @@
                     });
                 }
                 })
+            });
+
+            // edit employee ajax request
+            $(document).on('click', '.viewPhotoProductIcon', function(e) {
+                e.preventDefault();
+                let id = $(this).attr('id');
+                $.ajax({
+                url: '{{ route('gapoktan-produk-viewPhoto') }}',
+                method: 'get',
+                data: {
+                    id: id,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    var customHtml = '';
+                    // if(response.success){
+                    //     var response = response.success;
+                    //     for (var i in response) {
+                    //         customHtml = customHtml + '<div class="my-2 tab-pane fade show active" id="home2" role="tabpanel"aria-labelledby="home-tab2"><img id="preview" class="img-fluid img-thumbnail image" src="../storage/produk/'+ response[i].name +'" alt="edukasi" style="width: 22rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"><a href="#" id="'+ response[i].id +'" class="text-danger mx-1 deletePhotoProduct">Hapus</a></div>';
+                    //     }
+                    //     $('.editFile').html(customHtml)
+                    // }
+                    $.each(response, function (i, item) {
+                        customHtml = customHtml + '<div class="my-2 tab-pane fade show active" id="home2" role="tabpanel"aria-labelledby="home-tab2"><img id="preview" class="img-fluid img-thumbnail image" src="../storage/produk/'+ response[i].name +'" alt="edukasi" style="width: 22rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"><a href="#" id="'+ response[i].id +'" class="text-danger mx-1 deletePhotoProduct">Hapus</a></div>';
+                        })
+                    $('.editFile').append(customHtml);
+                }
+                });
+            });
+
+            // delete employee ajax request
+            $(document).on('click', '.deletePhotoProduct', function(e) {
+                e.preventDefault();
+                let id = $(this).attr('id');
+                let csrf = '{{ csrf_token() }}';
+                Swal.fire({
+                title: 'Apa kamu yakin?',
+                text: "Anda tidak akan dapat mengembalikan ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Cancel!'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                    url: '{{ route('gapoktan-produk-deletePhoto') }}',
+                    method: 'delete',
+                    data: {
+                        id: id,
+                        _token: csrf
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        Swal.fire(
+                        'Dihapus!',
+                        'File Anda telah dihapus.',
+                        'success'
+                        )
+                        $("#viewPhotoProduct").modal('hide');
+                        window.location.reload();
+                    }
+                    });
+                }
+                })
+            });
+
+            // edit employee ajax request
+            $(document).on('click', '.addPhotoProductIcon', function(e) {
+                e.preventDefault();
+                let id = $(this).attr('id');
+                $.ajax({
+                url: '{{ route('gapoktan-produk-addPhoto') }}',
+                method: 'get',
+                data: {
+                    id: id,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    $("#namaProduct").val(response.name);
+                    $("#id").val(response.id);
+                }
+                });
+            });
+
+            // update employee ajax request
+            $("#addPhotoProductForm").submit(function(e) {
+                e.preventDefault();
+
+                var formData = new FormData(this);
+                let TotalImages = $('#imagesEdit')[0].files.length; //Total Images
+                let images = $('#imagesEdit')[0];
+                for (let i = 0; i < TotalImages; i++) {
+                    formData.append('images' + i, images.files[i]);
+                }
+                formData.append('TotalImages', TotalImages);
+
+                $("#addPhotoProductBtn").text('Tunggu..');
+                $("#addPhotoProductBtn").prop('disabled', true);
+                $.ajax({
+                url: '{{ route('gapoktan-produk-addPhotoProduct') }}',
+                method: 'post',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status == 400) {
+                        showError('name', response.messages.photo_product.name);
+                        $("#addPhotoProductForm")[0].reset();
+                    } else if (response.status == 200){
+                        Swal.fire(
+                            'Menambahkan!',
+                            'Foto Produk Berhasil ditambahkan!',
+                            'success'
+                        )
+                        fetchAllEmployees();
+                        $("#addPhotoProduct").modal('hide');
+                        $("#addPhotoProductForm")[0].reset();
+                    } else if (response.status == 401) {
+                        Swal.fire(
+                            'Gagal!',
+                            'Silahkan coba lagi!',
+                            'warning'
+                        )
+                        fetchAllEmployees();
+                        $("#addPhotoProduct").modal('hide');
+                        $("#addPhotoProductForm")[0].reset();
+                        $("#addPhotoProductBtn").prop('disabled', false);
+                    }
+                    $('.preview-image-edit').html("");
+                    $("#addPhotoProductBtn").text('Simpan');
+                    $("#addPhotoProductBtn").prop('disabled', false);
+                    window.location.reload();
+                }
+                });
             });
 
             // fetch all employees ajax request

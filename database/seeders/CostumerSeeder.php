@@ -19,7 +19,6 @@ class CostumerSeeder extends Seeder
         $datas = [
             [
                 "user_id" => 5,
-                "address_id" => 1,
             ],
 
         ];

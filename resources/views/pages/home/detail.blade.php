@@ -86,21 +86,29 @@
                         <div class="product-images">
                             <main id="">
                                 <div class="main-img">
-                                    <img src="{{ asset('../storage/produk/'.$product->image) }}" id="current" alt="{{ $product->name }}">
+                                    @foreach ($product->photo_product->take(1) as $photos)
+                                        <img src="{{ asset('../storage/produk/'.$photos->name) }}" id="current" alt="{{ $product->name }}">
+                                    @endforeach
                                 </div>
                                 <div class="images">
-                                    <img src="{{ asset('../storage/produk/'.$product->image) }}" class="img" alt="#">
-                                    <img src="{{ asset('assets/images/product-details/02.jpg') }}" class="img" alt="#">
-                                    <img src="{{ asset('assets/images/product-details/03.jpg') }}" class="img" alt="#">
-                                    <img src="{{ asset('assets/images/product-details/04.jpg') }}" class="img" alt="#">
-                                    <img src="{{ asset('assets/images/product-details/05.jpg') }}" class="img" alt="#">
+                                    @foreach ($product->photo_product as $photos)
+                                        <img src="{{ asset('../storage/produk/'.$photos->name) }}" class="img" alt="#">
+                                    @endforeach
                                 </div>
                             </main>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-12 col-12">
                         <div class="product-info">
-                            <h2 class="title">{{ $product->name }}</h2>
+                            <h2 class="title">{{ $product->name }}
+                                <span>
+                                    @if ($product->stoke < 1)
+                                        <label class="mx-3 badge bg-danger">Habis</label>
+                                    @elseif($product->stoke < 10)
+                                        <label class="mx-3 badge bg-danger">Tersisa {{ $product->stoke }}</label>
+                                    @endif
+                                </span>
+                            </h2>
                             <p class="category">Terjual 40</p>
                             <p class="category"><i class="lni lni-tag"></i> Kategori:<a
                                     href="{{ url('product-category/'.$product->product_category->slug) }}">{{ $product->product_category->name }}</a></p>
@@ -139,6 +147,18 @@
                             </div>
                             <div class="bottom-content">
                                 <div class="row align-items-end">
+                                    @if ($product->stoke < 1)
+                                    <div class="col-lg-4 col-md-4 col-12">
+                                        <div class="button cart-button">
+                                            <button disabled class="btn" id="addToCartBtn" style="width: 100%;">+ Keranjang</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-12">
+                                        <div class="wish-button">
+                                            <button disabled class="btn">Beli Langsung</button>
+                                        </div>
+                                    </div>
+                                    @else
                                     <div class="col-lg-4 col-md-4 col-12">
                                         <div class="button cart-button">
                                             <button class="btn" id="addToCartBtn" style="width: 100%;">+ Keranjang</button>
@@ -149,6 +169,7 @@
                                             <button class="btn">Beli Langsung</button>
                                         </div>
                                     </div>
+                                    @endif
                                     <div class="col-lg-4 col-md-4 col-12">
                                         <div class="wish-button">
                                             <button class="btn"><i class="lni lni-heart"></i> Favorit</button>

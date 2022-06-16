@@ -55,6 +55,7 @@ Route::middleware('auth:api')->group(function () {
     // ------ Customer -----------
     // Cart
     Route::resource('cart', CartApiController::class);
+    Route::put('cart/qty/{id}', [CartApiController::class, 'updateQty']);
     Route::resource('customer', CustomerApiController::class);
     Route::post('customer/update/image', [CustomerApiController::class, 'updatePhoto']);
     Route::get('cart/user_id/{user_id}', [CartApiController::class, 'indexByid']);

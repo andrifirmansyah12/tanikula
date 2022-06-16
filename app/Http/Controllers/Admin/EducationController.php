@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\EducationCategory;
 use Illuminate\Support\Facades\Storage;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
+use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 
@@ -26,10 +27,15 @@ class EducationController extends Controller
 
     // handle fetch all eamployees ajax request
 	public function fetchAll() {
-		$emps = Education::with('education_category')->latest()->get();
+		$emps = Education::join('education_categories', 'education.category_education_id', '=', 'education_categories.id')
+                    ->join('users', 'education.user_id', '=', 'users.id')
+                    ->select('education.*', 'education_categories.name as name')
+                    ->where('education_categories.is_active', '=', 1)
+                    ->orderBy('education.updated_at', 'desc')
+                    ->get();
 		$output = '';
 		if ($emps->count() > 0) {
-			$output .= '<table id="example1" class="table table-hover">
+			$output .= '<table class="table table-striped table-sm text-center align-middle">
             <thead>
               <tr>
                 <th>No</th>
@@ -55,13 +61,13 @@ class EducationController extends Controller
                     $output .= '<td><img src="../stisla/assets/img/example-image.jpg" class="img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"></td>';
                 }
                 $output .= '<td>' . $emp->title . '</td>';
-                if (empty($emp->education_category->name)) {
+                if (empty($emp->name)) {
                     $output .= '<td><span class="text-danger">Tidak ada kategori</span></td>';
                 } else {
-                    $output .= '<td>' . $emp->education_category->name . '</td>';
+                    $output .= '<td>' . $emp->name . '</td>';
                 }
                 $output .= '<td>' . date("d F Y", strtotime($emp->date)) . '</td>
-                <td class="desc text-justify">' . $emp->desc . '</td>
+                <td>' . $emp->desc . '</td>
                 <td>
                   <a href="#" id="' . $emp->id . '" class="text-success mx-1 editIcon" data-toggle="modal" data-target="#editEmployeeModal"><i class="bi-pencil-square h4"></i></a>
                   <a href="#" id="' . $emp->id . '" class="text-danger mx-1 deleteIcon"><i class="bi-trash h4"></i></a>
@@ -77,20 +83,42 @@ class EducationController extends Controller
 
     // handle insert a new employee ajax request
 	public function store(Request $request) {
-        if ($request->file('file')) {
-            $file = $request->file('file');
-		    $fileName = time() . '.' . $file->getClientOriginalExtension();
-		    $file->storeAs('edukasi', $fileName);
-		    $empData = ['title' => $request->title, 'slug' => $request->slug, 'category_education_id' => $request->category_education_id, 'desc' => $request->desc, 'file' => $fileName];
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|max:255',
+            'category_education_id' => 'required',
+            'desc' => 'required',
+            'file' => 'required',
+        ], [
+            'title.required' => 'Judul edukasi diperlukan!',
+            'title.max' => 'Judul edukasi maksimal 255 karakter!',
+            'category_education_id.required' => 'Kategori edukasi diperlukan!',
+            'desc.required' => 'Deskripsi edukasi diperlukan!',
+            'file.required' => 'Foto edukasi diperlukan!',
+        ]);
+
+        if($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'messages' => $validator->getMessageBag()
+            ]);
         } else {
-		    $empData = ['title' => $request->title, 'slug' => $request->slug, 'category_education_id' => $request->category_education_id, 'desc' => $request->desc];
-        }
+            if ($request->file('file')) {
+                $file = $request->file('file');
+                $fileName = time() . '.' . $file->getClientOriginalExtension();
+                $file->storeAs('edukasi', $fileName);
+
+                $empData = ['title' => $request->title, 'slug' => $request->slug, 'category_education_id' => $request->category_education_id, 'desc' => $request->desc, 'file' => $fileName];
+            } else {
+                $empData = ['title' => $request->title, 'slug' => $request->slug, 'category_education_id' => $request->category_education_id, 'desc' => $request->desc];
+            }
+
             $empData['date'] = Carbon::now()->format('Y-m-d');
             $empData['user_id'] = $request->user_id;
             Education::create($empData);
-		return response()->json([
-			'status' => 200,
-		]);
+            return response()->json([
+                'status' => 200,
+            ]);
+        }
 	}
 
     // handle edit an employee ajax request
@@ -102,32 +130,49 @@ class EducationController extends Controller
 
 	// handle update an employee ajax request
 	public function update(Request $request) {
-		$fileName = '';
-		$emp = Education::find($request->emp_id);
-		if ($request->hasFile('file')) {
-			$file = $request->file('file');
-			$fileName = time() . '.' . $file->getClientOriginalExtension();
-			$file->storeAs('edukasi', $fileName);
-			if ($emp->file) {
-				Storage::delete('edukasi/' . $emp->file);
-			}
-		} else {
-			$fileName = $request->emp_avatar;
-		}
+		$validator = Validator::make($request->all(), [
+            'title' => 'required|max:255',
+            'category_education_id' => 'required',
+            'desc' => 'required',
+        ], [
+            'title.required' => 'Judul edukasi diperlukan!',
+            'title.max' => 'Judul edukasi maksimal 255 karakter!',
+            'category_education_id.required' => 'Kategori edukasi diperlukan!',
+            'desc.required' => 'Deskripsi edukasi diperlukan!',
+        ]);
 
-        if ($request->user_id) {
-            $empData = ['title' => $request->title, 'slug' => $request->slug, 'category_education_id' => $request->category_education_id, 'desc' => $request->desc, 'file' => $fileName];
-            $empData['date'] = Carbon::now()->format('Y-m-d');
-            $empData['user_id'] = $request->user_id;
+        if($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'messages' => $validator->getMessageBag()
+            ]);
         } else {
-            $empData = ['title' => $request->title, 'slug' => $request->slug, 'category_education_id' => $request->category_education_id, 'desc' => $request->desc, 'file' => $fileName];
-            $empData['date'] = Carbon::now()->format('Y-m-d');
-        }
+            $fileName = '';
+            $emp = Education::find($request->emp_id);
+            if ($request->hasFile('file')) {
+                $file = $request->file('file');
+                $fileName = time() . '.' . $file->getClientOriginalExtension();
+                $file->storeAs('edukasi', $fileName);
+                if ($emp->file) {
+                    Storage::delete('edukasi/' . $emp->file);
+                }
+            } else {
+                $fileName = $request->emp_avatar;
+            }
 
-		$emp->update($empData);
-		return response()->json([
-			'status' => 200,
-		]);
+            if ($request->user_id) {
+                $empData = ['title' => $request->title, 'slug' => $request->slug, 'category_education_id' => $request->category_education_id, 'desc' => $request->desc, 'file' => $fileName];
+                $empData['date'] = Carbon::now()->format('Y-m-d');
+                $empData['user_id'] = $request->user_id;
+            } else {
+                $empData = ['title' => $request->title, 'slug' => $request->slug, 'category_education_id' => $request->category_education_id, 'desc' => $request->desc, 'file' => $fileName];
+                $empData['date'] = Carbon::now()->format('Y-m-d');
+            }
+            $emp->update($empData);
+            return response()->json([
+                'status' => 200,
+            ]);
+        }
 	}
 
     // handle delete an employee ajax request

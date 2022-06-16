@@ -3,7 +3,7 @@
 
 @section('style')
 <style>
-    /* Style */
+     /* Style */
     .icon-shape {
     display: inline-flex;
     align-items: center;
@@ -16,6 +16,39 @@
         width: 2rem;
         height: 2rem;
 
+    }
+
+    /* 4.3 Page */
+    .page-error {
+        height: 100%;
+        width: 100%;
+        padding-top: 60px;
+        padding-bottom: 60px;
+        text-align: center;
+        display: table;
+    }
+
+    .page-error .page-inner {
+        display: table-cell;
+        width: 100%;
+        vertical-align: middle;
+    }
+
+    .page-error img {
+        width: 30rem;
+    }
+
+    .page-error .page-description {
+        padding-top: 30px;
+        font-size: 18px;
+        font-weight: 400;
+        color: color: var(--primary);;
+    }
+
+    @media (max-width: 575.98px) {
+        .page-error {
+            padding-top: 0px;
+        }
     }
 </style>
 @endsection
@@ -31,7 +64,10 @@
                 <div class="col-12 col-xl-8 mb-3 mb-xl-0">
                     @php
                         $total = 0;
+                        $totalPrice = 0;
+                        $totalQty = 0;
                     @endphp
+                    @if ($cartItem->count())
                     @foreach ($cartItem as $item)
                         <div class="mb-12 py-3 mt-3 border-top border-bottom" id="product_data">
                             <div class="row align-items-center mb-6 mb-md-3">
@@ -43,12 +79,14 @@
                                         <div class="col-12 col-md-3 col-lg-3">
                                             <div class="d-flex align-items-center justify-content-center bg-light"
                                                 style="width: 160px; height: 150px;">
+                                                @foreach ($item->product->photo_product->take(1) as $photos)
                                                 <img class="img-fluid" style="object-fit: contain;"
-                                                    src="{{ asset('../storage/produk/'.$item->product->image) }}" alt="">
+                                                    src="{{ asset('../storage/produk/'.$photos->name) }}" alt="{{ $item->product->name }}">
+                                                @endforeach
                                             </div>
                                         </div>
                                         <div class="col-6 mt-2 mt-md-0">
-                                            <h3 class="mb-2 fs-6 fw-bold">{{ $item->product->name }}</h3>
+                                            <h3 class="mb-2 fs-6 fw-bold"><a class="text-black" href="{{ url('home/'.$item->product->slug) }}">{{ $item->product->name }}</a></h3>
                                             <label for="color">Tipe</label>
                                             <div class="dropdown mt-1">
                                                 <button class="btn border dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -66,45 +104,64 @@
                                             <div class="d-flex flex-row justify-content-end align-items-center">
                                                 <h6 class="border-end border-dark pe-3">Favorit</h6>
                                                 <button class="delete-cart-item btn btn-danger ms-3"><i class="lni lni-trash-can"></i></button>
-                                                {{-- <div class="d-flex justify-content-between">
-                                                    <div class="input-group w-auto justify-content-end align-items-center">
-                                                        <input type="button" value="-" class="button-minus border rounded-circle icon-shape icon-sm mx-1" data-field="quantity">
-                                                        <input type="number" step="1" max="10" value="1" name="quantity" class="quantity-field border-0 text-center w-25">
-                                                        <input type="button" value="+" class="button-plus border rounded-circle icon-shape icon-sm" data-field="quantity">
+                                                @if ($item->product->stoke >= $item->product_qty)
+                                                    <div class="col-6 col-md-3 form-group" style="margin-left: 10px">
+                                                        <input type="hidden" value="{{ $item->product_id }}" id="prod_id">
+                                                        <div class="d-flex justify-content-between">
+                                                            <button class="input-group-text changeQuantity decrement-btn me-1">-</button>
+                                                            <input type="text" name="quantity" class="form-control qty-input text-center" value="{{ $item->product_qty }}">
+                                                            <button class="input-group-text changeQuantity increment-btn ms-1">+</button>
+                                                        </div>
                                                     </div>
-                                                </div> --}}
-                                                <div class="col-6 col-md-3 form-group" style="margin-left: 10px">
-                                                    <input type="hidden" value="{{ $item->product_id }}" id="prod_id">
-                                                    <div class="d-flex justify-content-between">
-                                                        <button class="input-group-text changeQuantity decrement-btn me-1">-</button>
-                                                        <input type="text" name="quantity" class="form-control qty-input text-center" value="{{ $item->product_qty }}">
-                                                        <button class="input-group-text changeQuantity increment-btn ms-1">+</button>
-                                                    </div>
-                                                </div>
+                                                    @php
+                                                        $total += $item->product->price * $item->product_qty;
+                                                        $totalQty += $item->product_qty;
+                                                        $totalPrice += $item->product->price;
+                                                    @endphp
+                                                @else
+                                                    <h4 class="m-3">Habis</h4>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        @php
-                            $total += $item->product->price * $item->product_qty;
-                        @endphp
                     @endforeach
+                    @else
+                    <div id="app">
+                        <section class="section">
+                            <div class="container">
+                                <div class="page-error">
+                                    <div class="page-inner">
+                                        <img src="{{ asset('img/undraw_empty_re_opql.svg') }}" alt="">
+                                        <div class="page-description">
+                                            Tidak ada produk dikeranjang!
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    @endif
                 </div>
                 <div class="col-12 col-xl-4">
                     <div class="m-0 m-xl-4 p-4 border">
                         <h3 class="mb-3 fs-4">Ringkasan Belanja</h3>
                         <div
                             class="d-flex mb-8 align-items-center justify-content-between pb-3 border-bottom border-info-light">
-                            <span class="">Total Harga(0 Barang)</span>
-                            <span class="fs-6 fw-bold">Rp0</span>
+                            <span class="">Total Harga({{$totalQty}} Barang)</span>
+                            <span class="fs-6 fw-bold">Rp. {{ number_format($total, 0) }}</span>
                         </div>
                         <div class="d-flex mb-10 mt-3 justify-content-between align-items-center">
                             <span class="fw-bold">Total Harga</span>
                             <span class="fs-6 fw-bold">Rp. {{ number_format($total, 0) }}</span>
                         </div>
-                        <a class="btn w-100 text-uppercase text-white" style="background: #16A085;" href="#">Beli (0)</a>
+                        @if ($cartItem->count())
+                            <a class="btn w-100 text-uppercase text-white" style="background: #16A085;" href="{{ url('cart/shipment') }}">Beli ({{$totalQty}})</a>
+                        @else
+                            <a class="btn w-100 text-uppercase text-white" style="background: #16A085;" href="{{ url('product-category/allCategory') }}">Belanja Sekarang</a>
+                        @endif
                     </div>
                 </div>
             </div>

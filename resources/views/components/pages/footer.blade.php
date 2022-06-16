@@ -52,7 +52,7 @@
                         <div class="single-footer f-link">
                             <h3>Kategori Produk</h3>
                             @php
-                                $category_product = App\Models\ProductCategory::take(5)->get();
+                                $category_product = App\Models\ProductCategory::where('is_active', '=', 1)->take(5)->get();
                             @endphp
                             <ul>
                                 @foreach ($category_product as $item)

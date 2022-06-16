@@ -26,4 +26,31 @@
 
     @yield('style')
 
+    <style>
+        /* 4.3 Page */
+        .page-error-notification {
+            height: 100%;
+            width: 100%;
+            text-align: center;
+            display: table;
+        }
+
+        .page-error-notification .page-inner-notification {
+            display: table-cell;
+            width: 100%;
+            vertical-align: middle;
+        }
+
+        .page-error-notification img {
+            width: 10rem;
+        }
+
+        .page-error-notification .page-description-notification {
+            padding-top: 30px;
+            font-size: 18px;
+            font-weight: 400;
+            color: color: var(--primary);;
+        }
+    </style>
+
 </head>

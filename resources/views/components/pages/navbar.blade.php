@@ -56,7 +56,7 @@
                                 <a href="{{ route('login') }}">Masuk</a>
                             </li>
                             <li>
-                                <a href="{{ route('login') }}">Daftar</a>
+                                <a href="{{ route('register-pembeli') }}">Daftar</a>
                             </li>
                         </ul>
                     </div>
@@ -109,22 +109,24 @@
                                 </a>
                             </div>
                             <div class="cart-items">
-                                <a href="javascript:void(0)" class="main-btn">
-                                    <i class="lni lni-cart"></i>
-                                    <span class="total-items">2</span>
-                                </a>
                                 <!-- Shopping Item -->
                                 @php
-                                $cartItem = App\Models\Cart::where('user_id', Auth::id())->get();
+                                $cartItem = App\Models\Cart::with('product')->where('user_id', Auth::id())->get();
                                 @endphp
+                                <a href="javascript:void(0)" class="main-btn">
+                                    <i class="lni lni-cart"></i>
+                                    <span class="total-items">{{ $cartItem->count() }}</span>
+                                </a>
+
                                 <div class="shopping-item">
                                     <div class="dropdown-cart-header">
-                                        <span>2 Items</span>
-                                        <a href="{{ url('cart') }}">Lihat Keranjang</a>
+                                        <span>Keranjang ({{ $cartItem->count() }})</span>
+                                        <a href="{{ url('cart') }}">Lihat Sekarang</a>
                                     </div>
                                     @php
                                     $total = 0;
                                     @endphp
+                                    @if ($cartItem->count())
                                     @foreach ($cartItem as $item)
                                     <ul class="shopping-list" id="product_data">
                                         <li>
@@ -132,14 +134,16 @@
                                             <button class="remove delete-cart-item" title="Remove this item"><i
                                                     class="lni lni-close"></i></button>
                                             <div class="cart-img-head">
-                                                <a class="cart-img" href="product-details.html"><img
-                                                        src="{{ asset('../storage/produk/'.$item->product->image) }}"
-                                                        alt="#"
-                                                        style="width: 10rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"></a>
+                                                <a class="cart-img" href="{{ url('home/'.$item->product->slug) }}">
+                                                    @foreach ($item->product->photo_product->take(1) as $photos)
+                                                        <img src="{{ asset('../storage/produk/'.$photos->name) }}" alt="{{ $item->product->name }}"
+                                                            style="width: 10rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                                    @endforeach
+                                                </a>
                                             </div>
 
                                             <div class="content">
-                                                <h4><a href="product-details.html">
+                                                <h4><a href="{{ url('home/'.$item->product->slug) }}">
                                                         {{ $item->product->name }}</a></h4>
                                                 <p class="quantity">{{ $item->product_qty }}x - <span class="amount">Rp.
                                                         {{ number_format($item->product->price, 0) }}</span></p>
@@ -150,13 +154,31 @@
                                     $total += $item->product->price * $item->product_qty;
                                     @endphp
                                     @endforeach
+                                    @else
+                                        <div id="app">
+                                            <div class="container">
+                                                <div class="page-error-notification">
+                                                    <div class="page-inner-notification">
+                                                        <img src="{{ asset('img/undraw_empty_re_opql.svg') }}" alt="">
+                                                        <div class="page-description-notification">
+                                                            Tidak ada produk dikeranjang!
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
                                     <div class="bottom">
                                         <div class="total">
                                             <span>Total</span>
                                             <span class="total-amount">Rp. {{ number_format($total, 0) }}</span>
                                         </div>
                                         <div class="button">
-                                            <a href="checkout.html" class="btn animate">Checkout</a>
+                                            @if ($cartItem->count())
+                                                <a href="{{ url('cart/shipment') }}" class="btn animate">Checkout</a>
+                                            @else
+                                                <a href="{{ url('product-category/allCategory') }}" class="btn animate">Belanja Sekarang</a>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -177,7 +199,7 @@
                     <div class="mega-category-menu">
                         <span class="cat-button"><i class="lni lni-menu"></i>Semua Kategori</span>
                         @php
-                        $category_product = App\Models\ProductCategory::take(5)->get();
+                        $category_product = App\Models\ProductCategory::where('is_active', '=', 1)->take(5)->get();
                         @endphp
                         <ul class="sub-category">
                             @foreach ($category_product as $item)

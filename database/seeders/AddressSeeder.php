@@ -14,19 +14,22 @@ class AddressSeeder extends Seeder
      */
     public function run()
     {
-        // Address::truncate();
+        Address::truncate();
 
-        // $datas = [
-        //     [
-        //         "address1" => "Jl. Rengasdengklok Desa Babadan Pangampu Rt.35 Rw.04",
-        //         "city" => "Indramayu",
-        //         "state" => "Jawa Barat",
-        //         "country" => "Indonesia",
-        //         "postal_code" => 1,
-        //     ],
+        $datas = [
+            [
+                "user_id" => 5,
+                "recipients_name" => "Robert Davids",
+                "telp" => "08345839235",
+                "address_label" => "Rumah",
+                "city" => "Bandung",
+                "postal_code" => "45525",
+                "complete_address" => "Jl. Rengasdengklok blok dempet Rt 10 Rw 01, Kec Indramayu, Kab Indramayu, Jawa Barat.",
+                "note_for_courier" => 'Depan Masjid',
+            ],
 
-        // ];
+        ];
 
-        // Address::insert($datas);
+        Address::insert($datas);
     }
 }

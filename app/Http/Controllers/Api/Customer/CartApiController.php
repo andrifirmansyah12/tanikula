@@ -73,4 +73,17 @@ class CartApiController extends BaseController
 
         return response()->json('Data deleted successfully');
     }
+
+    public function updateQty(Request $request, $id)
+    {
+        $datas = Cart::findOrFail($id);
+
+        $datas->update([
+            'product_qty' => $request->product_qty,
+        ]);
+
+        $datas->update();
+
+        return $this->sendResponse($datas, 'Data Updated');
+    }
 }
