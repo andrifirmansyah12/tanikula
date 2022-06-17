@@ -9,7 +9,6 @@
     integrity="sha256-pODNVtK3uOhL8FUNWWvFQK0QoQoV3YA9wGGng6mbZ0E=" crossorigin="anonymous" />
 <style>
     /* Style */
-    /* Style */
     .icon-shape {
     display: inline-flex;
     align-items: center;
@@ -125,8 +124,8 @@
                                             <h3 class="mb-2 fs-6 fw-bold"><a class="text-black"
                                                     href="{{ url('home/'.$item->product->slug) }}">{{ $item->product->name }}</a>
                                             </h3>
-                                            <p class="fw-bold">Type Produk</p>
-                                            <p style="font-size: 13px;">Type Produk <span>{{ $item->product_qty }} Barang</span></p>
+                                            {{-- <p class="fw-bold">Type Produk</p> --}}
+                                            <p style="font-size: 13px;">{{ $item->product_qty }} Barang</p>
                                             <p class="mb-0 fs-6 fw-bold mt-2">Rp.
                                                 {{ number_format($item->product->price, 0) }}</p>
                                         </div>
@@ -135,13 +134,14 @@
                             </div>
                         </div>
                         @php
+                            $subTotal = $item->product->price * $item->product_qty;
                             $total += $item->product->price * $item->product_qty;
                             $totalQty += $item->product_qty;
                         @endphp
                         <div class="my-2">
                             <div class="d-flex justify-content-between">
                                 <div class="fw-bold">Subtotal ({{$item->product_qty}} Barang)</div>
-                                <div>Rp. {{ number_format($total, 0) }}</div>
+                                <div>Rp. {{ number_format($subTotal, 0) }}</div>
                             </div>
                         </div>
                         @endforeach
@@ -182,24 +182,6 @@
                                 @else
                                 <a class="btn w-100 text-uppercase text-white" style="background: #16A085;" href="{{ url('product-category/allCategory') }}">Belanja Sekarang</a>
                                 @endif
-                                {{-- Modal --}}
-                                {{-- <div class="modal fade" id="PilihPembayaran" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                ...
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-primary">Save changes</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -209,7 +191,26 @@
     </div>
 </section>
 
-<!-- Modal -->
+{{-- Modal Pilih Pembayaran --}}
+{{-- <div class="modal fade" id="PilihPembayaran" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div> --}}
+
+<!-- Modal Pilih Alamat -->
 <div class="modal fade" id="PilihAlamat" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
@@ -227,8 +228,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
             </div>
         </div>
     </div>

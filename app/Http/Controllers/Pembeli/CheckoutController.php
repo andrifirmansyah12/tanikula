@@ -125,6 +125,15 @@ class CheckoutController extends Controller
                 ';
 			}
 			echo $output;
+                            // <div class="d-flex flex-row justify-content-between">
+                            //     <p class="fw-bold text-black mb-2 col-8 col-md-8">' . $emp->recipients_name .'
+                            //         <span class="fw-normal">('.$emp->address_label.') </span>
+                            //         <svg class="text-success" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-patch-check-fill" viewBox="0 0 16 16">
+                            //         <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
+                            //         </svg>
+                            //     </p>
+                            //     <a href="#" id="' . $emp->id . '" class="text-danger fw-bold deleteIcon"><i class="bi-trash h4"></i></a>
+                            // </div>
 		} else {
 			echo '<h1 class="text-center text-secondary my-5">Tidak ada Alamat!</h1>';
 		}
@@ -163,6 +172,14 @@ class CheckoutController extends Controller
             $address->complete_address = $request->complete_address;
             $address->note_for_courier = $request->note_for_courier;
             $address->main_address = $request->main_address ? 1 : 0;
+            // if ($request->main_address == 1) {
+            //     foreach ($address as $item) {
+            //         if ($item->main_address == 1) {
+            //             $item->main_address = 0;
+            //             $item->update();
+            //         }
+            //     }
+            // }
             $address->user_id = auth()->user()->id;
             $address->save();
 

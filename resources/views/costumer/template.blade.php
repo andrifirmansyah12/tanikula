@@ -1,26 +1,21 @@
-{{-- Header --}}
+<!-- Header -->
 @include('components.costumer.header')
 
-<body>
-    <div id="app">
-        <div class="main-wrapper">
-            <div class="navbar-bg"></div>
+<body class="g-sidenav-show bg-gray-100">
 
-            {{-- Navbar --}}
-            @include('components.costumer.navbar')
+    {{-- Sidebar  --}}
+    @include('components.costumer.sidebar')
 
-            {{-- Sidebar --}}
-            @include('components.costumer.sidebar')
+    <div class="main-content position-relative bg-gray-100 max-height-vh-100 h-100">
 
-            @yield('content')
+        <!-- Navbar -->
+        @include('components.costumer.navbar')
 
-            {{-- FooterJS --}}
-            @include('components.costumer.footer')
+        @yield('content')
 
-        </div>
     </div>
 
-    {{-- FooterJS --}}
+    <!-- Footer JS -->
     @include('components.costumer.footerJS')
 
 </body>

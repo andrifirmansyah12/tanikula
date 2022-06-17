@@ -47,10 +47,12 @@
                 </div>
                 <div class="col-lg-4 col-md-4 col-12">
                     <div class="top-end">
-                        <div class="user">
+                    @auth
+                        <a href="{{ route('pembeli') }}" class="user">
                             <i class="lni lni-user"></i>
-                            Hello
-                        </div>
+                            {{ auth()->user()->name }}
+                        </a>
+                    @else
                         <ul class="user-login">
                             <li>
                                 <a href="{{ route('login') }}">Masuk</a>
@@ -59,6 +61,7 @@
                                 <a href="{{ route('register-pembeli') }}">Daftar</a>
                             </li>
                         </ul>
+                    @endauth
                     </div>
                 </div>
             </div>

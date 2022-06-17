@@ -29,6 +29,34 @@ $(document).ready(function () {
         });
     });
 
+    $('#addToWishlistBtn').click(function (e) {
+        e.preventDefault();
+
+        var product_id = $(this).closest('#product_data').find('#prod_id').val();
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            method: "POST",
+            url: "/add-to-wishlist",
+            data: {
+                'product_id': product_id,
+            },
+            success: function (response) {
+                window.location.reload();
+                iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                    title: 'Berhasil',
+                    message: response.status,
+                    position: 'topRight'
+                });
+            }
+        });
+    });
+
     $('.increment-btn').click(function (e) {
         e.preventDefault();
 

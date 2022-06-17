@@ -115,7 +115,7 @@
                             <h3 class="price">Rp. {{ number_format($product->price, 0) }}<span>Rp. {{ number_format(0, 0) }}</span></h3>
                             <p class="info-text">{{ $product->desc }}</p>
                             <div class="row">
-                                <div class="col-lg-4 col-md-4 col-12">
+                                {{-- <div class="col-lg-4 col-md-4 col-12">
                                     <div class="form-group">
                                         <label for="color">Tipe</label>
                                         <select class="form-control" id="color">
@@ -124,7 +124,7 @@
                                             <option>Tipe C</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-4 col-md-4 col-12">
                                     <div class="form-group">
                                         <input type="hidden" value="{{ $product->id }}" id="prod_id">
@@ -172,7 +172,7 @@
                                     @endif
                                     <div class="col-lg-4 col-md-4 col-12">
                                         <div class="wish-button">
-                                            <button class="btn"><i class="lni lni-heart"></i> Favorit</button>
+                                            <button class="btn" id="addToWishlistBtn"><i class="lni lni-heart"></i> Wishlist</button>
                                         </div>
                                     </div>
                                 </div>
