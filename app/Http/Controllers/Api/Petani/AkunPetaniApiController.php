@@ -10,14 +10,11 @@ use Illuminate\Support\Facades\Storage;
 
 class AkunPetaniApiController extends Controller
 {
-     
-
     public function update(Request $request, $id)
     {
         $datas = Farmer::findOrFail($id);
 
         $datas->update([
-            'chairman' => $request->chairman,
             'city' => $request->city,
             'address' => $request->address,
             'telp' => $request->telp,
