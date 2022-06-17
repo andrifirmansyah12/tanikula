@@ -87,7 +87,7 @@
                                         </div>
                                         <div class="col-6 mt-2 mt-md-0">
                                             <h3 class="mb-2 fs-6 fw-bold"><a class="text-black" href="{{ url('home/'.$item->product->slug) }}">{{ $item->product->name }}</a></h3>
-                                            <label for="color">Tipe</label>
+                                            {{-- <label for="color">Tipe</label>
                                             <div class="dropdown mt-1">
                                                 <button class="btn border dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                                     Pilih Tipe
@@ -97,7 +97,7 @@
                                                     <li><a class="dropdown-item" href="#">Tipe B</a></li>
                                                     <li><a class="dropdown-item" href="#">Tipe C</a></li>
                                                 </ul>
-                                            </div>
+                                            </div> --}}
                                             <p class="mb-0 fs-6 fw-bold mt-2">Rp. {{ number_format($item->product->price, 0) }}</p>
                                         </div>
                                         <div class="col-12 mt-3 mt-md-0">

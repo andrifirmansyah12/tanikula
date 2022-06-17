@@ -2,26 +2,26 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>Pembeli | @yield('title')</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{asset('../costumer/assets/img/apple-icon.png')}}">
+    <link rel="icon" type="image/png" href="{{asset('../costumer/assets/img/favicon.png')}}">
+    <title>
+        @yield('title') | TaniKula
+    </title>
 
     @yield('style')
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css"
+        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+    <!-- Nucleo Icons -->
+    <link href="{{asset('../costumer/assets/css/nucleo-icons.css')}}" rel="stylesheet" />
+    <link href="{{asset('../costumer/assets/css/nucleo-svg.css')}}" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <!-- CSS Files -->
+    <link id="pagestyle" href="{{asset('../costumer/assets/css/material-dashboard.css?v=3.0.')}}" rel="stylesheet" />
 
-    <!-- General CSS Files -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
-        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-
-    <!-- CSS Libraries -->
-    {{-- <link rel="stylesheet" href="../node_modules/jqvmap/dist/jqvmap.min.css">
-    <link rel="stylesheet" href="../node_modules/weathericons/css/weather-icons.min.css">
-    <link rel="stylesheet" href="../node_modules/weathericons/css/weather-icons-wind.min.css">
-    <link rel="stylesheet" href="../node_modules/summernote/dist/summernote-bs4.css"> --}}
-
-    <!-- Template CSS -->
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/components.css') }}">
 </head>

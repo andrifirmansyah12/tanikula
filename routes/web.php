@@ -12,18 +12,20 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-// Login Admin
-Route::get('/admin/login', [App\Http\Controllers\Admin\LoginController::class, 'login'])->name('login-admin');
-Route::post('/admin/login', [App\Http\Controllers\Admin\LoginController::class, 'loginAdmin'])->name('login-admin');
-Route::post('/admin/logout', [App\Http\Controllers\Admin\LoginController::class, 'logout'])->name('logout-admin');
-Route::get('/admin/forgot-password', [App\Http\Controllers\Admin\LoginController::class, 'forgotPassword'])->name('forgotPassword-admin');
-Route::post('/admin/forgot-password', [App\Http\Controllers\Admin\LoginController::class, 'forgotPasswordEmail'])->name('forgotPasswordEmail-admin');
-Route::get('/admin/reset-password/{email}/{token}', [App\Http\Controllers\Admin\LoginController::class, 'reset'])->name('resetPass-admin');
-Route::post('/admin/reset-password', [App\Http\Controllers\Admin\LoginController::class, 'resetPassword'])->name('resetPassword-admin');
+Route::group(['middleware' => ['guest']], function() {
+    // Login Admin
+    Route::get('/admin/login', [App\Http\Controllers\Admin\LoginController::class, 'login'])->name('login-admin');
+    Route::post('/admin/login', [App\Http\Controllers\Admin\LoginController::class, 'loginAdmin'])->name('login-admin');
+    Route::get('/admin/forgot-password', [App\Http\Controllers\Admin\LoginController::class, 'forgotPassword'])->name('forgotPassword-admin');
+    Route::post('/admin/forgot-password', [App\Http\Controllers\Admin\LoginController::class, 'forgotPasswordEmail'])->name('forgotPasswordEmail-admin');
+    Route::get('/admin/reset-password/{email}/{token}', [App\Http\Controllers\Admin\LoginController::class, 'reset'])->name('resetPass-admin');
+    Route::post('/admin/reset-password', [App\Http\Controllers\Admin\LoginController::class, 'resetPassword'])->name('resetPassword-admin');
+});
 
 // Admin
 Route::group(['middleware' => ['LoginCheck', 'auth', 'role:admin']], function() {
+
+    Route::post('/admin/logout', [App\Http\Controllers\Admin\LoginController::class, 'logout'])->name('logout-admin');
 
     Route::get('admin', function() {
         return view('admin.dashboard.index');
@@ -78,7 +80,6 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:admin']], function() 
     Route::get('admin/produk/addPhoto', [App\Http\Controllers\Admin\ProductController::class, 'addPhoto'])->name('admin-produk-addPhoto');
     Route::post('admin/produk/addPhotoProduct', [App\Http\Controllers\Admin\ProductController::class, 'addPhotoProduct'])->name('admin-produk-addPhotoProduct');
 
-
     Route::get('admin/daftar-gapoktan', [App\Http\Controllers\Admin\GapoktanController::class, 'index'])->name('admin-gapoktan');
     Route::post('admin/daftar-gapoktan/store', [App\Http\Controllers\Admin\GapoktanController::class, 'store'])->name('admin-gapoktan-store');
     Route::get('admin/daftar-gapoktan/fetchall', [App\Http\Controllers\Admin\GapoktanController::class, 'fetchAll'])->name('admin-gapoktan-fetchAll');
@@ -119,15 +120,18 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:admin']], function() 
 
 });
 
-// Login Gapoktan
-Route::get('/gapoktan/login', [App\Http\Controllers\Gapoktan\LoginController::class, 'login'])->name('login-gapoktan');
-Route::post('/gapoktan/login', [App\Http\Controllers\Gapoktan\LoginController::class, 'loginGapoktan'])->name('login-gapoktan');
-Route::get('/gapoktan/register', [App\Http\Controllers\Gapoktan\LoginController::class, 'register'])->name('register-gapoktan');
-Route::post('/gapoktan/register', [App\Http\Controllers\Gapoktan\LoginController::class, 'registerGapoktan'])->name('registerGapoktan-gapoktan');
-Route::post('/gapoktan/logout', [App\Http\Controllers\Gapoktan\LoginController::class, 'logout'])->name('logout-gapoktan');
+Route::group(['middleware' => ['guest']], function() {
+    // Login Gapoktan
+    Route::get('/gapoktan/login', [App\Http\Controllers\Gapoktan\LoginController::class, 'login'])->name('login-gapoktan');
+    Route::post('/gapoktan/login', [App\Http\Controllers\Gapoktan\LoginController::class, 'loginGapoktan'])->name('login-gapoktan');
+    Route::get('/gapoktan/register', [App\Http\Controllers\Gapoktan\LoginController::class, 'register'])->name('register-gapoktan');
+    Route::post('/gapoktan/register', [App\Http\Controllers\Gapoktan\LoginController::class, 'registerGapoktan'])->name('registerGapoktan-gapoktan');
+});
 
 // Gapoktan
 Route::group(['middleware' => ['LoginCheck', 'auth', 'role:gapoktan']], function() {
+
+    Route::post('/gapoktan/logout', [App\Http\Controllers\Gapoktan\LoginController::class, 'logout'])->name('logout-gapoktan');
 
     Route::get('gapoktan', [App\Http\Controllers\Gapoktan\DashboardController::class, 'index'])->name('gapoktan');
     Route::get('gapoktan/fetchall', [App\Http\Controllers\Gapoktan\DashboardController::class, 'fetchAll'])->name('gapoktan-fetchAll');
@@ -223,15 +227,18 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:gapoktan']], function
 
 });
 
-// Login Poktan
-Route::get('/poktan/login', [App\Http\Controllers\Poktan\LoginController::class, 'login'])->name('login-poktan');
-Route::post('/poktan/login', [App\Http\Controllers\Poktan\LoginController::class, 'loginPoktan'])->name('login-poktan');
-Route::get('/poktan/register', [App\Http\Controllers\Poktan\LoginController::class, 'register'])->name('register-poktan');
-Route::post('/poktan/register', [App\Http\Controllers\Poktan\LoginController::class, 'registerPoktan'])->name('registerPoktan-poktan');
-Route::post('/poktan/logout', [App\Http\Controllers\Poktan\LoginController::class, 'logout'])->name('logout-poktan');
+Route::group(['middleware' => ['guest']], function() {
+    // Login Poktan
+    Route::get('/poktan/login', [App\Http\Controllers\Poktan\LoginController::class, 'login'])->name('login-poktan');
+    Route::post('/poktan/login', [App\Http\Controllers\Poktan\LoginController::class, 'loginPoktan'])->name('login-poktan');
+    Route::get('/poktan/register', [App\Http\Controllers\Poktan\LoginController::class, 'register'])->name('register-poktan');
+    Route::post('/poktan/register', [App\Http\Controllers\Poktan\LoginController::class, 'registerPoktan'])->name('registerPoktan-poktan');
+});
 
 // Poktan
 Route::group(['middleware' => ['LoginCheck', 'auth', 'role:poktan']], function() {
+
+    Route::post('/poktan/logout', [App\Http\Controllers\Poktan\LoginController::class, 'logout'])->name('logout-poktan');
 
     // Route::get('poktan', function() {
     //     return view('poktan.dashboard.index');
@@ -287,15 +294,18 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:poktan']], function()
 
 });
 
-// Login Petani
-Route::get('/petani/login', [App\Http\Controllers\Petani\LoginController::class, 'login'])->name('login-petani');
-Route::post('/petani/login', [App\Http\Controllers\Petani\LoginController::class, 'loginPetani'])->name('login-petani');
-Route::get('/petani/register', [App\Http\Controllers\Petani\LoginController::class, 'register'])->name('register-petani');
-Route::post('/petani/register', [App\Http\Controllers\Petani\LoginController::class, 'registerPetani'])->name('registerPetani-petani');
-Route::post('/petani/logout', [App\Http\Controllers\Petani\LoginController::class, 'logout'])->name('logout-petani');
+Route::group(['middleware' => ['guest']], function() {
+    // Login Petani
+    Route::get('/petani/login', [App\Http\Controllers\Petani\LoginController::class, 'login'])->name('login-petani');
+    Route::post('/petani/login', [App\Http\Controllers\Petani\LoginController::class, 'loginPetani'])->name('login-petani');
+    Route::get('/petani/register', [App\Http\Controllers\Petani\LoginController::class, 'register'])->name('register-petani');
+    Route::post('/petani/register', [App\Http\Controllers\Petani\LoginController::class, 'registerPetani'])->name('registerPetani-petani');
+});
 
 // Petani
 Route::group(['middleware' => ['LoginCheck', 'auth', 'role:petani']], function() {
+
+    Route::post('/petani/logout', [App\Http\Controllers\Petani\LoginController::class, 'logout'])->name('logout-petani');
 
     // Route::get('petani', function() {
     //     return view('petani.dashboard.index');
@@ -337,24 +347,38 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:petani']], function()
     Route::post('petani/pengaturan-updatePassword', [App\Http\Controllers\Petani\PengaturanController::class, 'pengaturanUpdatePassword'])->name('petani.pengaturan.updatePassword');
 });
 
-// Login Pembeli
-Route::get('/login', [App\Http\Controllers\Pembeli\LoginController::class, 'login'])->name('login');
-Route::post('/login', [App\Http\Controllers\Pembeli\LoginController::class, 'loginPembeli'])->name('loginPembeli-pembeli');
-Route::get('/register', [App\Http\Controllers\Pembeli\LoginController::class, 'register'])->name('register-pembeli');
-Route::post('/register', [App\Http\Controllers\Pembeli\LoginController::class, 'registerPembeli'])->name('registerPembeli-pembeli');
-Route::get('/forgot-password', [App\Http\Controllers\Pembeli\LoginController::class, 'forgotPassword'])->name('forgotPassword-pembeli');
-Route::post('/forgot-password', [App\Http\Controllers\Pembeli\LoginController::class, 'forgotPasswordEmail'])->name('forgotPasswordEmail-pembeli');
-Route::get('/reset-password/{email}/{token}', [App\Http\Controllers\Pembeli\LoginController::class, 'reset'])->name('resetPassword-pembeli');
-Route::post('/reset-password', [App\Http\Controllers\Pembeli\LoginController::class, 'resetPassword'])->name('resetPassword');
-Route::post('/logout', [App\Http\Controllers\Pembeli\LoginController::class, 'logout'])->name('logout');
-Route::get('/account/verify/{token}', [App\Http\Controllers\Pembeli\LoginController::class, 'verifyAccount'])->name('user.verify');
+Route::group(['middleware' => ['guest']], function() {
+    // Login Pembeli
+    Route::get('/login', [App\Http\Controllers\Pembeli\LoginController::class, 'login'])->name('login');
+    Route::post('/login', [App\Http\Controllers\Pembeli\LoginController::class, 'loginPembeli'])->name('loginPembeli-pembeli');
+    Route::get('/register', [App\Http\Controllers\Pembeli\LoginController::class, 'register'])->name('register-pembeli');
+    Route::post('/register', [App\Http\Controllers\Pembeli\LoginController::class, 'registerPembeli'])->name('registerPembeli-pembeli');
+    Route::get('/forgot-password', [App\Http\Controllers\Pembeli\LoginController::class, 'forgotPassword'])->name('forgotPassword-pembeli');
+    Route::post('/forgot-password', [App\Http\Controllers\Pembeli\LoginController::class, 'forgotPasswordEmail'])->name('forgotPasswordEmail-pembeli');
+    Route::get('/reset-password/{email}/{token}', [App\Http\Controllers\Pembeli\LoginController::class, 'reset'])->name('resetPassword-pembeli');
+    Route::post('/reset-password', [App\Http\Controllers\Pembeli\LoginController::class, 'resetPassword'])->name('resetPassword');
+    Route::get('/account/verify/{token}', [App\Http\Controllers\Pembeli\LoginController::class, 'verifyAccount'])->name('user.verify');
+});
 
 // Pembeli
 Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function() {
 
+    Route::post('/logout', [App\Http\Controllers\Pembeli\LoginController::class, 'logout'])->name('logout');
+
     Route::get('pembeli', [App\Http\Controllers\Pembeli\PengaturanController::class, 'pengaturan'])->name('pembeli');
     Route::post('pembeli-image', [App\Http\Controllers\Pembeli\PengaturanController::class, 'pengaturanImage'])->name('pembeli.pengaturan.image');
     Route::post('pembeli-update', [App\Http\Controllers\Pembeli\PengaturanController::class, 'pengaturanUpdate'])->name('pembeli.pengaturan.update');
+    Route::post('pembeli-updatePassword', [App\Http\Controllers\Pembeli\PengaturanController::class, 'pengaturanUpdatePassword'])->name('pembeli.pengaturan.updatePassword');
+
+    Route::get('pembeli/wishlist', [App\Http\Controllers\Pembeli\WishlistController::class, 'index'])->name('pembeli.wishlist');
+
+    Route::get('/cart', [App\Http\Controllers\Pembeli\CartController::class, 'viewCart']);
+    Route::get('/cart/shipment', [App\Http\Controllers\Pembeli\CheckoutController::class, 'index']);
+    Route::post('/cart/shipment/place-order', [App\Http\Controllers\Pembeli\CheckoutController::class, 'placeOrder'])->name('place-order-costumer');
+    Route::post('/cart/shipment/addAddress', [App\Http\Controllers\Pembeli\CheckoutController::class, 'addAlamat'])->name('add-alamat-costumer');
+    Route::get('/cart/shipment/fetchallAddress', [App\Http\Controllers\Pembeli\CheckoutController::class, 'fetchAll'])->name('alamat-fetchAll');
+    Route::get('/cart/shipment/editAddress', [App\Http\Controllers\Pembeli\CheckoutController::class, 'editAddress'])->name('edit.alamat.costumer');
+    Route::post('/cart/shipment/updateAddress', [App\Http\Controllers\Pembeli\CheckoutController::class, 'updateAddress'])->name('update.alamat.costumer');
 
     // Route::get('pembeli', function() {
     //     return view('costumer.pengaturan.index');
@@ -370,16 +394,6 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function(
 
 });
 
-Route::group(['middleware' => ['LoginCheck', 'auth']], function() {
-    Route::get('/cart', [App\Http\Controllers\Pembeli\CartController::class, 'viewCart']);
-    Route::get('/cart/shipment', [App\Http\Controllers\Pembeli\CheckoutController::class, 'index']);
-    Route::post('/cart/shipment/place-order', [App\Http\Controllers\Pembeli\CheckoutController::class, 'placeOrder'])->name('place-order-costumer');
-    Route::post('/cart/shipment/addAddress', [App\Http\Controllers\Pembeli\CheckoutController::class, 'addAlamat'])->name('add-alamat-costumer');
-    Route::get('/cart/shipment/fetchallAddress', [App\Http\Controllers\Pembeli\CheckoutController::class, 'fetchAll'])->name('alamat-fetchAll');
-    Route::get('/cart/shipment/editAddress', [App\Http\Controllers\Pembeli\CheckoutController::class, 'editAddress'])->name('edit.alamat.costumer');
-    Route::post('/cart/shipment/updateAddress', [App\Http\Controllers\Pembeli\CheckoutController::class, 'updateAddress'])->name('update.alamat.costumer');
-});
-
 Route::get('/', [App\Http\Controllers\Pages\ProductController::class, 'index']);
 Route::get('/home', [App\Http\Controllers\Pages\ProductController::class, 'index'])->name('home');
 Route::get('/home/{product:slug}', [App\Http\Controllers\Pages\ProductController::class, 'detailProduct']);
@@ -389,6 +403,9 @@ Route::get('/product-category/{category_slug}/{product_slug}', [App\Http\Control
 Route::post('/add-to-cart', [App\Http\Controllers\Pembeli\CartController::class, 'addProduct']);
 Route::post('/delete-cart-item', [App\Http\Controllers\Pembeli\CartController::class, 'deleteCartItem']);
 Route::post('/update-cart-item', [App\Http\Controllers\Pembeli\CartController::class, 'updateCartItem']);
+
+Route::post('/add-to-wishlist', [App\Http\Controllers\Pembeli\WishlistController::class, 'addToWishlist'])->name('pembeli.addToWishlist');
+Route::post('/delete-cart-wishlist', [App\Http\Controllers\Pembeli\WishlistController::class, 'deleteWishlistItem']);
 
 // Route::get('/thank-you-purchasing', function () {
 //     return view('pages.checkout.purchasing');

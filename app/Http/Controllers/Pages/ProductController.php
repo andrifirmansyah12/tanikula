@@ -72,6 +72,8 @@ class ProductController extends Controller
                     ->join('users', 'products.user_id', '=', 'users.id')
                     ->select('products.*', 'product_categories.name as category_name')
                     ->where('category_product_id', $category_product->id)
+                    ->where('product_categories.is_active', '=', 1)
+                    ->where('products.is_active', '=', 1)
                     ->orderBy('products.updated_at', 'desc')
                     ->get();
             return view('pages.category.index', compact('category_product', 'product'));
