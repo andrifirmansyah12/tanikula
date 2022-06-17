@@ -44,8 +44,8 @@ class CartApiController extends BaseController
 
          ]);
  
-        // $result = CartResource::collection($datas);
-        return $this->sendResponse($datas, 'Data fetched');
+        $result = CartResource::make($datas);
+        return $this->sendResponse($result, 'Data fetched');
     }
 
 

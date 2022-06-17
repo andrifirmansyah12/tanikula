@@ -63,6 +63,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('wishlist/user_id/{user_id}', [WishlistApiController::class, 'indexByid']);
     Route::resource('address', AddressApiController::class);
     Route::get('address/user_id/{user_id}', [AddressApiController::class, 'indexByid']);
+    Route::put('address/main_address/{user_id}', [AddressApiController::class, 'updateMainAddress']);
     // ------ Gapoktan -----------
     // Activity
     Route::resource('activity', ActivityApiController::class);
