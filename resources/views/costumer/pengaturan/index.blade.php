@@ -62,7 +62,6 @@
                                                             src="{{ asset('stisla/assets/img/example-image.jpg') }}"
                                                             class="img-fluid img-thumbnail">
                                                     @endif
-
                                                 </div>
                                             </a>
                                         </div>
@@ -125,9 +124,9 @@
                                                     <label for="birth">Tanggal Lahir</label>
                                                     <div class="input-group">
                                                         <div class="input-group-prepend">
-                                                        <div class="input-group-text">
-                                                            <i class="bi bi-calendar"></i>
-                                                        </div>
+                                                            <div class="input-group-text">
+                                                                <i class="bi bi-calendar"></i>
+                                                            </div>
                                                         </div>
                                                         @if ($userInfo->birth)
                                                             <input type="text" name="birth" id="birth" class="form-control datepicker" value="{{ date("d-F-Y", strtotime($userInfo->birth)) }}">

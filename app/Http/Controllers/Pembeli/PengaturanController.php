@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Costumer;
@@ -18,7 +19,19 @@ class PengaturanController extends Controller
             ->where('user_id', '=', auth()->user()->id)
             ->first()
         ];
-        return view('costumer.pengaturan.index', $data);
+
+        $data2 = ['checkUser' => Costumer::with('user')
+            ->join('users', 'costumers.user_id', '=', 'users.id')
+            ->where('costumers.user_id', '=', auth()->user()->id)
+            ->whereNotNull('users.name')
+            ->whereNotNull('users.email')
+            ->whereNotNull('costumers.birth')
+            ->whereNotNull('costumers.gender')
+            ->select('costumers.*', 'users.name as name')
+            ->first()
+        ];
+
+        return view('costumer.profile.index', $data, $data2);
     }
 
     public function pengaturanImage(Request $request) {
@@ -51,15 +64,32 @@ class PengaturanController extends Controller
             'email' => $request->email,
         ]);
 
-        Costumer::with('user')->where('id', $request->id)->update([
-            'telp' => $request->telp,
-            'birth' => Carbon::createFromFormat('d-M-Y', $request->birth)->format('Y-m-d h:i:s'),
-            'gender' => $request->gender,
-        ]);
+        if ($request->birth) {
+            Costumer::with('user')->where('id', $request->id)->update([
+                'telp' => $request->telp,
+                'birth' => $request->birth,
+                'gender' => $request->gender,
+            ]);
+        } else {
+            Costumer::with('user')->where('id', $request->id)->update([
+                'telp' => $request->telp,
+                'gender' => $request->gender,
+            ]);
+        }
 
         return response()->json([
             'status' => 200,
             'messages' => 'Biodata diri berhasil diupdate!'
+        ]);
+    }
+
+    public function pengaturanUpdatePassword(Request $request){
+        User::where('id', auth()->user()->id)->update([
+            'password' => Hash::make($request->password)
+        ]);
+        return response()->json([
+            'status' => 200,
+            'messages' => 'Password berhasil diperbarui!'
         ]);
     }
 }

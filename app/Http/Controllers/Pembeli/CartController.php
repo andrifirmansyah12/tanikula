@@ -48,10 +48,10 @@ class CartController extends Controller
             if (Cart::where('product_id', $product_id)->where('user_id', Auth::id())->exists()) {
                 $cartItem = Cart::where('product_id', $product_id)->where('user_id', Auth::id())->first();
                 $cartItem->delete();
-                return response()->json(['status' => "Product deleted successfully"]);
+                return response()->json(['status' => "Produk berhasil dihapus dari Keranjang!"]);
             }
         } else {
-            return response()->json(['status' => "login To Continue"]);
+            return response()->json(['status' => "Silahkan login!"]);
         }
     }
 

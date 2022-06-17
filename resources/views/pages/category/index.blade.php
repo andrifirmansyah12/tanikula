@@ -3,7 +3,53 @@
 
 @section('style')
     <style>
-        /*  */
+        /* Style */
+    .icon-shape {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    vertical-align: middle;
+    }
+
+    .icon-sm {
+        width: 2rem;
+        height: 2rem;
+
+    }
+
+    /* 4.3 Page */
+    .page-error {
+        height: 100%;
+        width: 100%;
+        padding-top: 60px;
+        padding-bottom: 60px;
+        text-align: center;
+        display: table;
+    }
+
+    .page-error .page-inner {
+        display: table-cell;
+        width: 100%;
+        vertical-align: middle;
+    }
+
+    .page-error img {
+        width: 30rem;
+    }
+
+    .page-error .page-description {
+        padding-top: 30px;
+        font-size: 18px;
+        font-weight: 400;
+        color: color: var(--primary);;
+    }
+
+    @media (max-width: 575.98px) {
+        .page-error {
+            padding-top: 0px;
+        }
+    }
     </style>
 @endsection
 
@@ -33,6 +79,7 @@
     <section class="section" style="margin-top: 12px;">
         <div class="container">
             <div class="row">
+                @if ($product->count())
                 @foreach ($product as $item)
                 <div class="col-lg-3 col-md-6 col-12">
                     <!-- Start Single Product -->
@@ -75,6 +122,22 @@
                     <!-- End Single Product -->
                 </div>
                 @endforeach
+                @else
+                <div id="app">
+                    <section class="section">
+                        <div class="container">
+                            <div class="page-error">
+                                <div class="page-inner">
+                                    <img src="{{ asset('img/undraw_empty_re_opql.svg') }}" alt="">
+                                    <div class="page-description">
+                                        Tidak ada produk dikategori {{ $category_product->name }}!
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                @endif
             </div>
         </div>
     </section>

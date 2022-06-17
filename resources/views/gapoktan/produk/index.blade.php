@@ -109,6 +109,15 @@
                             <label for="desc">Deskripsi</label>
                             <input type="text" name="desc" class="form-control" placeholder="Deskripsi" required>
                         </div>
+                        <div class="my-2 form-group">
+                            <label for="is_active">Status Produk</label>
+                            <div>
+                                <label class="custom-switch">
+                                    <input type="checkbox" name="is_active" class="custom-switch-input">
+                                    <span class="custom-switch-indicator"></span>
+                                </label>
+                            </div>
+                        </div>
                         {{-- <div class="my-2 form-group">
                             <label for="image">Unggah Foto</label>
                             <small class="d-flex text-danger pb-1">*Unggah berupa foto produk</small>
@@ -186,6 +195,12 @@
                         <div class="my-2 form-group">
                             <label for="desc">Deskripsi</label>
                             <input type="text" name="desc" id="desc" class="form-control" placeholder="Deskripsi" required>
+                        </div>
+                        <div class="my-2 form-group">
+                            <label for="is_active">Status Produk</label>
+                            <div id="is_active">
+
+                            </div>
                         </div>
                         {{-- <div class="my-2 form-group">
                             <label for="image">Unggah Foto</label>
@@ -421,6 +436,11 @@
                     $("#stoke").val(response.stoke);
                     $("#price").val(response.price);
                     $("#desc").val(response.desc);
+                    $("#is_active").html(
+                        `<label class="custom-switch">
+                            <input type="checkbox" name="is_active" ${response.is_active ? 'checked' : ''} class="custom-switch-input">
+                            <span class="custom-switch-indicator"></span>
+                        </label>`);
                     // if (response.file) {
                     //     $(".editFile").html(
                     //         `<div class="tab-pane fade show active" id="home2" role="tabpanel"
