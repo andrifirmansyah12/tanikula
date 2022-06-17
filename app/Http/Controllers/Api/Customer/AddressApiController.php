@@ -21,6 +21,19 @@ class AddressApiController extends BaseController
     public function store(Request $request)
     {
 
+        if ($request->main_address == 1) {
+            $address = Address::where('user_id', $request->user_id)->latest()->get();
+            foreach ($address as $item) {
+                if ($item->main_address == 1) {
+                    $datasFound = Address::findOrFail($item->id);
+                    $datasFound->update([ 
+                        "main_address" => 0, 
+                    ]);
+                    $datasFound->update();
+                }
+            }
+        }
+
         $datas = Address::create([
             'user_id' => $request->user_id, 
             "recipients_name" => $request->recipients_name,
@@ -28,6 +41,7 @@ class AddressApiController extends BaseController
             "address_label" => $request->address_label,
             "city" => $request->city,
             "postal_code" => $request->postal_code,
+            "main_address" => $request->main_address,
             "complete_address" => $request->complete_address,
             "note_for_courier" => $request->note_for_courier,
          ]);
@@ -47,8 +61,32 @@ class AddressApiController extends BaseController
             "address_label" => $request->address_label,
             "city" => $request->city,
             "postal_code" => $request->postal_code,
+            "main_address" => $request->main_address,
             "complete_address" => $request->complete_address,
             "note_for_courier" => $request->note_for_courier,
+        ]);
+
+        $datas->update();
+
+        return $this->sendResponse($datas, 'Data Updated');
+    }
+
+    public function updateMainAddress(Request $request, $id) 
+    {
+        $address = Address::where('user_id', $request->user_id)->latest()->get();
+        foreach ($address as $item) {
+            if ($item->main_address == 1) {
+                $datasFound = Address::findOrFail($item->id);
+                $datasFound->update([ 
+                    "main_address" => 0, 
+                ]);
+                $datasFound->update();
+            }
+        }
+        $datas = Address::findOrFail($id);
+
+        $datas->update([ 
+            "main_address" => $request->main_address, 
         ]);
 
         $datas->update();
