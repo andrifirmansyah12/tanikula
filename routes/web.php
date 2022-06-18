@@ -404,6 +404,7 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function(
 Route::get('/', [App\Http\Controllers\Pages\ProductController::class, 'index']);
 Route::get('/home', [App\Http\Controllers\Pages\ProductController::class, 'index'])->name('home');
 Route::get('/home/{product:slug}', [App\Http\Controllers\Pages\ProductController::class, 'detailProduct']);
+Route::get('/based-on-your-search', [App\Http\Controllers\Pages\ProductController::class, 'basedSearch'])->name('based.search');
 Route::get('/new-product', [App\Http\Controllers\Pages\ProductController::class, 'newProduct'])->name('new.product');
 Route::get('/product-category/all-category', [App\Http\Controllers\Pages\ProductController::class, 'allCategory'])->name('new.product');
 Route::get('/product-category/{slug}', [App\Http\Controllers\Pages\ProductController::class, 'viewCategory'])->name('view.category');

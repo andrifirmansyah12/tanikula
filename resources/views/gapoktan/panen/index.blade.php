@@ -71,7 +71,7 @@
                         </div>
                         <div class="form-group my-2">
                             <label for="address">Alamat</label>
-                            <textarea class="form-control" style="height: 8rem" disabled name="address" id="address" rows="3" placeholder="Deskripsi required"></textarea>
+                            <textarea class="form-control" style="height: 8rem" disabled name="address" id="address" rows="3" placeholder="Alamat"></textarea>
                         </div>
                         <div class="my-2 form-group">
                             <label for="plating_date">Tanggal Tandur</label>

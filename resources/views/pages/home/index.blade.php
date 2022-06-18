@@ -278,7 +278,7 @@
             <div class="col-12">
                 <div class="d-flex align-items-center section-title">
                     <h2>Berdasarkan Pencarianmu</h2>
-                    <a href="{{ url('product-category/allCategory') }}">Lihat semua</a>
+                    <a href="{{ url('based-on-your-search') }}">Lihat semua</a>
                 </div>
             </div>
         </div>
