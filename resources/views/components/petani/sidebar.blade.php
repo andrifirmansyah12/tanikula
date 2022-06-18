@@ -39,6 +39,12 @@
                 <span>Panen</span>
             </a>
         </li>
+        <li class="nav-item dropdown {{ Request::is('petani/riwayat-tandur*') ? 'active' : '' }}">
+            <a href="#" onclick="petani_riwayat_tandur('{{ url('petani/riwayat-tandur') }}')" class="nav-link">
+                <i class="fas fa-solid fa-clock"></i>
+                <span>Riwayat Tandur</span>
+            </a>
+        </li>
         <li class="menu-header">Profile Saya</li>
         <li class="nav-item dropdown {{ Request::is('petani/pengaturan*') ? 'active' : '' }}">
             <a href="#" onclick="petani_pengaturan('{{ url('petani/pengaturan') }}')" class="nav-link">

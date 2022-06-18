@@ -9,6 +9,7 @@
 <script src="{{ asset('js/main.js') }}"></script>
 <script src="{{ asset('js/market.js') }}"></script>
 @yield('script')
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 <script type="text/javascript">
     //========= Hero Slider
     tns({
@@ -49,7 +50,7 @@
         }
     });
 </script>
-<script>
+{{-- <script>
     $(document).ready(function () {
 
         $('#dynamic_content').html(make_skeleton())
@@ -90,7 +91,26 @@
                 success:function(data){
                     $('#dynamic_content').html(data);
                 }
-            })
+            });
         }
-    })
+    });
+</script> --}}
+<script>
+
+    var availableTags = [];
+    $.ajax({
+        url: "/product-list",
+        method: "GET",
+        success: function (response) {
+            // console.log(response);
+            startAutoComplete(response);
+        }
+    });
+
+    function startAutoComplete(availableTags) {
+        $("#search_product").autocomplete({
+            source: availableTags
+        });
+    }
+
 </script>

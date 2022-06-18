@@ -178,7 +178,7 @@
                                 <i class="fas fa-bell"></i>
                             </div>
                             <div class="dropdown-item-desc">
-                                <b>{{ $item->plant->farmer->user->name }}</b> telah melakukan tandur <b> {{ $item->name }} </b> di <b> {{ $item->plant->surface_area }} </b>
+                                <b>{{ $item->plant->farmer->user->name }}</b> telah melakukan tandur <b> {{ $item->name }} </b> di <b> {{ $item->plant->address }} </b>
                                 <div class="time">{{$item->created_at->diffForHumans()}}</div>
                                 <a href="#" id="{{ $item->id }}" class="notifPlant float-right mx-1">Lihat</a>
                             </div>
@@ -191,7 +191,7 @@
                                 <i class="fas fa-check"></i>
                             </div>
                             <div class="dropdown-item-desc">
-                                <b>{{ $item->plant->farmer->user->name }}</b> telah melakukan panen <b> {{ $item->name }} </b> di <b> {{ $item->plant->surface_area }} </b>
+                                <b>{{ $item->plant->farmer->user->name }}</b> telah melakukan panen <b> {{ $item->name }} </b> di <b> {{ $item->plant->address }} </b>
                                 <div class="time">{{$item->created_at->diffForHumans()}}</div>
                                 <a href="#" id="{{ $item->id }}" class="notifHarvest float-right mx-1">Lihat</a>
                             </div>
@@ -213,9 +213,6 @@
                             </section>
                         </div>
                     @endif
-                </div>
-                <div class="dropdown-footer text-center">
-                    <a href="#">View All <i class="fas fa-chevron-right"></i></a>
                 </div>
             </div>
         </li>

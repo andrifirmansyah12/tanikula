@@ -62,12 +62,16 @@
                     <input type="hidden" name="emp_id" id="emp_id">
                     <div class="modal-body p-4">
                         <div class="form-group my-2">
-                            <label for="plant_tanaman">Nama Tanaman</label>
+                            <label for="plant_tanaman">Tanaman</label>
                             <input type="text" disabled name="plant_tanaman" id="plant_tanaman" class="form-control" placeholder="Nama Tanaman" required>
                         </div>
                         <div class="form-group my-2">
-                            <label for="surface_area">Area</label>
-                            <input type="text" disabled name="surface_area" id="surface_area" class="form-control" placeholder="Area" required>
+                            <label for="surface_area">Luas Tanah</label>
+                            <input type="text" disabled name="surface_area" id="surface_area" class="form-control" placeholder="Luas Tanah" required>
+                        </div>
+                        <div class="form-group my-2">
+                            <label for="address">Alamat</label>
+                            <textarea class="form-control" style="height: 8rem" disabled name="address" id="address" rows="3" placeholder="Deskripsi required"></textarea>
                         </div>
                         <div class="my-2 form-group">
                             <label for="plating_date">Tanggal Tandur</label>
@@ -78,12 +82,6 @@
                                     </div>
                                 </div>
                                 <input type="text" name="plating_date" disabled id="plating_date" v-model="plating_date" class="form-control datepicker">
-                            </div>
-                        </div>
-                        <div class="my-2 form-group">
-                            <label for="plating_date">Tanggal Panen</label>
-                            <div class="input-group" id="harvest_date">
-
                             </div>
                         </div>
                     </div>
@@ -178,6 +176,7 @@
                 success: function(response) {
                     $("#plant_tanaman").val(response.plant_tanaman);
                     $("#surface_area").val(response.surface_area);
+                    $("#address").val(response.address);
                     $("#plating_date").val(moment(response.plating_date).format('DD-MMM-YYYY'));
                     if (response.harvest_date) {
                         $("#harvest_date").html(`<div class="input-group-prepend">

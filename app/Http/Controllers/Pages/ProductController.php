@@ -50,6 +50,19 @@ class ProductController extends Controller
         }
     }
 
+    public function newProduct()
+    {
+        $product_new = Product::with('photo_product')
+                    ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
+                    ->join('users', 'products.user_id', '=', 'users.id')
+                    ->select('products.*', 'product_categories.name as category_name')
+                    ->where('product_categories.is_active', '=', 1)
+                    ->where('products.is_active', '=', 1)
+                    ->orderBy('products.updated_at', 'desc')
+                    ->get();
+        return view('pages.home.product', compact('product_new'));
+    }
+
     public function allCategory()
     {
         $product_new = Product::with('photo_product')
@@ -94,6 +107,38 @@ class ProductController extends Controller
 
         } else {
             return redirect('/')->with('status', 'No such category found!');
+        }
+    }
+
+    public function productListAjax()
+    {
+        $product = Product::select('name')->where('is_active', '1')->get();
+        $data = [];
+
+        foreach ($product as $item) {
+            $data[] = $item['name'];
+        }
+
+        return $data;
+    }
+
+    public function searchProduct(Request $request)
+    {
+        $searched_product = $request->product_name;
+
+        if ($searched_product != "")
+        {
+            $product = Product::where('name', 'like', "%{$searched_product}%")->first();
+            if ($product)
+            {
+                return redirect('product-category/'.$product->product_category->slug.'/'.$product->slug);
+            } else
+            {
+                return redirect()->back()->with('status', 'Produk yang anda cari tidak ada!');
+            }
+        } else
+        {
+            return redirect()->back();
         }
 
     }

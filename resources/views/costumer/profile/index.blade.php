@@ -59,15 +59,10 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="">
-                                <span class="ms-1 fw-bold">Daftar ALamat</span>
+                            <a href="{{ route('pembeli.alamat') }}">
+                                <span class="ms-1 fw-bold">Daftar Alamat</span>
                             </a>
                         </li>
-                        {{-- <li class="nav-item">
-                            <a href="{{ route('pembeli.wishlist') }}">
-                                <span class="ms-1 fw-bold">Favorit</span>
-                            </a>
-                        </li> --}}
                     </ul>
                 </div>
             </div>
@@ -115,7 +110,7 @@
                                 <li class="list-group-item border-0 ps-0 text-sm"><strong
                                         class="text-dark">Tanggal Lahir:</strong> &nbsp;
                                     @if ( $userInfo->birth )
-                                        {{ date("d-F-Y", strtotime($userInfo->birth)) }}
+                                        {{ date("d F Y", strtotime($userInfo->birth)) }}
                                     @else
                                         <span class="text-danger">Belum diisi</span>
                                     @endif
@@ -186,7 +181,6 @@
                         </div>
                         <div class="row form-group mb-3">
                             <label for="birth">Tanggal Lahir</label>
-                            <small class="text-danger">*kosongkan jika tidak ingin ubah tanggal lahir</small>
                             <div class="input-group">
                                 @if ($userInfo->birth)
                                 <input type="date" name="birth" id="birth" class="form-control datepicker border px-3"
@@ -196,6 +190,7 @@
                                     placeholder="Tanggal lahir">
                                 @endif
                             </div>
+                            <small class="text-danger">*kosongkan jika tidak ingin ubah tanggal lahir</small>
                             <div class="invalid-feedback">
                             </div>
                         </div>

@@ -25,4 +25,9 @@ class Farmer extends Model
     {
         return $this->hasMany(Plant::class);
     }
+
+    public function historyEducation()
+    {
+        return $this->hasMany(HistoryEducation::class);
+    }
 }

@@ -1,5 +1,5 @@
 @extends('pages.template1')
-@section('title', 'Semua Kategori Produk')
+@section('title', 'Produk Terbaru')
 
 @section('style')
     <style>
@@ -20,7 +20,6 @@
                 <div class="col-lg-6 col-md-6 col-12">
                     <ul class="breadcrumb-nav">
                         <li><a href="index.html"><i class="lni lni-home"></i> Home</a></li>
-                        <li><a href="index.html">Kategori Produk</a></li>
                         {{-- @if ( Request::is('blogs*') ) --}}
                         <li>@yield('title')</li>
                     </ul>

@@ -19,12 +19,21 @@ $(document).ready(function () {
                 'product_qty': product_qty,
             },
             success: function (response) {
-                window.location.reload();
-                iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
-                    title: 'Berhasil',
-                    message: response.status,
-                    position: 'topRight'
-                });
+                if (response.status == 'Silahkan login!') {
+                    window.location = '/login';
+                    iziToast.warning({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                        title: 'Gagal',
+                        message: response.status,
+                        position: 'topRight'
+                    });
+                } else {
+                    window.location.reload();
+                    iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                        title: 'Berhasil',
+                        message: response.status,
+                        position: 'topRight'
+                    });
+                }
             }
         });
     });
@@ -47,12 +56,21 @@ $(document).ready(function () {
                 'product_id': product_id,
             },
             success: function (response) {
-                window.location.reload();
-                iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
-                    title: 'Berhasil',
-                    message: response.status,
-                    position: 'topRight'
-                });
+                if (response.status == 'Silahkan login!') {
+                    window.location = '/login';
+                    iziToast.warning({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                        title: 'Gagal',
+                        message: response.status,
+                        position: 'topRight'
+                    });
+                } else {
+                    window.location.reload();
+                    iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                        title: 'Berhasil',
+                        message: response.status,
+                        position: 'topRight'
+                    });
+                }
             }
         });
     });

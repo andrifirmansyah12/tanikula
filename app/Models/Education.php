@@ -45,6 +45,11 @@ class Education extends Model
         return $this->belongsTo(EducationCategory::class, 'category_education_id');
     }
 
+    public function historyEducation()
+    {
+        return $this->hasMany(HistoryEducation::class);
+    }
+
     public function getRouteKeyName()
     {
         return 'slug';

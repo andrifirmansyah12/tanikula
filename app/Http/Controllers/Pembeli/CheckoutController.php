@@ -163,6 +163,17 @@ class CheckoutController extends Controller
                 'messages' => $validator->getMessageBag()
             ]);
         } else {
+            if ($request->main_address ? 1 : 0) {
+                $addressOld = Address::where('user_id', auth()->user()->id)->latest()->get();
+                foreach ($addressOld as $item) {
+                    if ($item->main_address == 1) {
+                        $datasFound = Address::findOrFail($item->id);
+                        $datasFound->main_address = 0;
+                        $datasFound->update();
+                    }
+                }
+            }
+
             $address = new Address();
             $address->recipients_name = $request->recipients_name;
             $address->address_label = $request->address_label;
@@ -172,14 +183,6 @@ class CheckoutController extends Controller
             $address->complete_address = $request->complete_address;
             $address->note_for_courier = $request->note_for_courier;
             $address->main_address = $request->main_address ? 1 : 0;
-            // if ($request->main_address == 1) {
-            //     foreach ($address as $item) {
-            //         if ($item->main_address == 1) {
-            //             $item->main_address = 0;
-            //             $item->update();
-            //         }
-            //     }
-            // }
             $address->user_id = auth()->user()->id;
             $address->save();
 
@@ -224,6 +227,17 @@ class CheckoutController extends Controller
                 'messages' => $validator->getMessageBag()
             ]);
         } else {
+            if ($request->main_address ? 1 : 0) {
+                $addressOld = Address::where('user_id', auth()->user()->id)->latest()->get();
+                foreach ($addressOld as $item) {
+                    if ($item->main_address == 1) {
+                        $datasFound = Address::findOrFail($item->id);
+                        $datasFound->main_address = 0;
+                        $datasFound->update();
+                    }
+                }
+            }
+            
             $address = Address::find($request->emp_id);
             $address->recipients_name = $request->recipients_name;
             $address->address_label = $request->address_label;
