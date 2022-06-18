@@ -20,6 +20,7 @@ class ProductController extends Controller
                     ->where('product_categories.is_active', '=', 1)
                     ->where('products.is_active', '=', 1)
                     ->orderBy('products.updated_at', 'desc')
+                    ->take(8)
                     ->get();
         $product_search = Product::with('photo_product')
                     ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
@@ -29,6 +30,7 @@ class ProductController extends Controller
                     ->where('products.is_active', '=', 1)
                     ->orderBy('products.updated_at', 'desc')
                     ->orderByRaw('RAND()')
+                    ->take(8)
                     ->get();
         return view('pages.home.index', compact('category_product', 'product_new', 'product_search'));
     }
@@ -60,7 +62,21 @@ class ProductController extends Controller
                     ->where('products.is_active', '=', 1)
                     ->orderBy('products.updated_at', 'desc')
                     ->get();
-        return view('pages.home.product', compact('product_new'));
+        return view('pages.home.product_new', compact('product_new'));
+    }
+
+    public function basedSearch()
+    {
+        $product_new = Product::with('photo_product')
+                    ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
+                    ->join('users', 'products.user_id', '=', 'users.id')
+                    ->select('products.*', 'product_categories.name as category_name')
+                    ->where('product_categories.is_active', '=', 1)
+                    ->where('products.is_active', '=', 1)
+                    ->orderBy('products.updated_at', 'desc')
+                    ->orderByRaw('RAND()')
+                    ->get();
+        return view('pages.home.product_search', compact('product_new'));
     }
 
     public function allCategory()
