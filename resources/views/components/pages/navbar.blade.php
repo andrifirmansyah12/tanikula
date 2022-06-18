@@ -84,14 +84,19 @@
                     <!-- Start Main Menu Search -->
                     <div class="main-menu-search">
                         <!-- navbar search start -->
-                        <div class="navbar-search search-style-5">
-                            <div class="search-input">
-                                <input type="text" placeholder="Search">
+                        <form action="{{ url('product-searchProduct') }}" method="POST">
+                            @csrf
+                            <div class="navbar-search search-style-5">
+
+                                <div class="search-input">
+                                    <input type="search" class="form-control" id="search_product" name="product_name"
+                                        placeholder="Pencarian produk">
+                                </div>
+                                <div class="search-btn">
+                                    <button type="submit"><i class="lni lni-search-alt"></i></button>
+                                </div>
                             </div>
-                            <div class="search-btn">
-                                <button><i class="lni lni-search-alt"></i></button>
-                            </div>
-                        </div>
+                        </form>
                         <!-- navbar search Ends -->
                     </div>
                     <!-- End Main Menu Search -->
@@ -208,6 +213,7 @@
                             @foreach ($category_product as $item)
                             <li><a href="{{ url('product-category/'.$item->slug) }}">{{ $item->name }} </a></li>
                             @endforeach
+                            <li><a href="{{ url('product-category/all-category') }}">Semua Kategori </a></li>
                         </ul>
                     </div>
                     <!-- End Mega Category Menu -->

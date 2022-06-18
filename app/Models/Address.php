@@ -20,4 +20,13 @@ class Address extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    //Local Scope
+    // public function scopeFilter($query, array $filters)
+    // {
+    //     // Isset Function
+    //     $query->when($filters['pencarian'] ?? false, function($query, $search) {
+    //         return $query->where('recipients_name', 'like', '%' . $search . '%');
+    //     });
+    // }
 }

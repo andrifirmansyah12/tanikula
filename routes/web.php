@@ -337,9 +337,13 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:petani']], function()
     Route::get('petani/kegiatan/checkSlug', [App\Http\Controllers\Petani\ActivityController::class, 'checkSlug'])->name('petani-kegiatan-checkSlug');
 
     Route::get('petani/panen', [App\Http\Controllers\Petani\HarvestController::class, 'index'])->name('petani-panen');
-    Route::post('petani/panen/store', [App\Http\Controllers\Petani\HarvestController::class, 'store'])->name('petani-panen-store');
     Route::get('petani/panen/fetchall', [App\Http\Controllers\Petani\HarvestController::class, 'fetchAll'])->name('petani-panen-fetchAll');
     Route::get('petani/panen/edit', [App\Http\Controllers\Petani\HarvestController::class, 'edit'])->name('petani-panen-edit');
+    Route::post('petani/panen/update', [App\Http\Controllers\Petani\HarvestController::class, 'update'])->name('petani-panen-update');
+
+    Route::get('petani/riwayat-tandur', [App\Http\Controllers\Petani\PlantingHistoryController::class, 'index'])->name('petani-riwayat-tandur');
+    Route::get('petani/riwayat-tandur/fetchall', [App\Http\Controllers\Petani\PlantingHistoryController::class, 'fetchAll'])->name('petani-riwayat-tandur-fetchAll');
+    Route::get('petani/riwayat-tandur/edit', [App\Http\Controllers\Petani\PlantingHistoryController::class, 'edit'])->name('petani-riwayat-tandur-edit');
 
     Route::get('petani/pengaturan', [App\Http\Controllers\Petani\PengaturanController::class, 'pengaturan'])->name('petani-pengaturan');
     Route::post('petani/pengaturan-image', [App\Http\Controllers\Petani\PengaturanController::class, 'pengaturanImage'])->name('petani.pengaturan.image');
@@ -370,7 +374,14 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function(
     Route::post('pembeli-update', [App\Http\Controllers\Pembeli\PengaturanController::class, 'pengaturanUpdate'])->name('pembeli.pengaturan.update');
     Route::post('pembeli-updatePassword', [App\Http\Controllers\Pembeli\PengaturanController::class, 'pengaturanUpdatePassword'])->name('pembeli.pengaturan.updatePassword');
 
-    Route::get('pembeli/wishlist', [App\Http\Controllers\Pembeli\WishlistController::class, 'index'])->name('pembeli.wishlist');
+    Route::get('/pembeli/alamat', [App\Http\Controllers\Pembeli\AddressController::class, 'index'])->name('pembeli.alamat');
+    Route::post('/pembeli/addAddress', [App\Http\Controllers\Pembeli\AddressController::class, 'addAlamat'])->name('add.pembeli.alamat');
+    Route::get('/pembeli/fetchallAddress', [App\Http\Controllers\Pembeli\AddressController::class, 'fetchAll'])->name('pembeli.alamat.fetchAll');
+    Route::get('/pembeli/editAddress', [App\Http\Controllers\Pembeli\AddressController::class, 'editAddress'])->name('edit.pembeli.alamat');
+    Route::post('/pembeli/updateAddress', [App\Http\Controllers\Pembeli\AddressController::class, 'updateAddress'])->name('update.pembeli.alamat');
+    Route::get('/pembeli/autocompleteAddress', [App\Http\Controllers\Pembeli\AddressController::class, 'autocomplete'])->name('alamat.autocomplete');
+
+    Route::get('/pembeli/wishlist', [App\Http\Controllers\Pembeli\WishlistController::class, 'index'])->name('pembeli.wishlist');
 
     Route::get('/cart', [App\Http\Controllers\Pembeli\CartController::class, 'viewCart']);
     Route::get('/cart/shipment', [App\Http\Controllers\Pembeli\CheckoutController::class, 'index']);
@@ -388,47 +399,27 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function(
         return view('costumer.chat.index');
     })->name('pembeli.chat');
 
-    Route::get('pembeli/alamat', function() {
-        return view('costumer.alamat.index');
-    })->name('pembeli.alamat');
-
 });
 
 Route::get('/', [App\Http\Controllers\Pages\ProductController::class, 'index']);
 Route::get('/home', [App\Http\Controllers\Pages\ProductController::class, 'index'])->name('home');
 Route::get('/home/{product:slug}', [App\Http\Controllers\Pages\ProductController::class, 'detailProduct']);
-Route::get('/product-category/allCategory', [App\Http\Controllers\Pages\ProductController::class, 'allCategory'])->name('all.category');
+Route::get('/new-product', [App\Http\Controllers\Pages\ProductController::class, 'newProduct'])->name('new.product');
+Route::get('/product-category/all-category', [App\Http\Controllers\Pages\ProductController::class, 'allCategory'])->name('new.product');
 Route::get('/product-category/{slug}', [App\Http\Controllers\Pages\ProductController::class, 'viewCategory'])->name('view.category');
 Route::get('/product-category/{category_slug}/{product_slug}', [App\Http\Controllers\Pages\ProductController::class, 'productView'])->name('view.product');
 Route::post('/add-to-cart', [App\Http\Controllers\Pembeli\CartController::class, 'addProduct']);
 Route::post('/delete-cart-item', [App\Http\Controllers\Pembeli\CartController::class, 'deleteCartItem']);
 Route::post('/update-cart-item', [App\Http\Controllers\Pembeli\CartController::class, 'updateCartItem']);
 
+Route::get('/product-list', [App\Http\Controllers\Pages\ProductController::class, 'productListAjax']);
+Route::post('/product-searchProduct', [App\Http\Controllers\Pages\ProductController::class, 'searchProduct']);
+
 Route::post('/add-to-wishlist', [App\Http\Controllers\Pembeli\WishlistController::class, 'addToWishlist'])->name('pembeli.addToWishlist');
 Route::post('/delete-cart-wishlist', [App\Http\Controllers\Pembeli\WishlistController::class, 'deleteWishlistItem']);
 
 // Route::get('/thank-you-purchasing', function () {
 //     return view('pages.checkout.purchasing');
-// });
-
-// Route::get('/keranjang', function () {
-//     return view('pages.bag.index');
-// });
-
-// Route::get('/payment', function () {
-//     return view('pages.checkout.payment');
-// });
-
-// Route::get('/kategori-edukasi', function () {
-//     return view('pages.edukasi.index');
-// });
-
-// Route::get('/semua-kategori', function () {
-//     return view('pages.edukasi.allcategory');
-// });
-
-// Route::get('/galeri', function () {
-//     return view('pages.edukasi.gallery');
 // });
 
 // Auth::routes();

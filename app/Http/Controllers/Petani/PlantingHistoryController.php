@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Poktan;
+namespace App\Http\Controllers\Petani;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -12,11 +12,11 @@ use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 
-class PlantController extends Controller
+class PlantingHistoryController extends Controller
 {
     // set index page view
 	public function index() {
-		return view('poktan.tandur.index');
+		return view('petani.riwayat_tandur.index');
 	}
 
     // handle fetch all eamployees ajax request
@@ -25,9 +25,9 @@ class PlantController extends Controller
         $emps = Plant::join('farmers', 'plants.farmer_id', '=', 'farmers.id')
                     ->join('poktans', 'plants.poktan_id', '=', 'poktans.id')
                     ->select('plants.*', 'surface_area as area')
-                    ->where('poktans.user_id', '=', auth()->user()->id)
-                    ->where('plants.harvest_date', '=', null)
-                    ->where('plants.status', '=', 'tandur')
+                    ->where('farmers.user_id', '=', auth()->user()->id)
+                    ->whereNotNull('plants.harvest_date')
+                    ->where('plants.status', 'selesai')
                     ->orderBy('updated_at', 'desc')
                     ->get();
 		$output = '';
@@ -41,6 +41,7 @@ class PlantController extends Controller
                 <th>Luas Tanah</th>
                 <th>Alamat</th>
                 <th>Tanggal Tandur</th>
+                <th>Tanggal Panen</th>
                 <th>Status</th>
                 <th>Aksi</th>
               </tr>
@@ -63,6 +64,11 @@ class PlantController extends Controller
                 } else {
                     $output .= '<td><span class="text-danger">Belum diisi</span></td>';
                 }
+                if ($emp->harvest_date) {
+                    $output .= '<td>' . date("d-F-Y", strtotime($emp->harvest_date)) . '</td>';
+                } else {
+                    $output .= '<td><span class="text-danger">Belum diisi</span></td>';
+                }
                 $output .= '<td><div class="badge badge-success text-capitalize">'. $emp->status .'</div></td>';
                 $output .= '<td>
                     <a href="#" id="' . $emp->id . '" class="text-success mx-1 editIcon" data-toggle="modal" data-target="#editEmployeeModal"><i class="bi-eye h4"></i></a>
@@ -72,7 +78,7 @@ class PlantController extends Controller
 			$output .= '</tbody></table>';
 			echo $output;
 		} else {
-			echo '<h1 class="text-center text-secondary my-5">Tidak ada data Tandur!</h1>';
+			echo '<h1 class="text-center text-secondary my-5">Tidak ada data Panen!</h1>';
 		}
 	}
 

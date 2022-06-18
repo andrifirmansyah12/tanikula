@@ -70,22 +70,26 @@
                             <input type="hidden" autofocus name="farmer_id" class="form-control" value="{{ $farmer->id }}" required>
                         @endforeach
                         <div class="form-group my-2">
-                            <label for="plant_tanaman">Nama Tanaman</label>
+                            <label for="plant_tanaman">Tanaman</label>
                             <input type="text" name="plant_tanaman" class="form-control" placeholder="Nama Tanaman" required>
                         </div>
                         <div class="form-group my-2">
-                            <label for="surface_area">Area</label>
-                            <input type="text" name="surface_area" class="form-control" placeholder="Area" required>
+                            <label for="surface_area">Luas Tanah</label>
+                            <input type="text" name="surface_area" class="form-control" placeholder="Luas Tanah" required>
+                        </div>
+                        <div class="form-group my-2">
+                            <label for="surface_area">Alamat</label>
+                            <textarea class="form-control" style="height: 8rem" name="address" rows="3" placeholder="Alamat" required></textarea>
                         </div>
                         <div class="my-2 form-group">
-                            <label for="plating_date">Tanggal Tanam</label>
+                            <label for="plating_date">Tanggal Tandur</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">
                                         <i class="bi bi-calendar"></i>
                                     </div>
                                 </div>
-                                <input type="text" name="plating_date" class="form-control datepicker" autocomplete="off">
+                                <input type="text" name="plating_date" placeholder="Tanggal Tandur" class="form-control datepicker" autocomplete="off">
                             </div>
                         </div>
                     </div>
@@ -114,14 +118,6 @@
                     <div class="modal-body p-4">
                         <input type="hidden" autofocus name="poktan_id" id="poktan_id"class="form-control" value="{{ $farmer->poktan_id }}" required>
                         <input type="hidden" autofocus name="farmer_id" id="farmer_id" class="form-control" value="{{ $farmer->id }}" required>
-                        <div class="form-group my-2">
-                            <label for="plant_tanaman">Nama Tanaman</label>
-                            <input type="text" name="plant_tanaman" id="plant_tanaman" class="form-control" placeholder="Nama Tanaman" required>
-                        </div>
-                        <div class="form-group my-2">
-                            <label for="surface_area">Area</label>
-                            <input type="text" name="surface_area" id="surface_area" class="form-control" placeholder="Area" required>
-                        </div>
                         <div class="my-2 form-group">
                             <label for="plating_date">Tanggal Panen</label>
                             <div class="input-group">

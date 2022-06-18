@@ -592,7 +592,6 @@
                         'success'
                         )
                         $("#viewPhotoProduct").modal('hide');
-                        window.location.reload();
                     }
                     });
                 }
@@ -666,7 +665,6 @@
                     $('.preview-image-edit').html("");
                     $("#addPhotoProductBtn").text('Simpan');
                     $("#addPhotoProductBtn").prop('disabled', false);
-                    window.location.reload();
                 }
                 });
             });

@@ -28,6 +28,7 @@ class HarvestController extends Controller
                     ->select('plants.*', 'surface_area as area')
                     ->where('gapoktans.user_id', '=', auth()->user()->id)
                     ->whereNotNull('plants.harvest_date')
+                    ->where('plants.status', 'panen')
                     ->orderBy('updated_at', 'desc')
                     ->get();
 		$output = '';
@@ -38,8 +39,9 @@ class HarvestController extends Controller
                 <th>No</th>
                 <th>Nama Poktan</th>
                 <th>Nama Petani</th>
-                <th>Tanaman Tandur</th>
-                <th>Area</th>
+                <th>Tanaman</th>
+                <th>Luas Tanah</th>
+                <th>Alamat</th>
                 <th>Tanggal Tandur</th>
                 <th>Tanggal Panen</th>
                 <th>Status</th>
@@ -59,6 +61,7 @@ class HarvestController extends Controller
                 } else {
                     $output .= '<td><span class="text-danger">Belum diisi</span></td>';
                 }
+                $output .= '<td>' . $emp->address . '</td>';
                 if ($emp->plating_date) {
                     $output .= '<td>' . date("d-F-Y", strtotime($emp->plating_date)) . '</td>';
                 } else {
@@ -69,11 +72,7 @@ class HarvestController extends Controller
                 } else {
                     $output .= '<td><span class="text-danger">Belum diisi</span></td>';
                 }
-                if (empty($emp->harvest_date)) {
-                    $output .= '<td><div class="badge badge-warning">Tanam</div></td>';
-                } else {
-                    $output .= '<td><div class="badge badge-success">Panen</div></td>';
-                }
+                $output .= '<td><div class="badge badge-success text-capitalize">'. $emp->status .'</div></td>';
                 $output .= '<td>
                     <a href="#" id="' . $emp->id . '" class="text-success mx-1 editIcon" data-toggle="modal" data-target="#editEmployeeModal"><i class="bi-eye h4"></i></a>
                 </td>

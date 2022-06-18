@@ -1,5 +1,5 @@
-@extends('poktan.template')
-@section('title', 'Laporan Panen')
+@extends('petani.template')
+@section('title', 'Riwayat Tandur')
 
 @section('style')
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -26,7 +26,7 @@
             <div class="section-header">
                 <h1>@yield('title')</h1>
                 <div class="section-header-breadcrumb">
-                    <div class="breadcrumb-item">Poktan</div>
+                    <div class="breadcrumb-item">Petani</div>
                     <div class="breadcrumb-item active"><a href="#">@yield('title')</a></div>
                 </div>
             </div>
@@ -52,7 +52,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Detail Panen</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Detail Riwayat Tandur</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -71,7 +71,7 @@
                         </div>
                         <div class="form-group my-2">
                             <label for="address">Alamat</label>
-                            <textarea class="form-control" style="height: 8rem" disabled name="address" id="address" rows="3" placeholder="Deskripsi required"></textarea>
+                            <textarea class="form-control" style="height: 8rem" name="address" rows="3" placeholder="Alamat" required></textarea>
                         </div>
                         <div class="my-2 form-group">
                             <label for="plating_date">Tanggal Tandur</label>
@@ -142,7 +142,7 @@
                 e.preventDefault();
                 let id = $(this).attr('id');
                 $.ajax({
-                url: '{{ route('poktan-panen-edit') }}',
+                url: '{{ route('petani-riwayat-tandur-edit') }}',
                 method: 'get',
                 data: {
                     id: id,
@@ -180,7 +180,7 @@
 
             function fetchAllEmployees() {
                 $.ajax({
-                url: '{{ route('poktan-panen-fetchAll') }}',
+                url: '{{ route('petani-riwayat-tandur-fetchAll') }}',
                 method: 'get',
                 success: function(response) {
                     $("#show_all_employees").html(response);

@@ -483,7 +483,7 @@
                         showError('note_for_courier', response.messages.note_for_courier);
                     } else if (response.status == 200) {
                         Swal.fire(
-                            'Menambahkan!',
+                            'Memperbarui!',
                             'Alamat Berhasil diperbarui!',
                             'success'
                         )

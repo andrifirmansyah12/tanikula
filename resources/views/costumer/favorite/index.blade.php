@@ -87,15 +87,10 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="">
-                                <span class="ms-1 fw-bold">Daftar ALamat</span>
+                            <a href="{{ route('pembeli.alamat') }}">
+                                <span class="ms-1 fw-bold">Daftar Alamat</span>
                             </a>
                         </li>
-                        {{-- <li class="nav-item">
-                            <a href="{{ route('pembeli.wishlist') }}">
-                                <span class="ms-1 fw-bold">Favorit</span>
-                            </a>
-                        </li> --}}
                     </ul>
                 </div>
             </div>
