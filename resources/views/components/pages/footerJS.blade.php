@@ -98,6 +98,7 @@
 <script>
 
     var availableTags = [];
+
     $.ajax({
         url: "/product-list",
         method: "GET",
@@ -112,5 +113,29 @@
             source: availableTags
         });
     }
+
+    $(document).ready(function () {
+
+        LoadCart();
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        function LoadCart()
+        {
+            $.ajax({
+                method: "GET",
+                url: "/load-cart",
+                success: function (response) {
+                    $('.cart-count').html('');
+                    $('.cart-count').html(response.count);
+                    // alert(response.count);
+                }
+            });
+        }
+    });
 
 </script>

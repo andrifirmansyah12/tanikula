@@ -1,5 +1,5 @@
-@extends('admin.template')
-@section('title', 'Laporan Panen')
+@extends('poktan.template')
+@section('title', 'Riwayat Penanam')
 
 @section('style')
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -21,28 +21,38 @@
 @section('content')
 
     <!-- Main Content -->
-    <section class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="table-responsive" id="show_all_employees">
-                                <h1 class="text-center text-secondary my-5">Memuat..</h1>
+    <div class="main-content">
+        <section class="section">
+            <div class="section-header">
+                <h1>@yield('title')</h1>
+                <div class="section-header-breadcrumb">
+                    <div class="breadcrumb-item">Poktan</div>
+                    <div class="breadcrumb-item active"><a href="#">@yield('title')</a></div>
+                </div>
+            </div>
+
+            <div class="section-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="table-responsive" id="show_all_employees">
+                                    <h1 class="text-center text-secondary my-5">Memuat..</h1>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </div>
 
     <!-- Modal -->
     <div class="modal fade" id="editEmployeeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Detail Panen</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Detail Riwayat Tandur</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -61,7 +71,7 @@
                         </div>
                         <div class="form-group my-2">
                             <label for="address">Alamat</label>
-                            <textarea class="form-control" disabled name="address" id="address" rows="3" placeholder="Deskripsi required"></textarea>
+                            <textarea class="form-control" style="height: 8rem" name="address" rows="3" placeholder="Alamat" required></textarea>
                         </div>
                         <div class="my-2 form-group">
                             <label for="plating_date">Tanggal Tandur</label>
@@ -132,7 +142,7 @@
                 e.preventDefault();
                 let id = $(this).attr('id');
                 $.ajax({
-                url: '{{ route('admin-panen-edit') }}',
+                url: '{{ route('poktan-riwayat-penanam-edit') }}',
                 method: 'get',
                 data: {
                     id: id,
@@ -170,7 +180,7 @@
 
             function fetchAllEmployees() {
                 $.ajax({
-                url: '{{ route('admin-panen-fetchAll') }}',
+                url: '{{ route('poktan-riwayat-penanam-fetchAll') }}',
                 method: 'get',
                 success: function(response) {
                     $("#show_all_employees").html(response);

@@ -52,12 +52,14 @@ class DashboardController extends Controller
                     ->join('gapoktans', 'poktans.gapoktan_id', '=', 'gapoktans.id')
                     ->where('gapoktans.user_id', '=', auth()->user()->id)
                     ->where('plants.harvest_date', '=', null)
+                    ->where('plants.status', '=', 'tandur')
                     ->count();
         $countHarvest = Plant::join('farmers', 'plants.farmer_id', '=', 'farmers.id')
                     ->join('poktans', 'plants.poktan_id', '=', 'poktans.id')
                     ->join('gapoktans', 'poktans.gapoktan_id', '=', 'gapoktans.id')
                     ->where('gapoktans.user_id', '=', auth()->user()->id)
                     ->whereNotNull('plants.harvest_date')
+                    ->where('plants.status', 'panen')
                     ->count();
         $countFarmer = Farmer::join('poktans', 'farmers.poktan_id', '=', 'poktans.id')
                     ->join('gapoktans', 'poktans.gapoktan_id', '=', 'gapoktans.id')
@@ -90,8 +92,18 @@ class DashboardController extends Controller
                     ->where('poktans.is_active', '=', 0)
                     ->where('gapoktans.user_id', '=', auth()->user()->id)
                     ->count();
-        $countEducation = Education::where('user_id', auth()->user()->id)->count();
-        $countActivity = Activity::where('user_id', auth()->user()->id)->count();
+        $countEducation = Education::join('education_categories', 'education.category_education_id', '=', 'education_categories.id')
+                    ->join('users', 'education.user_id', '=', 'users.id')
+                    ->select('education.*', 'education_categories.name as name')
+                    ->where('education_categories.is_active', '=', 1)
+                    ->where('user_id', auth()->user()->id)
+                    ->count();
+        $countActivity = Activity::join('activity_categories', 'activities.category_activity_id', '=', 'activity_categories.id')
+                    ->join('users', 'activities.user_id', '=', 'users.id')
+                    ->select('activities.*', 'activity_categories.name as name')
+                    ->where('activity_categories.is_active', '=', 1)
+                    ->where('user_id', auth()->user()->id)
+                    ->count();
 
 		$output = '';
             $output .= '

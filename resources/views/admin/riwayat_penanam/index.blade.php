@@ -1,5 +1,5 @@
 @extends('admin.template')
-@section('title', 'Laporan Panen')
+@section('title', 'Riwayat Penanam')
 
 @section('style')
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -42,7 +42,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Detail Panen</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Detail Riwayat Penanam</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -132,7 +132,7 @@
                 e.preventDefault();
                 let id = $(this).attr('id');
                 $.ajax({
-                url: '{{ route('admin-panen-edit') }}',
+                url: '{{ route('admin-riwayat-penanam-edit') }}',
                 method: 'get',
                 data: {
                     id: id,
@@ -170,7 +170,7 @@
 
             function fetchAllEmployees() {
                 $.ajax({
-                url: '{{ route('admin-panen-fetchAll') }}',
+                url: '{{ route('admin-riwayat-penanam-fetchAll') }}',
                 method: 'get',
                 success: function(response) {
                     $("#show_all_employees").html(response);

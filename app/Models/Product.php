@@ -37,6 +37,15 @@ class Product extends Model
         return $this->hasMany(PhotoProduct::class);
     }
 
+    //Local Scope
+    public function scopeFilter($query, array $filters)
+    {
+        // Isset Function
+        $query->when($filters['pencarian'] ?? false, function($query, $search) {
+            return $query->where('products.name', 'like', '%' . $search . '%');
+        });
+    }
+
     public function sluggable()
     {
         return [

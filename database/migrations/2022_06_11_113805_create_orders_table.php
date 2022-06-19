@@ -18,6 +18,8 @@ class CreateOrdersTable extends Migration
             $table->foreignId("user_id")->nullable();
             $table->foreignId("address_id")->nullable();
             $table->tinyInteger("status")->default('0');
+            // $table->enum('payment_status', ['1', '2', '3', '4'])->comment('1=menunggu pembayaran, 2=sudah dibayar, 3=kadaluarsa, 4=batal');
+            // $table->string('snap_token', 36)->nullable();
             $table->bigInteger("total_price")->nullabel();
             $table->string("message")->nullabel();
             $table->string("tracking_no")->nullabel();

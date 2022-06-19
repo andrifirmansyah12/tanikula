@@ -46,7 +46,7 @@ integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifw
         window.location = url;
     }
     // Riwayat Tandur
-    function petani_riwayat_tandur(url) {
+    function petani_riwayat_penanam(url) {
         window.location = url;
     }
     // Pengaturan

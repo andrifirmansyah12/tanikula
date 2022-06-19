@@ -8,6 +8,7 @@ use App\Models\Education;
 use App\Models\EducationCategory;
 use App\Models\Farmer;
 use App\Models\HistoryEducation;
+use Illuminate\Support\Carbon;
 
 class EducationController extends Controller
 {
@@ -39,19 +40,16 @@ class EducationController extends Controller
         foreach ($farmer as $data) {
             $education = Education::findOrFail($education->id);
             if ($education) {
-                $historyEducation = new HistoryEducation();
-                if (HistoryEducation::where('education_id', $education->id)->exists()) {
-                    $historyEducation->education_id = $education->id;
-                    $historyEducation->farmer_id = $data->id;
-                    $historyEducation->update();
-                } else {
+                $checkHistory = HistoryEducation::where('education_id', $education->id)->exists();
+                if (!$checkHistory) {
+                    $historyEducation = new HistoryEducation();
                     $historyEducation->education_id = $education->id;
                     $historyEducation->farmer_id = $data->id;
                     $historyEducation->save();
                 }
             }
         }
-       
+
         return view('pages.edukasi.detail', [
             'education' => $education,
             'educationsMore' => Education::with('historyEducation')

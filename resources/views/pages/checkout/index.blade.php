@@ -180,7 +180,7 @@
                                     Buat Pesanan
                                 </button>
                                 @else
-                                <a class="btn w-100 text-uppercase text-white" style="background: #16A085;" href="{{ url('product-category/allCategory') }}">Belanja Sekarang</a>
+                                <a class="btn w-100 text-uppercase text-white" style="background: #16A085;" href="{{ url('new-product') }}">Belanja Sekarang</a>
                                 @endif
                             </div>
                         </div>
