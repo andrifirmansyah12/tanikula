@@ -105,7 +105,7 @@
                         </div>
                         <div class="my-2 form-group">
                             <label for="desc">Deskripsi</label>
-                            <input type="text" name="desc" class="form-control" placeholder="Deskripsi" required>
+                            <textarea class="form-control" name="desc" rows="3" placeholder="Deskripsi"></textarea>
                         </div>
                         {{-- <div class="my-2 form-group">
                             <label for="image">Unggah Foto</label>
@@ -204,7 +204,7 @@
                         </div>
                         <div class="my-2 form-group">
                             <label for="desc">Deskripsi</label>
-                            <input type="text" name="desc" id="desc" class="form-control" placeholder="Deskripsi" required>
+                            <textarea class="form-control" name="desc" id="desc" rows="3" placeholder="Deskripsi"></textarea>
                         </div>
                         {{-- <div class="my-2 form-group">
                             <label for="image">Unggah Foto</label>

@@ -23,7 +23,7 @@
         height: 100%;
         width: 100%;
         padding-top: 60px;
-        padding-bottom: 60px;
+        /* padding-bottom: 60px; */
         text-align: center;
         display: table;
     }
@@ -61,7 +61,7 @@
         <div class="bg-white">
             <h2 class="mb-3 fs-3 mb-md-4">Keranjang</h2>
             <div class="row">
-                <div class="col-12 col-xl-8 mb-3 mb-xl-0">
+                <div class="col-12 col-xl-8 mb-3 mb-xl-0 CartItems">
                     @php
                         $total = 0;
                         $totalPrice = 0;
@@ -160,7 +160,7 @@
                         @if ($cartItem->count())
                             <a class="btn w-100 text-uppercase text-white" style="background: #16A085;" href="{{ url('cart/shipment') }}">Beli ({{$totalQty}})</a>
                         @else
-                            <a class="btn w-100 text-uppercase text-white" style="background: #16A085;" href="{{ url('product-category/allCategory') }}">Belanja Sekarang</a>
+                            <a class="btn w-100 text-uppercase text-white" style="background: #16A085;" href="{{ url('new-product') }}">Belanja Sekarang</a>
                         @endif
                     </div>
                 </div>

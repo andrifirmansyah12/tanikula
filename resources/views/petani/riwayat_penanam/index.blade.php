@@ -1,5 +1,5 @@
 @extends('petani.template')
-@section('title', 'Riwayat Tandur')
+@section('title', 'Riwayat Penanam')
 
 @section('style')
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -142,7 +142,7 @@
                 e.preventDefault();
                 let id = $(this).attr('id');
                 $.ajax({
-                url: '{{ route('petani-riwayat-tandur-edit') }}',
+                url: '{{ route('petani-riwayat-penanam-edit') }}',
                 method: 'get',
                 data: {
                     id: id,
@@ -180,7 +180,7 @@
 
             function fetchAllEmployees() {
                 $.ajax({
-                url: '{{ route('petani-riwayat-tandur-fetchAll') }}',
+                url: '{{ route('petani-riwayat-penanam-fetchAll') }}',
                 method: 'get',
                 success: function(response) {
                     $("#show_all_employees").html(response);

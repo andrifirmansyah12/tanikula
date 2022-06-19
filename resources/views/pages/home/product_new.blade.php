@@ -3,7 +3,38 @@
 
 @section('style')
     <style>
-        /*  */
+        /* 4.3 Page */
+        .page-error {
+            height: 100%;
+            width: 100%;
+            padding-top: 60px;
+            padding-bottom: 60px;
+            text-align: center;
+            display: table;
+        }
+
+        .page-error .page-inner {
+            display: table-cell;
+            width: 100%;
+            vertical-align: middle;
+        }
+
+        .page-error img {
+            width: 30rem;
+        }
+
+        .page-error .page-description {
+            padding-top: 30px;
+            font-size: 18px;
+            font-weight: 400;
+            color: color: var(--primary);;
+        }
+
+        @media (max-width: 575.98px) {
+            .page-error {
+                padding-top: 0px;
+            }
+        }
     </style>
 @endsection
 
@@ -14,14 +45,22 @@
             <div class="row align-items-center">
                 <div class="col-lg-6 col-md-6 col-12">
                     <div class="breadcrumbs-content">
-                        <h1 class="page-title">@yield('title')</h1>
+                        @if ( request('pencarian') )
+                            <h1 class="page-title">{{ request('pencarian') }}</h1>
+                        @else
+                            <h1 class="page-title">@yield('title')</h1>
+                        @endif
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-12">
                     <ul class="breadcrumb-nav">
                         <li><a href="index.html"><i class="lni lni-home"></i> Home</a></li>
                         {{-- @if ( Request::is('blogs*') ) --}}
-                        <li>@yield('title')</li>
+                        @if ( request('pencarian') )
+                            <li>{{ request('pencarian') }}</li>
+                        @else
+                            <li>@yield('title')</li>
+                        @endif
                     </ul>
                 </div>
             </div>
@@ -33,6 +72,7 @@
     <section class="section" style="margin-top: 12px;">
         <div class="container">
             <div class="row">
+                @if ($product_new->count())
                 @foreach ($product_new as $item)
                 <div class="col-lg-3 col-md-6 col-12">
                     <!-- Start Single Product -->
@@ -77,6 +117,39 @@
                     <!-- End Single Product -->
                 </div>
                 @endforeach
+                @else
+                    @if ( request('pencarian') )
+                    <div id="app">
+                        <section class="section">
+                            <div class="container">
+                                <div class="page-error">
+                                    <div class="page-inner">
+                                        <img src="{{ asset('img/undraw_empty_re_opql.svg') }}" alt="">
+                                        <div class="page-description">
+                                            Produk yang anda cari tidak ada!
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    @else
+                    <div id="app">
+                        <section class="section">
+                            <div class="container">
+                                <div class="page-error">
+                                    <div class="page-inner">
+                                        <img src="{{ asset('img/undraw_empty_re_opql.svg') }}" alt="">
+                                        <div class="page-description">
+                                            Tidak ada produk yang diposting!
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    @endif
+                    @endif
             </div>
         </div>
     </section>

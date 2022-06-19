@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Petani;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -16,7 +16,7 @@ class PlantingHistoryController extends Controller
 {
     // set index page view
 	public function index() {
-		return view('petani.riwayat_penanam.index');
+		return view('admin.riwayat_penanam.index');
 	}
 
     // handle fetch all eamployees ajax request
@@ -25,7 +25,6 @@ class PlantingHistoryController extends Controller
         $emps = Plant::join('farmers', 'plants.farmer_id', '=', 'farmers.id')
                     ->join('poktans', 'plants.poktan_id', '=', 'poktans.id')
                     ->select('plants.*', 'surface_area as area')
-                    ->where('farmers.user_id', '=', auth()->user()->id)
                     ->whereNotNull('plants.harvest_date')
                     ->where('plants.status', 'selesai')
                     ->orderBy('updated_at', 'desc')

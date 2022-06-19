@@ -93,6 +93,12 @@
                 <span>Panen</span>
             </a>
         </li>
+        <li class="nav-item dropdown {{ Request::is('gapoktan/riwayat-penanam*') ? 'active' : '' }}">
+            <a href="#" onclick="gapoktan_riwayat_penanam('{{ url('gapoktan/riwayat-penanam') }}')" class="nav-link">
+                <i class="fas fa-solid fa-clock"></i>
+                <span>Riwayat Penanam</span>
+            </a>
+        </li>
         <li class="nav-item dropdown {{ Request::is('gapoktan/rekap-penjualan*') ? 'active' : '' }}">
             <a href="#" onclick="gapoktan_rekap_penjualan('{{ url('gapoktan/rekap-penjualan') }}')" class="nav-link">
                 <i class="fas fa-solid fa-chart-line"></i>
