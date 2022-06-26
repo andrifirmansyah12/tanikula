@@ -385,12 +385,26 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function(
     Route::post('pembeli-update', [App\Http\Controllers\Pembeli\PengaturanController::class, 'pengaturanUpdate'])->name('pembeli.pengaturan.update');
     Route::post('pembeli-updatePassword', [App\Http\Controllers\Pembeli\PengaturanController::class, 'pengaturanUpdatePassword'])->name('pembeli.pengaturan.updatePassword');
 
+    Route::get('/pembeli/menunggu-pembayaran', [App\Http\Controllers\Pembeli\WaitingPaymentController::class, 'index'])->name('pembeli.waitingPayment');
+    Route::get('/pembeli/menunggu-pembayaran/fetchall', [App\Http\Controllers\Pembeli\WaitingPaymentController::class, 'fetchAll'])->name('pembeli.waitingPayment.fetchAll');
+    Route::get('/pembeli/menunggu-pembayaran/detail-order/{id}', [App\Http\Controllers\Pembeli\WaitingPaymentController::class, 'viewWaitingPayment'])->name('pembeli.viewWaitingPayment');
+    Route::post('/pembeli/menunggu-pembayaran/updateOrder', [App\Http\Controllers\Pembeli\WaitingPaymentController::class, 'updateWaitingPayment'])->name('pembeli.updateWaitingPayment');
+
+    Route::get('/pembeli/daftar-transaksi', [App\Http\Controllers\Pembeli\TransactionListController::class, 'index'])->name('pembeli.transactionList');
+    Route::get('/pembeli/daftar-transaksi/fetchall', [App\Http\Controllers\Pembeli\TransactionListController::class, 'fetchAll'])->name('pembeli.transactionList.fetchAll');
+    Route::get('/pembeli/daftar-transaksi/fetchDikemas', [App\Http\Controllers\Pembeli\TransactionListController::class, 'fetchDikemas'])->name('pembeli.transactionList.fetchDikemas');
+    Route::get('/pembeli/daftar-transaksi/fetchDikirim', [App\Http\Controllers\Pembeli\TransactionListController::class, 'fetchDikirim'])->name('pembeli.transactionList.fetchDikirim');
+    Route::get('/pembeli/daftar-transaksi/fetchSelesai', [App\Http\Controllers\Pembeli\TransactionListController::class, 'fetchSelesai'])->name('pembeli.transactionList.fetchSelesai');
+    Route::get('/pembeli/daftar-transaksi/fetchDibatalkan', [App\Http\Controllers\Pembeli\TransactionListController::class, 'fetchDibatalkan'])->name('pembeli.transactionList.fetchDibatalkan');
+
     Route::get('/pembeli/alamat', [App\Http\Controllers\Pembeli\AddressController::class, 'index'])->name('pembeli.alamat');
     Route::post('/pembeli/addAddress', [App\Http\Controllers\Pembeli\AddressController::class, 'addAlamat'])->name('add.pembeli.alamat');
     Route::get('/pembeli/fetchallAddress', [App\Http\Controllers\Pembeli\AddressController::class, 'fetchAll'])->name('pembeli.alamat.fetchAll');
     Route::get('/pembeli/editAddress', [App\Http\Controllers\Pembeli\AddressController::class, 'editAddress'])->name('edit.pembeli.alamat');
     Route::post('/pembeli/updateAddress', [App\Http\Controllers\Pembeli\AddressController::class, 'updateAddress'])->name('update.pembeli.alamat');
     Route::get('/pembeli/autocompleteAddress', [App\Http\Controllers\Pembeli\AddressController::class, 'autocomplete'])->name('alamat.autocomplete');
+
+    Route::get('/cart/shipment/place-order/received/{orderID}', [App\Http\Controllers\Pembeli\CheckoutController::class, 'received']);
 
     Route::get('/pembeli/wishlist', [App\Http\Controllers\Pembeli\WishlistController::class, 'index'])->name('pembeli.wishlist');
 
@@ -408,6 +422,11 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function(
 
 });
 
+Route::post('payments/notification', [App\Http\Controllers\Pembeli\PaymentController::class, 'notification']);
+Route::get('payments/completed', [App\Http\Controllers\Pembeli\PaymentController::class, 'completed']);
+Route::get('payments/failed', [App\Http\Controllers\Pembeli\PaymentController::class, 'unfinish']);
+Route::get('payments/unfinish', [App\Http\Controllers\Pembeli\PaymentController::class, 'failed']);
+
 Route::get('/', [App\Http\Controllers\Pages\ProductController::class, 'index']);
 Route::get('/home', [App\Http\Controllers\Pages\ProductController::class, 'index'])->name('home');
 Route::get('/home/{product:slug}', [App\Http\Controllers\Pages\ProductController::class, 'detailProduct']);
@@ -421,6 +440,7 @@ Route::post('/delete-cart-item', [App\Http\Controllers\Pembeli\CartController::c
 Route::post('/update-cart-item', [App\Http\Controllers\Pembeli\CartController::class, 'updateCartItem']);
 
 Route::get('/load-cart', [App\Http\Controllers\Pages\ProductController::class, 'countCart']);
+Route::get('/incrementDecrement/{product:slug}', [App\Http\Controllers\Pages\ProductController::class, 'incrementDecrement']);
 
 Route::get('/product-list', [App\Http\Controllers\Pages\ProductController::class, 'productListAjax']);
 // Route::post('/product-searchProduct', [App\Http\Controllers\Pages\ProductController::class, 'searchProduct']);

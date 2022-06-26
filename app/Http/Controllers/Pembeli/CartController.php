@@ -15,12 +15,19 @@ class CartController extends Controller
         $product_id = $request->input('product_id');
         $product_qty = $request->input('product_qty');
 
-        if(Auth::check() && Auth()->user()->hasRole('pembeli')) {
+        if(Auth::check() && Auth()->user()->hasRole('pembeli'))
+        {
             $prod_check = Product::where('id', $product_id)->first();
 
             if ($prod_check) {
                 if (Cart::where('product_id', $product_id)->where('user_id', Auth::id())->exists()) {
-                    return response()->json(['status' => $prod_check->name." Sudah ditambahkan ke Keranjang"]);
+                    $checkCart = Cart::where('product_id', $product_id)->where('user_id', Auth::id())->get();
+                    foreach ($checkCart as $cart) {
+                        $updateCart = Cart::where('id', $cart->id)->first();
+                        $updateCart->product_qty = $updateCart->product_qty + $product_qty;
+                        $updateCart->update();
+                        return response()->json(['status' => $prod_check->name." Ditambahkan ke Keranjang"]);
+                    }
                 } else {
                     $cartItem = new Cart();
                     $cartItem->product_id = $product_id;

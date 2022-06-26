@@ -102,7 +102,7 @@
                                         </div>
                                         <div class="col-12 mt-3 mt-md-0">
                                             <div class="d-flex flex-row justify-content-end align-items-center">
-                                                <h6 class="border-end border-dark pe-3">Favorit</h6>
+                                                <a href="#" id="addToWishlistBtn" class="border-end text-black border-dark pe-3">Wishlist</a>
                                                 <button class="delete-cart-item btn btn-danger ms-3"><i class="lni lni-trash-can"></i></button>
                                                 @if ($item->product->stoke >= $item->product_qty)
                                                     <div class="col-6 col-md-3 form-group" style="margin-left: 10px">

@@ -10,6 +10,7 @@ use App\Models\Address;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 
 class CheckoutController extends Controller
@@ -35,9 +36,31 @@ class CheckoutController extends Controller
         return view('pages.checkout.index', compact('cartItem', 'address'));
     }
 
+    public function received($orderId)
+	{
+        $checkOrder = Order::with('address', 'user', 'orderItems')
+                    ->join('users', 'orders.user_id', '=', 'users.id')
+                    ->join('addresses', 'orders.address_id', '=', 'addresses.id')
+                    ->select('orders.*', 'addresses.recipients_name as name_billing')
+                    ->where('orders.user_id', '=', auth()->user()->id)
+                    ->where('orders.payment_status', '=', 'unpaid')
+                    ->where('orders.status', '=', 'created')
+                    ->where('orders.id', '=', $orderId)
+                    ->exists();
+        if ($checkOrder) {
+            $order = Order::with('address', 'user', 'orderItems')
+                ->where('id', $orderId)
+                ->where('user_id', \Auth::user()->id)
+                ->firstOrFail();
+
+            return view('pages.order.index', compact('order'));
+        } else {
+            return redirect('/');
+        }
+	}
+
     public function placeOrder(Request $request)
     {
-        
         $order = new Order();
         $order->user_id = auth()->user()->id;
 
@@ -59,8 +82,11 @@ class CheckoutController extends Controller
             $total += $product_total->product->price * $product_total->product_qty;
         }
         $order->total_price = $total;
-        $order->message = 'Pesanan anda berhasil dibuat';
-        $order->tracking_no = 'TaniKula'.rand(1111111111, 9999999999);
+        $order->code = Order::generateCode();
+        $order->status = Order::CREATED;
+        $order->order_date = Carbon::now()->format('Y-m-d H:i:s');
+        $order->payment_due = Carbon::now()->format('Y-m-d H:i:s');
+        $order->payment_status = Order::UNPAID;
         $order->save();
 
         $cartItem = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
@@ -77,10 +103,45 @@ class CheckoutController extends Controller
             $prod->update();
         }
 
-        $cartItem = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
-        Cart::destroy($cartItem);
+        $this->initPaymentGateway();
 
-        return redirect('/')->with('status', 'Berhasil Membuat Pesanan');
+		$customerDetails = [
+			'first_name' => $address->recipients_name,
+			'email' => $address->user->email,
+			'phone' => $address->telp,
+		];
+
+		$params = [
+			'enable_payments' => \App\Models\Payment::PAYMENT_CHANNELS,
+			'transaction_details' => [
+				'order_id' => $order->code,
+				'gross_amount' => $order->total_price,
+			],
+			'customer_details' => $customerDetails,
+			'expiry' => [
+				'start_time' => date('Y-m-d H:i:s T'),
+				'unit' => \App\Models\Payment::EXPIRY_UNIT,
+				'duration' => \App\Models\Payment::EXPIRY_DURATION,
+			],
+		];
+
+		$snap = \Midtrans\Snap::createTransaction($params);
+
+		if ($snap->token) {
+			$order->payment_token = $snap->token;
+			$order->payment_url = $snap->redirect_url;
+			$order->save();
+		}
+
+        if ($order) {
+			$cartItem = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
+            Cart::destroy($cartItem);
+
+			\Session::flash('success', 'Thank you. Your order has been received!');
+			return redirect('cart/shipment/place-order/received/'. $order->id);
+		}
+
+        return redirect('cart/shipment');
 
     }
 
@@ -237,7 +298,7 @@ class CheckoutController extends Controller
                     }
                 }
             }
-            
+
             $address = Address::find($request->emp_id);
             $address->recipients_name = $request->recipients_name;
             $address->address_label = $request->address_label;
@@ -258,5 +319,17 @@ class CheckoutController extends Controller
                     'status' => 200,
                 ]);
         }
+	}
+
+    private function initPaymentGateway()
+	{
+		// Set your Merchant Server Key
+		\Midtrans\Config::$serverKey = env('MIDTRANS_SERVER_KEY');
+		// Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
+		\Midtrans\Config::$isProduction = false;
+		// Set sanitization on (default)
+		\Midtrans\Config::$isSanitized = true;
+		// Set 3DS transaction for credit card to true
+		\Midtrans\Config::$is3ds = true;
 	}
 }
