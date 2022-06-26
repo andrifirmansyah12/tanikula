@@ -28,7 +28,7 @@ $(document).ready(function () {
                         position: 'topRight'
                     });
                 } else {
-                    // window.location.reload();
+                    window.location.reload();
                     iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
                         title: 'Berhasil',
                         message: response.status,

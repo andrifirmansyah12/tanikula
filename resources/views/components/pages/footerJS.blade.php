@@ -50,7 +50,7 @@
         }
     });
 </script>
-<script>
+{{-- <script>
     $(document).ready(function () {
 
         $('#dynamic_content').html(make_skeleton())
@@ -94,7 +94,7 @@
             });
         }
     });
-</script>
+</script> --}}
 <script>
 
     var availableTags = [];

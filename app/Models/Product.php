@@ -37,6 +37,11 @@ class Product extends Model
         return $this->hasMany(PhotoProduct::class);
     }
 
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
     //Local Scope
     public function scopeFilter($query, array $filters)
     {
