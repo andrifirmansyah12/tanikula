@@ -33,6 +33,14 @@ class CustomerApiController extends BaseController
         return $this->sendResponse($datas, 'Data Updated');
     }
 
+    public function show($id)
+    {
+        $data =   Costumer::where('user_id', $id)->first();
+        $result = CustomerResource::make($data);
+        return $this->sendResponse($result, 'Data fetched');
+
+    }
+
     
     public function updatePhoto(Request $request){
         $data = Costumer::findOrFail($request->id);

@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProductCategoryResource extends JsonResource
+class RoomChatResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,11 +16,10 @@ class ProductCategoryResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            "slug" => $this->slug,
-            "is_active" => $this->is_active,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            "sender_id" =>new UserResource($this->user),
+            "receiver_id" =>new UserResource($this->user),
+            "chat_id" =>new ChatResource($this->chat),
+            "is_hide" => $this->is_hide,
         ];
     }
 }

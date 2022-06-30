@@ -14,6 +14,8 @@ class LoginGapoktanApiController extends BaseController
             $user = Auth::user(); 
             $success['token'] =  $user->createToken('MyApp')->accessToken; 
             $success['id'] =  $user->id;
+            $success['name'] =  $user->name;
+            $success['email'] =  $user->email;
             $success['hasRole'] =  $user->hasRole('gapoktan');
 
             if ($success['hasRole'] == 'gapoktan') {
