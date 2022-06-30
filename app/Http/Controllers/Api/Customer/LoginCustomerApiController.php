@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Api\BaseApiController as BaseController;
-
+use App\Models\Costumer;
 
 class LoginCustomerApiController  extends BaseController
 {
@@ -14,10 +14,12 @@ class LoginCustomerApiController  extends BaseController
     {
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){ 
             $user = Auth::user(); 
+            $customer_id =   Costumer::where('user_id', $user->id)->first();
             $success['token'] =  $user->createToken('MyApp')->accessToken; 
             $success['id'] =  $user->id;
             $success['email'] =  $user->email;
-            $success['password'] =  $user->password;
+            $success['name'] =  $user->name;
+            $success['customer_id'] =  $customer_id->id;
             $success['hasRole'] =  $user->hasRole('pembeli');
 
             if ($success['hasRole'] == 'pembeli') {

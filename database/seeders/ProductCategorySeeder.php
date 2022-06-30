@@ -19,17 +19,45 @@ class ProductCategorySeeder extends Seeder
 
         $datas = [
             [
-                "name" => "Kategori Product 1",
-                "slug" => "kategori-Product-1",
-                'created_at' => Carbon::now()->format('Y-m-d'),
-                'updated_at' => Carbon::now()->format('Y-m-d'),
-            ],
+                "name" => "Beras",  
+                "slug" => "beras",  
+                "is_active" => 1,  
+            ], 
             [
-                "name" => "Kategori Product 2",
-                "slug" => "kategori-Product-2",
-                'created_at' => Carbon::now()->format('Y-m-d'),
-                'updated_at' => Carbon::now()->format('Y-m-d'),
-            ],
+                "name" => "Buah",  
+                "slug" => "buah",
+                "is_active" => 1,  
+            ], 
+            [
+                "name" => "Olahan Buah",  
+                "slug" => "olahan-ouah",  
+                "is_active" => 1,  
+            ], 
+            [
+                "name" => "Bibit Sayuran",  
+                "slug" => "bibit-sayuran",  
+                "is_active" => 1,  
+            ], 
+            [
+                "name" => "Sayuran",  
+                "slug" => "sayuran",  
+                "is_active" => 1,  
+            ], 
+            [
+                "name" => "Roti",  
+                "slug" => "roti",  
+                "is_active" => 1,  
+            ], 
+            [
+                "name" => "Jamu Herbal",  
+                "slug" => "jamu-herbal",  
+                "is_active" => 1,  
+            ], 
+            [
+                "name" => "Susu Kedelai",  
+                "slug" => "susu-kedelai",  
+                "is_active" => 1,  
+            ], 
         ];
 
         ProductCategory::insert($datas);

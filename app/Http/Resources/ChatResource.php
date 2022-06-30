@@ -2,9 +2,10 @@
 
 namespace App\Http\Resources;
 
+use App\Models\ParticipantChat;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProductCategoryResource extends JsonResource
+class ChatResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,9 +17,11 @@ class ProductCategoryResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            "slug" => $this->slug,
-            "is_active" => $this->is_active,
+            "sender_id" =>new UserResource($this->userSender),
+            "receiver_id" =>new UserResource($this->userReceiver),
+            "is_hide" => $this->is_hide,
+            "is_read" => $this->is_read,
+            "text" => $this->text,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
