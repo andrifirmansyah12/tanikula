@@ -39,6 +39,12 @@
                 <span>Panen</span>
             </a>
         </li>
+        <li class="nav-item dropdown {{ Request::is('petani/riwayat-penanam*') ? 'active' : '' }}">
+            <a href="#" onclick="petani_riwayat_penanam('{{ url('petani/riwayat-penanam') }}')" class="nav-link">
+                <i class="fas fa-solid fa-clock"></i>
+                <span>Riwayat Penanam</span>
+            </a>
+        </li>
         <li class="menu-header">Profile Saya</li>
         <li class="nav-item dropdown {{ Request::is('petani/pengaturan*') ? 'active' : '' }}">
             <a href="#" onclick="petani_pengaturan('{{ url('petani/pengaturan') }}')" class="nav-link">

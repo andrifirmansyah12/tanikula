@@ -47,11 +47,13 @@ class DashboardController extends Controller
                     ->join('poktans', 'plants.poktan_id', '=', 'poktans.id')
                     ->where('poktans.user_id', '=', auth()->user()->id)
                     ->where('plants.harvest_date', '=', null)
+                    ->where('plants.status', '=', 'tandur')
                     ->count();
         $countHarvest = Plant::join('farmers', 'plants.farmer_id', '=', 'farmers.id')
                     ->join('poktans', 'plants.poktan_id', '=', 'poktans.id')
                     ->where('poktans.user_id', '=', auth()->user()->id)
                     ->whereNotNull('plants.harvest_date')
+                    ->where('plants.status', 'panen')
                     ->count();
         $countFarmer = Farmer::join('poktans', 'farmers.poktan_id', '=', 'poktans.id')
                     ->join('users', 'farmers.user_id', '=', 'users.id')

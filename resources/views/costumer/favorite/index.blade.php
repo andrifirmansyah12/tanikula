@@ -87,15 +87,10 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="">
-                                <span class="ms-1 fw-bold">Daftar ALamat</span>
+                            <a href="{{ route('pembeli.alamat') }}">
+                                <span class="ms-1 fw-bold">Daftar Alamat</span>
                             </a>
                         </li>
-                        {{-- <li class="nav-item">
-                            <a href="{{ route('pembeli.wishlist') }}">
-                                <span class="ms-1 fw-bold">Favorit</span>
-                            </a>
-                        </li> --}}
                     </ul>
                 </div>
             </div>
@@ -107,7 +102,7 @@
                         <h6 class="mb-1">Wishlist</h6>
                         <p class="text-sm">Produk favorit yang dipilih.</p>
                     </div>
-                    <div class="row">
+                    <div class="row WishlistItems">
                         @if ($wishlist->count())
                         @foreach ($wishlist as $item)
                         <div class="col-xl-3 col-md-6 mb-xl-0 mb-4 mt-5" id="product_data">
@@ -135,7 +130,7 @@
                                         <button type="button" id="addToCartBtn" class="btn btn-outline-primary btn-sm mb-0">+
                                             Keranjang</button>
                                         <button type="button" id="delete-cart-wishlistItem" class="btn btn-outline-primary btn-sm mb-0">
-                                            <i class="bi bi-heart-fill h-5"></i>
+                                            <i class="bi bi-heart-fill h-5 text-danger"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -152,7 +147,7 @@
                                                 Tidak ada produk favorit yang dipilih!
                                             </div>
                                             <div class="mt-3">
-                                                <a href="{{ url('product-category/allCategory') }}" class="btn btn-outline-primary btn-sm mb-0">
+                                                <a href="{{ url('new-product') }}" class="btn btn-outline-primary btn-sm mb-0">
                                                     Belanja Sekarang
                                                 </a>
                                             </div>
@@ -192,7 +187,8 @@
     <script>
     $(document).ready(function () {
 
-        $('#delete-cart-wishlistItem').click(function (e) {
+        // $('#delete-cart-wishlistItem').click(function (e) {
+        $(document).on('click', '#delete-cart-wishlistItem', function (e) {
             e.preventDefault();
 
             $.ajaxSetup({
@@ -211,6 +207,7 @@
                 },
                 success: function (response) {
                     window.location.reload();
+                    // $('.WishlistItems').load(location.href + '.WishlistItems');
                     iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
                         title: 'Berhasil',
                         message: response.status,

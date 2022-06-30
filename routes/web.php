@@ -27,9 +27,8 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:admin']], function() 
 
     Route::post('/admin/logout', [App\Http\Controllers\Admin\LoginController::class, 'logout'])->name('logout-admin');
 
-    Route::get('admin', function() {
-        return view('admin.dashboard.index');
-    })->name('admin');
+    Route::get('admin', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin');
+    Route::get('admin/fetchall', [App\Http\Controllers\Admin\DashboardController::class, 'fetchAll'])->name('admin-fetchAll');
 
     Route::get('admin/edukasi', [App\Http\Controllers\Admin\EducationController::class, 'index'])->name('admin-edukasi');
     Route::post('admin/edukasi/store', [App\Http\Controllers\Admin\EducationController::class, 'store'])->name('admin-edukasi-store');
@@ -112,6 +111,10 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:admin']], function() 
     Route::post('admin/panen/store', [App\Http\Controllers\Admin\HarvestController::class, 'store'])->name('admin-panen-store');
     Route::get('admin/panen/fetchall', [App\Http\Controllers\Admin\HarvestController::class, 'fetchAll'])->name('admin-panen-fetchAll');
     Route::get('admin/panen/edit', [App\Http\Controllers\Admin\HarvestController::class, 'edit'])->name('admin-panen-edit');
+
+    Route::get('admin/riwayat-penanam', [App\Http\Controllers\Admin\PlantingHistoryController::class, 'index'])->name('admin-riwayat-penanam');
+    Route::get('admin/riwayat-penanam/fetchall', [App\Http\Controllers\Admin\PlantingHistoryController::class, 'fetchAll'])->name('admin-riwayat-penanam-fetchAll');
+    Route::get('admin/riwayat-penanam/edit', [App\Http\Controllers\Admin\PlantingHistoryController::class, 'edit'])->name('admin-riwayat-penanam-edit');
 
     Route::get('admin/pengaturan', [App\Http\Controllers\Admin\PengaturanController::class, 'pengaturan'])->name('admin-pengaturan');
     Route::post('admin/pengaturan-image', [App\Http\Controllers\Admin\PengaturanController::class, 'pengaturanImage'])->name('admin.pengaturan.image');
@@ -220,6 +223,10 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:gapoktan']], function
     Route::get('gapoktan/panen/fetchall', [App\Http\Controllers\Gapoktan\HarvestController::class, 'fetchAll'])->name('gapoktan-panen-fetchAll');
     Route::get('gapoktan/panen/edit', [App\Http\Controllers\Gapoktan\HarvestController::class, 'edit'])->name('gapoktan-panen-edit');
 
+    Route::get('gapoktan/riwayat-penanam', [App\Http\Controllers\Gapoktan\PlantingHistoryController::class, 'index'])->name('gapoktan-riwayat-penanam');
+    Route::get('gapoktan/riwayat-penanam/fetchall', [App\Http\Controllers\Gapoktan\PlantingHistoryController::class, 'fetchAll'])->name('gapoktan-riwayat-penanam-fetchAll');
+    Route::get('gapoktan/riwayat-penanam/edit', [App\Http\Controllers\Gapoktan\PlantingHistoryController::class, 'edit'])->name('gapoktan-riwayat-penanam-edit');
+
     Route::get('gapoktan/pengaturan', [App\Http\Controllers\Gapoktan\PengaturanController::class, 'pengaturan'])->name('gapoktan-pengaturan');
     Route::post('gapoktan/pengaturan-image', [App\Http\Controllers\Gapoktan\PengaturanController::class, 'pengaturanImage'])->name('gapoktan.pengaturan.image');
     Route::post('gapoktan/pengaturan-update', [App\Http\Controllers\Gapoktan\PengaturanController::class, 'pengaturanUpdate'])->name('gapoktan.pengaturan.update');
@@ -287,6 +294,10 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:poktan']], function()
     Route::get('poktan/panen/fetchall', [App\Http\Controllers\Poktan\HarvestController::class, 'fetchAll'])->name('poktan-panen-fetchAll');
     Route::get('poktan/panen/edit', [App\Http\Controllers\Poktan\HarvestController::class, 'edit'])->name('poktan-panen-edit');
 
+    Route::get('poktan/riwayat-penanam', [App\Http\Controllers\Poktan\PlantingHistoryController::class, 'index'])->name('poktan-riwayat-penanam');
+    Route::get('poktan/riwayat-penanam/fetchall', [App\Http\Controllers\Poktan\PlantingHistoryController::class, 'fetchAll'])->name('poktan-riwayat-penanam-fetchAll');
+    Route::get('poktan/riwayat-penanam/edit', [App\Http\Controllers\Poktan\PlantingHistoryController::class, 'edit'])->name('poktan-riwayat-penanam-edit');
+
     Route::get('poktan/pengaturan', [App\Http\Controllers\Poktan\PengaturanController::class, 'pengaturan'])->name('poktan-pengaturan');
     Route::post('poktan/pengaturan-image', [App\Http\Controllers\Poktan\PengaturanController::class, 'pengaturanImage'])->name('poktan.pengaturan.image');
     Route::post('poktan/pengaturan-update', [App\Http\Controllers\Poktan\PengaturanController::class, 'pengaturanUpdate'])->name('poktan.pengaturan.update');
@@ -337,9 +348,13 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:petani']], function()
     Route::get('petani/kegiatan/checkSlug', [App\Http\Controllers\Petani\ActivityController::class, 'checkSlug'])->name('petani-kegiatan-checkSlug');
 
     Route::get('petani/panen', [App\Http\Controllers\Petani\HarvestController::class, 'index'])->name('petani-panen');
-    Route::post('petani/panen/store', [App\Http\Controllers\Petani\HarvestController::class, 'store'])->name('petani-panen-store');
     Route::get('petani/panen/fetchall', [App\Http\Controllers\Petani\HarvestController::class, 'fetchAll'])->name('petani-panen-fetchAll');
     Route::get('petani/panen/edit', [App\Http\Controllers\Petani\HarvestController::class, 'edit'])->name('petani-panen-edit');
+    Route::post('petani/panen/update', [App\Http\Controllers\Petani\HarvestController::class, 'update'])->name('petani-panen-update');
+
+    Route::get('petani/riwayat-penanam', [App\Http\Controllers\Petani\PlantingHistoryController::class, 'index'])->name('petani-riwayat-penanam');
+    Route::get('petani/riwayat-penanam/fetchall', [App\Http\Controllers\Petani\PlantingHistoryController::class, 'fetchAll'])->name('petani-riwayat-penanam-fetchAll');
+    Route::get('petani/riwayat-penanam/edit', [App\Http\Controllers\Petani\PlantingHistoryController::class, 'edit'])->name('petani-riwayat-penanam-edit');
 
     Route::get('petani/pengaturan', [App\Http\Controllers\Petani\PengaturanController::class, 'pengaturan'])->name('petani-pengaturan');
     Route::post('petani/pengaturan-image', [App\Http\Controllers\Petani\PengaturanController::class, 'pengaturanImage'])->name('petani.pengaturan.image');
@@ -370,7 +385,28 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function(
     Route::post('pembeli-update', [App\Http\Controllers\Pembeli\PengaturanController::class, 'pengaturanUpdate'])->name('pembeli.pengaturan.update');
     Route::post('pembeli-updatePassword', [App\Http\Controllers\Pembeli\PengaturanController::class, 'pengaturanUpdatePassword'])->name('pembeli.pengaturan.updatePassword');
 
-    Route::get('pembeli/wishlist', [App\Http\Controllers\Pembeli\WishlistController::class, 'index'])->name('pembeli.wishlist');
+    Route::get('/pembeli/menunggu-pembayaran', [App\Http\Controllers\Pembeli\WaitingPaymentController::class, 'index'])->name('pembeli.waitingPayment');
+    Route::get('/pembeli/menunggu-pembayaran/fetchall', [App\Http\Controllers\Pembeli\WaitingPaymentController::class, 'fetchAll'])->name('pembeli.waitingPayment.fetchAll');
+    Route::get('/pembeli/menunggu-pembayaran/detail-order/{id}', [App\Http\Controllers\Pembeli\WaitingPaymentController::class, 'viewWaitingPayment'])->name('pembeli.viewWaitingPayment');
+    Route::post('/pembeli/menunggu-pembayaran/updateOrder', [App\Http\Controllers\Pembeli\WaitingPaymentController::class, 'updateWaitingPayment'])->name('pembeli.updateWaitingPayment');
+
+    Route::get('/pembeli/daftar-transaksi', [App\Http\Controllers\Pembeli\TransactionListController::class, 'index'])->name('pembeli.transactionList');
+    Route::get('/pembeli/daftar-transaksi/fetchall', [App\Http\Controllers\Pembeli\TransactionListController::class, 'fetchAll'])->name('pembeli.transactionList.fetchAll');
+    Route::get('/pembeli/daftar-transaksi/fetchDikemas', [App\Http\Controllers\Pembeli\TransactionListController::class, 'fetchDikemas'])->name('pembeli.transactionList.fetchDikemas');
+    Route::get('/pembeli/daftar-transaksi/fetchDikirim', [App\Http\Controllers\Pembeli\TransactionListController::class, 'fetchDikirim'])->name('pembeli.transactionList.fetchDikirim');
+    Route::get('/pembeli/daftar-transaksi/fetchSelesai', [App\Http\Controllers\Pembeli\TransactionListController::class, 'fetchSelesai'])->name('pembeli.transactionList.fetchSelesai');
+    Route::get('/pembeli/daftar-transaksi/fetchDibatalkan', [App\Http\Controllers\Pembeli\TransactionListController::class, 'fetchDibatalkan'])->name('pembeli.transactionList.fetchDibatalkan');
+
+    Route::get('/pembeli/alamat', [App\Http\Controllers\Pembeli\AddressController::class, 'index'])->name('pembeli.alamat');
+    Route::post('/pembeli/addAddress', [App\Http\Controllers\Pembeli\AddressController::class, 'addAlamat'])->name('add.pembeli.alamat');
+    Route::get('/pembeli/fetchallAddress', [App\Http\Controllers\Pembeli\AddressController::class, 'fetchAll'])->name('pembeli.alamat.fetchAll');
+    Route::get('/pembeli/editAddress', [App\Http\Controllers\Pembeli\AddressController::class, 'editAddress'])->name('edit.pembeli.alamat');
+    Route::post('/pembeli/updateAddress', [App\Http\Controllers\Pembeli\AddressController::class, 'updateAddress'])->name('update.pembeli.alamat');
+    Route::get('/pembeli/autocompleteAddress', [App\Http\Controllers\Pembeli\AddressController::class, 'autocomplete'])->name('alamat.autocomplete');
+
+    Route::get('/cart/shipment/place-order/received/{orderID}', [App\Http\Controllers\Pembeli\CheckoutController::class, 'received']);
+
+    Route::get('/pembeli/wishlist', [App\Http\Controllers\Pembeli\WishlistController::class, 'index'])->name('pembeli.wishlist');
 
     Route::get('/cart', [App\Http\Controllers\Pembeli\CartController::class, 'viewCart']);
     Route::get('/cart/shipment', [App\Http\Controllers\Pembeli\CheckoutController::class, 'index']);
@@ -380,56 +416,37 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function(
     Route::get('/cart/shipment/editAddress', [App\Http\Controllers\Pembeli\CheckoutController::class, 'editAddress'])->name('edit.alamat.costumer');
     Route::post('/cart/shipment/updateAddress', [App\Http\Controllers\Pembeli\CheckoutController::class, 'updateAddress'])->name('update.alamat.costumer');
 
-    // Route::get('pembeli', function() {
-    //     return view('costumer.pengaturan.index');
-    // })->name('pembeli');
-
     Route::get('pembeli/chat', function() {
         return view('costumer.chat.index');
     })->name('pembeli.chat');
 
-    Route::get('pembeli/alamat', function() {
-        return view('costumer.alamat.index');
-    })->name('pembeli.alamat');
-
 });
+
+Route::post('payments/notification', [App\Http\Controllers\Pembeli\PaymentController::class, 'notification']);
+Route::get('payments/completed', [App\Http\Controllers\Pembeli\PaymentController::class, 'completed']);
+Route::get('payments/failed', [App\Http\Controllers\Pembeli\PaymentController::class, 'unfinish']);
+Route::get('payments/unfinish', [App\Http\Controllers\Pembeli\PaymentController::class, 'failed']);
 
 Route::get('/', [App\Http\Controllers\Pages\ProductController::class, 'index']);
 Route::get('/home', [App\Http\Controllers\Pages\ProductController::class, 'index'])->name('home');
 Route::get('/home/{product:slug}', [App\Http\Controllers\Pages\ProductController::class, 'detailProduct']);
-Route::get('/product-category/allCategory', [App\Http\Controllers\Pages\ProductController::class, 'allCategory'])->name('all.category');
+Route::get('/based-on-your-search', [App\Http\Controllers\Pages\ProductController::class, 'basedSearch'])->name('based.search');
+Route::get('/new-product', [App\Http\Controllers\Pages\ProductController::class, 'newProduct'])->name('new.product');
+Route::get('/product-category/all-category', [App\Http\Controllers\Pages\ProductController::class, 'allCategory'])->name('new.product');
 Route::get('/product-category/{slug}', [App\Http\Controllers\Pages\ProductController::class, 'viewCategory'])->name('view.category');
 Route::get('/product-category/{category_slug}/{product_slug}', [App\Http\Controllers\Pages\ProductController::class, 'productView'])->name('view.product');
 Route::post('/add-to-cart', [App\Http\Controllers\Pembeli\CartController::class, 'addProduct']);
 Route::post('/delete-cart-item', [App\Http\Controllers\Pembeli\CartController::class, 'deleteCartItem']);
 Route::post('/update-cart-item', [App\Http\Controllers\Pembeli\CartController::class, 'updateCartItem']);
 
+Route::get('/load-cart', [App\Http\Controllers\Pages\ProductController::class, 'countCart']);
+Route::get('/incrementDecrement/{product:slug}', [App\Http\Controllers\Pages\ProductController::class, 'incrementDecrement']);
+
+Route::get('/product-list', [App\Http\Controllers\Pages\ProductController::class, 'productListAjax']);
+// Route::post('/product-searchProduct', [App\Http\Controllers\Pages\ProductController::class, 'searchProduct']);
+
 Route::post('/add-to-wishlist', [App\Http\Controllers\Pembeli\WishlistController::class, 'addToWishlist'])->name('pembeli.addToWishlist');
 Route::post('/delete-cart-wishlist', [App\Http\Controllers\Pembeli\WishlistController::class, 'deleteWishlistItem']);
-
-// Route::get('/thank-you-purchasing', function () {
-//     return view('pages.checkout.purchasing');
-// });
-
-// Route::get('/keranjang', function () {
-//     return view('pages.bag.index');
-// });
-
-// Route::get('/payment', function () {
-//     return view('pages.checkout.payment');
-// });
-
-// Route::get('/kategori-edukasi', function () {
-//     return view('pages.edukasi.index');
-// });
-
-// Route::get('/semua-kategori', function () {
-//     return view('pages.edukasi.allcategory');
-// });
-
-// Route::get('/galeri', function () {
-//     return view('pages.edukasi.gallery');
-// });
 
 // Auth::routes();
 

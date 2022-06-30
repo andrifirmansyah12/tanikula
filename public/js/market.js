@@ -1,4 +1,5 @@
 $(document).ready(function () {
+
     $('#addToCartBtn').click(function (e) {
         e.preventDefault();
 
@@ -19,12 +20,21 @@ $(document).ready(function () {
                 'product_qty': product_qty,
             },
             success: function (response) {
-                window.location.reload();
-                iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
-                    title: 'Berhasil',
-                    message: response.status,
-                    position: 'topRight'
-                });
+                if (response.status == 'Silahkan login!') {
+                    window.location = '/login';
+                    iziToast.warning({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                        title: 'Gagal',
+                        message: response.status,
+                        position: 'topRight'
+                    });
+                } else {
+                    window.location.reload();
+                    iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                        title: 'Berhasil',
+                        message: response.status,
+                        position: 'topRight'
+                    });
+                }
             }
         });
     });
@@ -47,17 +57,27 @@ $(document).ready(function () {
                 'product_id': product_id,
             },
             success: function (response) {
-                window.location.reload();
-                iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
-                    title: 'Berhasil',
-                    message: response.status,
-                    position: 'topRight'
-                });
+                if (response.status == 'Silahkan login!') {
+                    window.location = '/login';
+                    iziToast.warning({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                        title: 'Gagal',
+                        message: response.status,
+                        position: 'topRight'
+                    });
+                } else {
+                    // window.location.reload();
+                    iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                        title: 'Berhasil',
+                        message: response.status,
+                        position: 'topRight'
+                    });
+                }
             }
         });
     });
 
-    $('.increment-btn').click(function (e) {
+    // $('.increment-btn').click(function (e) {
+    $(document).on('click', '.increment-btn', function (e) {
         e.preventDefault();
 
         // var inc_value = $('.qty-input').val();
@@ -72,7 +92,8 @@ $(document).ready(function () {
         }
     });
 
-    $('.decrement-btn').click(function (e) {
+    // $('.decrement-btn').click(function (e) {
+    $(document).on('click', '.decrement-btn', function (e) {
         e.preventDefault();
 
         // var dec_value = $('.qty-input').val();
@@ -87,7 +108,8 @@ $(document).ready(function () {
         }
     });
 
-    $('.delete-cart-item').click(function (e) {
+    // $('.delete-cart-item').click(function (e) {
+    $(document).on('click', '.delete-cart-item', function (e) {
         e.preventDefault();
 
         $.ajaxSetup({
@@ -105,7 +127,10 @@ $(document).ready(function () {
                 'product_id': product_id,
             },
             success: function (response) {
-                window.location.reload();
+                // window.location.reload();
+                LoadCart();
+                $('.CartItems').load(location.href + '.CartItems');
+
                 iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
                     title: 'Berhasil',
                     message: response.status,
@@ -115,7 +140,8 @@ $(document).ready(function () {
         });
     });
 
-    $('.changeQuantity').click(function (e) {
+    // $('.changeQuantity').click(function (e) {
+    $(document).on('click', '.changeQuantity', function (e) {
         e.preventDefault();
 
         $.ajaxSetup({
@@ -135,7 +161,8 @@ $(document).ready(function () {
                 'product_qty': qty,
             },
             success: function (response) {
-                window.location.reload();
+                // window.location.reload();
+                $('.CartItems').load(location.href + '.CartItems');
             }
         });
     });

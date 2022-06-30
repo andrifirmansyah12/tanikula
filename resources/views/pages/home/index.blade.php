@@ -58,6 +58,53 @@
     .featured-categories .single-category ul li a {
         color: var(--primary);
     }
+
+    /* Style */
+    .icon-shape {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    vertical-align: middle;
+    }
+
+    .icon-sm {
+        width: 2rem;
+        height: 2rem;
+
+    }
+
+    /* 4.3 Page */
+    .page-error {
+        height: 100%;
+        width: 100%;
+        padding-top: 60px;
+        text-align: center;
+        display: table;
+    }
+
+    .page-error .page-inner {
+        display: table-cell;
+        width: 100%;
+        vertical-align: middle;
+    }
+
+    .page-error img {
+        width: 10rem;
+    }
+
+    .page-error .page-description {
+        padding-top: 30px;
+        font-size: 18px;
+        font-weight: 400;
+        color: var(--primary);
+    }
+
+    @media (max-width: 575.98px) {
+        .page-error {
+            padding-top: 0px;
+        }
+    }
 </style>
 @endsection
 
@@ -72,6 +119,7 @@
             </div>
         </div>
         <div class="row">
+            @if ($category_product->count())
             @foreach ($category_product as $item)
             <div class="col-lg-4 col-md-6 col-12">
                 <div class="single-category">
@@ -79,7 +127,7 @@
                     <ul>
                         @foreach ($product_new->take(3) as $product_category)
                             @if ($product_category->category_product_id == $item->id)
-                                <li><a href="{{ url('home/'.$item->slug) }}">{{ $product_category->name }}</a></li>
+                                <li><a href="{{ url('home/'.$product_category->slug) }}">{{ $product_category->name }}</a></li>
                             @endif
                         @endforeach
                         <li><a href="{{ url('product-category/'.$item->slug) }}">Lainnya</a></li>
@@ -91,22 +139,39 @@
                 </div>
             </div>
             @endforeach
+            @else
+            <div id="app">
+                <section class="section">
+                    <div class="container">
+                        <div class="page-error">
+                            <div class="page-inner">
+                                <img src="{{ asset('img/undraw_empty_re_opql.svg') }}" alt="">
+                                <div class="page-description">
+                                    Tidak ada Kategori Produk!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            @endif
         </div>
     </div>
 </section>
 
 <!-- Start Trending Product Area -->
 <section class="section" style="background: #16A085;">
-    <div class="container">
+    <div class="container mt-3">
         <div class="row">
             <div class="col-12">
                 <div class="d-flex align-items-center section-title">
                     <h2>Produk Terbaru</h2>
-                    <a class="text-white" href="{{ url('product-category/allCategory') }}">Lihat semua</a>
+                    <a class="text-white" href="{{ url('new-product') }}">Lihat semua</a>
                 </div>
             </div>
         </div>
         <div class="row">
+            @if ($product_new->count())
             @foreach ($product_new as $item)
             <div class="col-lg-3 col-md-6 col-12">
                 <!-- Start Single Product -->
@@ -151,6 +216,22 @@
                 <!-- End Single Product -->
             </div>
             @endforeach
+            @else
+            <div id="app">
+                <section class="section">
+                    <div class="container">
+                        <div class="page-error">
+                            <div class="page-inner">
+                                <img src="{{ asset('img/undraw_empty_re_opql.svg') }}" alt="">
+                                <div class="page-description text-white">
+                                    Tidak ada produk terbaru!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            @endif
         </div>
     </div>
 </section>
@@ -197,11 +278,12 @@
             <div class="col-12">
                 <div class="d-flex align-items-center section-title">
                     <h2>Berdasarkan Pencarianmu</h2>
-                    <a href="{{ url('product-category/allCategory') }}">Lihat semua</a>
+                    <a href="{{ url('based-on-your-search') }}">Lihat semua</a>
                 </div>
             </div>
         </div>
         <div class="row">
+            @if ($product_search->count())
             @foreach ($product_search as $item)
             <div class="col-lg-3 col-md-6 col-12">
                 <!-- Start Single Product -->
@@ -246,6 +328,22 @@
                 <!-- End Single Product -->
             </div>
             @endforeach
+            @else
+            <div id="app">
+                <section class="section">
+                    <div class="container">
+                        <div class="page-error">
+                            <div class="page-inner">
+                                <img src="{{ asset('img/undraw_empty_re_opql.svg') }}" alt="">
+                                <div class="page-description">
+                                    Tidak ada produk berdasarkan pencarianmu!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            @endif
         </div>
     </div>
 </section>

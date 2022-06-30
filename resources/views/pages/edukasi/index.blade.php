@@ -250,11 +250,16 @@
                                 </a>
                             </div>
                             <div class="blog-content-edukasi">
-                                <h5 class="blog-title-edukasi text-capitalize">
+                                <h5 class="blog-title-edukasi text-capitalize d-flex flex-row align-items-center justify-content-between">
                                     <a href="{{ url('/edukasi'.'/'.$item->slug) }}"
                                         style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">
                                         {{$item->title}}
                                     </a>
+                                    @foreach ($item->historyEducation->take(1) as $history)
+                                        @if ($history->education_id == $item->id)
+                                            <i class="bi bi-star-fill h-4" style="color: orange"></i>
+                                        @endif
+                                    @endforeach
                                 </h5>
                                 <span><i class="fas fa-solid fa-calendar-day"></i>
                                     {{ date("d F Y", strtotime($item->date))}}</span>

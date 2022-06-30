@@ -205,8 +205,13 @@
                                 </a>
                             </div>
                             <div class="blog-content-edukasi">
-                                <h5 class="blog-title-edukasi text-capitalize">
+                                <h5 class="blog-title-edukasi text-capitalize d-flex flex-row align-items-center justify-content-between">
                                     {{$education->title}}
+                                    @foreach ($education->historyEducation->take(1) as $history)
+                                        @if ($history->education_id == $education->id)
+                                            <i class="bi bi-star-fill h-4" style="color: orange"></i>
+                                        @endif
+                                    @endforeach
                                 </h5>
                                 <div class="d-flex flex-row justify-content-between">
                                     <p><i class="fas fa-solid fa-calendar-day"></i> {{ date("d F Y", strtotime($education->date))}}</p>

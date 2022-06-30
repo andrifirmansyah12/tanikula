@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\ProductCategory;
 use App\Models\Product;
 use App\Models\PhotoProduct;
+use App\Models\Cart;
 
 class ProductController extends Controller
 {
@@ -20,6 +21,7 @@ class ProductController extends Controller
                     ->where('product_categories.is_active', '=', 1)
                     ->where('products.is_active', '=', 1)
                     ->orderBy('products.updated_at', 'desc')
+                    ->take(8)
                     ->get();
         $product_search = Product::with('photo_product')
                     ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
@@ -29,6 +31,7 @@ class ProductController extends Controller
                     ->where('products.is_active', '=', 1)
                     ->orderBy('products.updated_at', 'desc')
                     ->orderByRaw('RAND()')
+                    ->take(8)
                     ->get();
         return view('pages.home.index', compact('category_product', 'product_new', 'product_search'));
     }
@@ -48,6 +51,40 @@ class ProductController extends Controller
         } else {
             return redirect('/')->with('status', 'Produk tidak ditemukan');
         }
+    }
+
+    public function countCart()
+    {
+        $countCart = Cart::where('user_id', auth()->user()->id)->count();
+        return response()->json(['count'=> $countCart]);
+    }
+
+    public function newProduct()
+    {
+        $product_new = Product::with('photo_product')
+                    ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
+                    ->join('users', 'products.user_id', '=', 'users.id')
+                    ->select('products.*', 'product_categories.name as category_name')
+                    ->where('product_categories.is_active', '=', 1)
+                    ->where('products.is_active', '=', 1)
+                    ->orderBy('products.updated_at', 'desc')
+                    ->filter(request(['pencarian']))
+                    ->get();
+        return view('pages.home.product_new', compact('product_new'));
+    }
+
+    public function basedSearch()
+    {
+        $product_new = Product::with('photo_product')
+                    ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
+                    ->join('users', 'products.user_id', '=', 'users.id')
+                    ->select('products.*', 'product_categories.name as category_name')
+                    ->where('product_categories.is_active', '=', 1)
+                    ->where('products.is_active', '=', 1)
+                    ->orderBy('products.updated_at', 'desc')
+                    ->orderByRaw('RAND()')
+                    ->get();
+        return view('pages.home.product_search', compact('product_new'));
     }
 
     public function allCategory()
@@ -95,6 +132,38 @@ class ProductController extends Controller
         } else {
             return redirect('/')->with('status', 'No such category found!');
         }
-
     }
+
+    public function productListAjax()
+    {
+        $product = Product::select('name')->where('is_active', '1')->get();
+        $data = [];
+
+        foreach ($product as $item) {
+            $data[] = $item['name'];
+        }
+
+        return $data;
+    }
+
+    // public function searchProduct(Request $request)
+    // {
+    //     $searched_product = $request->product_name;
+
+    //     if ($searched_product != "")
+    //     {
+    //         $product = Product::where('name', 'like', "%{$searched_product}%")->first();
+    //         if ($product)
+    //         {
+    //             return redirect('product-category/'.$product->product_category->slug.'/'.$product->slug);
+    //         } else
+    //         {
+    //             return redirect()->back()->with('status', 'Produk yang anda cari tidak ada!');
+    //         }
+    //     } else
+    //     {
+    //         return redirect()->back();
+    //     }
+
+    // }
 }

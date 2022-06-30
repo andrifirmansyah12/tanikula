@@ -37,13 +37,13 @@ class WishlistController extends Controller
             $prod_check = Product::where('id', $product_id)->first();
             if ($prod_check) {
                 if (Wishlist::where('product_id', $product_id)->where('user_id', Auth::id())->exists()) {
-                    return response()->json(['status' => "Produk sudah ditambahkan ke Favorit!"]);
+                    return response()->json(['status' => "Produk sudah ditambahkan ke Wishlist!"]);
                 } else {
                     $wishlist = new Wishlist();
                     $wishlist->user_id = Auth::id();
                     $wishlist->product_id = $product_id;
                     $wishlist->save();
-                    return response()->json(['status' => "Ditambahkan ke Favorit"]);
+                    return response()->json(['status' => "Ditambahkan ke Wishlist"]);
                 }
             }
         } else {

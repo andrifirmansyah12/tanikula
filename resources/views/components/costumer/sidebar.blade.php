@@ -34,7 +34,7 @@
                 <h6 class="ps-4 ms-2 text-uppercase text-xs  font-weight-bolder opacity-8">Pembelian</h6>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ Request::is('pembeli/menunggu-pembayaran*') ? 'active bg-gradient-primary' : 'text-dark fw-bold' }}" href="{{ ('pembeli/menunggu-pembayaran') }}">
+                <a class="nav-link {{ Request::is('pembeli/menunggu-pembayaran*') ? 'active bg-gradient-primary' : 'text-dark fw-bold' }}" href="{{ url('pembeli/menunggu-pembayaran') }}">
                     <div class=" text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="bi bi-clock-history h-4"></i>
                     </div>
@@ -42,7 +42,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ Request::is('pembeli/daftar-transaksi*') ? 'active bg-gradient-primary' : 'text-dark fw-bold' }}" href="{{ ('pembeli/daftar-transaksi') }}">
+                <a class="nav-link {{ Request::is('pembeli/daftar-transaksi*') ? 'active bg-gradient-primary' : 'text-dark fw-bold' }}" href="{{ url('pembeli/daftar-transaksi') }}">
                     <div class=" text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="bi bi-card-checklist h-4"></i>
                     </div>

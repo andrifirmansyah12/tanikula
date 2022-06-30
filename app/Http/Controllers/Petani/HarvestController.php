@@ -27,6 +27,7 @@ class HarvestController extends Controller
                     ->select('plants.*', 'surface_area as area')
                     ->where('farmers.user_id', '=', auth()->user()->id)
                     ->whereNotNull('plants.harvest_date')
+                    ->where('plants.status', 'panen')
                     ->orderBy('updated_at', 'desc')
                     ->get();
 		$output = '';
@@ -35,10 +36,10 @@ class HarvestController extends Controller
             <thead>
               <tr>
                 <th>No</th>
-                <th>Nama Poktan</th>
                 <th>Nama Petani</th>
-                <th>Tanaman Tandur</th>
-                <th>Area</th>
+                <th>Tanaman</th>
+                <th>Luas Tanah</th>
+                <th>Alamat</th>
                 <th>Tanggal Tandur</th>
                 <th>Tanggal Panen</th>
                 <th>Status</th>
@@ -50,14 +51,14 @@ class HarvestController extends Controller
 			foreach ($emps as $emp) {
                 $output .= '<tr>';
                 $output .= '<td>' . $nomor++ . '</td>';
-                $output .= '<td>' . $emp->poktan->user->name . '</td>
-                <td>' . $emp->farmer->user->name . '</td>
+                $output .= '<td>' . $emp->farmer->user->name . '</td>
                 <td>' . $emp->plant_tanaman . '</td>';
                 if ($emp->area) {
                     $output .= '<td>' . $emp->area . '</td>';
                 } else {
                     $output .= '<td><span class="text-danger">Belum diisi</span></td>';
                 }
+                $output .= '<td>' . $emp->address . '</td>';
                 if ($emp->plating_date) {
                     $output .= '<td>' . date("d-F-Y", strtotime($emp->plating_date)) . '</td>';
                 } else {
@@ -68,13 +69,9 @@ class HarvestController extends Controller
                 } else {
                     $output .= '<td><span class="text-danger">Belum diisi</span></td>';
                 }
-                if (empty($emp->harvest_date)) {
-                    $output .= '<td><div class="badge badge-warning">Tanam</div></td>';
-                } else {
-                    $output .= '<td><div class="badge badge-success">Panen</div></td>';
-                }
+                $output .= '<td><div class="badge badge-success text-capitalize">'. $emp->status .'</div></td>';
                 $output .= '<td>
-                    <a href="#" id="' . $emp->id . '" class="text-success mx-1 editIcon" data-toggle="modal" data-target="#editEmployeeModal"><i class="bi-eye h4"></i></a>
+                    <a href="#" id="' . $emp->id . '" class="text-success mx-1 editIcon" data-toggle="modal" data-target="#editEmployeeModal"><i class="bi-pencil-square h4"></i></a>
                 </td>
             </tr>';
 			}
@@ -90,6 +87,17 @@ class HarvestController extends Controller
 		$id = $request->id;
 		$emp = Plant::with('poktan', 'farmer')->where('id', $id)->first();
 		return response()->json($emp);
+	}
+
+    public function update(Request $request) {
+
+        $plant = Plant::with('poktan', 'farmer')->find($request->emp_id);
+        $plant->status = "selesai";
+        $plant->save();
+
+		return response()->json([
+			'status' => 200,
+		]);
 	}
 
 }

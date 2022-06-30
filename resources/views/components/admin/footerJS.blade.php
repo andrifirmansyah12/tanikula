@@ -73,6 +73,10 @@
     function admin_panen(url) {
         window.location = url;
     }
+    // Riwayat Penanam
+    function admin_riwayat_penanam(url) {
+        window.location = url;
+    }
     // Rekap Penjualan
     function admin_rekap_penjualan(url) {
         window.location = url;

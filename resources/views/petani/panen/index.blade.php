@@ -52,7 +52,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Detail Panen</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Panen</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -62,12 +62,16 @@
                     <input type="hidden" name="emp_id" id="emp_id">
                     <div class="modal-body p-4">
                         <div class="form-group my-2">
-                            <label for="plant_tanaman">Nama Tanaman</label>
+                            <label for="plant_tanaman">Tanaman</label>
                             <input type="text" disabled name="plant_tanaman" id="plant_tanaman" class="form-control" placeholder="Nama Tanaman" required>
                         </div>
                         <div class="form-group my-2">
-                            <label for="surface_area">Area</label>
-                            <input type="text" disabled name="surface_area" id="surface_area" class="form-control" placeholder="Area" required>
+                            <label for="surface_area">Luas Tanah</label>
+                            <input type="text" disabled name="surface_area" id="surface_area" class="form-control" placeholder="Luas Tanah" required>
+                        </div>
+                        <div class="form-group my-2">
+                            <label for="address">Alamat</label>
+                            <textarea class="form-control" style="height: 8rem" disabled name="address" id="address" rows="3" placeholder="Alamat"></textarea>
                         </div>
                         <div class="my-2 form-group">
                             <label for="plating_date">Tanggal Tandur</label>
@@ -85,6 +89,10 @@
                             <div class="input-group" id="harvest_date">
 
                             </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
+                            <button type="submit" id="edit_employee_btn" class="btn btn-primary">Selesai</button>
                         </div>
                     </div>
                 </form>
@@ -147,6 +155,7 @@
                 success: function(response) {
                     $("#plant_tanaman").val(response.plant_tanaman);
                     $("#surface_area").val(response.surface_area);
+                    $("#address").val(response.address);
                     $("#plating_date").val(moment(response.plating_date).format('DD-MMM-YYYY'));
                     if (response.harvest_date) {
                         $("#harvest_date").html(`<div class="input-group-prepend">
@@ -166,6 +175,37 @@
                         `);
                     }
                     $("#emp_id").val(response.id);
+                }
+                });
+            });
+
+            // update employee ajax request
+            $("#edit_employee_form").submit(function(e) {
+                e.preventDefault();
+                const fd = new FormData(this);
+                $("#edit_employee_btn").text('Tunggu..');
+                $("#edit_employee_btn").prop('disabled', true);
+                $.ajax({
+                url: '{{ route('petani-panen-update') }}',
+                method: 'post',
+                data: fd,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status == 200) {
+                    Swal.fire(
+                        'Memperbarui!',
+                        'Panen telah selesai!',
+                        'success'
+                    )
+                    fetchAllEmployees();
+                    }
+                    $("#edit_employee_btn").text('Simpan');
+                    $("#edit_employee_btn").prop('disabled', false);
+                    $("#edit_employee_form")[0].reset();
+                    $("#editEmployeeModal").modal('hide');
                 }
                 });
             });

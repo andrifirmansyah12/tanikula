@@ -146,9 +146,9 @@
                         </div>
                     @endif
                 </div>
-                <div class="dropdown-footer text-center">
+                {{-- <div class="dropdown-footer text-center">
                     <a href="#">View All <i class="fas fa-chevron-right"></i></a>
-                </div>
+                </div> --}}
             </div>
         </li>
         <li class="dropdown"><a href="#" data-toggle="dropdown"

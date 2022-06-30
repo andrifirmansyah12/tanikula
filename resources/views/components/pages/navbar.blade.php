@@ -84,14 +84,19 @@
                     <!-- Start Main Menu Search -->
                     <div class="main-menu-search">
                         <!-- navbar search start -->
-                        <div class="navbar-search search-style-5">
-                            <div class="search-input">
-                                <input type="text" placeholder="Search">
+                        <form action="{{ url('new-product') }}">
+                            <div class="navbar-search search-style-5">
+
+                                <div class="search-input">
+                                    <input type="search" class="form-control" id="search_product" value="{{ request('pencarian') }}"
+                                        name="pencarian"
+                                        placeholder="Pencarian produk">
+                                </div>
+                                <div class="search-btn">
+                                    <button type="submit"><i class="lni lni-search-alt"></i></button>
+                                </div>
                             </div>
-                            <div class="search-btn">
-                                <button><i class="lni lni-search-alt"></i></button>
-                            </div>
-                        </div>
+                        </form>
                         <!-- navbar search Ends -->
                     </div>
                     <!-- End Main Menu Search -->
@@ -118,7 +123,7 @@
                                 @endphp
                                 <a href="javascript:void(0)" class="main-btn">
                                     <i class="lni lni-cart"></i>
-                                    <span class="total-items">{{ $cartItem->count() }}</span>
+                                    <span class="total-items cart-count">0</span>
                                 </a>
 
                                 <div class="shopping-item">
@@ -134,8 +139,8 @@
                                     <ul class="shopping-list" id="product_data">
                                         <li>
                                             <input type="hidden" value="{{ $item->product_id }}" id="prod_id">
-                                            <button class="remove delete-cart-item" title="Remove this item"><i
-                                                    class="lni lni-close"></i></button>
+                                            {{-- <button class="remove delete-cart-item" title="Remove this item"><i
+                                                    class="lni lni-close"></i></button> --}}
                                             <div class="cart-img-head">
                                                 <a class="cart-img" href="{{ url('home/'.$item->product->slug) }}">
                                                     @foreach ($item->product->photo_product->take(1) as $photos)
@@ -180,7 +185,7 @@
                                             @if ($cartItem->count())
                                                 <a href="{{ url('cart/shipment') }}" class="btn animate">Checkout</a>
                                             @else
-                                                <a href="{{ url('product-category/allCategory') }}" class="btn animate">Belanja Sekarang</a>
+                                                <a href="{{ url('new-product') }}" class="btn animate">Belanja Sekarang</a>
                                             @endif
                                         </div>
                                     </div>
@@ -208,6 +213,7 @@
                             @foreach ($category_product as $item)
                             <li><a href="{{ url('product-category/'.$item->slug) }}">{{ $item->name }} </a></li>
                             @endforeach
+                            <li><a href="{{ url('product-category/all-category') }}">Semua Kategori </a></li>
                         </ul>
                     </div>
                     <!-- End Mega Category Menu -->

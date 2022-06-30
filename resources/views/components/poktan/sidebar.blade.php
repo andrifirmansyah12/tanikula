@@ -45,6 +45,12 @@
                 <span>Panen</span>
             </a>
         </li>
+        <li class="nav-item dropdown {{ Request::is('poktan/riwayat-penanam*') ? 'active' : '' }}">
+            <a href="#" onclick="poktan_riwayat_penanam('{{ url('poktan/riwayat-penanam') }}')" class="nav-link">
+                <i class="fas fa-solid fa-clock"></i>
+                <span>Riwayat Penanam</span>
+            </a>
+        </li>
         <li class="menu-header">Profile Saya</li>
         <li class="nav-item dropdown {{ Request::is('poktan/pengaturan*') ? 'active' : '' }}">
             <a href="#" onclick="poktan_pengaturan('{{ url('poktan/pengaturan') }}')" class="nav-link">

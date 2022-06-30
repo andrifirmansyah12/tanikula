@@ -27,6 +27,7 @@ class PlantController extends Controller
                     ->select('plants.*', 'surface_area as area')
                     ->where('poktans.user_id', '=', auth()->user()->id)
                     ->where('plants.harvest_date', '=', null)
+                    ->where('plants.status', '=', 'tandur')
                     ->orderBy('updated_at', 'desc')
                     ->get();
 		$output = '';
@@ -35,12 +36,11 @@ class PlantController extends Controller
             <thead>
               <tr>
                 <th>No</th>
-                <th>Nama Poktan</th>
                 <th>Nama Petani</th>
-                <th>Tanaman Tandur</th>
-                <th>Area</th>
+                <th>Tanaman</th>
+                <th>Luas Tanah</th>
+                <th>Alamat</th>
                 <th>Tanggal Tandur</th>
-                <th>Tanggal Panen</th>
                 <th>Status</th>
                 <th>Aksi</th>
               </tr>
@@ -50,29 +50,20 @@ class PlantController extends Controller
 			foreach ($emps as $emp) {
                 $output .= '<tr>';
                 $output .= '<td>' . $nomor++ . '</td>';
-                $output .= '<td>' . $emp->poktan->user->name . '</td>
-                <td>' . $emp->farmer->user->name . '</td>
+                $output .= '<td>' . $emp->farmer->user->name . '</td>
                 <td>' . $emp->plant_tanaman . '</td>';
                 if ($emp->area) {
                     $output .= '<td>' . $emp->area . '</td>';
                 } else {
                     $output .= '<td><span class="text-danger">Belum diisi</span></td>';
                 }
+                $output .= '<td>' . $emp->address . '</td>';
                 if ($emp->plating_date) {
                     $output .= '<td>' . date("d-F-Y", strtotime($emp->plating_date)) . '</td>';
                 } else {
                     $output .= '<td><span class="text-danger">Belum diisi</span></td>';
                 }
-                if ($emp->harvest_date) {
-                    $output .= '<td>' . date("d-F-Y", strtotime($emp->harvest_date)) . '</td>';
-                } else {
-                    $output .= '<td><span class="text-danger">Belum diisi</span></td>';
-                }
-                if (empty($emp->harvest_date)) {
-                    $output .= '<td><div class="badge badge-warning">Tandur</div></td>';
-                } else {
-                    $output .= '<td><div class="badge badge-success">Panen</div></td>';
-                }
+                $output .= '<td><div class="badge badge-success text-capitalize">'. $emp->status .'</div></td>';
                 $output .= '<td>
                     <a href="#" id="' . $emp->id . '" class="text-success mx-1 editIcon" data-toggle="modal" data-target="#editEmployeeModal"><i class="bi-eye h4"></i></a>
                 </td>

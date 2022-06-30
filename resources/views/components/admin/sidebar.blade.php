@@ -137,6 +137,14 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a href="#" onclick="admin_riwayat_penanam('{{ url('admin/riwayat-penanam') }}')" class="nav-link {{ Request::is('admin/riwayat-penanam*') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-solid fa-clock"></i>
+                    <p>
+                        Riwayat Penanam
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="#" onclick="admin_rekap_penjualan('{{ url('admin/rekap-penjualan') }}')" class="nav-link {{ Request::is('admin/rekap-penjualan*') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-solid fa-chart-line"></i>
                     <p>
