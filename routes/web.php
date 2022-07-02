@@ -396,6 +396,14 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function(
     Route::get('/pembeli/daftar-transaksi/fetchDikirim', [App\Http\Controllers\Pembeli\TransactionListController::class, 'fetchDikirim'])->name('pembeli.transactionList.fetchDikirim');
     Route::get('/pembeli/daftar-transaksi/fetchSelesai', [App\Http\Controllers\Pembeli\TransactionListController::class, 'fetchSelesai'])->name('pembeli.transactionList.fetchSelesai');
     Route::get('/pembeli/daftar-transaksi/fetchDibatalkan', [App\Http\Controllers\Pembeli\TransactionListController::class, 'fetchDibatalkan'])->name('pembeli.transactionList.fetchDibatalkan');
+    Route::get('/pembeli/daftar-transaksi/detail-order/{id}', [App\Http\Controllers\Pembeli\TransactionListController::class, 'viewTransactionList'])->name('pembeli.viewTransactionList');
+
+    Route::get('/pembeli/ulasan', [App\Http\Controllers\Pembeli\ReviewController::class, 'index'])->name('pembeli.review');
+    Route::get('/pembeli/ulasan/fetchBelumDiulas', [App\Http\Controllers\Pembeli\ReviewController::class, 'fetchBelumDiulas'])->name('pembeli.review.fetchBelumDiulas');
+    Route::get('/pembeli/ulasan/fetchUlasanSaya', [App\Http\Controllers\Pembeli\ReviewController::class, 'fetchUlasanSaya'])->name('pembeli.review.fetchUlasanSaya');
+    Route::post('/pembeli/ulasan/updateUlasanSaya', [App\Http\Controllers\Pembeli\ReviewController::class, 'updateUlasanSaya'])->name('pembeli.updateUlasanSaya');
+
+    Route::post('/pembeli/review', [App\Http\Controllers\Pembeli\ReviewController::class, 'addReview'])->name('add.pembeli.review');
 
     Route::get('/pembeli/alamat', [App\Http\Controllers\Pembeli\AddressController::class, 'index'])->name('pembeli.alamat');
     Route::post('/pembeli/addAddress', [App\Http\Controllers\Pembeli\AddressController::class, 'addAlamat'])->name('add.pembeli.alamat');
@@ -442,7 +450,7 @@ Route::post('/update-cart-item', [App\Http\Controllers\Pembeli\CartController::c
 Route::get('/load-cart', [App\Http\Controllers\Pages\ProductController::class, 'countCart']);
 Route::get('/incrementDecrement/{product:slug}', [App\Http\Controllers\Pages\ProductController::class, 'incrementDecrement']);
 
-Route::get('/product-list', [App\Http\Controllers\Pages\ProductController::class, 'productListAjax']);
+Route::get('/product-list', [App\Http\Controllers\Pages\ProductController::class, 'productListAjax'])->name('productListAjax');
 // Route::post('/product-searchProduct', [App\Http\Controllers\Pages\ProductController::class, 'searchProduct']);
 
 Route::post('/add-to-wishlist', [App\Http\Controllers\Pembeli\WishlistController::class, 'addToWishlist'])->name('pembeli.addToWishlist');

@@ -170,11 +170,21 @@
                                         </div>
                                     </div>
                                     @endif
-                                    <div class="col-lg-4 col-md-4 col-12">
-                                        <div class="wish-button">
-                                            <button class="btn" id="addToWishlistBtn"><i class="lni lni-heart"></i> Wishlist</button>
-                                        </div>
-                                    </div>
+                                    {{-- @foreach ($product->wishlist as $wishlist)
+                                        @if ($product->id == $wishlist->product_id)
+                                            <div class="col-lg-4 col-md-4 col-12">
+                                                <div class="wish-button">
+                                                    <button class="btn" id="delete-cart-wishlistItem"><i class="text-danger lni lni-heart-filled"></i> Wishlist</button>
+                                                </div>
+                                            </div>
+                                        @else --}}
+                                            <div class="col-lg-4 col-md-4 col-12">
+                                                <div class="wish-button">
+                                                    <button class="btn" id="addToWishlistBtn">+ Wishlist</button>
+                                                </div>
+                                            </div>
+                                        {{-- @endif
+                                    @endforeach --}}
                                 </div>
                             </div>
                         </div>

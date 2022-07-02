@@ -1,5 +1,26 @@
 $(document).ready(function () {
 
+    LoadCart();
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    function LoadCart()
+    {
+        $.ajax({
+            method: "GET",
+            url: "/load-cart",
+            success: function (response) {
+                $('.cart-count').html('');
+                $('.cart-count').html(response.count);
+                // alert(response.count);
+            }
+        });
+    }
+
     $('#addToCartBtn').click(function (e) {
         e.preventDefault();
 
@@ -22,11 +43,6 @@ $(document).ready(function () {
             success: function (response) {
                 if (response.status == 'Silahkan login!') {
                     window.location = '/login';
-                    iziToast.warning({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
-                        title: 'Gagal',
-                        message: response.status,
-                        position: 'topRight'
-                    });
                 } else {
                     window.location.reload();
                     iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
@@ -38,6 +54,36 @@ $(document).ready(function () {
             }
         });
     });
+
+    // $('#delete-cart-wishlistItem').click(function (e) {
+        // $(document).on('click', '#delete-cart-wishlistItem', function (e) {
+        //     e.preventDefault();
+
+        //     $.ajaxSetup({
+        //         headers: {
+        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //         }
+        //     });
+
+        //     var product_id = $(this).closest('#product_data').find('#prod_id').val();
+
+        //     $.ajax({
+        //         method: "POST",
+        //         url: "/delete-cart-wishlist",
+        //         data: {
+        //             'product_id': product_id,
+        //         },
+        //         success: function (response) {
+        //             window.location.reload();
+        //             // $('.WishlistItems').load(location.href + '.WishlistItems');
+        //             iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+        //                 title: 'Berhasil',
+        //                 message: response.status,
+        //                 position: 'topRight'
+        //             });
+        //         }
+        //     });
+        // });
 
     $('#addToWishlistBtn').click(function (e) {
         e.preventDefault();
@@ -59,11 +105,6 @@ $(document).ready(function () {
             success: function (response) {
                 if (response.status == 'Silahkan login!') {
                     window.location = '/login';
-                    iziToast.warning({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
-                        title: 'Gagal',
-                        message: response.status,
-                        position: 'topRight'
-                    });
                 } else {
                     // window.location.reload();
                     iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
@@ -76,8 +117,8 @@ $(document).ready(function () {
         });
     });
 
-    // $('.increment-btn').click(function (e) {
-    $(document).on('click', '.increment-btn', function (e) {
+    $('.increment-btn').click(function (e) {
+    // $(document).on('click', '.increment-btn', function (e) {
         e.preventDefault();
 
         // var inc_value = $('.qty-input').val();
@@ -92,8 +133,8 @@ $(document).ready(function () {
         }
     });
 
-    // $('.decrement-btn').click(function (e) {
-    $(document).on('click', '.decrement-btn', function (e) {
+    $('.decrement-btn').click(function (e) {
+    // $(document).on('click', '.decrement-btn', function (e) {
         e.preventDefault();
 
         // var dec_value = $('.qty-input').val();
@@ -108,8 +149,8 @@ $(document).ready(function () {
         }
     });
 
-    // $('.delete-cart-item').click(function (e) {
-    $(document).on('click', '.delete-cart-item', function (e) {
+    $('.delete-cart-item').click(function (e) {
+    // $(document).on('click', '.delete-cart-item', function (e) {
         e.preventDefault();
 
         $.ajaxSetup({
@@ -127,9 +168,9 @@ $(document).ready(function () {
                 'product_id': product_id,
             },
             success: function (response) {
-                // window.location.reload();
                 LoadCart();
-                $('.CartItems').load(location.href + '.CartItems');
+                window.location.reload();
+                // $('.CartItems').load(location.href + '.CartItems');
 
                 iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
                     title: 'Berhasil',
@@ -140,8 +181,8 @@ $(document).ready(function () {
         });
     });
 
-    // $('.changeQuantity').click(function (e) {
-    $(document).on('click', '.changeQuantity', function (e) {
+    $('.changeQuantity').click(function (e) {
+    // $(document).on('click', '.changeQuantity', function (e) {
         e.preventDefault();
 
         $.ajaxSetup({
@@ -161,8 +202,8 @@ $(document).ready(function () {
                 'product_qty': qty,
             },
             success: function (response) {
-                // window.location.reload();
-                $('.CartItems').load(location.href + '.CartItems');
+                window.location.reload();
+                // $('.CartItems').load(location.href + '.CartItems');
             }
         });
     });

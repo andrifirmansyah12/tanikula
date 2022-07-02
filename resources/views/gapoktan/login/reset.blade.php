@@ -14,7 +14,7 @@
     <div class="container mt-5">
         <div class="login-brand mb-5">
             <a href="{{ url('home') }}">
-                <h4>Sri Makmur</h4>
+                <h4>TaniKula</h4>
             </a>
         </div>
         <div class="row align-items-center">

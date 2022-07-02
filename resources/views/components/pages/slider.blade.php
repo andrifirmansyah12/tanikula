@@ -1,4 +1,4 @@
-<div class="slider-head">
+<div class="slider-head mt-5">
     <!-- Start Hero Slider -->
     <div class="hero-slider">
         <!-- Start Single Slider -->

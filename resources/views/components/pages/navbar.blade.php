@@ -1,5 +1,5 @@
 <!-- Start Header Area -->
-<header class="header navbar-area">
+<header class="header navbar-area shadow">
     <!-- Start Topbar -->
     @if (Request::is('/', 'home'))
     <div class="topbar" style="border-bottom: 1px solid #eee;">
@@ -76,7 +76,7 @@
                 <div class="col-lg-3 col-md-3 col-7">
                     <!-- Start Header Logo -->
                     <a class="navbar-brand" href="{{ url('home') }}">
-                        <h3> <span style="color: #16A085">Shop</span>TaniKula</h3>
+                        <h3 style="color: #16A085">TaniKula</h3>
                     </a>
                     <!-- End Header Logo -->
                 </div>
@@ -88,9 +88,9 @@
                             <div class="navbar-search search-style-5">
 
                                 <div class="search-input">
-                                    <input type="search" class="form-control" id="search_product" value="{{ request('pencarian') }}"
+                                    <input type="search" class="form-control typeaheadProduct" value="{{ request('pencarian') }}"
                                         name="pencarian"
-                                        placeholder="Pencarian produk">
+                                        placeholder="Pencarian produk" autocomplete="off">
                                 </div>
                                 <div class="search-btn">
                                     <button type="submit"><i class="lni lni-search-alt"></i></button>

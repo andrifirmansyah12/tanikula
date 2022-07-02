@@ -50,7 +50,7 @@
 <div class="container-fluid px-2 px-md-4 mb-5">
     <div class="page-header min-height-300 border-radius-xl mt-4"
         style="background-image: url('https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');">
-        <span class="mask  bg-gradient-primary  opacity-6"></span>
+        <span class="mask  bg-primary  opacity-6"></span>
     </div>
     <div class="card card-body mx-3 mx-md-4 mt-n6">
         <div class="row gx-4 mb-2">
@@ -78,16 +78,17 @@
                     </div>
                 </div>
             </div>
+            <input type="hidden" name="id" id="id" value="{{ $userInfo->id }}">
             <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
                 <div class="nav-wrapper position-relative end-0">
                     <ul class="nav nav-fill p-1">
                         <li class="nav-item">
-                            <a href="{{ route('pembeli') }}">
+                            <a class="btn {{ Request::is('pembeli') ? 'active text-white bg-primary' : '' }}" onclick="pembeli_dashboard('{{ url('pembeli') }}')" href="#">
                                 <span class="ms-1 fw-bold">Biodata Diri</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('pembeli.alamat') }}">
+                            <a class="btn {{ Request::is('pembeli/alamat*') ? 'active text-white bg-primary' : '' }}" onclick="pembeli_alamat('{{ url('pembeli/alamat') }}')" href="#">
                                 <span class="ms-1 fw-bold">Daftar Alamat</span>
                             </a>
                         </li>
@@ -125,12 +126,13 @@
                                     <p class="mb-4 text-sm">
                                         Rp. {{ number_format($item->product->price, 0) }}
                                     </p>
+                                    <input type="hidden" name="quantity" class="form-control qty-input text-center" value="1">
                                     <input type="hidden" value="{{ $item->product_id }}" id="prod_id">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <button type="button" id="addToCartBtn" class="btn btn-outline-primary btn-sm mb-0">+
                                             Keranjang</button>
                                         <button type="button" id="delete-cart-wishlistItem" class="btn btn-outline-primary btn-sm mb-0">
-                                            <i class="bi bi-heart-fill h-5 text-danger"></i>
+                                            <i class="bi bi-trash h-5 text-danger"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -186,6 +188,35 @@
     <!-- JAVASCRIPT -->
     <script>
     $(document).ready(function () {
+        $("#image").change(function(e) {
+            const file = e.target.files[0];
+            let url = window.URL.createObjectURL(file);
+            $("#image_preview").attr('src', url);
+            let fd = new FormData();
+            fd.append('image', file);
+            fd.append('id', $("#id").val());
+            fd.append('_token', '{{ csrf_token() }}');
+            $.ajax({
+                url: '{{ route('pembeli.pengaturan.image') }}',
+                method: 'POST',
+                data: fd,
+                cache: false,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: function(res){
+                    if(res.status == 200) {
+                        // $("#profile_alert").html(showMessage('success', res.messages));
+                        iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                            title: 'Berhasil',
+                            message: res.messages,
+                            position: 'topRight'
+                        });
+                        $("#image").val('');
+                    }
+                }
+            });
+        });
 
         // $('#delete-cart-wishlistItem').click(function (e) {
         $(document).on('click', '#delete-cart-wishlistItem', function (e) {

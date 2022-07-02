@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Models\Review;
+use App\Models\Costumer;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 
@@ -75,7 +77,7 @@ class TransactionListController extends Controller
                                         <span class="text-secondary text-xs font-weight-bold text-capitalize">'. $emp->payment_status .'</span>
                                     </td>
                                     <td class="align-middle">
-                                        <a href="/pembeli/menunggu-pembayaran/detail-order/'.$emp->id.'" class="text-secondary font-weight-bold text-xs">
+                                        <a href="/pembeli/daftar-transaksi/detail-order/'.$emp->id.'" class="text-secondary font-weight-bold text-xs">
                                             Detail Pesanan
                                         </a>
                                     </td>
@@ -161,7 +163,7 @@ class TransactionListController extends Controller
                                         <span class="text-secondary text-xs font-weight-bold text-capitalize">'. $emp->payment_status .'</span>
                                     </td>
                                     <td class="align-middle">
-                                        <a href="/pembeli/menunggu-pembayaran/detail-order/'.$emp->id.'" class="text-secondary font-weight-bold text-xs">
+                                        <a href="/pembeli/daftar-transaksi/detail-order/'.$emp->id.'" class="text-secondary font-weight-bold text-xs">
                                             Detail Pesanan
                                         </a>
                                     </td>
@@ -247,7 +249,7 @@ class TransactionListController extends Controller
                                         <span class="text-secondary text-xs font-weight-bold text-capitalize">'. $emp->payment_status .'</span>
                                     </td>
                                     <td class="align-middle">
-                                        <a href="/pembeli/menunggu-pembayaran/detail-order/'.$emp->id.'" class="text-secondary font-weight-bold text-xs">
+                                        <a href="/pembeli/daftar-transaksi/detail-order/'.$emp->id.'" class="text-secondary font-weight-bold text-xs">
                                             Detail Pesanan
                                         </a>
                                     </td>
@@ -333,7 +335,7 @@ class TransactionListController extends Controller
                                         <span class="text-secondary text-xs font-weight-bold text-capitalize">'. $emp->payment_status .'</span>
                                     </td>
                                     <td class="align-middle">
-                                        <a href="/pembeli/menunggu-pembayaran/detail-order/'.$emp->id.'" class="text-secondary font-weight-bold text-xs">
+                                        <a href="/pembeli/daftar-transaksi/detail-order/'.$emp->id.'" class="text-secondary font-weight-bold text-xs">
                                             Detail Pesanan
                                         </a>
                                     </td>
@@ -419,7 +421,7 @@ class TransactionListController extends Controller
                                         <span class="text-secondary text-xs font-weight-bold text-capitalize">'. $emp->payment_status .'</span>
                                     </td>
                                     <td class="align-middle">
-                                        <a href="/pembeli/menunggu-pembayaran/detail-order/'.$emp->id.'" class="text-secondary font-weight-bold text-xs">
+                                        <a href="/pembeli/daftar-transaksi/detail-order/'.$emp->id.'" class="text-secondary font-weight-bold text-xs">
                                             Detail Pesanan
                                         </a>
                                     </td>
@@ -445,4 +447,40 @@ class TransactionListController extends Controller
                 </div>';
 		}
 	}
+
+    public function viewTransactionList($id)
+    {
+        $checkOrder = Order::with('address', 'user', 'orderItems')
+                        ->join('users', 'orders.user_id', '=', 'users.id')
+                        ->join('addresses', 'orders.address_id', '=', 'addresses.id')
+                        ->select('orders.*', 'addresses.recipients_name as name_billing')
+                        ->where('orders.user_id', '=', auth()->user()->id)
+                        ->where('orders.id', '=', $id)
+                        ->exists();
+        if ($checkOrder) {
+            $order = Order::with('address', 'user', 'orderItems')
+                        ->join('users', 'orders.user_id', '=', 'users.id')
+                        ->join('addresses', 'orders.address_id', '=', 'addresses.id')
+                        ->select('orders.*', 'addresses.recipients_name as name_billing')
+                        ->where('orders.user_id', '=', auth()->user()->id)
+                        // ->where('orders.id', '=', $id)
+                        ->find($id);
+            
+            $reviews = Review::with('user', 'product')
+                        ->join('users', 'reviews.user_id', '=', 'users.id')
+                        ->join('products', 'reviews.product_id', '=', 'products.id')
+                        ->select('reviews.*', 'users.name as name_reviewer')
+                        ->where('reviews.user_id', '=', auth()->user()->id)
+                        ->where('reviews.order_id', '=', $id)
+                        ->get();
+                        
+            $userInfo = Costumer::with('user')
+                ->where('user_id', '=', auth()->user()->id)
+                ->first();
+
+            return view('costumer.transaction_list.detail', compact('order', 'reviews', 'userInfo'));
+        } else {
+            return redirect('/pembeli/daftar-transaksi');
+        }
+    }
 }
