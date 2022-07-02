@@ -52,7 +52,7 @@
         <div class="col-12">
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                    <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                    <div class="bg-primary shadow-primary border-radius-lg pt-4 pb-3">
                         <h6 class="text-white text-capitalize ps-3">@yield('title')</h6>
                     </div>
                 </div>
@@ -179,7 +179,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-footer border-0 px-4 bg-gradient-primary shadow-primary border-radius-lg py-5 d-md-flex align-items-center justify-content-between">
+                <div class="card-footer border-0 px-4 bg-primary shadow-primary border-radius-lg py-5 d-md-flex align-items-center justify-content-between">
                     <h5 class="text-white text-uppercase mb-0">Total
                         Pembayaran: <span class="d-flex h2 mb-0 ms-2 text-white text-capitalize">Rp.
                             {{ number_format($total, 0) }}</span></h5>

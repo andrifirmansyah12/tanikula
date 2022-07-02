@@ -50,7 +50,7 @@
 <div class="container-fluid px-2 px-md-4 mb-5">
     <div class="page-header min-height-300 border-radius-xl mt-4"
         style="background-image: url('https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');">
-        <span class="mask bg-gradient-primary opacity-6"></span>
+        <span class="mask bg-primary opacity-6"></span>
     </div>
     <div class="card card-body mx-3 mx-md-4 mt-n6">
         <div class="row gx-4 mb-2">
@@ -58,10 +58,10 @@
                 <div class="avatar avatar-xl position-relative">
                     @if ($userInfo->image)
                     <img id="image_preview" src="{{asset('../storage/profile/'. $userInfo->image)}}" alt="profile_image"
-                        class="border-radius-lg shadow-sm" style="width: 92px; height: 72px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                        class="border-radius-lg rounded-circle shadow-sm" style="width: 92px; height: 72px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                     @else
                     <img id="image_preview" src="{{ asset('stisla/assets/img/example-image.jpg') }}" alt="profile_image"
-                        class="border-radius-lg shadow-sm" style="width: 92px; height: 72px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                        class="border-radius-lg rounded-circle shadow-sm" style="width: 92px; height: 72px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                     @endif
                 </div>
             </div>
@@ -78,16 +78,17 @@
                     </div>
                 </div>
             </div>
+            <input type="hidden" name="id" id="id" value="{{ $userInfo->id }}">
             <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
                 <div class="nav-wrapper position-relative end-0">
                     <ul class="nav nav-fill p-1">
                         <li class="nav-item">
-                            <a href="{{ route('pembeli') }}">
+                            <a class="btn {{ Request::is('pembeli') ? 'active text-white bg-primary' : '' }}" onclick="pembeli_dashboard('{{ url('pembeli') }}')" href="#">
                                 <span class="ms-1 fw-bold">Biodata Diri</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('pembeli.alamat') }}">
+                            <a class="btn {{ Request::is('pembeli/alamat*') ? 'active text-white bg-primary' : '' }}" onclick="pembeli_alamat('{{ url('pembeli/alamat') }}')" href="#">
                                 <span class="ms-1 fw-bold">Daftar Alamat</span>
                             </a>
                         </li>
@@ -96,8 +97,8 @@
             </div>
         </div>
         <div class="row">
-            <div class="d-flex flex-row justify-content-end mt-4">
-                {{-- <form action="{{ url('/pembeli/alamat') }}">
+            <div class="d-flex flex-column-reverse flex-md-row justify-content-between align-items-md-center mt-4">
+                <form action="{{ url('/pembeli/alamat') }}">
                     <div class="pt-2 input-group items-align-center justify-content-center">
                         <div class="form-outline">
                             <input class="typeahead form-control px-3 border" value="{{ request('pencarian') }}" name="pencarian"
@@ -108,7 +109,7 @@
                             <i class="bi bi-search"></i>
                         </button>
                     </div>
-                </form> --}}
+                </form>
                 <button type="button" class="btn btn-light border" data-bs-toggle="modal"
                     data-bs-target="#TambahAlamat" data-bs-dismiss="modal">
                     Tambah Alamat Baru
@@ -314,9 +315,38 @@
     });
 
     $(function() {
+        $("#image").change(function(e) {
+            const file = e.target.files[0];
+            let url = window.URL.createObjectURL(file);
+            $("#image_preview").attr('src', url);
+            let fd = new FormData();
+            fd.append('image', file);
+            fd.append('id', $("#id").val());
+            fd.append('_token', '{{ csrf_token() }}');
+            $.ajax({
+                url: '{{ route('pembeli.pengaturan.image') }}',
+                method: 'POST',
+                data: fd,
+                cache: false,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: function(res){
+                    if(res.status == 200) {
+                        // $("#profile_alert").html(showMessage('success', res.messages));
+                        iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                            title: 'Berhasil',
+                            message: res.messages,
+                            position: 'topRight'
+                        });
+                        $("#image").val('');
+                    }
+                }
+            });
+        });
 
         // add new employee ajax request
-            $("#add_employee_form").submit(function(e) {
+        $("#add_employee_form").submit(function(e) {
                 e.preventDefault();
                 var formData = new FormData(this);
                 $("#add_employee_btn").text('Tunggu..');
@@ -352,7 +382,7 @@
                     window.location.reload();
                 }
                 });
-            });
+        });
 
         // edit employee ajax request
         $(document).on('click', '.editAlamat', function (e) {

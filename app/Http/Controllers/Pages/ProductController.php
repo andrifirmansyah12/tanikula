@@ -134,16 +134,24 @@ class ProductController extends Controller
         }
     }
 
-    public function productListAjax()
+    // public function productListAjax()
+    // {
+    //     $product = Product::select('name')->where('is_active', '1')->get();
+    //     $data = [];
+
+    //     foreach ($product as $item) {
+    //         $data[] = $item['name'];
+    //     }
+
+    //     return $data;
+    // }
+
+    public function productListAjax(Request $request)
     {
-        $product = Product::select('name')->where('is_active', '1')->get();
-        $data = [];
-
-        foreach ($product as $item) {
-            $data[] = $item['name'];
-        }
-
-        return $data;
+        return Product::select('name')
+        ->where('is_active', '1')
+        ->where('name', 'like', "%{$request->term}%")
+        ->pluck('name');
     }
 
     // public function searchProduct(Request $request)

@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="apple-touch-icon" sizes="76x76" href="{{asset('../costumer/assets/img/apple-icon.png')}}">
-    <link rel="icon" type="image/png" href="{{asset('../costumer/assets/img/favicon.png')}}">
+    {{-- <link rel="apple-touch-icon" sizes="76x76" href="{{asset('../costumer/assets/img/apple-icon.png')}}"> --}}
+    {{-- <link rel="icon" type="image/png" href="{{asset('../costumer/assets/img/favicon.png')}}"> --}}
     <title>
         @yield('title') | TaniKula
     </title>
@@ -18,6 +18,7 @@
     <link href="{{asset('../costumer/assets/css/nucleo-icons.css')}}" rel="stylesheet" />
     <link href="{{asset('../costumer/assets/css/nucleo-svg.css')}}" rel="stylesheet" />
     <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="{{ asset('css/LineIcons.3.0.css') }}" />
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">

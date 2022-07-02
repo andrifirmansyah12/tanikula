@@ -28,6 +28,7 @@ class CreateOrdersTable extends Migration
 			$table->unsignedBigInteger('cancelled_by')->nullable();
 			$table->datetime('cancelled_at')->nullable();
 			$table->text('cancellation_note')->nullable();
+			$table->string('review')->nullable();
             $table->timestamps();
 
             $table->foreign('approved_by')->references('id')->on('users');

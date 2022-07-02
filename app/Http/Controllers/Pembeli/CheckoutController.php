@@ -81,11 +81,15 @@ class CheckoutController extends Controller
         foreach ($cartItem_total as $product_total) {
             $total += $product_total->product->price * $product_total->product_qty;
         }
+
+        $orderDate = date('Y-m-d H:i:s');
+		$paymentDue = (new \DateTime($orderDate))->modify('+1 day')->format('Y-m-d H:i:s');
+
         $order->total_price = $total;
         $order->code = Order::generateCode();
         $order->status = Order::CREATED;
-        $order->order_date = Carbon::now()->format('Y-m-d H:i:s');
-        $order->payment_due = Carbon::now()->format('Y-m-d H:i:s');
+        $order->order_date = $orderDate;
+        $order->payment_due = $paymentDue;
         $order->payment_status = Order::UNPAID;
         $order->save();
 

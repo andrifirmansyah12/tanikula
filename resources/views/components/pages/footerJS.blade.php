@@ -10,6 +10,7 @@
 <script src="{{ asset('js/market.js') }}"></script>
 @yield('script')
 <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
 <script type="text/javascript">
     //========= Hero Slider
     tns({
@@ -96,46 +97,30 @@
     });
 </script> --}}
 <script>
-
-    var availableTags = [];
-
-    $.ajax({
-        url: "/product-list",
-        method: "GET",
-        success: function (response) {
-            // console.log(response);
-            startAutoComplete(response);
-        }
-    });
-
-    function startAutoComplete(availableTags) {
-        $("#search_product").autocomplete({
-            source: availableTags
-        });
-    }
-
-    $(document).ready(function () {
-
-        LoadCart();
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        function LoadCart()
-        {
-            $.ajax({
-                method: "GET",
-                url: "/load-cart",
-                success: function (response) {
-                    $('.cart-count').html('');
-                    $('.cart-count').html(response.count);
-                    // alert(response.count);
-                }
+    var path = "{{ route('productListAjax')  }}";
+    $('input.typeaheadProduct').typeahead({
+        source: function (query, process) {
+            return $.get(path, {
+                term: query
+            }, function (data) {
+                return process(data);
             });
         }
     });
 
+    // var availableTags = [];
+    // $.ajax({
+    //     url: "/product-list",
+    //     method: "GET",
+    //     success: function (response) {
+    //         // console.log(response);
+    //         startAutoComplete(response);
+    //     }
+    // });
+
+    // function startAutoComplete(availableTags) {
+    //     $("#search_product").autocomplete({
+    //         source: availableTags
+    //     });
+    // }
 </script>

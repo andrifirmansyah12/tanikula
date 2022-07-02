@@ -18,6 +18,8 @@ class Order extends Model
 
 	public const ORDERCODE = 'INV';
 
+	public const REVIEWED = 'reviewed';
+
 	public const PAID = 'paid';
 	public const UNPAID = 'unpaid';
 
@@ -42,6 +44,11 @@ class Order extends Model
     public function orderItems()
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function review()
+    {
+        return $this->hasMany(Review::class);
     }
 
     public function isPaid()

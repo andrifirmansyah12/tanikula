@@ -1,13 +1,13 @@
-<footer class="footer">
+<footer class="footer shadow">
     <!-- Start Footer Top -->
-    <div class="footer-top border" style="border-color: #16A085">
+    <div class="footer-top border-bottom" style="border-color: #16A085">
         <div class="container">
             <div class="inner-content">
                 <div class="row">
                     <div class="col-lg-3 col-md-4 col-12">
                         <div class="footer-logo">
                             <a href="index.html">
-                                <h3> <span style="color: #16A085">Shop</span>TaniKula</h3>
+                                <h3 style="color: #16A085">TaniKula</h3>
                             </a>
                         </div>
                     </div>

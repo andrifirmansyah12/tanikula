@@ -33,7 +33,7 @@
     <div class="card register container" style="margin-top: 80px; margin-bottom: 70px;">
         <div class="login-brand d-block d-md-none">
             <a href="{{ url('home') }}">
-                <h4>Sri Makmur</h4>
+                <h4>TaniKula</h4>
             </a>
         </div>
         <div class="row align-items-center">
@@ -47,7 +47,7 @@
             <div class="col-lg-4 registerInput col-md-6 col-12">
                 <div class="login-brand d-none d-md-block">
                     <a href="{{ url('home') }}">
-                        <h4>Sri Makmur</h4>
+                        <h4>TaniKula</h4>
                     </a>
                 </div>
                 <div class="card card-primary">

@@ -24,8 +24,8 @@
 
     .featured-categories .single-category {
         padding: 40px;
+        height: 200px;
         margin-top: 30px;
-        border: 2px solid #f0f0f0;
         position: relative;
         background: #fff;
         z-index: 0;
@@ -122,7 +122,7 @@
             @if ($category_product->count())
             @foreach ($category_product as $item)
             <div class="col-lg-4 col-md-6 col-12">
-                <div class="single-category">
+                <div class="single-category shadow rounded bg-body">
                     <h3 class="heading"><a class="text-black" href="{{ url('product-category/'.$item->slug) }}"> {{ $item->name }}</a></h3>
                     <ul>
                         @foreach ($product_new->take(3) as $product_category)

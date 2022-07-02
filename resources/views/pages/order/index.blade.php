@@ -186,8 +186,8 @@
                                 <p class="text-muted mb-0 text-capitalize">Status Pembayaran : {{$order->payment_status}}</p>
                             </div>
                             <div class="mt-3 mt-md-0">
-                                <p class="text-muted mb-0"><span class="fw-bold me-4">Discount</span> 0</p>
                                 <p class="text-muted mb-0"><span class="fw-bold me-4">Total</span> Rp. {{ number_format($total, 0) }}</p>
+                                <p class="text-muted mb-0"><span class="fw-bold me-4">Discount</span> 0</p>
                             </div>
                         </div>
 

@@ -95,6 +95,7 @@ class PaymentController extends Controller
 					if (in_array($payment->status, [Payment::SUCCESS, Payment::SETTLEMENT])) {
 						$order->payment_status = Order::PAID;
 						$order->status = Order::CONFIRMED;
+                        // $order->payment_due = Carbon::now()->format('Y-m-d H:i:s');
 						$order->save();
 					}
 				}
