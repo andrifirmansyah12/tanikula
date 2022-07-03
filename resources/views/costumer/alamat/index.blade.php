@@ -61,7 +61,7 @@
                         class="border-radius-lg rounded-circle shadow-sm" style="width: 92px; height: 72px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                     @else
                     <img id="image_preview" src="{{ asset('stisla/assets/img/example-image.jpg') }}" alt="profile_image"
-                        class="border-radius-lg rounded-circle shadow-sm" style="width: 92px; height: 72px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                        class="border-radius-lg rounded-circle shadow-sm" style="height: 72px;">
                     @endif
                 </div>
             </div>
@@ -450,6 +450,44 @@
                     window.location.reload();
                 }
             });
+        });
+
+         // delete employee ajax request
+        $(document).on('click', '.updateMainAddress', function(e) {
+            e.preventDefault();
+            let id = $(this).attr('id');
+            let csrf = '{{ csrf_token() }}';
+            Swal.fire({
+            title: 'Apa kamu yakin?',
+            text: "Ingin menjadikan alamat utama!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Jadikan alamat utama!',
+            cancelButtonText: 'Kembali!'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                url: '{{ route('updateMainAddress.pembeli.alamat') }}',
+                method: 'POST',
+                data: {
+                    id: id,
+                    _token: csrf
+                },
+                success: function(response) {
+                    if (response.status == 200) {
+                        Swal.fire(
+                            'Berhasil!',
+                            'Berhasil menjadikan alamat utama!',
+                            'success'
+                        )
+                        window.location.reload();
+                    }
+                }
+                });
+            }
+            })
         });
 
         // fetch all employees ajax request

@@ -1,9 +1,10 @@
 @extends('pages.template1')
 @section('title', 'Detail Produk')
+@section('breadcrumb-title', $product->product_category->name)
+@section('breadcrumb-subTitle', $product->name)
 
 @section('style')
     <style>
-
         /* rating */
         .rating-produk div {
             color: #f0d800;
@@ -56,29 +57,8 @@
 @endsection
 
 @section('content')
-    <!-- Start Breadcrumbs -->
-    <div class="breadcrumbs">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6 col-md-6 col-12">
-                    <div class="breadcrumbs-content">
-                        <h1 class="page-title">{{ $product->name }}</h1>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-12">
-                    <ul class="breadcrumb-nav">
-                        <li><a href="index.html"><i class="lni lni-home"></i> Home</a></li>
-                        <li><a href="index.html">{{ $product->product_category->name }}</a></li>
-                        <li>{{ $product->name }}</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End Breadcrumbs -->
-
     <!-- Start Item Details -->
-    <section class="item-details section bg-white">
+    <section class="item-details section bg-white mt-md-5">
         <div class="container">
             <div class="top-area" id="product_data">
                 <div class="row align-items-center">
@@ -112,7 +92,8 @@
                             <p class="category">Terjual 40</p>
                             <p class="category"><i class="lni lni-tag"></i> Kategori:<a
                                     href="{{ url('product-category/'.$product->product_category->slug) }}">{{ $product->product_category->name }}</a></p>
-                            <h3 class="price">Rp. {{ number_format($product->price, 0) }}<span>Rp. {{ number_format(0, 0) }}</span></h3>
+                            {{-- <h3 class="price">Rp. {{ number_format($product->price, 0) }}<span>Rp. {{ number_format(0, 0) }}</span></h3> --}}
+                            <h3 class="price">Rp. {{ number_format($product->price, 0) }}</h3>
                             <p class="info-text">{{ $product->desc }}</p>
                             <div class="row">
                                 {{-- <div class="col-lg-4 col-md-4 col-12">
@@ -140,7 +121,7 @@
                                     <div class="form-group">
                                         <label for="color">Lainnya</label>
                                         <div class="wish-button">
-                                            <button class="btn"><i class="lni lni-envelope"></i> Chat</button>
+                                            <button class="btn"><i class="bi bi-chat-dots"></i> Chat</button>
                                         </div>
                                     </div>
                                 </div>

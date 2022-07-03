@@ -133,8 +133,31 @@
                         <li><a href="{{ url('product-category/'.$item->slug) }}">Lainnya</a></li>
                     </ul>
                     <div class="images d-block">
-                        <img src="{{ asset('img/Fibers.svg') }}" class="img-fluid" style="width: 10rem; height: 6rem;"
-                            alt="#">
+                        @if ($item->id == '1')
+                            <img src="{{ asset('img/kategori-produk/beras.png') }}" class="img-fluid pe-4" style="width: 8rem; height: 6rem;"
+                                alt="{{$item->name}}">
+                        @elseif ($item->id == '2')
+                            <img src="{{ asset('img/kategori-produk/buah.png') }}" class="img-fluid pe-4" style="width: 8rem; height: 6rem;"
+                                alt="{{$item->name}}">
+                        @elseif ($item->id == '3')
+                            <img src="{{ asset('img/kategori-produk/olahan-buah.png') }}" class="img-fluid pe-4" style="width: 8rem; height: 6rem;"
+                                alt="{{$item->name}}">
+                        @elseif ($item->id == '4')
+                            <img src="{{ asset('img/kategori-produk/bibit-sayuran.png') }}" class="img-fluid pe-4" style="width: 8rem; height: 6rem;"
+                                alt="{{$item->name}}">
+                        @elseif ($item->id == '5')
+                            <img src="{{ asset('img/kategori-produk/sayuran.png') }}" class="img-fluid pe-4" style="width: 8rem; height: 6rem;"
+                                alt="{{$item->name}}">
+                        @elseif ($item->id == '6')
+                            <img src="{{ asset('img/kategori-produk/roti.png') }}" class="img-fluid pe-4" style="width: 8rem; height: 6rem;"
+                                alt="{{$item->name}}">
+                        @elseif ($item->id == '7')
+                            <img src="{{ asset('img/kategori-produk/jamu.png') }}" class="img-fluid pe-4" style="width: 8rem; height: 6rem;"
+                                alt="{{$item->name}}">
+                        @elseif ($item->id == '8')
+                            <img src="{{ asset('img/kategori-produk/suau-kedelai.png') }}" class="img-fluid pe-4" style="width: 8rem; height: 6rem;"
+                                alt="{{$item->name}}">
+                        @endif
                     </div>
                 </div>
             </div>

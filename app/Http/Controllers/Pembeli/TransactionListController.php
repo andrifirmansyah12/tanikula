@@ -111,7 +111,7 @@ class TransactionListController extends Controller
                     ->select('orders.*', 'addresses.recipients_name as name_billing')
                     ->where('orders.user_id', '=', auth()->user()->id)
                     ->where('orders.status', '=', 'confirmed')
-                    ->orderBy('orders.payment_status', 'desc')
+                    ->orderBy('orders.created_at', 'desc')
                     ->get();
 		$output = '';
                     $output .= '<table class="table align-items-center mb-0">
@@ -197,7 +197,7 @@ class TransactionListController extends Controller
                     ->select('orders.*', 'addresses.recipients_name as name_billing')
                     ->where('orders.user_id', '=', auth()->user()->id)
                     ->where('orders.status', '=', 'delivered')
-                    ->orderBy('orders.payment_status', 'desc')
+                    ->orderBy('orders.created_at', 'desc')
                     ->get();
 		$output = '';
                     $output .= '<table class="table align-items-center mb-0">
@@ -283,7 +283,7 @@ class TransactionListController extends Controller
                     ->select('orders.*', 'addresses.recipients_name as name_billing')
                     ->where('orders.user_id', '=', auth()->user()->id)
                     ->where('orders.status', '=', 'completed')
-                    ->orderBy('orders.payment_status', 'desc')
+                    ->orderBy('orders.created_at', 'desc')
                     ->get();
 		$output = '';
                     $output .= '<table class="table align-items-center mb-0">
@@ -369,7 +369,7 @@ class TransactionListController extends Controller
                     ->select('orders.*', 'addresses.recipients_name as name_billing')
                     ->where('orders.user_id', '=', auth()->user()->id)
                     ->where('orders.status', '=', 'cancelled')
-                    ->orderBy('orders.payment_status', 'desc')
+                    ->orderBy('orders.created_at', 'desc')
                     ->get();
 		$output = '';
                     $output .= '<table class="table align-items-center mb-0">

@@ -1,4 +1,4 @@
-@extends('pages.template1')
+@extends('pages.template3')
 @section('title', 'Keranjang')
 
 @section('style')
@@ -54,109 +54,110 @@
 @endsection
 
 @section('content')
-
 <!-- Start Item Details -->
 <section class="item-details section bg-white overflow-hidden">
     <div class="container">
         <div class="bg-white">
             <div class="row">
-                <div class="col-12 col-xl-8 mb-3 mb-xl-0 CartItems">
-                    @php
-                        $total = 0;
-                        $totalPrice = 0;
-                        $totalQty = 0;
-                    @endphp
-                    @if ($cartItem->count())
-                    @foreach ($cartItem as $item)
-                        <div class="p-5 mt-4 shadow rounded" id="product_data">
-                            <h2 class="mb-3 fs-3 mb-md-4">Keranjang</h2>
-                            <div class="row align-items-center mb-6 mb-md-3">
-                                <div class="col-12 col-md-12 col-lg-12 mb-6 mb-md-0">
-                                    <div class="row align-items-center">
-                                        <div>
-                                            <p class="fw-bold mb-2"><i class="bi bi-shop"></i> {{ $item->product->user->name }}</p>
-                                        </div>
-                                        <div class="col-12 col-md-3 col-lg-3">
-                                            <div class="d-flex align-items-center justify-content-center bg-light"
-                                                style="width: 160px; height: 150px;">
-                                                @foreach ($item->product->photo_product->take(1) as $photos)
-                                                <img class="img-fluid" style="object-fit: contain;"
-                                                    src="{{ asset('../storage/produk/'.$photos->name) }}" alt="{{ $item->product->name }}">
-                                                @endforeach
+                <div class="shadow mt-md-4 rounded col-12 col-xl-8 mb-3 mb-xl-0">
+                    <div class="p-5 CartItems">
+                        <h2 class="mb-3 fs-3 mb-md-4">Keranjang</h2>
+                        @php
+                            $total = 0;
+                            $totalPrice = 0;
+                            $totalQty = 0;
+                        @endphp
+                        @if ($cartItem->count())
+                        @foreach ($cartItem as $item)
+                            <div class="border-bottom mb-4 pb-4 pb-md-0" id="product_data">
+                                <div class="row align-items-center mb-6 mb-md-3">
+                                    <div class="col-12 col-md-12 col-lg-12 mb-6 mb-md-0">
+                                        <div class="row align-items-center">
+                                            <div>
+                                                <p class="fw-bold mb-2"><i class="bi bi-shop"></i> {{ $item->product->user->name }}</p>
                                             </div>
-                                        </div>
-                                        <div class="col-6 mt-2 mt-md-0">
-                                            <h3 class="mb-2 fs-6 fw-bold"><a class="text-black" href="{{ url('home/'.$item->product->slug) }}">{{ $item->product->name }}</a></h3>
-                                            {{-- <label for="color">Tipe</label>
-                                            <div class="dropdown mt-1">
-                                                <button class="btn border dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    Pilih Tipe
-                                                </button>
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                    <li><a class="dropdown-item" href="#">Tipe A</a></li>
-                                                    <li><a class="dropdown-item" href="#">Tipe B</a></li>
-                                                    <li><a class="dropdown-item" href="#">Tipe C</a></li>
-                                                </ul>
-                                            </div> --}}
-                                            <p class="mb-0 fs-6 fw-bold mt-2">Rp. {{ number_format($item->product->price, 0) }}</p>
-                                        </div>
-                                        <div class="col-12 mt-3 mt-md-0">
-                                            <div class="d-flex flex-md-row flex-column-reverse justify-content-end align-items-end align-items-md-center">
-                                                <div class="d-flex flex-row mt-2 mt-md-0">
-                                                    <div class="border-end text-black border-dark pe-3">
-                                                        <button class="btn btn-success" id="addToWishlistBtn">+
-                                                            Wishlist</button>
-                                                    </div>
-                                                    <div>
-                                                        <button class="delete-cart-item btn btn-danger ms-3"><i
-                                                            class="lni lni-trash-can"></i></button>
-                                                    </div>
+                                            <div class="col-12 col-md-3 col-lg-3">
+                                                <div class="d-flex align-items-center justify-content-center bg-light"
+                                                    style="width: 160px; height: 150px;">
+                                                    @foreach ($item->product->photo_product->take(1) as $photos)
+                                                    <img class="img-fluid" style="object-fit: contain;"
+                                                        src="{{ asset('../storage/produk/'.$photos->name) }}" alt="{{ $item->product->name }}">
+                                                    @endforeach
                                                 </div>
-                                                <div class="col-8 col-md-3 form-group ps-0 ps-md-3">
-                                                    <input type="hidden" value="{{ $item->product_id }}" id="prod_id">
-                                                    <div class="d-flex justify-content-between">
-                                                        <button
-                                                            class="input-group-text changeQuantity decrement-btn me-1">-</button>
-                                                        <input type="text" name="quantity"
-                                                            class="form-control qty-input text-center"
-                                                            value="{{ $item->product_qty }}">
-                                                        @if ($item->product->stoke >= $item->product_qty)
-                                                        <button
-                                                            class="input-group-text changeQuantity increment-btn ms-1">+</button>
-                                                        @else
-                                                        <button disabled
-                                                            class="input-group-text changeQuantity increment-btn ms-1">+</button>
-                                                        @endif
+                                            </div>
+                                            <div class="col-6 mt-2 mt-md-0">
+                                                <h3 class="mb-2 fs-6 fw-bold"><a class="text-black" href="{{ url('home/'.$item->product->slug) }}">{{ $item->product->name }}</a></h3>
+                                                {{-- <label for="color">Tipe</label>
+                                                <div class="dropdown mt-1">
+                                                    <button class="btn border dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Pilih Tipe
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                        <li><a class="dropdown-item" href="#">Tipe A</a></li>
+                                                        <li><a class="dropdown-item" href="#">Tipe B</a></li>
+                                                        <li><a class="dropdown-item" href="#">Tipe C</a></li>
+                                                    </ul>
+                                                </div> --}}
+                                                <p class="mb-0 fs-6 fw-bold mt-2">Rp. {{ number_format($item->product->price, 0) }}</p>
+                                            </div>
+                                            <div class="col-12 mt-3 mt-md-0">
+                                                <div class="d-flex flex-md-row flex-column-reverse justify-content-end align-items-end align-items-md-center">
+                                                    <div class="d-flex flex-row mt-2 mt-md-0">
+                                                        <div class="border-end text-black border-dark pe-3">
+                                                            <button class="btn btn-success" id="addToWishlistBtn">+
+                                                                Wishlist</button>
+                                                        </div>
+                                                        <div>
+                                                            <button class="delete-cart-item btn btn-danger ms-3"><i
+                                                                class="lni lni-trash-can"></i></button>
+                                                        </div>
                                                     </div>
+                                                    <div class="col-8 col-md-3 form-group ps-0 ps-md-3">
+                                                        <input type="hidden" value="{{ $item->product_id }}" id="prod_id">
+                                                        <div class="d-flex justify-content-between">
+                                                            <button
+                                                                class="input-group-text changeQuantity decrement-btn me-1">-</button>
+                                                            <input type="text" name="quantity"
+                                                                class="form-control qty-input text-center"
+                                                                value="{{ $item->product_qty }}">
+                                                            @if ($item->product->stoke > $item->product_qty)
+                                                            <button
+                                                                class="input-group-text changeQuantity increment-btn ms-1">+</button>
+                                                            @else
+                                                            <button disabled
+                                                                class="input-group-text changeQuantity increment-btn ms-1">+</button>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                    @php
+                                                    $total += $item->product->price * $item->product_qty;
+                                                    $totalQty += $item->product_qty;
+                                                    $totalPrice += $item->product->price;
+                                                    @endphp
                                                 </div>
-                                                @php
-                                                $total += $item->product->price * $item->product_qty;
-                                                $totalQty += $item->product_qty;
-                                                $totalPrice += $item->product->price;
-                                                @endphp
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        @endforeach
+                        @else
+                        <div id="app">
+                            <section class="section">
+                                <div class="container">
+                                    <div class="page-error">
+                                        <div class="page-inner">
+                                            <img src="{{ asset('img/undraw_empty_re_opql.svg') }}" alt="">
+                                            <div class="page-description">
+                                                Tidak ada produk dikeranjang!
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
                         </div>
-                    @endforeach
-                    @else
-                    <div id="app">
-                        <section class="section">
-                            <div class="container">
-                                <div class="page-error">
-                                    <div class="page-inner">
-                                        <img src="{{ asset('img/undraw_empty_re_opql.svg') }}" alt="">
-                                        <div class="page-description">
-                                            Tidak ada produk dikeranjang!
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
+                        @endif
                     </div>
-                    @endif
                 </div>
                 <div class="col-12 col-xl-4">
                     <div class="m-0 m-xl-4 p-4 shadow rounded">
