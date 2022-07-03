@@ -1,5 +1,7 @@
 @extends('pages.template1')
 @section('title', 'Kategori Produk')
+@section('breadcrumb-title', 'Kategori Produk')
+@section('breadcrumb-subTitle', $category_product->name)
 
 @section('style')
     <style>
@@ -54,27 +56,6 @@
 @endsection
 
 @section('content')
-    <!-- Start Breadcrumbs -->
-    <div class="breadcrumbs">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6 col-md-6 col-12">
-                    <div class="breadcrumbs-content">
-                        <h1 class="page-title">{{ $category_product->name }}</h1>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-12">
-                    <ul class="breadcrumb-nav">
-                        <li><a href="index.html"><i class="lni lni-home"></i> Home</a></li>
-                        <li><a href="index.html">Kategori Produk</a></li>
-                        <li>{{ $category_product->name }}</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End Breadcrumbs -->
-
     <!-- Start Trending Product Area -->
     <section class="section" style="margin-top: 12px;">
         <div class="container">

@@ -150,7 +150,8 @@ class CheckoutController extends Controller
     }
 
     // handle fetch all eamployees ajax request
-	public function fetchAll() {
+	public function fetchAll() 
+    {
 		$emps = Address::with('user')
                     ->join('users', 'addresses.user_id', '=', 'users.id')
                     ->select('addresses.*', 'users.email as email')
@@ -161,9 +162,13 @@ class CheckoutController extends Controller
 		if ($emps->count() > 0) {
 			foreach ($emps as $emp) {
 				$output .= '
-                <div class="body mt-2 border border-success">
-                    <div class="card-body">
-                        <div class="row align-items-center">
+                <div class="body mt-2 border border-success">';
+                    if ($emp->main_address == 1) {
+                            $output .= '<div class="card-body rounded" style="background-color: hsl(110, 100%, 75%);">';
+                        } else if($emp->main_address == 0) {
+                            $output .= '<div class="card-body rounded">';
+                        }
+                         $output .= '<div class="row align-items-center">
                             <div>';
                             if ($emp->main_address == 1) {
                                 $output .= '<p class="fw-bold text-black mb-2">' . $emp->recipients_name .'
@@ -184,7 +189,10 @@ class CheckoutController extends Controller
                                 <p>'.$emp->city.', '.$emp->postal_code.'.</p>
                             </div>
                         </div>
-                        <a href="#" id="'.$emp->id.'" class="pt-2 fw-bold editAlamat" type="button" data-bs-toggle="modal" data-bs-target="#EditAlamat" style="color: #16A085" data-bs-dismiss="modal">Edit alamat</a>
+                        <div class="d-flex flex-row align-items-center justify-content-between justify-content-md-start">
+                            <a href="#" id="'.$emp->id.'" class="mt-2 fw-bold editAlamat" type="button" data-bs-toggle="modal" data-bs-target="#EditAlamat" style="color: #16A085" data-bs-dismiss="modal">Edit alamat</a>
+                            <a href="#" id="'.$emp->id.'" class="mt-2 ms-md-3 bg-light fw-bold updateMainAddress border px-2 rounded" style="color: #16A085">Jadikan alamat utama</a>
+                        </div>
                     </div>
                 </div>
                 ';
@@ -323,6 +331,33 @@ class CheckoutController extends Controller
                     'status' => 200,
                 ]);
         }
+	}
+
+    // handle update an employee ajax request
+	public function updateMainAddress(Request $request) 
+    {
+        $id = $request->id;
+        $addressCheck = Address::where('id', $id)->where('main_address', '0')->first();
+        if ($addressCheck) {
+            $addressOld = Address::where('user_id', auth()->user()->id)->latest()->get();
+            foreach ($addressOld as $item) {
+                if ($item->main_address == 1) {
+                    $datasFound = Address::findOrFail($item->id);
+                    $datasFound->main_address = 0;
+                    $datasFound->update();
+                }
+            }
+        }
+
+        $address = Address::findOrFail($id);
+        if ($request->main_address == 0) {
+            $address->main_address = 1;
+        }
+        $address->update();
+
+        return response()->json([
+            'status' => 200,
+        ]);
 	}
 
     private function initPaymentGateway()

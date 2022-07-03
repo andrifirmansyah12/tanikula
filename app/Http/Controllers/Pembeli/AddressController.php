@@ -77,6 +77,7 @@ class AddressController extends Controller
                             <a href="#" id="'.$emp->id.'" class="pt-2 fw-bold editAlamat" type="button"
                                 data-bs-toggle="modal" data-bs-target="#EditAlamat" style="color: #16A085"
                                 data-bs-dismiss="modal">Edit alamat</a>
+                            <a href="#" id="'.$emp->id.'" class="mt-2 ms-md-3 bg-light fw-bold updateMainAddress border px-2 rounded" style="color: #16A085">Jadikan alamat utama</a>
                         </div>
                     </div>
                 </div>

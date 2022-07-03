@@ -423,6 +423,7 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function(
     Route::get('/cart/shipment/fetchallAddress', [App\Http\Controllers\Pembeli\CheckoutController::class, 'fetchAll'])->name('alamat-fetchAll');
     Route::get('/cart/shipment/editAddress', [App\Http\Controllers\Pembeli\CheckoutController::class, 'editAddress'])->name('edit.alamat.costumer');
     Route::post('/cart/shipment/updateAddress', [App\Http\Controllers\Pembeli\CheckoutController::class, 'updateAddress'])->name('update.alamat.costumer');
+    Route::post('/cart/shipment/updateMainAddress', [App\Http\Controllers\Pembeli\CheckoutController::class, 'updateMainAddress'])->name('updateMainAddress.pembeli.alamat');
 
     Route::get('pembeli/chat', function() {
         return view('costumer.chat.index');

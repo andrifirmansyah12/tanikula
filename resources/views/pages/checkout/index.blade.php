@@ -1,4 +1,4 @@
-@extends('pages.template1')
+@extends('pages.template3')
 @section('title', 'Checkout')
 
 @section('style')
@@ -59,16 +59,15 @@
 @endsection
 
 @section('content')
-
 <!-- Start Item Details -->
-<section class="item-details section bg-white overflow-hidden">
+<section class="item-details mt-md-4 section bg-white overflow-hidden">
     <div class="container">
         <div class="bg-white">
             <h2 class="mb-3 fs-3 mb-md-4">Checkout</h2>
             <form action="{{ url('cart/shipment/place-order') }}" method="POST">
             @csrf
                 <div class="row">
-                    <div class="col-12 col-xl-8 mb-3 mb-xl-0">
+                    <div class="col-12 col-xl-8 mb-3 mb-xl-0 mb-5 mb-md-0">
                         <h6 class="">Alamat Pengiriman</h6>
                         <div class="mb-12 py-3 mt-3 border-top border-bottom" id="product_data">
                             <div class="row align-items-center mb-6 mb-md-3">
@@ -285,8 +284,7 @@
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Catatan untuk
                                 kurir:</label>
-                            <input type="text" name="note_for_courier" id="note_for_courier" class="form-control"
-                                id="recipient-name">
+                            <input type="text" name="note_for_courier" id="note_for_courier" class="form-control">
                             <small class="d-flex text-danger pb-1">Warna rumah, patokan, pesan khusus, dll.</small>
                         </div>
                         <div class="input-group mb-3">
@@ -310,7 +308,7 @@
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tamabah Alamat Baru</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Alamat Baru</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -496,6 +494,44 @@
                     window.location.reload();
                 }
             });
+        });
+
+         // delete employee ajax request
+        $(document).on('click', '.updateMainAddress', function(e) {
+            e.preventDefault();
+            let id = $(this).attr('id');
+            let csrf = '{{ csrf_token() }}';
+            Swal.fire({
+            title: 'Apa kamu yakin?',
+            text: "Ingin menjadikan alamat utama!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Jadikan alamat utama!',
+            cancelButtonText: 'Kembali!'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                url: '{{ route('updateMainAddress.pembeli.alamat') }}',
+                method: 'POST',
+                data: {
+                    id: id,
+                    _token: csrf
+                },
+                success: function(response) {
+                    if (response.status == 200) {
+                        Swal.fire(
+                            'Berhasil!',
+                            'Berhasil menjadikan alamat utama!',
+                            'success'
+                        )
+                        window.location.reload();
+                    }
+                }
+                });
+            }
+            })
         });
 
         // fetch all employees ajax request
