@@ -85,8 +85,8 @@
                                                     @endforeach
                                                 </div>
                                             </div>
-                                            <div class="col-6 mt-2 mt-md-0">
-                                                <h3 class="mb-2 fs-6 fw-bold"><a class="text-black" href="{{ url('home/'.$item->product->slug) }}">{{ $item->product->name }}</a></h3>
+                                            <div class="col-12 col-md-6 mt-2 ms-md-3 mt-md-0">
+                                                <h3 class="mb-2 fs-6 fw-bold"><a style="color:#16A085;" href="{{ url('home/'.$item->product->slug) }}">{{ $item->product->name }}</a></h3>
                                                 {{-- <label for="color">Tipe</label>
                                                 <div class="dropdown mt-1">
                                                     <button class="btn border dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -115,6 +115,9 @@
                                                     <div class="col-8 col-md-3 form-group ps-0 ps-md-3">
                                                         <input type="hidden" value="{{ $item->product_id }}" id="prod_id">
                                                         <div class="d-flex justify-content-between">
+                                                            <script>
+                                                                var stoke = '{{ $item->product->stoke }}';
+                                                            </script>
                                                             <button
                                                                 class="input-group-text changeQuantity decrement-btn me-1">-</button>
                                                             <input type="text" name="quantity"
@@ -187,6 +190,36 @@
 
 @section('script')
 <script type="text/javascript">
+    $(document).ready(function () {
+
+            $('.increment-btn').click(function (e) {
+                e.preventDefault();
+
+                var inc_value = $(this).closest('#product_data').find('.qty-input').val();
+
+                var value = parseInt(inc_value, stoke);
+                value = isNaN(value) ? stoke : value;
+                if (value < stoke) {
+                    value++;
+                    // $('.qty-input').val(value);
+                    $(this).closest('#product_data').find('.qty-input').val(value);
+                }
+            });
+
+            $('.decrement-btn').click(function (e) {
+                e.preventDefault();
+
+                var dec_value = $(this).closest('#product_data').find('.qty-input').val();
+
+                var value = Number(dec_value, stoke);
+                value = isNaN(value) ? stoke : value;
+                if (value > 1) {
+                    value--;
+                    $(this).closest('#product_data').find('.qty-input').val(value);
+                }
+            });
+        });
+
     // Script
     // function incrementValue(e) {
     //     e.preventDefault();

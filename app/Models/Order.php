@@ -56,6 +56,11 @@ class Order extends Model
 		return $this->payment_status == self::PAID;
 	}
 
+    public function isCancelled()
+	{
+		return $this->status == self::CANCELLED;
+	}
+
     public static function generateCode()
 	{
 		$dateCode = self::ORDERCODE . '/' . date('Ymd') . '/' .\App\Helpers\General::integerToRoman(date('m')). '/' .\App\Helpers\General::integerToRoman(date('d')). '/';

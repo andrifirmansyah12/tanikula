@@ -1,58 +1,34 @@
 @extends('pages.template1')
 @section('title', 'Detail Produk')
 @section('breadcrumb-title', $product->product_category->name)
-@section('breadcrumb-subTitle', $product->name)
+@section('breadcrumb-subTitle', substr($product->name,0,20). '...')
 
 @section('style')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-        /* rating */
-        .rating-produk div {
-            color: #f0d800;
-            font-size: 30px;
-            font-family: sans-serif;
-            font-weight: 800;
+        .ratings-color{
+           color: #f0d800;
+        }
+
+        .page-error {
+            height: 100%;
+            width: 100%;
             text-align: center;
-            text-transform: uppercase;
-            padding: 0 0 50px;
+            display: table;
         }
 
-        .rating-produk input {
-            display: none;
+        .page-error .page-description {
+            padding-top: 30px;
+            font-size: 18px;
+            font-weight: 400;
+            color: var(--primary);
         }
 
-        .rating-produk input + label {
-            font-size: 60px;
-            text-shadow: 1px 1px 0 #8f8420;
-            cursor: pointer;
+        @media (max-width: 575.98px) {
+            .page-error {
+                padding-top: 0px;
+            }
         }
-
-        .rating-produk input:checked + label ~ label {
-            color: #b4afaf;
-        }
-
-        .rating-produk label:active {
-            transform: scale(0.8);
-            transition: 0.3s ease;
-        }
-
-        /* rating */
-        .ratings div {
-            color: #f0d800;
-            font-family: sans-serif;
-            font-weight: 800;
-            text-transform: uppercase;
-        }
-
-        .ratings input {
-            display: none;
-        }
-
-        .ratings input + label {
-            font-size: 20px;
-            text-shadow: 1px 1px 0 #8f8420;
-            cursor: pointer;
-        }
-
     </style>
 @endsection
 
@@ -60,7 +36,7 @@
     <!-- Start Item Details -->
     <section class="item-details section bg-white mt-md-5">
         <div class="container">
-            <div class="top-area" id="product_data">
+            <div class="top-area shadow" id="product_data">
                 <div class="row align-items-center">
                     <div class="col-lg-6 col-md-12 col-12">
                         <div class="product-images">
@@ -80,20 +56,35 @@
                     </div>
                     <div class="col-lg-6 col-md-12 col-12">
                         <div class="product-info">
-                            <h2 class="title">{{ $product->name }}
-                                <span>
-                                    @if ($product->stoke < 1)
-                                        <label class="mx-3 badge bg-danger">Habis</label>
-                                    @elseif($product->stoke < 10)
-                                        <label class="mx-3 badge bg-danger">Tersisa {{ $product->stoke }}</label>
-                                    @endif
-                                </span>
-                            </h2>
-                            <p class="category">Terjual 40</p>
+                            <p class="h5 mb-3">
+                                @if ($product->stoke < 1)
+                                    <label class="badge bg-danger">Habis</label>
+                                @elseif($product->stoke < 10)
+                                    <label class="badge bg-danger">Tersisa {{ $product->stoke }}</label>
+                                @endif
+                            </p>
+                            <h2 class="title text-capitalize" style="color:#16A085;">{{ $product->name }}</h2>
+                            @php
+                                $rateNum = number_format($ratingValue)
+                            @endphp
+                            <div class="pb-3 rating-produk">
+                                <div class="star-icon" style="
+                                        font-size: 20px;
+                                        font-family: sans-serif;
+                                        font-weight: 800;
+                                        text-transform: uppercase;">
+                                    @for ($i = 1; $i <= $rateNum; $i++)
+                                        <i class="lni lni-star-filled ratings-color"></i>
+                                    @endfor
+                                    @for ($j = $rateNum+1; $j <= 5; $j++)
+                                        <i class="lni lni-star-filled"></i>
+                                    @endfor
+                                </div>
+                            </div>
                             <p class="category"><i class="lni lni-tag"></i> Kategori:<a
                                     href="{{ url('product-category/'.$product->product_category->slug) }}">{{ $product->product_category->name }}</a></p>
                             {{-- <h3 class="price">Rp. {{ number_format($product->price, 0) }}<span>Rp. {{ number_format(0, 0) }}</span></h3> --}}
-                            <h3 class="price">Rp. {{ number_format($product->price, 0) }}</h3>
+                            <h3 class="price" style="color:#16A085;">Rp. {{ number_format($product->price, 0) }}</h3>
                             <p class="info-text">{{ $product->desc }}</p>
                             <div class="row">
                                 {{-- <div class="col-lg-4 col-md-4 col-12">
@@ -111,6 +102,9 @@
                                         <input type="hidden" value="{{ $product->id }}" id="prod_id">
                                         <label for="quantity">Kuantitas</label>
                                         <div class="d-flex">
+                                            <script>
+                                                var stoke = '{{ $product->stoke }}';
+                                            </script>
                                             <button class="input-group-text decrement-btn me-1">-</button>
                                             <input type="text" name="quantity" class="form-control qty-input text-center" value="1">
                                             <button class="input-group-text increment-btn ms-1">+</button>
@@ -151,126 +145,165 @@
                                         </div>
                                     </div>
                                     @endif
-                                    {{-- @foreach ($product->wishlist as $wishlist)
-                                        @if ($product->id == $wishlist->product_id)
-                                            <div class="col-lg-4 col-md-4 col-12">
-                                                <div class="wish-button">
-                                                    <button class="btn" id="delete-cart-wishlistItem"><i class="text-danger lni lni-heart-filled"></i> Wishlist</button>
-                                                </div>
-                                            </div>
-                                        @else --}}
-                                            <div class="col-lg-4 col-md-4 col-12">
-                                                <div class="wish-button">
-                                                    <button class="btn" id="addToWishlistBtn">+ Wishlist</button>
-                                                </div>
-                                            </div>
-                                        {{-- @endif
-                                    @endforeach --}}
+                                    <div class="col-lg-4 col-md-4 col-12">
+                                        <div class="wish-button">
+                                            <button class="btn" id="addToWishlistBtn">+ Wishlist</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="product-details-info">
+            <div class="product-details-info shadow">
                 <div class="single-block">
-                    <div class="row">
-                        <div class="col-lg-6 col-12">
-                            <div class="info-body custom-responsive-margin">
-                                <h4>Details</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                                    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                                    irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat.</p>
-                                <h4>Features</h4>
-                                <ul class="features">
-                                    <li>Capture 4K30 Video and 12MP Photos</li>
-                                    <li>Game-Style Controller with Touchscreen</li>
-                                    <li>View Live Camera Feed</li>
-                                    <li>Full Control of HERO6 Black</li>
-                                    <li>Use App for Dedicated Camera Operation</li>
+                    <h5 class="mx-2 fw-bold" style="color:#16A085;">Produk Lainnnya</h5>
+                    <div class="owl-carousel owl-theme">
+                        @foreach ($product_new as $item)
+                        <!-- Start Single Product -->
+                        <div class="mx-2 single-product shadow-none" style="height: 25.3rem">
+                            <div class="product-image">
+                                <a href="{{ url('home/'.$item->slug) }}">
+                                    @foreach ($item->photo_product->take(1) as $photos)
+                                        @if ($photos->name)
+                                        <img src="{{ asset('../storage/produk/'.$photos->name) }}" alt="{{ $item->name }}"
+                                            style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                        @else
+                                        <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->name }}"
+                                            style="width: 27rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                        @endif
+                                    @endforeach
+                                </a>
+                            </div>
+                            <div class="product-info">
+                                <a href="{{ url('product-category/'.$item->product_category->slug) }}">
+                                    <span class="category">{{ $item->category_name }}</span>
+                                </a>
+                                <h4 class="title text-capitalize">
+                                    <a href="{{ url('home/'.$item->slug) }}" style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">{{ $item->name }}</a>
+                                </h4>
+                                <ul class="review">
+                                    <div>
+                                        @if ($item->stock_out)
+                                            <span>{{$item->stock_out}} Terjual</span>
+                                        @else
+                                            <span>0 Terjual</span>
+                                        @endif
+                                    </div>
+                                    @php
+                                        $reviewProduct = App\Models\Review::where('product_id', $item->id)->get();
+                                        $ratingProductSum = App\Models\Review::where('product_id', $item->id)->sum('stars_rated');
+                                        if ($reviews->count() > 0){
+                                            $ratingProductValue = $ratingProductSum / $reviewProduct->count();
+                                        } else {
+                                            $ratingProductValue = 0;
+                                        }
+                                        $ratingsProduckAll = number_format($ratingProductValue)
+                                    @endphp
+                                    @for ($i = 1; $i <= $ratingsProduckAll; $i++)
+                                        <li><i class="lni lni-star-filled"></i></li>
+                                    @endfor
+                                    @for ($j = $ratingsProduckAll+1; $j <= 5; $j++)
+                                        <li><i class="lni lni-star"></i>
+                                        </li>
+                                    @endfor
                                 </ul>
+                                <div class="fw-bold mt-2">
+                                    <span style="color:#16A085;">Rp. {{ number_format($item->price, 0) }}</span>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-6 col-12">
-                            <div class="info-body">
-                                <h4>Specifications</h4>
-                                <ul class="normal-list">
-                                    <li><span>Weight:</span> 35.5oz (1006g)</li>
-                                    <li><span>Maximum Speed:</span> 35 mph (15 m/s)</li>
-                                    <li><span>Maximum Distance:</span> Up to 9,840ft (3,000m)</li>
-                                    <li><span>Operating Frequency:</span> 2.4GHz</li>
-                                    <li><span>Manufacturer:</span> GoPro, USA</li>
-                                </ul>
-                                <h4>Shipping Options:</h4>
-                                <ul class="normal-list">
-                                    <li><span>Courier:</span> 2 - 4 days, $22.50</li>
-                                    <li><span>Local Shipping:</span> up to one week, $10.00</li>
-                                    <li><span>UPS Ground Shipping:</span> 4 - 6 days, $18.00</li>
-                                    <li><span>Unishop Global Export:</span> 3 - 4 days, $25.00</li>
-                                </ul>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
-            <div class="product-details-info">
+            <div class="product-details-info shadow">
                 <div class="single-block">
                     <div class="row">
                         <div class="col-lg-6 col-12">
                             <div class="info-body custom-responsive-margin">
-                                <h4>Ulasan</h4>
-                                <p>Nama Produk</p>
+                                <h4>Ulasan <span>({{ $showReviews->count() }} Ulasan)</span></h4>
+                                <p class="fw-bold text-capitalize col-10">{{ $product->name }}</p>
                                 <div class="rating-produk">
-                                    <div class="star-icon">
-                                        <input type="radio" value="1" name="product_rating" checked id="rating1">
-                                        <label for="rating1" class="lni lni-star-filled"></label>
-                                        <input type="radio" value="2" name="product_rating" id="rating2">
-                                        <label for="rating2" class="lni lni-star-filled"></label>
-                                        <input type="radio" value="3" name="product_rating" id="rating3">
-                                        <label for="rating3" class="lni lni-star-filled"></label>
-                                        <input type="radio" value="4" name="product_rating" id="rating4">
-                                        <label for="rating4" class="lni lni-star-filled"></label>
-                                        <input type="radio" value="5" name="product_rating" id="rating5">
-                                        <label for="rating5" class="lni lni-star-filled"></label>
+                                    <div class="star-icon" style="
+                                        font-size: 40px;
+                                        font-family: sans-serif;
+                                        font-weight: 800;
+                                        text-align: center;
+                                        text-transform: uppercase;">
+                                        @for ($i = 1; $i <= $rateNum; $i++)
+                                            <i class="lni lni-star-filled ratings-color"></i>
+                                        @endfor
+                                        @for ($j = $rateNum+1; $j <= 5; $j++)
+                                            <i class="lni lni-star-filled"></i>
+                                        @endfor
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-12 col-12">
+                        <div class="col-lg-12 col-12 mt-md-5">
                             <div class="info-body">
-                                <h4>Semua Ulasan</h4>
-                                <div class="mt-3 d-lg-flex justify-content-start">
-                                    <div class="col-8 col-lg-3 col-xl-2">
-                                        <div>
-                                            <img src="{{ asset('stisla/assets/img/avatar/avatar-1.png') }}" style="max-width: 4rem;" class="img-fluid img-thumbnail rounded-circle" alt="">
-                                            <span class="ms-1">Nama Pembeli</span>
+                                <h4 class="fw-bold" style="color:#16A085;">Semua Ulasan</h4>
+                                @if ($showReviews->count() > 0)
+                                    @foreach ($showReviews as $review)
+                                    <div class="mt-3 d-lg-flex align-items-center justify-content-start">
+                                        <div class="col-8 col-lg-3 col-xl-2">
+                                            <div>
+                                                @foreach ($review->user->costumer as $potoProfile)
+                                                @if ($potoProfile->image)
+                                                <img src="{{ asset('../storage/profile/'.$potoProfile->image) }}"
+                                                    style="max-width: 4rem;" class="img-fluid img-thumbnail rounded-circle"
+                                                    alt="">
+                                                @else
+                                                <img src="{{ asset('stisla/assets/img/avatar/avatar-1.png') }}"
+                                                    style="max-width: 4rem;" class="img-fluid img-thumbnail rounded-circle"
+                                                    alt="">
+                                                @endif
+                                                @endforeach
+                                                <span class="ms-1">{{ substr($review->user->name, 0, 12). '...' }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-8 col-xl-10 mt-2 mt-lg-0 ms-0 ms-lg-5">
+                                            <ul class="normal-list">
+                                                <li>
+                                                    <div class="ratings">
+                                                        <div class="star-icon" style="
+                                                        font-size: 20px;
+                                                        font-family: sans-serif;
+                                                        font-weight: 800;
+                                                        text-transform: uppercase;">
+                                                            @for ($i = 1; $i <= $review->stars_rated; $i++)
+                                                                <i class="lni lni-star-filled ratings-color"></i>
+                                                            @endfor
+                                                            @for ($j = $review->stars_rated+1; $j <= 5; $j++) <i
+                                                                class="lni lni-star-filled"></i>
+                                                            @endfor
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <span class="me-md-5">
+                                                    {{ $review->review }}
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-lg-8 col-xl-10 mt-2 mt-lg-0 ms-0 ms-lg-5">
-                                        <ul class="normal-list">
-                                            <li><div class="ratings">
-                                                <div class="star-icon">
-                                                    <input type="radio" value="1" checked>
-                                                    <label class="lni lni-star-filled"></label>
-                                                    <input type="radio" value="2">
-                                                    <label class="lni lni-star-filled"></label>
-                                                    <input type="radio" value="3">
-                                                    <label class="lni lni-star-filled"></label>
-                                                    <input type="radio" value="4">
-                                                    <label class="lni lni-star-filled"></label>
-                                                    <input type="radio" value="5">
-                                                    <label class="lni lni-star-filled"></label>
+                                    @endforeach
+                                @else
+                                <div id="app">
+                                    <section class="section">
+                                        <div class="container">
+                                            <div class="page-error">
+                                                <div class="page-inner">
+                                                    <div class="page-description text-black">
+                                                        Belum ada ulasan produk!
+                                                    </div>
                                                 </div>
-                                            </div></li>
-                                            <span class="me-md-5">
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...
-                                            </span>
-                                            <li></li>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </section>
                                 </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -278,11 +311,30 @@
             </div>
         </div>
     </section>
-
 @endsection
 
 @section('script')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script type="text/javascript">
+        $('.owl-carousel').owlCarousel({
+            loop:false,
+            responsiveClass:true,
+            responsive:{
+                0:{
+                    items:1,
+                },
+                480:{
+                    items:2,
+                },
+                600:{
+                    items:3,
+                },
+                1000:{
+                    items:4,
+                }
+            }
+        });
+
         const current = document.getElementById("current");
         const opacity = 0.6;
         const imgs = document.querySelectorAll(".img");
@@ -297,6 +349,36 @@
                 //current.classList.add("fade-in");
                 //opacity
                 e.target.style.opacity = opacity;
+            });
+        });
+
+        $(document).ready(function () {
+
+            $('.increment-btn').click(function (e) {
+                e.preventDefault();
+
+                var inc_value = $(this).closest('#product_data').find('.qty-input').val();
+
+                var value = parseInt(inc_value, stoke);
+                value = isNaN(value) ? stoke : value;
+                if (value < stoke) {
+                    value++;
+                    // $('.qty-input').val(value);
+                    $(this).closest('#product_data').find('.qty-input').val(value);
+                }
+            });
+
+            $('.decrement-btn').click(function (e) {
+                e.preventDefault();
+
+                var dec_value = $(this).closest('#product_data').find('.qty-input').val();
+
+                var value = parseInt(dec_value, stoke);
+                value = isNaN(value) ? stoke : value;
+                if (value > 1) {
+                    value--;
+                    $(this).closest('#product_data').find('.qty-input').val(value);
+                }
             });
         });
     </script>

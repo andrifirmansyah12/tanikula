@@ -23,10 +23,14 @@ class CartController extends Controller
                 if (Cart::where('product_id', $product_id)->where('user_id', Auth::id())->exists()) {
                     $checkCart = Cart::where('product_id', $product_id)->where('user_id', Auth::id())->get();
                     foreach ($checkCart as $cart) {
-                        $updateCart = Cart::where('id', $cart->id)->first();
-                        $updateCart->product_qty = $updateCart->product_qty + $product_qty;
-                        $updateCart->update();
-                        return response()->json(['status' => $prod_check->name." Ditambahkan ke Keranjang"]);
+                        if($cart->product_qty >= $cart->product->stoke) {
+                            return response()->json(['status' => "Kuantiti tidak boleh melebihi stok"]);
+                        } else {
+                            $updateCart = Cart::where('id', $cart->id)->first();
+                            $updateCart->product_qty = $updateCart->product_qty + $product_qty;
+                            $updateCart->update();
+                            return response()->json(['status' => $prod_check->name." Ditambahkan ke Keranjang"]);
+                        }
                     }
                 } else {
                     $cartItem = new Cart();

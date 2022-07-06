@@ -7,11 +7,57 @@
 <script src="{{ asset('js/tiny-slider.js') }}"></script>
 <script src="{{ asset('js/glightbox.min.js') }}"></script>
 <script src="{{ asset('js/main.js') }}"></script>
-<script src="{{ asset('js/market.js') }}"></script>
+{{-- <script src="{{ asset('js/market.js') }}"></script> --}}
 @yield('script')
 <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
 <script type="text/javascript">
+    // Route Link
+    // Home
+    function home(url) {
+        window.location = url;
+    }
+    // Hubungi Kami
+    function hubungi_kami(url) {
+        window.location = url;
+    }
+    // // Cart
+    // function cart(url) {
+    //     window.location = url;
+    // }
+    // // Produk Detail
+    // function product_detail(url) {
+    //     window.location = url;
+    // }
+    // // Shipment
+    // function shipment(url) {
+    //     window.location = url;
+    // }
+    // // New Product
+    // function new_product(url) {
+    //     window.location = url;
+    // }
+    // // Nama Kategori
+    // function category_name(url) {
+    //     window.location = url;
+    // }
+    // // Semua Kategori
+    // function all_category(url) {
+    //     window.location = url;
+    // }
+    // Pembeli Dashboard
+    function pembeli(url) {
+        window.location = url;
+    }
+    // Login
+    function login(url) {
+        window.location = url;
+    }
+    // Register
+    function register(url) {
+        window.location = url;
+    }
+
     //========= Hero Slider
     tns({
         container: '.hero-slider',
@@ -123,4 +169,149 @@
     //         source: availableTags
     //     });
     // }
+</script>
+<script>
+    $(document).ready(function () {
+
+    LoadCart();
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    function LoadCart()
+    {
+        $.ajax({
+            method: "GET",
+            url: "/load-cart",
+            success: function (response) {
+                $('.cart-count').html('');
+                $('.cart-count').html(response.count);
+                // alert(response.count);
+            }
+        });
+    }
+
+    $('#addToCartBtn').click(function (e) {
+        e.preventDefault();
+
+        var product_id = $(this).closest('#product_data').find('#prod_id').val();
+        var product_qty = $(this).closest('#product_data').find('.qty-input').val();
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            method: "POST",
+            url: "/add-to-cart",
+            data: {
+                'product_id': product_id,
+                'product_qty': product_qty,
+            },
+            success: function (response) {
+                if (response.status == 'Silahkan login!') {
+                    window.location = '/login';
+                } else {
+                    iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                        title: 'Berhasil',
+                        message: response.status,
+                        position: 'topRight'
+                    });
+                    window.setTimeout(function(){location.reload()},1000)
+                }
+            }
+        });
+    });
+
+    $('#addToWishlistBtn').click(function (e) {
+        e.preventDefault();
+
+        var product_id = $(this).closest('#product_data').find('#prod_id').val();
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            method: "POST",
+            url: "/add-to-wishlist",
+            data: {
+                'product_id': product_id,
+            },
+            success: function (response) {
+                if (response.status == 'Silahkan login!') {
+                    window.location = '/login';
+                } else {
+                    // window.location.reload();
+                    iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                        title: 'Berhasil',
+                        message: response.status,
+                        position: 'topRight'
+                    });
+                }
+            }
+        });
+    });
+
+    $('.delete-cart-item').click(function (e) {
+        e.preventDefault();
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        var product_id = $(this).closest('#product_data').find('#prod_id').val();
+
+        $.ajax({
+            method: "POST",
+            url: "delete-cart-item",
+            data: {
+                'product_id': product_id,
+            },
+            success: function (response) {
+                LoadCart();
+                iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                    title: 'Berhasil',
+                    message: response.status,
+                    position: 'topRight'
+                });
+                window.setTimeout(function(){location.reload()},3000)
+            }
+        });
+    });
+
+    $('.changeQuantity').click(function (e) {
+        e.preventDefault();
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        var product_id = $(this).closest('#product_data').find('#prod_id').val();
+        var qty = $(this).closest('#product_data').find('.qty-input').val();
+
+        $.ajax({
+            method: "POST",
+            url: "update-cart-item",
+            data: {
+                'product_id': product_id,
+                'product_qty': qty,
+            },
+            success: function (response) {
+                window.location.reload();
+            }
+        });
+    });
+});
 </script>

@@ -104,6 +104,11 @@ class CheckoutController extends Controller
 
             $prod = Product::where('id', $item->product_id)->first();
             $prod->stoke = $prod->stoke - $item->product_qty;
+            if ($prod->stock_out == null) {
+                $prod->stock_out = $item->product_qty;
+            } else {
+                $prod->stock_out = $prod->stock_out + $item->product_qty;
+            }
             $prod->update();
         }
 
@@ -150,7 +155,7 @@ class CheckoutController extends Controller
     }
 
     // handle fetch all eamployees ajax request
-	public function fetchAll() 
+	public function fetchAll()
     {
 		$emps = Address::with('user')
                     ->join('users', 'addresses.user_id', '=', 'users.id')
@@ -190,9 +195,13 @@ class CheckoutController extends Controller
                             </div>
                         </div>
                         <div class="d-flex flex-row align-items-center justify-content-between justify-content-md-start">
-                            <a href="#" id="'.$emp->id.'" class="mt-2 fw-bold editAlamat" type="button" data-bs-toggle="modal" data-bs-target="#EditAlamat" style="color: #16A085" data-bs-dismiss="modal">Edit alamat</a>
-                            <a href="#" id="'.$emp->id.'" class="mt-2 ms-md-3 bg-light fw-bold updateMainAddress border px-2 rounded" style="color: #16A085">Jadikan alamat utama</a>
-                        </div>
+                            <a href="#" id="'.$emp->id.'" class="mt-2 fw-bold editAlamat" type="button" data-bs-toggle="modal" data-bs-target="#EditAlamat" style="color: #16A085" data-bs-dismiss="modal">Edit alamat</a>';
+                            if ($emp->main_address == 1) {
+                                $output .= '<a class="mt-2 ms-md-3 fw-bold text-white px-2 rounded" style="background: #16A085">Alamat utama</a>';
+                            } else if($emp->main_address == 0) {
+                                $output .= '<a href="#" id="'.$emp->id.'" class="mt-2 ms-md-3 bg-light fw-bold updateMainAddress border px-2 rounded" style="color: #16A085">Jadikan alamat utama</a>';
+                            }
+                        $output .= '</div>
                     </div>
                 </div>
                 ';
@@ -334,7 +343,7 @@ class CheckoutController extends Controller
 	}
 
     // handle update an employee ajax request
-	public function updateMainAddress(Request $request) 
+	public function updateMainAddress(Request $request)
     {
         $id = $request->id;
         $addressCheck = Address::where('id', $id)->where('main_address', '0')->first();

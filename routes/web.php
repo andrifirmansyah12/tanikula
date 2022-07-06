@@ -448,8 +448,11 @@ Route::post('/add-to-cart', [App\Http\Controllers\Pembeli\CartController::class,
 Route::post('/delete-cart-item', [App\Http\Controllers\Pembeli\CartController::class, 'deleteCartItem']);
 Route::post('/update-cart-item', [App\Http\Controllers\Pembeli\CartController::class, 'updateCartItem']);
 
+Route::get('/hubungi-kami', function() {
+        return view('pages.contact.index');
+    })->name('contact.us');
+
 Route::get('/load-cart', [App\Http\Controllers\Pages\ProductController::class, 'countCart']);
-Route::get('/incrementDecrement/{product:slug}', [App\Http\Controllers\Pages\ProductController::class, 'incrementDecrement']);
 
 Route::get('/product-list', [App\Http\Controllers\Pages\ProductController::class, 'productListAjax'])->name('productListAjax');
 // Route::post('/product-searchProduct', [App\Http\Controllers\Pages\ProductController::class, 'searchProduct']);

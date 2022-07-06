@@ -123,11 +123,13 @@
             @foreach ($category_product as $item)
             <div class="col-lg-4 col-md-6 col-12">
                 <div class="single-category shadow rounded bg-body">
-                    <h3 class="heading"><a class="text-black" href="{{ url('product-category/'.$item->slug) }}"> {{ $item->name }}</a></h3>
+                    <h3 class="heading"><a style="color:#16A085;" href="{{ url('product-category/'.$item->slug) }}"> {{ $item->name }}</a></h3>
                     <ul>
                         @foreach ($product_new->take(3) as $product_category)
                             @if ($product_category->category_product_id == $item->id)
-                                <li><a href="{{ url('home/'.$product_category->slug) }}">{{ $product_category->name }}</a></li>
+                                <li><a href="{{ url('home/'.$product_category->slug) }}">
+                                        {{ substr($product_category->name, 0, 20). '...' }}
+                                </a></li>
                             @endif
                         @endforeach
                         <li><a href="{{ url('product-category/'.$item->slug) }}">Lainnya</a></li>
@@ -198,13 +200,13 @@
             @foreach ($product_new as $item)
             <div class="col-lg-3 col-md-6 col-12">
                 <!-- Start Single Product -->
-                <div class="single-product">
+                <div class="single-product" style="height: 24.5rem">
                     <div class="product-image">
                         <a href="{{ url('home/'.$item->slug) }}">
                             @foreach ($item->photo_product->take(1) as $photos)
                                 @if ($photos->name)
                                 <img src="{{ asset('../storage/produk/'.$photos->name) }}" alt="{{ $item->name }}"
-                                    style="width: 27rem; height: 15rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                    style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                                 @else
                                 <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->name }}"
                                     style="width: 27rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
@@ -221,15 +223,33 @@
                             <span class="category">{{ $item->category_name }}</span>
                         </a>
                         <h4 class="title">
-                            <a href="{{ url('home/'.$item->slug) }}">{{ $item->name }}</a>
+                            <a href="{{ url('home/'.$item->slug) }}" style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">{{ $item->name }}</a>
                         </h4>
                         <ul class="review">
-                            <li><i class="lni lni-star-filled"></i></li>
-                            <li><i class="lni lni-star-filled"></i></li>
-                            <li><i class="lni lni-star-filled"></i></li>
-                            <li><i class="lni lni-star-filled"></i></li>
-                            <li><i class="lni lni-star"></i></li>
-                            <li><span>4.0 Ulasan(40)</span></li>
+                            <div>
+                                @if ($item->stock_out)
+                                    <span>{{$item->stock_out}} Terjual</span>
+                                @else
+                                    <span>0 Terjual</span>
+                                @endif
+                            </div>
+                            @php
+                                $reviews = App\Models\Review::where('product_id', $item->id)->get();
+                                $ratingSum = App\Models\Review::where('product_id', $item->id)->sum('stars_rated');
+                                if ($reviews->count() > 0){
+                                    $ratingValue = $ratingSum / $reviews->count();
+                                } else {
+                                    $ratingValue = 0;
+                                }
+                                $rateNum = number_format($ratingValue)
+                            @endphp
+                            @for ($i = 1; $i <= $rateNum; $i++)
+                                <li><i class="lni lni-star-filled"></i></li>
+                            @endfor
+                            @for ($j = $rateNum+1; $j <= 5; $j++)
+                                <li><i class="lni lni-star"></i>
+                                </li>
+                            @endfor
                         </ul>
                         <div class="price">
                             <span>Rp. {{ number_format($item->price, 0) }}</span>
@@ -310,13 +330,13 @@
             @foreach ($product_search as $item)
             <div class="col-lg-3 col-md-6 col-12">
                 <!-- Start Single Product -->
-                <div class="single-product">
+                <div class="single-product" style="height: 24.5rem">
                     <div class="product-image">
                         <a href="{{ url('home/'.$item->slug) }}">
                             @foreach ($item->photo_product->take(1) as $photos)
                                 @if ($photos->name)
                                 <img src="{{ asset('../storage/produk/'.$photos->name) }}" alt="{{ $item->name }}"
-                                    style="width: 27rem; height: 15rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                    style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                                 @else
                                 <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->name }}"
                                     style="width: 27rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
@@ -324,8 +344,8 @@
                             @endforeach
                         </a>
                         {{-- <div class="button">
-                            <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
-                                Keranjang</a>
+                            <button id="addToCartBtn" class="btn"><i class="lni lni-cart"></i>
+                                Keranjang</button>
                         </div> --}}
                     </div>
                     <div class="product-info">
@@ -333,15 +353,33 @@
                             <span class="category">{{ $item->category_name }}</span>
                         </a>
                         <h4 class="title">
-                            <a href="{{ url('home/'.$item->slug) }}">{{ $item->name }}</a>
+                            <a href="{{ url('home/'.$item->slug) }}" style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">{{ $item->name }}</a>
                         </h4>
                         <ul class="review">
-                            <li><i class="lni lni-star-filled"></i></li>
-                            <li><i class="lni lni-star-filled"></i></li>
-                            <li><i class="lni lni-star-filled"></i></li>
-                            <li><i class="lni lni-star-filled"></i></li>
-                            <li><i class="lni lni-star"></i></li>
-                            <li><span>4.0 Ulasan(40)</span></li>
+                            <div>
+                                @if ($item->stock_out)
+                                    <span>{{$item->stock_out}} Terjual</span>
+                                @else
+                                    <span>0 Terjual</span>
+                                @endif
+                            </div>
+                            @php
+                                $reviews = App\Models\Review::where('product_id', $item->id)->get();
+                                $ratingSum = App\Models\Review::where('product_id', $item->id)->sum('stars_rated');
+                                if ($reviews->count() > 0){
+                                    $ratingValue = $ratingSum / $reviews->count();
+                                } else {
+                                    $ratingValue = 0;
+                                }
+                                $rateNum = number_format($ratingValue)
+                            @endphp
+                            @for ($i = 1; $i <= $rateNum; $i++)
+                                <li><i class="lni lni-star-filled"></i></li>
+                            @endfor
+                            @for ($j = $rateNum+1; $j <= 5; $j++)
+                                <li><i class="lni lni-star"></i>
+                                </li>
+                            @endfor
                         </ul>
                         <div class="price">
                             <span>Rp. {{ number_format($item->price, 0) }}</span>

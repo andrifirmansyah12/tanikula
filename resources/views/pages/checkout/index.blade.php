@@ -120,7 +120,7 @@
                                             </div>
                                         </div>
                                         <div class="col-6 mt-2 mt-md-0">
-                                            <h3 class="mb-2 fs-6 fw-bold"><a class="text-black"
+                                            <h3 class="mb-2 fs-6 fw-bold"><a style="color:#16A085;"
                                                     href="{{ url('home/'.$item->product->slug) }}">{{ $item->product->name }}</a>
                                             </h3>
                                             {{-- <p class="fw-bold">Type Produk</p> --}}
@@ -189,25 +189,6 @@
         </div>
     </div>
 </section>
-
-{{-- Modal Pilih Pembayaran --}}
-{{-- <div class="modal fade" id="PilihPembayaran" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div> --}}
 
 <!-- Modal Pilih Alamat -->
 <div class="modal fade" id="PilihAlamat" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -411,6 +392,8 @@
                         showError('postal_code', response.messages.postal_code);
                         showError('complete_address', response.messages.complete_address);
                         showError('note_for_courier', response.messages.note_for_courier);
+                        $("#add_employee_btn").text('Simpan');
+                        $("#add_employee_btn").prop('disabled', false);
                     } else if (response.status == 200){
                         Swal.fire(
                             'Menambahkan!',
@@ -420,10 +403,10 @@
                         fetchAllEmployees();
                         $("#TambahAlamat").modal('hide');
                         $("#add_employee_form")[0].reset();
+                        $("#add_employee_btn").text('Simpan');
+                        $("#add_employee_btn").prop('disabled', false);
+                        window.location.reload();
                     }
-                    $("#add_employee_btn").text('Simpan');
-                    $("#add_employee_btn").prop('disabled', false);
-                    window.location.reload();
                 }
                 });
             });
@@ -479,6 +462,8 @@
                         showError('postal_code', response.messages.postal_code);
                         showError('complete_address', response.messages.complete_address);
                         showError('note_for_courier', response.messages.note_for_courier);
+                        $("#edit_employee_btn").text('Simpan');
+                        $("#edit_employee_btn").prop('disabled', false);
                     } else if (response.status == 200) {
                         Swal.fire(
                             'Memperbarui!',
@@ -488,10 +473,10 @@
                         fetchAllEmployees();
                         $("#EditAlamat").modal('hide');
                         $("#edit_employee_form")[0].reset();
+                        $("#edit_employee_btn").text('Simpan');
+                        $("#edit_employee_btn").prop('disabled', false);
+                        window.location.reload();
                     }
-                    $("#edit_employee_btn").text('Simpan');
-                    $("#edit_employee_btn").prop('disabled', false);
-                    window.location.reload();
                 }
             });
         });
@@ -526,7 +511,7 @@
                             'Berhasil menjadikan alamat utama!',
                             'success'
                         )
-                        window.location.reload();
+                        window.setTimeout(function(){location.reload()},1000)
                     }
                 }
                 });
