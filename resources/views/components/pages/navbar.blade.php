@@ -48,17 +48,17 @@
                 <div class="col-lg-4 col-md-4 col-12">
                     <div class="top-end">
                     @auth
-                        <a href="{{ route('pembeli') }}" class="user">
+                        <a onclick="pembeli('{{ route('pembeli') }}')" href="#" class="user">
                             <i class="lni lni-user"></i>
                             {{ auth()->user()->name }}
                         </a>
                     @else
                         <ul class="user-login">
                             <li>
-                                <a href="{{ route('login') }}">Masuk</a>
+                                <a onclick="login('{{ route('login') }}')" href="#">Masuk</a>
                             </li>
                             <li>
-                                <a href="{{ route('register-pembeli') }}">Daftar</a>
+                                <a onclick="register('{{ route('register-pembeli') }}')" href="#">Daftar</a>
                             </li>
                         </ul>
                     @endauth
@@ -75,7 +75,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-3 col-md-3 col-7">
                     <!-- Start Header Logo -->
-                    <a class="navbar-brand" href="{{ url('home') }}">
+                    <a class="navbar-brand" onclick="home('{{ url('home') }}')" href="#">
                         <h3 style="color: #16A085">TaniKula</h3>
                     </a>
                     <!-- End Header Logo -->
@@ -86,7 +86,6 @@
                         <!-- navbar search start -->
                         <form action="{{ url('new-product') }}">
                             <div class="navbar-search search-style-5">
-
                                 <div class="search-input">
                                     <input type="search" class="form-control typeaheadProduct" value="{{ request('pencarian') }}"
                                         name="pencarian"
@@ -129,7 +128,7 @@
                                 <div class="shopping-item">
                                     <div class="dropdown-cart-header">
                                         <span>Keranjang ({{ $cartItem->count() }})</span>
-                                        <a href="{{ url('cart') }}">Lihat Sekarang</a>
+                                        <a style="color:#16A085;" href="{{ url('cart') }}">Lihat Sekarang</a>
                                     </div>
                                     @php
                                     $total = 0;
@@ -151,7 +150,7 @@
                                             </div>
 
                                             <div class="content">
-                                                <h4><a href="{{ url('home/'.$item->product->slug) }}">
+                                                <h4><a style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;" href="{{ url('home/'.$item->product->slug) }}">
                                                         {{ $item->product->name }}</a></h4>
                                                 <p class="quantity">{{ $item->product_qty }}x - <span class="amount">Rp.
                                                         {{ number_format($item->product->price, 0) }}</span></p>
@@ -205,16 +204,22 @@
                 <div class="nav-inner">
                     <!-- Start Mega Category Menu -->
                     <div class="mega-category-menu">
-                        <span class="cat-button"><i class="lni lni-menu"></i>Semua Kategori</span>
                         @php
-                        $category_product = App\Models\ProductCategory::where('is_active', '=', 1)->take(5)->get();
+                        $category_product = App\Models\ProductCategory::where('is_active', '=', 1)->get();
                         @endphp
-                        <ul class="sub-category">
-                            @foreach ($category_product as $item)
-                            <li><a href="{{ url('product-category/'.$item->slug) }}">{{ $item->name }} </a></li>
-                            @endforeach
-                            <li><a href="{{ url('product-category/all-category') }}">Semua Kategori </a></li>
-                        </ul>
+                        <a href="#" class="nav-link text-black fw-bold" data-bs-display="static" data-bs-toggle="dropdown"><i class="lni lni-menu text-black fw-bold pe-2"></i>Semua Kategori</a>
+                        <div class="dropdown-menu" >
+                            <div class="row" style="width: 32rem">
+                                @foreach ($category_product as $item)
+                                <div class="col-4">
+                                    <a href="{{ url('product-category/'.$item->slug) }}" class="dropdown-item">{{ $item->name }}</a>
+                                </div>
+                                @endforeach
+                                <div class="col-4">
+                                    <a href="{{ url('product-category/all-category') }}" class="dropdown-item">Semua Kategori</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <!-- End Mega Category Menu -->
                     <!-- Start Navbar -->
@@ -229,10 +234,10 @@
                         <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                             <ul id="nav" class="navbar-nav ms-auto">
                                 <li class="nav-item">
-                                    <a href="{{ url('home') }}" class="active" aria-label="Toggle navigation">Home</a>
+                                    <a onclick="home('{{ url('home') }}')" href="#" class="{{ Request::is('home') ? 'active' : '' }}" aria-label="Toggle navigation">Home</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ url('hubungi-kami') }}" aria-label="Toggle navigation">Hubungi kami</a>
+                                    <a onclick="hubungi_kami('{{ url('hubungi-kami') }}')" href="#" class="{{ Request::is('hubungi-kami') ? 'active' : '' }}" aria-label="Toggle navigation">Hubungi kami</a>
                                 </li>
                             </ul>
                         </div> <!-- navbar collapse -->

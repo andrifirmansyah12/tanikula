@@ -323,9 +323,10 @@
                                 message: res.messages,
                                 position: 'topRight'
                             });
+                            $("#editProfile").modal('hide');
                             $("#profile_btn").val('Update Biodata Diri');
                             $("#profile_btn").prop('disabled', false);
-                            window.location.reload();
+                            window.setTimeout(function(){location.reload()},1000)
                         }
                     }
                 });
@@ -349,9 +350,10 @@
                                 message: res.messages,
                                 position: 'topRight'
                             });
-                            $("#profile_btn").val('Ubah Password');
-                            $("#profile_btn").prop('disabled', false);
-                            window.location.reload();
+                            $("#editPassword").modal('hide');
+                            $("#password_btn").val('Ubah Password');
+                            $("#password_btn").prop('disabled', false);
+                            window.setTimeout(function(){location.reload()},1000)
                         }
                     }
                 });

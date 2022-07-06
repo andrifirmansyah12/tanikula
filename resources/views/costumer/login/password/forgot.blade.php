@@ -32,7 +32,7 @@
 <section class="section">
     <div class="card register container" style="margin-top: 80px; margin-bottom: 70px;">
         <div class="login-brand d-block d-md-none">
-            <a href="{{ url('home') }}">
+            <a onclick="home('{{ url('home') }}')" href="#">
                 <h4>TaniKula</h4>
             </a>
         </div>
@@ -46,7 +46,7 @@
             </div>
             <div class="col-lg-4 registerInput col-md-6 col-12">
                 <div class="login-brand d-none d-md-block">
-                    <a href="{{ url('home') }}">
+                    <a onclick="home('{{ url('home') }}')" href="#">
                         <h4>TaniKula</h4>
                     </a>
                 </div>
@@ -72,7 +72,7 @@
                             </div>
                         </form>
                         <div class="mt-3 text-muted text-center">
-                            Kembali ke <a href="{{ route('login') }}" class="text-decoration-none" style="font-weight: bold">Halaman Masuk</a>
+                            Kembali ke <a onclick="login('{{ route('login') }}')" href="#" class="text-decoration-none" style="font-weight: bold">Halaman Masuk</a>
                         </div>
                     </div>
                 </div>

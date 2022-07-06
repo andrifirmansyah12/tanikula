@@ -25,7 +25,7 @@ class WaitingPaymentController extends Controller
                     ->where('orders.user_id', '=', auth()->user()->id)
                     ->where('orders.payment_status', '=', 'unpaid')
                     ->where('orders.status', '=', 'created')
-                    ->orderBy('orders.payment_status', 'desc')
+                    ->orderBy('orders.created_at', 'desc')
                     ->get();
 		$output = '';
                     $output .= '<table class="table align-items-center mb-0">

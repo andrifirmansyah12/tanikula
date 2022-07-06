@@ -1,4 +1,4 @@
-@extends('pages.template1')
+@extends('pages.template3')
 @section('title', 'Order')
 
 @section('style')
@@ -63,9 +63,45 @@
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-lg-10 col-xl-12">
-                <div class="card" style="border-radius: 10px;">
-                    <div class="card-header px-4 py-5" style="background: #16A085;">
-                        <h5 class="mb-0 text-white">Pesanan Anda telah dibuat, silahkan menlanjutkan untuk pembayaran!</h5>
+                <div class="card shadow rounded">
+                    <div class="d-flex flex-row justify-content-between align-items-center card-header px-4 py-5" style="background: #16A085;">
+                        <div>
+                            <h5 class="mb-0 text-white">Pesanan Anda telah dibuat,</h5>
+                            <h5 class="mb-0 text-white">Silahkan melanjutkan untuk pembayaran!</h5>
+                        </div>
+                        <script>
+                            CountDownTimer('{{ $order->order_date }}', 'countdown');
+                            function CountDownTimer(dt, id)
+                            {
+                                var end = new Date('{{ $order->payment_due }}');
+                                var _second = 1000;
+                                var _minute = _second * 60;
+                                var _hour = _minute * 60;
+                                var _day = _hour * 24;
+                                var timer;
+                                function showRemaining() {
+                                    var now = new Date();
+                                    var distance = end - now;
+                                    if (distance < 0) {
+                                        clearInterval(timer);
+                                        return;
+                                    }
+                                    var days = Math.floor(distance / _day);
+                                    var hours = Math.floor((distance % _day) / _hour);
+                                    var minutes = Math.floor((distance % _hour) / _minute);
+                                    var seconds = Math.floor((distance % _minute) / _second);
+
+                                    document.getElementById(id).innerHTML = days + 'Hari ';
+                                    document.getElementById(id).innerHTML += hours + 'Jam ';
+                                    document.getElementById(id).innerHTML += minutes + 'Menit ';
+                                    document.getElementById(id).innerHTML += seconds + 'Detik';
+                                }
+                                timer = setInterval(showRemaining, 1000);
+                            }
+                        </script>
+                        <div>
+                            <h6 class="mb-0 text-white" id="countdown"></h6>
+                        </div>
                     </div>
                     <div class="card-body p-4">
                         <div class="d-md-flex justify-content-between align-items-center mb-4">
@@ -192,7 +228,7 @@
                         </div>
 
                     </div>
-                    <div class="card-footer border-0 px-4 py-5 d-md-flex align-items-center justify-content-between "
+                    <div class="card-footer border-0 px-4 rounded-bottom py-5 d-md-flex align-items-center justify-content-between "
                         style="background-color: #16A085; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
                         <h5 class="text-white text-uppercase mb-0">Total
                             Pembayaran: <span class="h2 mb-0 ms-2 text-capitalize">Rp. {{ number_format($total, 0) }}</span></h5>

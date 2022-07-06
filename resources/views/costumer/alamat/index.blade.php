@@ -367,6 +367,8 @@
                         showError('postal_code', response.messages.postal_code);
                         showError('complete_address', response.messages.complete_address);
                         showError('note_for_courier', response.messages.note_for_courier);
+                        $("#add_employee_btn").text('Simpan');
+                        $("#add_employee_btn").prop('disabled', false);
                     } else if (response.status == 200){
                         Swal.fire(
                             'Menambahkan!',
@@ -376,10 +378,9 @@
                         fetchAllEmployees();
                         $("#TambahAlamat").modal('hide');
                         $("#add_employee_form")[0].reset();
+                        $("#add_employee_btn").text('Simpan');
+                        $("#add_employee_btn").prop('disabled', false);
                     }
-                    $("#add_employee_btn").text('Simpan');
-                    $("#add_employee_btn").prop('disabled', false);
-                    window.location.reload();
                 }
                 });
         });
@@ -435,6 +436,8 @@
                         showError('postal_code', response.messages.postal_code);
                         showError('complete_address', response.messages.complete_address);
                         showError('note_for_courier', response.messages.note_for_courier);
+                        $("#edit_employee_btn").text('Simpan');
+                        $("#edit_employee_btn").prop('disabled', false);
                     } else if (response.status == 200) {
                         Swal.fire(
                             'Memperbarui!',
@@ -444,10 +447,9 @@
                         fetchAllEmployees();
                         $("#EditAlamat").modal('hide');
                         $("#edit_employee_form")[0].reset();
+                        $("#edit_employee_btn").text('Simpan');
+                        $("#edit_employee_btn").prop('disabled', false);
                     }
-                    $("#edit_employee_btn").text('Simpan');
-                    $("#edit_employee_btn").prop('disabled', false);
-                    window.location.reload();
                 }
             });
         });
@@ -482,7 +484,7 @@
                             'Berhasil menjadikan alamat utama!',
                             'success'
                         )
-                        window.location.reload();
+                        window.setTimeout(function(){location.reload()},1000)
                     }
                 }
                 });

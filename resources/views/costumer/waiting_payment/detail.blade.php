@@ -181,16 +181,52 @@
                 </div>
                 <div class="card-footer border-0 px-4 bg-primary shadow-primary border-radius-lg py-5 d-md-flex align-items-center justify-content-between">
                     <h5 class="text-white text-uppercase mb-0">Total
-                        Pembayaran: <span class="d-flex h2 mb-0 ms-2 text-white text-capitalize">Rp.
+                        Pembayaran: <span class="d-flex h2 mb-0 text-white text-capitalize">Rp.
                             {{ number_format($total, 0) }}</span></h5>
                     @if (!$order->isPaid())
                     <div class="d-block mt-3 mt-md-0">
-                        <button type="button" class="btn border bg-danger text-white" data-bs-toggle="modal" data-bs-target="#showOrderModal">
-                            Batalkan Pesanan
-                        </button>
-                        <a href="{{ $order->payment_url }}" class="d-inline-flex btn border" style="background: #ffff; color: #16A085;">
-                            Lanjutkan Pembayaran
-                        </a>
+                        <script>
+                            CountDownTimer('{{ $order->order_date }}', 'countdown');
+                            function CountDownTimer(dt, id)
+                            {
+                                var end = new Date('{{ $order->payment_due }}');
+                                var _second = 1000;
+                                var _minute = _second * 60;
+                                var _hour = _minute * 60;
+                                var _day = _hour * 24;
+                                var timer;
+                                function showRemaining() {
+                                    var now = new Date();
+                                    var distance = end - now;
+                                    if (distance < 0) {
+                                        clearInterval(timer);
+                                        return;
+                                    }
+                                    var days = Math.floor(distance / _day);
+                                    var hours = Math.floor((distance % _day) / _hour);
+                                    var minutes = Math.floor((distance % _hour) / _minute);
+                                    var seconds = Math.floor((distance % _minute) / _second);
+
+                                    document.getElementById(id).innerHTML = days + 'Hari ';
+                                    document.getElementById(id).innerHTML += hours + 'Jam ';
+                                    document.getElementById(id).innerHTML += minutes + 'Menit ';
+                                    document.getElementById(id).innerHTML += seconds + 'Detik';
+                                }
+                                timer = setInterval(showRemaining, 1000);
+                            }
+                        </script>
+                        <div>
+                            <p class="fw-bold mb-0 text-white">Waktu Pembayaran</p>
+                            <p class="fw-bold mb-0 text-white" id="countdown"></p>
+                        </div>
+                        <div class="mt-2">
+                            <button type="button" class="btn border bg-danger text-white" data-bs-toggle="modal" data-bs-target="#showOrderModal">
+                                Batalkan Pesanan
+                            </button>
+                            <a href="{{ $order->payment_url }}" class="d-inline-flex btn border" style="background: #ffff; color: #16A085;">
+                                Lanjutkan Pembayaran
+                            </a>
+                        </div>
                     </div>
                     @endif
                 </div>
@@ -279,7 +315,6 @@
     });
 
     $(function() {
-
         // update employee ajax request
         $("#edit_employee_form").submit(function (e) {
             e.preventDefault();
@@ -298,6 +333,8 @@
                 success: function (response) {
                     if (response.status == 400) {
                         showError('cancellation_note', response.messages.cancellation_note);
+                        $("#edit_employee_btn").text('Konfirmasi');
+                        $("#edit_employee_btn").prop('disabled', false);
                     } else if (response.status == 200) {
                         Swal.fire(
                             'Memperbarui!',
@@ -306,10 +343,10 @@
                         )
                         $("#showOrderModal").modal('hide');
                         $("#edit_employee_form")[0].reset();
+                        $("#edit_employee_btn").text('Konfirmasi');
+                        $("#edit_employee_btn").prop('disabled', false);
                         window.location = '{{ route('pembeli.waitingPayment') }}';
                     }
-                    $("#edit_employee_btn").text('Konfirmasi');
-                    $("#edit_employee_btn").prop('disabled', false);
                 }
             });
         });

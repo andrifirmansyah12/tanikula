@@ -237,13 +237,13 @@
                     'product_id': product_id,
                 },
                 success: function (response) {
-                    window.location.reload();
                     // $('.WishlistItems').load(location.href + '.WishlistItems');
                     iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
                         title: 'Berhasil',
                         message: response.status,
                         position: 'topRight'
                     });
+                    window.setTimeout(function(){location.reload()},1000)
                 }
             });
         });

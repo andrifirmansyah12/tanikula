@@ -58,6 +58,25 @@
 
     <script src="{{ asset('js/function.js') }}"></script>
 
+    <script>
+        // Route Link
+        function home(url) {
+            window.location = url;
+        }
+        // Login
+        function login(url) {
+            window.location = url;
+        }
+        // Register
+        function register(url) {
+            window.location = url;
+        }
+        // Forgot Password
+        function forgotPassword(url) {
+            window.location = url;
+        }
+    </script>
+
     @yield('script')
 </body>
 

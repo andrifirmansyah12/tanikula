@@ -32,7 +32,7 @@
 <section class="section">
     <div class="card register container" style="margin-top: 80px; margin-bottom: 70px;">
         <div class="login-brand d-block d-md-none">
-            <a href="{{ url('home') }}">
+            <a onclick="home('{{ url('home') }}')" href="#">
                 <h4>TaniKula</h4>
             </a>
         </div>
@@ -46,7 +46,7 @@
             </div>
             <div class="col-lg-4 registerInput col-md-6 col-12">
                 <div class="login-brand d-none d-md-block">
-                    <a href="{{ url('home') }}">
+                    <a onclick="home('{{ url('home') }}')" href="#">
                         <h4>TaniKula</h4>
                     </a>
                 </div>
@@ -73,7 +73,7 @@
                                 <div class="d-block">
                                     <label for="password" class="control-label">Password</label>
                                     <div class="float-right">
-                                        <a href="{{ route('forgotPassword-pembeli') }}" class="text-small">
+                                        <a onclick="forgotPassword('{{ route('forgotPassword-pembeli') }}')" href="#" class="text-small">
                                             Lupa Password?
                                         </a>
                                     </div>
@@ -88,7 +88,7 @@
                             </div>
                         </form>
                         <div class="mt-3 text-muted text-center">
-                            Belum punya akun? <a href="{{ route('register-pembeli') }}">Daftar</a>
+                            Belum punya akun? <a onclick="register('{{ route('register-pembeli') }}')" href="#">Daftar</a>
                         </div>
                     </div>
                 </div>

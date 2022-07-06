@@ -336,8 +336,56 @@
                 </div>
                 <div class="card-footer border-0 px-4 bg-primary shadow-primary border-radius-lg py-5 d-md-flex align-items-center justify-content-between">
                     <h5 class="text-white text-uppercase mb-0">Total
-                        Pembayaran: <span class="d-flex h2 mb-0 ms-2 text-white text-capitalize">Rp.
+                        Pembayaran: <span class="d-flex h2 mb-0 text-white text-capitalize">Rp.
                             {{ number_format($total, 0) }}</span></h5>
+                    @if (!$order->isPaid())
+                        @if (!$order->isCancelled())
+                        <div class="d-block mt-3 mt-md-0">
+                            <script>
+                                CountDownTimer('{{ $order->order_date }}', 'countdown');
+                                function CountDownTimer(dt, id)
+                                {
+                                    var end = new Date('{{ $order->payment_due }}');
+                                    var _second = 1000;
+                                    var _minute = _second * 60;
+                                    var _hour = _minute * 60;
+                                    var _day = _hour * 24;
+                                    var timer;
+                                    function showRemaining() {
+                                        var now = new Date();
+                                        var distance = end - now;
+                                        if (distance < 0) {
+                                            clearInterval(timer);
+                                            return;
+                                        }
+                                        var days = Math.floor(distance / _day);
+                                        var hours = Math.floor((distance % _day) / _hour);
+                                        var minutes = Math.floor((distance % _hour) / _minute);
+                                        var seconds = Math.floor((distance % _minute) / _second);
+
+                                        document.getElementById(id).innerHTML = days + 'Hari ';
+                                        document.getElementById(id).innerHTML += hours + 'Jam ';
+                                        document.getElementById(id).innerHTML += minutes + 'Menit ';
+                                        document.getElementById(id).innerHTML += seconds + 'Detik';
+                                    }
+                                    timer = setInterval(showRemaining, 1000);
+                                }
+                            </script>
+                            <div>
+                                <p class="fw-bold mb-0 text-white">Waktu Pembayaran</p>
+                                <p class="fw-bold mb-0 text-white" id="countdown"></p>
+                            </div>
+                            <div class="mt-2">
+                                <button type="button" class="btn border bg-danger text-white" data-bs-toggle="modal" data-bs-target="#cancelledOrderModal">
+                                    Batalkan Pesanan
+                                </button>
+                                <a href="{{ $order->payment_url }}" class="d-inline-flex btn border" style="background: #ffff; color: #16A085;">
+                                    Lanjutkan Pembayaran
+                                </a>
+                            </div>
+                        </div>
+                        @endif
+                    @endif
                     @if ( $order->status == 'completed')
                         @if (!$order->review == 'reviewed')
                             <button type="button" class="mt-3 mt-md-0 btn border bg-light" data-bs-toggle="modal" data-bs-target="#reviewModal">
@@ -591,6 +639,53 @@
         </div>
     </div>
 </div>
+
+<!-- Modal Edit Alamat -->
+<div class="modal fade" id="cancelledOrderModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-center border-bottom-0">
+                <h5 class="modal-title" id="exampleModalLabel">Pilih Alasan Pembatalan</h5>
+            </div>
+            <form action="#" method="POST" id="cancelled_orders_form" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-body text-start text-black p-4">
+                    <input type="hidden" value="{{$order->id}}" name="emp_id">
+                    <div class="alert alert-danger text-white d-flex align-items-center" role="alert">
+                        <i class="bi bi-exclamation-circle pe-2"></i>
+                        <div>
+                            Silahkan pilih alasan pembatalan. Pesananmu akan langsung dibatalkan setelah
+                            alasan pembatalan diajukan.
+                        </div>
+                    </div>
+                    <div class="p-0 form-check">
+                        <input class="form-check-input" value="Ingin mengubah alamat pengiriman" type="radio" name="cancellation_note" id="cancellation_note">
+                        <label class="form-check-label" for="cancellation_note">
+                            Ingin mengubah alamat pengiriman
+                        </label>
+                    </div>
+                    <div class="p-0 form-check">
+                        <input class="form-check-input" value="Ingin mengubah rincian dan membuat pesanan baru" type="radio" name="cancellation_note" id="cancellation_note">
+                        <label class="form-check-label" for="cancellation_note">
+                            Ingin membuat pesanan baru
+                        </label>
+                    </div>
+                    <div class="p-0 form-check">
+                        <input class="form-check-input" value="Lainnya/berubah pikiran" type="radio" name="cancellation_note" id="cancellation_note">
+                        <label class="form-check-label" for="cancellation_note">
+                            Lainnya/berubah pikiran
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-center border-top-0 py-4">
+                    <button type="submit" id="cancelled_orders_btn" class="btn btn-primary btn-lg mb-1" style="background-color: #16A085;">
+                        Konfirmasi
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('script')
@@ -639,6 +734,41 @@
     });
 
     $(function() {
+        // update employee ajax request
+        $("#cancelled_orders_form").submit(function (e) {
+            e.preventDefault();
+
+            var formData = new FormData(this);
+            $("#cancelled_orders_btn").text('Tunggu..');
+            $("#cancelled_orders_btn").prop('disabled', true);
+            $.ajax({
+                url: '{{ route('pembeli.updateWaitingPayment') }}',
+                method: 'post',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == 400) {
+                        showError('cancellation_note', response.messages.cancellation_note);
+                        $("#cancelled_orders_btn").text('Konfirmasi');
+                        $("#cancelled_orders_btn").prop('disabled', false);
+                    } else if (response.status == 200) {
+                        Swal.fire(
+                            'Memperbarui!',
+                            'Berhasil membatalkan pesanan!',
+                            'success'
+                        )
+                        $("#cancelledOrderModal").modal('hide');
+                        $("#cancelled_orders_form")[0].reset();
+                        $("#cancelled_orders_btn").text('Konfirmasi');
+                        $("#cancelled_orders_btn").prop('disabled', false);
+                        window.setTimeout(function(){location.reload()},1000)
+                    }
+                }
+            });
+        });
 
         // add new employee ajax request
         $("#add_employee_form").submit(function(e) {
@@ -670,7 +800,7 @@
                     $("#add_employee_form")[0].reset();
                     $("#add_employee_btn").text('Kirim');
                     $("#add_employee_btn").prop('disabled', false);
-                    window.location.reload();
+                    window.setTimeout(function(){location.reload()},1000)
                 }
             }
             });
@@ -707,7 +837,7 @@
                         $("#edit_employee_form")[0].reset();
                         $("#edit_employee_btn").text('Kirim');
                         $("#edit_employee_btn").prop('disabled', false);
-                        window.location.reload();
+                        window.setTimeout(function(){location.reload()},1000)
                     }
                 }
             });
