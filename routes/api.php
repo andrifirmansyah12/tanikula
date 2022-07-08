@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\Customer\AddressApiController;
 use App\Http\Controllers\Api\Customer\CartApiController;
 use App\Http\Controllers\Api\Customer\ChatApiController;
+use App\Http\Controllers\Api\Customer\CheckoutApiController;
 use App\Http\Controllers\Api\Customer\CustomerApiController;
 use App\Http\Controllers\Api\Customer\LoginCustomerApiController;
 use App\Http\Controllers\Api\Customer\ParticipantChatApiController;
@@ -68,6 +69,8 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('address', AddressApiController::class);
     Route::get('address/user_id/{user_id}', [AddressApiController::class, 'indexByid']);
     Route::put('address/main_address/{user_id}', [AddressApiController::class, 'updateMainAddress']);
+    Route::post('/cart/shipment/place-order', [CheckoutApiController::class, 'placeOrder']);
+
     // ------ Gapoktan -----------
     // Activity
     Route::resource('activity', ActivityApiController::class);
