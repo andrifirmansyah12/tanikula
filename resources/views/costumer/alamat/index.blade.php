@@ -98,22 +98,24 @@
         </div>
         <div class="row">
             <div class="d-flex flex-column-reverse flex-md-row justify-content-between align-items-md-center mt-4">
-                <form action="{{ url('/pembeli/alamat') }}">
+                <div>
                     <div class="pt-2 input-group items-align-center justify-content-center">
                         <div class="form-outline">
-                            <input class="typeahead form-control px-3 border" value="{{ request('pencarian') }}" name="pencarian"
+                            <input class="typeahead form-control px-3 border" name="search_data" id="search_data"
                                 placeholder="Cari alamat ..." style="font-size: 15px; border-color: #16A085;"
                                 type="search" autocomplete="off">
                         </div>
-                        <button type="submit" class="btn" style="background-color: #16A085; color: white">
+                        <button type="button" name="search" id="search" class="btn" style="background-color: #16A085; color: white">
                             <i class="bi bi-search"></i>
                         </button>
                     </div>
-                </form>
-                <button type="button" class="btn btn-light border" data-bs-toggle="modal"
-                    data-bs-target="#TambahAlamat" data-bs-dismiss="modal">
-                    Tambah Alamat Baru
-                </button>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-light border" data-bs-toggle="modal"
+                        data-bs-target="#TambahAlamat" data-bs-dismiss="modal">
+                        Tambah Alamat Baru
+                    </button>
+                </div>
             </div>
             <div class="col-12" id="show_all_employees">
                 <div id="app">
@@ -495,15 +497,29 @@
         // fetch all employees ajax request
         fetchAllEmployees();
 
-        function fetchAllEmployees() {
+        function fetchAllEmployees(search_data = '') {
             $.ajax({
-            url: '{{ route('pembeli.alamat.fetchAll') }}',
-            method: 'get',
-            success: function(response) {
-                $("#show_all_employees").html(response);
-            }
+                url: '{{ route('pembeli.alamat.fetchAll') }}',
+                data:{search_data:search_data},
+                method: 'get',
+                success: function(response) {
+                    $("#show_all_employees").html(response);
+                }
             });
         }
+
+        $('#search').click(function(){
+            var search_data = $('#search_data').val();
+            if(search_data != '')
+            {
+                $('table').DataTable().destroy();
+                fetchAllEmployees(search_data);
+            }
+            else
+            {
+                fetchAllEmployees();
+            }
+        });
     });
     </script>
 @endsection

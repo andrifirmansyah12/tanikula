@@ -21,30 +21,6 @@
     function hubungi_kami(url) {
         window.location = url;
     }
-    // // Cart
-    // function cart(url) {
-    //     window.location = url;
-    // }
-    // // Produk Detail
-    // function product_detail(url) {
-    //     window.location = url;
-    // }
-    // // Shipment
-    // function shipment(url) {
-    //     window.location = url;
-    // }
-    // // New Product
-    // function new_product(url) {
-    //     window.location = url;
-    // }
-    // // Nama Kategori
-    // function category_name(url) {
-    //     window.location = url;
-    // }
-    // // Semua Kategori
-    // function all_category(url) {
-    //     window.location = url;
-    // }
     // Pembeli Dashboard
     function pembeli(url) {
         window.location = url;
@@ -55,6 +31,30 @@
     }
     // Register
     function register(url) {
+        window.location = url;
+    }
+    // Max price new product
+    function newproduct_maxPrice(url) {
+        window.location = url;
+    }
+    // Min price new product
+    function newproduct_minPrice(url) {
+        window.location = url;
+    }
+    // Max price based search
+    function basedSearch_maxPrice(url) {
+        window.location = url;
+    }
+    // Min price based search
+    function basedSearch_minPrice(url) {
+        window.location = url;
+    }
+    // Max price all category
+    function allCategory_maxPrice(url) {
+        window.location = url;
+    }
+    // Min price all category
+    function allCategory_minPrice(url) {
         window.location = url;
     }
 

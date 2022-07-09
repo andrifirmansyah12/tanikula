@@ -165,15 +165,20 @@
                         <div class="mx-2 single-product shadow-none" style="height: 25.3rem">
                             <div class="product-image">
                                 <a href="{{ url('home/'.$item->slug) }}">
-                                    @foreach ($item->photo_product->take(1) as $photos)
-                                        @if ($photos->name)
-                                        <img src="{{ asset('../storage/produk/'.$photos->name) }}" alt="{{ $item->name }}"
-                                            style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
-                                        @else
+                                    @if ($item->photo_product->count() > 0)
+                                        @foreach ($item->photo_product->take(1) as $photos)
+                                            @if ($photos->name)
+                                            <img src="{{ asset('../storage/produk/'.$photos->name) }}" alt="{{ $item->name }}"
+                                                style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                            @else
+                                            <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->name }}"
+                                                style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                            @endif
+                                        @endforeach
+                                    @else
                                         <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->name }}"
-                                            style="width: 27rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
-                                        @endif
-                                    @endforeach
+                                            style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                    @endif
                                 </a>
                             </div>
                             <div class="product-info">

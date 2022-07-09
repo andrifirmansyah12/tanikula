@@ -48,8 +48,8 @@
                 Filter Berdasarkan
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li><a class="dropdown-item" href="#">Harga Tertinggi</a></li>
-                <li><a class="dropdown-item" href="#">Harga Terendah</a></li>
+                <li><a class="dropdown-item" onclick="newproduct_maxPrice('{{ url('/new-product-filtered-max-price') }}')" href="#">Harga Tertinggi</a></li>
+                <li><a class="dropdown-item" onclick="newproduct_minPrice('{{ url('/new-product-filtered-min-price') }}')" href="#">Harga Terendah</a></li>
             </ul>
         </div>
     </div>
@@ -64,15 +64,20 @@
                 <div class="single-product" style="height: 24.5rem">
                     <div class="product-image">
                         <a href="{{ url('home/'.$item->slug) }}">
-                            @foreach ($item->photo_product->take(1) as $photos)
-                                @if ($photos->name)
-                                <img src="{{ asset('../storage/produk/'.$photos->name) }}" alt="{{ $item->name }}"
-                                    style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
-                                @else
+                            @if ($item->photo_product->count() > 0)
+                                @foreach ($item->photo_product->take(1) as $photos)
+                                    @if ($photos->name)
+                                    <img src="{{ asset('../storage/produk/'.$photos->name) }}" alt="{{ $item->name }}"
+                                        style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                    @else
+                                    <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->name }}"
+                                        style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                    @endif
+                                @endforeach
+                            @else
                                 <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->name }}"
-                                    style="width: 27rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
-                                @endif
-                            @endforeach
+                                    style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                            @endif
                         </a>
                         {{-- <div class="button">
                             <button id="addToCartBtn" class="btn"><i class="lni lni-cart"></i>
