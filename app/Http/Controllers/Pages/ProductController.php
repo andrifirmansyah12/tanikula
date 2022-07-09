@@ -117,6 +117,32 @@ class ProductController extends Controller
         return view('pages.home.product_new', compact('product_new'));
     }
 
+    public function maxPriceNewProduct()
+    {
+        $product_new = Product::with('photo_product')
+                    ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
+                    ->join('users', 'products.user_id', '=', 'users.id')
+                    ->select('products.*', 'product_categories.name as category_name')
+                    ->where('product_categories.is_active', '=', 1)
+                    ->where('products.is_active', '=', 1)
+                    ->orderBy('products.price', 'desc')
+                    ->get();
+        return view('pages.home.product_new', compact('product_new'));
+    }
+
+    public function minPriceNewProduct()
+    {
+        $product_new = Product::with('photo_product')
+                    ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
+                    ->join('users', 'products.user_id', '=', 'users.id')
+                    ->select('products.*', 'product_categories.name as category_name')
+                    ->where('product_categories.is_active', '=', 1)
+                    ->where('products.is_active', '=', 1)
+                    ->orderBy('products.price', 'asc')
+                    ->get();
+        return view('pages.home.product_new', compact('product_new'));
+    }
+
     public function basedSearch()
     {
         $product_new = Product::with('photo_product')
@@ -131,6 +157,34 @@ class ProductController extends Controller
         return view('pages.home.product_search', compact('product_new'));
     }
 
+    public function maxPriceBasedSearch()
+    {
+        $product_new = Product::with('photo_product')
+                    ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
+                    ->join('users', 'products.user_id', '=', 'users.id')
+                    ->select('products.*', 'product_categories.name as category_name')
+                    ->where('product_categories.is_active', '=', 1)
+                    ->where('products.is_active', '=', 1)
+                    ->orderBy('products.price', 'desc')
+                    ->orderByRaw('RAND()')
+                    ->get();
+        return view('pages.home.product_search', compact('product_new'));
+    }
+
+    public function minPriceBasedSearch()
+    {
+        $product_new = Product::with('photo_product')
+                    ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
+                    ->join('users', 'products.user_id', '=', 'users.id')
+                    ->select('products.*', 'product_categories.name as category_name')
+                    ->where('product_categories.is_active', '=', 1)
+                    ->where('products.is_active', '=', 1)
+                    ->orderBy('products.price', 'asc')
+                    ->orderByRaw('RAND()')
+                    ->get();
+        return view('pages.home.product_search', compact('product_new'));
+    }
+
     public function allCategory()
     {
         $product_new = Product::with('photo_product')
@@ -140,6 +194,32 @@ class ProductController extends Controller
                     ->where('product_categories.is_active', '=', 1)
                     ->where('products.is_active', '=', 1)
                     ->orderBy('products.updated_at', 'desc')
+                    ->get();
+        return view('pages.category.allCategory', compact('product_new'));
+    }
+
+    public function maxPriceAllCategory()
+    {
+        $product_new = Product::with('photo_product')
+                    ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
+                    ->join('users', 'products.user_id', '=', 'users.id')
+                    ->select('products.*', 'product_categories.name as category_name')
+                    ->where('product_categories.is_active', '=', 1)
+                    ->where('products.is_active', '=', 1)
+                    ->orderBy('products.price', 'desc')
+                    ->get();
+        return view('pages.category.allCategory', compact('product_new'));
+    }
+
+    public function minPriceAllCategory()
+    {
+        $product_new = Product::with('photo_product')
+                    ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
+                    ->join('users', 'products.user_id', '=', 'users.id')
+                    ->select('products.*', 'product_categories.name as category_name')
+                    ->where('product_categories.is_active', '=', 1)
+                    ->where('products.is_active', '=', 1)
+                    ->orderBy('products.price', 'asc')
                     ->get();
         return view('pages.category.allCategory', compact('product_new'));
     }
@@ -177,6 +257,7 @@ class ProductController extends Controller
                     ->where('products.is_active', '=', 1)
                     ->orderBy('products.updated_at', 'desc')
                     ->get();
+                $showReviews = Review::where('product_id', $product->id)->get();
                 $reviews = Review::where('product_id', $product->id)->get();
                 $ratingSum = Review::where('product_id', $product->id)->sum('stars_rated');
                 if ($reviews->count() > 0){
@@ -184,7 +265,7 @@ class ProductController extends Controller
                 } else {
                     $ratingValue = 0;
                 }
-                return view('pages.home.detail', compact('product', 'product_new', 'reviews', 'ratingValue'));
+                return view('pages.home.detail', compact('product', 'product_new', 'reviews', 'ratingValue', 'showReviews'));
             } else {
                 return redirect('/')->with('status', 'The link was broken!');
             }

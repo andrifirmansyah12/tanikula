@@ -30,14 +30,28 @@ class AddressController extends Controller
     }
 
         // handle fetch all eamployees ajax request
-	public function fetchAll() {
-		$emps = Address::with('user')
+	public function fetchAll(Request $request) {
+        if(!empty($request->search_data))
+        {
+            $emps = Address::with('user')
+                    ->join('users', 'addresses.user_id', '=', 'users.id')
+                    ->select('addresses.*', 'users.email as email')
+                    ->where('user_id', auth()->user()->id)
+                    ->where('addresses.recipients_name', 'like', '%' . $request->search_data . '%')
+                    // ->filter(request(['pencarian']))
+                    ->orderBy('addresses.main_address', 'desc')
+                    ->get();
+        }
+        else
+        {
+		    $emps = Address::with('user')
                     ->join('users', 'addresses.user_id', '=', 'users.id')
                     ->select('addresses.*', 'users.email as email')
                     ->where('user_id', auth()->user()->id)
                     // ->filter(request(['pencarian']))
                     ->orderBy('addresses.main_address', 'desc')
                     ->get();
+        }
 		$output = '';
 		if ($emps->count() > 0) {
 			foreach ($emps as $emp) {
@@ -89,19 +103,35 @@ class AddressController extends Controller
 			}
 			echo $output;
 		} else {
-			echo '<div id="app">
+            if (!empty($request->search_data)) {
+                echo '<div id="app">
                     <section class="section">
                         <div class="container">
                             <div class="page-error">
                                 <div class="page-inner">
                                     <div class="page-description">
-                                        Anda belum menambahkan alamat!
+                                        Alamat yang anda cari tidak ada!
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </section>
                 </div>';
+            } else {
+                echo '<div id="app">
+                    <section class="section">
+                        <div class="container">
+                            <div class="page-error">
+                                <div class="page-inner">
+                                    <div class="page-description">
+                                        Alamat belum ditambahkan!
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>';
+            }
 		}
 	}
 
@@ -203,7 +233,7 @@ class AddressController extends Controller
                     }
                 }
             }
-            
+
             $address = Address::find($request->emp_id);
             $address->recipients_name = $request->recipients_name;
             $address->address_label = $request->address_label;

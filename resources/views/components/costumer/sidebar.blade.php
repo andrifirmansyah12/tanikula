@@ -5,11 +5,11 @@
             aria-hidden="true" style="color: black" id="iconSidenav"></i>
         <a class="navbar-brand m-0" href="{{ route('home') }}"
             target="_blank">
-            <span class="ms-1 font-weight-bold ">TaniKula</span>
+            <span class="ms-1 h5 font-weight-bold ">TaniKula</span>
         </a>
     </div>
     <hr class="horizontal light mt-0 mb-2">
-    <div class="collapse navbar-collapse w-auto" style="height: 100%" id="sidenav-collapse-main">
+    <div class="collapse navbar-collapse w-auto" style="height: 80%" id="sidenav-collapse-main">
         <ul class="navbar-nav">
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs  font-weight-bolder opacity-8">Kotak Masuk</h6>
