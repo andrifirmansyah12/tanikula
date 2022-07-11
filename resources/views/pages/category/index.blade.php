@@ -63,13 +63,23 @@
                 Filter Berdasarkan
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li><a class="dropdown-item" href="#">Harga Tertinggi</a></li>
-                <li><a class="dropdown-item" href="#">Harga Terendah</a></li>
+                <li>
+                    <form action="{{ url('product-category/'.$category_product->slug) }}">
+                        <input type="hidden" name="max_price" id="max_price" value="max_price">
+                        <button type="submit" id="max_price_btn" class="dropdown-item">Harga Tertinggi</button>
+                    </form>
+                </li>
+                <li>
+                    <form action="{{ url('product-category/'.$category_product->slug) }}">
+                        <input type="hidden" name="min_price" id="min_price" value="min_price">
+                        <button type="submit" id="min_price_btn" class="dropdown-item">Harga Terendah</button>
+                    </form>
+                </li>
             </ul>
         </div>
     </div>
     <!-- Start Trending Product Area -->
-    <section class="section" style="margin-top: 12px;">
+    <section class="section">
         <div class="container">
             <div class="row">
                 @if ($product->count())
@@ -78,7 +88,7 @@
                     <!-- Start Single Product -->
                     <div class="single-product" style="height: 24.5rem">
                         <div class="product-image">
-                            <a href="{{ url('home/'.$item->slug) }}">
+                            <a href="{{ url('product-category/'.$category_product->slug.'/'.$item->slug) }}">
                                 @if ($item->photo_product->count() > 0)
                                     @foreach ($item->photo_product->take(1) as $photos)
                                         @if ($photos->name)

@@ -10,6 +10,7 @@ use App\Models\PhotoProduct;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Review;
 
 class ProductController extends Controller
@@ -77,7 +78,11 @@ class ProductController extends Controller
 
     public function countCart()
     {
-        $countCart = Cart::where('user_id', auth()->user()->id)->count();
+        if (Auth::user()) {
+            $countCart = Cart::where('user_id', auth()->user()->id)->count();
+        } elseif (Auth::guest()) {
+            $countCart = 0;
+        }
         return response()->json(['count'=> $countCart]);
     }
 
@@ -105,7 +110,38 @@ class ProductController extends Controller
 
     public function newProduct()
     {
-        $product_new = Product::with('photo_product')
+        return view('pages.home.product_new');
+    }
+
+    public function fetchAllNewProduct(Request $request)
+    {
+        if($request->max_price == 'max_price')
+        {
+            $product_new = Product::with('photo_product')
+                    ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
+                    ->join('users', 'products.user_id', '=', 'users.id')
+                    ->select('products.*', 'product_categories.name as category_name')
+                    ->where('product_categories.is_active', '=', 1)
+                    ->where('products.is_active', '=', 1)
+                    ->orderBy('products.price', 'desc')
+                    ->filter(request(['pencarian']))
+                    ->get();
+        }
+        else if ($request->min_price == 'min_price')
+        {
+            $product_new = Product::with('photo_product')
+                    ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
+                    ->join('users', 'products.user_id', '=', 'users.id')
+                    ->select('products.*', 'product_categories.name as category_name')
+                    ->where('product_categories.is_active', '=', 1)
+                    ->where('products.is_active', '=', 1)
+                    ->orderBy('products.price', 'asc')
+                    ->filter(request(['pencarian']))
+                    ->get();
+        }
+        else
+        {
+		    $product_new = Product::with('photo_product')
                     ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
                     ->join('users', 'products.user_id', '=', 'users.id')
                     ->select('products.*', 'product_categories.name as category_name')
@@ -114,52 +150,118 @@ class ProductController extends Controller
                     ->orderBy('products.updated_at', 'desc')
                     ->filter(request(['pencarian']))
                     ->get();
-        return view('pages.home.product_new', compact('product_new'));
-    }
-
-    public function maxPriceNewProduct()
-    {
-        $product_new = Product::with('photo_product')
-                    ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
-                    ->join('users', 'products.user_id', '=', 'users.id')
-                    ->select('products.*', 'product_categories.name as category_name')
-                    ->where('product_categories.is_active', '=', 1)
-                    ->where('products.is_active', '=', 1)
-                    ->orderBy('products.price', 'desc')
-                    ->get();
-        return view('pages.home.product_new', compact('product_new'));
-    }
-
-    public function minPriceNewProduct()
-    {
-        $product_new = Product::with('photo_product')
-                    ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
-                    ->join('users', 'products.user_id', '=', 'users.id')
-                    ->select('products.*', 'product_categories.name as category_name')
-                    ->where('product_categories.is_active', '=', 1)
-                    ->where('products.is_active', '=', 1)
-                    ->orderBy('products.price', 'asc')
-                    ->get();
-        return view('pages.home.product_new', compact('product_new'));
-    }
+        }
+		$output = '';
+		if ($product_new->count() > 0) {
+			foreach ($product_new as $item) {
+				$output .= '
+                <div class="col-lg-3 col-md-6 col-12">
+                    <!-- Start Single Product -->
+                    <div class="single-product" style="height: 24.5rem">
+                        <div class="product-image">
+                            <a href="home/'.$item->slug.'">';
+                                if ($item->photo_product->count() > 0) {
+                                    foreach ($item->photo_product->take(1) as $photos) {
+                                        if ($photos->name) {
+                                        $output .= '<img src="../storage/produk/'.$photos->name.'" alt="'. $item->name .'"
+                                            style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
+                                        } else {
+                                        $output .= '<img src="img/no-image.png" alt="'. $item->name .'"
+                                            style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
+                                        }
+                                    }
+                                } else {
+                                $output .= '<img src="img/no-image.png" alt="'. $item->name .'"
+                                    style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
+                                }
+                            $output .= '</a>
+                        </div>
+                        <div class="product-info">
+                            <a href="product-category/'.$item->product_category->slug.'">
+                                <span class="category">'. $item->category_name .'</span>
+                            </a>
+                            <h4 class="title">
+                                <a href="home/'.$item->slug.'"
+                                    style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">'. $item->name .'</a>
+                            </h4>
+                            <ul class="review">
+                                <div>';
+                                    if ($item->stock_out) {
+                                        $output .= '<span>'.$item->stock_out.' Terjual</span>';
+                                    } else {
+                                        $output .= '<span>0 Terjual</span>';
+                                    }
+                                $output .= '</div>';
+                                $reviews = Review::where('product_id', $item->id)->get();
+                                $ratingSum = Review::where('product_id', $item->id)->sum('stars_rated');
+                                if ($reviews->count() > 0) {
+                                    $ratingValue = $ratingSum / $reviews->count();
+                                } else {
+                                    $ratingValue = 0;
+                                }
+                                $rateNum = number_format($ratingValue);
+                                for ($i = 1; $i <= $rateNum; $i++) {
+                                    $output .= '<li><i class="lni lni-star-filled"></i></li>';
+                                }
+                                for ($j = $rateNum+1; $j <= 5; $j++) {
+                                    $output .= '<li><i class="lni lni-star"></i></li>';
+                                }
+                            $output .= '</ul>
+                            <div class="price">
+                                <span>Rp. '. number_format($item->price, 0) .'</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Single Product -->
+                </div>
+                ';
+			}
+			echo $output;
+		} else {
+            if (request('pencarian')) {
+                echo '<div id="app">
+                    <section class="section">
+                        <div class="container">
+                            <div class="page-error">
+                                <div class="page-inner">
+                                    <img src="img/undraw_empty_re_opql.svg" alt="">
+                                    <div class="page-description">
+                                        Produk yang anda cari tidak ada!
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>';
+            } else {
+                echo '<div id="app">
+                    <section class="section">
+                        <div class="container">
+                            <div class="page-error">
+                                <div class="page-inner">
+                                    <img src="img/undraw_empty_re_opql.svg" alt="">
+                                    <div class="page-description">
+                                        Tidak ada produk yang diposting!
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>';
+            }
+		}
+	}
 
     public function basedSearch()
     {
-        $product_new = Product::with('photo_product')
-                    ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
-                    ->join('users', 'products.user_id', '=', 'users.id')
-                    ->select('products.*', 'product_categories.name as category_name')
-                    ->where('product_categories.is_active', '=', 1)
-                    ->where('products.is_active', '=', 1)
-                    ->orderBy('products.updated_at', 'desc')
-                    ->orderByRaw('RAND()')
-                    ->get();
-        return view('pages.home.product_search', compact('product_new'));
+        return view('pages.home.product_search');
     }
 
-    public function maxPriceBasedSearch()
+    public function fetchAllBasedSearch(Request $request)
     {
-        $product_new = Product::with('photo_product')
+        if($request->max_price == 'max_price')
+        {
+            $based_search = Product::with('photo_product')
                     ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
                     ->join('users', 'products.user_id', '=', 'users.id')
                     ->select('products.*', 'product_categories.name as category_name')
@@ -168,12 +270,10 @@ class ProductController extends Controller
                     ->orderBy('products.price', 'desc')
                     ->orderByRaw('RAND()')
                     ->get();
-        return view('pages.home.product_search', compact('product_new'));
-    }
-
-    public function minPriceBasedSearch()
-    {
-        $product_new = Product::with('photo_product')
+        }
+        else if ($request->min_price == 'min_price')
+        {
+            $based_search = Product::with('photo_product')
                     ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
                     ->join('users', 'products.user_id', '=', 'users.id')
                     ->select('products.*', 'product_categories.name as category_name')
@@ -182,25 +282,113 @@ class ProductController extends Controller
                     ->orderBy('products.price', 'asc')
                     ->orderByRaw('RAND()')
                     ->get();
-        return view('pages.home.product_search', compact('product_new'));
-    }
+        }
+        else
+        {
+		    $based_search = Product::with('photo_product')
+                    ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
+                    ->join('users', 'products.user_id', '=', 'users.id')
+                    ->select('products.*', 'product_categories.name as category_name')
+                    ->where('product_categories.is_active', '=', 1)
+                    ->where('products.is_active', '=', 1)
+                    ->orderBy('products.updated_at', 'desc')
+                    ->orderByRaw('RAND()')
+                    ->get();
+        }
+		$output = '';
+		if ($based_search->count() > 0) {
+			foreach ($based_search as $item) {
+				$output .= '
+                <div class="col-lg-3 col-md-6 col-12">
+                    <!-- Start Single Product -->
+                    <div class="single-product" style="height: 24.5rem">
+                        <div class="product-image">
+                            <a href="home/'.$item->slug.'">';
+                                if ($item->photo_product->count() > 0) {
+                                    foreach ($item->photo_product->take(1) as $photos) {
+                                        if ($photos->name) {
+                                        $output .= '<img src="../storage/produk/'.$photos->name.'" alt="'. $item->name .'"
+                                            style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
+                                        } else {
+                                        $output .= '<img src="img/no-image.png" alt="'. $item->name .'"
+                                            style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
+                                        }
+                                    }
+                                } else {
+                                $output .= '<img src="img/no-image.png" alt="'. $item->name .'"
+                                    style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
+                                }
+                            $output .= '</a>
+                        </div>
+                        <div class="product-info">
+                            <a href="product-category/'.$item->product_category->slug.'">
+                                <span class="category">'. $item->category_name .'</span>
+                            </a>
+                            <h4 class="title">
+                                <a href="home/'.$item->slug.'"
+                                    style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">'. $item->name .'</a>
+                            </h4>
+                            <ul class="review">
+                                <div>';
+                                    if ($item->stock_out) {
+                                        $output .= '<span>'.$item->stock_out.' Terjual</span>';
+                                    } else {
+                                        $output .= '<span>0 Terjual</span>';
+                                    }
+                                $output .= '</div>';
+                                $reviews = Review::where('product_id', $item->id)->get();
+                                $ratingSum = Review::where('product_id', $item->id)->sum('stars_rated');
+                                if ($reviews->count() > 0) {
+                                    $ratingValue = $ratingSum / $reviews->count();
+                                } else {
+                                    $ratingValue = 0;
+                                }
+                                $rateNum = number_format($ratingValue);
+                                for ($i = 1; $i <= $rateNum; $i++) {
+                                    $output .= '<li><i class="lni lni-star-filled"></i></li>';
+                                }
+                                for ($j = $rateNum+1; $j <= 5; $j++) {
+                                    $output .= '<li><i class="lni lni-star"></i></li>';
+                                }
+                            $output .= '</ul>
+                            <div class="price">
+                                <span>Rp. '. number_format($item->price, 0) .'</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Single Product -->
+                </div>
+                ';
+			}
+			echo $output;
+		} else {
+            echo '<div id="app">
+                <section class="section">
+                    <div class="container">
+                        <div class="page-error">
+                            <div class="page-inner">
+                                <img src="img/undraw_empty_re_opql.svg" alt="">
+                                <div class="page-description">
+                                    Tidak ada produk yang diposting!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>';
+		}
+	}
 
     public function allCategory()
     {
-        $product_new = Product::with('photo_product')
-                    ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
-                    ->join('users', 'products.user_id', '=', 'users.id')
-                    ->select('products.*', 'product_categories.name as category_name')
-                    ->where('product_categories.is_active', '=', 1)
-                    ->where('products.is_active', '=', 1)
-                    ->orderBy('products.updated_at', 'desc')
-                    ->get();
-        return view('pages.category.allCategory', compact('product_new'));
+        return view('pages.category.allCategory');
     }
 
-    public function maxPriceAllCategory()
+    public function fetchallCategory(Request $request)
     {
-        $product_new = Product::with('photo_product')
+        if($request->max_price == 'max_price')
+        {
+            $product_new = Product::with('photo_product')
                     ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
                     ->join('users', 'products.user_id', '=', 'users.id')
                     ->select('products.*', 'product_categories.name as category_name')
@@ -208,12 +396,10 @@ class ProductController extends Controller
                     ->where('products.is_active', '=', 1)
                     ->orderBy('products.price', 'desc')
                     ->get();
-        return view('pages.category.allCategory', compact('product_new'));
-    }
-
-    public function minPriceAllCategory()
-    {
-        $product_new = Product::with('photo_product')
+        }
+        else if ($request->min_price == 'min_price')
+        {
+            $product_new = Product::with('photo_product')
                     ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
                     ->join('users', 'products.user_id', '=', 'users.id')
                     ->select('products.*', 'product_categories.name as category_name')
@@ -221,22 +407,142 @@ class ProductController extends Controller
                     ->where('products.is_active', '=', 1)
                     ->orderBy('products.price', 'asc')
                     ->get();
-        return view('pages.category.allCategory', compact('product_new'));
-    }
-
-    public function viewCategory($slug)
-    {
-        if (ProductCategory::where('slug', $slug)->exists()) {
-            $category_product = ProductCategory::where('slug', $slug)->first();
-            $product = Product::with('photo_product')
+        }
+        else
+        {
+		    $product_new = Product::with('photo_product')
                     ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
                     ->join('users', 'products.user_id', '=', 'users.id')
                     ->select('products.*', 'product_categories.name as category_name')
-                    ->where('category_product_id', $category_product->id)
                     ->where('product_categories.is_active', '=', 1)
                     ->where('products.is_active', '=', 1)
                     ->orderBy('products.updated_at', 'desc')
                     ->get();
+        }
+		$output = '';
+		if ($product_new->count() > 0) {
+			foreach ($product_new as $item) {
+				$output .= '
+                <div class="col-lg-3 col-md-6 col-12">
+                    <!-- Start Single Product -->
+                    <div class="single-product" style="height: 24.5rem">
+                        <div class="product-image">
+                            <a href="../home/'.$item->slug.'">';
+                                if ($item->photo_product->count() > 0) {
+                                    foreach ($item->photo_product->take(1) as $photos) {
+                                        if ($photos->name) {
+                                        $output .= '<img src="../storage/produk/'.$photos->name.'" alt="'. $item->name .'"
+                                            style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
+                                        } else {
+                                        $output .= '<img src="../img/no-image.png" alt="'. $item->name .'"
+                                            style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
+                                        }
+                                    }
+                                } else {
+                                $output .= '<img src="../img/no-image.png" alt="'. $item->name .'"
+                                    style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
+                                }
+                            $output .= '</a>
+                        </div>
+                        <div class="product-info">
+                            <a href="../product-category/'.$item->product_category->slug.'">
+                                <span class="category">'. $item->category_name .'</span>
+                            </a>
+                            <h4 class="title">
+                                <a href="../home/'.$item->slug.'"
+                                    style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">'. $item->name .'</a>
+                            </h4>
+                            <ul class="review">
+                                <div>';
+                                    if ($item->stock_out) {
+                                        $output .= '<span>'.$item->stock_out.' Terjual</span>';
+                                    } else {
+                                        $output .= '<span>0 Terjual</span>';
+                                    }
+                                $output .= '</div>';
+                                $reviews = Review::where('product_id', $item->id)->get();
+                                $ratingSum = Review::where('product_id', $item->id)->sum('stars_rated');
+                                if ($reviews->count() > 0) {
+                                    $ratingValue = $ratingSum / $reviews->count();
+                                } else {
+                                    $ratingValue = 0;
+                                }
+                                $rateNum = number_format($ratingValue);
+                                for ($i = 1; $i <= $rateNum; $i++) {
+                                    $output .= '<li><i class="lni lni-star-filled"></i></li>';
+                                }
+                                for ($j = $rateNum+1; $j <= 5; $j++) {
+                                    $output .= '<li><i class="lni lni-star"></i></li>';
+                                }
+                            $output .= '</ul>
+                            <div class="price">
+                                <span>Rp. '. number_format($item->price, 0) .'</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Single Product -->
+                </div>
+                ';
+			}
+			echo $output;
+		} else {
+            echo '<div id="app">
+                <section class="section">
+                    <div class="container">
+                        <div class="page-error">
+                            <div class="page-inner">
+                                <img src="img/undraw_empty_re_opql.svg" alt="">
+                                <div class="page-description">
+                                    Tidak ada produk yang diposting!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>';
+		}
+	}
+
+    public function viewCategory(Request $request, $slug)
+    {
+        if (ProductCategory::where('slug', $slug)->exists()) {
+            $category_product = ProductCategory::where('slug', $slug)->first();
+            if($request->max_price == 'max_price')
+            {
+                $product = Product::with('photo_product')
+                        ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
+                        ->join('users', 'products.user_id', '=', 'users.id')
+                        ->select('products.*', 'product_categories.name as category_name')
+                        ->where('category_product_id', $category_product->id)
+                        ->where('product_categories.is_active', '=', 1)
+                        ->where('products.is_active', '=', 1)
+                        ->orderBy('products.price', 'desc')
+                        ->get();
+            }
+            else if ($request->min_price == 'min_price')
+            {
+                $product = Product::with('photo_product')
+                        ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
+                        ->join('users', 'products.user_id', '=', 'users.id')
+                        ->select('products.*', 'product_categories.name as category_name')
+                        ->where('category_product_id', $category_product->id)
+                        ->where('product_categories.is_active', '=', 1)
+                        ->where('products.is_active', '=', 1)
+                        ->orderBy('products.price', 'asc')
+                        ->get();
+            }
+            else
+            {
+                $product = Product::with('photo_product')
+                        ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
+                        ->join('users', 'products.user_id', '=', 'users.id')
+                        ->select('products.*', 'product_categories.name as category_name')
+                        ->where('category_product_id', $category_product->id)
+                        ->where('product_categories.is_active', '=', 1)
+                        ->where('products.is_active', '=', 1)
+                        ->orderBy('products.updated_at', 'desc')
+                        ->get();
+            }
 
             return view('pages.category.index', compact('category_product', 'product'));
         } else {
