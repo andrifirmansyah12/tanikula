@@ -509,18 +509,15 @@ Route::get('/home/{product:slug}', [App\Http\Controllers\Pages\ProductController
 
 // Produk Berdasarkan Pencarian
 Route::get('/based-on-your-search', [App\Http\Controllers\Pages\ProductController::class, 'basedSearch'])->name('based.search');
-Route::get('/based-on-your-search-filtered-max-price', [App\Http\Controllers\Pages\ProductController::class, 'maxPriceBasedSearch'])->name('maxPrice.based.search');
-Route::get('/based-on-your-search-filtered-min-price', [App\Http\Controllers\Pages\ProductController::class, 'minPriceBasedSearch'])->name('minPrice.based.search');
+Route::get('/based-on-your-search/fetchallBasedSearch', [App\Http\Controllers\Pages\ProductController::class, 'fetchAllBasedSearch'])->name('fetchAllBasedSearch');
 
 // Produk Terbaru
 Route::get('/new-product', [App\Http\Controllers\Pages\ProductController::class, 'newProduct'])->name('new.product');
-Route::get('/new-product-filtered-max-price', [App\Http\Controllers\Pages\ProductController::class, 'maxPriceNewProduct'])->name('maxPrice.new.product');
-Route::get('/new-product-filtered-min-price', [App\Http\Controllers\Pages\ProductController::class, 'minPriceNewProduct'])->name('minPrice.new.product');
+Route::get('/new-product/fetchallNewProduct', [App\Http\Controllers\Pages\ProductController::class, 'fetchAllNewProduct'])->name('fetchAllNewProduct');
 
 // Semua Kategori Produk
 Route::get('/product-category/all-category', [App\Http\Controllers\Pages\ProductController::class, 'allCategory']);
-Route::get('/product-category/all-category-filtered-max-price', [App\Http\Controllers\Pages\ProductController::class, 'maxPriceAllCategory'])->name('maxPrice.all.category');
-Route::get('/product-category/all-category-filtered-min-price', [App\Http\Controllers\Pages\ProductController::class, 'minPriceAllCategory'])->name('minPrice.all.category');
+Route::get('/product-category/all-category/fetchallCategory', [App\Http\Controllers\Pages\ProductController::class, 'fetchallCategory'])->name('fetchallCategory');
 
 // Nama Kategori Produk
 Route::get('/product-category/{slug}', [App\Http\Controllers\Pages\ProductController::class, 'viewCategory'])->name('view.category');
@@ -536,7 +533,7 @@ Route::get('/hubungi-kami', function() {
         return view('pages.contact.index');
     })->name('contact.us');
 
-    // Count Keranjang
+// Count Keranjang
 Route::get('/load-cart', [App\Http\Controllers\Pages\ProductController::class, 'countCart']);
 
 // List Pencarian Product
