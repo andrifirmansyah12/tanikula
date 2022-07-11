@@ -108,6 +108,47 @@ class ProductController extends Controller
         return response()->json();
     }
 
+    public function searchAllProduct(Request $request)
+    {
+        if($request->max_price == 'max_price')
+        {
+            $product_new = Product::with('photo_product')
+                        ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
+                        ->join('users', 'products.user_id', '=', 'users.id')
+                        ->select('products.*', 'product_categories.name as category_name')
+                        ->where('product_categories.is_active', '=', 1)
+                        ->where('products.is_active', '=', 1)
+                        ->filter(request(['pencarian']))
+                        ->orderBy('products.price', 'desc')
+                        ->get();
+        }
+        else if ($request->min_price == 'min_price')
+        {
+            $product_new = Product::with('photo_product')
+                        ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
+                        ->join('users', 'products.user_id', '=', 'users.id')
+                        ->select('products.*', 'product_categories.name as category_name')
+                        ->where('product_categories.is_active', '=', 1)
+                        ->where('products.is_active', '=', 1)
+                        ->filter(request(['pencarian']))
+                        ->orderBy('products.price', 'asc')
+                        ->get();
+        }
+        else
+        {
+            $product_new = Product::with('photo_product')
+                        ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
+                        ->join('users', 'products.user_id', '=', 'users.id')
+                        ->select('products.*', 'product_categories.name as category_name')
+                        ->where('product_categories.is_active', '=', 1)
+                        ->where('products.is_active', '=', 1)
+                        ->filter(request(['pencarian']))
+                        ->orderBy('products.updated_at', 'desc')
+                        ->get();
+        }
+        return view('pages.home.search_product', compact('product_new'));
+    }
+
     public function newProduct()
     {
         return view('pages.home.product_new');
@@ -124,7 +165,6 @@ class ProductController extends Controller
                     ->where('product_categories.is_active', '=', 1)
                     ->where('products.is_active', '=', 1)
                     ->orderBy('products.price', 'desc')
-                    ->filter(request(['pencarian']))
                     ->get();
         }
         else if ($request->min_price == 'min_price')
@@ -136,7 +176,6 @@ class ProductController extends Controller
                     ->where('product_categories.is_active', '=', 1)
                     ->where('products.is_active', '=', 1)
                     ->orderBy('products.price', 'asc')
-                    ->filter(request(['pencarian']))
                     ->get();
         }
         else
@@ -148,7 +187,6 @@ class ProductController extends Controller
                     ->where('product_categories.is_active', '=', 1)
                     ->where('products.is_active', '=', 1)
                     ->orderBy('products.updated_at', 'desc')
-                    ->filter(request(['pencarian']))
                     ->get();
         }
 		$output = '';

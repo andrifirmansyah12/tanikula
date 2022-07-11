@@ -515,6 +515,9 @@ Route::get('/based-on-your-search/fetchallBasedSearch', [App\Http\Controllers\Pa
 Route::get('/new-product', [App\Http\Controllers\Pages\ProductController::class, 'newProduct'])->name('new.product');
 Route::get('/new-product/fetchallNewProduct', [App\Http\Controllers\Pages\ProductController::class, 'fetchAllNewProduct'])->name('fetchAllNewProduct');
 
+// Search Produk
+Route::get('/search-product', [App\Http\Controllers\Pages\ProductController::class, 'searchAllProduct'])->name('searchAllProduct');
+
 // Semua Kategori Produk
 Route::get('/product-category/all-category', [App\Http\Controllers\Pages\ProductController::class, 'allCategory']);
 Route::get('/product-category/all-category/fetchallCategory', [App\Http\Controllers\Pages\ProductController::class, 'fetchallCategory'])->name('fetchallCategory');

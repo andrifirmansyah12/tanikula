@@ -42,9 +42,17 @@
                         <div class="product-images">
                             <main id="">
                                 <div class="main-img">
-                                    @foreach ($product->photo_product->take(1) as $photos)
-                                        <img src="{{ asset('../storage/produk/'.$photos->name) }}" id="current" alt="{{ $product->name }}">
-                                    @endforeach
+                                    @if ($product->photo_product->count() > 0)
+                                        @foreach ($product->photo_product->take(1) as $photos)
+                                            @if ($photos->name)
+                                                <img src="{{ asset('../storage/produk/'.$photos->name) }}" id="current" alt="{{ $product->name }}">
+                                            @else
+                                                <img src="{{ asset('img/no-image.png') }}" id="current" alt="{{ $product->name }}">
+                                            @endif
+                                        @endforeach
+                                    @else
+                                        <img src="{{ asset('img/no-image.png') }}" id="current" alt="{{ $product->name }}">
+                                    @endif
                                 </div>
                                 <div class="images">
                                     @foreach ($product->photo_product as $photos)
