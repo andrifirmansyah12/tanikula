@@ -74,7 +74,7 @@
                         <!-- Start Main Menu Search -->
                         <div class="main-menu-search">
                             <!-- navbar search start -->
-                            <form action="{{ url('new-product') }}">
+                            <form action="{{ url('/search-product') }}">
                                 <div class="navbar-search search-style-5">
 
                                     <div class="search-input">

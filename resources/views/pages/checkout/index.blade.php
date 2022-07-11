@@ -24,6 +24,14 @@
     }
 
     /* 4.3 Page */
+    .page-error-address {
+        height: 100%;
+        width: 100%;
+        text-align: center;
+        display: table;
+    }
+
+    /* 4.3 Page */
     .page-error {
         height: 100%;
         width: 100%;
@@ -72,6 +80,7 @@
                         <div class="mb-12 py-3 mt-3 border-top border-bottom" id="product_data">
                             <div class="row align-items-center mb-6 mb-md-3">
                                 <div class="col-12 col-md-12 col-lg-12 mb-6 mb-md-0">
+                                    @if ($address->count() > 0)
                                     @foreach ($address as $item)
                                     <div class="row align-items-center">
                                         <div>
@@ -86,6 +95,21 @@
                                         </div>
                                     </div>
                                     @endforeach
+                                    @else
+                                    <div id="app">
+                                        <section class="section p-5">
+                                            <div class="container">
+                                                <div class="page-error-address">
+                                                    <div class="page-inner-address">
+                                                        <div class="page-description-address">
+                                                            Alamat belum ada, silahkan pilih alamat!
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -99,7 +123,7 @@
                             $totalPrice = 0;
                             $totalQty = 0;
                         @endphp
-                        @if ($cartItem->count())
+                        @if ($cartItem->count() > 0)
                         @foreach ($cartItem as $item)
                         <div class="mb-12 py-3 mt-3 border-top border-bottom" id="product_data">
                             <div class="row align-items-center mb-6 mb-md-3">
@@ -112,11 +136,23 @@
                                         <div class="col-12 col-md-3 col-lg-3">
                                             <div class="d-flex align-items-center justify-content-center bg-light"
                                                 style="width: 160px; height: 150px;">
-                                                @foreach ($item->product->photo_product->take(1) as $photos)
-                                                <img class="img-fluid" style="object-fit: contain;"
-                                                    src="{{ asset('../storage/produk/'.$photos->name) }}"
-                                                    alt="{{ $item->product->name }}">
-                                                @endforeach
+                                                @if ($item->product->photo_product->count() > 0)
+                                                    @foreach ($item->product->photo_product->take(1) as $photos)
+                                                        @if ($photos->name)
+                                                            <img class="img-fluid" style="object-fit: contain;"
+                                                                src="{{ asset('../storage/produk/'.$photos->name) }}"
+                                                                alt="{{ $item->product->name }}">
+                                                        @else
+                                                            <img class="img-fluid" style="object-fit: contain;"
+                                                                src="{{ asset('img/no-image.png') }}"
+                                                                alt="{{ $item->product->name }}">
+                                                        @endif
+                                                    @endforeach
+                                                @else
+                                                    <img class="img-fluid" style="object-fit: contain;"
+                                                        src="{{ asset('img/no-image.png') }}"
+                                                        alt="{{ $item->product->name }}">
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="col-6 mt-2 mt-md-0">
@@ -154,6 +190,9 @@
                                             <div class="page-description">
                                                 Tidak ada produk untuk melakukan checkout!
                                             </div>
+                                            <div class="mt-3 d-inline-flex">
+                                                <a class="btn w-100 text-uppercase text-white" style="background: #16A085;" href="{{ url('new-product') }}">Belanja Sekarang</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -174,12 +213,20 @@
                                 <span class="fs-6 fw-bold">Rp. {{ number_format($total, 0) }}</span>
                             </div>
                             <div class="col-12">
-                                @if ($cartItem->count())
-                                <button type="submit" class="btn border col-12" style="background: #16A085; color: white;" data-bs-toggle="modal" data-bs-target="#PilihPembayaran">
-                                    Buat Pesanan
-                                </button>
+                                @if ($address->count() < 1)
+                                    <button disabled class="btn border col-12" style="background: #16A085; color: white;" data-bs-toggle="modal" data-bs-target="#PilihPembayaran">
+                                        Buat Pesanan
+                                    </button>
                                 @else
-                                <a class="btn w-100 text-uppercase text-white" style="background: #16A085;" href="{{ url('new-product') }}">Belanja Sekarang</a>
+                                    @if ($cartItem->count() > 0)
+                                        <button type="submit" class="btn border col-12" style="background: #16A085; color: white;" data-bs-toggle="modal" data-bs-target="#PilihPembayaran">
+                                            Buat Pesanan
+                                        </button>
+                                    @else
+                                        <button disabled class="btn border col-12" style="background: #16A085; color: white;" data-bs-toggle="modal" data-bs-target="#PilihPembayaran">
+                                            Buat Pesanan
+                                        </button>
+                                    @endif
                                 @endif
                             </div>
                         </div>

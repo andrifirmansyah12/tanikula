@@ -144,14 +144,14 @@
                     </p>
                 </a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a href="#" onclick="admin_rekap_penjualan('{{ url('admin/rekap-penjualan') }}')" class="nav-link {{ Request::is('admin/rekap-penjualan*') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-solid fa-chart-line"></i>
                     <p>
                         Rekap Penjualan
                     </p>
                 </a>
-            </li>
+            </li> --}}
             <li class="nav-header">Profile Saya</li>
             <li class="nav-item">
                 <a href="#" onclick="admin_pengaturan('{{ url('admin/pengaturan') }}')" class="nav-link {{ Request::is('admin/pengaturan*') ? 'active' : '' }}">

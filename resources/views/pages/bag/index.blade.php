@@ -79,10 +79,20 @@
                                             <div class="col-12 col-md-3 col-lg-3">
                                                 <div class="d-flex align-items-center justify-content-center bg-light"
                                                     style="width: 160px; height: 150px;">
-                                                    @foreach ($item->product->photo_product->take(1) as $photos)
-                                                    <img class="img-fluid" style="object-fit: contain;"
-                                                        src="{{ asset('../storage/produk/'.$photos->name) }}" alt="{{ $item->product->name }}">
-                                                    @endforeach
+                                                    @if ($item->product->photo_product->count() > 0)
+                                                        @foreach ($item->product->photo_product->take(1) as $photos)
+                                                            @if ($photos->name)
+                                                                <img class="img-fluid" style="object-fit: contain;"
+                                                                    src="{{ asset('../storage/produk/'.$photos->name) }}" alt="{{ $item->product->name }}">
+                                                            @else
+                                                                <img class="img-fluid" style="object-fit: contain;"
+                                                                    src="{{ asset('img/no-image.png') }}" alt="{{ $item->product->name }}">
+                                                            @endif
+                                                        @endforeach
+                                                    @else
+                                                        <img class="img-fluid" style="object-fit: contain;"
+                                                            src="{{ asset('img/no-image.png') }}" alt="{{ $item->product->name }}">
+                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-6 mt-2 ms-md-3 mt-md-0">
