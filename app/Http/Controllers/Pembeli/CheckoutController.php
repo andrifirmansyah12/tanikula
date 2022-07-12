@@ -62,7 +62,7 @@ class CheckoutController extends Controller
     public function placeOrder(Request $request)
     {
         $order = new Order();
-        $order->user_id = auth()->user()->id;
+        $order->user_id = auth()->user()->id; //
 
         $address = Address::with('user')
                     ->join('users', 'addresses.user_id', '=', 'users.id')
@@ -73,10 +73,10 @@ class CheckoutController extends Controller
                     ->take(1)
                     ->get();
         foreach ($address as $address) {
-            $order->address_id = $address->id;
+            $order->address_id = $address->id; // alamat checkout
         }
 
-        $total = 0;
+        $total = 0; // total item checkout
         $cartItem_total = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
         foreach ($cartItem_total as $product_total) {
             $total += $product_total->product->price * $product_total->product_qty;
