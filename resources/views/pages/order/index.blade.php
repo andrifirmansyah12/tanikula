@@ -70,6 +70,7 @@
                             <h5 class="mb-0 text-white">Silahkan melanjutkan untuk pembayaran!</h5>
                         </div>
                         <script>
+                            var isExpired = false;
                             CountDownTimer('{{ $order->order_date }}', 'countdown');
                             function CountDownTimer(dt, id)
                             {
@@ -84,6 +85,7 @@
                                     var distance = end - now;
                                     if (distance < 0) {
                                         clearInterval(timer);
+                                        isExpired = true;
                                         return;
                                     }
                                     var days = Math.floor(distance / _day);
@@ -237,6 +239,7 @@
                             Lanjutkan Pembayaran
                         </a>
                         @endif
+                        
                     </div>
                 </div>
             </div>
