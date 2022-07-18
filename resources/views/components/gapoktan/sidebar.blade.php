@@ -13,6 +13,13 @@
                 <span>Dashboard</span>
             </a>
         </li>
+        <li class="menu-header">Pesanan Masuk</li>
+        <li class="nav-item dropdown {{ Request::is('gapoktan/pesanan*') ? 'active' : '' }}">
+            <a href="#" onclick="gapoktan_pesanan('{{ url('gapoktan/pesanan') }}')" class="nav-link">
+                <i class="fas fa-solid fa-shop"></i>
+                <span>Pesanan</span>
+            </a>
+        </li>
         <li class="menu-header">Kotak Masuk</li>
         <li class="nav-item dropdown {{ Request::is('gapoktan/chat*') ? 'active' : '' }}">
             <a href="#" onclick="gapoktan_chat('{{ url('gapoktan/chat') }}')" class="nav-link">

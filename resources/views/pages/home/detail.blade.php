@@ -141,6 +141,11 @@
                                             <button disabled class="btn">Beli Langsung</button>
                                         </div>
                                     </div>
+                                    <div class="col-lg-4 col-md-4 col-12">
+                                        <div class="wish-button">
+                                            <button disabled class="btn" id="addToWishlistBtn">+ Wishlist</button>
+                                        </div>
+                                    </div>
                                     @else
                                     <div class="col-lg-4 col-md-4 col-12">
                                         <div class="button cart-button">
@@ -152,12 +157,12 @@
                                             <button class="btn">Beli Langsung</button>
                                         </div>
                                     </div>
-                                    @endif
                                     <div class="col-lg-4 col-md-4 col-12">
                                         <div class="wish-button">
                                             <button class="btn" id="addToWishlistBtn">+ Wishlist</button>
                                         </div>
                                     </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -207,7 +212,7 @@
                                     @php
                                         $reviewProduct = App\Models\Review::where('product_id', $item->id)->get();
                                         $ratingProductSum = App\Models\Review::where('product_id', $item->id)->sum('stars_rated');
-                                        if ($reviews->count() > 0){
+                                        if ($reviewProduct->count() > 0){
                                             $ratingProductValue = $ratingProductSum / $reviewProduct->count();
                                         } else {
                                             $ratingProductValue = 0;

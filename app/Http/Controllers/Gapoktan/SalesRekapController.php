@@ -56,8 +56,6 @@ class SalesRekapController extends Controller
                 <th class="text-center">
                     Status Pembayaran
                 </th>
-                <th class="text-center">
-                </th>
             </thead>
             <tbody>';
             $nomor=1;
@@ -89,14 +87,6 @@ class SalesRekapController extends Controller
                     <td class="align-middle text-center">
                         <span
                             class="text-xs font-weight-bold text-capitalize">'. $emp->payment_status .'</span>
-                    </td>
-                    <td class="align-middle text-center action_buttons">
-                        <a class="btn-icon btn-darken" href="" title="View Quiz Report">
-                            <i class="bi bi-plus-circle h4"></i>
-                        </a>
-                        <a class="btn-icon btn-darken" href="" title="Edit">
-                            <i class="bi bi-pencil-square h4"></i>
-                        </a>
                     </td>
                 </tr>';
 			}
