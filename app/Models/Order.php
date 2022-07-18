@@ -56,6 +56,46 @@ class Order extends Model
 		return $this->payment_status == self::PAID;
 	}
 
+    /**
+	 * Check order is created
+	 *
+	 * @return boolean
+	 */
+	public function isCreated()
+	{
+		return $this->status == self::CREATED;
+	}
+
+	/**
+	 * Check order is confirmed
+	 *
+	 * @return boolean
+	 */
+	public function isConfirmed()
+	{
+		return $this->status == self::CONFIRMED;
+	}
+
+	/**
+	 * Check order is delivered
+	 *
+	 * @return boolean
+	 */
+	public function isDelivered()
+	{
+		return $this->status == self::DELIVERED;
+	}
+
+	/**
+	 * Check order is completed
+	 *
+	 * @return boolean
+	 */
+	public function isCompleted()
+	{
+		return $this->status == self::COMPLETED;
+	}
+
     public function isCancelled()
 	{
 		return $this->status == self::CANCELLED;

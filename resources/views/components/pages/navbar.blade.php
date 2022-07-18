@@ -142,10 +142,20 @@
                                                     class="lni lni-close"></i></button> --}}
                                             <div class="cart-img-head">
                                                 <a class="cart-img" href="{{ url('home/'.$item->product->slug) }}">
-                                                    @foreach ($item->product->photo_product->take(1) as $photos)
-                                                        <img src="{{ asset('../storage/produk/'.$photos->name) }}" alt="{{ $item->product->name }}"
+                                                    @if ($item->product->photo_product->count() > 0)
+                                                        @foreach ($item->product->photo_product->take(1) as $photos)
+                                                            @if ($photos->name)
+                                                                <img src="{{ asset('../storage/produk/'.$photos->name) }}" alt="{{ $item->product->name }}"
+                                                                    style="width: 10rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                                            @else
+                                                                <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->product->name }}"
+                                                                    style="width: 10rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                                            @endif
+                                                        @endforeach
+                                                    @else
+                                                        <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->product->name }}"
                                                             style="width: 10rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
-                                                    @endforeach
+                                                    @endif
                                                 </a>
                                             </div>
 

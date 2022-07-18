@@ -483,4 +483,30 @@ class TransactionListController extends Controller
             return redirect('/pembeli/daftar-transaksi');
         }
     }
+
+    // handle update an employee ajax request
+	public function orderCompleted(Request $request) 
+    {
+        $validator = Validator::make($request->all(), [
+            // Required
+        ], [
+            // Validator
+        ]);
+
+        if($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'messages' => $validator->getMessageBag()
+            ]);
+        } else 
+        {
+            $orders = Order::find($request->emp_id);
+            $orders->status = Order::COMPLETED;
+			$orders->update();
+
+            return response()->json([
+                    'status' => 200,
+                ]);
+        }
+	}
 }

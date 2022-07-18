@@ -235,6 +235,14 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:gapoktan']], function
     Route::get('gapoktan/rekap-penjualan', [App\Http\Controllers\Gapoktan\SalesRekapController::class, 'index'])->name('gapoktan-sales-rekap');
     Route::get('gapoktan/rekap-penjualan/fetchall', [App\Http\Controllers\Gapoktan\SalesRekapController::class, 'fetchAll'])->name('gapoktan-salesRekap-fetchAll');
 
+    // Pesanan Masuk
+    Route::get('gapoktan/pesanan', [App\Http\Controllers\Gapoktan\OrderController::class, 'index'])->name('gapoktan.orders');
+    Route::get('gapoktan/pesanan/fetchDikemas', [App\Http\Controllers\Gapoktan\OrderController::class, 'fetchDikemas'])->name('gapoktan.orders.fetchDikemas');
+    Route::get('gapoktan/pesanan/fetchDikirim', [App\Http\Controllers\Gapoktan\OrderController::class, 'fetchDikirim'])->name('gapoktan.orders.fetchDikirim');
+    Route::get('gapoktan/pesanan/fetchSelesai', [App\Http\Controllers\Gapoktan\OrderController::class, 'fetchSelesai'])->name('gapoktan.orders.fetchSelesai');
+    Route::get('gapoktan/pesanan/detail-pesanan/{id}', [App\Http\Controllers\Gapoktan\OrderController::class, 'viewOrder'])->name('gapoktan.viewOrder');
+    Route::post('gapoktan/pesanan/update-pesanan', [App\Http\Controllers\Gapoktan\OrderController::class, 'updateOrder'])->name('gapoktan.updateOrder');
+
     // Daftar Petani
     Route::get('gapoktan/daftar-petani', [App\Http\Controllers\Gapoktan\FarmerController::class, 'index'])->name('gapoktan-petani');
     Route::post('gapoktan/daftar-petani/store', [App\Http\Controllers\Gapoktan\FarmerController::class, 'store'])->name('gapoktan-petani-store');
@@ -453,6 +461,7 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function(
     Route::get('/pembeli/daftar-transaksi/fetchSelesai', [App\Http\Controllers\Pembeli\TransactionListController::class, 'fetchSelesai'])->name('pembeli.transactionList.fetchSelesai');
     Route::get('/pembeli/daftar-transaksi/fetchDibatalkan', [App\Http\Controllers\Pembeli\TransactionListController::class, 'fetchDibatalkan'])->name('pembeli.transactionList.fetchDibatalkan');
     Route::get('/pembeli/daftar-transaksi/detail-order/{id}', [App\Http\Controllers\Pembeli\TransactionListController::class, 'viewTransactionList'])->name('pembeli.viewTransactionList');
+    Route::post('/pembeli/daftar-transaksi/order-completed', [App\Http\Controllers\Pembeli\TransactionListController::class, 'orderCompleted'])->name('pembeli.orderCompleted');
 
     // Buat Ulasan
     Route::get('/pembeli/ulasan', [App\Http\Controllers\Pembeli\ReviewController::class, 'index'])->name('pembeli.review');
