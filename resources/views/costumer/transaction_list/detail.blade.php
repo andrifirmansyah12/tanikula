@@ -278,11 +278,25 @@
                                             <tr>
                                                 <td>
                                                     <div class="d-flex px-2 py-1">
+                                                        @if ($orderitem->product->photo_product->count() > 0)
                                                         @foreach ($orderitem->product->photo_product->take(1) as
                                                         $photos)
-                                                        <img src="{{ asset('../storage/produk/'.$photos->name) }}" class="img-fluid"
-                                                            style="object-fit: contain;" alt="{{ $orderitem->product->name }}">
+                                                        @if ($photos->name)
+                                                        <img src="{{ asset('../storage/produk/'.$photos->name) }}"
+                                                            class="img-fluid"
+                                                            style="width: 10rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
+                                                            alt="{{ $orderitem->product->name }}">
+                                                        @else
+                                                        <img src="{{ asset('img/no-image.png') }}" class="img-fluid"
+                                                            style="width: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
+                                                            alt="{{ $orderitem->product->name }}">
+                                                        @endif
                                                         @endforeach
+                                                        @else
+                                                        <img src="{{ asset('img/no-image.png') }}" class="img-fluid"
+                                                            style="width: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
+                                                            alt="{{ $orderitem->product->name }}">
+                                                        @endif
                                                     </div>
                                                 </td>
                                                 <td>
@@ -356,6 +370,7 @@
                                         var distance = end - now;
                                         if (distance < 0) {
                                             clearInterval(timer);
+                                            document.getElementById(id).innerHTML = '<b>Pembayaran Sudah Kadaluarsa';
                                             return;
                                         }
                                         var days = Math.floor(distance / _day);
@@ -397,9 +412,22 @@
                             </button>
                         @endif
                     @elseif ($order->status == 'confirmed')
-                    <button type="button" class="mt-3 mt-md-0 btn border bg-light" data-bs-toggle="modal" data-bs-target="#showOrderModal">
-                        Lacak Pesanan
+                    <button type="button" class="mt-3 mt-md-0 btn border bg-warning text-white">
+                        Sedang Dikemas
                     </button>
+                    @elseif ($order->status == 'delivered')
+                    <div class="d-md-flex">
+                        <button type="button" class="mt-3 mt-md-0 btn border bg-light" data-bs-toggle="modal" data-bs-target="#showOrderModal">
+                            Lacak Pesanan
+                        </button>
+                        <form action="#" method="POST" id="order_completed">
+                            @csrf
+                            <input type="hidden" value="{{$order->id}}" name="emp_id">
+                            <button type="submit" class="btn ms-md-2 border text-white bg-warning">
+                                Pesanan Diterima
+                            </button>
+                        </form>
+                    </div>
                     @endif
                 </div>
             </div>
@@ -423,11 +451,21 @@
                         <input type="hidden" name="order_id[]" value="{{ $orderitem->order_id }}">
                         <input type="hidden" name="rev_order_id" value="{{ $orderitem->order_id }}">
                         <div class="d-flex align-items-center py-1 border-bottom">
-                            @foreach ($orderitem->product->photo_product->take(1) as
-                            $photos)
-                            <img src="{{ asset('../storage/produk/'.$photos->name) }}" class="img-fluid"
-                                style="object-fit: contain; width: 60px" alt="{{ $orderitem->product->name }}">
-                            @endforeach
+                            @if ($orderitem->product->photo_product->count() > 0)
+                                @foreach ($orderitem->product->photo_product->take(1) as
+                                $photos)
+                                    @if ($photos->name)
+                                        <img src="{{ asset('../storage/produk/'.$photos->name) }}" class="img-fluid"
+                                            style="object-fit: contain; width: 60px" alt="{{ $orderitem->product->name }}">
+                                    @else
+                                        <img src="{{ asset('img/no-image.png') }}" class="img-fluid"
+                                            style="object-fit: contain; width: 60px" alt="{{ $orderitem->product->name }}">
+                                    @endif
+                                @endforeach
+                            @else
+                                <img src="{{ asset('img/no-image.png') }}" class="img-fluid"
+                                    style="object-fit: contain; width: 60px" alt="{{ $orderitem->product->name }}">
+                            @endif
                             <div>
                                 <p class="my-0 mx-3 text-secondary text-xs font-weight-bold">{{ $orderitem->product->name }}</p>
                                 <span class="my-0 mx-3 text-secondary text-xs font-weight-bold">{{ $orderitem->qty }} Qty</span>
@@ -500,11 +538,21 @@
                     </div>
 
                     <div class="d-flex align-items-center py-1 bg-light px-3">
-                        @foreach ($review->product->photo_product->take(1) as
-                        $photos)
-                        <img src="{{ asset('../storage/produk/'.$photos->name) }}" class="img-fluid"
-                            style="object-fit: contain; width: 60px" alt="{{ $review->product->name }}">
-                        @endforeach
+                        @if ($orderitem->product->photo_product->count() > 0)
+                            @foreach ($orderitem->product->photo_product->take(1) as
+                            $photos)
+                                @if ($photos->name)
+                                    <img src="{{ asset('../storage/produk/'.$photos->name) }}" class="img-fluid"
+                                        style="object-fit: contain; width: 60px" alt="{{ $orderitem->product->name }}">
+                                @else
+                                    <img src="{{ asset('img/no-image.png') }}" class="img-fluid"
+                                        style="object-fit: contain; width: 60px" alt="{{ $orderitem->product->name }}">
+                                @endif
+                            @endforeach
+                        @else
+                            <img src="{{ asset('img/no-image.png') }}" class="img-fluid"
+                                style="object-fit: contain; width: 60px" alt="{{ $orderitem->product->name }}">
+                         @endif
                         <div>
                             <p class="my-0 mx-3 text-secondary text-xs font-weight-bold text-truncate col-9">
                                 {{ $review->product->name }}</p>
@@ -539,11 +587,21 @@
                         <input type="hidden" name="reviewed_id[]" value="{{ $review->id }}">
                         <input type="hidden" name="reviewed_product_id[]" value="{{ $review->product_id }}">
                         <div class="d-flex align-items-center py-1 border-bottom">
-                            @foreach ($review->product->photo_product->take(1) as
-                            $photos)
-                            <img src="{{ asset('../storage/produk/'.$photos->name) }}" class="img-fluid"
-                                style="object-fit: contain; width: 60px" alt="{{ $review->product->name }}">
-                            @endforeach
+                            @if ($orderitem->product->photo_product->count() > 0)
+                                @foreach ($orderitem->product->photo_product->take(1) as
+                                $photos)
+                                    @if ($photos->name)
+                                        <img src="{{ asset('../storage/produk/'.$photos->name) }}" class="img-fluid"
+                                            style="object-fit: contain; width: 60px" alt="{{ $orderitem->product->name }}">
+                                    @else
+                                        <img src="{{ asset('img/no-image.png') }}" class="img-fluid"
+                                            style="object-fit: contain; width: 60px" alt="{{ $orderitem->product->name }}">
+                                    @endif
+                                @endforeach
+                            @else
+                                <img src="{{ asset('img/no-image.png') }}" class="img-fluid"
+                                    style="object-fit: contain; width: 60px" alt="{{ $orderitem->product->name }}">
+                            @endif
                             <div>
                                 <p class="my-0 mx-3 text-secondary text-xs font-weight-bold">{{ $review->product->name }}</p>
                                 <p class="my-1 mx-3 text-secondary text-xs">
@@ -591,7 +649,8 @@
                                 </div>
                                 <div class="text-end">
                                     <p class="mb-0">Expected Arrival <span>01/12/19</span></p>
-                                    <p class="mb-0">USPS <span class="font-weight-bold">234094567242423422898</span></p>
+                                    <p class="mb-0">No Tracking</p>
+                                    <span class="font-weight-bold">234094567242423422898</span>
                                 </div>
                             </div>
                             <ul id="progressbar-2" class="d-flex justify-content-between mx-0 mt-0 mb-5 px-0 pt-0 pb-2">
@@ -837,6 +896,29 @@
                         $("#edit_employee_form")[0].reset();
                         $("#edit_employee_btn").text('Kirim');
                         $("#edit_employee_btn").prop('disabled', false);
+                        window.setTimeout(function(){location.reload()},1000)
+                    }
+                }
+            });
+        });
+
+        // update employee ajax request
+        $("#order_completed").submit(function (e) {
+            e.preventDefault();
+
+            var formData = new FormData(this);
+            $.ajax({
+                url: '{{ route('pembeli.orderCompleted') }}',
+                method: 'post',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == 400) {
+                        showError('cancellation_note', response.messages.cancellation_note);
+                    } else if (response.status == 200) {
                         window.setTimeout(function(){location.reload()},1000)
                     }
                 }

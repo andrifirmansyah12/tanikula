@@ -123,11 +123,25 @@
                                             <tr>
                                                 <td>
                                                     <div class="d-flex px-2 py-1">
+                                                        @if ($orderitem->product->photo_product->count() > 0)
                                                         @foreach ($orderitem->product->photo_product->take(1) as
                                                         $photos)
-                                                        <img src="{{ asset('../storage/produk/'.$photos->name) }}" class="img-fluid"
-                                                            style="object-fit: contain;" alt="{{ $orderitem->product->name }}">
+                                                        @if ($photos->name)
+                                                        <img src="{{ asset('../storage/produk/'.$photos->name) }}"
+                                                            class="img-fluid"
+                                                            style="width: 10rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
+                                                            alt="{{ $orderitem->product->name }}">
+                                                        @else
+                                                        <img src="{{ asset('img/no-image.png') }}" class="img-fluid"
+                                                            style="width: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
+                                                            alt="{{ $orderitem->product->name }}">
+                                                        @endif
                                                         @endforeach
+                                                        @else
+                                                        <img src="{{ asset('img/no-image.png') }}" class="img-fluid"
+                                                            style="width: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
+                                                            alt="{{ $orderitem->product->name }}">
+                                                        @endif
                                                     </div>
                                                 </td>
                                                 <td>
@@ -200,6 +214,7 @@
                                     var distance = end - now;
                                     if (distance < 0) {
                                         clearInterval(timer);
+                                        document.getElementById(id).innerHTML = '<b>Pembayaran Sudah Kadaluarsa';
                                         return;
                                     }
                                     var days = Math.floor(distance / _day);
