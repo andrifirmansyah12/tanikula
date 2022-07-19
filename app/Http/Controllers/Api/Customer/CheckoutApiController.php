@@ -21,6 +21,8 @@ class CheckoutApiController extends BaseController
     {
         $order = new Order();
         $order->user_id = $request->user_id; //
+        $total_harga = $request->total_hraga;
+        $product_id =  $request->input('product_id', []);
 
         $address = Address::with('user')
             ->join('users', 'addresses.user_id', '=', 'users.id')
@@ -34,16 +36,20 @@ class CheckoutApiController extends BaseController
             $order->address_id = $address->id; // alamat checkout
         }
 
-        $total = 0; // total item checkout
-        $cartItem_total = Cart::with('product')->where('user_id', $request->user_id)->latest()->get();
-        foreach ($cartItem_total as $product_total) {
-            $total += $product_total->product->price * $product_total->product_qty;
-        }
+        // Mengambil jumlah harga
+        // Menjumlahkan semua harga
+        // * this
+        // $total = 0; // total item checkout
+        // $cartItem_total = Cart::with('product')->where('user_id', $request->user_id)->latest()->get();
+        // foreach ($cartItem_total as $product_total) {
+        //     $total += $product_total->product->price * $product_total->product_qty;
+        // }
 
         $orderDate = date('Y-m-d H:i:s');
         $paymentDue = (new \DateTime($orderDate))->modify('+1 day')->format('Y-m-d H:i:s');
 
-        $order->total_price = $total;
+        // $order->total_price = $total;
+        $order->total_price = $total_harga;
         $order->code = Order::generateCode();
         $order->status = Order::CREATED;
         $order->order_date = $orderDate;
@@ -51,23 +57,29 @@ class CheckoutApiController extends BaseController
         $order->payment_status = Order::UNPAID;
         $order->save();
 
-        $cartItem = Cart::with('product')->where('user_id', $request->user_id)->latest()->get();
-        foreach ($cartItem as $item) {
-            OrderItem::create([
-                'order_id' => $order->id,
-                'product_id' => $item->product_id,
-                'qty' => $item->product_qty,
-                'price' => $item->product->price,
-            ]);
+        foreach ($product_id as $i => $value) {
+            // $cartItem = Cart::with('product')->where('user_id', $request->user_id)->where('product_id', $product_id[$i])->latest()->get();
+            $cartItem = Cart::with('product')->where('user_id', $request->user_id)->where('id', $product_id[$i])->latest()->get();
 
-            $prod = Product::where('id', $item->product_id)->first();
-            $prod->stoke = $prod->stoke - $item->product_qty;
-            if ($prod->stock_out == null) {
-                $prod->stock_out = $item->product_qty;
-            } else {
-                $prod->stock_out = $prod->stock_out + $item->product_qty;
+            foreach ($cartItem as $item) {
+                OrderItem::create([
+                    'order_id' => $order->id,
+                    'product_id' => $item->product_id,
+                    'qty' => $item->product_qty,
+                    'price' => $item->product->price,
+                ]);
+
+                // * this
+                // mengurangi stock
+                // $prod = Product::where('id', $item->product_id)->first();
+                // $prod->stoke = $prod->stoke - $item->product_qty;
+                // if ($prod->stock_out == null) {
+                //     $prod->stock_out = $item->product_qty;
+                // } else {
+                //     $prod->stock_out = $prod->stock_out + $item->product_qty;
+                // }
+                // $prod->update();
             }
-            $prod->update();
         }
 
         $this->initPaymentGateway();
@@ -101,8 +113,12 @@ class CheckoutApiController extends BaseController
         }
 
         if ($order) {
-            $cartItem = Cart::with('product')->where('user_id', $request->user_id)->latest()->get();
-            Cart::destroy($cartItem);
+            foreach ($product_id as $i => $value) {
+                // $cartItem = Cart::with('product')->where('user_id', $request->user_id)->where('product_id', $product_id[$i])->latest()->get();
+                $cartItem = Cart::with('product')->where('user_id', $request->user_id)->where('id', $product_id[$i])->latest()->get();
+                Cart::destroy($cartItem);
+            }
+            // $cartItem = Cart::with('product')->where('user_id', $request->user_id)->latest()->get();
 
             // \Session::flash('success', 'Thank you. Your order has been received!');
             // return redirect('cart/shipment/place-order/received/'. $order->id);

@@ -113,6 +113,9 @@ Route::post('login-customer', [LoginCustomerApiController::class, 'login']);
 Route::resource('product-photo-customer', PhotoProductApiControlller::class);
 Route::resource('product-category', ProductCategoryApiController::class);
 
+//tes api
+Route::post('notif', [ProductCustomerApiController::class, 'sendnofit']);
+
 // // Cart
 // Route::resource('cart', CartApiController::class);
 // Route::get('cart/user_id/{user_id}', [CartApiController::class, 'indexByid']);
