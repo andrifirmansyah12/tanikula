@@ -51,7 +51,7 @@ class Product extends Model
     public function scopeFilter($query, array $filters)
     {
         // Isset Function
-        $query->when($filters['pencarian'] ?? false, function($query, $search) {
+        $query->when($filters['pencarian'] ?? false, function ($query, $search) {
             return $query->where('products.name', 'like', '%' . $search . '%');
         });
     }

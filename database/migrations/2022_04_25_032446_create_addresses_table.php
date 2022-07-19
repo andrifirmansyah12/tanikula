@@ -19,7 +19,9 @@ class CreateAddressesTable extends Migration
             $table->string('recipients_name')->nullable(); // nama penerima
             $table->string('telp')->nullable(); // telepon penerima
             $table->string('address_label')->nullable(); // label alamat (contoh rumah, kantor)
-            $table->string('city')->nullable(); // kota kabupaten
+            // $table->string('city')->nullable(); // kota kabupaten
+            $table->integer('provinsi_id')->nullable(); // provinsi id
+            $table->integer('kota_id')->nullable(); // kota id
             $table->integer('postal_code')->nullable(); // kode pos
             $table->boolean('main_address')->default(0); // Alamat Utama
             $table->string('complete_address')->nullable(); // alamat lengkap

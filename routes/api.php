@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\Customer\ParticipantChatApiController;
 use App\Http\Controllers\Api\Customer\ProductCustomerApiController;
 use App\Http\Controllers\Api\Customer\RegisterCustomerApiController;
 use App\Http\Controllers\Api\Customer\RoomChatApiController;
+use App\Http\Controllers\Api\Customer\TransactionListApiController;
 use App\Http\Controllers\Api\Customer\WishlistApiController;
 use App\Http\Controllers\Api\Gapoktan\ActivityApiController;
 use App\Http\Controllers\Api\Gapoktan\ActivityCategoryApiController;
@@ -29,6 +30,7 @@ use App\Http\Controllers\Api\ProductApiController;
 use App\Http\Controllers\Api\ProductCategoryApiController;
 use App\Http\Controllers\Api\UserApiController;
 use Illuminate\Support\Facades\Route;
+use Midtrans\Transaction;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,7 +53,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('product/search/{name}', [ProductApiController::class, 'search']);
     Route::resource('product-photo', PhotoProductApiControlller::class);
     Route::post('product-photo/delete-where-id-product', [PhotoProductApiControlller::class, 'deleteWhereProductId']);
-    
+
     // Chat 
     Route::resource('chat', ChatApiController::class);
     Route::resource('room-chat', RoomChatApiController::class);
@@ -70,6 +72,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('address/user_id/{user_id}', [AddressApiController::class, 'indexByid']);
     Route::put('address/main_address/{user_id}', [AddressApiController::class, 'updateMainAddress']);
     Route::post('/cart/shipment/place-order', [CheckoutApiController::class, 'placeOrder']);
+    Route::get('transaction_list/{user_id}', [TransactionListApiController::class, 'index']);
 
     // ------ Gapoktan -----------
     // Activity
@@ -99,7 +102,6 @@ Route::middleware('auth:api')->group(function () {
     Route::post('akun-petani/update/image', [AkunPetaniApiController::class, 'updatePhoto']);
     // user
     Route::resource('user', UserApiController::class);
-    
 });
 
 
@@ -110,6 +112,9 @@ Route::post('register-customer', [RegisterCustomerApiController::class, 'registe
 Route::post('login-customer', [LoginCustomerApiController::class, 'login']);
 Route::resource('product-photo-customer', PhotoProductApiControlller::class);
 Route::resource('product-category', ProductCategoryApiController::class);
+
+//tes api
+Route::post('notif', [ProductCustomerApiController::class, 'sendnofit']);
 
 // // Cart
 // Route::resource('cart', CartApiController::class);

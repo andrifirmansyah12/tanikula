@@ -70,6 +70,7 @@
                             <h5 class="mb-0 text-white">Silahkan melanjutkan untuk pembayaran!</h5>
                         </div>
                         <script>
+                            var isExpired = false;
                             CountDownTimer('{{ $order->order_date }}', 'countdown');
                             function CountDownTimer(dt, id)
                             {
@@ -248,6 +249,7 @@
                             Lanjutkan Pembayaran
                         </a>
                         @endif
+                        
                     </div>
                 </div>
             </div>
