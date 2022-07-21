@@ -58,10 +58,12 @@
                                 <div class="dropdown-menu mt-2" aria-labelledby="dropdownMenuButton">
                                     <ul class="m-0 p-0">
                                         <ul class="m-0 p-0">
-                                            <a class="dropdown-item" href="#">Export CSV</a>
-                                            <a class="dropdown-item" href="#">Export Excel</a>
-                                            <a class="dropdown-item" href="#">Export PDF</a>
-                                            <a class="dropdown-item" href="#">Print</a>
+                                            <ul class="m-0 p-0">
+                                                <a class="dropdown-item" href="#">Export CSV</a>
+                                                <a class="dropdown-item" href="#">Export Excel</a>
+                                                <a class="dropdown-item" href="#">Export PDF</a>
+                                                <a class="dropdown-item" href="#">Print</a>
+                                            </ul>
                                         </ul>
                                     </ul>
                                 </div>
@@ -192,7 +194,7 @@
             });
         });
 
-        $("ul ul a").click(function() {
+        $("ul ul ul a").click(function() {
             var i = $(this).index() + 1
             var table = $('table').DataTable();
             if (i == 1) {

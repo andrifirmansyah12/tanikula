@@ -69,7 +69,7 @@
                                     <span class="fa fa-map-marker"></span>
                                 </div>
                                 <div class="text">
-                                    <p><span>Alamat:</span> 198 West 21th Street, Suite 721 New York NY 10016</p>
+                                    <p><span>Alamat:</span> Desa Krasak, Kecamatan Jatibarang, Kabupaten Indramayu.</p>
                                 </div>
                             </div>
                         </div>
@@ -79,7 +79,7 @@
                                     <span class="fa fa-phone"></span>
                                 </div>
                                 <div class="text">
-                                    <p><span>No Hp:</span> <a style="color:#16A085;" href="tel://1234567920">083123456789</a></p>
+                                    <p><span>Telp:</span> <a style="color:#16A085;" href="tel://1234567920">(+62) 33 169 7720</a></p>
                                 </div>
                             </div>
                         </div>

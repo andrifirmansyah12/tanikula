@@ -53,6 +53,10 @@ integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifw
     function gapoktan_edukasi(url) {
         window.location = url;
     }
+    // Pesanan
+    function gapoktan_pesanan(url) {
+        window.location = url;
+    }
     // Kegiatan
     function gapoktan_kegiatan(url) {
         window.location = url;

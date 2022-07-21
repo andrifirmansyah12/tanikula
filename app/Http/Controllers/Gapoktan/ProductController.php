@@ -60,11 +60,15 @@ class ProductController extends Controller
 				$output .= '<tr>';
                 $output .= '<td>' . $nomor++ . '</td>';
                 $output .= '<td>';
-                foreach ($emp->photo_product->take(1) as $photos)
-                if (empty($photos->name)) {
-                    $output .= '<img src="../stisla/assets/img/example-image.jpg" class="img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
+                if ($emp->photo_product->count() > 0) {
+                    foreach ($emp->photo_product->take(1) as $photos)
+                    if ($photos->name) {
+                        $output .= '<img src="../storage/produk/' . $photos->name . '" class="img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
+                    } else {
+                        $output .= '<img src="../stisla/assets/img/example-image.jpg" class="img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
+                    }
                 } else {
-                    $output .= '<img src="../storage/produk/' . $photos->name . '" class="img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
+                    $output .= '<img src="../stisla/assets/img/example-image.jpg" class="img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
                 }
                 $output .= '</td>';
                 $output .= '<td>' . $emp->code . '</td>
