@@ -180,6 +180,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
         LaraIzitoast\LaraIzitoastServiceProvider::class,
+        LaravelFCM\FCMServiceProvider::class,
     ],
 
     /*
@@ -235,6 +236,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        'FCM'      => LaravelFCM\Facades\FCM::class,
     ],
 
 ];

@@ -17,9 +17,9 @@ class CreateChatsTable extends Migration
             $table->id();
             $table->foreignId("sender_id")->nullable();
             $table->foreignId("receiver_id")->nullable();
+            $table->foreignId("product_id")->nullable();
             $table->boolean('is_hide')->default(0);
             $table->boolean('is_read')->default(0);
-            $table->text("text")->nullable();
             $table->timestamps();
         });
     }

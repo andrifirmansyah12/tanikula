@@ -47,6 +47,11 @@ class Product extends Model
         return $this->hasMany(OrderItem::class);
     }
 
+    public function chat()
+    {
+        return $this->hasMany(Chat::class);
+    }
+
     //Local Scope
     public function scopeFilter($query, array $filters)
     {
