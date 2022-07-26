@@ -23,13 +23,13 @@ class CheckoutController extends Controller
         $cost_url = 'https://api.rajaongkir.com/starter/cost';
 
         $address = Address::with('user')
-                    ->join('users', 'addresses.user_id', '=', 'users.id')
-                    ->select('addresses.*', 'users.email as email')
-                    ->where('user_id', auth()->user()->id)
-                    ->where('addresses.main_address', 1)
-                    ->orderBy('addresses.updated_at', 'desc')
-                    ->take(1)
-                    ->get();
+            ->join('users', 'addresses.user_id', '=', 'users.id')
+            ->select('addresses.*', 'users.email as email')
+            ->where('user_id', auth()->user()->id)
+            ->where('addresses.main_address', 1)
+            ->orderBy('addresses.updated_at', 'desc')
+            ->take(1)
+            ->get();
         $old_cartItem = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
         foreach ($old_cartItem as $item) {
             if (!Product::where('id', $item->product_id)->where('stoke', '>=', $item->product_qty)->exists()) {
@@ -116,16 +116,16 @@ class CheckoutController extends Controller
     }
 
     public function received($orderId)
-	{
+    {
         $checkOrder = Order::with('address', 'user', 'orderItems')
-                    ->join('users', 'orders.user_id', '=', 'users.id')
-                    ->join('addresses', 'orders.address_id', '=', 'addresses.id')
-                    ->select('orders.*', 'addresses.recipients_name as name_billing')
-                    ->where('orders.user_id', '=', auth()->user()->id)
-                    ->where('orders.payment_status', '=', 'unpaid')
-                    ->where('orders.status', '=', 'created')
-                    ->where('orders.id', '=', $orderId)
-                    ->exists();
+            ->join('users', 'orders.user_id', '=', 'users.id')
+            ->join('addresses', 'orders.address_id', '=', 'addresses.id')
+            ->select('orders.*', 'addresses.recipients_name as name_billing')
+            ->where('orders.user_id', '=', auth()->user()->id)
+            ->where('orders.payment_status', '=', 'unpaid')
+            ->where('orders.status', '=', 'created')
+            ->where('orders.id', '=', $orderId)
+            ->exists();
         if ($checkOrder) {
             $order = Order::with('address', 'user', 'orderItems')
                 ->where('id', $orderId)
@@ -136,7 +136,7 @@ class CheckoutController extends Controller
         } else {
             return redirect('/');
         }
-	}
+    }
 
     public function placeOrder(Request $request)
     {
@@ -144,13 +144,13 @@ class CheckoutController extends Controller
         $order->user_id = auth()->user()->id; //
 
         $address = Address::with('user')
-                    ->join('users', 'addresses.user_id', '=', 'users.id')
-                    ->select('addresses.*', 'users.email as email')
-                    ->where('user_id', auth()->user()->id)
-                    ->where('addresses.main_address', 1)
-                    ->orderBy('addresses.updated_at', 'desc')
-                    ->take(1)
-                    ->get();
+            ->join('users', 'addresses.user_id', '=', 'users.id')
+            ->select('addresses.*', 'users.email as email')
+            ->where('user_id', auth()->user()->id)
+            ->where('addresses.main_address', 1)
+            ->orderBy('addresses.updated_at', 'desc')
+            ->take(1)
+            ->get();
         foreach ($address as $address) {
             $order->address_id = $address->id; // alamat checkout
         }
@@ -163,7 +163,7 @@ class CheckoutController extends Controller
         }
 
         $orderDate = date('Y-m-d H:i:s');
-		$paymentDue = (new \DateTime($orderDate))->modify('+1 day')->format('Y-m-d H:i:s');
+        $paymentDue = (new \DateTime($orderDate))->modify('+1 day')->format('Y-m-d H:i:s');
 
         $order->total_price = $total + $request->priceService;
         $order->code = Order::generateCode();
@@ -176,10 +176,10 @@ class CheckoutController extends Controller
         $cartItem = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
         foreach ($cartItem as $item) {
             OrderItem::create([
-                'order_id'=> $order->id,
-                'product_id'=> $item->product_id,
-                'qty'=> $item->product_qty,
-                'price'=> $item->product->price,
+                'order_id' => $order->id,
+                'product_id' => $item->product_id,
+                'qty' => $item->product_qty,
+                'price' => $item->product->price,
             ]);
 
             $prod = Product::where('id', $item->product_id)->first();
@@ -194,115 +194,115 @@ class CheckoutController extends Controller
 
         $this->initPaymentGateway();
 
-		$customerDetails = [
-			'first_name' => $address->recipients_name,
-			'email' => $address->user->email,
-			'phone' => $address->telp,
-		];
+        $customerDetails = [
+            'first_name' => $address->recipients_name,
+            'email' => $address->user->email,
+            'phone' => $address->telp,
+        ];
 
-		$params = [
-			'enable_payments' => \App\Models\Payment::PAYMENT_CHANNELS,
-			'transaction_details' => [
-				'order_id' => $order->code,
-				'gross_amount' => $order->total_price,
-			],
-			'customer_details' => $customerDetails,
-			'expiry' => [
-				'start_time' => date('Y-m-d H:i:s T'),
-				'unit' => \App\Models\Payment::EXPIRY_UNIT,
-				'duration' => \App\Models\Payment::EXPIRY_DURATION,
-			],
-		];
+        $params = [
+            'enable_payments' => \App\Models\Payment::PAYMENT_CHANNELS,
+            'transaction_details' => [
+                'order_id' => $order->code,
+                'gross_amount' => $order->total_price,
+            ],
+            'customer_details' => $customerDetails,
+            'expiry' => [
+                'start_time' => date('Y-m-d H:i:s T'),
+                'unit' => \App\Models\Payment::EXPIRY_UNIT,
+                'duration' => \App\Models\Payment::EXPIRY_DURATION,
+            ],
+        ];
 
-		$snap = \Midtrans\Snap::createTransaction($params);
+        $snap = \Midtrans\Snap::createTransaction($params);
 
-		if ($snap->token) {
-			$order->payment_token = $snap->token;
-			$order->payment_url = $snap->redirect_url;
-			$order->save();
-		}
+        if ($snap->token) {
+            $order->payment_token = $snap->token;
+            $order->payment_url = $snap->redirect_url;
+            $order->save();
+        }
 
         if ($order) {
-			$cartItem = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
+            $cartItem = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
             Cart::destroy($cartItem);
 
-			\Session::flash('success', 'Thank you. Your order has been received!');
-			return redirect('cart/shipment/place-order/received/'. $order->id);
-		}
+            \Session::flash('success', 'Thank you. Your order has been received!');
+            return redirect('cart/shipment/place-order/received/' . $order->id);
+        }
 
         return redirect('cart/shipment');
-
     }
 
     // handle fetch all eamployees ajax request
-	public function fetchAll()
+    public function fetchAll()
     {
-		$emps = Address::with('user')
-                    ->join('users', 'addresses.user_id', '=', 'users.id')
-                    ->select('addresses.*', 'users.email as email')
-                    ->where('user_id', auth()->user()->id)
-                    ->orderBy('addresses.main_address', 'desc')
-                    ->get();
-		$output = '';
-		if ($emps->count() > 0) {
-			foreach ($emps as $emp) {
-				$output .= '
+        $emps = Address::with('user')
+            ->join('users', 'addresses.user_id', '=', 'users.id')
+            ->select('addresses.*', 'users.email as email')
+            ->where('user_id', auth()->user()->id)
+            ->orderBy('addresses.main_address', 'desc')
+            ->get();
+        $output = '';
+        if ($emps->count() > 0) {
+            foreach ($emps as $emp) {
+                $output .= '
                 <div class="body mt-2 border border-success">';
-                    if ($emp->main_address == 1) {
-                            $output .= '<div class="card-body rounded" style="background-color: hsl(110, 100%, 75%);">';
-                        } else if($emp->main_address == 0) {
-                            $output .= '<div class="card-body rounded">';
-                        }
-                         $output .= '<div class="row align-items-center">
+                if ($emp->main_address == 1) {
+                    $output .= '<div class="card-body rounded" style="background-color: hsl(110, 100%, 75%);">';
+                } else if ($emp->main_address == 0) {
+                    $output .= '<div class="card-body rounded">';
+                }
+                $output .= '<div class="row align-items-center">
                             <div>';
-                            if ($emp->main_address == 1) {
-                                $output .= '<p class="fw-bold text-black mb-2">' . $emp->recipients_name .'
-                                    <span class="fw-normal">('.$emp->address_label.') </span>
+                if ($emp->main_address == 1) {
+                    $output .= '<p class="fw-bold text-black mb-2">' . $emp->recipients_name . '
+                                    <span class="fw-normal">(' . $emp->address_label . ') </span>
                                     <svg class="text-success" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-patch-check-fill" viewBox="0 0 16 16">
                                     <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
                                     </svg>
                                 </p>';
-                            } else if($emp->main_address == 0) {
-                                $output .= '<p class="fw-bold text-black mb-2">' . $emp->recipients_name .'
-                                    <span class="fw-normal">('.$emp->address_label.') </span>
+                } else if ($emp->main_address == 0) {
+                    $output .= '<p class="fw-bold text-black mb-2">' . $emp->recipients_name . '
+                                    <span class="fw-normal">(' . $emp->address_label . ') </span>
                                 </p>';
-                            }
-                            $output .= '</div>
+                }
+                $output .= '</div>
                             <div class="col-12 mt-2 mt-md-0">
-                            <p class="mb-2 fw-bold text-black">'.$emp->telp.'</p>
-                                <p>'.$emp->city.', '.$emp->postal_code.' [TaniKula Note: '.$emp->complete_address.' '.$emp->note_for_courier.']</p>
-                                <p>'.$emp->city.', '.$emp->postal_code.'.</p>
+                            <p class="mb-2 fw-bold text-black">' . $emp->telp . '</p>
+                                <p>' . $emp->city . ', ' . $emp->postal_code . ' [TaniKula Note: ' . $emp->complete_address . ' ' . $emp->note_for_courier . ']</p>
+                                <p>' . $emp->city . ', ' . $emp->postal_code . '.</p>
                             </div>
                         </div>
                         <div class="d-flex flex-row align-items-center justify-content-between justify-content-md-start">
-                            <a href="#" id="'.$emp->id.'" class="mt-2 fw-bold editAlamat" type="button" data-bs-toggle="modal" data-bs-target="#EditAlamat" style="color: #16A085" data-bs-dismiss="modal">Edit alamat</a>';
-                            if ($emp->main_address == 1) {
-                                $output .= '<a class="mt-2 ms-md-3 fw-bold text-white px-2 rounded" style="background: #16A085">Alamat utama</a>';
-                            } else if($emp->main_address == 0) {
-                                $output .= '<a href="#" id="'.$emp->id.'" class="mt-2 ms-md-3 bg-light fw-bold updateMainAddress border px-2 rounded" style="color: #16A085">Jadikan alamat utama</a>';
-                            }
-                        $output .= '</div>
+                            <a href="#" id="' . $emp->id . '" class="mt-2 fw-bold editAlamat" type="button" data-bs-toggle="modal" data-bs-target="#EditAlamat" style="color: #16A085" data-bs-dismiss="modal">Edit alamat</a>';
+                if ($emp->main_address == 1) {
+                    $output .= '<a class="mt-2 ms-md-3 fw-bold text-white px-2 rounded" style="background: #16A085">Alamat utama</a>';
+                } else if ($emp->main_address == 0) {
+                    $output .= '<a href="#" id="' . $emp->id . '" class="mt-2 ms-md-3 bg-light fw-bold updateMainAddress border px-2 rounded" style="color: #16A085">Jadikan alamat utama</a>';
+                }
+                $output .= '</div>
                     </div>
                 </div>
                 ';
-			}
-			echo $output;
-                            // <div class="d-flex flex-row justify-content-between">
-                            //     <p class="fw-bold text-black mb-2 col-8 col-md-8">' . $emp->recipients_name .'
-                            //         <span class="fw-normal">('.$emp->address_label.') </span>
-                            //         <svg class="text-success" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-patch-check-fill" viewBox="0 0 16 16">
-                            //         <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
-                            //         </svg>
-                            //     </p>
-                            //     <a href="#" id="' . $emp->id . '" class="text-danger fw-bold deleteIcon"><i class="bi-trash h4"></i></a>
-                            // </div>
-		} else {
-			echo '<h1 class="text-center text-secondary my-5">Tidak ada Alamat!</h1>';
-		}
-	}
+            }
+            echo $output;
+            // <div class="d-flex flex-row justify-content-between">
+            //     <p class="fw-bold text-black mb-2 col-8 col-md-8">' . $emp->recipients_name .'
+            //         <span class="fw-normal">('.$emp->address_label.') </span>
+            //         <svg class="text-success" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-patch-check-fill" viewBox="0 0 16 16">
+            //         <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
+            //         </svg>
+            //     </p>
+            //     <a href="#" id="' . $emp->id . '" class="text-danger fw-bold deleteIcon"><i class="bi-trash h4"></i></a>
+            // </div>
+        } else {
+            echo '<h1 class="text-center text-secondary my-5">Tidak ada Alamat!</h1>';
+        }
+    }
 
     // handle insert a new employee ajax request
-	public function addAlamat(Request $request) {
+    public function addAlamat(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'recipients_name' => 'required|max:255',
             'telp' => 'required',
@@ -319,7 +319,7 @@ class CheckoutController extends Controller
             'note_for_courier.required' => 'Catatan untuk kurir diperlukan!',
         ]);
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
             return response()->json([
                 'status' => 400,
                 'messages' => $validator->getMessageBag()
@@ -349,24 +349,25 @@ class CheckoutController extends Controller
             $address->save();
 
             return response()->json([
-                    'status' => 200,
-                ]);
+                'status' => 200,
+            ]);
         }
-	}
+    }
 
     public function editAddress(Request $request)
     {
         $id = $request->id;
-		$emp = Address::with('user')
-                    ->join('users', 'addresses.user_id', '=', 'users.id')
-                    ->select('addresses.*', 'users.email as email')
-                    ->where('user_id', auth()->user()->id)
-                    ->find($id);
-		return response()->json($emp);
+        $emp = Address::with('user')
+            ->join('users', 'addresses.user_id', '=', 'users.id')
+            ->select('addresses.*', 'users.email as email')
+            ->where('user_id', auth()->user()->id)
+            ->find($id);
+        return response()->json($emp);
     }
 
     // handle update an employee ajax request
-	public function updateAddress(Request $request) {
+    public function updateAddress(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'recipients_name' => 'required|max:255',
             'telp' => 'required',
@@ -383,7 +384,7 @@ class CheckoutController extends Controller
             'note_for_courier.required' => 'Catatan untuk kurir diperlukan!',
         ]);
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
             return response()->json([
                 'status' => 400,
                 'messages' => $validator->getMessageBag()
@@ -417,13 +418,13 @@ class CheckoutController extends Controller
             $address->update();
 
             return response()->json([
-                    'status' => 200,
-                ]);
+                'status' => 200,
+            ]);
         }
-	}
+    }
 
     // handle update an employee ajax request
-	public function updateMainAddress(Request $request)
+    public function updateMainAddress(Request $request)
     {
         $id = $request->id;
         $addressCheck = Address::where('id', $id)->where('main_address', '0')->first();
@@ -447,17 +448,17 @@ class CheckoutController extends Controller
         return response()->json([
             'status' => 200,
         ]);
-	}
+    }
 
     private function initPaymentGateway()
-	{
-		// Set your Merchant Server Key
-		\Midtrans\Config::$serverKey = env('MIDTRANS_SERVER_KEY');
-		// Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
-		\Midtrans\Config::$isProduction = false;
-		// Set sanitization on (default)
-		\Midtrans\Config::$isSanitized = true;
-		// Set 3DS transaction for credit card to true
-		\Midtrans\Config::$is3ds = true;
-	}
+    {
+        // Set your Merchant Server Key
+        \Midtrans\Config::$serverKey = env('MIDTRANS_SERVER_KEY');
+        // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
+        \Midtrans\Config::$isProduction = false;
+        // Set sanitization on (default)
+        \Midtrans\Config::$isSanitized = true;
+        // Set 3DS transaction for credit card to true
+        \Midtrans\Config::$is3ds = true;
+    }
 }
