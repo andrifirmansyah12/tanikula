@@ -311,9 +311,10 @@
                                                         class="text-secondary text-xs font-weight-bold">Rp. {{ number_format($orderitem->price, 0) }}</span>
                                                 </td>
                                                 @php
-                                                $subTotal = $orderitem->price * $orderitem->qty;
-                                                $total += $orderitem->price * $orderitem->qty;
-                                                $totalQty += $orderitem->product_qty;
+                                                    $subTotal = $orderitem->price * $orderitem->qty;
+                                                    $total += $orderitem->price * $orderitem->qty;
+                                                    $totalQty += $orderitem->product_qty;
+                                                    $ongkirTotal = $order->total_price - $total;
                                                 @endphp
                                                 <td class="align-middle text-center">
                                                     <span
@@ -344,6 +345,7 @@
                         <div class="mt-3 mt-md-0">
                             <p class="text-muted mb-0"><span class="fw-bold me-4">Total</span> Rp.
                                 {{ number_format($total, 0) }}</p>
+                            <p class="text-muted mb-0"><span class="fw-bold me-4">Ongkir</span> Rp. {{ number_format($ongkirTotal, 0) }}</p>
                             <p class="text-muted mb-0"><span class="fw-bold me-4">Discount</span> 0</p>
                         </div>
                     </div>
@@ -351,7 +353,7 @@
                 <div class="card-footer border-0 px-4 bg-primary shadow-primary border-radius-lg py-5 d-md-flex align-items-center justify-content-between">
                     <h5 class="text-white text-uppercase mb-0">Total
                         Pembayaran: <span class="d-flex h2 mb-0 text-white text-capitalize">Rp.
-                            {{ number_format($total, 0) }}</span></h5>
+                            {{ number_format($order->total_price, 0) }}</span></h5>
                     @if (!$order->isPaid())
                         @if (!$order->isCancelled())
                         <div class="d-block mt-3 mt-md-0">

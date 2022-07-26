@@ -12,15 +12,58 @@
         integrity="sha256-pODNVtK3uOhL8FUNWWvFQK0QoQoV3YA9wGGng6mbZ0E=" crossorigin="anonymous" />
     <!-- AKHIR STYLE CSS -->
     <style>
-        input[type='file'] {
-            opacity:0
-        }
-        /* 4.3 Page */
+    .chat-online {
+        color: #34ce57
+    }
+
+    .chat-offline {
+        color: #e4606d
+    }
+
+    .chat-messages {
+        display: flex;
+        flex-direction: column;
+        height: 500px;
+        overflow-y: scroll
+    }
+
+    .chat-message-left,
+    .chat-message-right {
+        display: flex;
+        flex-shrink: 0
+    }
+
+    .chat-message-left {
+        margin-right: auto
+    }
+
+    .chat-message-right {
+        flex-direction: row-reverse;
+        margin-left: auto
+    }
+    .py-3 {
+        padding-top: 1rem!important;
+        padding-bottom: 1rem!important;
+    }
+    .px-4 {
+        padding-right: 1.5rem!important;
+        padding-left: 1.5rem!important;
+    }
+    .flex-grow-0 {
+        flex-grow: 0!important;
+    }
+    .border-top {
+        border-top: 1px solid #dee2e6!important;
+    }
+
+    input[type='file'] {
+        opacity:0
+    }
+    /* 4.3 Page */
     .page-error {
         height: 100%;
         width: 100%;
-        padding-top: 60px;
-        padding-bottom: 60px;
+        padding-top: 11.5rem;
         text-align: center;
         display: table;
     }
@@ -60,250 +103,146 @@
                         <h6 class="text-white text-capitalize ps-3">@yield('title')</h6>
                     </div>
                 </div>
-                <section>
-                    <div class="container py-5">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="card" id="chat3" style="border-radius: 15px;">
-                                    <div class="row">
-                                            <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0">
-                                                <div class="p-3">
-                                                    <div class="input-group rounded mb-3">
-                                                        <input type="search" class="form-control rounded"
-                                                            placeholder="Search" aria-label="Search"
-                                                            aria-describedby="search-addon" />
-                                                        <span class="input-group-text border-0" id="search-addon">
-                                                            <i class="fas fa-search"></i>
-                                                        </span>
-                                                    </div>
-                                                    <div>
-                                                        <ul class="list-unstyled mb-0">
-                                                            <li class="p-2 border-bottom">
-                                                                <a href="#!" class="d-flex justify-content-between">
-                                                                    <div class="d-flex flex-row">
-                                                                        <div>
-                                                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-                                                                                alt="avatar"
-                                                                                class="d-flex align-self-center me-3"
-                                                                                width="60">
-                                                                            <span
-                                                                                class="badge bg-success badge-dot"></span>
-                                                                        </div>
-                                                                        <div class="pt-1">
-                                                                            <p class="fw-bold mb-0">Marie Horwitz</p>
-                                                                            <p class="small text-muted">Hello, Are you
-                                                                                there?</p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="pt-1">
-                                                                        <p class="small text-muted mb-1">Just now</p>
-                                                                        <span
-                                                                            class="badge bg-danger rounded-pill float-end">3</span>
-                                                                    </div>
-                                                                </a>
-                                                            </li>
-                                                            <li class="p-2 border-bottom">
-                                                                <a href="#!" class="d-flex justify-content-between">
-                                                                    <div class="d-flex flex-row">
-                                                                        <div>
-                                                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"
-                                                                                alt="avatar"
-                                                                                class="d-flex align-self-center me-3"
-                                                                                width="60">
-                                                                            <span
-                                                                                class="badge bg-warning badge-dot"></span>
-                                                                        </div>
-                                                                        <div class="pt-1">
-                                                                            <p class="fw-bold mb-0">Alexa Chung</p>
-                                                                            <p class="small text-muted">Lorem ipsum
-                                                                                dolor sit.</p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="pt-1">
-                                                                        <p class="small text-muted mb-1">5 mins ago</p>
-                                                                        <span
-                                                                            class="badge bg-danger rounded-pill float-end">2</span>
-                                                                    </div>
-                                                                </a>
-                                                            </li>
-                                                            <li class="p-2 border-bottom">
-                                                                <a href="#!" class="d-flex justify-content-between">
-                                                                    <div class="d-flex flex-row">
-                                                                        <div>
-                                                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
-                                                                                alt="avatar"
-                                                                                class="d-flex align-self-center me-3"
-                                                                                width="60">
-                                                                            <span
-                                                                                class="badge bg-success badge-dot"></span>
-                                                                        </div>
-                                                                        <div class="pt-1">
-                                                                            <p class="fw-bold mb-0">Danny McChain</p>
-                                                                            <p class="small text-muted">Lorem ipsum
-                                                                                dolor sit.</p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="pt-1">
-                                                                        <p class="small text-muted mb-1">Yesterday</p>
-                                                                    </div>
-                                                                </a>
-                                                            </li>
-                                                            <li class="p-2 border-bottom">
-                                                                <a href="#!" class="d-flex justify-content-between">
-                                                                    <div class="d-flex flex-row">
-                                                                        <div>
-                                                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp"
-                                                                                alt="avatar"
-                                                                                class="d-flex align-self-center me-3"
-                                                                                width="60">
-                                                                            <span
-                                                                                class="badge bg-danger badge-dot"></span>
-                                                                        </div>
-                                                                        <div class="pt-1">
-                                                                            <p class="fw-bold mb-0">Ashley Olsen</p>
-                                                                            <p class="small text-muted">Lorem ipsum
-                                                                                dolor sit.</p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="pt-1">
-                                                                        <p class="small text-muted mb-1">Yesterday</p>
-                                                                    </div>
-                                                                </a>
-                                                            </li>
-                                                            <li class="p-2 border-bottom">
-                                                                <a href="#!" class="d-flex justify-content-between">
-                                                                    <div class="d-flex flex-row">
-                                                                        <div>
-                                                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava5-bg.webp"
-                                                                                alt="avatar"
-                                                                                class="d-flex align-self-center me-3"
-                                                                                width="60">
-                                                                            <span
-                                                                                class="badge bg-warning badge-dot"></span>
-                                                                        </div>
-                                                                        <div class="pt-1">
-                                                                            <p class="fw-bold mb-0">Kate Moss</p>
-                                                                            <p class="small text-muted">Lorem ipsum
-                                                                                dolor sit.</p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="pt-1">
-                                                                        <p class="small text-muted mb-1">Yesterday</p>
-                                                                    </div>
-                                                                </a>
-                                                            </li>
-                                                            <li class="p-2">
-                                                                <a href="#!" class="d-flex justify-content-between">
-                                                                    <div class="d-flex flex-row">
-                                                                        <div>
-                                                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
-                                                                                alt="avatar"
-                                                                                class="d-flex align-self-center me-3"
-                                                                                width="60">
-                                                                            <span
-                                                                                class="badge bg-success badge-dot"></span>
-                                                                        </div>
-                                                                        <div class="pt-1">
-                                                                            <p class="fw-bold mb-0">Ben Smith</p>
-                                                                            <p class="small text-muted">Lorem ipsum
-                                                                                dolor sit.</p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="pt-1">
-                                                                        <p class="small text-muted mb-1">Yesterday</p>
-                                                                    </div>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
+                <main class="content">
+                    <div class="container p-0">
+                        <div class="card-body">
+                            <div class="row g-0">
+                                <div class="col-12 col-lg-5 col-xl-3 shadow rounded border border-light">
+                                    <div class="px-4 d-none border-bottom d-md-block">
+                                        <div class="d-flex align-items-center">
+                                            <div class="flex-grow-1">
+                                                <input type="text" class="border ps-3 form-control my-3" placeholder="Pencarian...">
                                             </div>
-
-                                            <div class="col-md-6 col-lg-7 col-xl-8">
-                                                <div class="pt-3 pe-3 overflow-auto sticky-top"
-                                                    style="position: relative; height: 580px">
-                                                    <div class="d-flex justify-content-between mb-4">
-                                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp"
-                                                            alt="avatar"
-                                                            class="rounded-circle d-flex align-self-start me-3 shadow-1-strong"
-                                                            width="60">
-                                                        <div class="card">
-                                                            <div class="card-header d-flex justify-content-between p-3">
-                                                                <p class="fw-bold mb-0">Brad Pitt</p>
-                                                                <p class="text-muted small mb-0"><i
-                                                                        class="far fa-clock"></i> 12 mins ago</p>
-                                                            </div>
-                                                            <div class="card-body">
-                                                                <p class="mb-0">
-                                                                    Lorem ipsum dolor sit amet, consectetur adipiscing
-                                                                    elit, sed do eiusmod tempor incididunt ut
-                                                                    labore et dolore magna aliqua.
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="d-flex justify-content-between mb-4">
-                                                        <div class="card w-100">
-                                                            <div class="card-header d-flex justify-content-between p-3">
-                                                                <p class="fw-bold mb-0">Lara Croft</p>
-                                                                <p class="text-muted small mb-0"><i
-                                                                        class="far fa-clock"></i> 13 mins ago</p>
-                                                            </div>
-                                                            <div class="card-body">
-                                                                <p class="mb-0">
-                                                                    Sed ut perspiciatis unde omnis iste natus error sit
-                                                                    voluptatem accusantium doloremque
-                                                                    laudantium.
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp"
-                                                            alt="avatar"
-                                                            class="rounded-circle d-flex align-self-start ms-3 shadow-1-strong"
-                                                            width="60">
-                                                    </div>
-                                                    <div class="d-flex justify-content-between mb-4">
-                                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp"
-                                                            alt="avatar"
-                                                            class="rounded-circle d-flex align-self-start me-3 shadow-1-strong"
-                                                            width="60">
-                                                        <div class="card">
-                                                            <div class="card-header d-flex justify-content-between p-3">
-                                                                <p class="fw-bold mb-0">Brad Pitt</p>
-                                                                <p class="text-muted small mb-0"><i
-                                                                        class="far fa-clock"></i> 10 mins ago</p>
-                                                            </div>
-                                                            <div class="card-body">
-                                                                <p class="mb-0">
-                                                                    Lorem ipsum dolor sit amet, consectetur adipiscing
-                                                                    elit, sed do eiusmod tempor incididunt ut
-                                                                    labore et dolore magna aliqua.
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div
-                                                    class="text-muted d-flex justify-content-start align-items-center pe-3 pt-3 mt-2">
-                                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
-                                                        alt="avatar 3" style="width: 40px; height: 100%;">
-                                                    <input type="text" class="form-control form-control-lg"
-                                                        id="exampleFormControlInput2" placeholder="Ketikan Pesan...">
-                                                    <a class="ms-1 text-muted" href="#!"><i
-                                                            class="fas fa-paperclip"></i></a>
-                                                    <a class="ms-3 text-muted" href="#!"><i
-                                                            class="fas fa-smile"></i></a>
-                                                    <a class="ms-3" href="#!"><i class="fas fa-paper-plane"></i></a>
-                                                </div>
-
-                                            </div>
+                                        </div>
                                     </div>
+                                    @foreach ($chats as $chat)
+                                    <a href="#" class="mt-3 list-group-item list-group-item-action border-0">
+                                        <div class="d-flex align-items-center">
+                                            <img src="https://bootdey.com/img/Content/avatar/avatar5.png"
+                                                class="rounded-circle me-1" alt="Vanessa Tucker" width="40" height="40">
+                                            <div class="flex-grow-1 ms-3">
+                                                {{ $chat->userReceiver->name }}<span class="badge bg-success ms-3">5</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    @endforeach
+                                </div>
+                                <div class="col-12 col-lg-7 col-xl-9 shadow rounded">
+                                    <div class="py-2 px-4 border-bottom d-none d-lg-block">
+                                        <div class="d-flex align-items-center py-3">
+                                            <div class="position-relative">
+                                                <img src="https://bootdey.com/img/Content/avatar/avatar5.png"
+                                                    class="rounded-circle mr-1" alt="Sharon Lessman" width="40"
+                                                    height="40">
+                                            </div>
+                                            <div class="flex-grow-1 ps-3">
+                                                <strong>Gapoktan</strong>
+                                            </div>
+                                            <div>
+                                                <button class="btn-white border border-white px-3"><svg
+                                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="feather feather-more-horizontal feather-lg">
+                                                        <circle cx="12" cy="12" r="1"></circle>
+                                                        <circle cx="19" cy="12" r="1"></circle>
+                                                        <circle cx="5" cy="12" r="1"></circle>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <form action="#" method="POST" id="add_employee_form">
+                                        <div class="position-relative">
+                                            <div class="chat-messages p-4">
+                                                @if ($roomChats->count() > 0)
+                                                {{-- <div class="border rounded d-flex flex-row align-items-center mb-3">
+                                                    <div>
+                                                        @if ($roomChat->chat->product->photo_product->count() > 0)
+                                                        @foreach ($roomChat->chat->product->photo_product->take(1) as
+                                                        $photos)
+                                                        @if ($photos->name)
+                                                        <img src="{{ asset('../storage/produk/'.$photos->name) }}"
+                                                            alt="{{ $roomChat->chat->product->name }}"
+                                                            style="width: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                                        @else
+                                                        <img src="{{ asset('img/no-image.png') }}"
+                                                            alt="{{ $roomChat->chat->product->name }}"
+                                                            style="width: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                                        @endif
+                                                        @endforeach
+                                                        @else
+                                                        <img src="{{ asset('img/no-image.png') }}"
+                                                            alt="{{ $roomChat->chat->product->name }}"
+                                                            style="width: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                                        @endif
+                                                    </div>
+                                                    <div class="ms-3">
+                                                        <p class="fw-bold m-0">{{ $roomChat->chat->product->name }}</p>
+                                                        <p class="m-0" style="font-size: 12px">Rp.
+                                                            {{ number_format($roomChat->chat->product->price, 0) }}</p>
+                                                    </div>
+                                                </div> --}}
+                                                @foreach ($roomChats as $roomChat)
+                                                    @if ($roomChat->sender_id === auth()->user()->id)
+                                                        <input type="hidden" name="chat_id" value="{{ $roomChat->chat_id }}">
+                                                        <input type="hidden" name="receiver_id" value="{{ $roomChat->receiver_id }}">
+                                                        <div class="chat-message-right text-white pb-4">
+                                                            <div>
+                                                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                                                                    class="rounded-circle me-1" alt="Chris Wood" width="40"
+                                                                    height="40">
+                                                                <div class="text-muted small text-nowrap mt-2">{{ date('H:i', strtotime($roomChat->created_at)) }}</div>
+                                                            </div>
+                                                            <div class="text-capitalize flex-shrink-1 bg-secondary rounded py-2 px-3 me-3">
+                                                                <div class="font-weight-bold mb-1">Anda</div>
+                                                                {{ $roomChat->message }}
+                                                            </div>
+                                                        </div>
+                                                    @else
+                                                        <div class="chat-message-left pb-4">
+                                                            <div>
+                                                                <img src="https://bootdey.com/img/Content/avatar/avatar5.png"
+                                                                    class="rounded-circle ms-1" alt="Gapoktan" width="40"
+                                                                    height="40">
+                                                                <div class="text-muted small text-nowrap mt-2">{{ date('H:i', strtotime($roomChat->created_at)) }}</div>
+                                                            </div>
+                                                            <div class="text-capitalize flex-shrink-1 bg-light rounded py-2 px-3 ms-3">
+                                                                <div class="font-weight-bold mb-1">Gapoktan</div>
+                                                                {{ $roomChat->message }}
+                                                            </div>
+                                                        </div>
+                                                    @endif
+                                                @endforeach
+                                                @else
+                                                <div id="app">
+                                                    <section class="section">
+                                                        <div class="container">
+                                                            <div class="page-error">
+                                                                <div class="page-inner">
+                                                                    <div class="page-description">
+                                                                        Belum ada pesan!
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </section>
+                                                </div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="flex-grow-0 py-3 px-4 border-top">
+                                            <div class="input-group d-flex flex-row align-items-center">
+                                                <input type="text" name="message" class="ps-3 border form-control" placeholder="Tulis Pesan...">
+                                                <button type="submit" id="chatBtnDisabled" class="mt-3 btn btn-primary">Kirim</button>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </section>
+                </main>
             </div>
         </div>
     </div>
@@ -331,6 +270,76 @@
 
     <!-- JAVASCRIPT -->
     <script>
+        // add new employee ajax request
+        $("#add_employee_form").submit(function(e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            $("#chatBtnDisabled").prop('disabled', true);
+            $.ajax({
+            url: '{{ route('pembeli.createChat') }}',
+            method: 'post',
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: 'json',
+            success: function(response) {
+                if (response.status == 400) {
+                    showError('message', response.messages.message);
+                    $("#chatBtnDisabled").prop('disabled', false);
 
+                } else if (response.status == 200){
+                    window.location.reload();
+                    $("#chatBtnDisabled").prop('disabled', false);
+                }
+            }
+            });
+        });
+
+        const messaging = firebase.messaging();
+        messaging.usePublicVapidKey("BOPzmY3tl0kiX3fUSsQBfurfNxn86-jBjjPCbJxObhqxEMu-RFxwwhHNQ-dGRF0SDQMIEuCTi3BOQz_pUYYBvxs");
+
+        function sendTokenToServer(fcm_token)
+        {
+            const user_id = '{{auth()->user()->id}}';
+            axios.post('/api/save-token', {
+                fcm_token, user_id
+            })
+            .then(res => {
+                console.log(res);
+            })
+        }
+
+        function retrieveToken() {
+            messaging.getToken()
+            .then((currentToken) => {
+                if (currentToken) {
+                    console.log('Token Received : ' +  currentToken)
+                    sendTokenToServer(currentToken);
+                    // Track the token -> client mapping, by sending to backend server
+                    // show on the UI that permission is secured
+                } else {
+                    alert('You should allow notification!');
+                    // console.log('No registration token available. Request permission to generate one.');
+                    // shows on the UI that permission is required
+                }
+            }).catch((err) => {
+                console.log('An error occurred while retrieving token. ', err);
+                // catch error while creating client token
+            });
+        }
+
+        retrieveToken();
+
+        messaging.onTokenRefresh(() => {
+            retrieveToken();
+        });
+
+        messaging.onMessage((payload)=>{
+            console.log('Message received');
+            console.log(payload);
+
+            location.reload();
+        });
     </script>
 @endsection

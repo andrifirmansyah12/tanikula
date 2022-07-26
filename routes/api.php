@@ -54,7 +54,7 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('product-photo', PhotoProductApiControlller::class);
     Route::post('product-photo/delete-where-id-product', [PhotoProductApiControlller::class, 'deleteWhereProductId']);
 
-    // Chat 
+    // Chat
     Route::resource('chat', ChatApiController::class);
     Route::resource('room-chat', RoomChatApiController::class);
     Route::resource('participant-chat', ParticipantChatApiController::class);
@@ -102,6 +102,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('akun-petani/update/image', [AkunPetaniApiController::class, 'updatePhoto']);
     // user
     Route::resource('user', UserApiController::class);
+
 });
 
 
@@ -128,6 +129,7 @@ Route::post('login-gapoktan', [LoginGapoktanApiController::class, 'login']);
 // ------ Gapoktan -----------
 Route::post('login-poktan', [LoginPoktanApiController::class, 'login']);
 
+Route::post('/save-token', [App\Http\Controllers\Pembeli\ChatController::class, 'tokenFcm']);
 
 // ------ Petani -----------
 Route::post('login-petani', [LoginPetaniApiController::class, 'login']);

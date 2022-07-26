@@ -11,14 +11,14 @@ class RoomChat extends Model
 
     protected $guarded = ['id'];
 
-    public function user()
+    public function userSender()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo('App\Models\User', 'sender_id', 'id');
     }
 
-    public function participantChat()
+    public function userReceiver()
     {
-        return $this->belongsTo(ParticipantChat::class);
+        return $this->belongsTo('App\Models\User', 'receiver_id', 'id');
     }
 
     public function chat()
