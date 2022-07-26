@@ -70,7 +70,6 @@
         .chat-messages {
             height: 300px;
             overflow-y: scroll;
-            overflow: hidden;
         }
     </style>
 @endsection
@@ -380,30 +379,30 @@
                 <div class="modal-body">
                     <div id="chat2">
                         <div class="border rounded p-3 d-flex justify-content-between align-items-center">
-                            <h6 class="mb-0">Chat</h6>
+                            <h6 class="mb-0">{{ $item->user->name }}</h6>
                         </div>
                         <div class="card-body position-relative">
                             <div class="chat-messages">
-                                @if ($chats->count() > 0)
-                                    @foreach ($chats as $chat)
+                                @if ($roomChats->count() > 0)
+                                    @foreach ($roomChats as $roomChat)
                                         @auth
-                                            @if ($chat->sender_id === auth()->user()->id)
+                                        @if ($roomChat->sender_id === auth()->user()->id)
                                         <div class="d-flex flex-row justify-content-end mb-4 pt-1">
                                             <div>
-                                                <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">{{ $chat->message }}</p>
+                                                <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">{{ $roomChat->message }}</p>
                                                 <p class="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">
-                                                    00:06</p>
+                                                    {{ date('H:i', strtotime($roomChat->created_at)) }}</p>
                                             </div>
                                             <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp"
                                                 alt="avatar 1" style="width: 45px; height: 100%;">
                                         </div>
-                                        @elseif ($chat->receiver_id === $item->user_id)
+                                        @else
                                         <div class="d-flex flex-row justify-content-start">
                                             <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
                                                 alt="avatar 1" style="width: 45px; height: 100%;">
                                             <div>
-                                                <p class="small p-2 ms-3 mb-1 rounded-3" style="background-color: #f5f6f7;">{{ $chat->message }}</p>
-                                                <p class="small ms-3 mb-3 rounded-3 text-muted">23:58</p>
+                                                <p class="small p-2 ms-3 mb-1 rounded-3" style="background-color: #f5f6f7;">{{ $roomChat->message }}</p>
+                                                <p class="small ms-3 mb-3 rounded-3 text-muted">{{ date('H:i', strtotime($roomChat->created_at)) }}</p>
                                             </div>
                                         </div>
                                         @endif
@@ -459,7 +458,7 @@
                                     alt="avatar 3" style="width: 40px; height: 100%;">
                                 <input type="text" name="message" class="border form-control ms-3" id="exampleFormControlInput1"
                                     placeholder="Tulis Pesan...">
-                                <button type="submit" class="ms-3 btn btn-white rounded border border"><i class="fas fa-paper-plane"></i></button>
+                                <button type="submit" id="chatBtnDisabled" class="ms-3 btn btn-white rounded border border"><i class="fas fa-paper-plane"></i></button>
                             </div>
                         </form>
                     </div>
@@ -560,6 +559,7 @@
         $("#addChatForm").submit(function(e) {
             e.preventDefault();
             var formData = new FormData(this);
+            $("#chatBtnDisabled").prop('disabled', true);
             $.ajax({
             url: '{{ route('produk.createChat') }}',
             method: 'post',
@@ -571,8 +571,10 @@
             success: function(response) {
                 if (response.status == 400) {
                     showError('message', response.messages.message);
+                    $("#chatBtnDisabled").prop('disabled', false);
                 } else if (response.status == 200){
                     window.location.reload();
+                    $("#chatBtnDisabled").prop('disabled', false);
                 }
             }
             });

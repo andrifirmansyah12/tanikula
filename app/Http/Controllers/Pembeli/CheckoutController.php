@@ -12,11 +12,16 @@ use App\Models\OrderItem;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Http;
 
 class CheckoutController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        //Variabel key dan url API raja ongkir
+        $key = 'f5ed16cb52b0f2936e98e7e22a4a02f5'; //Buat akun atau pakai API akun Tahu Coding
+        $cost_url = 'https://api.rajaongkir.com/starter/cost';
+
         $address = Address::with('user')
                     ->join('users', 'addresses.user_id', '=', 'users.id')
                     ->select('addresses.*', 'users.email as email')
@@ -33,7 +38,81 @@ class CheckoutController extends Controller
             }
         }
         $cartItem = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
-        return view('pages.checkout.index', compact('cartItem', 'address'));
+
+        //Variabel yang valuenya didapat dari request()
+        if($request->has('service'))
+        {
+            $data_origin = 149;
+            $data_destination = 154;
+            $data_weight = 1700;
+            $data_courier = $request->courier;
+            $data_service = $request->service;
+
+            //logic untuk calculate cost
+            $response = Http::retry(10, 200)->asForm()->withHeaders([
+                'key' => $key
+            ])->post($cost_url, [
+                'origin' => $data_origin,
+                'destination' => $data_destination,
+                'weight' => $data_weight,
+                'courier' => $data_courier
+            ]);
+
+            $result_cost = $response['rajaongkir']['results'][0]['costs'];
+        }
+        else{
+            $data_courier = "";
+            $data_service = "";
+            $result_cost = null;
+        }
+
+        return view('pages.checkout.index', compact('cartItem', 'address', 'result_cost', 'data_service'));
+    }
+
+    //function untuk calculate cost
+    // private function postData($key, $url,$data_origin,$data_destination,$data_weight,$data_courier){
+    //     //retry() maskudnya function untuk retry hit API jika time out sebanyak parameter pertama dan range interval pada parameter kedua dalam milisecon
+    //     //asForm() maksudnya menggunakan application/x-www-form-urlencoded content type biasanya untuk method POST
+    //     //withHeaders() maksudnya parameter header (Jika diminta, masing2 API punya header masing-masing dan yang tidak pakai header)
+    //     return Http::retry(10, 200)->asForm()->withHeaders([
+    //         'key' => $key
+    //     ])->post($cost_url, [
+    //         'origin' => $data_origin,
+    //         'destination' => $data_destination,
+    //         'weight' => $data_weight,
+    //         'courier' => $data_courier
+    //     ]);
+    //     //setelah $url itu adalah array yaitu parameter wajib yg dibutuhkan ketika meminta POST request
+    // }
+
+    public function check_ongkir(Request $request)
+    {
+        // //Variabel key dan url API raja ongkir
+        $key = 'f5ed16cb52b0f2936e98e7e22a4a02f5'; //Buat akun atau pakai API akun Tahu Coding
+        $cost_url = 'https://api.rajaongkir.com/starter/cost';
+
+        if($request->courier)
+        {
+            $data_origin = 149;
+            $data_destination = 154;
+            $data_weight = 1700;
+            $data_courier = $request->courier;
+
+            $response = Http::retry(10, 200)->asForm()->withHeaders([
+                'key' => $key
+            ])->post($cost_url, [
+                'origin' => $data_origin,
+                'destination' => $data_destination,
+                'weight' => $data_weight,
+                'courier' => $data_courier
+            ]);
+
+            $result_cost = $response['rajaongkir']['results'][0]['costs'];
+        } else {
+            $result_cost = null;
+        }
+
+        return response()->json($result_cost);
     }
 
     public function received($orderId)
@@ -78,14 +157,15 @@ class CheckoutController extends Controller
 
         $total = 0; // total item checkout
         $cartItem_total = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
-        foreach ($cartItem_total as $product_total) {
+        foreach ($cartItem_total as $product_total)
+        {
             $total += $product_total->product->price * $product_total->product_qty;
         }
 
         $orderDate = date('Y-m-d H:i:s');
 		$paymentDue = (new \DateTime($orderDate))->modify('+1 day')->format('Y-m-d H:i:s');
 
-        $order->total_price = $total;
+        $order->total_price = $total + $request->priceService;
         $order->code = Order::generateCode();
         $order->status = Order::CREATED;
         $order->order_date = $orderDate;

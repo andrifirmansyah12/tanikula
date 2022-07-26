@@ -234,7 +234,7 @@
                                         <div class="flex-grow-0 py-3 px-4 border-top">
                                             <div class="input-group d-flex flex-row align-items-center">
                                                 <input type="text" name="message" class="ps-3 border form-control" placeholder="Tulis Pesan...">
-                                                <button type="submit" class="mt-3 btn btn-primary">Kirim</button>
+                                                <button type="submit" id="chatBtnDisabled" class="mt-3 btn btn-primary">Kirim</button>
                                             </div>
                                         </div>
                                     </form>
@@ -274,6 +274,7 @@
         $("#add_employee_form").submit(function(e) {
             e.preventDefault();
             var formData = new FormData(this);
+            $("#chatBtnDisabled").prop('disabled', true);
             $.ajax({
             url: '{{ route('pembeli.createChat') }}',
             method: 'post',
@@ -285,8 +286,11 @@
             success: function(response) {
                 if (response.status == 400) {
                     showError('message', response.messages.message);
+                    $("#chatBtnDisabled").prop('disabled', false);
+
                 } else if (response.status == 200){
                     window.location.reload();
+                    $("#chatBtnDisabled").prop('disabled', false);
                 }
             }
             });

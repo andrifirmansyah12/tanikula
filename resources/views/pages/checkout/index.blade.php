@@ -169,9 +169,21 @@
                             </div>
                         </div>
                         @php
-                            $subTotal = $item->product->price * $item->product_qty;
-                            $total += $item->product->price * $item->product_qty;
-                            $totalQty += $item->product_qty;
+                            if($result_cost) {
+                                foreach($result_cost as $result) {
+                                    if ($result['service'] == $data_service) {
+                                        $subTotal = $item->product->price * $item->product_qty;
+                                        $total += $item->product->price * $item->product_qty;
+                                        $totalService = $total + $result['cost'][0]['value'];
+                                        $totalQty += $item->product_qty;
+                                        $valueService = $result['cost'][0]['value'];
+                                    }
+                                }
+                            } else {
+                                $subTotal = $item->product->price * $item->product_qty;
+                                $total += $item->product->price * $item->product_qty;
+                                $totalQty += $item->product_qty;
+                            }
                         @endphp
                         <div class="my-2">
                             <div class="d-flex justify-content-between">
@@ -204,28 +216,84 @@
                         <div class="m-0 m-xl-4 p-4 border">
                             <h3 class="mb-3 fs-4">Ringkasan Belanja</h3>
                             <div
-                                class="d-flex mb-8 align-items-center justify-content-between pb-3 border-bottom border-info-light">
-                                <span class="">Total Harga({{$totalQty}} Barang)</span>
-                                <span class="fs-6 fw-bold">Rp. {{ number_format($total, 0) }}</span>
+                                class="mb-8 pb-3 border-bottom border-info-light">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <span class="">Total Harga({{$totalQty}} Barang)</span>
+                                    <span class="fs-6 fw-bold">Rp. {{ number_format($total, 0) }}</span>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <span class="">Ongkir</span>
+                                    <span class="fs-6 fw-bold">
+                                        @if ($result_cost)
+                                            @if ($cartItem->count() > 0)
+                                                Rp. {{ number_format($valueService, 0) }}
+                                            @else
+                                                Rp. 0
+                                            @endif
+                                        @else
+                                            Rp. 0
+                                        @endif
+                                    </span>
+                                </div>
                             </div>
                             <div class="d-flex mb-10 mt-3 justify-content-between align-items-center">
                                 <span class="fw-bold">Total Tagihan</span>
-                                <span class="fs-6 fw-bold">Rp. {{ number_format($total, 0) }}</span>
+                                <span class="fs-6 fw-bold">
+                                    @if ($result_cost)
+                                        @if ($cartItem->count() > 0)
+                                            Rp. {{ number_format($totalService, 0) }}
+                                        @else
+                                            Rp. 0
+                                        @endif
+                                    @else
+                                        Rp. {{ number_format($total, 0) }}
+                                    @endif
+                                </span>
                             </div>
                             <div class="col-12">
-                                @if ($address->count() < 1)
+                                @if($result_cost)
+                                <div>
+                                    <p for="courier" class="py-2 fw-bold">Estimasi</p>
+                                    <div class="border p-2 mb-2 rounded">
+                                    @foreach($result_cost as $result)
+                                        @if ($result['service'] == $data_service)
+                                            <input type="hidden" name="priceService" value="{{$result['cost'][0]['value']}}">
+                                            <div class="px-2">
+                                                <p>{{$result['service']}} - {{$result['description']}} {{$result['cost'][0]['value']}}</p>
+                                                <p>({{$result['cost'][0]['etd']}} Hari)</p>
+                                            </div>
+                                            <p style="cursor: pointer;" class="px-2 text-end fw-bold" data-bs-toggle="modal" data-bs-target="#PilihCourier">Ganti Kurir</p>
+                                        @endif
+                                    @endforeach
+                                    </div>
+                                </div>
+                                @else
+                                    @if ($cartItem->count() > 0)
+                                    <div class="mb-2">
+                                        <label for="courier" class="py-2">Pilih Kurir</label>
+                                        <a style="background: #16A085; color: white" class="d-flex justify-content-center btn btn-light border" data-bs-toggle="modal" data-bs-target="#PilihCourier">Pilih Kurir</a>
+                                    </div>
+                                    @endif
+                                @endif
+                                @if (!$result_cost)
                                     <button disabled class="btn border col-12" style="background: #16A085; color: white;" data-bs-toggle="modal" data-bs-target="#PilihPembayaran">
                                         Buat Pesanan
                                     </button>
                                 @else
-                                    @if ($cartItem->count() > 0)
-                                        <button type="submit" class="btn border col-12" style="background: #16A085; color: white;" data-bs-toggle="modal" data-bs-target="#PilihPembayaran">
-                                            Buat Pesanan
-                                        </button>
-                                    @else
+                                    @if ($address->count() < 1 )
                                         <button disabled class="btn border col-12" style="background: #16A085; color: white;" data-bs-toggle="modal" data-bs-target="#PilihPembayaran">
                                             Buat Pesanan
                                         </button>
+                                    @else
+                                        @if ($cartItem->count() > 0)
+                                            <button type="submit" class="btn border col-12" style="background: #16A085; color: white;" data-bs-toggle="modal" data-bs-target="#PilihPembayaran">
+                                                Buat Pesanan
+                                            </button>
+                                        @else
+                                            <button disabled class="btn border col-12" style="background: #16A085; color: white;" data-bs-toggle="modal" data-bs-target="#PilihPembayaran">
+                                                Buat Pesanan
+                                            </button>
+                                        @endif
                                     @endif
                                 @endif
                             </div>
@@ -236,6 +304,55 @@
         </div>
     </div>
 </section>
+
+<!-- Modal Pilih Alamat -->
+<div class="modal fade" id="PilihCourier" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            {{-- <form action="#" id="checkCourier" method="GET">
+                @csrf --}}
+                <div class="modal-body">
+                    {{-- @if($result_cost)
+                    <div>
+                        <label for="service" class="py-2">Pilih Pengiriman</label>
+                        <select name="service" required class="form-control">
+                            <option value="" selected disabled holder>Pilih Pengiriman</option>
+                            @foreach($result_cost as $result)
+                            <option>{{$result['service']}} - {{$result['description']}} {{$result['cost'][0]['value']}}
+                                ({{$result['cost'][0]['etd']}} Hari)</span></option>
+                            @endforeach
+                        </select>
+                    </div>
+                    @else --}}
+                    <form action="{{ url('/cart/shipment') }}" method="get">
+                        @csrf
+                        <div class="my-2">
+                            <p class="py-2">Pilih Kurir</p>
+                            <select name="courier" required class="form-control">
+                                <option value="" selected disabled holder>Pilih Kurir</option>
+                                <option value="jne">JNE</option>
+                                <option value="tiki">TIKI</option>
+                                <option value="pos">POS</option>
+                            </select>
+                            <button id="btn-check" class="my-2 border btn btn-light col-12">Check Kurir</button>
+                        </div>
+
+                        <div class="form-group mt-5">
+                            <h1 class="text-center">ESTIMASI</h1>
+                            <p class="py-2">Pilih Estimasi</p>
+                            <select name="service" id="service" class="form-control" required>
+                                <option value="" disabled selected holder>Pilih Estimasi</option>
+                            </select>
+                            <button type="submit" style="background: #16A085; color: white" id="btnDisabled" disabled
+                                class="my-2 border btn btn-light col-12">Simpan</button>
+                        </div>
+                    </form>
+                    {{-- @endif --}}
+                </div>
+            {{-- </form> --}}
+        </div>
+    </div>
+</div>
 
 <!-- Modal Pilih Alamat -->
 <div class="modal fade" id="PilihAlamat" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -412,6 +529,36 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
+        });
+    });
+
+    $(document).ready(function(){
+    //ajax check ongkir
+        $('#btn-check').click(function (e) {
+            e.preventDefault();
+
+            let token = $("meta[name='csrf-token']").attr("content");
+            let courier = $('select[name=courier]').val();
+
+            $.ajax({
+                url: "/ongkir",
+                data: {
+                    _token: token,
+                    courier: courier,
+                },
+                dataType: "JSON",
+                type: "POST",
+                success: function (response) {
+                    if (response) {
+                        $('select[name="service"]').empty();
+                        $("#btnDisabled").prop('disabled', false);
+                        var increment = 0;
+                        $.each(response, function (key, value) {
+                            $('select[name="service"]').append('<option value="'+value.service+'"><strong>'+value.service+'</strong> - Rp. '+value.cost[0].value+' ('+value.cost[0].etd+' hari)</option>')
+                        });
+                    }
+                }
+            });
         });
     });
 

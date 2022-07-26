@@ -490,7 +490,7 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function(
 
     // Keranjang dan Order
     Route::get('/cart', [App\Http\Controllers\Pembeli\CartController::class, 'viewCart']);
-    Route::get('/cart/shipment', [App\Http\Controllers\Pembeli\CheckoutController::class, 'index']);
+    Route::get('/cart/shipment', [App\Http\Controllers\Pembeli\CheckoutController::class, 'index'])->name('cart.shipment.pembeli');
     Route::post('/cart/shipment/place-order', [App\Http\Controllers\Pembeli\CheckoutController::class, 'placeOrder'])->name('place-order-costumer');
 
     // Crud Address
@@ -499,6 +499,9 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function(
     Route::get('/cart/shipment/editAddress', [App\Http\Controllers\Pembeli\CheckoutController::class, 'editAddress'])->name('edit.alamat.costumer');
     Route::post('/cart/shipment/updateAddress', [App\Http\Controllers\Pembeli\CheckoutController::class, 'updateAddress'])->name('update.alamat.costumer');
     Route::post('/cart/shipment/updateMainAddress', [App\Http\Controllers\Pembeli\CheckoutController::class, 'updateMainAddress'])->name('updateMainAddress.pembeli.alamat');
+
+    // Check Ongkir (RajaOngkir)
+    Route::post('/ongkir', [App\Http\Controllers\Pembeli\CheckoutController::class, 'check_ongkir']);
 
     // Chat
     Route::get('/pembeli/chat', [App\Http\Controllers\Pembeli\ChatController::class, 'index'])->name('pembeli.chat');
@@ -509,6 +512,11 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function(
     //     return view('costumer.chat.index');
     // })->name('pembeli.chat');
 
+    // Raja Ongkir
+    Route::get('/raja-ongkir', [App\Http\Controllers\Pages\RajaOngkirController::class, 'index']);
+
+    Route::post('/store-token', [App\Http\Controllers\Pembeli\NotificationController::class, 'storeToken'])->name('store.token');
+    Route::post('/send-web-notification', [App\Http\Controllers\Pembeli\NotificationController::class, 'sendWebNotification'])->name('send.web-notification');
 });
 
 // Notifikasi Payment Midtrans

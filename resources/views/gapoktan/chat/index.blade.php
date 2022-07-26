@@ -188,9 +188,9 @@
                                             </div>
                                         </div> --}}
                                         @foreach ($roomChats as $roomChat)
-                                        @if ($roomChat->sender_id === auth()->user()->id)
                                         <input type="hidden" name="chat_id" value="{{ $roomChat->chat_id }}">
                                         <input type="hidden" name="receiver_id" value="{{ $roomChat->sender_id }}">
+                                        @if ($roomChat->sender_id === auth()->user()->id)
                                         <div class="chat-message-right pb-4">
                                             <div>
                                                 <img src="https://bootdey.com/img/Content/avatar/avatar1.png"
@@ -237,7 +237,7 @@
                                     <div class="input-group d-flex flex-row align-items-center">
                                         <input type="text" name="message" class="ps-3 border form-control"
                                             placeholder="Tulis Pesan...">
-                                        <button type="submit" class="btn btn-primary">Kirim</button>
+                                        <button type="submit" id="chatBtnDisabled" class="btn btn-primary">Kirim</button>
                                     </div>
                                 </div>
                                 </form>
@@ -275,6 +275,7 @@
         $("#add_employee_form").submit(function(e) {
             e.preventDefault();
             var formData = new FormData(this);
+            $("#chatBtnDisabled").prop('disabled', true);
             $.ajax({
             url: '{{ route('gapoktan.createChat') }}',
             method: 'post',
@@ -286,8 +287,11 @@
             success: function(response) {
                 if (response.status == 400) {
                     showError('message', response.messages.message);
+                    $("#chatBtnDisabled").prop('disabled', false);
+
                 } else if (response.status == 200){
                     window.location.reload();
+                    $("#chatBtnDisabled").prop('disabled', false);
                 }
             }
             });

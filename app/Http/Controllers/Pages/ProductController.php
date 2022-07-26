@@ -9,7 +9,7 @@ use App\Models\Product;
 use App\Models\PhotoProduct;
 use App\Models\Cart;
 use App\Models\Order;
-use App\Models\Chat;
+use App\Models\RoomChat;
 use App\Models\OrderItem;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Review;
@@ -70,10 +70,10 @@ class ProductController extends Controller
                 $ratingValue = 0;
             }
 
-            $chats = Chat::all();
+            $roomChats = RoomChat::all();
 
             // $photoProduct = PhotoProduct::where('product_id', $product->id)->get();
-            return view('pages.home.detail', compact('product', 'product_new', 'reviews', 'ratingValue', 'showReviews', 'chats'));
+            return view('pages.home.detail', compact('product', 'product_new', 'reviews', 'ratingValue', 'showReviews', 'roomChats'));
         } else {
             return redirect('/')->with('status', 'Produk tidak ditemukan');
         }
@@ -612,8 +612,8 @@ class ProductController extends Controller
                 } else {
                     $ratingValue = 0;
                 }
-                $chats = Chat::all();
-                return view('pages.home.detail', compact('product', 'product_new', 'reviews', 'ratingValue', 'showReviews', 'chats'));
+                $roomChats = RoomChat::all();
+                return view('pages.home.detail', compact('product', 'product_new', 'reviews', 'ratingValue', 'showReviews', 'roomChats'));
             } else {
                 return redirect('/')->with('status', 'The link was broken!');
             }
