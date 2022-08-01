@@ -65,10 +65,17 @@
             <div class="col-lg-10 col-xl-12">
                 <div class="card shadow rounded">
                     <div class="d-flex flex-row justify-content-between align-items-center card-header px-4 py-5" style="background: #16A085;">
+                        @if (!$order->isPaid())
                         <div>
-                            <h5 class="mb-0 text-white">Pesanan Anda telah dibuat,</h5>
+                            <h5 class="mb-0 text-white">Pesanan Anda telah dibuat.</h5>
                             <h5 class="mb-0 text-white">Silahkan melanjutkan untuk pembayaran!</h5>
                         </div>
+                        @else
+                        <div>
+                            <h5 class="mb-0 text-white">Pembayaran Berhasil.</h5>
+                            <h5 class="mb-0 text-white">Terima Kasih, pesanan anda sedang diproses!</h5>
+                        </div>
+                        @endif
                         <script>
                             var isExpired = false;
                             CountDownTimer('{{ $order->order_date }}', 'countdown');
@@ -101,9 +108,11 @@
                                 timer = setInterval(showRemaining, 1000);
                             }
                         </script>
+                        @if (!$order->isPaid())
                         <div>
                             <h6 class="mb-0 text-white" id="countdown"></h6>
                         </div>
+                        @endif
                     </div>
                     <div class="card-body p-4">
                         <div class="d-md-flex justify-content-between align-items-center mb-4">
@@ -251,7 +260,7 @@
                             Lanjutkan Pembayaran
                         </a>
                         @endif
-                        
+
                     </div>
                 </div>
             </div>
