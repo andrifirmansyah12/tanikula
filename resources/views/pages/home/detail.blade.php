@@ -87,7 +87,7 @@
                                     @if ($product->photo_product->count() > 0)
                                         @foreach ($product->photo_product->take(1) as $photos)
                                             @if ($photos->name)
-                                                <img src="{{ asset('../storage/produk/'.$photos->name) }}" id="current" alt="{{ $product->name }}">
+                                                <img src="{{ asset('../storage/produk/'.$photos->name) }}" id="current" alt="{{ $product->name }}" style="height: 25rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                                             @else
                                                 <img src="{{ asset('img/no-image.png') }}" id="current" alt="{{ $product->name }}">
                                             @endif
@@ -98,7 +98,7 @@
                                 </div>
                                 <div class="images">
                                     @foreach ($product->photo_product as $photos)
-                                        <img src="{{ asset('../storage/produk/'.$photos->name) }}" class="img" alt="#">
+                                        <img src="{{ asset('../storage/produk/'.$photos->name) }}" class="img" style="height: 6rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="#">
                                     @endforeach
                                 </div>
                             </main>
