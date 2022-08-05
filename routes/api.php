@@ -30,6 +30,7 @@ use App\Http\Controllers\Api\Poktan\AkunPoktanApiController;
 use App\Http\Controllers\Api\Poktan\LoginPoktanApiController;
 use App\Http\Controllers\Api\ProductApiController;
 use App\Http\Controllers\Api\ProductCategoryApiController;
+use App\Http\Controllers\Api\PushNotificationController;
 use App\Http\Controllers\Api\UserApiController;
 use Illuminate\Support\Facades\Route;
 use Midtrans\Transaction;
@@ -76,6 +77,8 @@ Route::middleware('auth:api')->group(function () {
     Route::get('transaction_list/{user_id}', [TransactionListApiController::class, 'index']);
     Route::post('/transaction_list/detail_transaction/{id}', [TransactionListApiController::class, 'detailPesanan']);
     Route::resource('review', ReviewApiController::class);
+    Route::get('notification_list/{user_id}', [PushNotificationController::class, 'indexByid']);
+    Route::get('notification_list/delete-all', [PushNotificationController::class, 'deleteall']);
 
     // ------ Gapoktan -----------
     // Activity
@@ -136,3 +139,11 @@ Route::post('login-poktan', [LoginPoktanApiController::class, 'login']);
 
 // ------ Petani -----------
 Route::post('login-petani', [LoginPetaniApiController::class, 'login']);
+
+// // Notification Controllers
+// Route::post('send', [PushNotificationController::class, 'bulksend'])->name('bulksend');
+// Route::get('all-notifications', [PushNotificationController::class, 'index']);
+// Route::get('get-notification-form', [PushNotificationController::class, 'create']);
+
+// Tes notifikasi
+// Route::post('send-notification', [PushNotificationController::class, 'tesApi']);

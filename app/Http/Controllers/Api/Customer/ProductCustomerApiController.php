@@ -14,7 +14,8 @@ class ProductCustomerApiController extends BaseController
 {
     public function index()
     {
-        $datas = Product::latest()->get();
+        // $datas = Product::latest()->get();
+        $datas = Product::paginate(3);
 
         $result = ProductResource::collection($datas);
         return $this->sendResponse($result, 'Data fetched');

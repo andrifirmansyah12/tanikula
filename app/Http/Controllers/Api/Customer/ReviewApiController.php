@@ -27,8 +27,8 @@ class ReviewApiController extends BaseController
             "review" => $request->review,
         ]);
 
-        $result = Review::make($datas);
-        return $this->sendResponse($result, 'Data fetched');
+        // $result = Review::make($datas);
+        return $this->sendResponse($datas, 'Data fetched');
 
         // $user_id =  $request->user_id;
         // $order_id =  $request->input('order_id', []);
