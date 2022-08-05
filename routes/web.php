@@ -162,9 +162,11 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:gapoktan']], function
     Route::post('gapoktan/markasreadHarvest', [App\Http\Controllers\Gapoktan\NotificationController::class, 'markNotificationHarvest'])->name('gapoktan.markas.read.harvest');
 
     // Chat
-    Route::get('gapoktan/chat', function () {
-        return view('gapoktan.chat.index');
-    })->name('gapoktan.chat');
+    Route::get('/gapoktan/chat', [App\Http\Controllers\Gapoktan\ChatController::class, 'index'])->name('gapoktan.chat');
+    Route::post('/gapoktan/chat', [App\Http\Controllers\Gapoktan\ChatController::class, 'createChat'])->name('gapoktan.createChat');
+    // Route::get('gapoktan/chat', function() {
+    //     return view('gapoktan.chat.index');
+    // })->name('gapoktan.chat');
 
     // Edukasi
     Route::get('gapoktan/edukasi', [App\Http\Controllers\Gapoktan\EducationController::class, 'index'])->name('gapoktan-edukasi');
@@ -485,7 +487,7 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function 
 
     // Keranjang dan Order
     Route::get('/cart', [App\Http\Controllers\Pembeli\CartController::class, 'viewCart']);
-    Route::get('/cart/shipment', [App\Http\Controllers\Pembeli\CheckoutController::class, 'index']);
+    Route::get('/cart/shipment', [App\Http\Controllers\Pembeli\CheckoutController::class, 'index'])->name('cart.shipment.pembeli');
     Route::post('/cart/shipment/place-order', [App\Http\Controllers\Pembeli\CheckoutController::class, 'placeOrder'])->name('place-order-costumer');
 
     // Crud Address
@@ -495,10 +497,23 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function 
     Route::post('/cart/shipment/updateAddress', [App\Http\Controllers\Pembeli\CheckoutController::class, 'updateAddress'])->name('update.alamat.costumer');
     Route::post('/cart/shipment/updateMainAddress', [App\Http\Controllers\Pembeli\CheckoutController::class, 'updateMainAddress'])->name('updateMainAddress.pembeli.alamat');
 
+    // Check Ongkir (RajaOngkir)
+    Route::post('/ongkir', [App\Http\Controllers\Pembeli\CheckoutController::class, 'check_ongkir']);
+
     // Chat
-    Route::get('pembeli/chat', function () {
-        return view('costumer.chat.index');
-    })->name('pembeli.chat');
+    Route::get('/pembeli/chat', [App\Http\Controllers\Pembeli\ChatController::class, 'index'])->name('pembeli.chat');
+    Route::post('/pembeli/createChat', [App\Http\Controllers\Pembeli\ChatController::class, 'createChat'])->name('pembeli.createChat');
+    // Route::get('/pembeli/detailChat', [App\Http\Controllers\Poktan\ChatController::class, 'detailChat'])->name('pembeli.detailChat');
+    Route::post('/produkChat', [App\Http\Controllers\Pembeli\ChatController::class, 'produkChat'])->name('produk.createChat');
+    // Route::get('pembeli/chat', function() {
+    //     return view('costumer.chat.index');
+    // })->name('pembeli.chat');
+
+    // Raja Ongkir
+    Route::get('/raja-ongkir', [App\Http\Controllers\Pages\RajaOngkirController::class, 'index']);
+
+    Route::post('/store-token', [App\Http\Controllers\Pembeli\NotificationController::class, 'storeToken'])->name('store.token');
+    Route::post('/send-web-notification', [App\Http\Controllers\Pembeli\NotificationController::class, 'sendWebNotification'])->name('send.web-notification');
 });
 
 // Notifikasi Payment Midtrans

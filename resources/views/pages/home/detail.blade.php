@@ -6,8 +6,45 @@
 @section('style')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
+        #chat2 .form-control {
+            border-color: transparent;
+        }
+
+        #chat2 .form-control:focus {
+            border-color: transparent;
+            box-shadow: inset 0px 0px 0px 1px transparent;
+        }
+
+        .divider:after,
+        .divider:before {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #eee;
+        }
+
         .ratings-color{
            color: #f0d800;
+        }
+
+        .page-error-chat {
+            height: 100%;
+            width: 100%;
+            text-align: center;
+            display: table;
+        }
+
+        .page-error-chat .page-description-chat {
+            padding-top: 100px;
+            font-size: 18px;
+            font-weight: 400;
+            color: var(--primary);
+        }
+
+        @media (max-width: 575.98px) {
+            .page-error-chat {
+                padding-top: 0px;
+            }
         }
 
         .page-error {
@@ -29,6 +66,11 @@
                 padding-top: 0px;
             }
         }
+
+        .chat-messages {
+            height: 300px;
+            overflow-y: scroll;
+        }
     </style>
 @endsection
 
@@ -45,7 +87,7 @@
                                     @if ($product->photo_product->count() > 0)
                                         @foreach ($product->photo_product->take(1) as $photos)
                                             @if ($photos->name)
-                                                <img src="{{ asset('../storage/produk/'.$photos->name) }}" id="current" alt="{{ $product->name }}">
+                                                <img src="{{ asset('../storage/produk/'.$photos->name) }}" id="current" alt="{{ $product->name }}" style="height: 25rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                                             @else
                                                 <img src="{{ asset('img/no-image.png') }}" id="current" alt="{{ $product->name }}">
                                             @endif
@@ -56,7 +98,7 @@
                                 </div>
                                 <div class="images">
                                     @foreach ($product->photo_product as $photos)
-                                        <img src="{{ asset('../storage/produk/'.$photos->name) }}" class="img" alt="#">
+                                        <img src="{{ asset('../storage/produk/'.$photos->name) }}" class="img" style="height: 6rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="#">
                                     @endforeach
                                 </div>
                             </main>
@@ -123,7 +165,7 @@
                                     <div class="form-group">
                                         <label for="color">Lainnya</label>
                                         <div class="wish-button">
-                                            <button class="btn"><i class="bi bi-chat-dots"></i> Chat</button>
+                                            <button class="btn" data-bs-toggle="modal" data-bs-target="#chatModal"><i class="bi bi-chat-dots"></i> Chat</button>
                                         </div>
                                     </div>
                                 </div>
@@ -329,11 +371,154 @@
             </div>
         </div>
     </section>
+
+    <!-- Modal -->
+    <div class="modal fade" id="chatModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div id="chat2">
+                        <div class="border rounded p-3 d-flex justify-content-between align-items-center">
+                            <h6 class="mb-0">{{ $item->user->name }}</h6>
+                        </div>
+                        <div class="card-body position-relative">
+                            <div class="chat-messages">
+                                @if ($roomChats->count() > 0)
+                                    @foreach ($roomChats as $roomChat)
+                                        @auth
+                                        @if ($roomChat->sender_id === auth()->user()->id)
+                                        <div class="d-flex flex-row justify-content-end mb-4 pt-1">
+                                            <div>
+                                                <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">{{ $roomChat->message }}</p>
+                                                <p class="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">
+                                                    {{ date('H:i', strtotime($roomChat->created_at)) }}</p>
+                                            </div>
+                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp"
+                                                alt="avatar 1" style="width: 45px; height: 100%;">
+                                        </div>
+                                        @else
+                                        <div class="d-flex flex-row justify-content-start">
+                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
+                                                alt="avatar 1" style="width: 45px; height: 100%;">
+                                            <div>
+                                                <p class="small p-2 ms-3 mb-1 rounded-3" style="background-color: #f5f6f7;">{{ $roomChat->message }}</p>
+                                                <p class="small ms-3 mb-3 rounded-3 text-muted">{{ date('H:i', strtotime($roomChat->created_at)) }}</p>
+                                            </div>
+                                        </div>
+                                        @endif
+                                        @endauth
+                                    @endforeach
+                                @else
+                                <div id="app">
+                                    <section class="section">
+                                        <div class="container">
+                                            <div class="page-error-chat">
+                                                <div class="page-inner-chat">
+                                                    <div class="page-description-chat">
+                                                        Belum ada pesan!
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="border rounded d-flex flex-row align-items-center mb-3">
+                            <div>
+                                @if ($item->photo_product->count() > 0)
+                                @foreach ($item->photo_product->take(1) as $photos)
+                                @if ($photos->name)
+                                <img src="{{ asset('../storage/produk/'.$photos->name) }}" alt="{{ $item->name }}"
+                                    style="width: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                @else
+                                <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->name }}"
+                                    style="width: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                @endif
+                                @endforeach
+                                @else
+                                <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->name }}"
+                                    style="width: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                @endif
+                            </div>
+                            <div class="ms-3">
+                                <p class="fw-bold">{{ $product->name }}</p>
+                                <p style="font-size: 12px">Rp. {{ number_format($product->price, 0) }}</p>
+                            </div>
+                        </div>
+                        <form action="#" method="POST" id="addChatForm">
+                            @auth
+                                <input type="hidden" name="sender_id" value="{{ auth()->user()->id }}">
+                                <input type="hidden" name="receiver_id" value="{{ $product->user_id }}">
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                            @endauth
+                            <div class="border rounded text-muted d-flex justify-content-start align-items-center p-3">
+                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
+                                    alt="avatar 3" style="width: 40px; height: 100%;">
+                                <input type="text" name="message" class="border form-control ms-3" id="exampleFormControlInput1"
+                                    placeholder="Tulis Pesan...">
+                                <button type="submit" id="chatBtnDisabled" class="ms-3 btn btn-white rounded border border"><i class="fas fa-paper-plane"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('script')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script type="text/javascript">
+        const messaging = firebase.messaging();
+        messaging.usePublicVapidKey("BOPzmY3tl0kiX3fUSsQBfurfNxn86-jBjjPCbJxObhqxEMu-RFxwwhHNQ-dGRF0SDQMIEuCTi3BOQz_pUYYBvxs");
+
+        function sendTokenToServer(fcm_token)
+        {
+            @auth
+                const user_id = '{{auth()->user()->id}}';
+            @endauth
+            axios.post('/api/save-token', {
+                fcm_token, user_id
+            })
+            .then(res => {
+                console.log(res);
+            })
+        }
+
+        function retrieveToken() {
+            messaging.getToken()
+            .then((currentToken) => {
+                if (currentToken) {
+                    console.log('Token Received : ' +  currentToken)
+                    sendTokenToServer(currentToken);
+                    // Track the token -> client mapping, by sending to backend server
+                    // show on the UI that permission is secured
+                } else {
+                    alert('You should allow notification!');
+                    // console.log('No registration token available. Request permission to generate one.');
+                    // shows on the UI that permission is required
+                }
+            }).catch((err) => {
+                console.log('An error occurred while retrieving token. ', err);
+                // catch error while creating client token
+            });
+        }
+
+        retrieveToken();
+
+        messaging.onTokenRefresh(() => {
+            retrieveToken();
+        });
+
+        messaging.onMessage((payload)=>{
+            console.log('Message received');
+            console.log(payload);
+
+            location.reload();
+        });
+
         $('.owl-carousel').owlCarousel({
             loop:false,
             responsiveClass:true,
@@ -367,6 +552,31 @@
                 //current.classList.add("fade-in");
                 //opacity
                 e.target.style.opacity = opacity;
+            });
+        });
+
+        // add new employee ajax request
+        $("#addChatForm").submit(function(e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            $("#chatBtnDisabled").prop('disabled', true);
+            $.ajax({
+            url: '{{ route('produk.createChat') }}',
+            method: 'post',
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: 'json',
+            success: function(response) {
+                if (response.status == 400) {
+                    showError('message', response.messages.message);
+                    $("#chatBtnDisabled").prop('disabled', false);
+                } else if (response.status == 200){
+                    window.location.reload();
+                    $("#chatBtnDisabled").prop('disabled', false);
+                }
+            }
             });
         });
 

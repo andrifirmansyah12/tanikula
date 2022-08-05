@@ -19,6 +19,7 @@ class CreateRoomChatsTable extends Migration
             $table->foreignId("receiver_id")->nullable();
             $table->foreignId("chat_id")->nullable();
             $table->bigInteger('is_hide')->nullable();
+            $table->longText("message")->nullable();
             $table->timestamps();
         });
     }

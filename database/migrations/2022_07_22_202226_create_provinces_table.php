@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateChatsTable extends Migration
+class CreateProvincesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,9 @@ class CreateChatsTable extends Migration
      */
     public function up()
     {
-        Schema::create('chats', function (Blueprint $table) {
+        Schema::create('provinces', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("sender_id")->nullable();
-            $table->foreignId("receiver_id")->nullable();
-            $table->foreignId("product_id")->nullable();
-            $table->boolean('is_hide')->default(0);
-            $table->boolean('is_read')->default(0);
+            $table->string('province');
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ class CreateChatsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('chats');
+        Schema::dropIfExists('provinces');
     }
 }
