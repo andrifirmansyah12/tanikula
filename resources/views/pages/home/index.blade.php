@@ -1,5 +1,5 @@
 @extends('pages.template')
-@section('title', 'Home')
+@section('title', 'Menyediakan produk hasil tani organik')
 
 @section('style')
 <style>

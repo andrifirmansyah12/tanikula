@@ -159,24 +159,51 @@
                             <label for="recipient-name" class="col-form-label">No. Hp:</label>
                             <input type="tel" name="telp" id="telp" class="form-control border px-3" id="recipient-name">
                         </div>
-                        <div class="mb-3">
-                            <label for="recipient-name" class="col-form-label">Label Alamat:</label>
-                            <input type="text" name="address_label" id="address_label" class="form-control border px-3"
-                                id="recipient-name">
-                            <small class="d-flex text-danger pb-1">*Contoh: Rumah, Kantor</small>
-                        </div>
-                        <div class="row">
-                            <div class="mb-3 col-8">
-                                <label for="recipient-name" class="col-form-label">Kec, Kab
-                                    dan Provinsi:</label>
-                                <input type="text" name="city" id="city" class="form-control border px-3" id="recipient-name">
-                                <small class="d-flex text-danger pb-1">*Contoh: Kec Sindang, Kab Indramayu, Jawa
-                                    Barat</small>
-                            </div>
-                            <div class="mb-3 col-4">
-                                <label for="recipient-name" class="col-form-label">Kode Pos:</label>
-                                <input type="text" name="postal_code" id="postal_code" class="form-control border px-3"
+                        <div class="row mb-3 ">
+                            <div class="col-6">
+                                <label for="recipient-name" class="col-form-label">Label Alamat:</label>
+                                <input type="text" name="address_label" id="address_label" class="form-control border px-3"
                                     id="recipient-name">
+                                <small class="d-flex text-danger pb-1">*Contoh: Rumah, Kantor</small>
+                            </div>
+                            <div class="form-group col-6">
+                                <label class="col-form-label" for="provinsi">Provinsi</label>
+                                @php
+                                    $provinces = new App\Http\Controllers\Pages\DependantDropdownController;
+                                    $provinces = $provinces->provinces();
+                                @endphp
+                                <select class="form-control border px-3" name="province_id" id="provinsi" required>
+                                    <option selected disabled>==Pilih Salah Satu==</option>
+                                    @foreach ($provinces as $item)
+                                    <option value="{{ $item->id ?? '' }}">{{ $item->name ?? '' }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3 ">
+                            <div class="form-group col-6">
+                                <label class="col-form-label" for="kota">Kabupaten / Kota</label>
+                                <select class="form-control border px-3" name="city_id" id="kota" required>
+                                    <option selected disabled>==Pilih Salah Satu==</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-6">
+                                <label class="col-form-label" for="kecamatan">Kecamatan</label>
+                                <select class="form-control border px-3" name="district_id" id="kecamatan" required>
+                                    <option selected disabled>==Pilih Salah Satu==</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="form-group col-6">
+                                <label class="col-form-label" for="desa">Desa</label>
+                                <select class="form-control border px-3" name="village_id" id="desa" required>
+                                    <option selected disabled>==Pilih Salah Satu==</option>
+                                </select>
+                            </div>
+                            <div class="col-4">
+                                <label for="recipient-name" class="col-form-label">Kode Pos:</label>
+                                <input type="text" name="postal_code" id="postal_code" class="form-control border px-3">
                             </div>
                         </div>
                         <div class="mb-3">
@@ -228,22 +255,51 @@
                             <label for="telp" class="col-form-label">No. Hp:</label>
                             <input type="tel" name="telp" class="form-control border px-3" id="recipient-name">
                         </div>
-                        <div class="mb-3">
-                            <label for="address_label" class="col-form-label">Label Alamat:</label>
-                            <input type="text" name="address_label" class="form-control border px-3" id="recipient-name">
-                            <small class="d-flex text-danger pb-1">*Contoh: Rumah, Kantor</small>
-                        </div>
-                        <div class="row">
-                            <div class="mb-3 col-8">
-                                <label for="city" class="col-form-label">Kec, Kab
-                                    dan Provinsi:</label>
-                                <input type="text" name="city" class="form-control border px-3" id="recipient-name">
-                                <small class="d-flex text-danger pb-1">*Contoh: Kec Sindang, Kab Indramayu, Jawa
-                                    Barat</small>
+                        <div class="row mb-3 ">
+                            <div class="col-6">
+                                <label for="recipient-name" class="col-form-label">Label Alamat:</label>
+                                <input type="text" name="address_label" class="form-control border px-3"
+                                    id="recipient-name">
+                                <small class="d-flex text-danger pb-1">*Contoh: Rumah, Kantor</small>
                             </div>
-                            <div class="mb-3 col-4">
-                                <label for="postal_code" class="col-form-label">Kode Pos:</label>
-                                <input type="text" name="postal_code" class="form-control border px-3" id="recipient-name">
+                            <div class="form-group col-6">
+                                <label class="col-form-label" for="provinsi">Provinsi</label>
+                                @php
+                                    $provinces = new App\Http\Controllers\Pages\DependantDropdownController;
+                                    $provinces = $provinces->provinces();
+                                @endphp
+                                <select class="form-control border px-3" name="province_id" id="province_id" required>
+                                    <option selected disabled>==Pilih Salah Satu==</option>
+                                    @foreach ($provinces as $item)
+                                    <option value="{{ $item->id ?? '' }}">{{ $item->name ?? '' }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3 ">
+                            <div class="form-group col-6">
+                                <label class="col-form-label" for="kota">Kabupaten / Kota</label>
+                                <select class="form-control border px-3" name="city_id" id="city_id" required>
+                                    <option selected disabled>==Pilih Salah Satu==</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-6">
+                                <label class="col-form-label" for="kecamatan">Kecamatan</label>
+                                <select class="form-control border px-3" name="district_id" id="district_id" required>
+                                    <option selected disabled>==Pilih Salah Satu==</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="form-group col-6">
+                                <label class="col-form-label" for="desa">Desa</label>
+                                <select class="form-control border px-3" name="village_id" id="village_id" required>
+                                    <option selected disabled>==Pilih Salah Satu==</option>
+                                </select>
+                            </div>
+                            <div class="col-4">
+                                <label for="recipient-name" class="col-form-label">Kode Pos:</label>
+                                <input type="text" name="postal_code" class="form-control border px-3">
                             </div>
                         </div>
                         <div class="mb-3">
@@ -305,6 +361,49 @@
     //         });
     //     }
     // });
+
+        function onChangeSelect(url, id, name) {
+            // send ajax request to get the cities of the selected province and append to the select tag
+            $.ajax({
+                url: url,
+                type: 'GET',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    $('#' + name).empty();
+                    $('#' + name).append('<option>==Pilih Salah Satu==</option>');
+
+                    $.each(data, function (key, value) {
+                        $('#' + name).append('<option value="' + key + '">' + value + '</option>');
+                    });
+                }
+            });
+        }
+
+        $(function () {
+            $('#provinsi').on('change', function () {
+                onChangeSelect('{{ route("cities") }}', $(this).val(), 'kota');
+            });
+            $('#kota').on('change', function () {
+                onChangeSelect('{{ route("districts") }}', $(this).val(), 'kecamatan');
+            })
+            $('#kecamatan').on('change', function () {
+                onChangeSelect('{{ route("villages") }}', $(this).val(), 'desa');
+            })
+        });
+
+        $(function () {
+            $('#province_id').on('change', function () {
+                onChangeSelect('{{ route("cities") }}', $(this).val(), 'city_id');
+            });
+            $('#city_id').on('change', function () {
+                onChangeSelect('{{ route("districts") }}', $(this).val(), 'district_id');
+            })
+            $('#district_id').on('change', function () {
+                onChangeSelect('{{ route("villages") }}', $(this).val(), 'village_id');
+            })
+        });
 
     //CSRF TOKEN PADA HEADER
     //Script ini wajib krn kita butuh csrf token setiap kali mengirim request post, patch, put dan delete ke server

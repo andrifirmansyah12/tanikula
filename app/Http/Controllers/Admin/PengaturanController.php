@@ -51,11 +51,23 @@ class PengaturanController extends Controller
             'email' => $request->email,
         ]);
 
-        Admin::where('id', $request->id)->update([
-            'telp' => $request->telp,
-            'city' => $request->city,
-            'address' => $request->address,
-        ]);
+        if ($request->province_id && $request->city_id && $request->district_id && $request->village_id) {
+            Admin::where('id', $request->id)->update([
+                'province_id' => $request->province_id,
+                'city_id' => $request->city_id,
+                'district_id' => $request->district_id,
+                'village_id' => $request->village_id,
+                'street' => $request->street,
+                'number' => $request->number,
+                'phone' => $request->phone,
+            ]);
+        } else {
+            Admin::where('id', $request->id)->update([
+                'street' => $request->street,
+                'number' => $request->number,
+                'phone' => $request->phone,
+            ]);
+        }
 
         return response()->json([
             'status' => 200,

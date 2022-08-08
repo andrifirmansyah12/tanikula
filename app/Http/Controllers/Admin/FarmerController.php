@@ -38,7 +38,6 @@ class FarmerController extends Controller
                 <th>Foto</th>
                 <th>Nama Poktan</th>
                 <th>Nama Petani</th>
-                <th>Kota</th>
                 <th>Alamat</th>
                 <th>No.Telp</th>
                 <th>Status Akun</th>
@@ -58,18 +57,17 @@ class FarmerController extends Controller
                     }
                     $output .= '<td>' . $emp->poktan->user->name . '</td>
                     <td>' . $emp->farmer_name . '</td>';
-                    if ($emp->city) {
-                        $output .= '<td>' . $emp->city . '</td>';
+                    if ($emp->street && $emp->number) {
+                        $output .= '<td>' . $emp->street . ', ' . $emp->number . '. ';
+                        if ($emp->village_id && $emp->district_id && $emp->city_id && $emp->province_id != null) {
+                            $output .= '' . $emp->village->name . ', Kecamatan '. $emp->district->name .', '. $emp->city->name .', Provinsi '. $emp->province->name .'.';
+                        }
+                        $output .= '</td>';
                     } else {
                         $output .= '<td><span class="text-danger">Belum diisi</span></td>';
                     }
-                    if ($emp->address) {
-                        $output .= '<td>' . $emp->address . '</td>';
-                    } else {
-                        $output .= '<td><span class="text-danger">Belum diisi</span></td>';
-                    }
-                    if ($emp->telp) {
-                        $output .= '<td>' . $emp->telp . '</td>';
+                    if ($emp->phone) {
+                        $output .= '<td>(+62) ' . $emp->phone . '</td>';
                     } else {
                         $output .= '<td><span class="text-danger">Belum diisi</span></td>';
                     }

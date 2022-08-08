@@ -17,7 +17,7 @@ class UserVerify extends Model
      * @return response()
      */
     protected $fillable = [
-        'user_id',
+        'costumer_id',
         'token',
     ];
 
@@ -26,8 +26,8 @@ class UserVerify extends Model
      *
      * @return response()
      */
-    public function user()
+    public function costumer()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Costumer::class);
     }
 }

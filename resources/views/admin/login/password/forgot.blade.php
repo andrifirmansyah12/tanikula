@@ -1,5 +1,5 @@
 @extends('components.auth.template')
-@section('title', 'Admin | Lupa Password')
+@section('title', 'Tanikula | Lupa Password')
 
 @section('style')
 <meta name="csrf-token" content="{{ csrf_token() }}">

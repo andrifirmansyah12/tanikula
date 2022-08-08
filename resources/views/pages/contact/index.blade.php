@@ -18,7 +18,7 @@
                         <div class="col-12">
                             <div class="contact-wrap w-100 p-md-5 p-4">
                                 <h3 class="mb-5 fw-bold" style="color:#16A085;">Hubungi Kami</h3>
-                                <form method="POST" id="contactForm" name="contactForm" class="contactForm">
+                                <form method="POST" action="{{ route('sendmail') }}" id="contactForm" name="contactForm" class="contactForm">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group mb-4">
@@ -50,7 +50,7 @@
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <input type="submit" value="Kirim Pesan" class="btn btn-primary">
+                                                <input type="submit" style="background: #16A085;" value="Kirim Pesan" class="btn border border-light text-white">
                                                 <div class="submitting"></div>
                                             </div>
                                         </div>

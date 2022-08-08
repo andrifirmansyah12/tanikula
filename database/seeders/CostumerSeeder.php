@@ -19,6 +19,7 @@ class CostumerSeeder extends Seeder
         $datas = [
             [
                 "user_id" => 5,
+                "is_email_verified" => 1,
             ],
 
         ];

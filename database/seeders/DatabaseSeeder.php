@@ -29,8 +29,9 @@ class DatabaseSeeder extends Seeder
             CostumerSeeder::class,
             AddressSeeder::class,
             AdminSeeder::class,
-            ProvinceSeeder::class,
-            CitySeeder::class,
+            FieldSeeder::class,
+            // ProvinceSeeder::class,
+            // CitySeeder::class,
         ]);
 
         // $this->call(CategorySeeder::class);

@@ -1577,7 +1577,6 @@ top: -1px;
 
 .header .topbar .top-end .user-login li {
   display: inline-block;
-  border-right: 1px solid rgba(0, 0, 0, 0.459);
   padding: 0px 10px;
   white-space: nowrap;
 }
@@ -1599,9 +1598,9 @@ top: -1px;
   white-space: nowrap;
 }
 
-.header .topbar .top-end .user-login li a:hover {
+/* .header .topbar .top-end .user-login li a:hover {
   color: #16A085;
-}
+} */
 
 .header .header-middle {
   display: -webkit-box;

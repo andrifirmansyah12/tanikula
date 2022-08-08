@@ -22,8 +22,6 @@ class AddressSeeder extends Seeder
                 "recipients_name" => "Robert Davids",
                 "telp" => "08345839235",
                 "address_label" => "Rumah",
-                "provinsi_id" => null,
-                "kota_id" => null,
                 "postal_code" => "45525",
                 "complete_address" => "Jl. Rengasdengklok blok dempet Rt 10 Rw 01, Kec Indramayu, Kab Indramayu, Jawa Barat.",
                 "note_for_courier" => 'Depan Masjid',

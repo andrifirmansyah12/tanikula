@@ -15,4 +15,9 @@ class Costumer extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function userVerify()
+    {
+        return $this->hasMany(UserVerify::class);
+    }
 }

@@ -19,10 +19,9 @@ class FarmerSeeder extends Seeder
         $datas = [
             [
                 "user_id" => 4,
+                "gapoktan_id" => 1,
                 "poktan_id" => 1,
-                "city" => "Kota Indramayu",
-                "address" => 'Desa Krasak, Jatibarang - Indramayu',
-                "telp" => "081223943853",
+                "is_active" => 1,
             ],
         ];
 

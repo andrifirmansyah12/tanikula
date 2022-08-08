@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Poktan;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Plant;
+use App\Models\FieldRecapPlanting;
 use App\Models\Poktan;
 use Illuminate\Support\Facades\DB;
 use App\Models\Farmer;
@@ -22,27 +22,23 @@ class PlantController extends Controller
     // handle fetch all eamployees ajax request
 	public function fetchAll(Request $request) {
 		// $emps = Poktan::with('user', 'gapoktan')->latest()->get();
-        $emps = Plant::join('farmers', 'plants.farmer_id', '=', 'farmers.id')
-                    ->join('poktans', 'plants.poktan_id', '=', 'poktans.id')
-                    ->select('plants.*', 'surface_area as area')
-                    ->where('poktans.user_id', '=', auth()->user()->id)
-                    ->where('plants.harvest_date', '=', null)
-                    ->where('plants.status', '=', 'tandur')
-                    ->orderBy('updated_at', 'desc')
+        $poktan = Poktan::where('user_id', auth()->user()->id)->first();
+        $emps = FieldRecapPlanting::join('fields', 'field_recap_plantings.field_id', '=', 'fields.id')
+                    ->join('farmers', 'field_recap_plantings.farmer_id', '=', 'farmers.id')
+                    ->select('field_recap_plantings.*', 'fields.farmer_id as name')
+                    ->where('farmers.gapoktan_id', '=', $poktan->gapoktan_id)
+                    ->orderBy('field_recap_plantings.updated_at', 'desc')
                     ->get();
 		$output = '';
 		if ($emps->count() > 0) {
-			$output .= '<table class="table table-striped table-sm text-center align-middle">
+			$output .= '<table id="recapPlanting" class="table table-striped table-sm text-center align-middle">
             <thead>
               <tr>
                 <th>No</th>
                 <th>Nama Petani</th>
-                <th>Tanaman</th>
-                <th>Luas Tanah</th>
-                <th>Alamat</th>
+                <th>Lahan</th>
                 <th>Tanggal Tandur</th>
                 <th>Status</th>
-                <th>Aksi</th>
               </tr>
             </thead>
             <tbody>';
@@ -51,22 +47,18 @@ class PlantController extends Controller
                 $output .= '<tr>';
                 $output .= '<td>' . $nomor++ . '</td>';
                 $output .= '<td>' . $emp->farmer->user->name . '</td>
-                <td>' . $emp->plant_tanaman . '</td>';
-                if ($emp->area) {
-                    $output .= '<td>' . $emp->area . '</td>';
+                <td>' . $emp->field->fieldCategory->name . ' (' . $emp->field->fieldCategory->details . ')</td>';
+                if ($emp->date_planting) {
+                    $output .= '<td>'. date("d-F-Y", strtotime($emp->date_planting)) .'</td>';
                 } else {
                     $output .= '<td><span class="text-danger">Belum diisi</span></td>';
                 }
-                $output .= '<td>' . $emp->address . '</td>';
-                if ($emp->plating_date) {
-                    $output .= '<td>' . date("d-F-Y", strtotime($emp->plating_date)) . '</td>';
+                if ($emp->status) {
+                    $output .= '<td><span class="text-capitalize">'. $emp->status .'</span></td>';
                 } else {
                     $output .= '<td><span class="text-danger">Belum diisi</span></td>';
                 }
-                $output .= '<td><div class="badge badge-success text-capitalize">'. $emp->status .'</div></td>';
-                $output .= '<td>
-                    <a href="#" id="' . $emp->id . '" class="text-success mx-1 editIcon" data-toggle="modal" data-target="#editEmployeeModal"><i class="bi-eye h4"></i></a>
-                </td>
+                $output .= '
             </tr>';
 			}
 			$output .= '</tbody></table>';

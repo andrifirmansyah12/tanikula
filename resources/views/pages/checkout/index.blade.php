@@ -90,8 +90,15 @@
                                         </div>
                                         <div class="col-12 mt-2 mt-md-0">
                                             <p class="mb-2 fw-bold text-black">{{$item->telp}}</p>
-                                            <p>{{$item->city}}, {{$item->postal_code}} [TaniKula Note: {{$item->complete_address}} {{$item->note_for_courier}}]</p>
-                                            <p>{{$item->city}}, {{$item->postal_code}}.</p>
+                                            <p>
+                                                @if ($item->village_id && $item->district_id && $item->city_id && $item->province_id != null)
+                                                    {{ $item->village->name }}, Kecamatan {{ $item->district->name }}, {{ $item->city->name }}, Provinsi {{ $item->province->name }}
+                                                @endif, {{$item->postal_code}}. [TaniKula Note: {{$item->complete_address}} {{$item->note_for_courier}}].</p>
+                                            <p class="pt-3">
+                                                @if ($item->district_id != null)
+                                                    {{ $item->district->name }},
+                                                @endif{{$item->postal_code}}.
+                                            </p>
                                         </div>
                                     </div>
                                     @endforeach
@@ -122,6 +129,7 @@
                             $total = 0;
                             $totalPrice = 0;
                             $totalQty = 0;
+                            $totalWeightProduct = 0;
                         @endphp
                         @if ($cartItem->count() > 0)
                         @foreach ($cartItem as $item)
@@ -177,12 +185,14 @@
                                         $totalService = $total + $result['cost'][0]['value'];
                                         $totalQty += $item->product_qty;
                                         $valueService = $result['cost'][0]['value'];
+                                        $totalWeightProduct += $item->product->weight;
                                     }
                                 }
                             } else {
                                 $subTotal = $item->product->price * $item->product_qty;
                                 $total += $item->product->price * $item->product_qty;
                                 $totalQty += $item->product_qty;
+                                $totalWeightProduct += $item->product->weight;
                             }
                         @endphp
                         <div class="my-2">
@@ -268,11 +278,40 @@
                                     </div>
                                 </div>
                                 @else
-                                    @if ($cartItem->count() > 0)
-                                    <div class="mb-2">
-                                        <label for="courier" class="py-2">Pilih Kurir</label>
-                                        <a style="background: #16A085; color: white" class="d-flex justify-content-center btn btn-light border" data-bs-toggle="modal" data-bs-target="#PilihCourier">Pilih Kurir</a>
-                                    </div>
+                                    @if ($address->count() < 1)
+                                        <div class="mb-2">
+                                            <label for="courier" class="py-2">Pilih Kurir</label>
+                                            <button disabled style="background: #16A085; color: white" class="col-12 btn btn-light border">Pilih Kurir</button>
+                                        </div>
+                                    @else
+                                        @if ($cartItem->count() < 1)
+                                            <div class="mb-2">
+                                                <label for="courier" class="py-2">Pilih Kurir</label>
+                                                <button disabled style="background: #16A085; color: white" class="col-12 btn btn-light border">Pilih Kurir</button>
+                                            </div>
+                                        @else
+                                            @if ($address->count() < 1)
+                                                <div class="mb-2">
+                                                    <label for="courier" class="py-2">Pilih Kurir</label>
+                                                    <button disabled style="background: #16A085; color: white" class="col-12 btn btn-light border">Pilih Kurir</button>
+                                                </div>
+                                            @else
+                                                @foreach ($address as $item)
+                                                    @if ($item->village_id && $item->district_id && $item->city_id && $item->province_id != null)
+                                                        <div class="mb-2">
+                                                            <label for="courier" class="py-2">Pilih Kurir</label>
+                                                            <a style="background: #16A085; color: white" class="d-flex justify-content-center btn btn-light border" data-bs-toggle="modal" data-bs-target="#PilihCourier">Pilih Kurir</a>
+                                                        </div>
+                                                    @else
+                                                        <div class="mb-2">
+                                                            <small class="text-danger">*Silahkan lengkapi alamat anda</small><br>
+                                                            <label for="courier" class="py-2">Pilih Kurir</label>
+                                                            <button disabled style="background: #16A085; color: white" class="col-12 btn btn-light border">Pilih Kurir</button>
+                                                        </div>
+                                                    @endif
+                                                @endforeach
+                                            @endif
+                                        @endif
                                     @endif
                                 @endif
                                 @if (!$result_cost)
@@ -326,6 +365,10 @@
                     @else --}}
                     <form action="{{ url('/cart/shipment') }}" method="get">
                         @csrf
+                        @foreach ($address as $item)
+                            <input type="hidden" name="destination_costumer" id="destination_costumer" value="{{ $item->city_id }}">
+                        @endforeach
+                        <input type="hidden" name="weight_product" id="weight_product" value="{{ $totalWeightProduct }}">
                         <div class="my-2">
                             <p class="py-2">Pilih Kurir</p>
                             <select name="courier" required class="form-control">
@@ -396,41 +439,88 @@
                                 Penerima:</label>
                             <input type="text" name="recipients_name" id="recipients_name" class="form-control"
                                 id="recipient-name">
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">No. Hp:</label>
                             <input type="tel" name="telp" id="telp" class="form-control" id="recipient-name">
-                        </div>
-                        <div class="mb-3">
-                            <label for="recipient-name" class="col-form-label">Label Alamat:</label>
-                            <input type="text" name="address_label" id="address_label" class="form-control"
-                                id="recipient-name">
-                            <small class="d-flex text-danger pb-1">*Contoh: Rumah, Kantor</small>
-                        </div>
-                        <div class="row">
-                            <div class="mb-3 col-8">
-                                <label for="recipient-name" class="col-form-label">Kec, Kab
-                                    dan Provinsi:</label>
-                                <input type="text" name="city" id="city" class="form-control" id="recipient-name">
-                                <small class="d-flex text-danger pb-1">*Contoh: Kec Sindang, Kab Indramayu, Jawa
-                                    Barat</small>
+                            <div class="invalid-feedback">
                             </div>
-                            <div class="mb-3 col-4">
-                                <label for="recipient-name" class="col-form-label">Kode Pos:</label>
-                                <input type="text" name="postal_code" id="postal_code" class="form-control"
+                        </div>
+                        <div class="row mb-3 ">
+                            <div class="col-6">
+                                <label for="recipient-name" class="col-form-label">Label Alamat:</label>
+                                <input type="text" name="address_label" id="address_label" class="form-control border px-3"
                                     id="recipient-name">
+                                <small class="d-flex text-danger pb-1">*Contoh: Rumah, Kantor</small>
+                                <div class="invalid-feedback">
+                                </div>
+                            </div>
+                            <div class="form-group col-6">
+                                <label class="col-form-label" for="provinsi">Provinsi</label>
+                                @php
+                                    $provinces = new App\Http\Controllers\Pages\DependantDropdownController;
+                                    $provinces = $provinces->provinces();
+                                @endphp
+                                <select class="form-control border px-3" name="province_id" id="provinsi" required>
+                                    <option selected disabled>==Pilih Salah Satu==</option>
+                                    @foreach ($provinces as $item)
+                                    <option value="{{ $item->id ?? '' }}">{{ $item->name ?? '' }}</option>
+                                    @endforeach
+                                </select>
+                                <div class="invalid-feedback">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3 ">
+                            <div class="form-group col-6">
+                                <label class="col-form-label" for="kota">Kabupaten / Kota</label>
+                                <select class="form-control border px-3" name="city_id" id="kota" required>
+                                    <option selected disabled>==Pilih Salah Satu==</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                </div>
+                            </div>
+                            <div class="form-group col-6">
+                                <label class="col-form-label" for="kecamatan">Kecamatan</label>
+                                <select class="form-control border px-3" name="district_id" id="kecamatan" required>
+                                    <option selected disabled>==Pilih Salah Satu==</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="form-group col-6">
+                                <label class="col-form-label" for="desa">Desa</label>
+                                <select class="form-control border px-3" name="village_id" id="desa" required>
+                                    <option selected disabled>==Pilih Salah Satu==</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <label for="recipient-name" class="col-form-label">Kode Pos:</label>
+                                <input type="text" name="postal_code" id="postal_code" class="form-control border px-3">
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                         </div>
                         <div class="mb-3">
                             <label for="message-text" class="col-form-label">Alamat Lengkap:</label>
                             <textarea class="form-control" name="complete_address" id="complete_address" rows="3"
                                 id="message-text"></textarea>
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Catatan untuk
                                 kurir:</label>
                             <input type="text" name="note_for_courier" id="note_for_courier" class="form-control">
                             <small class="d-flex text-danger pb-1">Warna rumah, patokan, pesan khusus, dll.</small>
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-text bg-white" id="main_address">
@@ -464,38 +554,87 @@
                         <div class="mb-3">
                             <label for="recipients_name" class="col-form-label">Nama Penerima:</label>
                             <input type="text" name="recipients_name" class="form-control" id="recipient-name">
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="telp" class="col-form-label">No. Hp:</label>
                             <input type="tel" name="telp" class="form-control" id="recipient-name">
-                        </div>
-                        <div class="mb-3">
-                            <label for="address_label" class="col-form-label">Label Alamat:</label>
-                            <input type="text" name="address_label" class="form-control" id="recipient-name">
-                            <small class="d-flex text-danger pb-1">*Contoh: Rumah, Kantor</small>
-                        </div>
-                        <div class="row">
-                            <div class="mb-3 col-8">
-                                <label for="city" class="col-form-label">Kec, Kab
-                                    dan Provinsi:</label>
-                                <input type="text" name="city" class="form-control" id="recipient-name">
-                                <small class="d-flex text-danger pb-1">*Contoh: Kec Sindang, Kab Indramayu, Jawa
-                                    Barat</small>
+                            <div class="invalid-feedback">
                             </div>
-                            <div class="mb-3 col-4">
-                                <label for="postal_code" class="col-form-label">Kode Pos:</label>
-                                <input type="text" name="postal_code" class="form-control" id="recipient-name">
+                        </div>
+                        <div class="row mb-3 ">
+                            <div class="col-6">
+                                <label for="recipient-name" class="col-form-label">Label Alamat:</label>
+                                <input type="text" name="address_label" class="form-control border px-3"
+                                    id="recipient-name">
+                                <small class="d-flex text-danger pb-1">*Contoh: Rumah, Kantor</small>
+                                <div class="invalid-feedback">
+                                </div>
+                            </div>
+                            <div class="form-group col-6">
+                                <label class="col-form-label" for="provinsi">Provinsi</label>
+                                @php
+                                    $provinces = new App\Http\Controllers\Pages\DependantDropdownController;
+                                    $provinces = $provinces->provinces();
+                                @endphp
+                                <select class="form-control border px-3" name="province_id" id="province_id" required>
+                                    <option selected disabled>==Pilih Salah Satu==</option>
+                                    @foreach ($provinces as $item)
+                                    <option value="{{ $item->id ?? '' }}">{{ $item->name ?? '' }}</option>
+                                    @endforeach
+                                </select>
+                                <div class="invalid-feedback">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3 ">
+                            <div class="form-group col-6">
+                                <label class="col-form-label" for="kota">Kabupaten / Kota</label>
+                                <select class="form-control border px-3" name="city_id" id="city_id" required>
+                                    <option selected disabled>==Pilih Salah Satu==</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                </div>
+                            </div>
+                            <div class="form-group col-6">
+                                <label class="col-form-label" for="kecamatan">Kecamatan</label>
+                                <select class="form-control border px-3" name="district_id" id="district_id" required>
+                                    <option selected disabled>==Pilih Salah Satu==</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="form-group col-6">
+                                <label class="col-form-label" for="desa">Desa</label>
+                                <select class="form-control border px-3" name="village_id" id="village_id" required>
+                                    <option selected disabled>==Pilih Salah Satu==</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <label for="recipient-name" class="col-form-label">Kode Pos:</label>
+                                <input type="text" name="postal_code" class="form-control border px-3">
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                         </div>
                         <div class="mb-3">
                             <label for="complete_address" class="col-form-label">Alamat Lengkap:</label>
                             <textarea class="form-control" name="complete_address" rows="3"
                                 id="message-text"></textarea>
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="note_for_courier" class="col-form-label">Catatan untuk kurir:</label>
                             <input type="text" name="note_for_courier" class="form-control" id="recipient-name">
                             <small class="d-flex text-danger pb-1">Warna rumah, patokan, pesan khusus, dll.</small>
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-text bg-white">
@@ -522,6 +661,49 @@
     integrity="sha256-siqh9650JHbYFKyZeTEAhq+3jvkFCG8Iz+MHdr9eKrw=" crossorigin="anonymous"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="text/javascript">
+    function onChangeSelect(url, id, name) {
+            // send ajax request to get the cities of the selected province and append to the select tag
+            $.ajax({
+                url: url,
+                type: 'GET',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    $('#' + name).empty();
+                    $('#' + name).append('<option>==Pilih Salah Satu==</option>');
+
+                    $.each(data, function (key, value) {
+                        $('#' + name).append('<option value="' + key + '">' + value + '</option>');
+                    });
+                }
+            });
+        }
+
+        $(function () {
+            $('#provinsi').on('change', function () {
+                onChangeSelect('{{ route("cities") }}', $(this).val(), 'kota');
+            });
+            $('#kota').on('change', function () {
+                onChangeSelect('{{ route("districts") }}', $(this).val(), 'kecamatan');
+            })
+            $('#kecamatan').on('change', function () {
+                onChangeSelect('{{ route("villages") }}', $(this).val(), 'desa');
+            })
+        });
+
+        $(function () {
+            $('#province_id').on('change', function () {
+                onChangeSelect('{{ route("cities") }}', $(this).val(), 'city_id');
+            });
+            $('#city_id').on('change', function () {
+                onChangeSelect('{{ route("districts") }}', $(this).val(), 'district_id');
+            })
+            $('#district_id').on('change', function () {
+                onChangeSelect('{{ route("villages") }}', $(this).val(), 'village_id');
+            })
+        });
+
     //CSRF TOKEN PADA HEADER
     //Script ini wajib krn kita butuh csrf token setiap kali mengirim request post, patch, put dan delete ke server
     $(document).ready(function() {
@@ -539,12 +721,18 @@
 
             let token = $("meta[name='csrf-token']").attr("content");
             let courier = $('select[name=courier]').val();
+            let weight_product = $('#weight_product').val();
+            let destination_costumer = $('#destination_costumer').val();
+            let origin_gapoktan = $('#origin_gapoktan').val();
 
             $.ajax({
                 url: "/ongkir",
                 data: {
                     _token: token,
                     courier: courier,
+                    weight_product: weight_product,
+                    destination_costumer: destination_costumer,
+                    origin_gapoktan: origin_gapoktan,
                 },
                 dataType: "JSON",
                 type: "POST",
@@ -599,7 +787,7 @@
                         $("#add_employee_form")[0].reset();
                         $("#add_employee_btn").text('Simpan');
                         $("#add_employee_btn").prop('disabled', false);
-                        window.location.reload();
+                        window.setTimeout(function(){location = '{{ route('cart.shipment.pembeli') }}'},1000)
                     }
                 }
                 });
@@ -669,7 +857,7 @@
                         $("#edit_employee_form")[0].reset();
                         $("#edit_employee_btn").text('Simpan');
                         $("#edit_employee_btn").prop('disabled', false);
-                        window.location.reload();
+                        window.setTimeout(function(){location = '{{ route('cart.shipment.pembeli') }}'},1000)
                     }
                 }
             });
@@ -705,7 +893,7 @@
                             'Berhasil menjadikan alamat utama!',
                             'success'
                         )
-                        window.setTimeout(function(){location.reload()},1000)
+                        window.setTimeout(function(){location = '{{ route('cart.shipment.pembeli') }}'},1000)
                     }
                 }
                 });

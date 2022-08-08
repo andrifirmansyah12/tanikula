@@ -20,6 +20,26 @@
                 height: 90px;
             }
         }
+
+        .preview-image img {
+            padding: 10px;
+            width: 7rem;
+            height: 7rem;
+            -o-object-fit: cover;
+            object-fit: cover;
+            -o-object-position: center;
+            object-position: center;
+        }
+
+        .preview-image-edit img {
+            padding: 10px;
+            width: 7rem;
+            height: 7rem;
+            -o-object-fit: cover;
+            object-fit: cover;
+            -o-object-position: center;
+            object-position: center;
+        }
     </style>
 @endsection
 
@@ -104,8 +124,21 @@
                             </div>
                         </div>
                         <div class="my-2 form-group">
+                            <label for="stoke" style="font-size: 12px">Berat (gram)</label>
+                                <input type="number" name="weight" class="form-control" placeholder="Berat" required>
+                        </div>
+                        <div class="my-2 form-group">
                             <label for="desc">Deskripsi</label>
                             <textarea class="form-control" name="desc" rows="3" placeholder="Deskripsi"></textarea>
+                        </div>
+                        <div class="my-2 form-group">
+                            <label for="is_active">Status Produk</label>
+                            <div>
+                                <label class="custom-switch">
+                                    <input type="checkbox" name="is_active" class="custom-switch-input">
+                                    <span class="custom-switch-indicator"></span>
+                                </label>
+                            </div>
                         </div>
                         {{-- <div class="my-2 form-group">
                             <label for="image">Unggah Foto</label>
@@ -203,8 +236,18 @@
                             </div>
                         </div>
                         <div class="my-2 form-group">
+                            <label for="stoke" style="font-size: 12px">Berat (gram)</label>
+                                <input type="number" name="weight" id="weight" class="form-control" placeholder="Berat" required>
+                        </div>
+                        <div class="my-2 form-group">
                             <label for="desc">Deskripsi</label>
                             <textarea class="form-control" name="desc" id="desc" rows="3" placeholder="Deskripsi"></textarea>
+                        </div>
+                        <div class="my-2 form-group">
+                            <label for="is_active">Status Produk</label>
+                            <div id="is_active">
+
+                            </div>
                         </div>
                         {{-- <div class="my-2 form-group">
                             <label for="image">Unggah Foto</label>
@@ -409,6 +452,8 @@
                         showError('stoke', response.messages.stoke);
                         showError('price', response.messages.price);
                         showError('desc', response.messages.desc);
+                        $("#add_employee_btn").text('Simpan');
+                        $("#add_employee_btn").prop('disabled', false);
                     } else if (response.status == 200){
                         Swal.fire(
                             'Menambahkan!',
@@ -418,9 +463,9 @@
                         fetchAllEmployees();
                         $("#addEmployeeModal").modal('hide');
                         $("#add_employee_form")[0].reset();
+                        $("#add_employee_btn").text('Simpan');
+                        $("#add_employee_btn").prop('disabled', false);
                     }
-                    $("#add_employee_btn").text('Simpan');
-                    $("#add_employee_btn").prop('disabled', false);
                 }
                 });
             });
@@ -442,7 +487,13 @@
                     $("#category_product_id").val(response.category_product_id);
                     $("#stoke").val(response.stoke);
                     $("#price").val(response.price);
+                    $("#weight").val(response.weight);
                     $("#desc").val(response.desc);
+                    $("#is_active").html(
+                        `<label class="custom-switch">
+                            <input type="checkbox" name="is_active" ${response.is_active ? 'checked' : ''} class="custom-switch-input">
+                            <span class="custom-switch-indicator"></span>
+                        </label>`);
                     // if (response.file) {
                     //     $(".editFile").html(
                     //         `<div class="tab-pane fade show active" id="home2" role="tabpanel"

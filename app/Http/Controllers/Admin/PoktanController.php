@@ -38,10 +38,9 @@ class PoktanController extends Controller
                 <th>Nama Gapoktan</th>
                 <th>Nama Poktan</th>
                 <th>Ketua Poktan</th>
-                <th>Kota</th>
                 <th>Alamat</th>
                 <th>No.Telp</th>
-                <th>Status Akun</th>
+                <th>Status Poktan</th>
                 <th>Aksi</th>
               </tr>
             </thead>
@@ -59,25 +58,24 @@ class PoktanController extends Controller
                     $output .= '<td>' . $emp->gapoktan->user->name . '</td>
                     <td>' . $emp->poktan_name . '</td>
                     <td>' . $emp->chairman . '</td>';
-                    if ($emp->city) {
-                        $output .= '<td>' . $emp->city . '</td>';
+                    if ($emp->street && $emp->number) {
+                        $output .= '<td>' . $emp->street . ', ' . $emp->number . '. ';
+                        if ($emp->village_id && $emp->district_id && $emp->city_id && $emp->province_id != null) {
+                            $output .= '' . $emp->village->name . ', Kecamatan '. $emp->district->name .', '. $emp->city->name .', Provinsi '. $emp->province->name .'.';
+                        }
+                        $output .= '</td>';
                     } else {
                         $output .= '<td><span class="text-danger">Belum diisi</span></td>';
                     }
-                    if ($emp->address) {
-                        $output .= '<td>' . $emp->address . '</td>';
-                    } else {
-                        $output .= '<td><span class="text-danger">Belum diisi</span></td>';
-                    }
-                    if ($emp->telp) {
-                        $output .= '<td>' . $emp->telp . '</td>';
+                    if ($emp->phone) {
+                        $output .= '<td>(+62) ' . $emp->phone . '</td>';
                     } else {
                         $output .= '<td><span class="text-danger">Belum diisi</span></td>';
                     }
                     if ($emp->is_active == 1) {
-                        $output .= '<td><div class="badge badge-success">Aktif</div></td>';
+                        $output .= '<td><span class="badge badge-success">Terverifikasi</span></td>';
                     } elseif ($emp->is_active == 0) {
-                        $output .= '<td><div class="badge badge-danger">Belum Aktif</div></td>';
+                        $output .= '<td><span class="badge badge-danger">Belum diverifikasi</span></td>';
                     }
                     $output .= '<td>
                     <a href="#" id="' . $emp->id . '" class="text-success mx-1 editIcon" data-toggle="modal" data-target="#editEmployeeModal"><i class="bi-pencil-square h4"></i></a>

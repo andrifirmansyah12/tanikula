@@ -30,7 +30,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <button type="button" class="btn py-1 btn-success" data-toggle="modal"
+                                <button type="button" style="border-radius: 5px;" class="btn btn btn-primary shadow-none py-1" data-toggle="modal"
                                     data-target="#addEmployeeModal">Tambah
                                     @yield('title')</button>
                             </div>
@@ -104,19 +104,19 @@
                                 <div class="tab-content" id="myTabContent2">
                                     <div class="tab-pane fade show active" id="home3" role="tabpanel"
                                         aria-labelledby="home-tab3">
-                                        <img id="preview" class="img-fluid img-thumbnail image"
+                                        <img id="addPreview" class="img-fluid img-thumbnail image"
                                         src="{{ asset('stisla/assets/img/example-image.jpg') }}" alt="edukasi"
                                         style="width: 20rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                                     </div>
                                     <div class="tab-pane fade" id="profile3" role="tabpanel"
                                         aria-labelledby="profile-tab3">
-                                        <video id="videoPreview" class="img-fluid img-thumbnail image" src=""
+                                        <video id="addVideoPreview" class="img-fluid img-thumbnail image" src=""
                                         style="width: 20rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
                                         controls></video>
                                     </div>
                                 </div>
                             </div>
-                            <input type="file" name="file" id="files" class="form-control" accept="image/*, video/*" required>
+                            <input type="file" name="file" id="addFiles" class="form-control" accept="image/*, video/*" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -232,7 +232,7 @@
         });
 
         $(function() {
-            $('#files').on('change', function() {
+            $('#addFiles').on('change', function() {
                 var file = this.files[0];
                 var reader = new FileReader();
                 reader.onload = viewer.load;
@@ -241,11 +241,11 @@
 
             var viewer = {
                 load : function(e) {
-                    $('#preview').attr('src', e.target.result)
-                    $('#videoPreview').attr('src', e.target.result)
+                    $('#addPreview').attr('src', e.target.result)
+                    $('#addVideoPreview').attr('src', e.target.result)
                 }
             }
-        })
+        });
 
         //CSRF TOKEN PADA HEADER
         //Script ini wajib krn kita butuh csrf token setiap kali mengirim request post, patch, put dan delete ke server
@@ -279,6 +279,8 @@
                         showError('category_education_id', response.messages.category_education_id);
                         showError('desc', response.messages.desc);
                         showError('file', response.messages.file);
+                        $("#add_employee_btn").text('Simpan');
+                        $("#add_employee_btn").prop('disabled', false);
                     }
                     else if (response.status == 200) {
                         Swal.fire(
@@ -289,9 +291,9 @@
                         fetchAllEmployees();
                         $("#add_employee_form")[0].reset();
                         $("#addEmployeeModal").modal('hide');
+                        $("#add_employee_btn").text('Simpan');
+                        $("#add_employee_btn").prop('disabled', false);
                     }
-                    $("#add_employee_btn").text('Simpan');
-                    $("#add_employee_btn").prop('disabled', false);
                 }
                 });
             });
@@ -326,6 +328,15 @@
                                 style="width: 20rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
                                 controls></video>
                             </div>`);
+                    } else {
+                        $(".editFile").html(
+                            `<div class="tab-pane fade show active" id="home2" role="tabpanel"
+                                aria-labelledby="home-tab2">
+                                <img id="preview" class="img-fluid img-thumbnail image"
+                                src="../stisla/assets/img/example-image.jpg" alt="edukasi"
+                                style="width: 20rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                            </div>
+                        `);
                     }
                     $("#emp_id").val(response.id);
                     $("#emp_avatar").val(response.file);
@@ -353,6 +364,8 @@
                         showError('category_education_id', response.messages.category_education_id);
                         showError('desc', response.messages.desc);
                         showError('file', response.messages.file);
+                        $("#add_employee_btn").text('Simpan');
+                        $("#add_employee_btn").prop('disabled', false);
                     }
                     else if (response.status == 200) {
                         Swal.fire(
@@ -363,9 +376,9 @@
                         fetchAllEmployees();
                         $("#edit_employee_form")[0].reset();
                         $("#editEmployeeModal").modal('hide');
+                        $("#add_employee_btn").text('Simpan');
+                        $("#add_employee_btn").prop('disabled', false);
                     }
-                    $("#edit_employee_btn").text('Simpan');
-                    $("#edit_employee_btn").prop('disabled', false);
                 }
                 });
             });
@@ -424,5 +437,20 @@
             }
         });
 
+        $(function() {
+            $('#files').on('change', function() {
+                var file = this.files[0];
+                var reader = new FileReader();
+                reader.onload = viewer.load;
+                reader.readAsDataURL(file);
+            });
+
+            var viewer = {
+                load : function(e) {
+                    $('#preview').attr('src', e.target.result)
+                    $('#videoPreview').attr('src', e.target.result)
+                }
+            }
+        });
     </script>
 @endsection

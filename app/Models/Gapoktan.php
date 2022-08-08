@@ -16,8 +16,43 @@ class Gapoktan extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function field()
+    {
+        return $this->hasMany(Field::class);
+    }
+
     public function poktan()
     {
         return $this->hasMany(Poktan::class);
+    }
+
+    public function province()
+    {
+        return $this->belongsTo(Province::class);
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
+
+    public function district()
+    {
+        return $this->belongsTo(District::class);
+    }
+
+    public function village()
+    {
+        return $this->belongsTo(Village::class);
+    }
+
+    public function certificateGapoktan()
+    {
+        return $this->hasMany(CertificateGapoktan::class);
+    }
+
+    public function farmer()
+    {
+        return $this->hasMany(Farmer::class);
     }
 }

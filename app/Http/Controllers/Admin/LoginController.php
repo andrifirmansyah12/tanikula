@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use App\Models\Admin;
+use App\Models\Support;
 use App\Models\UserVerify;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
@@ -41,13 +42,47 @@ class LoginController extends Controller
                 'messages' => $validator->getMessageBag()
             ]);
         } else {
-            $user = User::where('email', $request->email)->first();
-            if($user){
-                if(Hash::check($request->password, $user->password)) {
+            $admins = Admin::join('users', 'admins.user_id', '=', 'users.id')
+                        ->select('admins.*', 'users.name as name')
+                        ->where('users.email', $request->email)
+                        ->first();
+            $supports = Support::join('users', 'supports.user_id', '=', 'users.id')
+                        ->select('supports.*', 'users.name as name')
+                        ->where('users.email', $request->email)
+                        ->first();
+            if ($admins) {
+                if(Hash::check($request->password, $admins->user->password)) {
                     if (auth()->attempt($credentials)) {
-                        if (auth()->check() && $user->hasRole('admin')) {
+                        if (auth()->check() && $admins->user->hasRole('admin')) {
                             return response()->json([
                                 'status' => 200,
+                                'messages' => 'Berhasil Masuk',
+                            ]);
+                        } else {
+                            \Auth::logout();
+                            return response()->json([
+                                'status' => 401,
+                                'messages' => 'Hak akses hanya untuk Admin!'
+                            ]);
+                        }
+                    } else {
+                        return response()->json([
+                            'status' => 401,
+                            'messages' => 'Kredensial tidak valid!'
+                        ]);
+                    }
+                } else {
+                    return response()->json([
+                        'status' => 401,
+                        'messages' => 'Email atau Kata Sandi salah!',
+                    ]);
+                }
+            } elseif ($supports) {
+                if(Hash::check($request->password, $supports->user->password)) {
+                    if (auth()->attempt($credentials)) {
+                        if (auth()->check() && $supports->user->hasRole('support')) {
+                            return response()->json([
+                                'status' => 201,
                                 'messages' => 'Berhasil Masuk',
                             ]);
                         } else {

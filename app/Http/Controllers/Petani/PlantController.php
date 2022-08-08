@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Petani;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Plant;
+use App\Models\FieldRecapPlanting;
 use App\Models\Poktan;
 use Illuminate\Support\Facades\DB;
 use App\Models\Farmer;
+use App\Models\Field;
 use App\Models\NotificationPlant;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
@@ -24,27 +25,21 @@ class PlantController extends Controller
     // handle fetch all eamployees ajax request
 	public function fetchAll(Request $request) {
 		// $emps = Poktan::with('user', 'gapoktan')->latest()->get();
-        $emps = Plant::join('farmers', 'plants.farmer_id', '=', 'farmers.id')
-                    ->join('poktans', 'plants.poktan_id', '=', 'poktans.id')
-                    ->select('plants.*', 'surface_area as area')
+        $emps = FieldRecapPlanting::join('fields', 'field_recap_plantings.field_id', '=', 'fields.id')
+                    ->join('farmers', 'field_recap_plantings.farmer_id', '=', 'farmers.id')
+                    ->select('field_recap_plantings.*', 'fields.farmer_id as name')
                     ->where('farmers.user_id', '=', auth()->user()->id)
-                    ->where('plants.harvest_date', '=', null)
-                    ->where('plants.status', '=', 'tandur')
-                    ->orderBy('updated_at', 'desc')
+                    ->orderBy('field_recap_plantings.updated_at', 'desc')
                     ->get();
 		$output = '';
 		if ($emps->count() > 0) {
-			$output .= '<table class="table table-striped table-sm text-center align-middle">
+			$output .= '<table id="recapPlanting" class="table table-striped table-sm text-center align-middle">
             <thead>
               <tr>
                 <th>No</th>
                 <th>Nama Petani</th>
-                <th>Tanaman</th>
-                <th>Luas Tanah</th>
-                <th>Alamat</th>
+                <th>Lahan</th>
                 <th>Tanggal Tandur</th>
-                <th>Status</th>
-                <th>Aksi</th>
               </tr>
             </thead>
             <tbody>';
@@ -53,73 +48,110 @@ class PlantController extends Controller
                 $output .= '<tr>';
                 $output .= '<td>' . $nomor++ . '</td>';
                 $output .= '<td>' . $emp->farmer->user->name . '</td>
-                <td>' . $emp->plant_tanaman . '</td>';
-                if ($emp->area) {
-                    $output .= '<td>' . $emp->area . '</td>';
+                <td>' . $emp->field->fieldCategory->name . ' (' . $emp->field->fieldCategory->details . ')</td>';
+                if ($emp->date_planting) {
+                    $output .= '<td>'. date("d-F-Y", strtotime($emp->date_planting)) .'</td>';
                 } else {
                     $output .= '<td><span class="text-danger">Belum diisi</span></td>';
                 }
-                $output .= '<td>' . $emp->address . '</td>';
-                if ($emp->plating_date) {
-                    $output .= '<td>' . date("d-F-Y", strtotime($emp->plating_date)) . '</td>';
-                } else {
-                    $output .= '<td><span class="text-danger">Belum diisi</span></td>';
-                }
-                $output .= '<td><div class="badge badge-warning text-capitalize">'. $emp->status .'</div></td>';
-                $output .= '<td>
-                    <a href="#" id="' . $emp->id . '" class="text-success mx-1 editIcon" data-toggle="modal" data-target="#editEmployeeModal"><i class="bi-pencil-square h4"></i></a>
-                    <a href="#" id="' . $emp->id . '" class="text-danger mx-1 deleteIcon"><i class="bi-trash h4"></i></a>
-                </td>
+                $output .= '
             </tr>';
 			}
 			$output .= '</tbody></table>';
 			echo $output;
 		} else {
-			echo '<h1 class="text-center text-secondary my-5">Tidak ada data Tandur!</h1>';
+			echo '<h1 class="text-center text-secondary my-5">Tidak ada data tandur!</h1>';
+		}
+	}
+
+    // handle fetch all eamployees ajax request
+	public function fetchAllFields(Request $request)
+    {
+		$farmers = Farmer::where('user_id', auth()->user()->id)->first();
+        $emps = Field::join('field_categories', 'fields.field_category_id', '=', 'field_categories.id')
+                    ->join('gapoktans', 'fields.gapoktan_id', '=', 'gapoktans.id')
+                    ->join('farmers', 'fields.farmer_id', '=', 'farmers.id')
+                    ->select('fields.*', 'field_categories.name as name')
+                    ->where('fields.farmer_id', $farmers->id)
+                    ->where('fields.status', '!=', 'tandur')
+                    ->where('fields.status', '!=', 'panen')
+                    ->where('fields.status', '!=', 'belum selesai panen')
+                    ->orderBy('fields.updated_at', 'desc')
+                    ->get();
+		$output = '';
+		if ($emps->count() > 0) {
+			$output .= '<table class="table table-striped table-sm text-center align-middle">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Lahan</th>
+                <th>Gapoktan</th>
+                <th>Petani</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody>';
+            $nomor=1;
+			foreach ($emps as $emp) {
+				$output .= '<tr>';
+                $output .= '<td>' . $nomor++ . '</td>';
+                $output .= '<td>' . $emp->fieldCategory->name . ' (' . $emp->fieldCategory->details . ')</td>';
+                $output .= '<td>' . $emp->gapoktan->user->name . '</td>
+                <td>' . $emp->farmer->user->name . '</td>';
+                $output .= '<td>
+                    <a href="#" id="' . $emp->id . '" class="text-success mx-1 editIcon" data-toggle="modal" data-target="#editEmployeeModal" data-dismiss="modal">Melakukan Tandur</a>
+                </td>
+              </tr>';
+			}
+			$output .= '</tbody></table>';
+			echo $output;
+		} else {
+			echo '<h1 class="text-center text-secondary my-5">Tidak ada data tandur!</h1>';
 		}
 	}
 
     // handle insert a new employee ajax request
-	public function store(Request $request)
-    {
-		$plant = new Plant();
-        $plant->farmer_id = $request->farmer_id;
-        $plant->poktan_id = $request->poktan_id;
-        $plant->plant_tanaman = $request->plant_tanaman;
-        $plant->surface_area = $request->surface_area;
-        $plant->address = $request->address;
-        $plant->status = "tandur";
-        $plant->plating_date = Carbon::createFromFormat('d-M-Y', $request->plating_date)->format('Y-m-d h:i:s');
-        $plant->save();
+	// public function store(Request $request)
+    // {
+	// 	$plant = new Plant();
+    //     $plant->farmer_id = $request->farmer_id;
+    //     $plant->poktan_id = $request->poktan_id;
+    //     $plant->plant_tanaman = $request->plant_tanaman;
+    //     $plant->surface_area = $request->surface_area;
+    //     $plant->address = $request->address;
+    //     $plant->status = "tandur";
+    //     $plant->plating_date = Carbon::createFromFormat('d-M-Y', $request->plating_date)->format('Y-m-d h:i:s');
+    //     $plant->save();
 
-        $notification = new NotificationPlant();
-        $notification->plant_id = $plant->id;
-        $notification->save();
+    //     $notification = new NotificationPlant();
+    //     $notification->plant_id = $plant->id;
+    //     $notification->save();
 
-		return response()->json([
-			'status' => 200,
-		]);
-	}
+	// 	return response()->json([
+	// 		'status' => 200,
+	// 	]);
+	// }
 
     // handle edit an employee ajax request
 	public function edit(Request $request) {
 		$id = $request->id;
-		$emp = Plant::with('poktan', 'farmer')->where('id', $id)->first();
+		$emp = Field::find($id);
 		return response()->json($emp);
 	}
 
 	// handle update an employee ajax request
-	public function update(Request $request) {
-
-        $plant = Plant::with('poktan', 'farmer')->find($request->emp_id);
-        $plant->farmer_id = $request->farmer_id;
-        $plant->poktan_id = $request->poktan_id;
-        // $plant->plant_tanaman = $request->plant_tanaman;
-        // $plant->surface_area = $request->surface_area;
-        // $plant->address = $request->address;
-        $plant->status = "panen";
-        $plant->harvest_date = Carbon::createFromFormat('d-M-Y', $request->harvest_date)->format('Y-m-d h:i:s');
+	public function update(Request $request)
+    {
+        $plant = Field::find($request->emp_id);
+        $plant->status = 'tandur';
         $plant->save();
+
+        $planting = FieldRecapPlanting::where('field_id', $request->emp_id)->create([
+            'field_id' => $request->field_id,
+            'farmer_id' => $request->farmer_id,
+            'date_planting' => Carbon::createFromFormat('d-M-Y', $request->date_planting)->format('Y-m-d h:i:s'),
+            'status' => 'melakukan tandur',
+        ]);
 
         $notificationExists = NotificationPlant::with('plant')->where('read_at', null)->first();
         if($notificationExists){

@@ -57,6 +57,14 @@ integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifw
     function gapoktan_pesanan(url) {
         window.location = url;
     }
+    // Kategori Lahan
+    function gapoktan_kategori_lahan(url) {
+        window.location = url;
+    }
+    // Lahan
+    function gapoktan_lahan(url) {
+        window.location = url;
+    }
     // Kegiatan
     function gapoktan_kegiatan(url) {
         window.location = url;

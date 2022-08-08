@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCitiesTable extends Migration
+class CreateProvincesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateCitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('cities', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('province_id')->unsigned();
-            $table->string('type');
-            $table->string('city_name');
-            $table->string('postal_code', 10);
+        Schema::create(config('laravolt.indonesia.table_prefix').'provinces', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->char('code', 2)->unique();
+            $table->string('name', 255);
+            $table->text('meta')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreateCitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cities');
+        Schema::drop(config('laravolt.indonesia.table_prefix').'provinces');
     }
 }

@@ -20,10 +20,8 @@ class PoktanSeeder extends Seeder
             [
                 "user_id" => 3,
                 "gapoktan_id" => 1,
-                "chairman" => "Bapak Mara Lagi",
-                "city" => "Kota Indramayu",
-                "address" => 'Desa Krasak, Jatibarang - Indramayu',
-                "telp" => "081223943853",
+                "chairman" => "Bapak Mara",
+                "is_active" => 1,
             ],
         ];
 

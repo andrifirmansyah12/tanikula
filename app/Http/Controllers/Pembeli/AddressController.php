@@ -83,9 +83,15 @@ class AddressController extends Controller
                                 $output .= '</div>
                                 <div class="col-12 col-md-10 mt-2 mt-md-0">
                                     <p class="mb-2 fw-bold text-black">'. $emp->telp .'</p>
-                                    <p>'.$emp->city.', '.$emp->postal_code.' [TaniKula Note:
-                                        '.$emp->complete_address.' '.$emp->note_for_courier.']</p>
-                                    <p>'.$emp->city.', '.$emp->postal_code.'.</p>
+                                    <p>';
+                                    if ($emp->village_id && $emp->district_id && $emp->city_id && $emp->province_id != null) {
+                                        $output .= '' . $emp->village->name . ', Kecamatan '. $emp->district->name .', '. $emp->city->name .', Provinsi '. $emp->province->name .'';
+                                    }$output .= ', '.$emp->postal_code.'. [TaniKula Note:
+                                        '.$emp->complete_address.' '.$emp->note_for_courier.'].</p>
+                                    <p>';
+                                    if ($emp->village_id && $emp->district_id && $emp->city_id && $emp->province_id != null) {
+                                        $output .= ''. $emp->district->name .', ';
+                                    }$output .= ''.$emp->postal_code.'.</p>
                                 </div>
                             </div>
                             <a href="#" id="'.$emp->id.'" class="pt-2 fw-bold editAlamat" type="button"
@@ -141,6 +147,10 @@ class AddressController extends Controller
             'recipients_name' => 'required|max:255',
             'telp' => 'required',
             'address_label' => 'required',
+            'province_id' => 'required',
+            'city_id' => 'required',
+            'district_id' => 'required',
+            'village_id' => 'required',
             'postal_code' => 'required|max:5',
             'complete_address' => 'required',
             'note_for_courier' => 'required',
@@ -174,8 +184,13 @@ class AddressController extends Controller
             $address->recipients_name = $request->recipients_name;
             $address->address_label = $request->address_label;
             $address->postal_code = $request->postal_code;
-            $address->city = $request->city;
             $address->telp = $request->telp;
+            if ($request->province_id && $request->city_id && $request->district_id && $request->village_id) {
+                $address->province_id = $request->province_id;
+                $address->city_id = $request->city_id;
+                $address->district_id = $request->district_id;
+                $address->village_id = $request->village_id;
+            }
             $address->complete_address = $request->complete_address;
             $address->note_for_courier = $request->note_for_courier;
             $address->main_address = $request->main_address ? 1 : 0;
@@ -238,8 +253,13 @@ class AddressController extends Controller
             $address->recipients_name = $request->recipients_name;
             $address->address_label = $request->address_label;
             $address->postal_code = $request->postal_code;
-            $address->city = $request->city;
             $address->telp = $request->telp;
+            if ($request->province_id && $request->city_id && $request->district_id && $request->village_id) {
+                $address->province_id = $request->province_id;
+                $address->city_id = $request->city_id;
+                $address->district_id = $request->district_id;
+                $address->village_id = $request->village_id;
+            }
             $address->complete_address = $request->complete_address;
             $address->note_for_courier = $request->note_for_courier;
             if ($request->main_address == 0) {

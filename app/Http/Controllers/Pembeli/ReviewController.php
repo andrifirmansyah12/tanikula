@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Validator;
 
 class ReviewController extends Controller
 {
-
     public function index()
     {
         return view('costumer.ulasan.index');

@@ -30,7 +30,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <button type="button" class="btn py-1 btn-success" data-toggle="modal"
+                                <button type="button" style="border-radius: 5px;" class="btn btn btn-primary shadow-none py-1" data-toggle="modal"
                                     data-target="#addEmployeeModal">Tambah
                                     @yield('title')</button>
                             </div>
@@ -61,6 +61,7 @@
                     <div class="modal-body p-4">
                         @foreach ($poktan as $item)
                             @if ($item->user->name == auth()->user()->name)
+                                <input type="hidden" autofocus name="gapoktan_id" class="form-control" value="{{ $item->gapoktan_id }}" required>
                                 <input type="hidden" autofocus name="poktan_id" class="form-control" value="{{ $item->id }}" required>
                             @endif
                         @endforeach
@@ -109,6 +110,7 @@
                     @csrf
                     <input type="hidden" name="emp_id" id="emp_id">
                     <input type="hidden" name="user_id" id="user_id">
+                    <input type="hidden" name="gapoktan_id" id="gapoktan_id">
                     <div class="modal-body p-4">
                         @foreach ($poktan as $item)
                             @if ($item->user->name == auth()->user()->name)
@@ -195,17 +197,17 @@
                 dataType: 'json',
                 success: function(response) {
                     if (response.status == 200) {
-                    Swal.fire(
-                        'Menambahkan!',
-                        'Petani Berhasil Ditambahkan!',
-                        'success'
-                    )
-                    fetchAllEmployees();
+                        Swal.fire(
+                            'Menambahkan!',
+                            'Petani Berhasil Ditambahkan!',
+                            'success'
+                        )
+                        fetchAllEmployees();
+                        $("#add_employee_btn").text('Simpan');
+                        $("#add_employee_btn").prop('disabled', false);
+                        $("#add_employee_form")[0].reset();
+                        $("#addEmployeeModal").modal('hide');
                     }
-                    $("#add_employee_btn").text('Simpan');
-                    $("#add_employee_btn").prop('disabled', false);
-                    $("#add_employee_form")[0].reset();
-                    $("#addEmployeeModal").modal('hide');
                 }
                 });
             });
@@ -236,6 +238,7 @@
                             <input type="checkbox" name="is_active" ${response.is_active ? 'checked' : ''} class="custom-switch-input">
                             <span class="custom-switch-indicator"></span>
                         </label>`);
+                    $("#gapoktan_id").val(response.gapoktan_id);
                     $("#emp_id").val(response.id);
                     $("#user_id").val(response.user.id);
                 }
@@ -258,17 +261,17 @@
                 dataType: 'json',
                 success: function(response) {
                     if (response.status == 200) {
-                    Swal.fire(
-                        'Memperbarui!',
-                        'Petani Berhasil Diperbarui!',
-                        'success'
-                    )
-                    fetchAllEmployees();
+                        Swal.fire(
+                            'Memperbarui!',
+                            'Petani Berhasil Diperbarui!',
+                            'success'
+                        )
+                        fetchAllEmployees();
+                        $("#edit_employee_btn").text('Simpan');
+                        $("#edit_employee_btn").prop('disabled', false);
+                        $("#edit_employee_form")[0].reset();
+                        $("#editEmployeeModal").modal('hide');
                     }
-                    $("#edit_employee_btn").text('Simpan');
-                    $("#edit_employee_btn").prop('disabled', false);
-                    $("#edit_employee_form")[0].reset();
-                    $("#editEmployeeModal").modal('hide');
                 }
                 });
             });

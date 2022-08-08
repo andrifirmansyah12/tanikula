@@ -43,8 +43,9 @@ class CheckoutController extends Controller
         if($request->has('service'))
         {
             $data_origin = 149;
-            $data_destination = 154;
-            $data_weight = 1700;
+            $data_destination = $request->destination_costumer;
+            // $data_destination = 149;
+            $data_weight = $request->weight_product;
             $data_courier = $request->courier;
             $data_service = $request->service;
 
@@ -91,26 +92,27 @@ class CheckoutController extends Controller
         $key = 'f5ed16cb52b0f2936e98e7e22a4a02f5'; //Buat akun atau pakai API akun Tahu Coding
         $cost_url = 'https://api.rajaongkir.com/starter/cost';
 
-        if($request->courier)
-        {
-            $data_origin = 149;
-            $data_destination = 154;
-            $data_weight = 1700;
-            $data_courier = $request->courier;
+            if($request->courier)
+            {
+                $data_origin = 149;
+                $data_destination = $request->destination_costumer;
+                // $data_destination = 149;
+                $data_weight = $request->weight_product;
+                $data_courier = $request->courier;
 
-            $response = Http::retry(10, 200)->asForm()->withHeaders([
-                'key' => $key
-            ])->post($cost_url, [
-                'origin' => $data_origin,
-                'destination' => $data_destination,
-                'weight' => $data_weight,
-                'courier' => $data_courier
-            ]);
+                $response = Http::retry(10, 200)->asForm()->withHeaders([
+                    'key' => $key
+                ])->post($cost_url, [
+                    'origin' => $data_origin,
+                    'destination' => $data_destination,
+                    'weight' => $data_weight,
+                    'courier' => $data_courier
+                ]);
 
-            $result_cost = $response['rajaongkir']['results'][0]['costs'];
-        } else {
-            $result_cost = null;
-        }
+                $result_cost = $response['rajaongkir']['results'][0]['costs'];
+            } else {
+                $result_cost = null;
+            }
 
         return response()->json($result_cost);
     }
@@ -123,18 +125,19 @@ class CheckoutController extends Controller
             ->select('orders.*', 'addresses.recipients_name as name_billing')
             ->where('orders.user_id', '=', auth()->user()->id)
             ->where('orders.payment_status', '=', 'unpaid')
-            ->where('orders.status', '=', 'created')
+            ->where('orders.status', '=', 'cancelled')
             ->where('orders.id', '=', $orderId)
             ->exists();
-        if ($checkOrder) {
+        if ($checkOrder)
+        {
+            return redirect('/');
+        } else {
             $order = Order::with('address', 'user', 'orderItems')
                 ->where('id', $orderId)
                 ->where('user_id', \Auth::user()->id)
                 ->firstOrFail();
 
             return view('pages.order.index', compact('order'));
-        } else {
-            return redirect('/');
         }
     }
 
@@ -269,8 +272,15 @@ class CheckoutController extends Controller
                 $output .= '</div>
                             <div class="col-12 mt-2 mt-md-0">
                             <p class="mb-2 fw-bold text-black">' . $emp->telp . '</p>
-                                <p>' . $emp->city . ', ' . $emp->postal_code . ' [TaniKula Note: ' . $emp->complete_address . ' ' . $emp->note_for_courier . ']</p>
-                                <p>' . $emp->city . ', ' . $emp->postal_code . '.</p>
+                                <p>';
+                                    if ($emp->village_id && $emp->district_id && $emp->city_id && $emp->province_id != null) {
+                                        $output .= '' . $emp->village->name . ', Kecamatan '. $emp->district->name .', '. $emp->city->name .', Provinsi '. $emp->province->name .'';
+                                    }$output .= ', '.$emp->postal_code.'. [TaniKula Note:
+                                        '.$emp->complete_address.' '.$emp->note_for_courier.'].</p>
+                                    <p>';
+                                    if ($emp->village_id && $emp->district_id && $emp->city_id && $emp->province_id != null) {
+                                        $output .= ''. $emp->district->name .', ';
+                                    }$output .= ''.$emp->postal_code.'.</p>
                             </div>
                         </div>
                         <div class="d-flex flex-row align-items-center justify-content-between justify-content-md-start">
@@ -340,7 +350,12 @@ class CheckoutController extends Controller
             $address->recipients_name = $request->recipients_name;
             $address->address_label = $request->address_label;
             $address->postal_code = $request->postal_code;
-            $address->city = $request->city;
+            if ($request->province_id && $request->city_id && $request->district_id && $request->village_id) {
+                $address->province_id = $request->province_id;
+                $address->city_id = $request->city_id;
+                $address->district_id = $request->district_id;
+                $address->village_id = $request->village_id;
+            }
             $address->telp = $request->telp;
             $address->complete_address = $request->complete_address;
             $address->note_for_courier = $request->note_for_courier;
@@ -405,7 +420,12 @@ class CheckoutController extends Controller
             $address->recipients_name = $request->recipients_name;
             $address->address_label = $request->address_label;
             $address->postal_code = $request->postal_code;
-            $address->city = $request->city;
+            if ($request->province_id && $request->city_id && $request->district_id && $request->village_id) {
+                $address->province_id = $request->province_id;
+                $address->city_id = $request->city_id;
+                $address->district_id = $request->district_id;
+                $address->village_id = $request->village_id;
+            }
             $address->telp = $request->telp;
             $address->complete_address = $request->complete_address;
             $address->note_for_courier = $request->note_for_courier;

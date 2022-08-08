@@ -51,12 +51,25 @@ class PengaturanController extends Controller
             'email' => $request->email,
         ]);
 
-        Gapoktan::where('id', $request->id)->update([
-            'chairman' => $request->chairman,
-            'telp' => $request->telp,
-            'city' => $request->city,
-            'address' => $request->address,
-        ]);
+        if ($request->province_id && $request->city_id && $request->district_id && $request->village_id) {
+            Gapoktan::where('id', $request->id)->update([
+                'province_id' => $request->province_id,
+                'city_id' => $request->city_id,
+                'district_id' => $request->district_id,
+                'village_id' => $request->village_id,
+                'chairman' => $request->chairman,
+                'street' => $request->street,
+                'number' => $request->number,
+                'phone' => $request->phone,
+            ]);
+        } else {
+            Gapoktan::where('id', $request->id)->update([
+                'chairman' => $request->chairman,
+                'street' => $request->street,
+                'number' => $request->number,
+                'phone' => $request->phone,
+            ]);
+        }
 
         return response()->json([
             'status' => 200,

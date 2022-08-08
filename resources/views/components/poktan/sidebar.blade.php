@@ -1,9 +1,9 @@
 <aside id="sidebar-wrapper">
     <div class="sidebar-brand">
-        <a href="index.html">Sri Makmur</a>
+        <a href="index.html">Tanikula</a>
     </div>
     <div class="sidebar-brand sidebar-brand-sm">
-        <a href="index.html">Sm</a>
+        <a href="index.html">TK</a>
     </div>
     <ul class="sidebar-menu">
         <li class="menu-header">Dashboard</li>

@@ -19,7 +19,6 @@
 @endsection
 
 @section('content')
-
     <!-- Main Content -->
     <div class="main-content">
         <section class="section">
@@ -35,6 +34,11 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
+                            <div class="card-header">
+                                <button type="button" style="border-radius: 5px;" class="btn btn btn-primary shadow-none py-1" data-toggle="modal"
+                                    data-target="#addEmployeeModal">Tambah
+                                    @yield('title')</button>
+                            </div>
                             <div class="card-body">
                                 <div class="table-responsive" id="show_all_employees">
                                     <h1 class="text-center text-secondary my-5">Memuat..</h1>
@@ -48,7 +52,26 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="editEmployeeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addEmployeeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Panen</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body p-4">
+                    <div id="show_all_fields">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="editPanenModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -57,43 +80,88 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="#" method="POST" id="edit_employee_form" enctype="multipart/form-data">
+                <form action="#" method="POST" id="edit_panen_form" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="emp_id" id="emp_id">
+                    <input type="hidden" name="field_id" id="field_id_edit">
+                    <input type="hidden" name="plant_id" id="plant_id_edit">
+                    <input type="hidden" name="farmer_id" id="farmer_id_edit">
                     <div class="modal-body p-4">
-                        <div class="form-group my-2">
-                            <label for="plant_tanaman">Tanaman</label>
-                            <input type="text" disabled name="plant_tanaman" id="plant_tanaman" class="form-control" placeholder="Nama Tanaman" required>
-                        </div>
-                        <div class="form-group my-2">
-                            <label for="surface_area">Luas Tanah</label>
-                            <input type="text" disabled name="surface_area" id="surface_area" class="form-control" placeholder="Luas Tanah" required>
-                        </div>
-                        <div class="form-group my-2">
-                            <label for="address">Alamat</label>
-                            <textarea class="form-control" style="height: 8rem" disabled name="address" id="address" rows="3" placeholder="Alamat"></textarea>
-                        </div>
-                        <div class="my-2 form-group">
-                            <label for="plating_date">Tanggal Tandur</label>
+                        <div class="form-group">
+                            <label for="plating_date">Tanggal Panen</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">
                                         <i class="bi bi-calendar"></i>
                                     </div>
                                 </div>
-                                <input type="text" name="plating_date" disabled id="plating_date" v-model="plating_date" class="form-control datepicker">
+                                <input type="text" name="date_harvest" placeholder="Tanggal Panen" id="date_harvest_edit"
+                                    class="form-control datepicker" autocomplete="off">
                             </div>
                         </div>
-                        <div class="my-2 form-group">
-                            <label for="plating_date">Tanggal Panen</label>
-                            <div class="input-group" id="harvest_date">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="status">Status</label>
+                            </div>
+                            <select class="custom-select" name="status" id="status_edit">
+                                <option selected disabled>Pilih...</option>
+                                <option value="panen">Selesai Panen</option>
+                                <option value="belum selesai panen">Belum Selesai Panen</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
+                        <button type="submit" id="edit_panen_btn" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="editEmployeeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Panen</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="#" method="POST" id="edit_employee_form" enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" name="emp_id" id="emp_id">
+                    <input type="hidden" name="plant_id" id="plant_id">
+                    <input type="hidden" name="farmer_id" id="farmer_id">
+                    <input type="hidden" name="field_id" id="field_id">
+                    <div class="modal-body p-4">
+                        <div class="form-group">
+                            <label for="plating_date">Tanggal Panen</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="bi bi-calendar"></i>
+                                    </div>
+                                </div>
+                                <input type="text" name="date_harvest" placeholder="Tanggal Panen" id="date_harvest"
+                                    class="form-control datepicker" autocomplete="off">
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
-                            <button type="submit" id="edit_employee_btn" class="btn btn-primary">Selesai</button>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="status">Status</label>
+                            </div>
+                            <select class="custom-select" name="status" id="status">
+                                <option selected disabled>Pilih...</option>
+                                <option value="panen">Selesai Panen</option>
+                                <option value="belum selesai panen">Belum Selesai Panen</option>
+                            </select>
                         </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
+                        <button type="submit" id="edit_employee_btn" class="btn btn-primary">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -140,6 +208,59 @@
         });
 
         $(function() {
+            // edit employee ajax request
+            $(document).on('click', '.editPanen', function(e) {
+                e.preventDefault();
+                let id = $(this).attr('id');
+                $.ajax({
+                url: '{{ route('petani-panen-editPanen') }}',
+                method: 'get',
+                data: {
+                    id: id,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    $("#status_edit").val(response.status);
+                    $("#date_harvest_edit").val(moment(response.date_harvest).format('DD-MMM-YYYY'));
+                    $("#plant_id_edit").val(response.planting_id);
+                    $("#farmer_id_edit").val(response.farmer_id);
+                    $("#field_id_edit").val(response.field_recap_planting.field_id);
+                    $("#emp_id").val(response.id);
+                }
+                });
+            });
+
+            // update employee ajax request
+            $("#edit_panen_form").submit(function(e) {
+                e.preventDefault();
+                const fd = new FormData(this);
+                $("#edit_panen_btn").text('Tunggu..');
+                $("#edit_panen_btn").prop('disabled', true);
+                $.ajax({
+                url: '{{ route('petani-panen-updatePanen') }}',
+                method: 'post',
+                data: fd,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status == 200) {
+                    Swal.fire(
+                        'Memperbarui!',
+                        'Panen Berhasil Diperbarui!',
+                        'success'
+                    )
+                    fetchAllEmployees();
+                    fetchAllEmployeesFields();
+                    }
+                    $("#edit_panen_btn").text('Simpan');
+                    $("#edit_panen_btn").prop('disabled', false);
+                    $("#edit_panen_form")[0].reset();
+                    $("#editPanenModal").modal('hide');
+                }
+                });
+            });
 
             // edit employee ajax request
             $(document).on('click', '.editIcon', function(e) {
@@ -153,27 +274,9 @@
                     _token: '{{ csrf_token() }}'
                 },
                 success: function(response) {
-                    $("#plant_tanaman").val(response.plant_tanaman);
-                    $("#surface_area").val(response.surface_area);
-                    $("#address").val(response.address);
-                    $("#plating_date").val(moment(response.plating_date).format('DD-MMM-YYYY'));
-                    if (response.harvest_date) {
-                        $("#harvest_date").html(`<div class="input-group-prepend">
-                                <div class="input-group-text">
-                                    <i class="bi bi-calendar"></i>
-                                </div>
-                            </div>
-                            <input type="text" name="harvest_date" disabled value="${moment(response.harvest_date).format('DD-MMM-YYYY')}" class="form-control datepicker">
-                        `);
-                    } else {
-                        $("#harvest_date").html(`<div class="input-group-prepend">
-                                <div class="input-group-text">
-                                    <i class="bi bi-calendar"></i>
-                                </div>
-                            </div>
-                            <input type="text" name="harvest_date" value="Belum diisi" disabled class="form-control datepicker">
-                        `);
-                    }
+                    $("#farmer_id").val(response.farmer_id);
+                    $("#field_id").val(response.field_id);
+                    $("#plant_id").val(response.id);
                     $("#emp_id").val(response.id);
                 }
                 });
@@ -197,10 +300,11 @@
                     if (response.status == 200) {
                     Swal.fire(
                         'Memperbarui!',
-                        'Panen telah selesai!',
+                        'Panen Berhasil Diperbarui!',
                         'success'
                     )
                     fetchAllEmployees();
+                    fetchAllEmployeesFields();
                     }
                     $("#edit_employee_btn").text('Simpan');
                     $("#edit_employee_btn").prop('disabled', false);
@@ -219,7 +323,21 @@
                 method: 'get',
                 success: function(response) {
                     $("#show_all_employees").html(response);
-                    $("table").DataTable();
+                    $("#recapHarvest").DataTable();
+                }
+                });
+            }
+
+            // fetch all employees ajax request
+            fetchAllEmployeesFields();
+
+            function fetchAllEmployeesFields() {
+                $.ajax({
+                url: '{{ route('petani-panen-fetchAllPlanting') }}',
+                method: 'get',
+                success: function(response) {
+                    $("#show_all_fields").html(response);
+                    $("#recapPlanting").DataTable();
                 }
                 });
             }

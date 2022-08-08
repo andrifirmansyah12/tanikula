@@ -20,8 +20,10 @@ class CreateAddressesTable extends Migration
             $table->string('telp')->nullable(); // telepon penerima
             $table->string('address_label')->nullable(); // label alamat (contoh rumah, kantor)
             // $table->string('city')->nullable(); // kota kabupaten
-            $table->integer('provinsi_id')->nullable(); // provinsi id
-            $table->integer('kota_id')->nullable(); // kota id
+            $table->foreignId("province_id")->nullable();
+            $table->foreignId("city_id")->nullable();
+            $table->foreignId("district_id")->nullable();
+            $table->foreignId("village_id")->nullable();
             $table->integer('postal_code')->nullable(); // kode pos
             $table->boolean('main_address')->default(0); // Alamat Utama
             $table->string('complete_address')->nullable(); // alamat lengkap

@@ -4,7 +4,7 @@
 @section('style')
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- MULAI STYLE CSS -->
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
     <link rel='stylesheet'
         href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css' />
@@ -12,8 +12,9 @@
         integrity="sha256-pODNVtK3uOhL8FUNWWvFQK0QoQoV3YA9wGGng6mbZ0E=" crossorigin="anonymous" />
     <!-- AKHIR STYLE CSS -->
     <style>
-        .datepicker {
-            z-index: 1600 !important; /* has to be larger than 1050 */
+        /* STYLE CSS */
+        .dt-buttons {
+            display: none;
         }
     </style>
 @endsection
@@ -36,6 +37,37 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
+                                <div class="row align-items-center input-daterange mb-4">
+                                    <div class="col-md-4">
+                                        <input type="text" name="from_date" id="from_date" class="form-control"
+                                            placeholder="Dari Tanggal" readonly />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="text" name="to_date" id="to_date" class="form-control"
+                                            placeholder="Ke Tanggal" readonly />
+                                    </div>
+                                    <div class="col-md-4 mt-md-0 mt-3">
+                                        <button type="button" name="filter" id="filter"
+                                            class="btn btn-primary shadow-none">Filter</button>
+                                        <button type="button" name="refresh" id="refresh"
+                                            class="text-dark btn btn-secondary shadow-none">Refresh</button>
+                                    </div>
+                                </div>
+                                <p class="d-inline-flex font-weight-bold text-white py-1 px-3 border border-light rounded" style="background: #16A085; cursor: pointer;" href="#" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
+                                    Export
+                                </p>
+                                <div class="dropdown-menu mt-2" aria-labelledby="dropdownMenuButton">
+                                    <ul class="m-0 p-0">
+                                        <ul class="m-0 p-0">
+                                            <ul class="m-0 p-0">
+                                                <a class="dropdown-item" href="#">Export CSV</a>
+                                                <a class="dropdown-item" href="#">Export Excel</a>
+                                                <a class="dropdown-item" href="#">Export PDF</a>
+                                                <a class="dropdown-item" href="#">Print</a>
+                                            </ul>
+                                        </ul>
+                                    </ul>
+                                </div>
                                 <div class="table-responsive" id="show_all_employees">
                                     <h1 class="text-center text-secondary my-5">Memuat..</h1>
                                 </div>
@@ -46,67 +78,25 @@
             </div>
         </section>
     </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="editEmployeeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Detail Riwayat Tandur</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form action="#" method="POST" id="edit_employee_form" enctype="multipart/form-data">
-                    @csrf
-                    <input type="hidden" name="emp_id" id="emp_id">
-                    <div class="modal-body p-4">
-                        <div class="form-group my-2">
-                            <label for="plant_tanaman">Tanaman</label>
-                            <input type="text" disabled name="plant_tanaman" id="plant_tanaman" class="form-control" placeholder="Nama Tanaman" required>
-                        </div>
-                        <div class="form-group my-2">
-                            <label for="surface_area">Luas Tanah</label>
-                            <input type="text" disabled name="surface_area" id="surface_area" class="form-control" placeholder="Luas Tanah" required>
-                        </div>
-                        <div class="form-group my-2">
-                            <label for="address">Alamat</label>
-                            <textarea class="form-control" style="height: 8rem" name="address" rows="3" placeholder="Alamat" required></textarea>
-                        </div>
-                        <div class="my-2 form-group">
-                            <label for="plating_date">Tanggal Tandur</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                        <i class="bi bi-calendar"></i>
-                                    </div>
-                                </div>
-                                <input type="text" name="plating_date" disabled id="plating_date" v-model="plating_date" class="form-control datepicker">
-                            </div>
-                        </div>
-                        <div class="my-2 form-group">
-                            <label for="plating_date">Tanggal Panen</label>
-                            <div class="input-group" id="harvest_date">
-
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
 @endsection
 
 @section('script')
     <!-- LIBARARY JS -->
     {{-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script> --}}
-    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <!-- DataTable -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"></script>
     <script type="text/javascript" language="javascript"
         src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 
     <script type="text/javascript" language="javascript"
         src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.flash.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js" type="text/javascript"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"
         integrity="sha256-sPB0F50YUDK0otDnsfNHawYmA5M0pjjUf4TvRJkGFrI=" crossorigin="anonymous"></script>
@@ -119,76 +109,104 @@
 
     <!-- JAVASCRIPT -->
     <script>
-        $( function() {
-            $( ".datepicker" ).datepicker({
-                dateFormat: 'dd-M-yy'
-            });
-        });
-
-        //CSRF TOKEN PADA HEADER
-        //Script ini wajib krn kita butuh csrf token setiap kali mengirim request post, patch, put dan delete ke server
         $(document).ready(function() {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-        });
-
-        $(function() {
-
-            // edit employee ajax request
-            $(document).on('click', '.editIcon', function(e) {
-                e.preventDefault();
-                let id = $(this).attr('id');
-                $.ajax({
-                url: '{{ route('gapoktan-riwayat-penanam-edit') }}',
-                method: 'get',
-                data: {
-                    id: id,
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function(response) {
-                    $("#plant_tanaman").val(response.plant_tanaman);
-                    $("#surface_area").val(response.surface_area);
-                    $("#address").val(response.address);
-                    $("#plating_date").val(moment(response.plating_date).format('DD-MMM-YYYY'));
-                    if (response.harvest_date) {
-                        $("#harvest_date").html(`<div class="input-group-prepend">
-                                <div class="input-group-text">
-                                    <i class="bi bi-calendar"></i>
-                                </div>
-                            </div>
-                            <input type="text" name="harvest_date" disabled value="${moment(response.harvest_date).format('DD-MMM-YYYY')}" class="form-control datepicker">
-                        `);
-                    } else {
-                        $("#harvest_date").html(`<div class="input-group-prepend">
-                                <div class="input-group-text">
-                                    <i class="bi bi-calendar"></i>
-                                </div>
-                            </div>
-                            <input type="text" name="harvest_date" value="Belum diisi" disabled class="form-control datepicker">
-                        `);
-                    }
-                    $("#emp_id").val(response.id);
-                }
-                });
+            $('.input-daterange').datepicker({
+                todayBtn:'linked',
+                format:'yyyy-mm-dd',
+                autoclose:true
             });
 
             // fetch all employees ajax request
             fetchAllEmployees();
 
-            function fetchAllEmployees() {
+            function fetchAllEmployees(from_date = '', to_date = '') {
                 $.ajax({
                 url: '{{ route('gapoktan-riwayat-penanam-fetchAll') }}',
+                data:{from_date:from_date, to_date:to_date},
                 method: 'get',
                 success: function(response) {
                     $("#show_all_employees").html(response);
-                    $("table").DataTable();
+                    $("table").DataTable({
+                    order: [0, 'asc'],
+                    dom: "Blfrtip",
+                    "bLengthChange": false,
+                    buttons: [
+                        {
+                            text: 'Csv',
+                            extend: 'csvHtml5',
+                            exportOptions: {
+                                columns: ':visible:not(.not-export-col)'
+                            }
+                        },
+                        {
+                            text: 'Excel',
+                            extend: 'excelHtml5',
+                            exportOptions: {
+                                columns: ':visible:not(.not-export-col)'
+                            }
+                        },
+                        {
+                            text: 'Pdf',
+                            extend: 'pdfHtml5',
+                            exportOptions: {
+                                columns: ':visible:not(.not-export-col)'
+                            }
+                        },
+                        {
+                            text: 'Print',
+                            extend: 'print',
+                            exportOptions: {
+                                columns: ':visible:not(.not-export-col)'
+                            }
+                        },
+                    ],
+                    columnDefs: [{
+                        orderable: false,
+                        targets: -1
+                    }]
+                    });
                 }
                 });
             }
+
+            $('#filter').click(function(){
+                var from_date = $('#from_date').val();
+                var to_date = $('#to_date').val();
+                if(from_date != '' &&  to_date != '')
+                {
+                    $('table').DataTable().destroy();
+                    fetchAllEmployees(from_date, to_date);
+                }
+                else
+                {
+                    Swal.fire(
+                        'Peringatan!',
+                        'Kedua tanggal perlu diisi!',
+                        'warning'
+                    )
+                }
+            });
+
+            $('#refresh').click(function(){
+                $('#from_date').val('');
+                $('#to_date').val('');
+                $('table').DataTable().destroy();
+                fetchAllEmployees();
+            });
         });
 
+        $("ul ul ul a").click(function() {
+            var i = $(this).index() + 1
+            var table = $('table').DataTable();
+            if (i == 1) {
+                table.button('.buttons-csv').trigger();
+            } else if (i == 2) {
+                table.button('.buttons-excel').trigger();
+            } else if (i == 3) {
+                table.button('.buttons-pdf').trigger();
+            } else if (i == 4) {
+                table.button('.buttons-print').trigger();
+            }
+        });
     </script>
 @endsection
