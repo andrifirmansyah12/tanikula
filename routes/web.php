@@ -603,9 +603,6 @@ Route::post('/delete-cart-item', [App\Http\Controllers\Pembeli\CartController::c
 Route::post('/update-cart-item', [App\Http\Controllers\Pembeli\CartController::class, 'updateCartItem']);
 
 // Hubungi Kami
-// Route::get('/hubungi-kami', function() {
-//         return view('pages.contact.index');
-//     })->name('contact.us');
 Route::get('/hubungi-kami', [App\Http\Controllers\Pages\ContactUsController::class, 'index'])->name('contact.us');
 
 // Count Keranjang
