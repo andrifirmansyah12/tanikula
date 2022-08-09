@@ -29,7 +29,7 @@ class ProductCustomerApiController extends BaseController
         $result = ProductResource::make($datas);
         return $this->sendResponse($result, 'Data fetched');
         if ($datas) {
-            # code...
+            # code...xsxs
         } else {
             $result = [];
             return $this->sendResponse($result, 'Data fetched');
