@@ -20,11 +20,13 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    public function login() {
+    public function login()
+    {
         return view('costumer.login.index');
     }
 
-    public function loginPembeli(Request $request) {
+    public function loginPembeli(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email|max:100',
             'password' => 'required|min:6|max:50',
@@ -38,15 +40,15 @@ class LoginController extends Controller
 
         $credentials = $request->except(['_token']);
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
             return response()->json([
                 'status' => 400,
                 'messages' => $validator->getMessageBag()
             ]);
         } else {
             $user = User::where('email', $request->email)->first();
-            if($user){
-                if(Hash::check($request->password, $user->password)) {
+            if ($user) {
+                if (Hash::check($request->password, $user->password)) {
                     if (auth()->attempt($credentials)) {
                         if (auth()->check() && $user->hasRole('pembeli')) {
                             if (!Auth::user()->is_email_verified) {
@@ -89,7 +91,8 @@ class LoginController extends Controller
         }
     }
 
-    public function registerPembeli(Request $request) {
+    public function registerPembeli(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:50',
             'email' => 'required|email|unique:users|max:100',
@@ -110,7 +113,7 @@ class LoginController extends Controller
             'cpassword.max' => 'Kata sandi maksimal 50 karakter!',
         ]);
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
             return response()->json([
                 'status' => 400,
                 'messages' => $validator->getMessageBag()
@@ -129,11 +132,11 @@ class LoginController extends Controller
 
             $token = Str::random(64);
             UserVerify::create([
-              'user_id' => $user->id,
-              'token' => $token
+                'user_id' => $user->id,
+                'token' => $token
             ]);
 
-            Mail::send('costumer.register.emailVerificationEmail', ['token' => $token], function($message) use($request){
+            Mail::send('costumer.register.emailVerificationEmail', ['token' => $token], function ($message) use ($request) {
                 $message->to($request->email);
                 $message->subject('Verifikasi Email');
             });
@@ -145,7 +148,8 @@ class LoginController extends Controller
         }
     }
 
-    public function register() {
+    public function register()
+    {
         return view('costumer.register.index');
     }
 
@@ -156,33 +160,35 @@ class LoginController extends Controller
         // notify()->warning("Maaf email Anda tidak dapat diidentifikasi.", "Warning", "topRight");
         // $messageDanger = 'Maaf email Anda tidak dapat diidentifikasi.';
 
-        if(!is_null($verifyUser) ){
+        if (!is_null($verifyUser)) {
             $user = $verifyUser->user;
 
-            if(!$user->is_email_verified) {
+            if (!$user->is_email_verified) {
                 $verifyUser->user->is_email_verified = 1;
                 $verifyUser->user->save();
-                notify()->success("Email Anda telah diverifikasi. Anda sekarang dapat masuk.", "Success", "topRight");
-                // $message = "Email Anda telah diverifikasi. Anda sekarang dapat masuk.";
+                notify()->success("Email Anda telah diverifikasi. Anda sekarang dapat masuk website dan aplikasi TaniKula.", "Success", "topRight");
+                // $message = "Email Anda telah diverifikasi. Anda sekarang dapat masuk website dan aplikasi TaniKula.";
             } else {
-                notify()->success("Email Anda sudah diverifikasi. Anda sekarang dapat masuk.", "Success", "topRight");
-                // $message = "Email Anda sudah diverifikasi. Anda sekarang dapat masuk.";
+                notify()->success("Email Anda sudah diverifikasi. Anda sekarang dapat masuk website dan aplikasi TaniKula.", "Success", "topRight");
+                // $message = "Email Anda sudah diverifikasi. Anda sekarang dapat masuk website dan aplikasi TaniKula.";
             }
         }
 
         return redirect()->route('login');
     }
 
-    public function forgotPassword() {
+    public function forgotPassword()
+    {
         return view('costumer.login.password.forgot');
     }
 
-    public function forgotPasswordEmail(Request $request) {
+    public function forgotPasswordEmail(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email|max:100',
         ]);
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
             return response()->json([
                 'status' => 400,
                 'messages' => $validator->getMessageBag()
@@ -214,7 +220,8 @@ class LoginController extends Controller
         }
     }
 
-    public function reset(Request $request) {
+    public function reset(Request $request)
+    {
         $email = $request->email;
         $token = $request->token;
         return view('costumer.login.password.reset', [
@@ -223,7 +230,8 @@ class LoginController extends Controller
         ]);
     }
 
-    public function resetPassword(Request $request) {
+    public function resetPassword(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'npass' => 'required|min:6|max:50',
             'cnpass' => 'required|min:6|max:50|same:npass',
@@ -237,7 +245,7 @@ class LoginController extends Controller
             'cnpass.max' => 'Kata sandi maksimal 50 karakter!',
         ]);
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
             return response()->json([
                 'status' => 400,
                 'messages' => $validator->getMessageBag()
@@ -269,10 +277,10 @@ class LoginController extends Controller
         }
     }
 
-    public function logout(Request $request) {
+    public function logout(Request $request)
+    {
         Auth::logout();
 
         return redirect()->route('home');
     }
-
 }
