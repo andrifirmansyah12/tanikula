@@ -55,8 +55,8 @@ class PoktanController extends Controller
                     } else {
                         $output .= '<td><img alt="image" src="../assets/img/avatar/avatar-5.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Wildan Ahdian"></td>';
                     }
-                    $output .= '<td>' . $emp->gapoktan->user->name . '</td>
-                    <td>' . $emp->poktan_name . '</td>
+                    $output .= '<td class="text-capitalize">' . $emp->gapoktan->user->name . '</td>
+                    <td class="text-capitalize">' . $emp->poktan_name . '</td>
                     <td>' . $emp->chairman . '</td>';
                     if ($emp->street && $emp->number) {
                         $output .= '<td>' . $emp->street . ', ' . $emp->number . '. ';

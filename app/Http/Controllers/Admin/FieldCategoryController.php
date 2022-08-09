@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Gapoktan;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -10,7 +10,7 @@ class FieldCategoryController extends Controller
 {
     // set index page view
 	public function index() {
-		return view('gapoktan.lahan-kategori.index');
+		return view('admin.lahan-kategori.index');
 	}
 
     // handle fetch all eamployees ajax request

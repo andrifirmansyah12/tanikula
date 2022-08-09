@@ -1,15 +1,21 @@
 @extends('admin.template')
-@section('title', 'Daftar Petani')
+@section('title', 'Lahan')
 
 @section('style')
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- MULAI STYLE CSS -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
     <link rel='stylesheet'
         href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css' />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.css"
         integrity="sha256-pODNVtK3uOhL8FUNWWvFQK0QoQoV3YA9wGGng6mbZ0E=" crossorigin="anonymous" />
     <!-- AKHIR STYLE CSS -->
+    <style>
+        .datepicker {
+            z-index: 1600 !important; /* has to be larger than 1050 */
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -40,7 +46,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tambah Daftar Petani</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Lahan</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -49,39 +55,41 @@
                     @csrf
                     <div class="modal-body p-4">
                         <div class="form-group my-2">
-                            <label for="name">Pilih Gapoktan</label>
-                            <select class="form-control select2 text-capitalize" name="gapoktan_id" required>
-                                <option selected disabled>Pilih Gapoktan</option>
-                                @foreach ($gapoktans as $item)
-                                    <option value="{{ $item->id }}">{{ $item->user->name }}</option>
+                            <label>Gapoktan</label>
+                            <select class="form-control select2" name="gapoktan_id">
+                                <option selected disabled>Pilih Kategori</option>
+                                @foreach ($gapoktans as $gapoktan)
+                                    @if ( old('gapoktan_id') == $gapoktan->id )
+                                        <option value="{{ $gapoktan->id }}" selected>{{ $gapoktan->user->name }}</option>
+                                    @else
+                                        <option value="{{ $gapoktan->id }}">{{ $gapoktan->user->name }}</option>
+                                    @endif
                                 @endforeach
                             </select>
                         </div>
                         <div class="form-group my-2">
-                            <label for="name">Pilih Poktan</label>
-                            <select class="form-control select2 text-capitalize" name="poktan_id" required>
+                            <label>Petani</label>
+                            <select class="form-control select2" name="farmer_id" required>
                             </select>
                         </div>
                         <div class="form-group my-2">
-                            <label for="name">Nama Petani</label>
-                            <input type="text" name="name" class="form-control" placeholder="Nama Petani" required>
-                        </div>
-                        <div class="my-2 form-group">
-                            <label for="email">Email</label>
-                            <input type="email" name="email" class="form-control" placeholder="Email" required>
-                        </div>
-                        <div class="my-2 form-group">
-                            <label for="password">Password</label>
-                            <input type="password" name="password" class="form-control" placeholder="Password" required>
-                        </div>
-                        <div class="my-2 form-group">
-                            <label for="is_active">Status Akun</label>
-                            <div>
-                                <label class="custom-switch">
-                                    <input type="checkbox" name="is_active" class="custom-switch-input">
-                                    <span class="custom-switch-indicator"></span>
-                                </label>
-                            </div>
+                            <label>Kategori Lahan</label>
+                            @if ($category->count() > 0)
+                            <select class="form-control select2" name="field_category_id" required>
+                                <option selected disabled>Pilih Kategori</option>
+                                @foreach ($category as $item)
+                                    @if ( old('field_category_id') == $item->id )
+                                        <option value="{{ $item->id }}" selected>{{ $item->name }} ({{ $item->details }})</option>
+                                    @else
+                                        <option value="{{ $item->id }}">{{ $item->name }} ({{ $item->details }})</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                            @else
+                            <select class="form-control select2" disabled required>
+                                    <option selected disabled>Tidak ada kategori</option>
+                            </select>
+                            @endif
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -98,7 +106,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit Daftar Petani</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Lahan</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -106,49 +114,53 @@
                 <form action="#" method="POST" id="edit_employee_form" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="emp_id" id="emp_id">
-                    <input type="hidden" name="user_id" id="user_id">
                     <div class="modal-body p-4">
                         <div class="form-group my-2">
-                            <label for="name">Ubah Gapoktan</label>
-                            <small class="d-flex text-danger pb-1">*Catatan:
-                                <br>1. Jika tidak ingin ubah Gapoktan dan Poktan biarkan kosong,
-                                <br>2. Dan jika ingin ubah Gapoktan dan Poktan, silahkan pilih Gapoktan kemudian Poktan.
-                            </small>
-                            <select class="form-control select2 text-capitalize" name="edit_gapoktan_id" required>
-                                <option selected disabled>Ubah Gapoktan</option>
-                                @foreach ($gapoktans as $item)
-                                    <option value="{{ $item->id }}">{{ $item->user->name }}</option>
+                            <label>Gapoktan</label>
+                            @if ($gapoktans->count() > 0)
+                            <select class="form-control select2" id="edit_gapoktan_id" name="edit_gapoktan_id">
+                                <option selected disabled>Pilih Kategori</option>
+                                @foreach ($gapoktans as $gapoktan)
+                                    @if ( old('gapoktan_id') == $gapoktan->id )
+                                        <option value="{{ $gapoktan->id }}" selected>{{ $gapoktan->user->name }}</option>
+                                    @else
+                                        <option value="{{ $gapoktan->id }}">{{ $gapoktan->user->name }}</option>
+                                    @endif
                                 @endforeach
                             </select>
+                            @else
+                            <select class="form-control select2" disabled required>
+                                <option selected disabled>Tidak ada kategori</option>
+                            </select>
+                            @endif
                         </div>
-                        <div class="form-group mb-5">
-                            <label for="name">Ubah Poktan</label>
-                            <select class="form-control select2" name="edit_poktan_id" required>
+                        <div class="form-group my-2">
+                            <label>Petani</label>
+                            <small class="d-flex text-danger pb-1">*Catatan:
+                                <br>1. Jika tidak ingin ubah Petani biarkan kosong,
+                                <br>2. Dan jika ingin ubah Petani, silahkan pilih Gapoktan kembali.
+                            </small>
+                            <select class="form-control select2" id="edit_farmer_id" name="edit_farmer_id" required>
                             </select>
                         </div>
                         <div class="form-group my-2">
-                            <label for="name">Nama Poktan</label>
-                            <input disabled type="text" id="poktan_id" class="form-control text-capitalize" placeholder="Nama Poktan" required>
-                        </div>
-                        <div class="form-group my-2">
-                            <label for="name">Nama Petani</label>
-                            <input type="text" name="name" id="name" class="form-control" placeholder="Nama Petani" required>
-                        </div>
-                        <div class="my-2 form-group">
-                            <label for="email">Email</label>
-                            <input type="email" name="email" id="email" class="form-control" placeholder="Email" required>
-                        </div>
-                        <div class="my-2 form-group">
-                            <label for="password">Password</label>
-                            <div id="password_edit">
-
-                            </div>
-                        </div>
-                        <div class="my-2 form-group">
-                            <label for="is_active">Status Akun</label>
-                            <div id="is_active">
-
-                            </div>
+                            <label>Kategori Lahan</label>
+                            @if ($category->count() > 0)
+                            <select class="form-control select2" id="field_category_id" name="field_category_id">
+                                <option selected disabled>Pilih Kategori</option>
+                                @foreach ($category as $item)
+                                    @if ( old('field_category_id') == $item->id )
+                                        <option value="{{ $item->id }}" selected>{{ $item->name }} ({{ $item->details }})</option>
+                                    @else
+                                        <option value="{{ $item->id }}">{{ $item->name }} ({{ $item->details }})</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                            @else
+                            <select class="form-control select2" disabled required>
+                                <option selected disabled>Tidak ada kategori</option>
+                            </select>
+                            @endif
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -165,6 +177,7 @@
 @section('script')
     <!-- LIBARARY JS -->
     {{-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script> --}}
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     <script type="text/javascript" language="javascript"
         src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 
@@ -187,18 +200,18 @@
                 var stateID = $(this).val();
                 if(stateID) {
                     $.ajax({
-                        url: '/poktan/'+stateID,
+                        url: '/farmer/'+stateID,
                         type: "GET",
                         dataType: "json",
                         success:function(data) {
-                            $('select[name="poktan_id"]').html('<option selected disabled>Pilih Poktan</option>');
+                            $('select[name="farmer_id"]').html('<option selected disabled>Pilih Petani</option>');
                             $.each(data, function(key, value) {
-                            $('select[name="poktan_id"]').append('<option class="text-capitalize" value="'+ key +'">'+ value +'</option>');
+                            $('select[name="farmer_id"]').append('<option class="text-capitalize" value="'+ key +'">'+ value +'</option>');
                             });
                         }
                     });
                 }else{
-                    $('select[name="poktan_id"]').empty();
+                    $('select[name="farmer_id"]').empty();
                 }
             });
         });
@@ -208,19 +221,25 @@
                 var stateID = $(this).val();
                 if(stateID) {
                     $.ajax({
-                        url: '/poktan/'+stateID,
+                        url: '/farmer/'+stateID,
                         type: "GET",
                         dataType: "json",
                         success:function(data) {
-                            $('select[name="edit_poktan_id"]').html('<option selected disabled>Ubah Poktan</option>');
+                            $('select[name="edit_farmer_id"]').html('<option selected disabled>Ubah Petani</option>');
                             $.each(data, function(key, value) {
-                            $('select[name="edit_poktan_id"]').append('<option class="text-capitalize" value="'+ key +'">'+ value +'</option>');
+                            $('select[name="edit_farmer_id"]').append('<option class="text-capitalize" value="'+ key +'">'+ value +'</option>');
                             });
                         }
                     });
                 }else{
-                    $('select[name="edit_poktan_id"]').empty();
+                    $('select[name="edit_farmer_id"]').empty();
                 }
+            });
+        });
+
+        $( function() {
+            $( ".datepicker" ).datepicker({
+                dateFormat: 'dd-M-yy'
             });
         });
 
@@ -243,7 +262,7 @@
                 $("#add_employee_btn").text('Tunggu..');
                 $("#add_employee_btn").prop('disabled', true);
                 $.ajax({
-                url: '{{ route('admin-petani-store') }}',
+                url: '{{ route('admin-lahan-store') }}',
                 method: 'post',
                 data: fd,
                 cache: false,
@@ -251,17 +270,25 @@
                 processData: false,
                 dataType: 'json',
                 success: function(response) {
-                    if (response.status == 200) {
-                    Swal.fire(
-                        'Menambahkan!',
-                        'Petani Berhasil Ditambahkan!',
-                        'success'
-                    )
-                    fetchAllEmployees();
-                    $("#add_employee_btn").text('Simpan');
-                    $("#add_employee_btn").prop('disabled', false);
-                    $("#add_employee_form")[0].reset();
-                    $("#addEmployeeModal").modal('hide');
+                    if (response.status == 400) {
+                        showError('gapoktan_id', response.messages.gapoktan_id);
+                        showError('field_category_id', response.messages.field_category_id);
+                        showError('farmer_id', response.messages.farmer_id);
+                        showError('status', response.messages.status);
+                        $("#add_employee_btn").text('Simpan');
+                        $("#add_employee_btn").prop('disabled', false);
+                    }
+                    else if (response.status == 200) {
+                        Swal.fire(
+                            'Menambahkan!',
+                            'Lahan Berhasil Ditambahkan!',
+                            'success'
+                        )
+                        fetchAllEmployees();
+                        $("#add_employee_form")[0].reset();
+                        $("#addEmployeeModal").modal('hide');
+                        $("#add_employee_btn").text('Simpan');
+                        $("#add_employee_btn").prop('disabled', false);
                     }
                 }
                 });
@@ -272,30 +299,17 @@
                 e.preventDefault();
                 let id = $(this).attr('id');
                 $.ajax({
-                url: '{{ route('admin-petani-edit') }}',
+                url: '{{ route('admin-lahan-edit') }}',
                 method: 'get',
                 data: {
                     id: id,
                     _token: '{{ csrf_token() }}'
                 },
                 success: function(response) {
-                    $("#poktan_id").val(response.name);
-                    $("#gapoktan_id").val(response.gapoktan_id);
-                    $("#name").val(response.user.name);
-                    $("#email").val(response.user.email);
-                    $("#password_edit").html(
-                        `<small class="d-flex text-danger pb-1">*Catatan:
-                            <br>1. Jika tidak ingin ubah password biarkan kosong,
-                            <br>2. Dan jika ingin ubah password, silahkan masukkan password.
-                        </small>
-                        <input type="password" name="password" class="form-control" placeholder="Password">`);
-                    $("#is_active").html(
-                        `<label class="custom-switch">
-                            <input type="checkbox" name="is_active" ${response.is_active ? 'checked' : ''} class="custom-switch-input">
-                            <span class="custom-switch-indicator"></span>
-                        </label>`);
+                    $("#edit_farmer_id").val(response.farmer_id);
+                    $("#edit_gapoktan_id").val(response.gapoktan_id);
+                    $("#field_category_id").val(response.field_category_id);
                     $("#emp_id").val(response.id);
-                    $("#user_id").val(response.user.id);
                 }
                 });
             });
@@ -307,7 +321,7 @@
                 $("#edit_employee_btn").text('Tunggu..');
                 $("#edit_employee_btn").prop('disabled', true);
                 $.ajax({
-                url: '{{ route('admin-petani-update') }}',
+                url: '{{ route('admin-lahan-update') }}',
                 method: 'post',
                 data: fd,
                 cache: false,
@@ -315,18 +329,24 @@
                 processData: false,
                 dataType: 'json',
                 success: function(response) {
-                    if (response.status == 200) {
-                    Swal.fire(
-                        'Memperbarui!',
-                        'Petani Berhasil Diperbarui!',
-                        'success'
-                    )
-                    fetchAllEmployees();
+                    if (response.status == 400) {
+                        showError('gapoktan_id', response.messages.gapoktan_id);
+                        showError('field_category_id', response.messages.field_category_id);
+                        showError('farmer_id', response.messages.farmer_id);
+                        showError('status', response.messages.status);
+                    }
+                    else if (response.status == 200) {
+                        Swal.fire(
+                            'Memperbarui!',
+                            'Lahan Berhasil Diperbarui!',
+                            'success'
+                        )
+                        fetchAllEmployees();
+                        $("#edit_employee_form")[0].reset();
+                        $("#editEmployeeModal").modal('hide');
+                    }
                     $("#edit_employee_btn").text('Simpan');
                     $("#edit_employee_btn").prop('disabled', false);
-                    $("#edit_employee_form")[0].reset();
-                    $("#editEmployeeModal").modal('hide');
-                    }
                 }
                 });
             });
@@ -348,7 +368,7 @@
                 }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                    url: '{{ route('admin-petani-delete') }}',
+                    url: '{{ route('admin-lahan-delete') }}',
                     method: 'delete',
                     data: {
                         id: id,
@@ -373,13 +393,11 @@
 
             function fetchAllEmployees() {
                 $.ajax({
-                url: '{{ route('admin-petani-fetchAll') }}',
+                url: '{{ route('admin-lahan-fetchAll') }}',
                 method: 'get',
                 success: function(response) {
                     $("#show_all_employees").html(response);
-                    $("table").DataTable({
-                        order: [0, 'asc']
-                    });
+                    $("table").DataTable();
                 }
                 });
             }

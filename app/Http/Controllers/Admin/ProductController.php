@@ -19,7 +19,7 @@ class ProductController extends Controller
 {
     // set index page view
 	public function index() {
-		$category = ProductCategory::all();
+		$category = ProductCategory::where('is_active', '=', 1)->get();
 		$user = User::whereHas(
             'roles', function($q){
                 $q->where('name', 'gapoktan');

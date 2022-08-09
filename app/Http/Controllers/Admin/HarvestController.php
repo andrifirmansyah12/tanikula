@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Plant;
+use App\Models\FieldRecapHarvest;
 use App\Models\Poktan;
 use Illuminate\Support\Facades\DB;
 use App\Models\Farmer;
@@ -21,29 +21,17 @@ class HarvestController extends Controller
 
     // handle fetch all eamployees ajax request
 	public function fetchAll(Request $request) {
-		// $emps = Poktan::with('user', 'gapoktan')->latest()->get();
-        $emps = Plant::join('farmers', 'plants.farmer_id', '=', 'farmers.id')
-                    ->join('poktans', 'plants.poktan_id', '=', 'poktans.id')
-                    ->join('gapoktans', 'poktans.gapoktan_id', '=', 'gapoktans.id')
-                    ->select('plants.*', 'surface_area as area')
-                    ->whereNotNull('plants.harvest_date')
-                    ->where('plants.status', 'panen')
-                    ->orderBy('updated_at', 'desc')
-                    ->get();
+		$emps = FieldRecapHarvest::latest()->get();
 		$output = '';
 		if ($emps->count() > 0) {
-			$output .= '<table id="example1" class="table table-hover">
+			$output .= '<table id="recapHarvest" class="table table-striped table-sm text-center align-middle">
             <thead>
               <tr>
                 <th>No</th>
                 <th>Nama Petani</th>
-                <th>Tanaman</th>
-                <th>Luas Tanah</th>
-                <th>Alamat</th>
+                <th>Lahan</th>
                 <th>Tanggal Tandur</th>
-                <th>Tanggal Panen</th>
                 <th>Status</th>
-                <th>Aksi</th>
               </tr>
             </thead>
             <tbody>';
@@ -52,33 +40,24 @@ class HarvestController extends Controller
                 $output .= '<tr>';
                 $output .= '<td>' . $nomor++ . '</td>';
                 $output .= '<td>' . $emp->farmer->user->name . '</td>
-                <td>' . $emp->plant_tanaman . '</td>';
-                if ($emp->area) {
-                    $output .= '<td>' . $emp->area . '</td>';
+                <td>' . $emp->fieldRecapPlanting->field->fieldCategory->name . ' (' . $emp->fieldRecapPlanting->field->fieldCategory->details . ')</td>';
+                if ($emp->date_harvest) {
+                    $output .= '<td>'. date("d-F-Y", strtotime($emp->date_harvest)) .'</td>';
                 } else {
                     $output .= '<td><span class="text-danger">Belum diisi</span></td>';
                 }
-                $output .= '<td>' . $emp->address . '</td>';
-                if ($emp->plating_date) {
-                    $output .= '<td>' . date("d-F-Y", strtotime($emp->plating_date)) . '</td>';
+                if ($emp->status) {
+                    $output .= '<td><span class="text-capitalize">'. $emp->status .'</span></td>';
                 } else {
                     $output .= '<td><span class="text-danger">Belum diisi</span></td>';
                 }
-                if ($emp->harvest_date) {
-                    $output .= '<td>' . date("d-F-Y", strtotime($emp->harvest_date)) . '</td>';
-                } else {
-                    $output .= '<td><span class="text-danger">Belum diisi</span></td>';
-                }
-                $output .= '<td><div class="badge badge-success text-capitalize">'. $emp->status .'</div></td>';
-                $output .= '<td>
-                    <a href="#" id="' . $emp->id . '" class="text-success mx-1 editIcon" data-toggle="modal" data-target="#editEmployeeModal"><i class="bi-eye h4"></i></a>
-                </td>
+                $output .= '
             </tr>';
 			}
 			$output .= '</tbody></table>';
 			echo $output;
 		} else {
-			echo '<h1 class="text-center text-secondary my-5">Tidak ada data Panen!</h1>';
+			echo '<h1 class="text-center text-secondary my-5">Tidak ada data Laporan Panen!</h1>';
 		}
 	}
 

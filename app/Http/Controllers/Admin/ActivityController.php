@@ -18,7 +18,7 @@ class ActivityController extends Controller
 {
     // set index page view
 	public function index() {
-		$category = ActivityCategory::all();
+		$category = ActivityCategory::where('is_active', '=', 1)->get();
         $authorizedRoles = ['gapoktan', 'poktan'];
         $user = User::whereHas('roles', static function ($query) use ($authorizedRoles) {
             return $query->whereIn('name', $authorizedRoles);

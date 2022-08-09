@@ -61,6 +61,14 @@
     function admin_daftar_poktan(url) {
         window.location = url;
     }
+    // Akun Poktan
+    function admin_kategori_lahan(url) {
+        window.location = url;
+    }
+    // Akun Poktan
+    function admin_lahan(url) {
+        window.location = url;
+    }
     // Akun Petani
     function admin_daftar_petani(url) {
         window.location = url;

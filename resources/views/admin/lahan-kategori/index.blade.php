@@ -1,5 +1,5 @@
 @extends('admin.template')
-@section('title', 'Daftar Poktan')
+@section('title', 'Kategori Lahan')
 
 @section('style')
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -13,6 +13,7 @@
 @endsection
 
 @section('content')
+
     <!-- Main Content -->
     <section class="content">
         <div class="container-fluid">
@@ -39,7 +40,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tambah Daftar Poktan</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Kategori Lahan</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -47,40 +48,16 @@
                 <form action="#" method="POST" id="add_employee_form" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body p-4">
-                        <label for="name">Pilih Gapoktan</label>
-                        <select class="form-control select2" name="gapoktan_id" required>
-                            <option selected disabled>Pilih Gapoktan</option>
-                            @foreach ($gapoktan as $item)
-                                @if ( old('gapoktan_id') == $item->id )
-                                    <option value="{{ $item->id }}" selected>{{ $item->user->name }}</option>
-                                @else
-                                    <option value="{{ $item->id }}">{{ $item->user->name }}</option>
-                                @endif
-                            @endforeach
-                        </select>
-                        <div class="form-group my-2">
-                            <label for="name">Nama Poktan</label>
-                            <input type="text" name="name" class="form-control" placeholder="Nama Poktan" required>
+                        <div class="row">
+                            <div class="col-lg my-2">
+                                <label for="name">Nama Lahan</label>
+                                <input type="text" name="name" class="nameCheck form-control" placeholder="Nama" required>
+                            </div>
                         </div>
-                        <div class="form-group my-2">
-                            <label for="chairman">Ketua Poktan</label>
-                            <input type="text" name="chairman" class="form-control" placeholder="Ketua Poktan" required>
-                        </div>
-                        <div class="my-2 form-group">
-                            <label for="email">Email</label>
-                            <input type="email" name="email" class="form-control" placeholder="Email" required>
-                        </div>
-                        <div class="my-2 form-group">
-                            <label for="password">Password</label>
-                            <input type="password" name="password" class="form-control" placeholder="Password" required>
-                        </div>
-                        <div class="my-2 form-group">
-                            <label for="is_active">Status Akun</label>
-                            <div>
-                                <label class="custom-switch">
-                                    <input type="checkbox" name="is_active" class="custom-switch-input">
-                                    <span class="custom-switch-indicator"></span>
-                                </label>
+                        <div class="row my-2">
+                            <div class="col-lg">
+                                <label for="name">Keterangan Lahan</label>
+                                <input type="text" name="details" class="form-control nameCheck" placeholder="Keterangan" required>
                             </div>
                         </div>
                     </div>
@@ -98,7 +75,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit Daftar Poktan</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Kategori Lahan</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -106,47 +83,17 @@
                 <form action="#" method="POST" id="edit_employee_form" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="emp_id" id="emp_id">
-                    <input type="hidden" name="user_id" id="user_id">
                     <div class="modal-body p-4">
-                        <div class="form-group mb-5">
-                            <label for="name">Ubah Gapoktan</label>
-                            <small class="d-flex text-danger pb-1">*Catatan:
-                                <br>1. Jika tidak ingin ubah Gapoktan biarkan kosong,
-                                <br>2. Dan jika ingin ubah Gapoktan, silahkan pilih Gapoktan.
-                            </small>
-                            <select class="form-control select2 text-capitalize" name="gapoktan_id" required>
-                                <option selected disabled>Pilih Gapoktan</option>
-                                @foreach ($gapoktan as $item)
-                                    @if ( old('poktan_id') == $item->id )
-                                        <option value="{{ $item->id }}" selected>{{ $item->user->name }}</option>
-                                    @else
-                                        <option value="{{ $item->id }}">{{ $item->user->name }}</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group my-2">
-                            <label for="name">Nama Poktan</label>
-                            <input type="text" name="name" id="name" class="form-control text-capitalize" placeholder="Nama Poktan" required>
-                        </div>
-                        <div class="form-group my-2">
-                            <label for="chairman">Ketua Poktan</label>
-                            <input type="text" name="chairman" id="chairman" class="form-control text-capitalize" placeholder="Ketua Poktan" required>
-                        </div>
-                        <div class="my-2 form-group">
-                            <label for="email">Email</label>
-                            <input type="email" name="email" id="email" class="form-control" placeholder="Email" required>
-                        </div>
-                        <div class="my-2 form-group">
-                            <label for="password">Password</label>
-                            <div id="password_edit">
-
+                        <div class="row my-2">
+                            <div class="col-lg">
+                                <label for="name">Nama Lahan</label>
+                                <input type="text" name="name" id="name" class="form-control nameCheck" placeholder="Nama" required>
                             </div>
                         </div>
-                        <div class="my-2 form-group">
-                            <label for="is_active">Status Akun</label>
-                            <div id="is_active">
-
+                        <div class="row my-2">
+                            <div class="col-lg">
+                                <label for="name">Keterangan Lahan</label>
+                                <input type="text" name="details" id="details" class="form-control nameCheck" placeholder="Keterangan" required>
                             </div>
                         </div>
                     </div>
@@ -200,7 +147,7 @@
                 $("#add_employee_btn").text('Tunggu..');
                 $("#add_employee_btn").prop('disabled', true);
                 $.ajax({
-                url: '{{ route('admin-poktan-store') }}',
+                url: '{{ route('admin-kategoriLahan-store') }}',
                 method: 'post',
                 data: fd,
                 cache: false,
@@ -211,7 +158,7 @@
                     if (response.status == 200) {
                     Swal.fire(
                         'Menambahkan!',
-                        'Poktan Berhasil Ditambahkan!',
+                        'Kategori Lahan Berhasil Ditambahkan!',
                         'success'
                     )
                     fetchAllEmployees();
@@ -229,29 +176,16 @@
                 e.preventDefault();
                 let id = $(this).attr('id');
                 $.ajax({
-                url: '{{ route('admin-poktan-edit') }}',
+                url: '{{ route('admin-kategoriLahan-edit') }}',
                 method: 'get',
                 data: {
                     id: id,
                     _token: '{{ csrf_token() }}'
                 },
                 success: function(response) {
-                    $("#name").val(response.user.name);
-                    $("#chairman").val(response.chairman);
-                    $("#email").val(response.user.email);
-                    $("#password_edit").html(
-                        `<small class="d-flex text-danger pb-1">*Catatan:
-                            <br>1. Jika tidak ingin ubah password biarkan kosong,
-                            <br>2. Dan jika ingin ubah password, silahkan masukkan password.
-                        </small>
-                        <input type="password" name="password" class="form-control" placeholder="Password">`);
-                    $("#is_active").html(
-                        `<label class="custom-switch">
-                            <input type="checkbox" name="is_active" ${response.is_active ? 'checked' : ''} class="custom-switch-input">
-                            <span class="custom-switch-indicator"></span>
-                        </label>`);
+                    $("#name").val(response.name);
+                    $("#details").val(response.details);
                     $("#emp_id").val(response.id);
-                    $("#user_id").val(response.user.id);
                 }
                 });
             });
@@ -263,7 +197,7 @@
                 $("#edit_employee_btn").text('Tunggu..');
                 $("#edit_employee_btn").prop('disabled', true);
                 $.ajax({
-                url: '{{ route('admin-poktan-update') }}',
+                url: '{{ route('admin-kategoriLahan-update') }}',
                 method: 'post',
                 data: fd,
                 cache: false,
@@ -274,7 +208,7 @@
                     if (response.status == 200) {
                     Swal.fire(
                         'Memperbarui!',
-                        'Poktan Berhasil Diperbarui!',
+                        'Kategori Lahan Berhasil Diperbarui!',
                         'success'
                     )
                     fetchAllEmployees();
@@ -287,54 +221,17 @@
                 });
             });
 
-            // delete employee ajax request
-            $(document).on('click', '.deleteIcon', function(e) {
-                e.preventDefault();
-                let id = $(this).attr('id');
-                let csrf = '{{ csrf_token() }}';
-                Swal.fire({
-                title: 'Apa kamu yakin?',
-                text: "Anda tidak akan dapat mengembalikan ini!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, Hapus!',
-                cancelButtonText: 'Cancel!'
-                }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                    url: '{{ route('admin-poktan-delete') }}',
-                    method: 'delete',
-                    data: {
-                        id: id,
-                        _token: csrf
-                    },
-                    success: function(response) {
-                        console.log(response);
-                        Swal.fire(
-                        'Dihapus!',
-                        'File Anda telah dihapus.',
-                        'success'
-                        )
-                        fetchAllEmployees();
-                    }
-                    });
-                }
-                })
-            });
-
             // fetch all employees ajax request
             fetchAllEmployees();
 
             function fetchAllEmployees() {
                 $.ajax({
-                url: '{{ route('admin-poktan-fetchAll') }}',
+                url: '{{ route('admin-kategoriLahan-fetchAll') }}',
                 method: 'get',
                 success: function(response) {
                     $("#show_all_employees").html(response);
                     $("table").DataTable({
-                        order: [0, 'asc']
+                    order: [0, 'asc']
                     });
                 }
                 });

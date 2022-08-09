@@ -56,6 +56,22 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:admin']], function() 
     Route::get('admin', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin');
     Route::get('admin/fetchall', [App\Http\Controllers\Admin\DashboardController::class, 'fetchAll'])->name('admin-fetchAll');
 
+    // Lahan
+    Route::get('admin/lahan', [App\Http\Controllers\Admin\FieldController::class, 'index'])->name('admin-lahan');
+    Route::post('admin/lahan/store', [App\Http\Controllers\Admin\FieldController::class, 'store'])->name('admin-lahan-store');
+    Route::get('admin/lahan/fetchall', [App\Http\Controllers\Admin\FieldController::class, 'fetchAll'])->name('admin-lahan-fetchAll');
+    Route::delete('admin/lahan/delete', [App\Http\Controllers\Admin\FieldController::class, 'delete'])->name('admin-lahan-delete');
+    Route::get('admin/lahan/edit', [App\Http\Controllers\Admin\FieldController::class, 'edit'])->name('admin-lahan-edit');
+    Route::post('admin/lahan/update', [App\Http\Controllers\Admin\FieldController::class, 'update'])->name('admin-lahan-update');
+    Route::get('farmer/{id}', [App\Http\Controllers\Admin\FieldController::class, 'farmer']);
+
+    // Kategori Lahan
+    Route::get('admin/kategori-lahan', [App\Http\Controllers\Admin\FieldCategoryController::class, 'index'])->name('admin-kategoriLahan');
+    Route::post('admin/kategori-lahan/store', [App\Http\Controllers\Admin\FieldCategoryController::class, 'store'])->name('admin-kategoriLahan-store');
+    Route::get('admin/kategori-lahan/fetchall', [App\Http\Controllers\Admin\FieldCategoryController::class, 'fetchAll'])->name('admin-kategoriLahan-fetchAll');
+    Route::get('admin/kategori-lahan/edit', [App\Http\Controllers\Admin\FieldCategoryController::class, 'edit'])->name('admin-kategoriLahan-edit');
+    Route::post('admin/kategori-lahan/update', [App\Http\Controllers\Admin\FieldCategoryController::class, 'update'])->name('admin-kategoriLahan-update');
+
     // Edukasi
     Route::get('admin/edukasi', [App\Http\Controllers\Admin\EducationController::class, 'index'])->name('admin-edukasi');
     Route::post('admin/edukasi/store', [App\Http\Controllers\Admin\EducationController::class, 'store'])->name('admin-edukasi-store');
@@ -134,6 +150,7 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:admin']], function() 
     Route::delete('admin/daftar-petani/delete', [App\Http\Controllers\Admin\FarmerController::class, 'delete'])->name('admin-petani-delete');
     Route::get('admin/daftar-petani/edit', [App\Http\Controllers\Admin\FarmerController::class, 'edit'])->name('admin-petani-edit');
     Route::post('admin/daftar-petani/update', [App\Http\Controllers\Admin\FarmerController::class, 'update'])->name('admin-petani-update');
+    Route::get('poktan/{id}', [App\Http\Controllers\Admin\FarmerController::class, 'poktan']);
 
     // Tandur
     Route::get('admin/tandur', [App\Http\Controllers\Admin\PlantController::class, 'index'])->name('admin-tandur');

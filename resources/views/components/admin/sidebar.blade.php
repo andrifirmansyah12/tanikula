@@ -63,6 +63,12 @@
                             <p>Kegiatan</p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="#" onclick="admin_kategori_lahan('{{ url('admin/kategori-lahan') }}')" class="nav-link {{ Request::is('admin/kategori-lahan*') ? 'active' : '' }}">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Lahan</p>
+                        </a>
+                    </li>
                 </ul>
             </li>
             <li class="nav-item">
@@ -86,6 +92,14 @@
                     <i class="nav-icon fas fa-solid fa-clipboard"></i>
                     <p>
                         Kegiatan
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" onclick="admin_lahan('{{ url('admin/lahan') }}')" class="nav-link {{ Request::is('admin/lahan*') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-solid fa-water"></i>
+                    <p>
+                        Lahan
                     </p>
                 </a>
             </li>

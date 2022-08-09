@@ -61,13 +61,13 @@
                     <div class="modal-body p-4">
                         <div class="row">
                             <div class="col-lg">
-                                <label for="name">Nama</label>
+                                <label for="name">Nama Lahan</label>
                                 <input type="text" name="name" class="nameCheck form-control" placeholder="Nama" required>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg">
-                                <label for="name">Keterangan</label>
+                                <label for="name">Keterangan Lahan</label>
                                 <input type="text" name="details" class="form-control nameCheck" placeholder="Keterangan" required>
                             </div>
                         </div>
@@ -97,13 +97,13 @@
                     <div class="modal-body p-4">
                         <div class="row">
                             <div class="col-lg">
-                                <label for="name">Nama</label>
+                                <label for="name">Nama Lahan</label>
                                 <input type="text" name="name" id="name" class="form-control nameCheck" placeholder="Nama" required>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg">
-                                <label for="name">Keterangan</label>
+                                <label for="name">Keterangan Lahan</label>
                                 <input type="text" name="details" id="details" class="form-control nameCheck" placeholder="Keterangan" required>
                             </div>
                         </div>

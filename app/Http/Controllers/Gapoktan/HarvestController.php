@@ -21,7 +21,8 @@ class HarvestController extends Controller
 	}
 
     // handle fetch all eamployees ajax request
-	public function fetchAll(Request $request) {
+	public function fetchAll(Request $request)
+    {
 		$gapoktans = Gapoktan::with('user')->where('user_id', auth()->user()->id)->first();
         $emps = FieldRecapHarvest::join('field_recap_plantings', 'field_recap_harvests.planting_id', '=', 'field_recap_plantings.id')
                     ->join('farmers', 'field_recap_harvests.farmer_id', '=', 'farmers.id')

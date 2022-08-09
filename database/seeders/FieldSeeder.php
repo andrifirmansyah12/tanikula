@@ -37,13 +37,13 @@ class FieldSeeder extends Seeder
                 "field_category_id" => 1,
                 "gapoktan_id" => 1,
                 "farmer_id" => 1,
-                "status" => 'Selesai',
+                "status" => 'Belum ada status',
             ],
             [
                 "field_category_id" => 2,
                 "gapoktan_id" => 1,
                 "farmer_id" => 1,
-                "status" => 'Belum Selesai',
+                "status" => 'Belum ada status',
             ],
         ];
 
