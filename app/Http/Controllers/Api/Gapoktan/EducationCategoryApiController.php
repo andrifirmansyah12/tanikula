@@ -27,20 +27,20 @@ class EducationCategoryApiController extends BaseController
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'name' => 'required',
-             
+
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json($validator->errors());
         }
 
         $datas = EducationCategory::create([
             'name' => $request->name,
             'slug' => Str::slug($request->title),
-         ]);
- 
+        ]);
+
         return $this->sendResponse($datas, 'Data Strored');
     }
 
@@ -59,12 +59,12 @@ class EducationCategoryApiController extends BaseController
 
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'name' => 'required'
         ]);
 
-        if($validator->fails()){
-        return $this->sendError("Validation Error", $validator->errors());
+        if ($validator->fails()) {
+            return $this->sendError("Validation Error", $validator->errors());
         }
 
         $datas = EducationCategory::findOrFail($id);

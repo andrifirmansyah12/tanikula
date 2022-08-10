@@ -84,11 +84,12 @@ Route::middleware('auth:api')->group(function () {
     // ------ Gapoktan -----------
     // Activity
     Route::resource('activity', ActivityApiController::class);
-    Route::get('activity/search/{name}', [ActivityApiController::class, 'search']);
+    Route::get('activity/search/{title}', [ActivityApiController::class, 'search']);
     Route::resource('activity-category', ActivityCategoryApiController::class);
     //Education
     Route::resource('education-category', EducationCategoryApiController::class);
     Route::resource('education', EducationApiController::class);
+    Route::get('education/search/{title}', [EducationApiController::class, 'search']);
     Route::post('education/update/file', [EducationApiController::class, 'updateWFile']);
     // Poktan
     Route::resource('poktan', PoktanApiController::class);
@@ -118,6 +119,7 @@ Route::get('product-customer', [ProductCustomerApiController::class, 'index']);
 Route::get('product-customer/detail/{slug}', [ProductCustomerApiController::class, 'detail']);
 Route::get('product-customer/search/{name}', [ProductCustomerApiController::class, 'search']);
 Route::get('product-customer/category/{id}', [ProductCustomerApiController::class, 'category']);
+Route::get('product-customer/toko/{id}', [ProductCustomerApiController::class, 'tokoById']);
 
 // Route::post('view_category/{slug}', [ProductCustomerApiController::class, 'viewCategory']);
 Route::post('login-customer', [LoginCustomerApiController::class, 'login']);

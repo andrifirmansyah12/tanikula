@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Kutia\Larafirebase\Facades\Larafirebase;
 use App\Http\Controllers\Api\BaseApiController as BaseController;
 use App\Http\Resources\ProductResource;
+use App\Models\Gapoktan;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\User;
@@ -56,6 +57,12 @@ class ProductCustomerApiController extends BaseController
 
         $result = ProductResource::collection($datas);
         return $this->sendResponse($result, 'Data fetched');
+    }
+
+    public function tokoById($id)
+    {
+        $datas = Gapoktan::where('user_id', '=', $id)->first();
+        return $this->sendResponse($datas, 'Data fetched');
     }
 
     public function viewCategory(Request $request, $slug)

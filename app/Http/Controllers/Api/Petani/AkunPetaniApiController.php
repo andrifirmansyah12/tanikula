@@ -7,8 +7,10 @@ use App\Http\Resources\FarmerResource;
 use App\Models\Farmer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\Api\BaseApiController as BaseController;
 
-class AkunPetaniApiController extends Controller
+
+class AkunPetaniApiController extends BaseController
 {
     public function update(Request $request, $id)
     {
@@ -24,8 +26,9 @@ class AkunPetaniApiController extends Controller
 
         return $this->sendResponse($datas, 'Data Updated');
     }
-    
-    public function updatePhoto(Request $request){
+
+    public function updatePhoto(Request $request)
+    {
         $data = Farmer::findOrFail($request->id);
 
         $image = $request->file('image');
