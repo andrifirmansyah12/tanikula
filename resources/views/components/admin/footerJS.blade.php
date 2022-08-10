@@ -22,7 +22,6 @@
 <script src="{{ asset('plus-admin/dist/js/demo.js') }}"></script>
 
 @yield('script')
-
 <script>
     // <-- Route Link -->
     // Dashboard
@@ -55,6 +54,10 @@
     }
     // Akun Gapoktan
     function admin_daftar_gapoktan(url) {
+        window.location = url;
+    }
+    // Hero
+    function admin_hero(url) {
         window.location = url;
     }
     // Akun Poktan

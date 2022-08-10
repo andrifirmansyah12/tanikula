@@ -2,6 +2,7 @@
 @section('title', 'Hubungi Kami')
 
 @section('style')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         /* CSS */
@@ -18,39 +19,58 @@
                         <div class="col-12">
                             <div class="contact-wrap w-100 p-md-5 p-4">
                                 <h3 class="mb-5 fw-bold" style="color:#16A085;">Hubungi Kami</h3>
-                                <form method="POST" id="contactForm" name="contactForm" class="contactForm">
+                                <form method="POST" action="#" id="contactForm" name="contactForm" class="contactForm" enctype="multipart/form-data">
+                                    @csrf
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group mb-4">
-                                                <label class="label pb-2" for="name">Nama Lengkap</label>
-                                                <input type="text" class="form-control" name="name" id="name"
+                                                <label class="label pb-2" for="name">{{ __('Nama Lengkap') }}</label>
+                                                <input type="text" class="form-control @error('name') is-invalid @enderror" name="fullname" id="fullname"
                                                     placeholder="Nama">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group mb-4">
-                                                <label class="label pb-2" for="email">Email</label>
-                                                <input type="email" class="form-control" name="email" id="email"
+                                                <label class="label pb-2" for="email">{{ __('Email') }}</label>
+                                                <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email"
                                                     placeholder="Email">
                                             </div>
                                         </div>
-                                        <div class="col-md-12">
+                                        <div class="col-md-8">
                                             <div class="form-group mb-4">
-                                                <label class="label pb-2" for="subject">Subjek</label>
-                                                <input type="text" class="form-control" name="subject" id="subject"
+                                                <label class="label pb-2" for="subject">{{ __('Subjek') }}</label>
+                                                <input type="text" class="form-control @error('subject') is-invalid @enderror" name="subject" id="subject"
                                                     placeholder="Subjek">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group mb-4">
+                                                <label class="label pb-2" for="subject">{{ __('Telp') }}</label>
+                                                <input type="text" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" id="phone_number"
+                                                    placeholder="Telp">
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group mb-4">
-                                                <label class="label pb-2" for="#">Pesan</label>
-                                                <textarea name="message" class="form-control" id="message" cols="30"
+                                                <label class="label pb-2" for="#">{{ __('Pesan') }}</label>
+                                                <textarea name="message" class="form-control @error('message') is-invalid @enderror" id="message" cols="30"
                                                     rows="4" placeholder="Pesan"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group mb-4">
+                                                <label for="name" class="col-form-label text-md-right">{{ __('Upload Foto') }}</label>
+                                                <div class="pb-2">
+                                                    <img id="addPreview" class="img-fluid img-thumbnail image"
+                                                        src="{{ asset('stisla/assets/img/example-image.jpg') }}" alt="edukasi"
+                                                        style="width: 20rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                                </div>
+                                                <input type="file" accept="image/*" class="form-control @error('screenshot') is-invalid @enderror" id="screenshot" name="screenshot" autofocus>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <input type="submit" style="background: #16A085;" value="Kirim Pesan" class="btn border border-light text-white">
+                                                <input type="submit" id="send_contact_us" style="background: #16A085;" value="Kirim Pesan" class="btn border border-light text-white">
                                                 <div class="submitting"></div>
                                             </div>
                                         </div>
@@ -70,7 +90,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3 pb-md-5 pb-4">
                             <div class="dbox w-100 text-center">
                                 <div class="icon d-flex align-items-center justify-content-center">
                                     <span class="fa fa-phone"></span>
@@ -80,7 +100,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3 pb-md-5 pb-4">
                             <div class="dbox w-100 text-center">
                                 <div class="icon d-flex align-items-center justify-content-center">
                                     <span class="fa fa-paper-plane"></span>
@@ -90,7 +110,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3 pb-md-5 pb-4">
                             <div class="dbox w-100 text-center">
                                 <div class="icon d-flex align-items-center justify-content-center">
                                     <span class="lni lni-instagram"></span>
@@ -141,6 +161,61 @@
 @section('script')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script type="text/javascript">
+        $(function() {
+            $('#screenshot').on('change', function() {
+                var file = this.files[0];
+                var reader = new FileReader();
+                reader.onload = viewer.load;
+                reader.readAsDataURL(file);
+            });
+
+            var viewer = {
+                load : function(e) {
+                    $('#addPreview').attr('src', e.target.result)
+                }
+            }
+        });
+
+        $(function () {
+            $("#contactForm").submit(function(e) {
+                e.preventDefault();
+                const fd = new FormData(this);
+                $("#send_contact_us").text('Silahkan Tunggu..');
+                $("#send_contact_us").prop('disabled', true);
+                $.ajax({
+                url: '{{ route('addContactUs') }}',
+                method: 'post',
+                data: fd,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status == 400)
+                    {
+                        showError('name', response.messages.name);
+                        showError('email', response.messages.email);
+                        showError('subject', response.messages.subject);
+                        showError('message', response.messages.message);
+                        $("#send_contact_us").val('Kirim Pesan');
+                        $("#send_contact_us").prop('disabled', false);
+                    }
+                        else if (response.status == 200)
+                    {
+                        iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                            title: 'Berhasil',
+                            message: response.messages,
+                            position: 'topRight'
+                        });
+                        $("#send_contact_us").val('Kirim Pesan');
+                        $("#send_contact_us").prop('disabled', false);
+                        window.location.reload();
+                    }
+                }
+                });
+            });
+        });
+
         const current = document.getElementById("current");
         const opacity = 0.6;
         const imgs = document.querySelectorAll(".img");

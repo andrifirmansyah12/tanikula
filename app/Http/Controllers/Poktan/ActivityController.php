@@ -22,7 +22,8 @@ class ActivityController extends Controller
 	}
 
     // handle fetch all eamployees ajax request
-	public function fetchAll() {
+	public function fetchAddActivity()
+    {
 		$emps = Activity::join('activity_categories', 'activities.category_activity_id', '=', 'activity_categories.id')
                     ->join('users', 'activities.user_id', '=', 'users.id')
                     ->select('activities.*', 'activity_categories.name as name')
@@ -32,7 +33,7 @@ class ActivityController extends Controller
                     ->get();
 		$output = '';
 		if ($emps->count() > 0) {
-			$output .= '<table class="table table-striped table-sm text-center align-middle">
+			$output .= '<table id="table_add_activity" class="table table-striped table-sm text-center align-middle">
             <thead>
               <tr>
                 <th>No</th>
@@ -55,7 +56,7 @@ class ActivityController extends Controller
                     $output .= '<td>' . $emp->name . '</td>';
                 }
                 $output .= '<td>' . date("d F Y", strtotime($emp->date)) . '</td>
-                <td>' . $emp->desc . '</td>
+                <td style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;" class="p-0">' . $emp->desc . '</td>
                 <td>
                   <a href="#" id="' . $emp->id . '" class="text-success mx-1 editIcon" data-toggle="modal" data-target="#editEmployeeModal"><i class="bi-pencil-square h4"></i></a>
                   <a href="#" id="' . $emp->id . '" class="text-danger mx-1 deleteIcon"><i class="bi-trash h4"></i></a>
@@ -67,6 +68,54 @@ class ActivityController extends Controller
 		} else {
 			echo '<h1 class="text-center text-secondary my-5">Tidak ada data Kegiatan!</h1>';
 		}
+	}
+
+    // handle fetch all eamployees ajax request
+	public function fetchDraftActivity()
+    {
+		$emps = Activity::join('activity_categories', 'activities.category_activity_id', '=', 'activity_categories.id')
+                    ->join('users', 'activities.user_id', '=', 'users.id')
+                    ->select('activities.*', 'activity_categories.name as name')
+                    ->where('activity_categories.is_active', '=', 1)
+                    ->orderBy('activities.updated_at', 'desc')
+                    ->get();
+		$output = '';
+		if ($emps->count() > 0) {
+			$output .= '<table id="table_draft_activity" class="table table-striped table-sm text-center align-middle">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Dibuat Oleh</th>
+                <th>Judul Kegiatan</th>
+                <th>Tanggal Kegiatan</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody>';
+            $nomor=1;
+			foreach ($emps as $emp) {
+				$output .= '<tr>';
+                $output .= '<td>' . $nomor++ . '</td>';
+                $output .= '<td>' . $emp->user->name . '</td>';
+                $output .= '<td>' . $emp->title . '</td>';
+                $output .= '<td>' . date("d F Y", strtotime($emp->date)) . '</td>
+                <td>
+                  <a href="#" id="' . $emp->id . '" class="text-success mx-1 showDraftActivity" data-toggle="modal" data-target="#showDraftActivityModal"><i class="bi-eye h4"></i></a>
+                </td>
+              </tr>';
+			}
+			$output .= '</tbody></table>';
+			echo $output;
+		} else {
+			echo '<h1 class="text-center text-secondary my-5">Tidak ada data Kegiatan!</h1>';
+		}
+	}
+
+    // handle edit an employee ajax request
+	public function show(Request $request) {
+		$id = $request->id;
+		$emp = Activity::with('user', 'activity_category')->find($id);
+		return response()->json($emp);
 	}
 
     // handle insert a new employee ajax request

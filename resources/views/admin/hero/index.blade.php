@@ -1,21 +1,15 @@
 @extends('admin.template')
-@section('title', 'Lahan')
+@section('title', 'Hero')
 
 @section('style')
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- MULAI STYLE CSS -->
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
     <link rel='stylesheet'
         href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css' />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.css"
         integrity="sha256-pODNVtK3uOhL8FUNWWvFQK0QoQoV3YA9wGGng6mbZ0E=" crossorigin="anonymous" />
     <!-- AKHIR STYLE CSS -->
-    <style>
-        .datepicker {
-            z-index: 1600 !important; /* has to be larger than 1050 */
-        }
-    </style>
 @endsection
 
 @section('content')
@@ -46,7 +40,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tambah Lahan</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Hero</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -54,42 +48,26 @@
                 <form action="#" method="POST" id="add_employee_form" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body p-4">
-                        <div class="form-group my-2">
-                            <label>Gapoktan</label>
-                            <select class="form-control select2" name="gapoktan_id">
-                                <option selected disabled>Pilih Gapoktan</option>
-                                @foreach ($gapoktans as $gapoktan)
-                                    @if ( old('gapoktan_id') == $gapoktan->id )
-                                        <option value="{{ $gapoktan->id }}" selected>{{ $gapoktan->user->name }}</option>
-                                    @else
-                                        <option value="{{ $gapoktan->id }}">{{ $gapoktan->user->name }}</option>
-                                    @endif
-                                @endforeach
-                            </select>
+                        <div class="row">
+                            <div class="col-lg my-2">
+                                <label for="name">Nama Hero</label>
+                                <input type="text" name="name" class="nameCheck form-control" placeholder="Nama" required>
+                            </div>
                         </div>
-                        <div class="form-group my-2">
-                            <label>Petani</label>
-                            <select class="form-control select2" name="farmer_id" required>
-                            </select>
-                        </div>
-                        <div class="form-group my-2">
-                            <label>Kategori Lahan</label>
-                            @if ($category->count() > 0)
-                            <select class="form-control select2" name="field_category_id" required>
-                                <option selected disabled>Pilih Kategori</option>
-                                @foreach ($category as $item)
-                                    @if ( old('field_category_id') == $item->id )
-                                        <option value="{{ $item->id }}" selected>{{ $item->name }} ({{ $item->details }})</option>
-                                    @else
-                                        <option value="{{ $item->id }}">{{ $item->name }} ({{ $item->details }})</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                            @else
-                            <select class="form-control select2" disabled required>
-                                    <option selected disabled>Tidak ada kategori</option>
-                            </select>
-                            @endif
+                        <div class="my-2 form-group">
+                            <label for="file">Unggah Foto Hero</label>
+                            <small class="d-flex text-danger pb-1">*Unggah berupa foto</small>
+                            <div class="">
+                                <div class="tab-content my-2" id="myTabContent2">
+                                    <div class="tab-pane fade show active" id="home3" role="tabpanel"
+                                        aria-labelledby="home-tab3">
+                                        <img id="addPreview" class="img-fluid img-thumbnail image"
+                                        src="{{ asset('stisla/assets/img/example-image.jpg') }}" alt="edukasi"
+                                        style="width: 20rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="file" name="image" id="addFiles" class="form-control" accept="image/*" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -106,7 +84,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit Lahan</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Hero</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -115,52 +93,21 @@
                     @csrf
                     <input type="hidden" name="emp_id" id="emp_id">
                     <div class="modal-body p-4">
-                        <div class="form-group my-2">
-                            <label>Gapoktan</label>
-                            @if ($gapoktans->count() > 0)
-                            <select class="form-control select2" id="edit_gapoktan_id" name="edit_gapoktan_id">
-                                <option selected disabled>Pilih Kategori</option>
-                                @foreach ($gapoktans as $gapoktan)
-                                    @if ( old('gapoktan_id') == $gapoktan->id )
-                                        <option value="{{ $gapoktan->id }}" selected>{{ $gapoktan->user->name }}</option>
-                                    @else
-                                        <option value="{{ $gapoktan->id }}">{{ $gapoktan->user->name }}</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                            @else
-                            <select class="form-control select2" disabled required>
-                                <option selected disabled>Tidak ada kategori</option>
-                            </select>
-                            @endif
+                        <div class="row my-2">
+                            <div class="col-lg">
+                                <label for="name">Nama Hero</label>
+                                <input type="text" name="name" id="name" class="form-control nameCheck" placeholder="Nama" required>
+                            </div>
                         </div>
-                        <div class="form-group my-2">
-                            <label>Petani</label>
-                            <small class="d-flex text-danger pb-1">*Catatan:
-                                <br>1. Jika tidak ingin ubah Petani biarkan kosong,
-                                <br>2. Dan jika ingin ubah Petani, silahkan pilih Gapoktan kembali.
-                            </small>
-                            <select class="form-control select2" id="edit_farmer_id" name="edit_farmer_id">
-                            </select>
-                        </div>
-                        <div class="form-group my-2">
-                            <label>Kategori Lahan</label>
-                            @if ($category->count() > 0)
-                            <select class="form-control select2" id="field_category_id" name="field_category_id">
-                                <option selected disabled>Pilih Kategori</option>
-                                @foreach ($category as $item)
-                                    @if ( old('field_category_id') == $item->id )
-                                        <option value="{{ $item->id }}" selected>{{ $item->name }} ({{ $item->details }})</option>
-                                    @else
-                                        <option value="{{ $item->id }}">{{ $item->name }} ({{ $item->details }})</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                            @else
-                            <select class="form-control select2" disabled required>
-                                <option selected disabled>Tidak ada kategori</option>
-                            </select>
-                            @endif
+                        <div class="my-2 form-group">
+                            <label for="file">Unggah Foto Hero</label>
+                            <small class="d-flex text-danger pb-1">*Unggah berupa foto</small>
+                            <div class="mt-2">
+                                <div class="tab-content editFile my-2" id="myTabContent2">
+
+                                </div>
+                            </div>
+                            <input type="file" name="image" id="files" accept="image/*, video/*" class="form-control">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -177,7 +124,6 @@
 @section('script')
     <!-- LIBARARY JS -->
     {{-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script> --}}
-    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     <script type="text/javascript" language="javascript"
         src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 
@@ -195,54 +141,6 @@
 
     <!-- JAVASCRIPT -->
     <script>
-        $(document).ready(function() {
-            $('select[name="gapoktan_id"]').on('change', function() {
-                var stateID = $(this).val();
-                if(stateID) {
-                    $.ajax({
-                        url: '/dropdown-farmer/'+stateID,
-                        type: "GET",
-                        dataType: "json",
-                        success:function(data) {
-                            $('select[name="farmer_id"]').html('<option selected disabled>Pilih Petani</option>');
-                            $.each(data, function(key, value) {
-                            $('select[name="farmer_id"]').append('<option class="text-capitalize" value="'+ key +'">'+ value +'</option>');
-                            });
-                        }
-                    });
-                }else{
-                    $('select[name="farmer_id"]').empty();
-                }
-            });
-        });
-
-        $(document).ready(function() {
-            $('select[name="edit_gapoktan_id"]').on('change', function() {
-                var stateID = $(this).val();
-                if(stateID) {
-                    $.ajax({
-                        url: '/dropdown-farmer/'+stateID,
-                        type: "GET",
-                        dataType: "json",
-                        success:function(data) {
-                            $('select[name="edit_farmer_id"]').html('<option selected disabled>Ubah Petani</option>');
-                            $.each(data, function(key, value) {
-                            $('select[name="edit_farmer_id"]').append('<option class="text-capitalize" value="'+ key +'">'+ value +'</option>');
-                            });
-                        }
-                    });
-                }else{
-                    $('select[name="edit_farmer_id"]').empty();
-                }
-            });
-        });
-
-        $( function() {
-            $( ".datepicker" ).datepicker({
-                dateFormat: 'dd-M-yy'
-            });
-        });
-
         //CSRF TOKEN PADA HEADER
         //Script ini wajib krn kita butuh csrf token setiap kali mengirim request post, patch, put dan delete ke server
         $(document).ready(function() {
@@ -254,6 +152,29 @@
         });
 
         $(function() {
+            $('#addFiles').on('change', function() {
+                var file = this.files[0];
+                var reader = new FileReader();
+                reader.onload = viewer.load;
+                reader.readAsDataURL(file);
+            });
+
+            var viewer = {
+                load : function(e) {
+                    $('#addPreview').attr('src', e.target.result)
+                    $('#addVideoPreview').attr('src', e.target.result)
+                }
+            }
+        });
+
+        $(function() {
+
+            $(".modal").on("hidden.bs.modal", function (e) {
+                console.log("Modal hidden");
+                $("#home3").html(`<img id="addPreview" class="img-fluid img-thumbnail image"
+                                        src="../stisla/assets/img/example-image.jpg" alt="edukasi"
+                                        style="width: 20rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">`);
+            });
 
             // add new employee ajax request
             $("#add_employee_form").submit(function(e) {
@@ -262,7 +183,7 @@
                 $("#add_employee_btn").text('Tunggu..');
                 $("#add_employee_btn").prop('disabled', true);
                 $.ajax({
-                url: '{{ route('admin-lahan-store') }}',
+                url: '{{ route('admin-hero-store') }}',
                 method: 'post',
                 data: fd,
                 cache: false,
@@ -271,31 +192,24 @@
                 dataType: 'json',
                 success: function(response) {
                     if (response.status == 400) {
-                        showError('gapoktan_id', response.messages.gapoktan_id);
-                        showError('field_category_id', response.messages.field_category_id);
-                        showError('farmer_id', response.messages.farmer_id);
-                        showError('status', response.messages.status);
-                        $("#add_employee_btn").text('Simpan');
-                        $("#add_employee_btn").prop('disabled', false);
+                        showError('title', response.messages.title);
+                        showError('category_education_id', response.messages.category_education_id);
+                        showError('desc', response.messages.desc);
+                        showError('file', response.messages.file);
                     }
                     else if (response.status == 200) {
                         Swal.fire(
                             'Menambahkan!',
-                            'Lahan Berhasil Ditambahkan!',
+                            'Hero Berhasil Ditambahkan!',
                             'success'
                         )
                         fetchAllEmployees();
                         $("#add_employee_form")[0].reset();
                         $("#addEmployeeModal").modal('hide');
-                        $("#add_employee_btn").text('Simpan');
-                        $("#add_employee_btn").prop('disabled', false);
                     }
-                }, error: function (xhr) {
-                    $('#validation-errors').html('');
-                    $.each(xhr.responseJSON.errors, function(key,value) {
-                        $('#validation-errors').append('<div class="alert alert-danger">'+value+'</div');
-                    });
-                },
+                    $("#add_employee_btn").text('Simpan');
+                    $("#add_employee_btn").prop('disabled', false);
+                }
                 });
             });
 
@@ -304,17 +218,35 @@
                 e.preventDefault();
                 let id = $(this).attr('id');
                 $.ajax({
-                url: '{{ route('admin-lahan-edit') }}',
+                url: '{{ route('admin-hero-edit') }}',
                 method: 'get',
                 data: {
                     id: id,
                     _token: '{{ csrf_token() }}'
                 },
                 success: function(response) {
-                    $("#edit_farmer_id").val(response.farmer_id);
-                    $("#edit_gapoktan_id").val(response.gapoktan_id);
-                    $("#field_category_id").val(response.field_category_id);
+                    $("#name").val(response.name);
+                    if (response.image) {
+                        $(".editFile").html(
+                            `<div class="tab-pane fade show active" id="home2" role="tabpanel"
+                                aria-labelledby="home-tab2">
+                                <img id="preview" class="img-fluid img-thumbnail image"
+                                src="../storage/hero/${response.image}" alt="edukasi"
+                                style="width: 20rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                            </div>
+                        `);
+                    } else {
+                        $(".editFile").html(
+                            `<div class="tab-pane fade show active" id="home2" role="tabpanel"
+                                aria-labelledby="home-tab2">
+                                <img id="preview" class="img-fluid img-thumbnail image"
+                                src="../stisla/assets/img/example-image.jpg" alt="edukasi"
+                                style="width: 20rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                            </div>
+                        `);
+                    }
                     $("#emp_id").val(response.id);
+                    $("#emp_avatar").val(response.file);
                 }
                 });
             });
@@ -326,7 +258,7 @@
                 $("#edit_employee_btn").text('Tunggu..');
                 $("#edit_employee_btn").prop('disabled', true);
                 $.ajax({
-                url: '{{ route('admin-lahan-update') }}',
+                url: '{{ route('admin-hero-update') }}',
                 method: 'post',
                 data: fd,
                 cache: false,
@@ -335,15 +267,15 @@
                 dataType: 'json',
                 success: function(response) {
                     if (response.status == 400) {
-                        showError('gapoktan_id', response.messages.gapoktan_id);
-                        showError('field_category_id', response.messages.field_category_id);
-                        showError('farmer_id', response.messages.farmer_id);
-                        showError('status', response.messages.status);
+                        showError('title', response.messages.title);
+                        showError('category_education_id', response.messages.category_education_id);
+                        showError('desc', response.messages.desc);
+                        showError('file', response.messages.file);
                     }
                     else if (response.status == 200) {
                         Swal.fire(
                             'Memperbarui!',
-                            'Lahan Berhasil Diperbarui!',
+                            'Hero Berhasil Diperbarui!',
                             'success'
                         )
                         fetchAllEmployees();
@@ -373,7 +305,7 @@
                 }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                    url: '{{ route('admin-lahan-delete') }}',
+                    url: '{{ route('admin-hero-delete') }}',
                     method: 'delete',
                     data: {
                         id: id,
@@ -398,13 +330,31 @@
 
             function fetchAllEmployees() {
                 $.ajax({
-                url: '{{ route('admin-lahan-fetchAll') }}',
+                url: '{{ route('admin-hero-fetchAll') }}',
                 method: 'get',
                 success: function(response) {
                     $("#show_all_employees").html(response);
-                    $("table").DataTable();
+                    $("table").DataTable({
+                        order: [0, 'asc']
+                    });
                 }
                 });
+            }
+        });
+
+        $(function() {
+            $('#files').on('change', function() {
+                var file = this.files[0];
+                var reader = new FileReader();
+                reader.onload = viewer.load;
+                reader.readAsDataURL(file);
+            });
+
+            var viewer = {
+                load : function(e) {
+                    $('#preview').attr('src', e.target.result)
+                    $('#videoPreview').attr('src', e.target.result)
+                }
             }
         });
 

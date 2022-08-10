@@ -56,6 +56,14 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:admin']], function() 
     Route::get('admin', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin');
     Route::get('admin/fetchall', [App\Http\Controllers\Admin\DashboardController::class, 'fetchAll'])->name('admin-fetchAll');
 
+    // Hero
+    Route::get('admin/hero', [App\Http\Controllers\Admin\HeroController::class, 'index'])->name('admin-hero');
+    Route::post('admin/hero/store', [App\Http\Controllers\Admin\HeroController::class, 'store'])->name('admin-hero-store');
+    Route::get('admin/hero/fetchall', [App\Http\Controllers\Admin\HeroController::class, 'fetchAll'])->name('admin-hero-fetchAll');
+    Route::delete('admin/hero/delete', [App\Http\Controllers\Admin\HeroController::class, 'delete'])->name('admin-hero-delete');
+    Route::get('admin/hero/edit', [App\Http\Controllers\Admin\HeroController::class, 'edit'])->name('admin-hero-edit');
+    Route::post('admin/hero/update', [App\Http\Controllers\Admin\HeroController::class, 'update'])->name('admin-hero-update');
+
     // Lahan
     Route::get('admin/lahan', [App\Http\Controllers\Admin\FieldController::class, 'index'])->name('admin-lahan');
     Route::post('admin/lahan/store', [App\Http\Controllers\Admin\FieldController::class, 'store'])->name('admin-lahan-store');
@@ -63,7 +71,7 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:admin']], function() 
     Route::delete('admin/lahan/delete', [App\Http\Controllers\Admin\FieldController::class, 'delete'])->name('admin-lahan-delete');
     Route::get('admin/lahan/edit', [App\Http\Controllers\Admin\FieldController::class, 'edit'])->name('admin-lahan-edit');
     Route::post('admin/lahan/update', [App\Http\Controllers\Admin\FieldController::class, 'update'])->name('admin-lahan-update');
-    Route::get('farmer/{id}', [App\Http\Controllers\Admin\FieldController::class, 'farmer']);
+    Route::get('dropdown-farmer/{id}', [App\Http\Controllers\Admin\FieldController::class, 'farmer']);
 
     // Kategori Lahan
     Route::get('admin/kategori-lahan', [App\Http\Controllers\Admin\FieldCategoryController::class, 'index'])->name('admin-kategoriLahan');
@@ -150,7 +158,7 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:admin']], function() 
     Route::delete('admin/daftar-petani/delete', [App\Http\Controllers\Admin\FarmerController::class, 'delete'])->name('admin-petani-delete');
     Route::get('admin/daftar-petani/edit', [App\Http\Controllers\Admin\FarmerController::class, 'edit'])->name('admin-petani-edit');
     Route::post('admin/daftar-petani/update', [App\Http\Controllers\Admin\FarmerController::class, 'update'])->name('admin-petani-update');
-    Route::get('poktan/{id}', [App\Http\Controllers\Admin\FarmerController::class, 'poktan']);
+    Route::get('dropdown-poktan/{id}', [App\Http\Controllers\Admin\FarmerController::class, 'poktan']);
 
     // Tandur
     Route::get('admin/tandur', [App\Http\Controllers\Admin\PlantController::class, 'index'])->name('admin-tandur');
@@ -245,9 +253,11 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:gapoktan']], function
     // Kegiatan
     Route::get('gapoktan/kegiatan', [App\Http\Controllers\Gapoktan\ActivityController::class, 'index'])->name('gapoktan-kegiatan');
     Route::post('gapoktan/kegiatan/store', [App\Http\Controllers\Gapoktan\ActivityController::class, 'store'])->name('gapoktan-kegiatan-store');
-    Route::get('gapoktan/kegiatan/fetchall', [App\Http\Controllers\Gapoktan\ActivityController::class, 'fetchAll'])->name('gapoktan-kegiatan-fetchAll');
+    Route::get('gapoktan/kegiatan/fetchAddActivity', [App\Http\Controllers\Gapoktan\ActivityController::class, 'fetchAddActivity'])->name('gapoktan-kegiatan-fetchAddActivity');
+    Route::get('gapoktan/kegiatan/fetchDraftActivity', [App\Http\Controllers\Gapoktan\ActivityController::class, 'fetchDraftActivity'])->name('gapoktan-kegiatan-fetchDraftActivity');
     Route::delete('gapoktan/kegiatan/delete', [App\Http\Controllers\Gapoktan\ActivityController::class, 'delete'])->name('gapoktan-kegiatan-delete');
     Route::get('gapoktan/kegiatan/edit', [App\Http\Controllers\Gapoktan\ActivityController::class, 'edit'])->name('gapoktan-kegiatan-edit');
+    Route::get('gapoktan/kegiatan/show', [App\Http\Controllers\Gapoktan\ActivityController::class, 'show'])->name('gapoktan-kegiatan-showActivity');
     Route::post('gapoktan/kegiatan/update', [App\Http\Controllers\Gapoktan\ActivityController::class, 'update'])->name('gapoktan-kegiatan-update');
     Route::get('gapoktan/kegiatan/checkSlug', [App\Http\Controllers\Gapoktan\ActivityController::class, 'checkSlug'])->name('gapoktan-kegiatan-checkSlug');
 
@@ -369,8 +379,10 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:poktan']], function()
     // Kegiatan
     Route::get('poktan/kegiatan', [App\Http\Controllers\Poktan\ActivityController::class, 'index'])->name('poktan-kegiatan');
     Route::post('poktan/kegiatan/store', [App\Http\Controllers\Poktan\ActivityController::class, 'store'])->name('poktan-kegiatan-store');
-    Route::get('poktan/kegiatan/fetchall', [App\Http\Controllers\Poktan\ActivityController::class, 'fetchAll'])->name('poktan-kegiatan-fetchAll');
+    Route::get('poktan/kegiatan/fetchAddActivity', [App\Http\Controllers\Poktan\ActivityController::class, 'fetchAddActivity'])->name('poktan-kegiatan-fetchAddActivity');
+    Route::get('poktan/kegiatan/fetchDraftActivity', [App\Http\Controllers\Poktan\ActivityController::class, 'fetchDraftActivity'])->name('poktan-kegiatan-fetchDraftActivity');
     Route::delete('poktan/kegiatan/delete', [App\Http\Controllers\Poktan\ActivityController::class, 'delete'])->name('poktan-kegiatan-delete');
+    Route::get('poktan/kegiatan/show', [App\Http\Controllers\Poktan\ActivityController::class, 'show'])->name('poktan-kegiatan-show');
     Route::get('poktan/kegiatan/edit', [App\Http\Controllers\Poktan\ActivityController::class, 'edit'])->name('poktan-kegiatan-edit');
     Route::post('poktan/kegiatan/update', [App\Http\Controllers\Poktan\ActivityController::class, 'update'])->name('poktan-kegiatan-update');
     Route::get('poktan/kegiatan/checkSlug', [App\Http\Controllers\Poktan\ActivityController::class, 'checkSlug'])->name('poktan-kegiatan-checkSlug');
@@ -621,6 +633,7 @@ Route::post('/update-cart-item', [App\Http\Controllers\Pembeli\CartController::c
 
 // Hubungi Kami
 Route::get('/hubungi-kami', [App\Http\Controllers\Pages\ContactUsController::class, 'index'])->name('contact.us');
+Route::post('/hubungi-kami', [App\Http\Controllers\Pages\ContactUsController::class, 'addContactUs'])->name('addContactUs');
 
 // Count Keranjang
 Route::get('/load-cart', [App\Http\Controllers\Pages\ProductController::class, 'countCart']);

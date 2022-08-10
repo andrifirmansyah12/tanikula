@@ -37,7 +37,7 @@
                         <div class="card">
                             <div class="card-body" id="tabs">
                                 <div class="card-body px-0 pb-2">
-                                    <ul class="mx-3 p-1 nav bg-light rounded nav-fill">
+                                    <ul class="mx-3 p-1 nav bg-white rounded nav-fill">
                                         <li class="nav-item">
                                             <a class="nav-link listDikemas col-12" href="#listDikemas">Dikemas</a>
                                         </li>
@@ -48,15 +48,15 @@
                                             <a class="nav-link listSelesai col-12" href="#listSelesai">Selesai</a>
                                         </li>
                                     </ul>
-                                    <div class="mt-4 table-responsive" id="listDikemas">
+                                    <div class="card mt-4 table-responsive" id="listDikemas">
                                         {{-- Table --}}
                                         <h5 class="text-center text-secondary my-5">Memuat..</h5>
                                     </div>
-                                    <div class="mt-4 table-responsive" id="listDikirim">
+                                    <div class="card mt-4 table-responsive" id="listDikirim">
                                         {{-- Table --}}
                                         <h5 class="text-center text-secondary my-5">Memuat..</h5>
                                     </div>
-                                    <div class="mt-4 table-responsive" id="listSelesai">
+                                    <div class="card mt-4 table-responsive" id="listSelesai">
                                         {{-- Table --}}
                                         <h5 class="text-center text-secondary my-5">Memuat..</h5>
                                     </div>

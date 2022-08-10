@@ -15,6 +15,10 @@
         .datepicker {
             z-index: 1600 !important; /* has to be larger than 1050 */
         }
+        /* STYLE CSS */
+        .costum-color {
+            background-image: linear-gradient(195deg, #16A085 0%, #16A085 100%);
+        }
     </style>
 @endsection
 
@@ -35,14 +39,32 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-header">
-                                <button type="button" style="border-radius: 5px;" class="btn btn btn-primary shadow-none py-1" data-toggle="modal"
-                                    data-target="#addEmployeeModal">Tambah
-                                    @yield('title')</button>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive" id="show_all_employees">
-                                    <h1 class="text-center text-secondary my-5">Memuat..</h1>
+                            <div class="card-body" id="tabs">
+                                <div class="card-body px-0 pb-2">
+                                    <ul class="mx-3 p-1 nav bg-white rounded nav-fill">
+                                        <li class="nav-item">
+                                            <a class="nav-link addActivity col-12"  href="#addActivity">Tambah Kegiatan</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link draftActivity col-12" href="#draftActivity">Daftar Kegiatan</a>
+                                        </li>
+                                    </ul>
+                                    <div class="card mt-4 table-responsive" id="addActivity">
+                                        <div class="card-header">
+                                            <button type="button" style="border-radius: 5px;" class="btn btn btn-primary shadow-none py-1" data-toggle="modal"
+                                                data-target="#addEmployeeModal">Tambah
+                                                @yield('title')</button>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive" id="add_activity">
+                                                <h1 class="text-center text-secondary my-5">Memuat..</h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card mt-4 table-responsive" id="draftActivity">
+                                        {{-- Table --}}
+                                        <h5 class="text-center text-secondary my-5">Memuat..</h5>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -176,6 +198,55 @@
         </div>
     </div>
 
+    <div class="modal fade" id="showDraftActivityModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Detail Kegiatan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="#" method="POST" id="edit_employee_form" enctype="multipart/form-data">
+                    @csrf
+                    <div class="row m-2">
+                        <div class="col-12">
+                            <article class="article article-style-b shadow-none">
+                                <div class="article-header">
+                                    <div class="article-image rounded-lg" style="height: 300px;" data-background="{{ asset('img/undraw_articles_wbpb.svg') }}">
+                                    </div>
+                                    <div class="article-badge">
+                                        <div class="article-badge-item bg-danger" id="category_activity">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="article-details">
+                                    <div class="m-0 row justify-content-between">
+                                        <div id="user_id" style="font-weight: bold">
+
+                                        </div>
+                                        <div id="date_activity">
+
+                                        </div>
+                                    </div>
+                                    <div class="article-title">
+                                        <div id="title_activity" class="mt-3 text-capitalize">
+
+                                        </div>
+                                    </div>
+                                    <div id="desc_activity">
+
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 @section('script')
@@ -194,11 +265,26 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.js"
         integrity="sha256-siqh9650JHbYFKyZeTEAhq+3jvkFCG8Iz+MHdr9eKrw=" crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
 
     <!-- AKHIR LIBARARY JS -->
 
     <!-- JAVASCRIPT -->
     <script>
+        $( function() {
+            $("#tabs").tabs();
+            $( ".addActivity" ).tabs({
+                classes: {
+                    "ui-tabs": "costum-color"
+                }
+            });
+            $( ".draftActivity" ).tabs({
+                classes: {
+                    "ui-tabs": "costum-color"
+                }
+            });
+        });
+
         $( function() {
             $( ".datepicker" ).datepicker({
                 dateFormat: 'dd-M-yy'
@@ -225,6 +311,48 @@
         });
 
         $(function() {
+
+            // edit employee ajax request
+            $(document).on('click', '.showDraftActivity', function(e) {
+                e.preventDefault();
+                let id = $(this).attr('id');
+                $.ajax({
+                url: '{{ route('poktan-kegiatan-show') }}',
+                method: 'get',
+                data: {
+                    id: id,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    $("#title_activity").html(`
+                        <h6 class="text-capitalize">
+                            ${response.title}
+                        </h6>
+                    `);
+                    $("#category_activity").html(`
+                        <i class="bi bi-bookmark"></i> ${response.activity_category.name}
+                    `);
+                    $("#user_id").html(`
+                        <span>
+                            Dibuat oleh
+                            ${response.user.name}
+                        </span>
+                    `);
+                    $("#date_activity").html(`
+                        <span>
+                            <i class="bi bi-calendar"></i>
+                            ${moment(response.date).locale('id').format('DD MMM YYYY')}
+                        </span>
+                    `);
+                    $("#desc_activity").html(`
+                        <p class="text-justify text-capitalize">
+                            ${response.desc}
+                        </p>
+                    `);
+                    $("#emp_id").val(response.id);
+                }
+                });
+            });
 
             // add new employee ajax request
             $("#add_employee_form").submit(function(e) {
@@ -359,15 +487,32 @@
             });
 
             // fetch all employees ajax request
-            fetchAllEmployees();
+            fetchAddActivity();
+            // fetch all employees ajax request
+            fetchDraftActivity();
 
-            function fetchAllEmployees() {
+            function fetchAddActivity() {
                 $.ajax({
-                url: '{{ route('poktan-kegiatan-fetchAll') }}',
+                url: '{{ route('poktan-kegiatan-fetchAddActivity') }}',
                 method: 'get',
                 success: function(response) {
-                    $("#show_all_employees").html(response);
-                    $("table").DataTable();
+                    $("#add_activity").html(response);
+                    $("#table_add_activity").DataTable({
+                        order: [0, 'asc']
+                    });
+                }
+                });
+            }
+
+            function fetchDraftActivity() {
+                $.ajax({
+                url: '{{ route('poktan-kegiatan-fetchDraftActivity') }}',
+                method: 'get',
+                success: function(response) {
+                    $("#draftActivity").html(response);
+                    $("#table_draft_activity").DataTable({
+                        order: [0, 'asc']
+                    });
                 }
                 });
             }

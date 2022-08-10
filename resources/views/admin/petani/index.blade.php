@@ -187,7 +187,7 @@
                 var stateID = $(this).val();
                 if(stateID) {
                     $.ajax({
-                        url: '/poktan/'+stateID,
+                        url: '/dropdown-poktan/'+stateID,
                         type: "GET",
                         dataType: "json",
                         success:function(data) {
@@ -208,7 +208,7 @@
                 var stateID = $(this).val();
                 if(stateID) {
                     $.ajax({
-                        url: '/poktan/'+stateID,
+                        url: '/dropdown-poktan/'+stateID,
                         type: "GET",
                         dataType: "json",
                         success:function(data) {

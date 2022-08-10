@@ -63,7 +63,7 @@ class LoginController extends Controller
                         ->first();
             $farmers = Farmer::join('users', 'farmers.user_id', '=', 'users.id')
                         ->join('gapoktans', 'farmers.gapoktan_id', '=', 'gapoktans.id')
-                        ->join('poktans', 'farmers.gapoktan_id', '=', 'poktans.id')
+                        ->join('poktans', 'farmers.poktan_id', '=', 'poktans.id')
                         ->select('farmers.*', 'users.name as name')
                         ->where('users.email', $request->email)
                         ->first();
@@ -124,7 +124,7 @@ class LoginController extends Controller
                             \Auth::logout();
                             return response()->json([
                                 'status' => 401,
-                                'messages' => 'Hak akses hanya untuk pembeli!'
+                                'messages' => 'Hak akses hanya untuk Gapoktan!'
                             ]);
                         }
                     } else {
@@ -161,7 +161,7 @@ class LoginController extends Controller
                             \Auth::logout();
                             return response()->json([
                                 'status' => 401,
-                                'messages' => 'Hak akses hanya untuk pembeli!'
+                                'messages' => 'Hak akses hanya untuk Poktan!'
                             ]);
                         }
                     } else {
@@ -198,7 +198,7 @@ class LoginController extends Controller
                             \Auth::logout();
                             return response()->json([
                                 'status' => 401,
-                                'messages' => 'Hak akses hanya untuk pembeli!'
+                                'messages' => 'Hak akses hanya untuk Petani!'
                             ]);
                         }
                     } else {
@@ -224,7 +224,8 @@ class LoginController extends Controller
         }
     }
 
-    public function registerPembeli(Request $request) {
+    public function registerPembeli(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:50',
             'email' => 'required|email|unique:users|max:100',

@@ -67,7 +67,7 @@ class EducationController extends Controller
                     $output .= '<td>' . $emp->name . '</td>';
                 }
                 $output .= '<td>' . date("d F Y", strtotime($emp->date)) . '</td>
-                <td>' . $emp->desc . '</td>
+                <td style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;" class="p-0">' . $emp->desc . '</td>
                 <td>
                   <a href="#" id="' . $emp->id . '" class="text-success mx-1 editIcon" data-toggle="modal" data-target="#editEmployeeModal"><i class="bi-pencil-square h4"></i></a>
                   <a href="#" id="' . $emp->id . '" class="text-danger mx-1 deleteIcon"><i class="bi-trash h4"></i></a>
@@ -82,7 +82,8 @@ class EducationController extends Controller
 	}
 
     // handle insert a new employee ajax request
-	public function store(Request $request) {
+	public function store(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'title' => 'required|max:255',
             'category_education_id' => 'required',
@@ -129,7 +130,8 @@ class EducationController extends Controller
 	}
 
 	// handle update an employee ajax request
-	public function update(Request $request) {
+	public function update(Request $request)
+    {
 		$validator = Validator::make($request->all(), [
             'title' => 'required|max:255',
             'category_education_id' => 'required',

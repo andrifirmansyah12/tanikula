@@ -35,6 +35,14 @@
                     </p>
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="#" onclick="admin_hero('{{ url('admin/hero') }}')" class="nav-link {{ Request::is('admin/hero*') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-solid fa-panorama"></i>
+                    <p>
+                        Hero
+                    </p>
+                </a>
+            </li>
             <li class="nav-header">MANAJEMEN</li>
             <li class="nav-item">
                 <a href="#" class="nav-link {{ Request::is('admin/kategori*') ? 'active' : '' }}">
