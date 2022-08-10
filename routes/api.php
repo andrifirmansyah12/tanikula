@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\Customer\CartApiController;
 use App\Http\Controllers\Api\Customer\ChatApiController;
 use App\Http\Controllers\Api\Customer\CheckoutApiController;
 use App\Http\Controllers\Api\Customer\CustomerApiController;
+use App\Http\Controllers\Api\Customer\ForgetPasswordApiController;
 use App\Http\Controllers\Api\Customer\LoginCustomerApiController;
 use App\Http\Controllers\Api\Customer\ParticipantChatApiController;
 use App\Http\Controllers\Api\Customer\ProductCustomerApiController;
@@ -53,7 +54,7 @@ use Midtrans\Transaction;
 Route::middleware('auth:api')->group(function () {
     // All
     Route::resource('product', ProductApiController::class);
-    Route::get('product/search/{name}', [ProductApiController::class, 'search']);
+    // Route::get('product/search/{name}', [ProductApiController::class, 'search']);
     Route::resource('product-photo', PhotoProductApiControlller::class);
     Route::post('product-photo/delete-where-id-product', [PhotoProductApiControlller::class, 'deleteWhereProductId']);
 
@@ -83,11 +84,12 @@ Route::middleware('auth:api')->group(function () {
     // ------ Gapoktan -----------
     // Activity
     Route::resource('activity', ActivityApiController::class);
-    Route::get('activity/search/{name}', [ActivityApiController::class, 'search']);
+    Route::get('activity/search/{title}', [ActivityApiController::class, 'search']);
     Route::resource('activity-category', ActivityCategoryApiController::class);
     //Education
     Route::resource('education-category', EducationCategoryApiController::class);
     Route::resource('education', EducationApiController::class);
+    Route::get('education/search/{title}', [EducationApiController::class, 'search']);
     Route::post('education/update/file', [EducationApiController::class, 'updateWFile']);
     // Poktan
     Route::resource('poktan', PoktanApiController::class);
@@ -108,17 +110,23 @@ Route::middleware('auth:api')->group(function () {
     Route::post('akun-petani/update/image', [AkunPetaniApiController::class, 'updatePhoto']);
     // user
     Route::resource('user', UserApiController::class);
-
 });
 
 
 
 // ------ Customer -----------
+Route::get('product-customer', [ProductCustomerApiController::class, 'index']);
+Route::get('product-customer/detail/{slug}', [ProductCustomerApiController::class, 'detail']);
+Route::get('product-customer/search/{name}', [ProductCustomerApiController::class, 'search']);
+Route::get('product-customer/category/{id}', [ProductCustomerApiController::class, 'category']);
+Route::get('product-customer/toko/{id}', [ProductCustomerApiController::class, 'tokoById']);
+
+// Route::post('view_category/{slug}', [ProductCustomerApiController::class, 'viewCategory']);
+Route::post('login-customer', [LoginCustomerApiController::class, 'login']);
+Route::post('forget-password', [ForgetPasswordApiController::class, 'forgotPasswordEmail']);
 Route::resource('review_public', ReviewPublicApiController::class);
 Route::get('star_rated/{id}', [ReviewPublicApiController::class, 'starRated']);
-Route::resource('product-customer', ProductCustomerApiController::class);
 Route::post('register-customer', [RegisterCustomerApiController::class, 'register']);
-Route::post('login-customer', [LoginCustomerApiController::class, 'login']);
 Route::resource('product-photo-customer', PhotoProductApiControlller::class);
 Route::resource('product-category', ProductCategoryApiController::class);
 

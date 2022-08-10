@@ -23,7 +23,6 @@ class CreateUsersTable extends Migration
             $table->dateTime('token_expire')->nullable();
             $table->longText('fcm_token')->nullable();
             $table->rememberToken();
-            $table->text('fcm_token')->nullable();
             $table->timestamps();
         });
     }
