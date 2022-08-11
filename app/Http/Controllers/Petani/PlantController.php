@@ -9,7 +9,6 @@ use App\Models\Poktan;
 use Illuminate\Support\Facades\DB;
 use App\Models\Farmer;
 use App\Models\Field;
-use App\Models\NotificationPlant;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
@@ -152,19 +151,6 @@ class PlantController extends Controller
             'date_planting' => Carbon::createFromFormat('d-M-Y', $request->date_planting)->format('Y-m-d h:i:s'),
             'status' => 'melakukan tandur',
         ]);
-
-        $notificationExists = NotificationPlant::with('plant')->where('read_at', null)->first();
-        if($notificationExists){
-            $notificationPlant = NotificationPlant::with('plant')->where('plant_id', $request->emp_id)->update([
-                'read_at' => null,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ]);
-        } else {
-            $notificationPlant = NotificationPlant::with('plant')->where('plant_id', $request->emp_id)->update([
-                'read_at' => Carbon::now(),
-            ]);
-        }
 
 		return response()->json([
 			'status' => 200,

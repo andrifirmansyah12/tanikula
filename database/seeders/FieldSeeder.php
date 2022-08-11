@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Field;
 use App\Models\FieldCategory;
+use Carbon\Carbon;
 
 class FieldSeeder extends Seeder
 {
@@ -21,10 +22,14 @@ class FieldSeeder extends Seeder
             [
                 "name" => 'Sawah',
                 "details" => 'Padi',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ],
             [
                 "name" => 'Kebun',
                 "details" => 'Jagung',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ],
         ];
 
@@ -38,12 +43,16 @@ class FieldSeeder extends Seeder
                 "gapoktan_id" => 1,
                 "farmer_id" => 1,
                 "status" => 'Belum ada status',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ],
             [
                 "field_category_id" => 2,
                 "gapoktan_id" => 1,
                 "farmer_id" => 1,
                 "status" => 'Belum ada status',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ],
         ];
 

@@ -6,7 +6,7 @@
                 <div class="row">
                     <div class="col-lg-3 col-md-4 col-12">
                         <div class="footer-logo">
-                            <a href="index.html">
+                            <a onclick="home('{{ url('home') }}')" href="#">
                                 <h3 style="color: #16A085">TaniKula</h3>
                             </a>
                         </div>
@@ -31,7 +31,7 @@
                                 <li><span>Minggu: </span> 10.00 am - 6.00 pm</li>
                             </ul>
                             <p class="mail">
-                                <a href="mailto:support@shopgrids.com">Srimakmur3@gmail.com</a>
+                                <a href="mailto:tanikula.app@gmail.com">tanikula.app@gmail.com</a>
                             </p>
                         </div>
                         <!-- End Single Widget -->
@@ -42,7 +42,7 @@
                             <h3>Informasi</h3>
                             <ul>
                                 <li><a href="javascript:void(0)">Tentang Kami</a></li>
-                                <li><a href="javascript:void(0)">Hubungi Kami</a></li>
+                                <li><a onclick="hubungi_kami('{{ url('hubungi-kami') }}')" href="#" class="{{ Request::is('hubungi-kami') ? 'active' : '' }}">Hubungi Kami</a></li>
                             </ul>
                         </div>
                         <!-- End Single Widget -->

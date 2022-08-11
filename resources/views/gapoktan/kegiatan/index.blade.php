@@ -380,7 +380,8 @@
                             'Kegiatan Berhasil Ditambahkan!',
                             'success'
                         )
-                        fetchAllEmployees();
+                        fetchAddActivity();
+                        fetchDraftActivity();
                         $("#add_employee_form")[0].reset();
                         $("#addEmployeeModal").modal('hide');
                     }
@@ -438,7 +439,8 @@
                             'Kegiatan Berhasil Diperbarui!',
                             'success'
                         )
-                        fetchAllEmployees();
+                        fetchAddActivity();
+                        fetchDraftActivity();
                         $("#edit_employee_form")[0].reset();
                         $("#editEmployeeModal").modal('hide');
                     }
@@ -478,7 +480,8 @@
                         'File Anda telah dihapus.',
                         'success'
                         )
-                        fetchAllEmployees();
+                        fetchAddActivity();
+                        fetchDraftActivity();
                     }
                     });
                 }

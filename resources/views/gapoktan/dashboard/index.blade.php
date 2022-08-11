@@ -19,7 +19,7 @@
                 <div class="col-lg-12 col-md-12 col-12 col-sm-12">
                     <div class="card">
                         <div class="card-header">
-                            <canvas id="canvas" height="280" width="600"></canvas>
+                            <canvas id="harvestCount" height="280" width="600"></canvas>
                         </div>
                     </div>
                 </div>
@@ -33,17 +33,27 @@
     <script>
         var year = <?php echo $year; ?>;
         var harvest = <?php echo $harvest; ?>;
+        var plant = <?php echo $plant; ?>;
+        var fields = <?php echo $fields; ?>;
         var barChartData = {
             labels: year,
             datasets: [{
-                label: 'Panen',
+                label: 'Lahan yang disediakan',
+                backgroundColor: "brown",
+                data: fields,
+            }, {
+                label: 'Tanam',
                 backgroundColor: "orange",
-                data: harvest
+                data: plant,
+            }, {
+                label: 'Panen',
+                backgroundColor: "green",
+                data: harvest,
             }]
         };
 
         window.onload = function() {
-            var ctx = document.getElementById("canvas").getContext("2d");
+            var ctx = document.getElementById("harvestCount").getContext("2d");
             window.myBar = new Chart(ctx, {
                 type: 'bar',
                 data: barChartData,
@@ -58,8 +68,8 @@
                     responsive: true,
                     title: {
                         display: true,
-                        text: 'Petani yang telah melakukan Panen'
-                    }
+                        text: 'Data tanam dan panen yang direkap dalam per tahun.'
+                    },
                 }
             });
         };

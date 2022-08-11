@@ -6,7 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Farmer;
-use App\Models\Plant;
+use App\Models\Gapoktan;
+use App\Models\Field;
+use App\Models\FieldRecapPlanting;
+use App\Models\FieldRecapHarvest;
 use App\Models\Education;
 use App\Models\Activity;
 use App\Models\Poktan;
@@ -18,48 +21,56 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $year = ['2022','2023','2024','2025','2026','2027','2028','2029','2030'];
+        $year = ['2022','2023'];
 
+        $fields = [];
         $plant = [];
         $harvest = [];
         foreach ($year as $key => $value) {
-            $plant[] = Plant::join('farmers', 'plants.farmer_id', '=', 'farmers.id')
-                    ->join('poktans', 'plants.poktan_id', '=', 'poktans.id')
-                    ->join('gapoktans', 'poktans.gapoktan_id', '=', 'gapoktans.id')
-                    ->where('gapoktans.user_id', '=', auth()->user()->id)
-                    ->where('plants.harvest_date', '=', null)
-                    ->where(\DB::raw("DATE_FORMAT(plants.created_at, '%Y')"),$value)
+		    $gapoktans = Gapoktan::with('user')->where('user_id', auth()->user()->id)->first();
+            $fields[] = Field::join('field_categories', 'fields.field_category_id', '=', 'field_categories.id')
+                    ->join('gapoktans', 'fields.gapoktan_id', '=', 'gapoktans.id')
+                    ->join('farmers', 'fields.farmer_id', '=', 'farmers.id')
+                    ->select('fields.*', 'field_categories.name as name')
+                    ->where(\DB::raw("DATE_FORMAT(fields.created_at, '%Y')"),$value)
+                    ->where('fields.gapoktan_id', $gapoktans->id)
                     ->count();
-            $harvest[] = Plant::join('farmers', 'plants.farmer_id', '=', 'farmers.id')
-                    ->join('poktans', 'plants.poktan_id', '=', 'poktans.id')
-                    ->join('gapoktans', 'poktans.gapoktan_id', '=', 'gapoktans.id')
-                    ->where('gapoktans.user_id', '=', auth()->user()->id)
-                    ->whereNotNull('plants.harvest_date')
-                    ->where(\DB::raw("DATE_FORMAT(plants.created_at, '%Y')"),$value)
+            $plant[] = FieldRecapPlanting::join('fields', 'field_recap_plantings.field_id', '=', 'fields.id')
+                    ->join('farmers', 'field_recap_plantings.farmer_id', '=', 'farmers.id')
+                    ->select('field_recap_plantings.*', 'fields.farmer_id as name')
+                    ->where('farmers.gapoktan_id', '=', $gapoktans->id)
+                    ->where(\DB::raw("DATE_FORMAT(field_recap_plantings.created_at, '%Y')"),$value)
+                    ->count();
+            $harvest[] = FieldRecapHarvest::join('field_recap_plantings', 'field_recap_harvests.planting_id', '=', 'field_recap_plantings.id')
+                    ->join('farmers', 'field_recap_harvests.farmer_id', '=', 'farmers.id')
+                    ->select('field_recap_harvests.*', 'farmers.user_id as name')
+                    ->where('farmers.gapoktan_id', '=', $gapoktans->id)
+                    ->where('field_recap_harvests.status', '=', 'panen')
+                    ->where(\DB::raw("DATE_FORMAT(field_recap_harvests.created_at, '%Y')"),$value)
                     ->count();
         }
 
     	return view('gapoktan.dashboard.index')
                 ->with('year',json_encode($year,JSON_NUMERIC_CHECK))
+                ->with('fields',json_encode($fields,JSON_NUMERIC_CHECK))
                 ->with('plant',json_encode($plant,JSON_NUMERIC_CHECK))
                 ->with('harvest',json_encode($harvest,JSON_NUMERIC_CHECK));
     }
 
     // handle fetch all eamployees ajax request
 	public function fetchAll(Request $request) {
-        $countPlant = Plant::join('farmers', 'plants.farmer_id', '=', 'farmers.id')
-                    ->join('poktans', 'plants.poktan_id', '=', 'poktans.id')
-                    ->join('gapoktans', 'poktans.gapoktan_id', '=', 'gapoktans.id')
-                    ->where('gapoktans.user_id', '=', auth()->user()->id)
-                    ->where('plants.harvest_date', '=', null)
-                    ->where('plants.status', '=', 'tandur')
+		$gapoktans = Gapoktan::with('user')->where('user_id', auth()->user()->id)->first();
+        $countPlant = FieldRecapPlanting::join('fields', 'field_recap_plantings.field_id', '=', 'fields.id')
+                    ->join('farmers', 'field_recap_plantings.farmer_id', '=', 'farmers.id')
+                    ->select('field_recap_plantings.*', 'fields.farmer_id as name')
+                    ->where('farmers.gapoktan_id', '=', $gapoktans->id)
+                    ->orderBy('updated_at', 'desc')
                     ->count();
-        $countHarvest = Plant::join('farmers', 'plants.farmer_id', '=', 'farmers.id')
-                    ->join('poktans', 'plants.poktan_id', '=', 'poktans.id')
-                    ->join('gapoktans', 'poktans.gapoktan_id', '=', 'gapoktans.id')
-                    ->where('gapoktans.user_id', '=', auth()->user()->id)
-                    ->whereNotNull('plants.harvest_date')
-                    ->where('plants.status', 'panen')
+        $countHarvest = FieldRecapHarvest::join('field_recap_plantings', 'field_recap_harvests.planting_id', '=', 'field_recap_plantings.id')
+                    ->join('farmers', 'field_recap_harvests.farmer_id', '=', 'farmers.id')
+                    ->select('field_recap_harvests.*', 'farmers.user_id as name')
+                    ->where('farmers.gapoktan_id', '=', $gapoktans->id)
+                    ->orderBy('updated_at', 'desc')
                     ->count();
         $countFarmer = Farmer::join('poktans', 'farmers.poktan_id', '=', 'poktans.id')
                     ->join('gapoktans', 'poktans.gapoktan_id', '=', 'gapoktans.id')

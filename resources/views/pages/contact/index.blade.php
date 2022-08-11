@@ -106,7 +106,7 @@
                                     <span class="fa fa-paper-plane"></span>
                                 </div>
                                 <div class="text">
-                                    <p><span>Email:</span> <a style="color:#16A085;" href="mailto:info@yoursite.com">Srimakmur3@gmail.com</a></p>
+                                    <p><span>Email:</span> <a style="color:#16A085;" href="mailto:info@yoursite.com">tanikula.app@gmail.com</a></p>
                                 </div>
                             </div>
                         </div>
@@ -116,7 +116,7 @@
                                     <span class="lni lni-instagram"></span>
                                 </div>
                                 <div class="text">
-                                    <p><span>Instagram:</span><a style="color:#16A085;" href="#">TaniKula</a></p>
+                                    <p><span>Instagram:</span><a style="color:#16A085;" href="#">Tanikula</a></p>
                                 </div>
                             </div>
                         </div>
