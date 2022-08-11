@@ -47,7 +47,7 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:support']], function(
 });
 
 // Admin
-Route::group(['middleware' => ['LoginCheck', 'auth', 'role:admin']], function() {
+Route::group(['middleware' => ['LoginCheck', 'auth', 'role:admin']], function () {
 
     // Logout
     Route::post('/admin/logout', [App\Http\Controllers\Admin\LoginController::class, 'logout'])->name('logout-admin');
@@ -184,19 +184,19 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:admin']], function() 
     Route::post('admin/pengaturan-image', [App\Http\Controllers\Admin\PengaturanController::class, 'pengaturanImage'])->name('admin.pengaturan.image');
     Route::post('admin/pengaturan-update', [App\Http\Controllers\Admin\PengaturanController::class, 'pengaturanUpdate'])->name('admin.pengaturan.update');
     Route::post('admin/pengaturan-updatePassword', [App\Http\Controllers\Admin\PengaturanController::class, 'pengaturanUpdatePassword'])->name('admin.pengaturan.updatePassword');
-
 });
 
 // Login Gapoktan
 // Route::group(['middleware' => ['guest']], function() {
 //     Route::get('/gapoktan/login', [App\Http\Controllers\Gapoktan\LoginController::class, 'login'])->name('login-gapoktan');
 //     Route::post('/gapoktan/login', [App\Http\Controllers\Gapoktan\LoginController::class, 'loginGapoktan'])->name('login-gapoktan');
+
     Route::get('/gapoktan/register', [App\Http\Controllers\Gapoktan\LoginController::class, 'register'])->name('register-gapoktan');
     Route::post('/gapoktan/register', [App\Http\Controllers\Gapoktan\LoginController::class, 'registerGapoktan'])->name('registerGapoktan-gapoktan');
 // });
 
 // Gapoktan
-Route::group(['middleware' => ['LoginCheck', 'auth', 'role:gapoktan']], function() {
+Route::group(['middleware' => ['LoginCheck', 'auth', 'role:gapoktan']], function () {
 
     // Logout
     Route::post('/gapoktan/logout', [App\Http\Controllers\Gapoktan\LoginController::class, 'logout'])->name('logout-gapoktan');
@@ -342,7 +342,6 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:gapoktan']], function
     Route::post('gapoktan/pengaturan-image', [App\Http\Controllers\Gapoktan\PengaturanController::class, 'pengaturanImage'])->name('gapoktan.pengaturan.image');
     Route::post('gapoktan/pengaturan-update', [App\Http\Controllers\Gapoktan\PengaturanController::class, 'pengaturanUpdate'])->name('gapoktan.pengaturan.update');
     Route::post('gapoktan/pengaturan-updatePassword', [App\Http\Controllers\Gapoktan\PengaturanController::class, 'pengaturanUpdatePassword'])->name('gapoktan.pengaturan.updatePassword');
-
 });
 
 // // Login Poktan
@@ -354,7 +353,7 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:gapoktan']], function
 // });
 
 // Poktan
-Route::group(['middleware' => ['LoginCheck', 'auth', 'role:poktan']], function() {
+Route::group(['middleware' => ['LoginCheck', 'auth', 'role:poktan']], function () {
 
     // Logout
     Route::post('/poktan/logout', [App\Http\Controllers\Poktan\LoginController::class, 'logout'])->name('logout-poktan');
@@ -424,7 +423,6 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:poktan']], function()
     Route::post('poktan/pengaturan-image', [App\Http\Controllers\Poktan\PengaturanController::class, 'pengaturanImage'])->name('poktan.pengaturan.image');
     Route::post('poktan/pengaturan-update', [App\Http\Controllers\Poktan\PengaturanController::class, 'pengaturanUpdate'])->name('poktan.pengaturan.update');
     Route::post('poktan/pengaturan-updatePassword', [App\Http\Controllers\Poktan\PengaturanController::class, 'pengaturanUpdatePassword'])->name('poktan.pengaturan.updatePassword');
-
 });
 
 // Login Petani
@@ -436,7 +434,7 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:poktan']], function()
 // });
 
 // Petani
-Route::group(['middleware' => ['LoginCheck', 'auth', 'role:petani']], function() {
+Route::group(['middleware' => ['LoginCheck', 'auth', 'role:petani']], function () {
 
     // Logout
     Route::post('/petani/logout', [App\Http\Controllers\Petani\LoginController::class, 'logout'])->name('logout-petani');
@@ -496,7 +494,7 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:petani']], function()
 });
 
 // Login Pembeli
-Route::group(['middleware' => ['guest']], function() {
+Route::group(['middleware' => ['guest']], function () {
     Route::get('/login', [App\Http\Controllers\Pembeli\LoginController::class, 'login'])->name('login');
     Route::post('/login', [App\Http\Controllers\Pembeli\LoginController::class, 'loginPembeli'])->name('loginPembeli-pembeli');
     Route::get('/register', [App\Http\Controllers\Pembeli\LoginController::class, 'register'])->name('register-pembeli');
@@ -509,7 +507,7 @@ Route::group(['middleware' => ['guest']], function() {
 });
 
 // Pembeli
-Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function() {
+Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function () {
 
     // Logout
     Route::post('/logout', [App\Http\Controllers\Pembeli\LoginController::class, 'logout'])->name('logout');
@@ -649,3 +647,7 @@ Route::post('/delete-cart-wishlist', [App\Http\Controllers\Pembeli\WishlistContr
 // Auth::routes();
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/logout', function () {
+    Auth::logout();
+    return Redirect::to('login');
+});

@@ -5,10 +5,13 @@ use App\Http\Controllers\Api\Customer\CartApiController;
 use App\Http\Controllers\Api\Customer\ChatApiController;
 use App\Http\Controllers\Api\Customer\CheckoutApiController;
 use App\Http\Controllers\Api\Customer\CustomerApiController;
+use App\Http\Controllers\Api\Customer\ForgetPasswordApiController;
 use App\Http\Controllers\Api\Customer\LoginCustomerApiController;
 use App\Http\Controllers\Api\Customer\ParticipantChatApiController;
 use App\Http\Controllers\Api\Customer\ProductCustomerApiController;
 use App\Http\Controllers\Api\Customer\RegisterCustomerApiController;
+use App\Http\Controllers\Api\Customer\ReviewApiController;
+use App\Http\Controllers\Api\Customer\ReviewPublicApiController;
 use App\Http\Controllers\Api\Customer\RoomChatApiController;
 use App\Http\Controllers\Api\Customer\TransactionListApiController;
 use App\Http\Controllers\Api\Customer\WishlistApiController;
@@ -28,6 +31,7 @@ use App\Http\Controllers\Api\Poktan\AkunPoktanApiController;
 use App\Http\Controllers\Api\Poktan\LoginPoktanApiController;
 use App\Http\Controllers\Api\ProductApiController;
 use App\Http\Controllers\Api\ProductCategoryApiController;
+use App\Http\Controllers\Api\PushNotificationController;
 use App\Http\Controllers\Api\UserApiController;
 use Illuminate\Support\Facades\Route;
 use Midtrans\Transaction;
@@ -50,7 +54,7 @@ use Midtrans\Transaction;
 Route::middleware('auth:api')->group(function () {
     // All
     Route::resource('product', ProductApiController::class);
-    Route::get('product/search/{name}', [ProductApiController::class, 'search']);
+    // Route::get('product/search/{name}', [ProductApiController::class, 'search']);
     Route::resource('product-photo', PhotoProductApiControlller::class);
     Route::post('product-photo/delete-where-id-product', [PhotoProductApiControlller::class, 'deleteWhereProductId']);
 
@@ -60,7 +64,6 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('participant-chat', ParticipantChatApiController::class);
 
     // ------ Customer -----------
-    // Cart
     Route::resource('cart', CartApiController::class);
     Route::put('cart/qty/{id}', [CartApiController::class, 'updateQty']);
     Route::resource('customer', CustomerApiController::class);
@@ -73,15 +76,20 @@ Route::middleware('auth:api')->group(function () {
     Route::put('address/main_address/{user_id}', [AddressApiController::class, 'updateMainAddress']);
     Route::post('/cart/shipment/place-order', [CheckoutApiController::class, 'placeOrder']);
     Route::get('transaction_list/{user_id}', [TransactionListApiController::class, 'index']);
+    Route::post('/transaction_list/detail_transaction/{id}', [TransactionListApiController::class, 'detailPesanan']);
+    Route::resource('review', ReviewApiController::class);
+    Route::get('notification_list/{user_id}', [PushNotificationController::class, 'indexByid']);
+    Route::get('notification_list/delete-all', [PushNotificationController::class, 'deleteall']);
 
     // ------ Gapoktan -----------
     // Activity
     Route::resource('activity', ActivityApiController::class);
-    Route::get('activity/search/{name}', [ActivityApiController::class, 'search']);
+    Route::get('activity/search/{title}', [ActivityApiController::class, 'search']);
     Route::resource('activity-category', ActivityCategoryApiController::class);
     //Education
     Route::resource('education-category', EducationCategoryApiController::class);
     Route::resource('education', EducationApiController::class);
+    Route::get('education/search/{title}', [EducationApiController::class, 'search']);
     Route::post('education/update/file', [EducationApiController::class, 'updateWFile']);
     // Poktan
     Route::resource('poktan', PoktanApiController::class);
@@ -102,15 +110,23 @@ Route::middleware('auth:api')->group(function () {
     Route::post('akun-petani/update/image', [AkunPetaniApiController::class, 'updatePhoto']);
     // user
     Route::resource('user', UserApiController::class);
-
 });
 
 
 
 // ------ Customer -----------
-Route::resource('product-customer', ProductCustomerApiController::class);
-Route::post('register-customer', [RegisterCustomerApiController::class, 'register']);
+Route::get('product-customer', [ProductCustomerApiController::class, 'index']);
+Route::get('product-customer/detail/{slug}', [ProductCustomerApiController::class, 'detail']);
+Route::get('product-customer/search/{name}', [ProductCustomerApiController::class, 'search']);
+Route::get('product-customer/category/{id}', [ProductCustomerApiController::class, 'category']);
+Route::get('product-customer/toko/{id}', [ProductCustomerApiController::class, 'tokoById']);
+
+// Route::post('view_category/{slug}', [ProductCustomerApiController::class, 'viewCategory']);
 Route::post('login-customer', [LoginCustomerApiController::class, 'login']);
+Route::post('forget-password', [ForgetPasswordApiController::class, 'forgotPasswordEmail']);
+Route::resource('review_public', ReviewPublicApiController::class);
+Route::get('star_rated/{id}', [ReviewPublicApiController::class, 'starRated']);
+Route::post('register-customer', [RegisterCustomerApiController::class, 'register']);
 Route::resource('product-photo-customer', PhotoProductApiControlller::class);
 Route::resource('product-category', ProductCategoryApiController::class);
 
@@ -133,3 +149,11 @@ Route::post('/save-token', [App\Http\Controllers\Pembeli\ChatController::class, 
 
 // ------ Petani -----------
 Route::post('login-petani', [LoginPetaniApiController::class, 'login']);
+
+// // Notification Controllers
+// Route::post('send', [PushNotificationController::class, 'bulksend'])->name('bulksend');
+// Route::get('all-notifications', [PushNotificationController::class, 'index']);
+// Route::get('get-notification-form', [PushNotificationController::class, 'create']);
+
+// Tes notifikasi
+// Route::post('send-notification', [PushNotificationController::class, 'tesApi']);
