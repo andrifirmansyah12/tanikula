@@ -23,8 +23,20 @@
         window.location = url;
     }
     // Pembeli Dashboard
-    function pembeli(url) {
-        window.location = url;
+    function pembeli(route) {
+        window.location = route;
+    }
+    // Pembeli Dashboard
+    function gapoktan(route) {
+        window.location = route;
+    }
+    // Pembeli Dashboard
+    function poktan(route) {
+        window.location = route;
+    }
+    // Pembeli Dashboard
+    function petani(route) {
+        window.location = route;
     }
     // Login
     function login(url) {

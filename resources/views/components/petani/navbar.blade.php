@@ -8,7 +8,7 @@
             <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="250">
             <button class="btn" type="submit"><i class="fas fa-search"></i></button>
             <div class="search-backdrop"></div>
-            <div class="search-result">
+            {{-- <div class="search-result">
                 <div class="search-header">
                     Histories
                 </div>
@@ -67,7 +67,7 @@
                         Create a new Homepage Design
                     </a>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </form>
     <ul class="navbar-nav navbar-right">
@@ -86,7 +86,6 @@
                                                                 ->where('notification_activities.read_at', '=', null)
                                                                 ->orderBy('notification_activities.updated_at', 'desc')
                                                                 ->count();
-
         @endphp
         <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
                 class="nav-link notification-toggle nav-link-lg {{ $countNotificationActivity == null ? '' : 'beep' }}"><i class="far fa-bell"></i><span class="position-absolute">{{ $countNotificationActivity }}</span></a>

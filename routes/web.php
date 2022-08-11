@@ -229,6 +229,7 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:gapoktan']], function
     Route::post('gapoktan/lahan/store', [App\Http\Controllers\Gapoktan\FieldController::class, 'store'])->name('gapoktan-lahan-store');
     Route::get('gapoktan/lahan/fetchall', [App\Http\Controllers\Gapoktan\FieldController::class, 'fetchAll'])->name('gapoktan-lahan-fetchAll');
     Route::delete('gapoktan/lahan/delete', [App\Http\Controllers\Gapoktan\FieldController::class, 'delete'])->name('gapoktan-lahan-delete');
+    Route::post('gapoktan/lahan/recycleField', [App\Http\Controllers\Gapoktan\FieldController::class, 'recycleField'])->name('gapoktan-lahan-recycleField');
     Route::get('gapoktan/lahan/edit', [App\Http\Controllers\Gapoktan\FieldController::class, 'edit'])->name('gapoktan-lahan-edit');
     Route::post('gapoktan/lahan/update', [App\Http\Controllers\Gapoktan\FieldController::class, 'update'])->name('gapoktan-lahan-update');
 

@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Plant;
 use App\Models\Poktan;
-use App\Models\Field;
+use App\Models\FieldRecapHarvest;
 use App\Models\FieldCategory;
 use App\Models\Gapoktan;
 use Illuminate\Support\Facades\DB;
@@ -23,31 +23,29 @@ class PlantingHistoryController extends Controller
 	}
 
     // handle fetch all eamployees ajax request
-	public function fetchAll(Request $request) 
+	public function fetchAll(Request $request)
     {
         if(!empty($request->from_date))
         {
             $gapoktans = Gapoktan::where('user_id', auth()->user()->id)->first();
-            $emps = Field::join('field_categories', 'fields.field_category_id', '=', 'field_categories.id')
-                    ->join('gapoktans', 'fields.gapoktan_id', '=', 'gapoktans.id')
-                    ->join('farmers', 'fields.farmer_id', '=', 'farmers.id')
-                    ->select('fields.*', 'field_categories.name as name')
-                    ->where('fields.gapoktan_id', $gapoktans->id)
-                    ->where('fields.status', 'panen')
-                    ->whereBetween('fields.updated_at', array($request->from_date, $request->to_date))
-                    ->orderBy('fields.updated_at', 'desc')
+            $emps = FieldRecapHarvest::join('field_recap_plantings', 'field_recap_harvests.planting_id', '=', 'field_recap_plantings.id')
+                    ->join('farmers', 'field_recap_harvests.farmer_id', '=', 'farmers.id')
+                    ->select('field_recap_harvests.*', 'farmers.user_id as name')
+                    ->where('farmers.gapoktan_id', '=', $gapoktans->id)
+                    ->where('field_recap_harvests.status', 'panen')
+                    ->whereBetween('field_recap_harvests.date_harvest', array($request->from_date, $request->to_date))
+                    ->orderBy('field_recap_harvests.updated_at', 'desc')
                     ->get();
         }
             else
         {
             $gapoktans = Gapoktan::where('user_id', auth()->user()->id)->first();
-            $emps = Field::join('field_categories', 'fields.field_category_id', '=', 'field_categories.id')
-                    ->join('gapoktans', 'fields.gapoktan_id', '=', 'gapoktans.id')
-                    ->join('farmers', 'fields.farmer_id', '=', 'farmers.id')
-                    ->select('fields.*', 'field_categories.name as name')
-                    ->where('fields.gapoktan_id', $gapoktans->id)
-                    ->where('fields.status', 'panen')
-                    ->orderBy('fields.updated_at', 'desc')
+            $emps = FieldRecapHarvest::join('field_recap_plantings', 'field_recap_harvests.planting_id', '=', 'field_recap_plantings.id')
+                    ->join('farmers', 'field_recap_harvests.farmer_id', '=', 'farmers.id')
+                    ->select('field_recap_harvests.*', 'farmers.user_id as name')
+                    ->where('farmers.gapoktan_id', '=', $gapoktans->id)
+                    ->where('field_recap_harvests.status', 'panen')
+                    ->orderBy('field_recap_harvests.updated_at', 'desc')
                     ->get();
         }
 		$output = '';
@@ -57,8 +55,9 @@ class PlantingHistoryController extends Controller
               <tr>
                 <th>No</th>
                 <th>Lahan</th>
-                <th>Gapoktan</th>
                 <th>Petani</th>
+                <th>Tanggal Tandur</th>
+                <th>Tanggal Panen</th>
                 <th>Status</th>
               </tr>
             </thead>
@@ -67,9 +66,10 @@ class PlantingHistoryController extends Controller
 			foreach ($emps as $emp) {
 				$output .= '<tr>';
                 $output .= '<td>' . $nomor++ . '</td>';
-                $output .= '<td>' . $emp->fieldCategory->name . '</td>';
-                $output .= '<td>' . $emp->gapoktan->user->name . '</td>
-                <td>' . $emp->farmer->user->name . '</td>';
+                $output .= '<td>' . $emp->fieldRecapPlanting->field->fieldCategory->name . '</td>';
+                $output .= '<td>' . $emp->farmer->user->name . '</td>
+                <td>' . date("d-F-Y", strtotime($emp->fieldRecapPlanting->date_planting)) . '</td>
+                <td>' . date("d-F-Y", strtotime($emp->date_harvest)) . '</td>';
                 if ($emp->status) {
                     $output .= '<td><span class="text-capitalize">' . $emp->status . '</span></td>';
                 } else {

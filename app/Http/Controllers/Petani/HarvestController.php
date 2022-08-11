@@ -48,8 +48,16 @@ class HarvestController extends Controller
 			foreach ($emps as $emp) {
                 $output .= '<tr>';
                 $output .= '<td>' . $nomor++ . '</td>';
-                $output .= '<td>' . $emp->farmer->user->name . '</td>
-                <td>' . $emp->fieldRecapPlanting->field->fieldCategory->name . ' (' . $emp->fieldRecapPlanting->field->fieldCategory->details . ')</td>';
+                $output .= '<td>' . $emp->farmer->user->name . '</td>';
+                if ($emp->planting_id) {
+                    $output .= '<td>
+                        ' . $emp->fieldRecapPlanting->field->fieldCategory->name . ' (' . $emp->fieldRecapPlanting->field->fieldCategory->details . ')
+                    </td>';
+                } else {
+                    $output .= '<td>
+                        Tidak ada
+                    </td>';
+                }
                 if ($emp->date_harvest) {
                     $output .= '<td>'. date("d-F-Y", strtotime($emp->date_harvest)) .'</td>';
                 } else {
@@ -127,8 +135,12 @@ class HarvestController extends Controller
 			foreach ($emps as $emp) {
                 $output .= '<tr>';
                 $output .= '<td>' . $nomor++ . '</td>';
-                $output .= '<td>' . $emp->farmer->user->name . '</td>
-                <td>' . $emp->field->fieldCategory->name . ' (' . $emp->field->fieldCategory->details . ')</td>';
+                $output .= '<td>' . $emp->farmer->user->name . '</td>';
+                if ($emp->planting_id){
+                    $output .= '<td>' . $emp->field->fieldCategory->name . ' (' . $emp->field->fieldCategory->details . ')</td>';
+                } else {
+                    $output .= '<td>Tidak ada</td>';
+                }
                 if ($emp->date_planting) {
                     $output .= '<td>'. date("d-F-Y", strtotime($emp->date_planting)) .'</td>';
                 } else {

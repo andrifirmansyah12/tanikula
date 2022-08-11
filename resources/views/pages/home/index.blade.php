@@ -121,43 +121,33 @@
         <div class="row">
             @if ($category_product->count())
             @foreach ($category_product as $item)
-            <div class="col-lg-4 col-md-6 col-12">
+            <div class="col-lg-3 col-md-6 col-12">
                 <div class="single-category shadow rounded bg-body">
-                    <h3 class="heading"><a style="color:#16A085;" href="{{ url('product-category/'.$item->slug) }}"> {{ $item->name }}</a></h3>
-                    <ul>
-                        @foreach ($product_new->take(3) as $product_category)
-                            @if ($product_category->category_product_id == $item->id)
-                                <li><a href="{{ url('home/'.$product_category->slug) }}">
-                                        {{ substr($product_category->name, 0, 20). '...' }}
-                                </a></li>
-                            @endif
-                        @endforeach
-                        <li><a href="{{ url('product-category/'.$item->slug) }}">Lainnya</a></li>
-                    </ul>
+                    <h4 class="heading"><a style="color:#16A085;" href="{{ url('product-category/'.$item->slug) }}"> {{ $item->name }}</a></h4>
                     <div class="images d-block">
                         @if ($item->id == '1')
-                            <img src="{{ asset('img/kategori-produk/beras.png') }}" class="img-fluid pe-4" style="width: 8rem; height: 6rem;"
+                            <img src="{{ asset('img/kategori-produk/beras.png') }}" class="img-fluid pt-3 pe-4" style="width: 6rem; height: 4rem; margin-right: 70px"
                                 alt="{{$item->name}}">
                         @elseif ($item->id == '2')
-                            <img src="{{ asset('img/kategori-produk/buah.png') }}" class="img-fluid pe-4" style="width: 8rem; height: 6rem;"
+                            <img src="{{ asset('img/kategori-produk/buah.png') }}" class="img-fluid pt-3 pe-4" style="width: 6rem; height: 4rem; margin-right: 70px"
                                 alt="{{$item->name}}">
                         @elseif ($item->id == '3')
-                            <img src="{{ asset('img/kategori-produk/olahan-buah.png') }}" class="img-fluid pe-4" style="width: 8rem; height: 6rem;"
+                            <img src="{{ asset('img/kategori-produk/olahan-buah.png') }}" class="img-fluid pt-3 pe-4" style="width: 6rem; height: 4rem; margin-right: 70px"
                                 alt="{{$item->name}}">
                         @elseif ($item->id == '4')
-                            <img src="{{ asset('img/kategori-produk/bibit-sayuran.png') }}" class="img-fluid pe-4" style="width: 8rem; height: 6rem;"
+                            <img src="{{ asset('img/kategori-produk/bibit-sayuran.png') }}" class="img-fluid pt-3 pe-4" style="width: 6rem; height: 4rem; margin-right: 70px"
                                 alt="{{$item->name}}">
                         @elseif ($item->id == '5')
-                            <img src="{{ asset('img/kategori-produk/sayuran.png') }}" class="img-fluid pe-4" style="width: 8rem; height: 6rem;"
+                            <img src="{{ asset('img/kategori-produk/sayuran.png') }}" class="img-fluid pt-3 pe-4" style="width: 6rem; height: 4rem; margin-right: 70px"
                                 alt="{{$item->name}}">
                         @elseif ($item->id == '6')
-                            <img src="{{ asset('img/kategori-produk/roti.png') }}" class="img-fluid pe-4" style="width: 8rem; height: 6rem;"
+                            <img src="{{ asset('img/kategori-produk/roti.png') }}" class="img-fluid pt-3 pe-4" style="width: 6rem; height: 4rem; margin-right: 70px"
                                 alt="{{$item->name}}">
                         @elseif ($item->id == '7')
-                            <img src="{{ asset('img/kategori-produk/jamu.png') }}" class="img-fluid pe-4" style="width: 8rem; height: 6rem;"
+                            <img src="{{ asset('img/kategori-produk/jamu.png') }}" class="img-fluid pt-3 pe-4" style="width: 6rem; height: 4rem; margin-right: 70px"
                                 alt="{{$item->name}}">
                         @elseif ($item->id == '8')
-                            <img src="{{ asset('img/kategori-produk/suau-kedelai.png') }}" class="img-fluid pe-4" style="width: 8rem; height: 6rem;"
+                            <img src="{{ asset('img/kategori-produk/suau-kedelai.png') }}" class="img-fluid pt-3 pe-4" style="width: 6rem; height: 4rem; margin-right: 70px"
                                 alt="{{$item->name}}">
                         @endif
                     </div>

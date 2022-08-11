@@ -1,5 +1,5 @@
 @extends('pages.template2')
-@section('title', 'Home')
+@section('title', 'Edukasi')
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
 <style>
