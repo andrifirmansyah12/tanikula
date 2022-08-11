@@ -82,10 +82,15 @@ class ReviewController extends Controller
                     $output .= '</div>
                     ';
                 foreach ($order->orderItems as $orderitem) {
-                $output .= '<div class="d-flex mb-1 align-items-center py-1 bg-light px-3">';
-                        foreach ($orderitem->product->photo_product->take(1) as $photos) {
-                        $output .= '<img src="../storage/produk/'.$photos->name.'" class="img-fluid"
-                            style="object-fit: contain; width: 60px" alt="'. $orderitem->product->name .'">';
+                $output .= '<div class="d-flex mb-1 align-items-center py-2 rounded bg-light px-3">';
+                        if ($orderitem->product->photo_product->count() > 0) {
+                            foreach ($orderitem->product->photo_product->take(1) as $photos) {
+                            $output .= '<img src="../storage/produk/'.$photos->name.'" class="img-fluid"
+                                style="object-fit: contain; width: 60px" alt="'. $orderitem->product->name .'">';
+                            }
+                        } else {
+                            $output .= '<img src="../img/no-image.png" class="img-fluid"
+                                style="object-fit: contain; width: 60px" alt="'. $orderitem->product->name .'">';
                         }
                         $output .= '<div>
                             <p class="my-0 mx-3 text-secondary text-xs font-weight-bold text-truncate col-9">
@@ -191,10 +196,15 @@ class ReviewController extends Controller
                     $output .= '</div>
                     ';
                 foreach ($order->orderItems as $orderitem) {
-                $output .= '<div class="d-flex mb-1 align-items-center py-1 bg-light px-3">';
-                        foreach ($orderitem->product->photo_product->take(1) as $photos) {
-                        $output .= '<img src="../storage/produk/'.$photos->name.'" class="img-fluid"
-                            style="object-fit: contain; width: 60px" alt="'. $orderitem->product->name .'">';
+                $output .= '<div class="d-flex mb-1 align-items-center py-2 rounded bg-light px-3">';
+                        if ($orderitem->product->photo_product->count() > 0) {
+                            foreach ($orderitem->product->photo_product->take(1) as $photos) {
+                            $output .= '<img src="../storage/produk/'.$photos->name.'" class="img-fluid"
+                                style="object-fit: contain; width: 60px" alt="'. $orderitem->product->name .'">';
+                            }
+                        } else {
+                            $output .= '<img src="../img/no-image.png" class="img-fluid"
+                                style="object-fit: contain; width: 60px" alt="'. $orderitem->product->name .'">';
                         }
                         $output .= '<div>
                             <p class="my-0 mx-3 text-secondary text-xs font-weight-bold text-truncate col-9">
@@ -258,7 +268,7 @@ class ReviewController extends Controller
 
             Review::insert($units);
 
-            
+
             $orders = Order::where('id', $request->input('rev_order_id'))->first();
             $orders->review = Order::REVIEWED;
             $orders->update();
