@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Api\Gapoktan;
+
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Gapoktan\ActivityResource;
@@ -14,25 +15,27 @@ class ActivityApiController extends BaseController
 {
     public function index()
     {
-        $datas = Activity::latest()->get();
+        $datas = Activity::orderBy('id', 'DESC')
+            ->where('category_activity_id', '!=', null)
+            ->paginate(7);
+
         $result = ActivityResource::collection($datas);
         return $this->sendResponse($result, 'Data fetched');
     }
 
     public function create()
     {
-
     }
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'category_activity_id' => 'required',
             'title' => 'required',
             'desc' => 'required'
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json($validator->errors());
         }
 
@@ -43,7 +46,7 @@ class ActivityApiController extends BaseController
             'slug' => Str::slug($request->title),
             'date' => $request->date,
             'desc' => $request->desc,
-         ]);
+        ]);
 
         $result = ActivityResource::make($datas);
         return $this->sendResponse($result, 'Data Stored');
@@ -68,13 +71,13 @@ class ActivityApiController extends BaseController
 
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'category_activity_id' => 'required',
             'title' => 'required',
             'desc' => 'required'
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json($validator->errors());
         }
 
@@ -102,17 +105,18 @@ class ActivityApiController extends BaseController
         return response()->json('Data deleted successfully');
     }
 
-    public function search($name)
+    public function search($title)
     {
-        $datas = Activity::where('title', 'LIKE', '%'. $name. '%')->get();
-        if(count($datas)){
+        $datas = Activity::where('title', 'LIKE', '%' . $title . '%')
+            ->where('category_activity_id', '!=', null)
+            ->paginate(8);
+        if (count($datas)) {
             // return Response()->json($datas);
             $result = ActivityResource::collection($datas);
             return $this->sendResponse($result, 'Data fetched');
+        } else {
+            return $this->sendResponse([], 'Data fetched');
+            // return response()->json(['Result' => 'No Data not found'], 404);
         }
-        else
-        {
-            return response()->json(['Result' => 'No Data not found'], 404);
-      }
     }
 }

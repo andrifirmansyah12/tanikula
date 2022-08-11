@@ -9,11 +9,11 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Api\BaseApiController as BaseController;
-
-
+use App\Models\PushNotification;
 
 class CheckoutApiController extends BaseController
 {
@@ -141,6 +141,33 @@ class CheckoutApiController extends BaseController
                 // return view('pages.order.index', compact('order'));
                 // return $order;
                 //   $result = CartResource::make($datas);
+
+                // Push Notification
+                $user_id = $request->user_id;
+                $url = "https://fcm.googleapis.com/fcm/send";
+                $SERVER_API_KEY = 'AAAASSWA7hI:APA91bGkfIJFNGyqIJAiKtLXI79XdZpDuicn7pQrFv-yXdbLmLQETRkRkCY5VnGZBfwRevDkUJdA0ADnJ7Z5r1rnS4flS-ds8yxe_bp4sXouzH8Nfj-PHYCGl8-pVKkE49WqsSuPkKtd';
+                $headers = [
+                    'Authorization' => 'key=' . $SERVER_API_KEY,
+                    'Content-Type' => 'application/json',
+                ];
+
+                PushNotification::create([
+                    'user_id' => $request->user_id,
+                    "title" => "Pemesanan berhasil dibuat",
+                    "body" => "Pesanan Anda telah dibuat, Silahkan melanjutkan pembayaran!",
+                ]);
+
+                Http::withHeaders($headers)->post($url, [
+                    // "to" => "cWmdLu_QQqa6CR28k2aDtJ:APA91bHs2-K9fkZ7rOIUOvrq2bEtlxNpTUoZSn7-TpOcNpfmbwFRfhY1NPBCjYv53uCHJLfFPmsmG84pSWXmG2ezDVkv-opbrM-AaQ42j_UKso-qAqGWlMoJv0AhffI2NAaKTv9DIe0v",
+                    'to' => '/topics/topic_user_id_' . $user_id,
+                    "notification" => [
+                        "title" => "Pemesanan berhasil dibuat",
+                        "body" => "Pesanan Anda telah dibuat, Silahkan melanjutkan pembayaran!",
+                        "mutable_content" => true,
+                        "sound" => "Tri-tone"
+                    ]
+                ]);
+
                 return $this->sendResponse($order, 'Data fetched');
             } else {
                 return "redirect('/')";

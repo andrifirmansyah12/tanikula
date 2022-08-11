@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Validator;
 
 class WishlistApiController extends BaseController
 {
-     public function indexByid($user_id)
+    public function indexByid($user_id)
     {
         $datas = Wishlist::where('user_id', $user_id)->latest()->get();
 
@@ -27,22 +27,14 @@ class WishlistApiController extends BaseController
 
     public function store(Request $request)
     {
-         $validator = Validator::make($request->all(),[
-            // 'category_activity_id' => 'required',
-             
-        ]);
-
-        if($validator->fails()){
-            return response()->json($validator->errors());
-        }
 
         $datas = Wishlist::create([
             'user_id' => $request->user_id,
             'product_id' => $request->product_id,
-         ]);
- 
-        // $result = WishlistResource::collection($datas);
-        return $this->sendResponse($datas, 'Data Strored');
+        ]);
+
+        $result = WishlistResource::make($datas);
+        return $this->sendResponse($result, 'Data Strored');
     }
 
 
