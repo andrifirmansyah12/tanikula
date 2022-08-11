@@ -20,6 +20,7 @@ class CreateCostumersTable extends Migration
             $table->dateTime('birth')->nullable();
             $table->bigInteger('telp')->nullable();
             $table->string('image')->nullable();
+            $table->boolean('is_email_verified')->default(0);
             $table->timestamps();
         });
     }

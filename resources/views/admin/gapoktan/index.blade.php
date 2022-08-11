@@ -10,6 +10,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.css"
         integrity="sha256-pODNVtK3uOhL8FUNWWvFQK0QoQoV3YA9wGGng6mbZ0E=" crossorigin="anonymous" />
     <!-- AKHIR STYLE CSS -->
+    <style>
+        .preview-image-edit img {
+            padding: 10px;
+            width: 7rem;
+            height: 7rem;
+            -o-object-fit: cover;
+            object-fit: cover;
+            -o-object-position: center;
+            object-position: center;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -63,6 +74,19 @@
                             <label for="password">Password</label>
                             <input type="password" name="password" class="form-control" placeholder="Password" required>
                         </div>
+                        <div class="form-group">
+                            <label for="images">Unggah Bukti</label>
+                            <small class="d-flex text-danger pb-1">*Unggah berupa bukti Gapoktan</small>
+                            <div>
+                                <div class="tab-content" id="myTabContent2">
+                                    <div class="tab-pane fade show active" id="home3" role="tabpanel"
+                                        aria-labelledby="home-tab3">
+                                        <div class="preview-image-edit"> </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="file" id="imagesEdit" name="images[]" multiple class="imagesEdit form-control">
+                        </div>
                         {{-- <div class="my-2 form-group">
                             <label for="is_active">Status Akun</label>
                             <div>
@@ -115,12 +139,12 @@
 
                             </div>
                         </div>
-                        {{-- <div class="my-2 form-group">
-                            <label for="is_active">Status Akun</label>
-                            <div id="is_active">
+                        <div class="my-2 form-group">
+                            <label for="is_verified">Status Gapoktan</label>
+                            <div id="is_verified">
 
                             </div>
-                        </div> --}}
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
@@ -153,6 +177,42 @@
 
     <!-- JAVASCRIPT -->
     <script>
+        $(function() {
+            // Multiple images preview with JavaScript
+            var multiImgPreview = function(input, imgPreviewPlaceholder) {
+                if (input.files) {
+                    var filesAmount = input.files.length;
+                    for (i = 0; i < filesAmount; i++) {
+                        var reader = new FileReader();
+                        reader.onload = function(event) {
+                            $($.parseHTML('<img>')).attr('src', event.target.result).appendTo(imgPreviewPlaceholder)
+                        }
+                        reader.readAsDataURL(input.files[i]);
+                    }
+                }
+            };
+            $('#images').on('change', function() {
+                multiImgPreview(this, 'div.preview-image');
+            });
+
+            // Multiple images preview with JavaScript
+            var multiImgPreviewEdit = function(input, imgPreviewPlaceholder) {
+                if (input.files) {
+                    var filesAmount = input.files.length;
+                    for (i = 0; i < filesAmount; i++) {
+                        var reader = new FileReader();
+                        reader.onload = function(event) {
+                        $($.parseHTML('<img>')).attr('src', event.target.result).appendTo(imgPreviewPlaceholder);
+                        }
+                        reader.readAsDataURL(input.files[i]);
+                    }
+                }
+            };
+            $('#imagesEdit').on('change', function() {
+                multiImgPreviewEdit(this, 'div.preview-image-edit');
+            });
+        });
+
         //CSRF TOKEN PADA HEADER
         //Script ini wajib krn kita butuh csrf token setiap kali mengirim request post, patch, put dan delete ke server
         $(document).ready(function() {
@@ -168,13 +228,21 @@
             // add new employee ajax request
             $("#add_employee_form").submit(function(e) {
                 e.preventDefault();
-                const fd = new FormData(this);
+
+                var formData = new FormData(this);
+                let TotalImages = $('#imagesEdit')[0].files.length; //Total Images
+                let images = $('#imagesEdit')[0];
+                for (let i = 0; i < TotalImages; i++) {
+                    formData.append('images' + i, images.files[i]);
+                }
+                formData.append('TotalImages', TotalImages);
+
                 $("#add_employee_btn").text('Tunggu..');
                 $("#add_employee_btn").prop('disabled', true);
                 $.ajax({
                 url: '{{ route('admin-gapoktan-store') }}',
                 method: 'post',
-                data: fd,
+                data: formData,
                 cache: false,
                 contentType: false,
                 processData: false,
@@ -192,6 +260,7 @@
                     $("#add_employee_btn").prop('disabled', false);
                     $("#add_employee_form")[0].reset();
                     $("#addEmployeeModal").modal('hide');
+                    window.setTimeout(function(){location.reload()},1000)
                 }
                 });
             });
@@ -217,6 +286,11 @@
                             <br>2. Dan jika ingin ubah password, silahkan masukkan password.
                         </small>
                         <input type="password" name="password" class="form-control" placeholder="Password">`);
+                    $("#is_verified").html(
+                        `<label class="custom-switch">
+                            <input type="checkbox" name="is_verified" ${response.is_verified ? 'checked' : ''} class="custom-switch-input">
+                            <span class="custom-switch-indicator"></span>
+                        </label>`);
                     // $("#is_active").html(
                     //     `<label class="custom-switch">
                     //         <input type="checkbox" name="is_active" ${response.is_active ? 'checked' : ''} class="custom-switch-input">

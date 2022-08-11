@@ -131,13 +131,19 @@
                                         </p>
                                     </div>
                                     <div>
-                                        <p class="text-black">{{$order->address->complete_address}}
-                                            {{$order->address->note_for_courier}}, {{$order->address->city}},
-                                            {{$order->address->postal_code}}.</p>
-                                        <p class="text-black"><span> Email : </span> {{$order->user->email}}</p>
+                                        <p class="text-black">
+                                            @if ($order->address->village_id && $order->address->district_id && $order->address->city_id && $order->address->province_id != null)
+                                                {{ $order->address->village->name }}, Kecamatan {{ $order->address->district->name }}, {{ $order->address->city->name }}, Provinsi {{ $order->address->province->name }}
+                                            @endif, {{$order->address->postal_code}}. [TaniKula Note: {{$order->address->complete_address}} {{$order->address->note_for_courier}}].</p>
+                                        <p class="text-black">
+                                            @if ($order->address->district_id != null)
+                                                {{ $order->address->district->name }},
+                                            @endif{{$order->address->postal_code}}.
+                                        </p>
+                                        <p class="text-black pt-3"><span> Email : </span> {{$order->user->email}}</p>
                                         <p class="text-black"><span> No Telp : </span> {{$order->address->telp}}</p>
-                                        <p class="text-black"><span> Kode Pos : </span>
-                                            {{$order->address->postal_code}}</p>
+                                        {{-- <p class="text-black"><span> Kode Pos : </span>
+                                            {{$order->address->postal_code}}</p> --}}
                                     </div>
                                 </div>
                                 {{-- <div class="mt-3 mt-md-0 col-md-6 col-12">

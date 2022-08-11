@@ -1,5 +1,5 @@
 @extends('components.auth.template')
-@section('title', 'Admin | Masuk')
+@section('title', 'Tanikula | Masuk')
 
 @section('style')
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -190,7 +190,7 @@ body {
         <div class="card">
             <form method="POST" action="#" id="login_form" class="d-flex flex-column">
             @csrf
-                <div class="h3 text-center mt-3" style="color: #16A085"><a href="{{ url('home') }}">ADMIN</a></div>
+                <div class="h3 text-center mt-3" style="color: #16A085"><a href="{{ url('home') }}">TANIKULA</a></div>
                 <div class="d-block mt-4">
                     <label for="email" class="control-label">Email</label>
                 </div>
@@ -280,10 +280,10 @@ body {
                         });
                         $("#login_btn").val('Masuk');
                         $("#login_btn").prop('disabled', false);
-                    } else {
-                        if(res.status == 200) {
-                            window.location = '{{ route('admin') }}';
-                        }
+                    } else if(res.status == 200) {
+                        window.location = '{{ route('admin') }}';
+                    } else if(res.status == 201) {
+                        window.location = '{{ route('support') }}';
                     }
                 }
             });

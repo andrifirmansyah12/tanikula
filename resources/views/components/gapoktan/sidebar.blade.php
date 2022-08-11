@@ -1,9 +1,9 @@
 <aside id="sidebar-wrapper">
     <div class="sidebar-brand">
-        <a href="index.html">Sri Makmur</a>
+        <a href="index.html">Tanikula</a>
     </div>
     <div class="sidebar-brand sidebar-brand-sm">
-        <a href="index.html">Sm</a>
+        <a href="index.html">TK</a>
     </div>
     <ul class="sidebar-menu">
         <li class="menu-header">Dashboard</li>
@@ -49,6 +49,11 @@
                         Kategori Kegiatan
                     </a>
                 </li>
+                <li class="{{ Request::is('gapoktan/kategori-lahan*') ? 'active' : '' }}">
+                    <a class="nav-link {{ Request::is('gapoktan/kategori-lahan*') ? '' : 'bg-white' }}" href="#" onclick="gapoktan_kategori_lahan('{{ url('gapoktan/kategori-lahan') }}')">
+                        Kategori Lahan
+                    </a>
+                </li>
             </ul>
         </li>
         <li class="nav-item dropdown {{ Request::is('gapoktan/produk*') ? 'active' : '' }}">
@@ -67,6 +72,12 @@
             <a href="#" onclick="gapoktan_kegiatan('{{ url('gapoktan/kegiatan') }}')" class="nav-link ">
                 <i class="fas fa-solid fa-clipboard"></i>
                 <span>Kegiatan</span>
+            </a>
+        </li>
+        <li class="nav-item dropdown {{ Request::is('gapoktan/lahan*') ? 'active' : '' }}">
+            <a href="#" onclick="gapoktan_lahan('{{ url('gapoktan/lahan') }}')" class="nav-link">
+                <i class="fas fa-solid fa-water"></i>
+                <span>Lahan</span>
             </a>
         </li>
         <li class="nav-item dropdown {{ Request::is('gapoktan/daftar*') ? 'active' : '' }}">

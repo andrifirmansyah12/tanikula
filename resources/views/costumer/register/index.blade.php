@@ -1,5 +1,5 @@
 @extends('components.auth.template')
-@section('title', 'Sri Makmur | Daftar')
+@section('title', 'TaniKula | Daftar')
 
 @section('style')
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -62,7 +62,7 @@
 
                     <div class="card-body">
                         <div id="show_success_alert"></div>
-                        <form method="POST" action="#" id="register_form">
+                        <form method="POST" action="#" id="register_form" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
                                 <label for="name">Nama</label>

@@ -19,7 +19,7 @@ class ProductController extends Controller
 {
     // set index page view
 	public function index() {
-		$category = ProductCategory::all();
+		$category = ProductCategory::where('is_active', '=', 1)->get();
 		$user = User::whereHas(
             'roles', function($q){
                 $q->where('name', 'gapoktan');
@@ -45,12 +45,12 @@ class ProductController extends Controller
               <tr>
                 <th>No</th>
                 <th>Foto</th>
-                <th>Kode</th>
                 <th>Nama</th>
                 <th>Kategori Produk</th>
                 <th>Stok</th>
+                <th>Berat</th>
                 <th>Harga</th>
-                <th>Deskripsi</th>
+                <th>Status</th>
                 <th>Aksi</th>
               </tr>
             </thead>
@@ -59,13 +59,19 @@ class ProductController extends Controller
 			foreach ($emps as $emp) {
 				$output .= '<tr>';
                 $output .= '<td>' . $nomor++ . '</td>';
-                foreach ($emp->photo_product->take(1) as $photos)
-                if (empty($photos->name)) {
-                    $output .= '<td><img src="../stisla/assets/img/example-image.jpg" class="img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"></td>';
+                $output .= '<td>';
+                if ($emp->photo_product->count() > 0) {
+                    foreach ($emp->photo_product->take(1) as $photos)
+                    if ($photos->name) {
+                        $output .= '<img src="../storage/produk/' . $photos->name . '" class="img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
+                    } else {
+                        $output .= '<img src="../stisla/assets/img/example-image.jpg" class="img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
+                    }
                 } else {
-                    $output .= '<td><img src="../storage/produk/' . $photos->name . '" class="img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"></td>';
+                    $output .= '<img src="../stisla/assets/img/example-image.jpg" class="img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
                 }
-                $output .= '<td>' . $emp->code . '</td>
+                $output .= '</td>';
+                $output .= '
                 <td>' . $emp->name . '</td>';
                 if (empty($emp->product_category->name)) {
                     $output .= '<td><a class="text-danger">Tidak ada kategori</a></p>';
@@ -73,9 +79,14 @@ class ProductController extends Controller
                     $output .= '<td>' . $emp->product_category->name . '</td>';
                 }
                 $output .= '<td>' . $emp->stoke . '</td>
-                <td>Rp. ' . number_format($emp->price, 0) . '</td>
-                <td>' . $emp->desc . '</td>
-                <td>
+                <td>' . $emp->weight . ' gram</td>
+                <td>Rp. ' . number_format($emp->price, 0) . '</td>';
+                if ($emp->is_active == 1) {
+                    $output .= '<td><div class="badge badge-success">Aktif</div></td>';
+                } elseif ($emp->is_active == 0) {
+                    $output .= '<td><div class="badge badge-danger">Tidak Aktif</div></td>';
+                }
+                $output .= '<td>
                   <a href="#" id="' . $emp->id . '" class="text-success mx-1 addPhotoProductIcon" data-toggle="modal" data-target="#addPhotoProduct"><i class="bi bi-images h4"></i></a>
                   <a href="#" id="' . $emp->id . '" class="text-success mx-1 viewPhotoProductIcon" data-toggle="modal" data-target="#viewPhotoProduct"><i class="bi bi-eye h4"></i></a>
                   <a href="#" id="' . $emp->id . '" class="text-success mx-1 editIcon" data-toggle="modal" data-target="#editEmployeeModal"><i class="bi-pencil-square h4"></i></a>
@@ -119,8 +130,10 @@ class ProductController extends Controller
             $product->slug = $request->slug;
             $product->category_product_id = $request->category_product_id;
             $product->stoke = $request->stoke;
+            $product->weight = $request->weight;
             $product->price = $request->price;
             $product->desc = $request->desc;
+            $product->is_active = $request->is_active ? 1 : 0;
             $product->code = random_int(1000, 9999);
             $product->user_id = $request->gapoktan_id;
             $product->save();
@@ -174,17 +187,29 @@ class ProductController extends Controller
                 $product->name = $request->name;
                 $product->slug = $request->slug;
                 $product->category_product_id = $request->category_product_id;
+                $product->weight = $request->weight;
                 $product->stoke = $request->stoke;
                 $product->price = $request->price;
                 $product->desc = $request->desc;
+                if ($request->is_active == 0) {
+                    $product->is_active = $request->is_active ? 1 : 0;
+                } elseif ($request->is_active == 1) {
+                    $product->is_active = $request->is_active ? 0 : 1;
+                }
                 $product->user_id = $request->gapoktan_id;
             } else {
                 $product->name = $request->name;
                 $product->slug = $request->slug;
                 $product->category_product_id = $request->category_product_id;
+                $product->weight = $request->weight;
                 $product->stoke = $request->stoke;
                 $product->price = $request->price;
                 $product->desc = $request->desc;
+                if ($request->is_active == 0) {
+                    $product->is_active = $request->is_active ? 1 : 0;
+                } elseif ($request->is_active == 1) {
+                    $product->is_active = $request->is_active ? 0 : 1;
+                }
             }
             $product->update();
             return response()->json([

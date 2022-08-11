@@ -45,10 +45,16 @@
                         @else
                             <ul class="user-login">
                                 <li>
-                                    <a onclick="login('{{ route('login') }}')" href="#">Masuk</a>
+                                    <a class="btn" style="background: #16A085; color: #ffff;" onclick="login('{{ route('login') }}')" href="#">Masuk</a>
                                 </li>
                                 <li>
-                                    <a onclick="register('{{ route('register-pembeli') }}')" href="#">Daftar</a>
+                                    <div class="dropdown">
+                                        <a style="cursor: pointer; background: #16A085; color: #ffff;" class="btn" data-toggle="dropdown" aria-expanded="false">Daftar</a>
+                                        <div class="dropdown-menu mt-2">
+                                            <a class="dropdown-item" onclick="register('{{ url('/register') }}')" href="#">Sebagai Pembeli</a>
+                                            <a class="dropdown-item" onclick="registerGapoktan('{{ url('/gapoktan/register') }}')" href="#">Sebagai Gapoktan</a>
+                                        </div>
+                                    </div>
                                 </li>
                             </ul>
                         @endauth

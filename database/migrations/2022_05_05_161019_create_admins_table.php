@@ -16,9 +16,13 @@ class CreateAdminsTable extends Migration
         Schema::create('admins', function (Blueprint $table) {
             $table->id();
             $table->foreignId("user_id")->nullable();
-            $table->string("city")->nullable();
-            $table->string("address")->nullable();
-            $table->bigInteger('telp')->nullable();
+            $table->foreignId("province_id")->nullable();
+            $table->foreignId("city_id")->nullable();
+            $table->foreignId("district_id")->nullable();
+            $table->foreignId("village_id")->nullable();
+            $table->string("street")->nullable();
+            $table->string("number")->nullable();
+            $table->bigInteger('phone')->nullable();
             $table->string('image')->nullable();
             $table->timestamps();
         });

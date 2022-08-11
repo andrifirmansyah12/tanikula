@@ -155,7 +155,9 @@ class WaitingPaymentController extends Controller
                 foreach ($orders->orderItems as $item) {
 					$products = Product::where('id', $item->product_id)->first();
                     $countProduct = $products->stoke + $item->qty;
+                    $stockOutProduct = $products->stock_out - $item->qty;
                     $products->stoke = $countProduct;
+                    $products->stock_out = $stockOutProduct;
                     $products->update();
 				}
             }

@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use App\Models\Costumer;
+use App\Models\UserGapoktan;
+use App\Models\Farmer;
+use App\Models\Poktan;
 use App\Models\UserVerify;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
@@ -46,12 +49,31 @@ class LoginController extends Controller
                 'messages' => $validator->getMessageBag()
             ]);
         } else {
-            $user = User::where('email', $request->email)->first();
-            if ($user) {
-                if (Hash::check($request->password, $user->password)) {
+            $costumers = Costumer::join('users', 'costumers.user_id', '=', 'users.id')
+                        ->select('costumers.*', 'users.name as name')
+                        ->where('users.email', $request->email)
+                        ->first();
+            $userGapoktan = UserGapoktan::join('users', 'user_gapoktans.user_id', '=', 'users.id')
+                        ->join('gapoktans', 'user_gapoktans.gapoktan_id', '=', 'gapoktans.id')
+                        ->select('user_gapoktans.*', 'users.name as name')
+                        ->where('users.email', $request->email)
+                        ->first();
+            $poktans = Poktan::join('users', 'poktans.user_id', '=', 'users.id')
+                        ->join('gapoktans', 'poktans.gapoktan_id', '=', 'gapoktans.id')
+                        ->select('poktans.*', 'users.name as name')
+                        ->where('users.email', $request->email)
+                        ->first();
+            $farmers = Farmer::join('users', 'farmers.user_id', '=', 'users.id')
+                        ->join('gapoktans', 'farmers.gapoktan_id', '=', 'gapoktans.id')
+                        ->join('poktans', 'farmers.poktan_id', '=', 'poktans.id')
+                        ->select('farmers.*', 'users.name as name')
+                        ->where('users.email', $request->email)
+                        ->first();
+            if($costumers){
+                if(Hash::check($request->password, $costumers->user->password)) {
                     if (auth()->attempt($credentials)) {
-                        if (auth()->check() && $user->hasRole('pembeli')) {
-                            if (!Auth::user()->is_email_verified) {
+                        if (auth()->check() && $costumers->user->hasRole('pembeli')) {
+                            if (!$costumers->is_email_verified) {
                                 auth()->logout();
                                 return response()->json([
                                     'status' => 401,
@@ -82,7 +104,120 @@ class LoginController extends Controller
                         'messages' => 'Gagal Masuk, Pastikan Email dan Password anda benar!'
                     ]);
                 }
-            } else {
+            }
+                elseif ($userGapoktan)
+            {
+                if(Hash::check($request->password, $userGapoktan->user->password)) {
+                    if (auth()->attempt($credentials)) {
+                        if (auth()->check() && $userGapoktan->user->hasRole('gapoktan')) {
+                            if (!$userGapoktan->is_active) {
+                                auth()->logout();
+                                return response()->json([
+                                    'status' => 401,
+                                    'messages' => 'Akun anda belum teraktivasi!'
+                                ]);
+                            } else {
+                                return response()->json([
+                                    'status' => 201,
+                                    'messages' => 'Berhasil Masuk'
+                                ]);
+                            }
+                        } else {
+                            \Auth::logout();
+                            return response()->json([
+                                'status' => 401,
+                                'messages' => 'Hak akses hanya untuk Gapoktan!'
+                            ]);
+                        }
+                    } else {
+                        return response()->json([
+                            'status' => 401,
+                            'messages' => 'Kredensial tidak valid!'
+                        ]);
+                    }
+                } else {
+                    return response()->json([
+                        'status' => 401,
+                        'messages' => 'Gagal Masuk, Pastikan Email dan Password anda benar!'
+                    ]);
+                }
+            }
+                elseif ($poktans)
+            {
+                if(Hash::check($request->password, $poktans->user->password)) {
+                    if (auth()->attempt($credentials)) {
+                        if (auth()->check() && $poktans->user->hasRole('poktan')) {
+                            if (!$poktans->is_active) {
+                                auth()->logout();
+                                return response()->json([
+                                    'status' => 401,
+                                    'messages' => 'Akun anda belum teraktivasi!'
+                                ]);
+                            } else {
+                                return response()->json([
+                                    'status' => 202,
+                                    'messages' => 'Berhasil Masuk'
+                                ]);
+                            }
+                        } else {
+                            \Auth::logout();
+                            return response()->json([
+                                'status' => 401,
+                                'messages' => 'Hak akses hanya untuk Poktan!'
+                            ]);
+                        }
+                    } else {
+                        return response()->json([
+                            'status' => 401,
+                            'messages' => 'Kredensial tidak valid!'
+                        ]);
+                    }
+                } else {
+                    return response()->json([
+                        'status' => 401,
+                        'messages' => 'Gagal Masuk, Pastikan Email dan Password anda benar!'
+                    ]);
+                }
+            }
+                elseif ($farmers)
+            {
+                if(Hash::check($request->password, $farmers->user->password)) {
+                    if (auth()->attempt($credentials)) {
+                        if (auth()->check() && $farmers->user->hasRole('petani')) {
+                            if (!$farmers->is_active) {
+                                auth()->logout();
+                                return response()->json([
+                                    'status' => 401,
+                                    'messages' => 'Akun anda belum teraktivasi!'
+                                ]);
+                            } else {
+                                return response()->json([
+                                    'status' => 203,
+                                    'messages' => 'Berhasil Masuk'
+                                ]);
+                            }
+                        } else {
+                            \Auth::logout();
+                            return response()->json([
+                                'status' => 401,
+                                'messages' => 'Hak akses hanya untuk Petani!'
+                            ]);
+                        }
+                    } else {
+                        return response()->json([
+                            'status' => 401,
+                            'messages' => 'Kredensial tidak valid!'
+                        ]);
+                    }
+                } else {
+                    return response()->json([
+                        'status' => 401,
+                        'messages' => 'Gagal Masuk, Pastikan Email dan Password anda benar!'
+                    ]);
+                }
+            }
+                else
+            {
                 return response()->json([
                     'status' => 401,
                     'messages' => 'Akun tidak ditemukan!'
@@ -132,8 +267,8 @@ class LoginController extends Controller
 
             $token = Str::random(64);
             UserVerify::create([
-                'user_id' => $user->id,
-                'token' => $token
+              'costumer_id' => $costumer->id,
+              'token' => $token
             ]);
 
             Mail::send('costumer.register.emailVerificationEmail', ['token' => $token], function ($message) use ($request) {
@@ -160,14 +295,14 @@ class LoginController extends Controller
         // notify()->warning("Maaf email Anda tidak dapat diidentifikasi.", "Warning", "topRight");
         // $messageDanger = 'Maaf email Anda tidak dapat diidentifikasi.';
 
-        if (!is_null($verifyUser)) {
-            $user = $verifyUser->user;
+        if(!is_null($verifyUser) ){
+            $costumer = $verifyUser->costumer;
 
-            if (!$user->is_email_verified) {
-                $verifyUser->user->is_email_verified = 1;
-                $verifyUser->user->save();
+            if(!$costumer->is_email_verified) {
+                $verifyUser->costumer->is_email_verified = 1;
+                $verifyUser->costumer->save();
                 notify()->success("Email Anda telah diverifikasi. Anda sekarang dapat masuk website dan aplikasi TaniKula.", "Success", "topRight");
-                // $message = "Email Anda telah diverifikasi. Anda sekarang dapat masuk website dan aplikasi TaniKula.";
+                // $message = "Email Anda telah diverifikasi. Anda sekarang dapat masuk.";
             } else {
                 notify()->success("Email Anda sudah diverifikasi. Anda sekarang dapat masuk website dan aplikasi TaniKula.", "Success", "topRight");
                 // $message = "Email Anda sudah diverifikasi. Anda sekarang dapat masuk website dan aplikasi TaniKula.";
@@ -209,7 +344,7 @@ class LoginController extends Controller
                 Mail::to($request->email)->send(new ForgotPassword($details));
                 return response()->json([
                     'status' => 200,
-                    'messages' => 'Tautan Atur Ulang Kata Sandi telah dikirim ke email Anda!'
+                    'messages' => 'Tautan atur ulang kata sandi telah dikirim ke email anda!'
                 ]);
             } else {
                 return response()->json([

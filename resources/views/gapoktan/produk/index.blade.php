@@ -11,16 +11,24 @@
         integrity="sha256-pODNVtK3uOhL8FUNWWvFQK0QoQoV3YA9wGGng6mbZ0E=" crossorigin="anonymous" />
     <!-- AKHIR STYLE CSS -->
     <style>
-        .preview-image img
-        {
+        .preview-image img {
             padding: 10px;
-            max-width: 100px;
+            width: 7rem;
+            height: 7rem;
+            -o-object-fit: cover;
+            object-fit: cover;
+            -o-object-position: center;
+            object-position: center;
         }
 
-        .preview-image-edit img
-        {
+        .preview-image-edit img {
             padding: 10px;
-            max-width: 100px;
+            width: 7rem;
+            height: 7rem;
+            -o-object-fit: cover;
+            object-fit: cover;
+            -o-object-position: center;
+            object-position: center;
         }
     </style>
 @endsection
@@ -43,7 +51,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <button type="button" class="btn py-1 btn-success" data-toggle="modal"
+                                <button type="button" style="border-radius: 5px;" class="btn shadow-none py-1 btn-primary" data-toggle="modal"
                                     data-target="#addEmployeeModal">Tambah
                                     @yield('title')</button>
                             </div>
@@ -104,6 +112,10 @@
                                 <label for="price" style="font-size: 12px">Harga</label>
                                 <input type="number" name="price" class="form-control" placeholder="Harga" required>
                             </div>
+                        </div>
+                        <div class="my-2 form-group">
+                            <label for="stoke" style="font-size: 12px">Berat (gram)</label>
+                                <input type="number" name="weight" class="form-control" placeholder="Berat" required>
                         </div>
                         <div class="my-2 form-group">
                             <label for="desc">Deskripsi</label>
@@ -191,6 +203,10 @@
                                 <label for="price" style="font-size: 12px">Harga</label>
                                 <input type="number" name="price" id="price" class="form-control" placeholder="Harga" required>
                             </div>
+                        </div>
+                        <div class="my-2 form-group">
+                            <label for="stoke" style="font-size: 12px">Berat (gram)</label>
+                                <input type="number" name="weight" id="weight" class="form-control" placeholder="Berat" required>
                         </div>
                         <div class="my-2 form-group">
                             <label for="desc">Deskripsi</label>
@@ -434,6 +450,7 @@
                     $("#name").val(response.name);
                     $("#category_product_id").val(response.category_product_id);
                     $("#stoke").val(response.stoke);
+                    $("#weight").val(response.weight);
                     $("#price").val(response.price);
                     $("#desc").val(response.desc);
                     $("#is_active").html(

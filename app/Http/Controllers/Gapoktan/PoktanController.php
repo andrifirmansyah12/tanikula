@@ -36,10 +36,8 @@ class PoktanController extends Controller
               <tr>
                 <th>No</th>
                 <th>Foto</th>
-                <th>Nama Gapoktan</th>
                 <th>Nama Poktan</th>
                 <th>Ketua Poktan</th>
-                <th>Kota</th>
                 <th>Alamat</th>
                 <th>No.Telp</th>
                 <th>Status Akun</th>
@@ -57,21 +55,20 @@ class PoktanController extends Controller
                     } else {
                         $output .= '<td><img alt="image" src="../assets/img/avatar/avatar-5.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Wildan Ahdian"></td>';
                     }
-                    $output .= '<td>' . $emp->gapoktan->user->name . '</td>
+                    $output .= '
                     <td>' . $emp->poktan_name . '</td>
                     <td>' . $emp->chairman . '</td>';
-                    if ($emp->city) {
-                        $output .= '<td>' . $emp->city . '</td>';
+                    if ($emp->street && $emp->number) {
+                        $output .= '<td>' . $emp->street . ', ' . $emp->number . '. ';
+                        if ($emp->village_id && $emp->district_id && $emp->city_id && $emp->province_id != null) {
+                            $output .= '' . $emp->village->name . ', Kecamatan '. $emp->district->name .', '. $emp->city->name .', Provinsi '. $emp->province->name .'.';
+                        }
+                        $output .= '</td>';
                     } else {
                         $output .= '<td><span class="text-danger">Belum diisi</span></td>';
                     }
-                    if ($emp->address) {
-                        $output .= '<td>' . $emp->address . '</td>';
-                    } else {
-                        $output .= '<td><span class="text-danger">Belum diisi</span></td>';
-                    }
-                    if ($emp->telp) {
-                        $output .= '<td>' . $emp->telp . '</td>';
+                    if ($emp->phone) {
+                        $output .= '<td>(+62) ' . $emp->phone . '</td>';
                     } else {
                         $output .= '<td><span class="text-danger">Belum diisi</span></td>';
                     }

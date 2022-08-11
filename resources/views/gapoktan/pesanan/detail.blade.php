@@ -53,11 +53,16 @@
                                                 </p>
                                             </div>
                                             <div>
-                                                <p class="text-black m-0">{{$order->address->complete_address}}
-                                                    {{$order->address->note_for_courier}},
-                                                    {{$order->address->city}},
-                                                    {{$order->address->postal_code}}.</p>
-                                                <p class="text-black m-0"><span> Email : </span>
+                                                <p class="text-black m-0">
+                                                    @if ($order->address->village_id && $order->address->district_id && $order->address->city_id && $order->address->province_id != null)
+                                                        {{ $order->address->village->name }}, Kecamatan {{ $order->address->district->name }}, {{ $order->address->city->name }}, Provinsi {{ $order->address->province->name }}
+                                                    @endif, {{$order->address->postal_code}}. [TaniKula Note: {{$order->address->complete_address}} {{$order->address->note_for_courier}}].</p>
+                                                <p class="text-black m-0">
+                                                    @if ($order->address->district_id != null)
+                                                        {{ $order->address->district->name }},
+                                                    @endif{{$order->address->postal_code}}.
+                                                </p>
+                                                <p class="text-black m-0 pt-3"><span> Email : </span>
                                                     {{$order->user->email}}</p>
                                                 <p class="text-black m-0"><span> No Telp : </span>
                                                     {{$order->address->telp}}</p>

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Poktan;
 use App\Models\Gapoktan;
+use App\Models\CertificateGapoktan;
+use App\Models\UserGapoktan;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -36,9 +38,9 @@ class GapoktanController extends Controller
                 <th>Foto</th>
                 <th>Nama Gapoktan</th>
                 <th>Ketua Gapoktan</th>
-                <th>Kota</th>
                 <th>Alamat</th>
                 <th>No.Telp</th>
+                <th>Status Gapoktan</th>
                 <th>Aksi</th>
               </tr>
             </thead>
@@ -55,26 +57,25 @@ class GapoktanController extends Controller
                     }
                     $output .= '<td>' . $emp->gapoktan_name . '</td>
                     <td>' . $emp->chairman . '</td>';
-                    if ($emp->city) {
-                        $output .= '<td>' . $emp->city . '</td>';
+                    if ($emp->street && $emp->number) {
+                        $output .= '<td>' . $emp->street . ', ' . $emp->number . '. ';
+                        if ($emp->village_id && $emp->district_id && $emp->city_id && $emp->province_id != null) {
+                            $output .= '' . $emp->village->name . ', Kecamatan '. $emp->district->name .', '. $emp->city->name .', Provinsi '. $emp->province->name .'.';
+                        }
+                        $output .= '</td>';
                     } else {
                         $output .= '<td><span class="text-danger">Belum diisi</span></td>';
                     }
-                    if ($emp->address) {
-                        $output .= '<td>' . $emp->address . '</td>';
+                    if ($emp->phone) {
+                        $output .= '<td>(+62) ' . $emp->phone . '</td>';
                     } else {
                         $output .= '<td><span class="text-danger">Belum diisi</span></td>';
                     }
-                    if ($emp->telp) {
-                        $output .= '<td>' . $emp->telp . '</td>';
-                    } else {
-                        $output .= '<td><span class="text-danger">Belum diisi</span></td>';
+                    if ($emp->is_verified == 1) {
+                        $output .= '<td><span class="badge badge-success">Terverifikasi</span></td>';
+                    } elseif ($emp->is_verified == 0) {
+                        $output .= '<td><span class="badge badge-danger">Belum diverifikasi</span></td>';
                     }
-                    // if ($emp->is_active == 1) {
-                    //     $output .= '<td><div class="badge badge-success">Aktif</div></td>';
-                    // } elseif ($emp->is_active == 0) {
-                    //     $output .= '<td><div class="badge badge-danger">Belum Aktif</div></td>';
-                    // }
                     $output .= '<td>
                     <a href="#" id="' . $emp->id . '" class="text-success mx-1 editIcon" data-toggle="modal" data-target="#editEmployeeModal"><i class="bi-pencil-square h4"></i></a>
                     <a href="#" id="' . $emp->user->id . '" class="text-danger mx-1 deleteIcon"><i class="bi-trash h4"></i></a>
@@ -93,8 +94,8 @@ class GapoktanController extends Controller
 	}
 
     // handle insert a new employee ajax request
-	public function store(Request $request) {
-
+	public function store(Request $request)
+    {
 		$user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
@@ -102,13 +103,36 @@ class GapoktanController extends Controller
         $user->assignRole('gapoktan');
         $user->save();
 
-        $chairman = $request->chairman;
-        // $is_active = $request->is_active ? 1 : 0;
-        Gapoktan::create([
-            'user_id' => $user->id,
-            'chairman' => $chairman,
-            // 'is_active' => $is_active,
-        ]);
+        $gapoktan = new Gapoktan();
+        $gapoktan->user_id = $user->id;
+        $gapoktan->chairman = $request->chairman;
+        $gapoktan->is_verified = 1;
+        $gapoktan->save();
+
+        $userGapoktans = new UserGapoktan();
+        $userGapoktans->user_id = $user->id;
+        $userGapoktans->gapoktan_id = $gapoktan->id;
+        $userGapoktans->is_active = 1;
+        $userGapoktans->save();
+
+        for ($x = 0; $x < $request->TotalImages; $x++)
+        {
+            if ($request->file('images'.$x))
+            {
+                $file = $request->file('images'.$x);
+                $fileName = $file->getClientOriginalName() . '.' . $file->getClientOriginalExtension();
+                if ($fileName) {
+                    $file->storeAs('sertifikat', $fileName);
+                    $insert[$x]['gapoktan_id'] = $gapoktan->id;
+                    $insert[$x]['evidence'] = $fileName;
+                    $insert[$x]['created_at'] = Carbon::now();
+                    $insert[$x]['updated_at'] = Carbon::now();
+                }
+            }
+        }
+
+        CertificateGapoktan::insert($insert);
+
 		return response()->json([
 			'status' => 200,
 		]);
@@ -122,8 +146,8 @@ class GapoktanController extends Controller
 	}
 
 	// handle update an employee ajax request
-	public function update(Request $request) {
-
+	public function update(Request $request)
+    {
         $user = User::find($request->user_id);
         if($request->password) {
             $user->name = $request->name;
@@ -135,26 +159,27 @@ class GapoktanController extends Controller
         }
         $user->save();
 
-        $emp = Gapoktan::with('user')->find($request->emp_id);
-        $emp->chairman = $request->input('chairman');
-        // if ($request->input('gapoktan_id')) {
-        //     $emp->gapoktan_id = $request->input('gapoktan_id');
-        //     $emp->chairman = $request->input('chairman');
-        //     if ($request->is_active == 0) {
-        //         $emp->is_active = $request->is_active ? 1 : 0;
-        //     } elseif ($request->is_active == 1) {
-        //         $emp->is_active = $request->is_active ? 0 : 1;
-        //     }
-        // } else {
-        //     $emp->chairman = $request->input('chairman');
-        //     if ($request->is_active == 0) {
-        //         $emp->is_active = $request->is_active ? 1 : 0;
-        //     } elseif ($request->is_active == 1) {
-        //         $emp->is_active = $request->is_active ? 0 : 1;
-        //     }
-        // }
+        if ($request->is_verified == 0) {
+            $gapoktan = Gapoktan::with('user')->find($request->emp_id);
+            $gapoktan->user_id = $user->id;
+            $gapoktan->chairman = $request->chairman;
+            $gapoktan->is_verified = $request->is_verified ? 1 : 0;
+            $gapoktan->save();
 
-        $emp->save();
+            $userGapoktans = UserGapoktan::where('gapoktan_id', $request->emp_id)->first();
+            $userGapoktans->is_active = $request->is_verified ? 1 : 0;
+            $userGapoktans->save();
+        } elseif ($request->is_verified == 1) {
+            $gapoktan = Gapoktan::with('user')->find($request->emp_id);
+            $gapoktan->user_id = $user->id;
+            $gapoktan->chairman = $request->chairman;
+            $gapoktan->is_verified = $request->is_verified ? 0 : 1;
+            $gapoktan->save();
+
+            $userGapoktans = UserGapoktan::where('gapoktan_id', $request->emp_id)->first();
+            $userGapoktans->is_active = $request->is_verified ? 0 : 1;
+            $userGapoktans->save();
+        }
 
 		return response()->json([
 			'status' => 200,

@@ -61,7 +61,7 @@
                     </div>
                 </div>
                 <div class="card-body px-0 pb-2">
-                    <ul class="mx-3 p-1 nav bg-light rounded nav-fill">
+                    <ul class="mx-3 p-1 nav bg-white rounded nav-fill">
                         <li class="nav-item">
                             <a class="nav-link listSemua text-black bg-white" href="#listSemua">Semua</a>
                         </li>

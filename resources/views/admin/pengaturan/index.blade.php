@@ -15,7 +15,7 @@
 
 @section('content')
 
-<!-- Modal -->
+    <!-- Modal -->
     <div class="modal fade" id="editEmployeeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -46,6 +46,103 @@
         </div>
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ubah Biodata Admin</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="post" action="#" id="profile_form">
+                    @csrf
+                    <div class="modal-body p-4">
+                        <div class="form-group my-2">
+                            <label for="name">Nama Admin</label>
+                            <input type="text" class="form-control" name="name" id="name"
+                                value="{{ $userInfo->user->name }}" required="">
+                            <div class="invalid-feedback">
+                            </div>
+                        </div>
+                        <div class="form-group my-2">
+                            <label class="m-0" for="email">Email</label>
+                            <p class="m-1 small text-danger">*gunakan email aktif</p>
+                            <input type="text" class="form-control" name="email" id="email"
+                                value="{{ $userInfo->user->email }}" required="">
+                            <div class="invalid-feedback">
+                            </div>
+                        </div>
+                        <div class="form-group my-2">
+                            <label for="phone">No Handphone</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span>+62</span>
+                                    </div>
+                                </div>
+                                <input type="number" name="phone" id="phone" value="{{ $userInfo->phone}}"
+                                    class="form-control phone-number">
+                            </div>
+                            <div class="invalid-feedback">
+                            </div>
+                        </div>
+                        <div class="form-group my-2">
+                            <label class="col-form-label" for="provinsi">Provinsi</label>
+                            @php
+                            $provinces = new App\Http\Controllers\Pages\DependantDropdownController;
+                            $provinces = $provinces->provinces();
+                            @endphp
+                            <select class="form-control" name="province_id" id="provinsi" required>
+                                <option disabled selected>==Pilih Salah Satu==</option>
+                                @foreach ($provinces as $item)
+                                <option value="{{ $item->id ?? '' }}">{{ $item->name ?? '' }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group my-2">
+                            <label class="col-form-label" for="kota">Kabupaten / Kota</label>
+                            <select class="form-control" name="city_id" id="kota" required>
+                                <option disabled selected>==Pilih Salah Satu==</option>
+                            </select>
+                        </div>
+                        <div class="form-group my-2">
+                            <label class="col-form-label" for="kecamatan">Kecamatan</label>
+                            <select class="form-control" name="district_id" id="kecamatan" required>
+                                <option disabled selected>==Pilih Salah Satu==</option>
+                            </select>
+                        </div>
+                        <div class="form-group my-2">
+                            <label class="col-form-label" for="desa">Desa</label>
+                            <select class="form-control" name="village_id" id="desa" required>
+                                <option disabled selected>==Pilih Salah Satu==</option>
+                            </select>
+                        </div>
+                        <div class="form-group my-2">
+                            <label for="street">Jalan / Gang</label>
+                            <input type="text" class="form-control" name="street" id="street"
+                                value="{{ $userInfo->street }}" required="">
+                            <div class="invalid-feedback">
+                            </div>
+                        </div>
+                        <div class="form-group my-2">
+                            <label for="number">Nomor</label>
+                            <input type="number" class="form-control" name="number" id="number"
+                                value="{{ $userInfo->number }}" required="">
+                            <div class="invalid-feedback">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
+                        <button type="submit" id="profile_btn" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Main Content -->
     <section class="content">
         <div class="container-fluid">
@@ -54,7 +151,7 @@
                     <div class="row">
                         <div class="col-12 mt-3">
                             <div class="card">
-                                <div class="card-body row">
+                                <div class="mt-4 card-body row">
                                     <div class="col-12 col-md-12 col-lg-5">
                                         <div id="profile_alert"></div>
                                         <div class="card align-items-center justify-content-center">
@@ -88,79 +185,62 @@
                                     </div>
                                     <input type="hidden" name="user_id" id="user_id" value="{{ $userInfo->id }}">
                                     <div class="col-12 col-md-12 col-lg-7">
-                                        <div class="">
-                                            <form method="post" action="#" id="profile_form">
-                                                @csrf
-                                                <div class="card-header mt-4 mt-lg-0"
-                                                    style="background: white; border: none">
-                                                    <h4>Ubah Biodata Admin</h4>
-                                                </div>
-                                                <div class="card-body">
-                                                    <div class="row">
-                                                        <div class="form-group col-md-12 col-12">
-                                                            <label for="name">Nama Admin</label>
-                                                            <input type="text" class="form-control" name="name"
-                                                                id="name" value="{{ $userInfo->user->name }}"
-                                                                required="">
-                                                            <div class="invalid-feedback">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="form-group col-md-12 col-12">
-                                                            <label for="email">Email</label>
-                                                            <input type="email" class="form-control" id="email"
-                                                                name="email" value="{{ $userInfo->user->email }}"
-                                                                required="">
-                                                            <div class="invalid-feedback">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="form-group col-md-7 col-12">
-                                                            <label for="telp">No Handphone</label>
-                                                            <div class="input-group">
-                                                                <div class="input-group-prepend">
-                                                                    <div class="input-group-text">
-                                                                        <span>+62</span>
-                                                                    </div>
-                                                                </div>
-                                                                <input type="tel" name="telp" id="telp"
-                                                                    value="{{ $userInfo->telp}}"
-                                                                    class="form-control phone-number">
-                                                            </div>
-                                                            <div class="invalid-feedback">
-                                                            </div>
-                                                            <div class="invalid-feedback">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group col-md-5 col-12">
-                                                            <label for="city">Kota</label>
-                                                            <input type="text" class="form-control" name="city"
-                                                                id="city" value="{{ $userInfo->city }}" required="">
-                                                            <div class="invalid-feedback">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="form-group col-md-12 col-12">
-                                                            <label for="address">Alamat</label>
-                                                            <input type="text" class="form-control" name="address"
-                                                                id="address" value="{{ $userInfo->address }}"
-                                                                required="">
-                                                            <div class="invalid-feedback">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card-footer bg-white row align-items-center justify-content-end mb-3"
-                                                    style="border: none">
-                                                    <input type="button" value="Ubah Password" class="btn btn-light m-1"
-                                                        data-toggle="modal" data-target="#editEmployeeModal">
-                                                    <input type="submit" id="profile_btn" value="Ubah Biodata Diri"
-                                                        class="btn btn-primary m-1">
-                                                </div>
-                                            </form>
+                                        <div>
+                                            <div class="pb-2">
+                                                <h4 class="text-center">Biodata Admin</h4>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table table-borderless">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="col-3">Nama</th>
+                                                            <th>{{ $userInfo->user->name }}</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th>Email</th>
+                                                            <td>
+                                                                {{ $userInfo->user->email }}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>No Hp</th>
+                                                            <td>
+                                                                @if ($userInfo->phone)
+                                                                    {{ $userInfo->phone }}
+                                                                @else
+                                                                    <span class="text-danger">Belum diisi</span>
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Alamat</th>
+                                                            <td class="text-capitalize">
+                                                                @if ($userInfo->street && $userInfo->number)
+                                                                {{ $userInfo->street }}, No {{ $userInfo->number }}.
+                                                                    @if ($userInfo->village_id &&
+                                                                        $userInfo->district_id && $userInfo->city_id &&
+                                                                        $userInfo->province_id != null)
+                                                                        {{ $userInfo->village->name }}, Kecamatan
+                                                                        {{ $userInfo->district->name }},
+                                                                        {{ $userInfo->city->name }}, Provinsi
+                                                                        {{ $userInfo->province->name }}.
+                                                                    @endif
+                                                                @else
+                                                                <span class="text-danger">Belum diisi</span>
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="card-footer bg-white row align-items-center justify-content-end mb-3">
+                                                <input type="button" value="Ubah Password"
+                                                    class="btn btn-light shadow-none m-1" data-toggle="modal" data-target="#editEmployeeModal">
+                                                <input type="button" value="Ubah Biodata"
+                                                    class="btn btn-primary shadow-none m-1" data-toggle="modal" data-target="#exampleModal">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -198,7 +278,38 @@
             $( ".datepicker" ).datepicker({
                 dateFormat: 'yy-mm-dd'
             });
-        } );
+        });
+
+        function onChangeSelect(url, id, name) {
+            // send ajax request to get the cities of the selected province and append to the select tag
+            $.ajax({
+                url: url,
+                type: 'GET',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    $('#' + name).empty();
+                    $('#' + name).append('<option>==Pilih Salah Satu==</option>');
+
+                    $.each(data, function (key, value) {
+                        $('#' + name).append('<option value="' + key + '">' + value + '</option>');
+                    });
+                }
+            });
+        }
+
+        $(function () {
+            $('#provinsi').on('change', function () {
+                onChangeSelect('{{ route("cities") }}', $(this).val(), 'kota');
+            });
+            $('#kota').on('change', function () {
+                onChangeSelect('{{ route("districts") }}', $(this).val(), 'kecamatan');
+            })
+            $('#kecamatan').on('change', function () {
+                onChangeSelect('{{ route("villages") }}', $(this).val(), 'desa');
+            })
+        });
 
         $(function() {
             $("#image").change(function(e) {

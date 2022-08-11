@@ -24,7 +24,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'is_email_verified',
         'fcm_token'
     ];
 
@@ -130,5 +129,20 @@ class User extends Authenticatable
     public function roomChat()
     {
         return $this->hasMany(RoomChat::class);
+    }
+
+    public function certificateGapoktan()
+    {
+        return $this->hasMany(CertificateGapoktan::class);
+    }
+
+    public function userGapoktan()
+    {
+        return $this->hasMany(UserGapoktan::class);
+    }
+
+    public function support()
+    {
+        return $this->hasMany(Support::class);
     }
 }

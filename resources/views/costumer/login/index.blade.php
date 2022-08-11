@@ -87,8 +87,14 @@
                                 <input type="submit" value="Masuk" id="login_btn" class="btn btn-primary btn-lg btn-block" tabindex="4">
                             </div>
                         </form>
-                        <div class="mt-3 text-muted text-center">
-                            Belum punya akun? <a onclick="register('{{ route('register-pembeli') }}')" href="#">Daftar</a>
+                        <div class="mt-3 text-center">
+                            <div class="dropdown">
+                                Belum punya akun? <a style="cursor: pointer" data-toggle="dropdown" aria-expanded="false">Daftar</a>
+                                <div class="dropdown-menu shadow-none border border-light">
+                                    <a class="dropdown-item" onclick="register('{{ url('/register') }}')" href="#">Sebagai Pembeli</a>
+                                    <a class="dropdown-item" onclick="registerGapoktan('{{ url('/gapoktan/register') }}')" href="#">Sebagai Gapoktan</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -133,10 +139,14 @@
                         });
                         $("#login_btn").val('Masuk');
                         $("#login_btn").prop('disabled', false);
-                    } else {
-                        if(res.status == 200) {
-                            window.location = '{{ route('pembeli') }}';
-                        }
+                    } else if (res.status == 200){
+                        window.location = '{{ route('pembeli') }}';
+                    } else if (res.status == 201){
+                        window.location = '{{ route('gapoktan') }}';
+                    } else if (res.status == 202){
+                        window.location = '{{ route('poktan') }}';
+                    } else if (res.status == 203){
+                        window.location = '{{ route('petani') }}';
                     }
                 }
             });

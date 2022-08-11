@@ -30,4 +30,49 @@ class Farmer extends Model
     {
         return $this->hasMany(HistoryEducation::class);
     }
+
+    public function province()
+    {
+        return $this->belongsTo(Province::class);
+    }
+
+    public function field()
+    {
+        return $this->hasMany(Field::class);
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
+
+    public function district()
+    {
+        return $this->belongsTo(District::class);
+    }
+
+    public function village()
+    {
+        return $this->belongsTo(Village::class);
+    }
+
+    public function gapoktan()
+    {
+        return $this->belongsTo(Gapoktan::class);
+    }
+
+    public function farmer()
+    {
+        return $this->hasMany(Farmer::class);
+    }
+
+    public function fieldRecapPlanting()
+    {
+        return $this->hasMany(FieldRecapPlanting::class);
+    }
+
+    public function fieldRecapHarvest()
+    {
+        return $this->hasMany(FieldRecapHarvest::class);
+    }
 }

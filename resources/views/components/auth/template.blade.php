@@ -69,6 +69,10 @@
             window.location = url;
         }
         // Register
+        function registerGapoktan(url) {
+            window.location = url;
+        }
+        // Register
         function register(url) {
             window.location = url;
         }

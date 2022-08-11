@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Admin;
+use App\Models\Support;
 
 class AdminSeeder extends Seeder
 {
@@ -19,12 +20,19 @@ class AdminSeeder extends Seeder
         $datas = [
             [
                 "user_id" => 1,
-                "city" => "Indramayu",
-                "address" => 'Desa Lohbener, Kab Indramayu - Jawa Barat',
-                "telp" => "081223943853",
             ],
         ];
 
         Admin::insert($datas);
+
+        Support::truncate();
+
+        $datas = [
+            [
+                "user_id" => 6,
+            ],
+        ];
+
+        Support::insert($datas);
     }
 }

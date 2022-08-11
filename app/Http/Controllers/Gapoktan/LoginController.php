@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use App\Models\Gapoktan;
+use App\Models\UserGapoktan;
+use App\Models\CertificateGapoktan;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
@@ -73,17 +76,18 @@ class LoginController extends Controller
     public function registerGapoktan(Request $request) {
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:users|max:50',
-            'chairman' => 'required|max:255',
+            // 'chairman' => 'required|max:255',
             'email' => 'required|email|unique:users|max:100',
             'password' => 'required|min:6|max:50',
-            'cpassword' => 'required|min:6|same:password'
+            'cpassword' => 'required|min:6|same:password',
+            'images' => 'required',
         ], [
             'cpassword.same' => 'Kata sandi tidak cocok!',
             'name.required' => 'Nama diperlukan!',
             'name.max' => 'Nama maksimal 50 karakter!',
             'name.unique' => 'Nama Gapoktan yang anda masukkan sudah ada!',
-            'chairman.required' => 'Nama Ketua diperlukan!',
-            'chairman.max' => 'Nama Ketua maksimal 255 karakter!',
+            // 'chairman.required' => 'Nama Ketua diperlukan!',
+            // 'chairman.max' => 'Nama Ketua maksimal 255 karakter!',
             'email.required' => 'Email diperlukan!',
             'email.unique' => 'Email yang anda masukkan sudah ada!',
             'password.required' => 'Kata sandi diperlukan!',
@@ -92,6 +96,7 @@ class LoginController extends Controller
             'cpassword.required' => 'Konfirmasi kata sandi diperlukan!',
             'cpassword.min' => 'Kata sandi harus minimal 6 karakter!',
             'cpassword.max' => 'Kata sandi maksimal 50 karakter!',
+            'images.required' => 'Foto sertifikat diperlukan!',
         ]);
 
         if($validator->fails()) {
@@ -107,11 +112,28 @@ class LoginController extends Controller
             $user->assignRole('gapoktan');
             $user->save();
 
-            $chairman = $request->chairman;
-            Gapoktan::create([
-              'user_id' => $user->id,
-              'chairman' => $chairman
-            ]);
+            // $chairman = $request->chairman;
+            $gapoktan = new Gapoktan();
+            $gapoktan->user_id = $user->id;
+            $gapoktan->save();
+
+            for ($x = 0; $x < $request->TotalImages; $x++)
+            {
+                if ($request->file('images'.$x))
+                {
+                    $file = $request->file('images'.$x);
+                    $fileName = $file->getClientOriginalName() . '.' . $file->getClientOriginalExtension();
+                    if ($fileName) {
+                        $file->storeAs('sertifikat', $fileName);
+                        $insert[$x]['gapoktan_id'] = $gapoktan->id;
+                        $insert[$x]['evidence'] = $fileName;
+                        $insert[$x]['created_at'] = Carbon::now();
+                        $insert[$x]['updated_at'] = Carbon::now();
+                    }
+                }
+            }
+
+            CertificateGapoktan::insert($insert);
 
             return response()->json([
                 'status' => 200,

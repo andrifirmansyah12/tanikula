@@ -14,6 +14,10 @@
 
         };
 
+//         DB_DATABASE=u5687430_gapoktan_db
+// DB_USERNAME=u5687430
+// DB_PASSWORD=@Polindra2022
+
     var type = '{{  $toast["type"] }}';
 
     show(type, options);

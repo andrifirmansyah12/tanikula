@@ -49,7 +49,7 @@
 
     <!-- Modal -->
     <div class="modal fade" id="editEmployeeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Detail Kegiatan</h5>
@@ -63,7 +63,7 @@
                         <div class="col-12">
                             <article class="article article-style-b shadow-none">
                                 <div class="article-header">
-                                    <div class="article-image rounded-lg" style="height: 300px;" data-background="{{ asset('img/undraw_schedule_meeting_52nu.svg') }}">
+                                    <div class="article-image rounded-lg" style="height: 300px;" data-background="{{ asset('img/undraw_articles_wbpb.svg') }}">
                                     </div>
                                     <div class="article-badge">
                                         <div class="article-badge-item bg-danger" id="category_activity_id">

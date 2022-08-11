@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateNotificationUsersTable extends Migration
+class CreateHeroesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateNotificationUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('notification_users', function (Blueprint $table) {
+        Schema::create('heroes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("user_id")->nullable();
-            $table->timestamp('read_at')->nullable();
+            $table->string('name')->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateNotificationUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('notification_users');
+        Schema::dropIfExists('heroes');
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Poktan;
+use App\Models\Gapoktan;
 use App\Models\Farmer;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
@@ -16,9 +17,18 @@ class FarmerController extends Controller
 {
     // set index page view
 	public function index() {
-        $poktan = Poktan::all();
-		return view('admin.petani.index', compact('poktan'));
+        $gapoktans = Gapoktan::all();
+		return view('admin.petani.index', compact('gapoktans'));
 	}
+
+    public function poktan($id)
+    {
+        $poktans = DB::table("poktans")
+                    ->join('users', 'poktans.user_id', '=', 'users.id')
+                    ->where("gapoktan_id", $id)
+                    ->pluck('users.name','poktans.id');
+        return json_encode($poktans);
+    }
 
     // handle fetch all eamployees ajax request
 	public function fetchAll(Request $request) {
@@ -38,7 +48,6 @@ class FarmerController extends Controller
                 <th>Foto</th>
                 <th>Nama Poktan</th>
                 <th>Nama Petani</th>
-                <th>Kota</th>
                 <th>Alamat</th>
                 <th>No.Telp</th>
                 <th>Status Akun</th>
@@ -56,20 +65,19 @@ class FarmerController extends Controller
                     } else {
                         $output .= '<td><img alt="image" src="../assets/img/avatar/avatar-5.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Wildan Ahdian"></td>';
                     }
-                    $output .= '<td>' . $emp->poktan->user->name . '</td>
+                    $output .= '<td class="text-capitalize">' . $emp->poktan->user->name . '</td>
                     <td>' . $emp->farmer_name . '</td>';
-                    if ($emp->city) {
-                        $output .= '<td>' . $emp->city . '</td>';
+                    if ($emp->street && $emp->number) {
+                        $output .= '<td>' . $emp->street . ', ' . $emp->number . '. ';
+                        if ($emp->village_id && $emp->district_id && $emp->city_id && $emp->province_id != null) {
+                            $output .= '' . $emp->village->name . ', Kecamatan '. $emp->district->name .', '. $emp->city->name .', Provinsi '. $emp->province->name .'.';
+                        }
+                        $output .= '</td>';
                     } else {
                         $output .= '<td><span class="text-danger">Belum diisi</span></td>';
                     }
-                    if ($emp->address) {
-                        $output .= '<td>' . $emp->address . '</td>';
-                    } else {
-                        $output .= '<td><span class="text-danger">Belum diisi</span></td>';
-                    }
-                    if ($emp->telp) {
-                        $output .= '<td>' . $emp->telp . '</td>';
+                    if ($emp->phone) {
+                        $output .= '<td>(+62) ' . $emp->phone . '</td>';
                     } else {
                         $output .= '<td><span class="text-danger">Belum diisi</span></td>';
                     }
@@ -96,8 +104,8 @@ class FarmerController extends Controller
 	}
 
     // handle insert a new employee ajax request
-	public function store(Request $request) {
-
+	public function store(Request $request)
+    {
 		$user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
@@ -106,9 +114,11 @@ class FarmerController extends Controller
         $user->save();
 
         $poktan_id = $request->poktan_id;
+        $gapoktan_id = $request->gapoktan_id;
         $is_active = $request->is_active ? 1 : 0;
         Farmer::create([
             'user_id' => $user->id,
+            'gapoktan_id' => $gapoktan_id,
             'poktan_id' => $poktan_id,
             'is_active' => $is_active,
         ]);
@@ -123,16 +133,16 @@ class FarmerController extends Controller
 		$emp = Farmer::join('poktans', 'farmers.poktan_id', '=', 'poktans.id')
                     ->join('gapoktans', 'poktans.gapoktan_id', '=', 'gapoktans.id')
                     ->join('users', 'poktans.user_id', '=', 'users.id')
-                    ->select('farmers.*', 'users.name as poktan_name')
-                    ->with('user', 'poktan')
+                    ->select('farmers.*', 'users.name as name')
+                    ->with('user', 'poktan', 'gapoktan')
                     ->where('farmers.id', $id)
                     ->first();
 		return response()->json($emp);
 	}
 
 	// handle update an employee ajax request
-	public function update(Request $request) {
-
+	public function update(Request $request)
+    {
         $user = User::find($request->user_id);
         if($request->password) {
             $user->name = $request->name;
@@ -145,8 +155,9 @@ class FarmerController extends Controller
         $user->save();
 
         $emp = Farmer::with('user', 'poktan')->find($request->emp_id);
-        if ($request->poktan_id) {
-            $emp->poktan_id = $request->poktan_id;
+        if ($request->edit_poktan_id && $request->edit_gapoktan_id) {
+            $emp->poktan_id = $request->edit_poktan_id;
+            $emp->gapoktan_id = $request->edit_gapoktan_id;
             if ($request->is_active == 0) {
                 $emp->is_active = $request->is_active ? 1 : 0;
             } elseif ($request->is_active == 1) {

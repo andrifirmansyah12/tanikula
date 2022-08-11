@@ -29,13 +29,10 @@
         </div>
     </div>
 </section>
-
 @endsection
 
 @section('script')
 <!-- LIBARARY JS -->
-
-
 
 <!-- AKHIR LIBARARY JS -->
 

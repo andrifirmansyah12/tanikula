@@ -48,17 +48,20 @@
                 <form action="#" method="POST" id="add_employee_form" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body p-4">
-                        <label for="name">Pilih Poktan</label>
-                        <select class="form-control select2" name="poktan_id" required>
-                            <option selected disabled>Pilih Poktan</option>
-                            @foreach ($poktan as $item)
-                                @if ( old('poktan_id') == $item->id )
-                                    <option value="{{ $item->id }}" selected>{{ $item->user->name }}</option>
-                                @else
+                        <div class="form-group my-2">
+                            <label for="name">Pilih Gapoktan</label>
+                            <select class="form-control select2 text-capitalize" name="gapoktan_id" required>
+                                <option selected disabled>Pilih Gapoktan</option>
+                                @foreach ($gapoktans as $item)
                                     <option value="{{ $item->id }}">{{ $item->user->name }}</option>
-                                @endif
-                            @endforeach
-                        </select>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group my-2">
+                            <label for="name">Pilih Poktan</label>
+                            <select class="form-control select2 text-capitalize" name="poktan_id" required>
+                            </select>
+                        </div>
                         <div class="form-group my-2">
                             <label for="name">Nama Petani</label>
                             <input type="text" name="name" class="form-control" placeholder="Nama Petani" required>
@@ -105,30 +108,31 @@
                     <input type="hidden" name="emp_id" id="emp_id">
                     <input type="hidden" name="user_id" id="user_id">
                     <div class="modal-body p-4">
+                        <div class="form-group my-2">
+                            <label for="name">Ubah Gapoktan</label>
+                            <small class="d-flex text-danger pb-1">*Catatan:
+                                <br>1. Jika tidak ingin ubah Gapoktan dan Poktan biarkan kosong,
+                                <br>2. Dan jika ingin ubah Gapoktan dan Poktan, silahkan pilih Gapoktan kemudian Poktan.
+                            </small>
+                            <select class="form-control select2 text-capitalize" name="edit_gapoktan_id" required>
+                                <option selected disabled>Ubah Gapoktan</option>
+                                @foreach ($gapoktans as $item)
+                                    <option value="{{ $item->id }}">{{ $item->user->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                         <div class="form-group mb-5">
                             <label for="name">Ubah Poktan</label>
-                            <small class="d-flex text-danger pb-1">*Catatan:
-                                <br>1. Jika tidak ingin ubah Poktan biarkan kosong,
-                                <br>2. Dan jika ingin ubah Poktan, silahkan pilih Poktan.
-                            </small>
-                            <select class="form-control select2" name="poktan_id" required>
-                                <option selected disabled>Pilih Poktan</option>
-                                @foreach ($poktan as $item)
-                                    @if ( old('poktan_id') == $item->id )
-                                        <option value="{{ $item->id }}" selected>{{ $item->user->name }}</option>
-                                    @else
-                                        <option value="{{ $item->id }}">{{ $item->user->name }}</option>
-                                    @endif
-                                @endforeach
+                            <select class="form-control select2" name="edit_poktan_id" required>
                             </select>
                         </div>
                         <div class="form-group my-2">
                             <label for="name">Nama Poktan</label>
-                            <input type="text" disabled id="poktan_id" class="form-control" placeholder="Nama Poktan" required>
+                            <input disabled type="text" id="poktan_id" class="form-control text-capitalize" placeholder="Nama Poktan" required>
                         </div>
                         <div class="form-group my-2">
                             <label for="name">Nama Petani</label>
-                            <input type="text" name="name" id="name" class="form-control" placeholder="Nama Poktan" required>
+                            <input type="text" name="name" id="name" class="form-control" placeholder="Nama Petani" required>
                         </div>
                         <div class="my-2 form-group">
                             <label for="email">Email</label>
@@ -178,6 +182,48 @@
 
     <!-- JAVASCRIPT -->
     <script>
+        $(document).ready(function() {
+            $('select[name="gapoktan_id"]').on('change', function() {
+                var stateID = $(this).val();
+                if(stateID) {
+                    $.ajax({
+                        url: '/dropdown-poktan/'+stateID,
+                        type: "GET",
+                        dataType: "json",
+                        success:function(data) {
+                            $('select[name="poktan_id"]').html('<option selected disabled>Pilih Poktan</option>');
+                            $.each(data, function(key, value) {
+                            $('select[name="poktan_id"]').append('<option class="text-capitalize" value="'+ key +'">'+ value +'</option>');
+                            });
+                        }
+                    });
+                }else{
+                    $('select[name="poktan_id"]').empty();
+                }
+            });
+        });
+
+        $(document).ready(function() {
+            $('select[name="edit_gapoktan_id"]').on('change', function() {
+                var stateID = $(this).val();
+                if(stateID) {
+                    $.ajax({
+                        url: '/dropdown-poktan/'+stateID,
+                        type: "GET",
+                        dataType: "json",
+                        success:function(data) {
+                            $('select[name="edit_poktan_id"]').html('<option selected disabled>Ubah Poktan</option>');
+                            $.each(data, function(key, value) {
+                            $('select[name="edit_poktan_id"]').append('<option class="text-capitalize" value="'+ key +'">'+ value +'</option>');
+                            });
+                        }
+                    });
+                }else{
+                    $('select[name="edit_poktan_id"]').empty();
+                }
+            });
+        });
+
         //CSRF TOKEN PADA HEADER
         //Script ini wajib krn kita butuh csrf token setiap kali mengirim request post, patch, put dan delete ke server
         $(document).ready(function() {
@@ -212,11 +258,11 @@
                         'success'
                     )
                     fetchAllEmployees();
-                    }
                     $("#add_employee_btn").text('Simpan');
                     $("#add_employee_btn").prop('disabled', false);
                     $("#add_employee_form")[0].reset();
                     $("#addEmployeeModal").modal('hide');
+                    }
                 }
                 });
             });
@@ -233,7 +279,8 @@
                     _token: '{{ csrf_token() }}'
                 },
                 success: function(response) {
-                    $("#poktan_id").val(response.poktan_name);
+                    $("#poktan_id").val(response.name);
+                    $("#gapoktan_id").val(response.gapoktan_id);
                     $("#name").val(response.user.name);
                     $("#email").val(response.user.email);
                     $("#password_edit").html(
@@ -275,11 +322,11 @@
                         'success'
                     )
                     fetchAllEmployees();
-                    }
                     $("#edit_employee_btn").text('Simpan');
                     $("#edit_employee_btn").prop('disabled', false);
                     $("#edit_employee_form")[0].reset();
                     $("#editEmployeeModal").modal('hide');
+                    }
                 }
                 });
             });

@@ -114,7 +114,7 @@
                                 <br>1. Jika tidak ingin ubah Gapoktan biarkan kosong,
                                 <br>2. Dan jika ingin ubah Gapoktan, silahkan pilih Gapoktan.
                             </small>
-                            <select class="form-control select2" name="gapoktan_id" required>
+                            <select class="form-control select2 text-capitalize" name="gapoktan_id" required>
                                 <option selected disabled>Pilih Gapoktan</option>
                                 @foreach ($gapoktan as $item)
                                     @if ( old('poktan_id') == $item->id )
@@ -127,11 +127,11 @@
                         </div>
                         <div class="form-group my-2">
                             <label for="name">Nama Poktan</label>
-                            <input type="text" name="name" id="name" class="form-control" placeholder="Nama Poktan" required>
+                            <input type="text" name="name" id="name" class="form-control text-capitalize" placeholder="Nama Poktan" required>
                         </div>
                         <div class="form-group my-2">
                             <label for="chairman">Ketua Poktan</label>
-                            <input type="text" name="chairman" id="chairman" class="form-control" placeholder="Ketua Poktan" required>
+                            <input type="text" name="chairman" id="chairman" class="form-control text-capitalize" placeholder="Ketua Poktan" required>
                         </div>
                         <div class="my-2 form-group">
                             <label for="email">Email</label>

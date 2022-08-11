@@ -21,6 +21,7 @@ class CreateProductsTable extends Migration
             $table->string("slug")->unique();
             $table->string("image")->nullable();
             $table->string("code")->unique();
+            $table->bigInteger("weight")->nullable();
             $table->bigInteger("stoke")->nullable();
             $table->bigInteger("stock_out")->nullable();
             $table->bigInteger("price")->nullable();

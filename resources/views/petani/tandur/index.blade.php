@@ -19,7 +19,6 @@
 @endsection
 
 @section('content')
-
     <!-- Main Content -->
     <div class="main-content">
         <section class="section">
@@ -36,7 +35,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <button type="button" class="btn py-1 btn-success" data-toggle="modal"
+                                <button type="button" style="border-radius: 5px;" class="btn btn btn-primary shadow-none py-1" data-toggle="modal"
                                     data-target="#addEmployeeModal">Tambah
                                     @yield('title')</button>
                             </div>
@@ -62,42 +61,11 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="#" method="POST" id="add_employee_form" enctype="multipart/form-data">
-                    @csrf
-                    <div class="modal-body p-4">
-                        @foreach ($farmer as $farmer)
-                            <input type="hidden" autofocus name="poktan_id" class="form-control" value="{{ $farmer->poktan_id }}" required>
-                            <input type="hidden" autofocus name="farmer_id" class="form-control" value="{{ $farmer->id }}" required>
-                        @endforeach
-                        <div class="form-group my-2">
-                            <label for="plant_tanaman">Tanaman</label>
-                            <input type="text" name="plant_tanaman" class="form-control" placeholder="Nama Tanaman" required>
-                        </div>
-                        <div class="form-group my-2">
-                            <label for="surface_area">Luas Tanah</label>
-                            <input type="text" name="surface_area" class="form-control" placeholder="Luas Tanah" required>
-                        </div>
-                        <div class="form-group my-2">
-                            <label for="surface_area">Alamat</label>
-                            <textarea class="form-control" style="height: 8rem" name="address" rows="3" placeholder="Alamat" required></textarea>
-                        </div>
-                        <div class="my-2 form-group">
-                            <label for="plating_date">Tanggal Tandur</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                        <i class="bi bi-calendar"></i>
-                                    </div>
-                                </div>
-                                <input type="text" name="plating_date" placeholder="Tanggal Tandur" class="form-control datepicker" autocomplete="off">
-                            </div>
-                        </div>
+                <div class="modal-body p-4">
+                    <div id="show_all_fields">
+
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
-                        <button type="submit" id="add_employee_btn" class="btn btn-primary">Simpan</button>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
@@ -107,7 +75,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit Tandur</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Tandur</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -115,18 +83,18 @@
                 <form action="#" method="POST" id="edit_employee_form" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="emp_id" id="emp_id">
+                    <input type="hidden" name="field_id" id="field_id">
+                    <input type="hidden" name="farmer_id" id="farmer_id">
                     <div class="modal-body p-4">
-                        <input type="hidden" autofocus name="poktan_id" id="poktan_id"class="form-control" value="{{ $farmer->poktan_id }}" required>
-                        <input type="hidden" autofocus name="farmer_id" id="farmer_id" class="form-control" value="{{ $farmer->id }}" required>
-                        <div class="my-2 form-group">
-                            <label for="plating_date">Tanggal Panen</label>
+                        <div class="form-group">
+                            <label for="plating_date">Tanggal Tandur</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">
                                         <i class="bi bi-calendar"></i>
                                     </div>
                                 </div>
-                                <input type="text" name="harvest_date" id="harvest_date" class="form-control datepicker" autocomplete="off">
+                                <input type="text" name="date_planting" id="date_planting" class="form-control datepicker" placeholder="Tanggal Tandur" autocomplete="off">
                             </div>
                         </div>
                     </div>
@@ -180,37 +148,6 @@
 
         $(function() {
 
-            // add new employee ajax request
-            $("#add_employee_form").submit(function(e) {
-                e.preventDefault();
-                const fd = new FormData(this);
-                $("#add_employee_btn").text('Tunggu..');
-                $("#add_employee_btn").prop('disabled', true);
-                $.ajax({
-                url: '{{ route('petani-tandur-store') }}',
-                method: 'post',
-                data: fd,
-                cache: false,
-                contentType: false,
-                processData: false,
-                dataType: 'json',
-                success: function(response) {
-                    if (response.status == 200) {
-                    Swal.fire(
-                        'Menambahkan!',
-                        'Tandur Berhasil Ditambahkan!',
-                        'success'
-                    )
-                    fetchAllEmployees();
-                    }
-                    $("#add_employee_btn").text('Simpan');
-                    $("#add_employee_btn").prop('disabled', false);
-                    $("#add_employee_form")[0].reset();
-                    $("#addEmployeeModal").modal('hide');
-                }
-                });
-            });
-
             // edit employee ajax request
             $(document).on('click', '.editIcon', function(e) {
                 e.preventDefault();
@@ -223,10 +160,8 @@
                     _token: '{{ csrf_token() }}'
                 },
                 success: function(response) {
-                    $("#poktan_id").val(response.poktan_id);
                     $("#farmer_id").val(response.farmer_id);
-                    $("#plant_tanaman").val(response.plant_tanaman);
-                    $("#surface_area").val(response.surface_area);
+                    $("#field_id").val(response.id);
                     $("#emp_id").val(response.id);
                 }
                 });
@@ -254,6 +189,7 @@
                         'success'
                     )
                     fetchAllEmployees();
+                    fetchAllEmployeesFields();
                     }
                     $("#edit_employee_btn").text('Simpan');
                     $("#edit_employee_btn").prop('disabled', false);
@@ -294,6 +230,7 @@
                         'success'
                         )
                         fetchAllEmployees();
+                        fetchAllEmployeesFields();
                     }
                     });
                 }
@@ -309,6 +246,20 @@
                 method: 'get',
                 success: function(response) {
                     $("#show_all_employees").html(response);
+                    $("#recapPlanting").DataTable();
+                }
+                });
+            }
+
+            // fetch all employees ajax request
+            fetchAllEmployeesFields();
+
+            function fetchAllEmployeesFields() {
+                $.ajax({
+                url: '{{ route('petani-lahan-fetchAllFields') }}',
+                method: 'get',
+                success: function(response) {
+                    $("#show_all_fields").html(response);
                     $("table").DataTable();
                 }
                 });

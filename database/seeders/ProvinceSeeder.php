@@ -33,4 +33,11 @@ class ProvinceSeeder extends Seeder
 
         Province::insert($data_province);
     }
+
+    //function untuk get data province and city
+    private function getData($key,$url){
+        return Http::withHeaders([
+            'key' => $key
+        ])->get($url);
+    }
 }

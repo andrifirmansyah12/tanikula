@@ -45,10 +45,10 @@ class ProductController extends Controller
               <tr>
                 <th>No</th>
                 <th>Foto</th>
-                <th>Kode</th>
                 <th>Nama</th>
                 <th>Kategori Produk</th>
                 <th>Stok</th>
+                <th>Berat</th>
                 <th>Harga</th>
                 <th>Status</th>
                 <th>Aksi</th>
@@ -71,7 +71,7 @@ class ProductController extends Controller
                     $output .= '<img src="../stisla/assets/img/example-image.jpg" class="img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
                 }
                 $output .= '</td>';
-                $output .= '<td>' . $emp->code . '</td>
+                $output .= '
                 <td>' . $emp->name . '</td>';
                 if (empty($emp->product_category->name)) {
                     $output .= '<td><a class="text-danger">Tidak ada kategori</a></p>';
@@ -79,6 +79,7 @@ class ProductController extends Controller
                     $output .= '<td>' . $emp->product_category->name . '</td>';
                 }
                 $output .= '<td>' . $emp->stoke . '</td>
+                <td>' . $emp->weight . ' gram</td>
                 <td>Rp. ' . number_format($emp->price, 0) . '</td>';
                 if ($emp->is_active == 1) {
                     $output .= '<td><div class="badge badge-success">Aktif</div></td>';
@@ -128,6 +129,7 @@ class ProductController extends Controller
             $product->slug = $request->slug;
             $product->category_product_id = $request->category_product_id;
             $product->stoke = $request->stoke;
+            $product->weight = $request->weight;
             $product->price = $request->price;
             $product->desc = $request->desc;
             $product->is_active = $request->is_active ? 1 : 0;
@@ -183,6 +185,7 @@ class ProductController extends Controller
             $product->name = $request->name;
             $product->slug = $request->slug;
             $product->category_product_id = $request->category_product_id;
+            $product->weight = $request->weight;
             $product->stoke = $request->stoke;
             $product->price = $request->price;
             $product->desc = $request->desc;

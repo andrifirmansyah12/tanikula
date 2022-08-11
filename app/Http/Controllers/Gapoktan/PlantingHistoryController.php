@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Plant;
 use App\Models\Poktan;
+use App\Models\Field;
+use App\Models\FieldCategory;
+use App\Models\Gapoktan;
 use Illuminate\Support\Facades\DB;
 use App\Models\Farmer;
 use Illuminate\Support\Facades\Hash;
@@ -20,66 +23,65 @@ class PlantingHistoryController extends Controller
 	}
 
     // handle fetch all eamployees ajax request
-	public function fetchAll(Request $request) {
-		// $emps = Poktan::with('user', 'gapoktan')->latest()->get();
-        $emps = Plant::join('farmers', 'plants.farmer_id', '=', 'farmers.id')
-                    ->join('poktans', 'plants.poktan_id', '=', 'poktans.id')
-                    ->join('gapoktans', 'poktans.gapoktan_id', '=', 'gapoktans.id')
-                    ->select('plants.*', 'surface_area as area')
-                    ->where('gapoktans.user_id', '=', auth()->user()->id)
-                    ->whereNotNull('plants.harvest_date')
-                    ->where('plants.status', 'selesai')
-                    ->orderBy('updated_at', 'desc')
+	public function fetchAll(Request $request) 
+    {
+        if(!empty($request->from_date))
+        {
+            $gapoktans = Gapoktan::where('user_id', auth()->user()->id)->first();
+            $emps = Field::join('field_categories', 'fields.field_category_id', '=', 'field_categories.id')
+                    ->join('gapoktans', 'fields.gapoktan_id', '=', 'gapoktans.id')
+                    ->join('farmers', 'fields.farmer_id', '=', 'farmers.id')
+                    ->select('fields.*', 'field_categories.name as name')
+                    ->where('fields.gapoktan_id', $gapoktans->id)
+                    ->where('fields.status', 'panen')
+                    ->whereBetween('fields.updated_at', array($request->from_date, $request->to_date))
+                    ->orderBy('fields.updated_at', 'desc')
                     ->get();
+        }
+            else
+        {
+            $gapoktans = Gapoktan::where('user_id', auth()->user()->id)->first();
+            $emps = Field::join('field_categories', 'fields.field_category_id', '=', 'field_categories.id')
+                    ->join('gapoktans', 'fields.gapoktan_id', '=', 'gapoktans.id')
+                    ->join('farmers', 'fields.farmer_id', '=', 'farmers.id')
+                    ->select('fields.*', 'field_categories.name as name')
+                    ->where('fields.gapoktan_id', $gapoktans->id)
+                    ->where('fields.status', 'panen')
+                    ->orderBy('fields.updated_at', 'desc')
+                    ->get();
+        }
 		$output = '';
 		if ($emps->count() > 0) {
 			$output .= '<table class="table table-striped table-sm text-center align-middle">
             <thead>
               <tr>
                 <th>No</th>
-                <th>Nama Petani</th>
-                <th>Tanaman</th>
-                <th>Luas Tanah</th>
-                <th>Alamat</th>
-                <th>Tanggal Tandur</th>
-                <th>Tanggal Panen</th>
+                <th>Lahan</th>
+                <th>Gapoktan</th>
+                <th>Petani</th>
                 <th>Status</th>
-                <th>Aksi</th>
               </tr>
             </thead>
             <tbody>';
             $nomor=1;
 			foreach ($emps as $emp) {
-                $output .= '<tr>';
+				$output .= '<tr>';
                 $output .= '<td>' . $nomor++ . '</td>';
-                $output .= '<td>' . $emp->farmer->user->name . '</td>
-                <td>' . $emp->plant_tanaman . '</td>';
-                if ($emp->area) {
-                    $output .= '<td>' . $emp->area . '</td>';
+                $output .= '<td>' . $emp->fieldCategory->name . '</td>';
+                $output .= '<td>' . $emp->gapoktan->user->name . '</td>
+                <td>' . $emp->farmer->user->name . '</td>';
+                if ($emp->status) {
+                    $output .= '<td><span class="text-capitalize">' . $emp->status . '</span></td>';
                 } else {
-                    $output .= '<td><span class="text-danger">Belum diisi</span></td>';
+                    $output .= '<td><span class="text-danger">Belum ada status</span></td>';
                 }
-                $output .= '<td>' . $emp->address . '</td>';
-                if ($emp->plating_date) {
-                    $output .= '<td>' . date("d-F-Y", strtotime($emp->plating_date)) . '</td>';
-                } else {
-                    $output .= '<td><span class="text-danger">Belum diisi</span></td>';
-                }
-                if ($emp->harvest_date) {
-                    $output .= '<td>' . date("d-F-Y", strtotime($emp->harvest_date)) . '</td>';
-                } else {
-                    $output .= '<td><span class="text-danger">Belum diisi</span></td>';
-                }
-                $output .= '<td><div class="badge badge-success text-capitalize">'. $emp->status .'</div></td>';
-                $output .= '<td>
-                    <a href="#" id="' . $emp->id . '" class="text-success mx-1 editIcon" data-toggle="modal" data-target="#editEmployeeModal"><i class="bi-eye h4"></i></a>
-                </td>
-            </tr>';
+                $output .= '
+              </tr>';
 			}
 			$output .= '</tbody></table>';
 			echo $output;
 		} else {
-			echo '<h1 class="text-center text-secondary my-5">Tidak ada data Panen!</h1>';
+			echo '<h1 class="text-center text-secondary my-5">Tidak ada data Riwayat Penanam!</h1>';
 		}
 	}
 
