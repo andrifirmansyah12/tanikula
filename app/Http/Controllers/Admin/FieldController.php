@@ -71,10 +71,10 @@ class FieldController extends Controller
                 }
                     $output .= '<td>
                     <a href="#" id="' . $emp->id . '" class="text-success mx-1 editIcon" data-toggle="modal" data-target="#editEmployeeModal"><i class="bi-pencil-square h4"></i></a>
-                    <a href="#" id="' . $emp->id . '" class="text-danger mx-1 deleteIcon"><i class="bi-trash h4"></i></a>
                     <a href="#" id="' . $emp->id . '" class="text-danger mx-1 recycleField"><i class="bi-recycle h4"></i></a>
                 </td>
               </tr>';
+                // <a href="#" id="' . $emp->id . '" class="text-danger mx-1 deleteIcon"><i class="bi-trash h4"></i></a>
 			}
 			$output .= '</tbody></table>';
 			echo $output;
