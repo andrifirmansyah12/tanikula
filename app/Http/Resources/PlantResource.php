@@ -16,16 +16,22 @@ class PlantResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'farmer_id' => new FarmerResource($this->farmer),
-            'poktan_id' =>  new PoktanResource($this->poktan),
-            "plant_tanaman" => $this->plant_tanaman,
-            'surface_area' => $this->surface_area,
-            'address' => $this->address,
-            'plating_date' => $this->plating_date,
-            'harvest_date' => $this->harvest_date,
+            'farmer_name' => $this->farmer->user->name,
+            'field_category_name' => $this->field->fieldCategory->name,
+            'field_category_details' => $this->field->fieldCategory->details,
+            // 'farmer_id' => new FarmerResource($this->farmer_id),
+            // 'poktan_id' =>  new PoktanResource($this->poktan),
+            // "plant_tanaman" => $this->plant_tanaman,
+            // 'surface_area' => $this->surface_area,
+            // 'address' => $this->address,
+            // 'plating_date' => $this->plating_date,
+            // 'harvest_date' => $this->harvest_date,
+            'date_planting' => $this->date_planting,
             'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'name' => $this->name,
         ];
     }
 }
+// <td>' . $emp->field->fieldCategory->name . ' (' . $emp->field->fieldCategory->details . ')</td>';
