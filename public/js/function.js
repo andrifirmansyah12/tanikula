@@ -6,7 +6,7 @@ function showError(field, message) {
             .siblings(".invalid-feedback")
             .text("");
     } else {
-       $("#" + field)
+        $("#" + field)
             .addClass("is-invalid")
             .removeClass("is-valid")
             .siblings(".invalid-feedback")
@@ -15,8 +15,8 @@ function showError(field, message) {
 }
 
 function removeValidationClasses(form) {
-    $(form).each(function() {
-        $(form).find(':input').removeClass("is-valid is-invalid")
+    $(form).each(function () {
+        $(form).find(":input").removeClass("is-valid is-invalid");
     });
 }
 

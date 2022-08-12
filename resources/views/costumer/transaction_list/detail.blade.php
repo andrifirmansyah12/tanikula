@@ -411,7 +411,7 @@
                     @if ( $order->status == 'completed')
                         @if (!$order->review == 'reviewed')
                             <button type="button" class="mt-3 mt-md-0 btn border bg-light" data-bs-toggle="modal" data-bs-target="#reviewModal">
-                                Kasih Ulasan
+                                Berikan Ulasan
                             </button>
                         @else
                             <button type="button" class="mt-3 mt-md-0 btn border bg-light" data-bs-toggle="modal" data-bs-target="#editReviewModal">
