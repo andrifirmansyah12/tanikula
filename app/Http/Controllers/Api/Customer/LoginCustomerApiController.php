@@ -61,7 +61,7 @@ class LoginCustomerApiController  extends BaseController
                 if (Hash::check($request->password, $user->password)) {
                     if (auth()->attempt($credentials)) {
                         if (auth()->check() && $user->hasRole('pembeli')) {
-                            if (!Auth::user()->is_email_verified) {
+                            if (!$customer->is_email_verified) {
                                 auth()->logout();
                                 return response()->json([
                                     'status' => 401,

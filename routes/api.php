@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Customer\ChatApiController;
 use App\Http\Controllers\Api\Customer\CheckoutApiController;
 use App\Http\Controllers\Api\Customer\CustomerApiController;
 use App\Http\Controllers\Api\Customer\ForgetPasswordApiController;
+use App\Http\Controllers\Api\Customer\HeroesApiController;
 use App\Http\Controllers\Api\Customer\LoginCustomerApiController;
 use App\Http\Controllers\Api\Customer\ParticipantChatApiController;
 use App\Http\Controllers\Api\Customer\ProductCustomerApiController;
@@ -79,7 +80,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/transaction_list/detail_transaction/{id}', [TransactionListApiController::class, 'detailPesanan']);
     Route::resource('review', ReviewApiController::class);
     Route::get('notification_list/{user_id}', [PushNotificationController::class, 'indexByid']);
-    Route::get('notification_list/delete-all', [PushNotificationController::class, 'deleteall']);
+    Route::get('notification_list/delete-all/{user_id}', [PushNotificationController::class, 'deleteall']);
 
     // ------ Gapoktan -----------
     // Activity
@@ -95,7 +96,6 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('poktan', PoktanApiController::class);
     Route::resource('akun-poktan', AkunPoktanApiController::class);
     Route::post('akun-poktan/update/image', [AkunPoktanApiController::class, 'updatePhoto']);
-
     //Gapoktan
     Route::resource('gapoktan', GapoktanApiController::class);
     Route::post('gapoktan/update/image', [GapoktanApiController::class, 'updatePhoto']);
@@ -108,6 +108,16 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('farmer', FarmerApiController::class);
     Route::resource('akun-petani', AkunPetaniApiController::class);
     Route::post('akun-petani/update/image', [AkunPetaniApiController::class, 'updatePhoto']);
+    // tandur
+    Route::get('plant/field/id/{id}', [PlantApiController::class, 'field']);
+    Route::get('plant/farmer/id/{id}', [PlantApiController::class, 'plant']);
+    Route::post('plant/plant/post', [PlantApiController::class, 'storePlant']);
+    // panen
+    Route::get('plant/harvest/plant/{id}', [PlantApiController::class, 'plantDataForHarvest']);
+    Route::get('plant/harvest/{id}', [PlantApiController::class, 'harvest']);
+    Route::post('plant/harvest/post', [PlantApiController::class, 'doHarvest']);
+    Route::post('plant/harvest/update', [PlantApiController::class, 'updatePanen']);
+
     // user
     Route::resource('user', UserApiController::class);
 });
@@ -120,6 +130,7 @@ Route::get('product-customer/detail/{slug}', [ProductCustomerApiController::clas
 Route::get('product-customer/search/{name}', [ProductCustomerApiController::class, 'search']);
 Route::get('product-customer/category/{id}', [ProductCustomerApiController::class, 'category']);
 Route::get('product-customer/toko/{id}', [ProductCustomerApiController::class, 'tokoById']);
+Route::get('hero', [HeroesApiController::class, 'index']);
 
 // Route::post('view_category/{slug}', [ProductCustomerApiController::class, 'viewCategory']);
 Route::post('login-customer', [LoginCustomerApiController::class, 'login']);
@@ -131,7 +142,7 @@ Route::resource('product-photo-customer', PhotoProductApiControlller::class);
 Route::resource('product-category', ProductCategoryApiController::class);
 
 //tes api
-Route::post('notif', [ProductCustomerApiController::class, 'sendnofit']);
+// Route::post('notif', [ProductCustomerApiController::class, 'sendnofit']);
 
 // // Cart
 // Route::resource('cart', CartApiController::class);
@@ -156,4 +167,4 @@ Route::post('login-petani', [LoginPetaniApiController::class, 'login']);
 // Route::get('get-notification-form', [PushNotificationController::class, 'create']);
 
 // Tes notifikasi
-// Route::post('send-notification', [PushNotificationController::class, 'tesApi']);
+Route::post('send-notification', [PushNotificationController::class, 'tesApi']);

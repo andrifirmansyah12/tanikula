@@ -55,7 +55,7 @@ class RegisterCustomerApiController extends BaseController
 
             $token = Str::random(64);
             UserVerify::create([
-                'user_id' => $user->id,
+                'costumer_id' => $costumer->id,
                 'token' => $token
             ]);
 

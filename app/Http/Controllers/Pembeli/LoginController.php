@@ -50,27 +50,27 @@ class LoginController extends Controller
             ]);
         } else {
             $costumers = Costumer::join('users', 'costumers.user_id', '=', 'users.id')
-                        ->select('costumers.*', 'users.name as name')
-                        ->where('users.email', $request->email)
-                        ->first();
+                ->select('costumers.*', 'users.name as name')
+                ->where('users.email', $request->email)
+                ->first();
             $userGapoktan = UserGapoktan::join('users', 'user_gapoktans.user_id', '=', 'users.id')
-                        ->join('gapoktans', 'user_gapoktans.gapoktan_id', '=', 'gapoktans.id')
-                        ->select('user_gapoktans.*', 'users.name as name')
-                        ->where('users.email', $request->email)
-                        ->first();
+                ->join('gapoktans', 'user_gapoktans.gapoktan_id', '=', 'gapoktans.id')
+                ->select('user_gapoktans.*', 'users.name as name')
+                ->where('users.email', $request->email)
+                ->first();
             $poktans = Poktan::join('users', 'poktans.user_id', '=', 'users.id')
-                        ->join('gapoktans', 'poktans.gapoktan_id', '=', 'gapoktans.id')
-                        ->select('poktans.*', 'users.name as name')
-                        ->where('users.email', $request->email)
-                        ->first();
+                ->join('gapoktans', 'poktans.gapoktan_id', '=', 'gapoktans.id')
+                ->select('poktans.*', 'users.name as name')
+                ->where('users.email', $request->email)
+                ->first();
             $farmers = Farmer::join('users', 'farmers.user_id', '=', 'users.id')
-                        ->join('gapoktans', 'farmers.gapoktan_id', '=', 'gapoktans.id')
-                        ->join('poktans', 'farmers.poktan_id', '=', 'poktans.id')
-                        ->select('farmers.*', 'users.name as name')
-                        ->where('users.email', $request->email)
-                        ->first();
-            if($costumers){
-                if(Hash::check($request->password, $costumers->user->password)) {
+                ->join('gapoktans', 'farmers.gapoktan_id', '=', 'gapoktans.id')
+                ->join('poktans', 'farmers.poktan_id', '=', 'poktans.id')
+                ->select('farmers.*', 'users.name as name')
+                ->where('users.email', $request->email)
+                ->first();
+            if ($costumers) {
+                if (Hash::check($request->password, $costumers->user->password)) {
                     if (auth()->attempt($credentials)) {
                         if (auth()->check() && $costumers->user->hasRole('pembeli')) {
                             if (!$costumers->is_email_verified) {
@@ -104,10 +104,8 @@ class LoginController extends Controller
                         'messages' => 'Gagal Masuk, Pastikan Email dan Password anda benar!'
                     ]);
                 }
-            }
-                elseif ($userGapoktan)
-            {
-                if(Hash::check($request->password, $userGapoktan->user->password)) {
+            } elseif ($userGapoktan) {
+                if (Hash::check($request->password, $userGapoktan->user->password)) {
                     if (auth()->attempt($credentials)) {
                         if (auth()->check() && $userGapoktan->user->hasRole('gapoktan')) {
                             if (!$userGapoktan->is_active) {
@@ -141,10 +139,8 @@ class LoginController extends Controller
                         'messages' => 'Gagal Masuk, Pastikan Email dan Password anda benar!'
                     ]);
                 }
-            }
-                elseif ($poktans)
-            {
-                if(Hash::check($request->password, $poktans->user->password)) {
+            } elseif ($poktans) {
+                if (Hash::check($request->password, $poktans->user->password)) {
                     if (auth()->attempt($credentials)) {
                         if (auth()->check() && $poktans->user->hasRole('poktan')) {
                             if (!$poktans->is_active) {
@@ -178,10 +174,8 @@ class LoginController extends Controller
                         'messages' => 'Gagal Masuk, Pastikan Email dan Password anda benar!'
                     ]);
                 }
-            }
-                elseif ($farmers)
-            {
-                if(Hash::check($request->password, $farmers->user->password)) {
+            } elseif ($farmers) {
+                if (Hash::check($request->password, $farmers->user->password)) {
                     if (auth()->attempt($credentials)) {
                         if (auth()->check() && $farmers->user->hasRole('petani')) {
                             if (!$farmers->is_active) {
@@ -215,9 +209,7 @@ class LoginController extends Controller
                         'messages' => 'Gagal Masuk, Pastikan Email dan Password anda benar!'
                     ]);
                 }
-            }
-                else
-            {
+            } else {
                 return response()->json([
                     'status' => 401,
                     'messages' => 'Akun tidak ditemukan!'
@@ -267,8 +259,8 @@ class LoginController extends Controller
 
             $token = Str::random(64);
             UserVerify::create([
-              'costumer_id' => $costumer->id,
-              'token' => $token
+                'costumer_id' => $costumer->id,
+                'token' => $token
             ]);
 
             Mail::send('costumer.register.emailVerificationEmail', ['token' => $token], function ($message) use ($request) {
@@ -295,10 +287,10 @@ class LoginController extends Controller
         // notify()->warning("Maaf email Anda tidak dapat diidentifikasi.", "Warning", "topRight");
         // $messageDanger = 'Maaf email Anda tidak dapat diidentifikasi.';
 
-        if(!is_null($verifyUser) ){
+        if (!is_null($verifyUser)) {
             $costumer = $verifyUser->costumer;
 
-            if(!$costumer->is_email_verified) {
+            if (!$costumer->is_email_verified) {
                 $verifyUser->costumer->is_email_verified = 1;
                 $verifyUser->costumer->save();
                 notify()->success("Email Anda telah diverifikasi. Anda sekarang dapat masuk website dan aplikasi TaniKula.", "Success", "topRight");
