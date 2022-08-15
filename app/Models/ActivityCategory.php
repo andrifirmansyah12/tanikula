@@ -30,5 +30,4 @@ class ActivityCategory extends Model
     {
         return 'slug';
     }
-
 }

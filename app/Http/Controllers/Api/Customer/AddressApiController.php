@@ -12,7 +12,7 @@ class AddressApiController extends BaseController
 {
     public function indexByid($user_id)
     {
-        $datas = Address::where('user_id', $user_id)->latest()->get();
+        $datas = Address::where('user_id', $user_id)->orderBy('id', 'DESC')->paginate(6);
 
         $result = AddressResource::collection($datas);
         return $this->sendResponse($result, 'Data fetched');

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Farmer;
+use Carbon\Carbon;
 
 class FarmerSeeder extends Seeder
 {
@@ -22,6 +23,8 @@ class FarmerSeeder extends Seeder
                 "gapoktan_id" => 1,
                 "poktan_id" => 1,
                 "is_active" => 1,
+                'created_at' => Carbon::now()->format('Y-m-d'),
+                'updated_at' => Carbon::now()->format('Y-m-d'),
             ],
         ];
 

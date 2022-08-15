@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PlantResource extends JsonResource
+class HarvestResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,9 +17,8 @@ class PlantResource extends JsonResource
         return [
             'id' => $this->id,
             'farmer_name' => $this->farmer->user->name,
-            'field_id' => $this->field->id,
-            'field_category_name' => $this->field->fieldCategory->name,
-            'field_category_details' => $this->field->fieldCategory->details,
+            'field_category_name' => $this->fieldRecapPlanting->field->fieldCategory->name,
+            'field_category_details' => $this->fieldRecapPlanting->field->fieldCategory->details,
             // 'farmer_id' => new FarmerResource($this->farmer_id),
             // 'poktan_id' =>  new PoktanResource($this->poktan),
             // "plant_tanaman" => $this->plant_tanaman,
@@ -27,15 +26,15 @@ class PlantResource extends JsonResource
             // 'address' => $this->address,
             // 'plating_date' => $this->plating_date,
             // 'harvest_date' => $this->harvest_date,
-            'date_planting' => $this->date_planting,
+            'date_harvest' => $this->date_harvest,
             'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'name' => $this->name,
             //
-            // 'planting_id' => $this->fieldRecapPlanting->id,
+            'planting_id' => $this->fieldRecapPlanting->id,
+            'field_id' => $this->fieldRecapPlanting->field->id,
 
         ];
     }
 }
-// <td>' . $emp->field->fieldCategory->name . ' (' . $emp->field->fieldCategory->details . ')</td>';

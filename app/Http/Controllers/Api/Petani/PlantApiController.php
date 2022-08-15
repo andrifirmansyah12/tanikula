@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Petani;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\BaseApiController as BaseController;
 use App\Http\Resources\fieldResources;
+use App\Http\Resources\HarvestResource;
 use App\Http\Resources\PlantResource;
 use App\Models\Field;
 use App\Models\FieldRecapHarvest;
@@ -28,7 +29,7 @@ class PlantApiController extends BaseController
             ->where('fields.status', '!=', 'panen')
             ->where('fields.status', '!=', 'belum selesai panen')
             ->orderBy('fields.updated_at', 'desc')
-            ->paginate(5);
+            ->paginate(7);
         $result = fieldResources::collection($datas);
         return $this->sendResponse($result, 'Data fetched');
     }
@@ -41,7 +42,7 @@ class PlantApiController extends BaseController
             ->select('field_recap_plantings.*', 'fields.farmer_id as name')
             ->where('farmers.user_id', '=', $id)
             ->orderBy('field_recap_plantings.updated_at', 'desc')
-            ->paginate(5);
+            ->paginate(7);
         $results = PlantResource::collection($datas);
         return $this->sendResponse($results, 'Data fetched');
     }
@@ -49,14 +50,14 @@ class PlantApiController extends BaseController
     // tambah tandur
     public function storePlant(Request $request)
     {
-        $plant = Field::find($request->id_field);
+        $plant = Field::find($request->field_id);
         $plant->status = 'tandur';
         $plant->save();
 
-        $planting = FieldRecapPlanting::where('field_id', $request->id_field)->create([
+        $planting = FieldRecapPlanting::where('field_id', $request->field_id)->create([
             'field_id' => $request->field_id,
             'farmer_id' => $request->farmer_id,
-            'date_planting' => Carbon::createFromFormat('d-M-Y', $request->date_planting)->format('Y-m-d h:i:s'),
+            'date_planting' => Carbon::parse($request->date_planting)->format('Y-m-d'),
             'status' => 'melakukan tandur',
         ]);
 
@@ -68,16 +69,17 @@ class PlantApiController extends BaseController
     // Panen
     public function plantDataForHarvest($id)
     {
-        $result = FieldRecapPlanting::join('fields', 'field_recap_plantings.field_id', '=', 'fields.id')
+        $datas = FieldRecapPlanting::join('fields', 'field_recap_plantings.field_id', '=', 'fields.id')
             ->join('farmers', 'field_recap_plantings.farmer_id', '=', 'farmers.id')
             ->select('field_recap_plantings.*', 'fields.farmer_id as name')
             ->where('farmers.user_id', '=', $id)
             ->where('field_recap_plantings.status', '!=', 'sudah panen')
             ->where('field_recap_plantings.status', '!=', 'belum selesai panen')
             ->orderBy('field_recap_plantings.updated_at', 'desc')
-            ->get();
+            ->paginate(7);
 
-        return $this->sendResponse($result, 'Data fetched');
+        $results = PlantResource::collection($datas);
+        return $this->sendResponse($results, 'Data fetched');
     }
 
     public function harvest($id)
@@ -87,19 +89,25 @@ class PlantApiController extends BaseController
             ->select('field_recap_harvests.*', 'farmers.user_id as name')
             ->where('farmers.user_id', '=', $id)
             ->orderBy('field_recap_harvests.updated_at', 'desc')
-            ->get();
+            ->paginate(7);
 
-        return $this->sendResponse($result, 'Data fetched');
+        $results = HarvestResource::collection($result);
+        return $this->sendResponse($results, 'Data fetched');
     }
 
 
     public function doHarvest(Request $request)
     {
+        // plant_id
+        // farmer_id
+        // date_farmer
+        // status
+
         if ($request->status === 'panen') {
             $planting = FieldRecapHarvest::where('planting_id', $request->plant_id)->create([
                 'planting_id' => $request->plant_id,
                 'farmer_id' => $request->farmer_id,
-                'date_harvest' => Carbon::createFromFormat('d-M-Y', $request->date_harvest)->format('Y-m-d h:i:s'),
+                'date_harvest' => Carbon::parse($request->date_harvest)->format('Y-m-d h:i:s'),
                 'status' => $request->status,
             ]);
 
@@ -114,7 +122,7 @@ class PlantApiController extends BaseController
             $planting = FieldRecapHarvest::where('planting_id', $request->plant_id)->create([
                 'planting_id' => $request->plant_id,
                 'farmer_id' => $request->farmer_id,
-                'date_harvest' => Carbon::createFromFormat('d-M-Y', $request->date_harvest)->format('Y-m-d h:i:s'),
+                'date_harvest' => Carbon::parse($request->date_harvest)->format('Y-m-d h:i:s'),
                 'status' => $request->status,
             ]);
 
@@ -126,6 +134,32 @@ class PlantApiController extends BaseController
                 'status' => $request->status,
             ]);
         }
+
+        // return response()->json([
+        //     'status' => 200,
+        // ]);
+        return $this->sendResponse($planting, 'Data fetched');
+    }
+
+    // update
+    public function updatePanen(Request $request)
+    {
+        // id
+        // field_id
+        // plant_id
+        // farmer_id
+        // date_harvest
+        // status
+        $planting = FieldRecapHarvest::find($request->id)->update([
+            'planting_id' => $request->plant_id,
+            'farmer_id' => $request->farmer_id,
+            'date_harvest' => Carbon::parse($request->date_harvest)->format('Y-m-d h:i:s'),
+            'status' => $request->status,
+        ]);
+
+        $plant = Field::where('id', $request->field_id)->first();
+        $plant->status = $request->status;
+        $plant->save();
 
         return response()->json([
             'status' => 200,

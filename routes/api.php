@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Customer\ChatApiController;
 use App\Http\Controllers\Api\Customer\CheckoutApiController;
 use App\Http\Controllers\Api\Customer\CustomerApiController;
 use App\Http\Controllers\Api\Customer\ForgetPasswordApiController;
+use App\Http\Controllers\Api\Customer\HeroesApiController;
 use App\Http\Controllers\Api\Customer\LoginCustomerApiController;
 use App\Http\Controllers\Api\Customer\ParticipantChatApiController;
 use App\Http\Controllers\Api\Customer\ProductCustomerApiController;
@@ -115,6 +116,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('plant/harvest/plant/{id}', [PlantApiController::class, 'plantDataForHarvest']);
     Route::get('plant/harvest/{id}', [PlantApiController::class, 'harvest']);
     Route::post('plant/harvest/post', [PlantApiController::class, 'doHarvest']);
+    Route::post('plant/harvest/update', [PlantApiController::class, 'updatePanen']);
 
     // user
     Route::resource('user', UserApiController::class);
@@ -128,6 +130,7 @@ Route::get('product-customer/detail/{slug}', [ProductCustomerApiController::clas
 Route::get('product-customer/search/{name}', [ProductCustomerApiController::class, 'search']);
 Route::get('product-customer/category/{id}', [ProductCustomerApiController::class, 'category']);
 Route::get('product-customer/toko/{id}', [ProductCustomerApiController::class, 'tokoById']);
+Route::get('hero', [HeroesApiController::class, 'index']);
 
 // Route::post('view_category/{slug}', [ProductCustomerApiController::class, 'viewCategory']);
 Route::post('login-customer', [LoginCustomerApiController::class, 'login']);
@@ -139,7 +142,7 @@ Route::resource('product-photo-customer', PhotoProductApiControlller::class);
 Route::resource('product-category', ProductCategoryApiController::class);
 
 //tes api
-Route::post('notif', [ProductCustomerApiController::class, 'sendnofit']);
+// Route::post('notif', [ProductCustomerApiController::class, 'sendnofit']);
 
 // // Cart
 // Route::resource('cart', CartApiController::class);
