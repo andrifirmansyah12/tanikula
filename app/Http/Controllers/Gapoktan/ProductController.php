@@ -50,6 +50,7 @@ class ProductController extends Controller
                 <th>Stok</th>
                 <th>Berat</th>
                 <th>Harga</th>
+                <th>Diskon</th>
                 <th>Status</th>
                 <th>Aksi</th>
               </tr>
@@ -81,6 +82,11 @@ class ProductController extends Controller
                 $output .= '<td>' . $emp->stoke . '</td>
                 <td>' . $emp->weight . ' gram</td>
                 <td>Rp. ' . number_format($emp->price, 0) . '</td>';
+                if ($emp->discount) {
+                    $output .= '<td>'. $emp->discount . '%</td>';
+                } else {
+                    $output .= '<td>0%</td>';
+                }
                 if ($emp->is_active == 1) {
                     $output .= '<td><div class="badge badge-success">Aktif</div></td>';
                 } elseif ($emp->is_active == 0) {
@@ -132,6 +138,21 @@ class ProductController extends Controller
             $product->weight = $request->weight;
             $product->price = $request->price;
             $product->desc = $request->desc;
+            // Diskon
+            if ($request->discount != 0)
+             {
+                // Rumus Diskon
+                $product->discount = $request->discount;
+                $harga_awal = $request->discount/100 * $request->price;
+                $harga_akhir = $request->price - $harga_awal;
+
+                // Database
+                $product->price_discount = $request->price;
+                $product->price = $harga_akhir;
+            } else {
+                $product->discount = $request->discount;
+                $product->price = $request->price;
+            }
             $product->is_active = $request->is_active ? 1 : 0;
             $product->code = random_int(1000, 9999);
             $product->user_id = auth()->user()->id;
@@ -187,8 +208,25 @@ class ProductController extends Controller
             $product->category_product_id = $request->category_product_id;
             $product->weight = $request->weight;
             $product->stoke = $request->stoke;
-            $product->price = $request->price;
             $product->desc = $request->desc;
+
+            // Diskon
+            if ($request->discount != 0)
+            {
+                // Rumus Diskon
+                $product->discount = $request->discount;
+                $harga_awal = $request->discount/100 * $request->price;
+                $harga_akhir = $request->price - $harga_awal;
+
+                // Database
+                $product->price_discount = $request->price;
+                $product->price = $harga_akhir;
+            } elseif ($request->discount == 0) {
+                $product->discount = $request->discount;
+                $product->price = $product->price_discount;
+                $product->price_discount = null;
+            }
+
             if ($request->is_active == 0) {
                 $product->is_active = $request->is_active ? 1 : 0;
             } elseif ($request->is_active == 1) {

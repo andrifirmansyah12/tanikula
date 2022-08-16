@@ -124,24 +124,24 @@
                                 <h5>Pesanan Anda</h5>
                                 <hr style="background-color: #e0e0e0; opacity: 1;">
                                 <div>
-                                    <p class="fw-bold text-black text-uppercase mb-2">Alamat Tagihan</p>
+                                    <p class="fw-bold text-secondary text-uppercase mb-2">Alamat Tagihan</p>
                                     <div>
-                                        <p class="text-black">{{ $order->address->recipients_name }} <span
+                                        <p class="text-secondary">{{ $order->address->recipients_name }} <span
                                                 class="fw-normal">({{$order->address->address_label}}) </span>
                                         </p>
                                     </div>
                                     <div>
-                                        <p class="text-black">
+                                        <p class="text-secondary">
                                             @if ($order->address->village_id && $order->address->district_id && $order->address->city_id && $order->address->province_id != null)
                                                 {{ $order->address->village->name }}, Kecamatan {{ $order->address->district->name }}, {{ $order->address->city->name }}, Provinsi {{ $order->address->province->name }}
                                             @endif, {{$order->address->postal_code}}. [TaniKula Note: {{$order->address->complete_address}} {{$order->address->note_for_courier}}].</p>
-                                        <p class="text-black">
+                                        <p class="text-secondary">
                                             @if ($order->address->district_id != null)
                                                 {{ $order->address->district->name }},
                                             @endif{{$order->address->postal_code}}.
                                         </p>
-                                        <p class="text-black pt-3"><span> Email : </span> {{$order->user->email}}</p>
-                                        <p class="text-black"><span> No Telp : </span> {{$order->address->telp}}</p>
+                                        <p class="text-secondary pt-3"><span> Email : </span> {{$order->user->email}}</p>
+                                        <p class="text-secondary"><span> No Telp : </span> {{$order->address->telp}}</p>
                                         {{-- <p class="text-black"><span> Kode Pos : </span>
                                             {{$order->address->postal_code}}</p> --}}
                                     </div>
@@ -188,6 +188,7 @@
                                             $total = 0;
                                             $totalPrice = 0;
                                             $totalQty = 0;
+                                            $discount = 0;
                                             @endphp
                                             <tbody class="border-top-0">
                                             @foreach ($order->orderItems as $orderitem)
@@ -223,6 +224,11 @@
                                                             class="text-secondary text-xs font-weight-bold">Rp. {{ number_format($orderitem->price, 0) }}</span>
                                                     </td>
                                                     @php
+                                                        if ($orderitem->product->discount) {
+                                                            $discount += $orderitem->product->price_discount - $orderitem->product->price;
+                                                        } else {
+                                                            $discount += 0;
+                                                        }
                                                         $subTotal = $orderitem->price * $orderitem->qty;
                                                         $total += $orderitem->price * $orderitem->qty;
                                                         $totalQty += $orderitem->product_qty;
@@ -252,10 +258,9 @@
                             <div class="mt-3 mt-md-0">
                                 <p class="text-muted mb-0"><span class="fw-bold me-4">Total</span> Rp. {{ number_format($total, 0) }}</p>
                                 <p class="text-muted mb-0"><span class="fw-bold me-4">Ongkir</span> Rp. {{ number_format($ongkirTotal, 0) }}</p>
-                                <p class="text-muted mb-0"><span class="fw-bold me-4">Discount</span> 0</p>
+                                <p class="text-muted mb-0"><span class="fw-bold me-4">Diskon</span> Rp. {{ number_format($discount, 0) }}</p>
                             </div>
                         </div>
-
                     </div>
                     <div class="card-footer border-0 px-4 rounded-bottom py-5 d-md-flex align-items-center justify-content-between "
                         style="background-color: #16A085; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">

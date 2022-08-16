@@ -72,7 +72,7 @@
                 @foreach ($product_new as $item)
                 <div class="col-lg-3 col-md-6 col-12">
                     <!-- Start Single Product -->
-                    <div class="single-product" style="height: 24.5rem">
+                    <div class="single-product" style="height: 26">
                         <div class="product-image">
                             <a href="{{ url('home/'.$item->slug) }}">
                                 @if ($item->photo_product->count() > 0)
@@ -90,15 +90,21 @@
                                         style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                                 @endif
                             </a>
-                            {{-- <div class="button">
-                                <button id="addToCartBtn" class="btn"><i class="lni lni-cart"></i>
-                                    Keranjang</button>
-                            </div> --}}
                         </div>
                         <div class="product-info">
-                            <a href="{{ url('product-category/'.$item->product_category->slug) }}">
-                                <span class="category">{{ $item->category_name }}</span>
-                            </a>
+                            @if ($item->discount != 0)
+                                <div class="d-flex justify-content-between">
+                                    <a href="{{ url('product-category/'.$item->product_category->slug) }}">
+                                        <span class="category">{{ $item->category_name }}</span>
+                                    </a>
+                                    <p class="small badge bg-danger">{{ $item->discount }}% OFF</p>
+                                </div>
+                            @else
+                                <a href="{{ url('product-category/'.$item->product_category->slug) }}">
+                                    <span class="category">{{ $item->category_name }}</span>
+                                </a>
+                            @endif
+                            <p class="small" style="color:#16A085;">Stok tersisa {{ $item->stoke }}</p>
                             <h4 class="title">
                                 <a href="{{ url('home/'.$item->slug) }}" style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">{{ $item->name }}</a>
                             </h4>
@@ -129,7 +135,11 @@
                                 @endfor
                             </ul>
                             <div class="price">
-                                <span>Rp. {{ number_format($item->price, 0) }}</span>
+                                @if ($item->price_discount)
+                                    <span class="text-decoration-line-through text-muted " style="font-size: 13px">Rp. {{ number_format($item->price_discount, 0) }} <span>Rp. {{ number_format($item->price, 0) }}</span></span>
+                                @else
+                                    <span>Rp. {{ number_format($item->price, 0) }}</span>
+                                @endif
                             </div>
                         </div>
                     </div>

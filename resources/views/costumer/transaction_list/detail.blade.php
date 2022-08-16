@@ -278,6 +278,7 @@
                                             $total = 0;
                                             $totalPrice = 0;
                                             $totalQty = 0;
+                                            $discount = 0;
                                             @endphp
                                             @foreach ($order->orderItems as $orderitem)
                                             <tr>
@@ -316,6 +317,11 @@
                                                         class="text-secondary text-xs font-weight-bold">Rp. {{ number_format($orderitem->price, 0) }}</span>
                                                 </td>
                                                 @php
+                                                    if ($orderitem->product->discount) {
+                                                        $discount += $orderitem->product->price_discount - $orderitem->product->price;
+                                                    } else {
+                                                        $discount += 0;
+                                                    }
                                                     $subTotal = $orderitem->price * $orderitem->qty;
                                                     $total += $orderitem->price * $orderitem->qty;
                                                     $totalQty += $orderitem->product_qty;
@@ -351,7 +357,7 @@
                             <p class="text-muted mb-0"><span class="fw-bold me-4">Total</span> Rp.
                                 {{ number_format($total, 0) }}</p>
                             <p class="text-muted mb-0"><span class="fw-bold me-4">Ongkir</span> Rp. {{ number_format($ongkirTotal, 0) }}</p>
-                            <p class="text-muted mb-0"><span class="fw-bold me-4">Discount</span> 0</p>
+                            <p class="text-muted mb-0"><span class="fw-bold me-4">Diskon</span> Rp. {{ number_format($discount, 0) }}</p>
                         </div>
                     </div>
                 </div>
