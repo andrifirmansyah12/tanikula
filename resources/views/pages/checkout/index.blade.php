@@ -363,7 +363,7 @@
                         </select>
                     </div>
                     @else --}}
-                    <form action="{{ url('/cart/shipment') }}" method="get">
+                    <form action="{{ url('/cart/shipment') }}" method="post">
                         @csrf
                         @foreach ($address as $item)
                             <input type="hidden" name="destination_costumer" id="destination_costumer" value="{{ $item->city_id }}">
@@ -381,7 +381,7 @@
                         </div>
 
                         <div class="form-group mt-5">
-                            <h1 class="text-center">ESTIMASI</h1>
+                            <h5 class="text-center fw-bold" style="color: #16A085">ESTIMASI</h1>
                             <p class="py-2">Pilih Estimasi</p>
                             <select name="service" id="service" class="form-control" required>
                                 <option value="" disabled selected holder>Pilih Estimasi</option>

@@ -561,6 +561,7 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function 
     // Keranjang dan Order
     Route::get('/cart', [App\Http\Controllers\Pembeli\CartController::class, 'viewCart']);
     Route::get('/cart/shipment', [App\Http\Controllers\Pembeli\CheckoutController::class, 'index'])->name('cart.shipment.pembeli');
+    Route::post('/cart/shipment', [App\Http\Controllers\Pembeli\CheckoutController::class, 'index'])->name('cart.shipment.pembeli');
     Route::post('/cart/shipment/place-order', [App\Http\Controllers\Pembeli\CheckoutController::class, 'placeOrder'])->name('place-order-costumer');
 
     // Crud Address
@@ -613,6 +614,20 @@ Route::get('/based-on-your-search/fetchallBasedSearch', [App\Http\Controllers\Pa
 // Produk Terbaru
 Route::get('/new-product', [App\Http\Controllers\Pages\ProductController::class, 'newProduct'])->name('new.product');
 Route::get('/new-product/fetchallNewProduct', [App\Http\Controllers\Pages\ProductController::class, 'fetchAllNewProduct'])->name('fetchAllNewProduct');
+
+// Review Star 5, 4, 3, 2, & 1
+Route::get('/five-stars-reviews/{id}', [App\Http\Controllers\Pages\ProductController::class, 'fetchAllFiveStar'])->name('five.stars');
+Route::get('/four-stars-reviews/{id}', [App\Http\Controllers\Pages\ProductController::class, 'fetchAllFourStar'])->name('four.stars');
+Route::get('/three-stars-reviews/{id}', [App\Http\Controllers\Pages\ProductController::class, 'fetchAllThreeStar'])->name('three.stars');
+Route::get('/two-stars-reviews/{id}', [App\Http\Controllers\Pages\ProductController::class, 'fetchAllTwoStar'])->name('two.stars');
+Route::get('/one-stars-reviews/{id}', [App\Http\Controllers\Pages\ProductController::class, 'fetchAllOneStar'])->name('one.stars');
+
+// Count Review Star 5, 4, 3, 2, & 1
+Route::get('/five-stars-count/{id}', [App\Http\Controllers\Pages\ProductController::class, 'countStarsFive'])->name('five.stars.count');
+Route::get('/four-stars-count/{id}', [App\Http\Controllers\Pages\ProductController::class, 'countStarsFour'])->name('four.stars.count');
+Route::get('/three-stars-count/{id}', [App\Http\Controllers\Pages\ProductController::class, 'countStarsThree'])->name('three.stars.count');
+Route::get('/two-stars-count/{id}', [App\Http\Controllers\Pages\ProductController::class, 'countStarsTwo'])->name('two.stars.count');
+Route::get('/one-stars-count/{id}', [App\Http\Controllers\Pages\ProductController::class, 'countStarsOne'])->name('one.stars.count');
 
 // Search Produk
 Route::get('/search-product', [App\Http\Controllers\Pages\ProductController::class, 'searchAllProduct'])->name('searchAllProduct');

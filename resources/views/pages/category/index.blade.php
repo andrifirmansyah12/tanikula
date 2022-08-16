@@ -86,7 +86,7 @@
                 @foreach ($product as $item)
                 <div class="col-lg-3 col-md-6 col-12">
                     <!-- Start Single Product -->
-                    <div class="single-product" style="height: 24.5rem">
+                    <div class="single-product" style="height: 26rem">
                         <div class="product-image">
                             <a href="{{ url('product-category/'.$category_product->slug.'/'.$item->slug) }}">
                                 @if ($item->photo_product->count() > 0)
@@ -113,6 +113,7 @@
                             <a href="{{ url('product-category/'.$item->product_category->slug) }}">
                                 <span class="category">{{ $item->category_name }}</span>
                             </a>
+                            <p class="small" style="color:#16A085;">Stok tersisa {{ $item->stoke }}</p>
                             <h4 class="title">
                                 <a href="{{ url('product-category/'.$category_product->slug.'/'.$item->slug) }}" style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">{{ $item->name }}</a>
                             </h4>

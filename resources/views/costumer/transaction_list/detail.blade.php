@@ -484,7 +484,7 @@
                                     data-showClear="false" data-showCaption="false" data-animate="false">
                             </div>
                         </div>
-                        <div>
+                        <div class="mb-5">
                             <textarea class="form-control border px-3"
                                 placeholder="Beritahu kepada pengguna lain mengapa anda sangat menyukai produk ini."
                                 name="review[]" rows="5" id="message-text"></textarea>
@@ -492,8 +492,25 @@
                             </div>
                         </div>
                         @endforeach
+                        <div class="mt-3">
+                            <div class="px-3 border text-sm p-2 rounded bg-white d-flex justify-content-between">
+                                <div>
+                                    <span>Tampilkan username pada penilaian</span>
+                                    @php
+                                    function get_starred($str) {
+                                        $len = strlen($str);
+                                        return substr($str, 0, 1).str_repeat('*', $len - 2).substr($str, $len - 1, 1);
+                                    }
+                                    @endphp
+                                    <div>Username yang akan ditampilkan adalah <span id="console-event">{{ strtok(auth()->user()->name, ' ') }}</span></div>
+                                </div>
+                                <input id="toggle-event" name="hide" type="checkbox" data-toggle="toggle">
+                            </div>
+                            <div class="invalid-feedback">
+                            </div>
+                        </div>
                     </div>
-                    <div class="modal-footer d-flex justify-content-center border-top-0 py-4">
+                    <div class="modal-footer d-flex justify-content-center border-top-0">
                         <button type="submit" id="add_employee_btn" class="text-white btn bg-primary btn-lg mb-1" style="background-color: #35558a;">
                             Kirim
                         </button>
@@ -523,7 +540,13 @@
                             style="width: 55px; height: 55px;" alt="{{ $userInfo->user->name }}">
                         @endif
                         <div>
-                            <p class="my-0 mx-3 text-secondary text-xs font-weight-bold">{{ $order->user->name }}</p>
+                            <p class="my-0 mx-3 text-secondary text-xs font-weight-bold">
+                                @if ($review->hide === 1)
+                                    {{ get_starred(strtok($order->user->name, ' ')) }}
+                                @else
+                                    {{ $order->user->name }}
+                                @endif
+                            </p>
                             <div class="my-0 mx-3 rating-produkView">
                                 <div class="star-icon">
                                     @for ($i=1; $i<=$review->stars_rated; $i++)
@@ -544,21 +567,21 @@
                         <p class="my-0 mx-3 text-secondary text-xs font-weight-bold">{{ $review->review }}</p>
                     </div>
 
-                    <div class="d-flex align-items-center py-1 bg-light px-3">
-                        @if ($orderitem->product->photo_product->count() > 0)
-                            @foreach ($orderitem->product->photo_product->take(1) as
+                    <div class="d-flex align-items-center py-2 rounded bg-light px-3">
+                        @if ($review->product->photo_product->count() > 0)
+                            @foreach ($review->product->photo_product->take(1) as
                             $photos)
                                 @if ($photos->name)
                                     <img src="{{ asset('../storage/produk/'.$photos->name) }}" class="img-fluid"
-                                        style="object-fit: contain; width: 60px" alt="{{ $orderitem->product->name }}">
+                                        style="object-fit: contain; width: 60px" alt="{{ $review->product->name }}">
                                 @else
                                     <img src="{{ asset('img/no-image.png') }}" class="img-fluid"
-                                        style="object-fit: contain; width: 60px" alt="{{ $orderitem->product->name }}">
+                                        style="object-fit: contain; width: 60px" alt="{{ $review->product->name }}">
                                 @endif
                             @endforeach
                         @else
                             <img src="{{ asset('img/no-image.png') }}" class="img-fluid"
-                                style="object-fit: contain; width: 60px" alt="{{ $orderitem->product->name }}">
+                                style="object-fit: contain; width: 60px" alt="{{ $review->product->name }}">
                          @endif
                         <div>
                             <p class="my-0 mx-3 text-secondary text-xs font-weight-bold text-truncate col-9">
@@ -579,7 +602,7 @@
     </div>
 </div>
 
-{{-- Modal Ulasan --}}
+{{-- Eidt Ulasan --}}
 <div class="modal fade" id="editUlasanModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
@@ -594,20 +617,20 @@
                         <input type="hidden" name="reviewed_id[]" value="{{ $review->id }}">
                         <input type="hidden" name="reviewed_product_id[]" value="{{ $review->product_id }}">
                         <div class="d-flex align-items-center py-1 border-bottom">
-                            @if ($orderitem->product->photo_product->count() > 0)
-                                @foreach ($orderitem->product->photo_product->take(1) as
+                            @if ($review->product->photo_product->count() > 0)
+                                @foreach ($review->product->photo_product->take(1) as
                                 $photos)
                                     @if ($photos->name)
                                         <img src="{{ asset('../storage/produk/'.$photos->name) }}" class="img-fluid"
-                                            style="object-fit: contain; width: 60px" alt="{{ $orderitem->product->name }}">
+                                            style="object-fit: contain; width: 60px" alt="{{ $review->product->name }}">
                                     @else
                                         <img src="{{ asset('img/no-image.png') }}" class="img-fluid"
-                                            style="object-fit: contain; width: 60px" alt="{{ $orderitem->product->name }}">
+                                            style="object-fit: contain; width: 60px" alt="{{ $review->product->name }}">
                                     @endif
                                 @endforeach
                             @else
                                 <img src="{{ asset('img/no-image.png') }}" class="img-fluid"
-                                    style="object-fit: contain; width: 60px" alt="{{ $orderitem->product->name }}">
+                                    style="object-fit: contain; width: 60px" alt="{{ $review->product->name }}">
                             @endif
                             <div>
                                 <p class="my-0 mx-3 text-secondary text-xs font-weight-bold">{{ $review->product->name }}</p>
@@ -621,7 +644,7 @@
                                     data-showClear="false" data-showCaption="false" data-animate="false">
                             </div>
                         </div>
-                        <div>
+                        <div class="mb-5">
                             <textarea class="form-control border px-3"
                                 placeholder="Beritahu kepada pengguna lain mengapa anda sangat menyukai produk ini."
                                 name="reviewed_review[]" rows="5" id="message-text">{{ $review->review }}</textarea>
@@ -630,7 +653,7 @@
                         </div>
                         @endforeach
                     </div>
-                    <div class="modal-footer d-flex justify-content-center border-top-0 py-4">
+                    <div class="modal-footer d-flex justify-content-center border-top-0">
                         <button type="submit" id="edit_employee_btn" class="text-white btn bg-primary btn-lg mb-1" style="background-color: #35558a;">
                             Kirim
                         </button>
@@ -706,7 +729,7 @@
     </div>
 </div>
 
-<!-- Modal Edit Alamat -->
+<!-- Modal Cancel Order -->
 <div class="modal fade" id="cancelledOrderModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
@@ -783,6 +806,16 @@
 
     <!-- JAVASCRIPT -->
     <script>
+    $(function() {
+        $('#toggle-event').change(function() {
+            if ($(this).prop('checked') == true) {
+                $('#console-event').html('{{ get_starred(strtok(auth()->user()->name, ' ')) }}')
+            } else if ($(this).prop('checked') == false){
+                $('#console-event').html('{{ strtok(auth()->user()->name, ' ') }}')
+            }
+        });
+    });
+
     // initialize with defaults
     $("#input-id").rating({
         showClear: 'false',

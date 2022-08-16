@@ -198,7 +198,7 @@ class ProductController extends Controller
 				$output .= '
                 <div class="col-lg-3 col-md-6 col-12">
                     <!-- Start Single Product -->
-                    <div class="single-product" style="height: 24.5rem">
+                    <div class="single-product" style="height: 26rem">
                         <div class="product-image">
                             <a href="home/'.$item->slug.'">';
                                 if ($item->photo_product->count() > 0) {
@@ -221,6 +221,7 @@ class ProductController extends Controller
                             <a href="product-category/'.$item->product_category->slug.'">
                                 <span class="category">'. $item->category_name .'</span>
                             </a>
+                            <p class="small" style="color:#16A085;">Stok tersisa '. $item->stoke .'</p>
                             <h4 class="title">
                                 <a href="home/'.$item->slug.'"
                                     style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">'. $item->name .'</a>
@@ -342,7 +343,7 @@ class ProductController extends Controller
 				$output .= '
                 <div class="col-lg-3 col-md-6 col-12">
                     <!-- Start Single Product -->
-                    <div class="single-product" style="height: 24.5rem">
+                    <div class="single-product" style="height: 26rem">
                         <div class="product-image">
                             <a href="home/'.$item->slug.'">';
                                 if ($item->photo_product->count() > 0) {
@@ -365,6 +366,7 @@ class ProductController extends Controller
                             <a href="product-category/'.$item->product_category->slug.'">
                                 <span class="category">'. $item->category_name .'</span>
                             </a>
+                            <p class="small" style="color:#16A085;">Stok tersisa '. $item->stoke .'</p>
                             <h4 class="title">
                                 <a href="home/'.$item->slug.'"
                                     style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">'. $item->name .'</a>
@@ -466,7 +468,7 @@ class ProductController extends Controller
 				$output .= '
                 <div class="col-lg-3 col-md-6 col-12">
                     <!-- Start Single Product -->
-                    <div class="single-product" style="height: 24.5rem">
+                    <div class="single-product" style="height: 26rem">
                         <div class="product-image">
                             <a href="../home/'.$item->slug.'">';
                                 if ($item->photo_product->count() > 0) {
@@ -489,6 +491,7 @@ class ProductController extends Controller
                             <a href="../product-category/'.$item->product_category->slug.'">
                                 <span class="category">'. $item->category_name .'</span>
                             </a>
+                            <p class="small" style="color:#16A085;">Stok tersisa '. $item->stoke .'</p>
                             <h4 class="title">
                                 <a href="../home/'.$item->slug.'"
                                     style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">'. $item->name .'</a>
@@ -623,17 +626,6 @@ class ProductController extends Controller
         }
     }
 
-    // public function productListAjax()
-    // {
-    //     $product = Product::select('name')->where('is_active', '1')->get();
-    //     $data = [];
-
-    //     foreach ($product as $item) {
-    //         $data[] = $item['name'];
-    //     }
-
-    //     return $data;
-    // }
 
     public function productListAjax(Request $request)
     {
@@ -643,24 +635,363 @@ class ProductController extends Controller
         ->pluck('name');
     }
 
-    // public function searchProduct(Request $request)
-    // {
-    //     $searched_product = $request->product_name;
+    public function fetchAllFiveStar(Request $request, $id)
+    {
+		$fiverateds = Review::where('product_id', $id)->where('stars_rated', 5)->get();
+		$output = '';
+		if ($fiverateds->count() > 0) {
+			foreach ($fiverateds as $review) {
+				$output .= '
+                <div class="mt-3 d-lg-flex align-items-center justify-content-start">
+                    <div class="">
+                        <div>';
+                            foreach ($review->user->costumer as $potoProfile) {
+                                if ($potoProfile->image) {
+                                    $output .= '<img src="../storage/profile/'.$potoProfile->image.'"
+                                        style="max-width: 4rem;" class="img-fluid img-thumbnail rounded-circle"
+                                        alt="">';
+                                } else {
+                                    $output .= '<img src="../stisla/assets/img/avatar/avatar-1.png"
+                                        style="max-width: 4rem;" class="img-fluid img-thumbnail rounded-circle"
+                                        alt="">';
+                                }
+                            }
+                            function get_starred($str) {
+                                $len = strlen($str);
+                                return substr($str, 0, 1).str_repeat('*', $len - 2).substr($str, $len - 1, 1);
+                            }
+                            $output .= '';
+                                if ($review->hide === 1) {
+                                    $output .= '<span class="ms-1">'.get_starred(strtok($review->user->name, ' ')).'</span>';
+                                } else {
+                                    $output .= '<span class="ms-1">'.$review->user->name.'</span>';
+                                }
+                            $output .= '
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-8 col-xl-10 mt-2 mt-lg-0 ms-0 ms-lg-5">
+                        <ul class="normal-list">
+                            <li>
+                                <div class="ratings">
+                                    <div class="star-icon" style="
+                                        font-size: 20px;
+                                        font-family: sans-serif;
+                                        font-weight: 800;
+                                        text-transform: uppercase;">';
+                                        for ($i = 1; $i <= $review->stars_rated; $i++) {
+                                            $output .= '<i class="lni lni-star-filled ratings-color"></i>';
+                                        }
+                                        for ($j = $review->stars_rated+1; $j <= 5; $j++) {
+                                            $output .= '<i class="lni lni-star-filled"></i>';
+                                        }
+                                    $output .= '</div>
+                                </div>
+                            </li>
+                            <span class="me-md-5">
+                                '. $review->review .'
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                ';
+			}
+			echo $output;
+		} else {
+            echo '<p class="h5 text-center" style="color: #16A085">Belum ada ulasan produk!</p>';
+		}
+	}
 
-    //     if ($searched_product != "")
-    //     {
-    //         $product = Product::where('name', 'like', "%{$searched_product}%")->first();
-    //         if ($product)
-    //         {
-    //             return redirect('product-category/'.$product->product_category->slug.'/'.$product->slug);
-    //         } else
-    //         {
-    //             return redirect()->back()->with('status', 'Produk yang anda cari tidak ada!');
-    //         }
-    //     } else
-    //     {
-    //         return redirect()->back();
-    //     }
+    public function fetchAllFourStar(Request $request, $id)
+    {
+		$fiverateds = Review::where('product_id', $id)->where('stars_rated', 4)->get();
+		$output = '';
+		if ($fiverateds->count() > 0) {
+			foreach ($fiverateds as $review) {
+				$output .= '
+                <div class="mt-3 d-lg-flex align-items-center justify-content-start">
+                    <div class="">
+                        <div>';
+                            foreach ($review->user->costumer as $potoProfile) {
+                                if ($potoProfile->image) {
+                                    $output .= '<img src="../storage/profile/'.$potoProfile->image.'"
+                                        style="max-width: 4rem;" class="img-fluid img-thumbnail rounded-circle"
+                                        alt="">';
+                                } else {
+                                    $output .= '<img src="../stisla/assets/img/avatar/avatar-1.png"
+                                        style="max-width: 4rem;" class="img-fluid img-thumbnail rounded-circle"
+                                        alt="">';
+                                }
+                            }
+                            function get_starred($str) {
+                                $len = strlen($str);
+                                return substr($str, 0, 1).str_repeat('*', $len - 2).substr($str, $len - 1, 1);
+                            }
+                            $output .= '';
+                                if ($review->hide === 1) {
+                                    $output .= '<span class="ms-1">'.get_starred(strtok($review->user->name, ' ')).'</span>';
+                                } else {
+                                    $output .= '<span class="ms-1">'.$review->user->name.'</span>';
+                                }
+                            $output .= '
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-8 col-xl-10 mt-2 mt-lg-0 ms-0 ms-lg-5">
+                        <ul class="normal-list">
+                            <li>
+                                <div class="ratings">
+                                    <div class="star-icon" style="
+                                        font-size: 20px;
+                                        font-family: sans-serif;
+                                        font-weight: 800;
+                                        text-transform: uppercase;">';
+                                        for ($i = 1; $i <= $review->stars_rated; $i++) {
+                                            $output .= '<i class="lni lni-star-filled ratings-color"></i>';
+                                        }
+                                        for ($j = $review->stars_rated+1; $j <= 5; $j++) {
+                                            $output .= '<i class="lni lni-star-filled"></i>';
+                                        }
+                                    $output .= '</div>
+                                </div>
+                            </li>
+                            <span class="me-md-5">
+                                '. $review->review .'
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                ';
+			}
+			echo $output;
+		} else {
+            echo '<p class="h5 text-center" style="color: #16A085">Belum ada ulasan produk!</p>';
+		}
+	}
 
-    // }
+    public function fetchAllThreeStar(Request $request, $id)
+    {
+		$fiverateds = Review::where('product_id', $id)->where('stars_rated', 3)->get();
+		$output = '';
+		if ($fiverateds->count() > 0) {
+			foreach ($fiverateds as $review) {
+				$output .= '
+                <div class="mt-3 d-lg-flex align-items-center justify-content-start">
+                    <div class="">
+                        <div>';
+                            foreach ($review->user->costumer as $potoProfile) {
+                                if ($potoProfile->image) {
+                                    $output .= '<img src="../storage/profile/'.$potoProfile->image.'"
+                                        style="max-width: 4rem;" class="img-fluid img-thumbnail rounded-circle"
+                                        alt="">';
+                                } else {
+                                    $output .= '<img src="../stisla/assets/img/avatar/avatar-1.png"
+                                        style="max-width: 4rem;" class="img-fluid img-thumbnail rounded-circle"
+                                        alt="">';
+                                }
+                            }
+                            function get_starred($str) {
+                                $len = strlen($str);
+                                return substr($str, 0, 1).str_repeat('*', $len - 2).substr($str, $len - 1, 1);
+                            }
+                            $output .= '';
+                                if ($review->hide === 1) {
+                                    $output .= '<span class="ms-1">'.get_starred(strtok($review->user->name, ' ')).'</span>';
+                                } else {
+                                    $output .= '<span class="ms-1">'.$review->user->name.'</span>';
+                                }
+                            $output .= '
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-8 col-xl-10 mt-2 mt-lg-0 ms-0 ms-lg-5">
+                        <ul class="normal-list">
+                            <li>
+                                <div class="ratings">
+                                    <div class="star-icon" style="
+                                        font-size: 20px;
+                                        font-family: sans-serif;
+                                        font-weight: 800;
+                                        text-transform: uppercase;">';
+                                        for ($i = 1; $i <= $review->stars_rated; $i++) {
+                                            $output .= '<i class="lni lni-star-filled ratings-color"></i>';
+                                        }
+                                        for ($j = $review->stars_rated+1; $j <= 5; $j++) {
+                                            $output .= '<i class="lni lni-star-filled"></i>';
+                                        }
+                                    $output .= '</div>
+                                </div>
+                            </li>
+                            <span class="me-md-5">
+                                '. $review->review .'
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                ';
+			}
+			echo $output;
+		} else {
+            echo '<p class="h5 text-center" style="color: #16A085">Belum ada ulasan produk!</p>';
+		}
+	}
+
+    public function fetchAllTwoStar(Request $request, $id)
+    {
+		$fiverateds = Review::where('product_id', $id)->where('stars_rated', 2)->get();
+		$output = '';
+		if ($fiverateds->count() > 0) {
+			foreach ($fiverateds as $review) {
+				$output .= '
+                <div class="mt-3 d-lg-flex align-items-center justify-content-start">
+                    <div class="">
+                        <div>';
+                            foreach ($review->user->costumer as $potoProfile) {
+                                if ($potoProfile->image) {
+                                    $output .= '<img src="../storage/profile/'.$potoProfile->image.'"
+                                        style="max-width: 4rem;" class="img-fluid img-thumbnail rounded-circle"
+                                        alt="">';
+                                } else {
+                                    $output .= '<img src="../stisla/assets/img/avatar/avatar-1.png"
+                                        style="max-width: 4rem;" class="img-fluid img-thumbnail rounded-circle"
+                                        alt="">';
+                                }
+                            }
+                            function get_starred($str) {
+                                $len = strlen($str);
+                                return substr($str, 0, 1).str_repeat('*', $len - 2).substr($str, $len - 1, 1);
+                            }
+                            $output .= '';
+                                if ($review->hide === 1) {
+                                    $output .= '<span class="ms-1">'.get_starred(strtok($review->user->name, ' ')).'</span>';
+                                } else {
+                                    $output .= '<span class="ms-1">'.$review->user->name.'</span>';
+                                }
+                            $output .= '
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-8 col-xl-10 mt-2 mt-lg-0 ms-0 ms-lg-5">
+                        <ul class="normal-list">
+                            <li>
+                                <div class="ratings">
+                                    <div class="star-icon" style="
+                                        font-size: 20px;
+                                        font-family: sans-serif;
+                                        font-weight: 800;
+                                        text-transform: uppercase;">';
+                                        for ($i = 1; $i <= $review->stars_rated; $i++) {
+                                            $output .= '<i class="lni lni-star-filled ratings-color"></i>';
+                                        }
+                                        for ($j = $review->stars_rated+1; $j <= 5; $j++) {
+                                            $output .= '<i class="lni lni-star-filled"></i>';
+                                        }
+                                    $output .= '</div>
+                                </div>
+                            </li>
+                            <span class="me-md-5">
+                                '. $review->review .'
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                ';
+			}
+			echo $output;
+		} else {
+            echo '<p class="h5 text-center" style="color: #16A085">Belum ada ulasan produk!</p>';
+		}
+	}
+
+    public function fetchAllOneStar(Request $request, $id)
+    {
+		$fiverateds = Review::where('product_id', $id)->where('stars_rated', 1)->get();
+		$output = '';
+		if ($fiverateds->count() > 0) {
+			foreach ($fiverateds as $review) {
+				$output .= '
+                <div class="mt-3 d-lg-flex align-items-center justify-content-start">
+                    <div class="">
+                        <div>';
+                            foreach ($review->user->costumer as $potoProfile) {
+                                if ($potoProfile->image) {
+                                    $output .= '<img src="../storage/profile/'.$potoProfile->image.'"
+                                        style="max-width: 4rem;" class="img-fluid img-thumbnail rounded-circle"
+                                        alt="">';
+                                } else {
+                                    $output .= '<img src="../stisla/assets/img/avatar/avatar-1.png"
+                                        style="max-width: 4rem;" class="img-fluid img-thumbnail rounded-circle"
+                                        alt="">';
+                                }
+                            }
+                            function get_starred($str) {
+                                $len = strlen($str);
+                                return substr($str, 0, 1).str_repeat('*', $len - 2).substr($str, $len - 1, 1);
+                            }
+                            $output .= '';
+                                if ($review->hide === 1) {
+                                    $output .= '<span class="ms-1">'.get_starred(strtok($review->user->name, ' ')).'</span>';
+                                } else {
+                                    $output .= '<span class="ms-1">'.$review->user->name.'</span>';
+                                }
+                            $output .= '
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-8 col-xl-10 mt-2 mt-lg-0 ms-0 ms-lg-5">
+                        <ul class="normal-list">
+                            <li>
+                                <div class="ratings">
+                                    <div class="star-icon" style="
+                                        font-size: 20px;
+                                        font-family: sans-serif;
+                                        font-weight: 800;
+                                        text-transform: uppercase;">';
+                                        for ($i = 1; $i <= $review->stars_rated; $i++) {
+                                            $output .= '<i class="lni lni-star-filled ratings-color"></i>';
+                                        }
+                                        for ($j = $review->stars_rated+1; $j <= 5; $j++) {
+                                            $output .= '<i class="lni lni-star-filled"></i>';
+                                        }
+                                    $output .= '</div>
+                                </div>
+                            </li>
+                            <span class="me-md-5">
+                                '. $review->review .'
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                ';
+			}
+			echo $output;
+		} else {
+            echo '<p class="h5 text-center" style="color: #16A085">Belum ada ulasan produk!</p>';
+		}
+	}
+
+    public function countStarsFive($id)
+    {
+        $countStarsFive = Review::where('product_id', $id)->where('stars_rated', 5)->count();
+        return response()->json(['countStarsFive'=> $countStarsFive]);
+    }
+
+    public function countStarsFour($id)
+    {
+        $countStarsFour = Review::where('product_id', $id)->where('stars_rated', 4)->count();
+        return response()->json(['countStarsFour'=> $countStarsFour]);
+    }
+
+    public function countStarsThree($id)
+    {
+        $countStarsThree = Review::where('product_id', $id)->where('stars_rated', 3)->count();
+        return response()->json(['countStarsThree'=> $countStarsThree]);
+    }
+
+    public function countStarsTwo($id)
+    {
+        $countStarsTwo = Review::where('product_id', $id)->where('stars_rated', 2)->count();
+        return response()->json(['countStarsTwo'=> $countStarsTwo]);
+    }
+
+    public function countStarsOne($id)
+    {
+        $countStarsOne = Review::where('product_id', $id)->where('stars_rated', 1)->count();
+        return response()->json(['countStarsOne'=> $countStarsOne]);
+    }
 }

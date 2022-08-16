@@ -4,6 +4,7 @@
 @section('breadcrumb-subTitle', substr($product->name,0,20). '...')
 
 @section('style')
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         #chat2 .form-control {
@@ -71,6 +72,10 @@
             height: 300px;
             overflow-y: scroll;
         }
+
+        .costum-color {
+            background-image: linear-gradient(195deg, rgb(255, 255, 255) 0%, #ffffff 100%);
+        }
     </style>
 @endsection
 
@@ -133,6 +138,7 @@
                             </div>
                             <p class="category"><i class="lni lni-tag"></i> Kategori:<a
                                     href="{{ url('product-category/'.$product->product_category->slug) }}">{{ $product->product_category->name }}</a></p>
+                            <p class="category">Stok {{ $product->stoke }}</p>
                             {{-- <h3 class="price">Rp. {{ number_format($product->price, 0) }}<span>Rp. {{ number_format(0, 0) }}</span></h3> --}}
                             <h3 class="price" style="color:#16A085;">Rp. {{ number_format($product->price, 0) }}</h3>
                             <p class="info-text">{{ $product->desc }}</p>
@@ -304,8 +310,83 @@
                         </div>
                         <div class="col-lg-12 col-12 mt-md-5">
                             <div class="info-body">
+                                <input type="hidden" name="passingIdProduct" value="{{ $product->id }}">
                                 <h4 class="fw-bold" style="color:#16A085;">Semua Ulasan</h4>
-                                @if ($showReviews->count() > 0)
+                                <div class="card-body px-0 py-3" id="tabs">
+                                    <ul class="mx-3 p-1 nav bg-white rounded nav-fill">
+                                        <li class="nav-item">
+                                            <a class="nav-link fiveStars text-black bg-white"
+                                                href="#fiveStars">
+                                                <i class="lni lni-star-filled" style="color: #f0d800;"></i>
+                                                <i class="lni lni-star-filled" style="color: #f0d800;"></i>
+                                                <i class="lni lni-star-filled" style="color: #f0d800;"></i>
+                                                <i class="lni lni-star-filled" style="color: #f0d800;"></i>
+                                                <i class="lni lni-star-filled" style="color: #f0d800;"></i>
+                                                <span>(<span class="five-count"></span>)</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link fourStars text-black bg-white"
+                                                href="#fourStars">
+                                                <i class="lni lni-star-filled" style="color: #f0d800;"></i>
+                                                <i class="lni lni-star-filled" style="color: #f0d800;"></i>
+                                                <i class="lni lni-star-filled" style="color: #f0d800;"></i>
+                                                <i class="lni lni-star-filled" style="color: #f0d800;"></i>
+                                                <i class="lni lni-star"></i>
+                                                <span>(<span class="four-count"></span>)</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link threeStars text-black bg-white"
+                                                href="#threeStars">
+                                                <i class="lni lni-star-filled" style="color: #f0d800;"></i>
+                                                <i class="lni lni-star-filled" style="color: #f0d800;"></i>
+                                                <i class="lni lni-star-filled" style="color: #f0d800;"></i>
+                                                <i class="lni lni-star"></i>
+                                                <i class="lni lni-star"></i>
+                                                <span>(<span class="three-count"></span>)</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link twoStars text-black bg-white"
+                                                href="#twoStars">
+                                                <i class="lni lni-star-filled" style="color: #f0d800;"></i>
+                                                <i class="lni lni-star-filled" style="color: #f0d800;"></i>
+                                                <i class="lni lni-star"></i>
+                                                <i class="lni lni-star"></i>
+                                                <i class="lni lni-star"></i>
+                                                <span>(<span class="two-count"></span>)</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link oneStars text-black bg-white"
+                                                href="#oneStars">
+                                                <i class="lni lni-star-filled" style="color: #f0d800;"></i>
+                                                <i class="lni lni-star"></i>
+                                                <i class="lni lni-star"></i>
+                                                <i class="lni lni-star"></i>
+                                                <i class="lni lni-star"></i>
+                                                <span>(<span class="one-count"></span>)</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <div class="py-5 px-md-5" id="fiveStars">
+                                        <p class="h5 text-center" style="color: #16A085">Memuat</p>
+                                    </div>
+                                    <div class="py-5 px-md-5" id="fourStars">
+                                        <p class="h5 text-center" style="color: #16A085">Memuat</p>
+                                    </div>
+                                    <div class="py-5 px-md-5" id="threeStars">
+                                        <p class="h5 text-center" style="color: #16A085">Memuat</p>
+                                    </div>
+                                    <div class="py-5 px-md-5" id="twoStars">
+                                        <p class="h5 text-center" style="color: #16A085">Memuat</p>
+                                    </div>
+                                    <div class="py-5 px-md-5" id="oneStars">
+                                        <p class="h5 text-center" style="color: #16A085">Memuat</p>
+                                    </div>
+                                </div>
+                                {{-- @if ($showReviews->count() > 0)
                                     @foreach ($showReviews as $review)
                                     <div class="mt-3 d-lg-flex align-items-center justify-content-start">
                                         <div class="col-8 col-lg-3 col-xl-2">
@@ -321,7 +402,19 @@
                                                     alt="">
                                                 @endif
                                                 @endforeach
-                                                <span class="ms-1">{{ substr($review->user->name, 0, 12). '...' }}</span>
+                                                @php
+                                                function get_starred($str) {
+                                                    $len = strlen($str);
+                                                    return substr($str, 0, 1).str_repeat('*', $len - 2).substr($str, $len - 1, 1);
+                                                }
+                                                @endphp
+                                                <span class="ms-1">
+                                                    @if ($review->hide === 1)
+                                                        {{ get_starred(strtok($review->user->name, ' ')) }}
+                                                    @else
+                                                        {{ $review->user->name }}
+                                                    @endif
+                                                </span>
                                             </div>
                                         </div>
                                         <div class="col-12 col-lg-8 col-xl-10 mt-2 mt-lg-0 ms-0 ms-lg-5">
@@ -363,7 +456,7 @@
                                         </div>
                                     </section>
                                 </div>
-                                @endif
+                                @endif --}}
                             </div>
                         </div>
                     </div>
@@ -469,8 +562,185 @@
 @endsection
 
 @section('script')
+    <!-- LIBARARY JS -->
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script type="text/javascript">
+        // ========================================= Tabs UI ==========================================
+        $( function() {
+            $("#tabs").tabs();
+            $( ".fiveStars" ).tabs({
+                classes: {
+                    "ui-tabs": "costum-color"
+                },
+            });
+            $( ".fourStars" ).tabs({
+                classes: {
+                    "ui-tabs": "costum-color"
+                }
+            });
+            $( ".threeStars" ).tabs({
+                classes: {
+                    "ui-tabs": "costum-color"
+                }
+            });
+            $( ".twoStars" ).tabs({
+                classes: {
+                    "ui-tabs": "costum-color"
+                }
+            });
+            $( ".oneStars" ).tabs({
+                classes: {
+                    "ui-tabs": "costum-color"
+                }
+            });
+        });
+
+        $(function() {
+
+            countStarsFive();
+            countStarsFour();
+            countStarsThree();
+            countStarsTwo();
+            countStarsOne();
+
+            fetchAllFiveStar();
+            fetchAllFourStar();
+            fetchAllThreeStar();
+            fetchAllTwoStar();
+            fetchAllOneStar();
+
+            // ==================================== Count Star Review ===============================
+
+            function countStarsFive()
+            {
+                var id = $("input[name=passingIdProduct]").val();
+                $.ajax({
+                    method: "GET",
+                    url: '/five-stars-count/' +id,
+                    success: function (response) {
+                        $('.five-count').html('');
+                        $('.five-count').html(response.countStarsFive);
+                        // alert(response.count);
+                    }
+                });
+            }
+
+            function countStarsFour()
+            {
+                var id = $("input[name=passingIdProduct]").val();
+                $.ajax({
+                    method: "GET",
+                    url: '/four-stars-count/' +id,
+                    success: function (response) {
+                        $('.four-count').html('');
+                        $('.four-count').html(response.countStarsFour);
+                        // alert(response.count);
+                    }
+                });
+            }
+
+            function countStarsThree()
+            {
+                var id = $("input[name=passingIdProduct]").val();
+                $.ajax({
+                    method: "GET",
+                    url: '/three-stars-count/' +id,
+                    success: function (response) {
+                        $('.three-count').html('');
+                        $('.three-count').html(response.countStarsThree);
+                        // alert(response.count);
+                    }
+                });
+            }
+
+            function countStarsTwo()
+            {
+                var id = $("input[name=passingIdProduct]").val();
+                $.ajax({
+                    method: "GET",
+                    url: '/two-stars-count/' +id,
+                    success: function (response) {
+                        $('.two-count').html('');
+                        $('.two-count').html(response.countStarsTwo);
+                        // alert(response.count);
+                    }
+                });
+            }
+
+            function countStarsOne()
+            {
+                var id = $("input[name=passingIdProduct]").val();
+                $.ajax({
+                    method: "GET",
+                    url: '/one-stars-count/' +id,
+                    success: function (response) {
+                        $('.one-count').html('');
+                        $('.one-count').html(response.countStarsOne);
+                        // alert(response.count);
+                    }
+                });
+            }
+
+            // ================================ Review =====================================
+
+            function fetchAllFiveStar() {
+                var id = $("input[name=passingIdProduct]").val();
+                $.ajax({
+                url: '/five-stars-reviews/' +id,
+                method: 'get',
+                success: function(response) {
+                    $("#fiveStars").html(response);
+                }
+                });
+            }
+
+            function fetchAllFourStar() {
+                var id = $("input[name=passingIdProduct]").val();
+                $.ajax({
+                url: '/four-stars-reviews/' +id,
+                method: 'get',
+                success: function(response) {
+                    $("#fourStars").html(response);
+                }
+                });
+            }
+
+            function fetchAllThreeStar() {
+                var id = $("input[name=passingIdProduct]").val();
+                $.ajax({
+                url: '/three-stars-reviews/' +id,
+                method: 'get',
+                success: function(response) {
+                    $("#threeStars").html(response);
+                }
+                });
+            }
+
+            function fetchAllTwoStar() {
+                var id = $("input[name=passingIdProduct]").val();
+                $.ajax({
+                url: '/two-stars-reviews/' +id,
+                method: 'get',
+                success: function(response) {
+                    $("#twoStars").html(response);
+                }
+                });
+            }
+
+            function fetchAllOneStar() {
+                var id = $("input[name=passingIdProduct]").val();
+                $.ajax({
+                url: '/one-stars-reviews/' +id,
+                method: 'get',
+                success: function(response) {
+                    $("#oneStars").html(response);
+                }
+                });
+            }
+        });
+
+        // ====================================== Message Firebase ==========================================
         const messaging = firebase.messaging();
         messaging.usePublicVapidKey("BOPzmY3tl0kiX3fUSsQBfurfNxn86-jBjjPCbJxObhqxEMu-RFxwwhHNQ-dGRF0SDQMIEuCTi3BOQz_pUYYBvxs");
 
