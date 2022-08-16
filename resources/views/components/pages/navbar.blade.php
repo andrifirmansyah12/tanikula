@@ -48,10 +48,27 @@
                 <div class="col-lg-4 col-md-4 col-12">
                     <div class="top-end">
                     @auth
-                        <a onclick="pembeli('{{ route('pembeli') }}')" href="#" class="user">
-                            <i class="lni lni-user"></i>
-                            {{ auth()->user()->name }}
-                        </a>
+                        @hasrole('pembeli')
+                            <a onclick="pembeli('{{ route('pembeli') }}')" href="#" class="user">
+                                <i class="lni lni-user"></i>
+                                {{ auth()->user()->name }}
+                            </a>
+                        @elserole('gapoktan')
+                            <a onclick="gapoktan('{{ route('gapoktan') }}')" href="#" class="user">
+                                <i class="lni lni-user"></i>
+                                {{ auth()->user()->name }}
+                            </a>
+                        @elserole('poktan')
+                            <a onclick="poktan('{{ route('poktan') }}')" href="#" class="user">
+                                <i class="lni lni-user"></i>
+                                {{ auth()->user()->name }}
+                            </a>
+                        @elserole('petani')
+                            <a onclick="petani('{{ route('petani') }}')" href="#" class="user">
+                                <i class="lni lni-user"></i>
+                                {{ auth()->user()->name }}
+                            </a>
+                        @endhasrole
                     @else
                         <ul class="user-login">
                             <li>

@@ -64,8 +64,6 @@ class LoginController extends Controller
                 ->where('users.email', $request->email)
                 ->first();
             $farmers = Farmer::join('users', 'farmers.user_id', '=', 'users.id')
-                ->join('gapoktans', 'farmers.gapoktan_id', '=', 'gapoktans.id')
-                ->join('poktans', 'farmers.poktan_id', '=', 'poktans.id')
                 ->select('farmers.*', 'users.name as name')
                 ->where('users.email', $request->email)
                 ->first();

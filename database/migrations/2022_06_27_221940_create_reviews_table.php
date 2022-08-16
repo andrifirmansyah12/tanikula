@@ -20,6 +20,7 @@ class CreateReviewsTable extends Migration
             $table->foreignId("product_id")->nullable();
             $table->string("stars_rated")->nullable();
             $table->mediumText("review")->nullable();
+            $table->boolean('hide')->default(0);
             $table->timestamps();
         });
     }

@@ -207,7 +207,9 @@
     <script>
         $( function() {
             $( ".datepicker" ).datepicker({
-                dateFormat: 'dd-M-yy'
+                dateFormat: 'dd-M-yy',
+                minDate: 0,
+                timepicker:false,
             });
         });
 
@@ -314,6 +316,43 @@
                     $("#edit_employee_btn").prop('disabled', false);
                 }
                 });
+            });
+
+            // delete employee ajax request
+            $(document).on('click', '.recycleField', function(e) {
+                e.preventDefault();
+                let id = $(this).attr('id');
+                let csrf = '{{ csrf_token() }}';
+                Swal.fire({
+                title: 'Apa kamu yakin?',
+                text: "Mengembalikan data ini kesemula!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yakin!',
+                cancelButtonText: 'Kembali!'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                    url: '{{ route('gapoktan-lahan-recycleField') }}',
+                    method: 'post',
+                    data: {
+                        id: id,
+                        _token: csrf
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        Swal.fire(
+                        'Berhasil!',
+                        'Data berhasil semula!',
+                        'success'
+                        )
+                        fetchAllEmployees();
+                    }
+                    });
+                }
+                })
             });
 
             // delete employee ajax request

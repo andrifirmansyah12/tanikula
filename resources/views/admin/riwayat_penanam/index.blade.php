@@ -28,6 +28,39 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
+                            <div class="row align-items-center input-daterange mb-4">
+                                <div class="col-md-4">
+                                    <input type="text" name="from_date" id="from_date" class="form-control"
+                                        placeholder="Dari Tanggal" readonly />
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" name="to_date" id="to_date" class="form-control"
+                                        placeholder="Ke Tanggal" readonly />
+                                </div>
+                                <div class="col-md-4 mt-md-0 mt-3">
+                                    <button type="button" name="filter" id="filter"
+                                        class="btn btn-primary shadow-none">Filter</button>
+                                    <button type="button" name="refresh" id="refresh"
+                                        class="text-dark btn btn-secondary shadow-none">Refresh</button>
+                                </div>
+                            </div>
+                            <p class="d-inline-flex font-weight-bold text-white py-1 px-3 border border-light rounded"
+                                style="background: #16A085; cursor: pointer;" href="#" id="dropdownMenuButton"
+                                data-toggle="dropdown" aria-expanded="false">
+                                Export
+                            </p>
+                            <div class="dropdown-menu mt-2" aria-labelledby="dropdownMenuButton">
+                                <ul class="m-0 p-0">
+                                    <ul class="m-0 p-0">
+                                        <ul class="m-0 p-0">
+                                            <a class="dropdown-item" href="#">Export CSV</a>
+                                            <a class="dropdown-item" href="#">Export Excel</a>
+                                            <a class="dropdown-item" href="#">Export PDF</a>
+                                            <a class="dropdown-item" href="#">Print</a>
+                                        </ul>
+                                    </ul>
+                                </ul>
+                            </div>
                             <div class="table-responsive" id="show_all_employees">
                                 <h1 class="text-center text-secondary my-5">Memuat..</h1>
                             </div>

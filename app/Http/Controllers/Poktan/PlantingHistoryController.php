@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Plant;
 use App\Models\Poktan;
-use App\Models\Field;
+use App\Models\FieldRecapHarvest;
 use App\Models\FieldCategory;
 use Illuminate\Support\Facades\DB;
 use App\Models\Farmer;
@@ -26,26 +26,24 @@ class PlantingHistoryController extends Controller
 		if(!empty($request->from_date))
         {
             $poktan = Poktan::where('user_id', auth()->user()->id)->first();
-            $emps = Field::join('field_categories', 'fields.field_category_id', '=', 'field_categories.id')
-                    ->join('gapoktans', 'fields.gapoktan_id', '=', 'gapoktans.id')
-                    ->join('farmers', 'fields.farmer_id', '=', 'farmers.id')
-                    ->select('fields.*', 'field_categories.name as name')
+            $emps = FieldRecapHarvest::join('field_recap_plantings', 'field_recap_harvests.planting_id', '=', 'field_recap_plantings.id')
+                    ->join('farmers', 'field_recap_harvests.farmer_id', '=', 'farmers.id')
+                    ->select('field_recap_harvests.*', 'farmers.user_id as name')
                     ->where('fields.gapoktan_id', $poktan->gapoktan_id)
-                    ->where('fields.status', 'panen')
-                    ->whereBetween('fields.updated_at', array($request->from_date, $request->to_date))
-                    ->orderBy('fields.updated_at', 'desc')
+                    ->where('field_recap_harvests.status', 'panen')
+                    ->whereBetween('field_recap_harvests.date_harvest', array($request->from_date, $request->to_date))
+                    ->orderBy('field_recap_harvests.updated_at', 'desc')
                     ->get();
         }
             else
         {
             $poktan = Poktan::where('user_id', auth()->user()->id)->first();
-            $emps = Field::join('field_categories', 'fields.field_category_id', '=', 'field_categories.id')
-                    ->join('gapoktans', 'fields.gapoktan_id', '=', 'gapoktans.id')
-                    ->join('farmers', 'fields.farmer_id', '=', 'farmers.id')
-                    ->select('fields.*', 'field_categories.name as name')
+            $emps = FieldRecapHarvest::join('field_recap_plantings', 'field_recap_harvests.planting_id', '=', 'field_recap_plantings.id')
+                    ->join('farmers', 'field_recap_harvests.farmer_id', '=', 'farmers.id')
+                    ->select('field_recap_harvests.*', 'farmers.user_id as name')
                     ->where('fields.gapoktan_id', $poktan->gapoktan_id)
-                    ->where('fields.status', 'panen')
-                    ->orderBy('fields.updated_at', 'desc')
+                    ->where('field_recap_harvests.status', 'panen')
+                    ->orderBy('field_recap_harvests.updated_at', 'desc')
                     ->get();
         }
 		$output = '';
