@@ -50,8 +50,10 @@ class HarvestController extends Controller
             foreach ($emps as $emp) {
                 $output .= '<tr>';
                 $output .= '<td>' . $nomor++ . '</td>';
-                $output .= '<td>' . $emp->farmer->user->name . '</td>
-                <td>' . $emp->fieldRecapPlanting->field->fieldCategory->name . ' (' . $emp->fieldRecapPlanting->field->fieldCategory->details . ')</td>';
+                $output .= '<td>' . $emp->farmer->user->name . '</td>';
+                $output .= '<td>
+                        ' . $emp->fieldRecapPlanting->field->fieldCategory->name . ' (' . $emp->fieldRecapPlanting->field->fieldCategory->details . ')
+                    </td>';
                 if ($emp->date_harvest) {
                     $output .= '<td>' . date("d-F-Y", strtotime($emp->date_harvest)) . '</td>';
                 } else {
@@ -131,8 +133,8 @@ class HarvestController extends Controller
             foreach ($emps as $emp) {
                 $output .= '<tr>';
                 $output .= '<td>' . $nomor++ . '</td>';
-                $output .= '<td>' . $emp->farmer->user->name . '</td>
-                <td>' . $emp->field->fieldCategory->name . ' (' . $emp->field->fieldCategory->details . ')</td>';
+                $output .= '<td>' . $emp->farmer->user->name . '</td>';
+                $output .= '<td>' . $emp->field->fieldCategory->name . ' (' . $emp->field->fieldCategory->details . ')</td>';
                 if ($emp->date_planting) {
                     $output .= '<td>' . date("d-F-Y", strtotime($emp->date_planting)) . '</td>';
                 } else {
@@ -172,7 +174,7 @@ class HarvestController extends Controller
             $plant->status = $request->status;
             $plant->save();
 
-            $planting = FieldRecapPlanting::find($request->field_id)->update([
+            $planting = FieldRecapPlanting::where('field_id', $request->field_id)->update([
                 'status' => 'sudah panen',
             ]);
         } elseif ($request->status === 'belum selesai panen') {
@@ -187,7 +189,7 @@ class HarvestController extends Controller
             $plant->status = $request->status;
             $plant->save();
 
-            $planting = FieldRecapPlanting::find($request->field_id)->update([
+            $planting = FieldRecapPlanting::where('field_id', $request->field_id)->update([
                 'status' => $request->status,
             ]);
         }

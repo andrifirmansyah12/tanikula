@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Field;
+use App\Models\FieldRecapHarvest;
 use App\Models\Poktan;
 use Illuminate\Support\Facades\DB;
 use App\Models\Farmer;
@@ -23,34 +23,33 @@ class PlantingHistoryController extends Controller
 	public function fetchAll(Request $request) {
 		if(!empty($request->from_date))
         {
-            $emps = Field::join('field_categories', 'fields.field_category_id', '=', 'field_categories.id')
-                    ->join('gapoktans', 'fields.gapoktan_id', '=', 'gapoktans.id')
-                    ->join('farmers', 'fields.farmer_id', '=', 'farmers.id')
-                    ->select('fields.*', 'field_categories.name as name')
-                    ->where('fields.status', 'panen')
-                    ->whereBetween('fields.updated_at', array($request->from_date, $request->to_date))
-                    ->orderBy('fields.updated_at', 'desc')
+            $emps = FieldRecapHarvest::join('field_recap_plantings', 'field_recap_harvests.planting_id', '=', 'field_recap_plantings.id')
+                    ->join('farmers', 'field_recap_harvests.farmer_id', '=', 'farmers.id')
+                    ->select('field_recap_harvests.*', 'farmers.user_id as name')
+                    ->where('field_recap_harvests.status', 'panen')
+                    ->whereBetween('field_recap_harvests.date_harvest', array($request->from_date, $request->to_date))
+                    ->orderBy('field_recap_harvests.updated_at', 'desc')
                     ->get();
         }
             else
         {
-            $emps = Field::join('field_categories', 'fields.field_category_id', '=', 'field_categories.id')
-                    ->join('gapoktans', 'fields.gapoktan_id', '=', 'gapoktans.id')
-                    ->join('farmers', 'fields.farmer_id', '=', 'farmers.id')
-                    ->select('fields.*', 'field_categories.name as name')
-                    ->where('fields.status', 'panen')
-                    ->orderBy('fields.updated_at', 'desc')
+            $emps = FieldRecapHarvest::join('field_recap_plantings', 'field_recap_harvests.planting_id', '=', 'field_recap_plantings.id')
+                    ->join('farmers', 'field_recap_harvests.farmer_id', '=', 'farmers.id')
+                    ->select('field_recap_harvests.*', 'farmers.user_id as name')
+                    ->where('field_recap_harvests.status', 'panen')
+                    ->orderBy('field_recap_harvests.updated_at', 'desc')
                     ->get();
         }
 		$output = '';
 		if ($emps->count() > 0) {
-			$output .= '<table class="table table-striped table-sm text-center align-middle">
+			$output .= '<table id="recapPlanting" class="table table-striped table-sm text-center align-middle">
             <thead>
               <tr>
                 <th>No</th>
                 <th>Lahan</th>
-                <th>Gapoktan</th>
                 <th>Petani</th>
+                <th>Tanggal Tandur</th>
+                <th>Tanggal Panen</th>
                 <th>Status</th>
               </tr>
             </thead>
@@ -59,9 +58,10 @@ class PlantingHistoryController extends Controller
 			foreach ($emps as $emp) {
 				$output .= '<tr>';
                 $output .= '<td>' . $nomor++ . '</td>';
-                $output .= '<td>' . $emp->fieldCategory->name . '</td>';
-                $output .= '<td>' . $emp->gapoktan->user->name . '</td>
-                <td>' . $emp->farmer->user->name . '</td>';
+                $output .= '<td>' . $emp->fieldRecapPlanting->field->fieldCategory->name . ' (' . $emp->fieldRecapPlanting->field->fieldCategory->details . ')</td>';
+                $output .= '<td>' . $emp->farmer->user->name . '</td>
+                <td>' . date("d-F-Y", strtotime($emp->fieldRecapPlanting->date_planting)) . '</td>
+                <td>' . date("d-F-Y", strtotime($emp->date_harvest)) . '</td>';
                 if ($emp->status) {
                     $output .= '<td><span class="text-capitalize">' . $emp->status . '</span></td>';
                 } else {

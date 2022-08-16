@@ -16,24 +16,25 @@ use Illuminate\Support\Str;
 class ActivityController extends Controller
 {
     // set index page view
-	public function index() {
-		$category = ActivityCategory::where('is_active', '=', 1)->get();
-		return view('gapoktan.kegiatan.index', compact('category'));
-	}
+    public function index()
+    {
+        $category = ActivityCategory::where('is_active', '=', 1)->get();
+        return view('gapoktan.kegiatan.index', compact('category'));
+    }
 
     // handle fetch all eamployees ajax request
-	public function fetchAddActivity()
+    public function fetchAddActivity()
     {
-		$emps = Activity::join('activity_categories', 'activities.category_activity_id', '=', 'activity_categories.id')
-                    ->join('users', 'activities.user_id', '=', 'users.id')
-                    ->select('activities.*', 'activity_categories.name as name')
-                    ->where('activity_categories.is_active', '=', 1)
-                    ->where('user_id', auth()->user()->id)
-                    ->orderBy('activities.updated_at', 'desc')
-                    ->get();
-		$output = '';
-		if ($emps->count() > 0) {
-			$output .= '<table id="table_add_activity" class="table table-striped table-sm text-center align-middle">
+        $emps = Activity::join('activity_categories', 'activities.category_activity_id', '=', 'activity_categories.id')
+            ->join('users', 'activities.user_id', '=', 'users.id')
+            ->select('activities.*', 'activity_categories.name as name')
+            ->where('activity_categories.is_active', '=', 1)
+            ->where('user_id', auth()->user()->id)
+            ->orderBy('activities.updated_at', 'desc')
+            ->get();
+        $output = '';
+        if ($emps->count() > 0) {
+            $output .= '<table id="table_add_activity" class="table table-striped table-sm text-center align-middle">
             <thead>
               <tr>
                 <th>No</th>
@@ -45,11 +46,11 @@ class ActivityController extends Controller
               </tr>
             </thead>
             <tbody>';
-            $nomor=1;
-			foreach ($emps as $emp) {
-				$output .= '<tr>';
+            $nomor = 1;
+            foreach ($emps as $emp) {
+                $output .= '<tr>';
                 $output .= '<td>' . $nomor++ . '</td>';
-                $output .= '<td>' . $emp->title . '</td>';
+                $output .= '<td style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;" class="p-0">' . $emp->title . '</td>';
                 if (empty($emp->name)) {
                     $output .= '<td><a class="text-danger">Tidak ada kategori</a></p>';
                 } else {
@@ -62,26 +63,26 @@ class ActivityController extends Controller
                   <a href="#" id="' . $emp->id . '" class="text-danger mx-1 deleteIcon"><i class="bi-trash h4"></i></a>
                 </td>
               </tr>';
-			}
-			$output .= '</tbody></table>';
-			echo $output;
-		} else {
-			echo '<h1 class="text-center text-secondary my-5">Tidak ada data Kegiatan!</h1>';
-		}
-	}
+            }
+            $output .= '</tbody></table>';
+            echo $output;
+        } else {
+            echo '<h1 class="text-center text-secondary my-5">Tidak ada data Kegiatan!</h1>';
+        }
+    }
 
     // handle fetch all eamployees ajax request
-	public function fetchDraftActivity()
+    public function fetchDraftActivity()
     {
-		$emps = Activity::join('activity_categories', 'activities.category_activity_id', '=', 'activity_categories.id')
-                    ->join('users', 'activities.user_id', '=', 'users.id')
-                    ->select('activities.*', 'activity_categories.name as name')
-                    ->where('activity_categories.is_active', '=', 1)
-                    ->orderBy('activities.updated_at', 'desc')
-                    ->get();
-		$output = '';
-		if ($emps->count() > 0) {
-			$output .= '<table id="table_draft_activity" class="table table-striped table-sm text-center align-middle">
+        $emps = Activity::join('activity_categories', 'activities.category_activity_id', '=', 'activity_categories.id')
+            ->join('users', 'activities.user_id', '=', 'users.id')
+            ->select('activities.*', 'activity_categories.name as name')
+            ->where('activity_categories.is_active', '=', 1)
+            ->orderBy('activities.updated_at', 'desc')
+            ->get();
+        $output = '';
+        if ($emps->count() > 0) {
+            $output .= '<table id="table_draft_activity" class="table table-striped table-sm text-center align-middle">
             <thead>
               <tr>
                 <th>No</th>
@@ -92,9 +93,9 @@ class ActivityController extends Controller
               </tr>
             </thead>
             <tbody>';
-            $nomor=1;
-			foreach ($emps as $emp) {
-				$output .= '<tr>';
+            $nomor = 1;
+            foreach ($emps as $emp) {
+                $output .= '<tr>';
                 $output .= '<td>' . $nomor++ . '</td>';
                 $output .= '<td>' . $emp->user->name . '</td>';
                 $output .= '<td>' . $emp->title . '</td>';
@@ -103,24 +104,25 @@ class ActivityController extends Controller
                   <a href="#" id="' . $emp->id . '" class="text-success mx-1 showDraftActivity" data-toggle="modal" data-target="#showDraftActivityModal"><i class="bi-eye h4"></i></a>
                 </td>
               </tr>';
-			}
-			$output .= '</tbody></table>';
-			echo $output;
-		} else {
-			echo '<h1 class="text-center text-secondary my-5">Tidak ada data Kegiatan!</h1>';
-		}
-	}
+            }
+            $output .= '</tbody></table>';
+            echo $output;
+        } else {
+            echo '<h1 class="text-center text-secondary my-5">Tidak ada data Kegiatan!</h1>';
+        }
+    }
 
     // handle edit an employee ajax request
-	public function show(Request $request)
+    public function show(Request $request)
     {
-		$id = $request->id;
-		$emp = Activity::with('user', 'activity_category')->find($id);
-		return response()->json($emp);
+        $id = $request->id;
+        $emp = Activity::with('user', 'activity_category')->find($id);
+        return response()->json($emp);
     }
 
     // handle insert a new employee ajax request
-	public function store(Request $request) {
+    public function store(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'title' => 'required|max:255',
             'category_activity_id' => 'required',
@@ -134,7 +136,7 @@ class ActivityController extends Controller
             'date.required' => 'Tanggal kegiatan diperlukan!',
         ]);
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
             return response()->json([
                 'status' => 400,
                 'messages' => $validator->getMessageBag()
@@ -157,17 +159,18 @@ class ActivityController extends Controller
                 'status' => 200,
             ]);
         }
-	}
+    }
 
     // handle edit an employee ajax request
-	public function edit(Request $request) {
-		$id = $request->id;
-		$emp = Activity::find($id);
-		return response()->json($emp);
-	}
+    public function edit(Request $request)
+    {
+        $id = $request->id;
+        $emp = Activity::find($id);
+        return response()->json($emp);
+    }
 
-	// handle update an employee ajax request
-	public function update(Request $request)
+    // handle update an employee ajax request
+    public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'title' => 'required|max:255',
@@ -182,7 +185,7 @@ class ActivityController extends Controller
             'date.required' => 'Tanggal kegiatan diperlukan!',
         ]);
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
             return response()->json([
                 'status' => 400,
                 'messages' => $validator->getMessageBag()
@@ -199,16 +202,16 @@ class ActivityController extends Controller
                 'status' => 200,
             ]);
         }
-	}
+    }
 
     // handle delete an employee ajax request
-	public function delete(Request $request)
+    public function delete(Request $request)
     {
-		$id = $request->id;
-		// $emp = Activity::find($id);
-		$emp = Activity::with('activity_category')->where('id', $id);
+        $id = $request->id;
+        // $emp = Activity::find($id);
+        $emp = Activity::with('activity_category')->where('id', $id);
         $emp->delete();
-	}
+    }
 
     public function checkSlug(Request $request)
     {

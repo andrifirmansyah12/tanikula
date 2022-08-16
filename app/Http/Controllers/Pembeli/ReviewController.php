@@ -253,6 +253,7 @@ class ReviewController extends Controller
             $order_id =  $request->input('order_id', []);
             $stars_rated =  $request->input('stars_rated', []);
             $review =  $request->input('review', []);
+            $hide =  $request->input('hide') ? 1 : 0;
             $units = [];
             foreach ($stars_rated as $index => $unit) {
                 $units[] = [
@@ -261,13 +262,13 @@ class ReviewController extends Controller
                     "order_id" => $order_id[$index],
                     "stars_rated" => $stars_rated[$index],
                     "review" => $review[$index],
+                    "hide" => $hide,
                     "created_at" => Carbon::now(),
                     "updated_at" => Carbon::now(),
                 ];
             }
 
             Review::insert($units);
-
 
             $orders = Order::where('id', $request->input('rev_order_id'))->first();
             $orders->review = Order::REVIEWED;

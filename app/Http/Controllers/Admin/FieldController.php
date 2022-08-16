@@ -71,9 +71,10 @@ class FieldController extends Controller
                 }
                     $output .= '<td>
                     <a href="#" id="' . $emp->id . '" class="text-success mx-1 editIcon" data-toggle="modal" data-target="#editEmployeeModal"><i class="bi-pencil-square h4"></i></a>
-                    <a href="#" id="' . $emp->id . '" class="text-danger mx-1 deleteIcon"><i class="bi-trash h4"></i></a>
+                    <a href="#" id="' . $emp->id . '" class="text-danger mx-1 recycleField"><i class="bi-recycle h4"></i></a>
                 </td>
               </tr>';
+                // <a href="#" id="' . $emp->id . '" class="text-danger mx-1 deleteIcon"><i class="bi-trash h4"></i></a>
 			}
 			$output .= '</tbody></table>';
 			echo $output;
@@ -108,6 +109,7 @@ class FieldController extends Controller
             $fields->field_category_id = $request->field_category_id;
             $fields->gapoktan_id = $request->gapoktan_id;
             $fields->farmer_id = $request->farmer_id;
+            $fields->status = 'Belum ada status';
             // $fields->status = $request->status;
             $fields->save();
 
@@ -168,6 +170,16 @@ class FieldController extends Controller
 		// $emp = Activity::find($id);
 		$emp = Field::find($id);
         $emp->delete();
+	}
+
+    // handle delete an employee ajax request
+	public function recycleField(Request $request)
+    {
+		$id = $request->id;
+		// $emp = Activity::find($id);
+		$fields = Field::find($id);
+        $fields->status = 'Belum ada status';
+        $fields->update();
 	}
 
     public function checkSlug(Request $request)
