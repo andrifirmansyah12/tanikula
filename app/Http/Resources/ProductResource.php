@@ -22,6 +22,7 @@ class ProductResource extends JsonResource
             "category_product_id" => new ProductCategoryResource($this->product_category),
             "code" => $this->code,
             "stoke" => $this->stoke,
+            "weight" => $this->weight,
             "stock_out" => $this->stock_out,
             "price" => $this->price,
             "desc" => $this->desc,

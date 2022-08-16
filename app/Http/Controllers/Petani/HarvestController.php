@@ -86,6 +86,7 @@ class HarvestController extends Controller
         return response()->json($emp);
     }
 
+    // update
     public function updatePanen(Request $request)
     {
         $planting = FieldRecapHarvest::find($request->emp_id)->update([
