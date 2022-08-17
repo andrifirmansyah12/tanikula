@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api\Customer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\BaseApiController as BaseController;
+use App\Http\Resources\DetailTranssactionResource;
+use App\Http\Resources\RiwayatPemesananResource;
 use App\Models\Order;
 
 class TransactionListApiController extends BaseController
@@ -16,9 +18,11 @@ class TransactionListApiController extends BaseController
             ->select('orders.*', 'addresses.recipients_name as name_billing')
             ->where('orders.user_id', '=', $user_id)
             ->orderBy('orders.created_at', 'desc')
-            ->get();
-        // $result = ChatResource::collection($datas);
-        return $this->sendResponse($datas, 'Data fetched');
+            ->paginate(4);
+        // ->get();
+        $result = RiwayatPemesananResource::collection($datas);
+        return $this->sendResponse($result, 'Data fetched');
+        // return $this->sendResponse($datas, 'Data fetched');
     }
 
     public function detailPesanan($id, Request $request)
@@ -41,10 +45,13 @@ class TransactionListApiController extends BaseController
                 // ->where('orders.id', '=', $id)
                 ->find($id);
 
-            return $this->sendResponse($order, 'Data fetched');
+            $result = DetailTranssactionResource::make($order);
+
+            // return $this->sendResponse($order, 'Data fetched');
+            return $this->sendResponse($result, 'Data fetched');
             // return $order;
         } else {
-            return "nothing";
+            return $this->sendResponse([], 'Data fetched');
         }
     }
 }
