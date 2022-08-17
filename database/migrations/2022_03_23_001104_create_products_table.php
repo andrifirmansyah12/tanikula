@@ -25,6 +25,8 @@ class CreateProductsTable extends Migration
             $table->bigInteger("stoke")->nullable();
             $table->bigInteger("stock_out")->nullable();
             $table->bigInteger("price")->nullable();
+            $table->bigInteger("discount")->default(0);
+            $table->bigInteger("price_discount")->nullable();
             $table->text("desc")->nullable();
             $table->boolean('is_active')->default(0);
             // $table->boolean("is_active")->nullable();

@@ -111,14 +111,21 @@
                     </div>
                     <div class="col-lg-6 col-md-12 col-12">
                         <div class="product-info">
+                            @if ($product->stoke < 1)
                             <p class="h5 mb-3">
-                                @if ($product->stoke < 1)
-                                    <label class="badge bg-danger">Habis</label>
-                                @elseif($product->stoke < 10)
-                                    <label class="badge bg-danger">Tersisa {{ $product->stoke }}</label>
-                                @endif
+                                <label class="badge bg-danger">Habis</label>
                             </p>
-                            <h2 class="title text-capitalize" style="color:#16A085;">{{ $product->name }}</h2>
+                            @elseif($product->stoke < 10)
+                            <p class="h5 mb-3">
+                                <label class="badge bg-danger">Tersisa {{ $product->stoke }}</label>
+                            </p>
+                            @endif
+                            <h2 class="title text-capitalize" style="color:#16A085;">
+                                {{ $product->name }}
+                                @if ($product->discount != 0)
+                                    <p class="small ms-3 badge bg-danger">{{ $product->discount }}% OFF</p>
+                                @endif
+                            </h2>
                             @php
                                 $rateNum = number_format($ratingValue)
                             @endphp
@@ -140,7 +147,13 @@
                                     href="{{ url('product-category/'.$product->product_category->slug) }}">{{ $product->product_category->name }}</a></p>
                             <p class="category">Stok {{ $product->stoke }}</p>
                             {{-- <h3 class="price">Rp. {{ number_format($product->price, 0) }}<span>Rp. {{ number_format(0, 0) }}</span></h3> --}}
-                            <h3 class="price" style="color:#16A085;">Rp. {{ number_format($product->price, 0) }}</h3>
+                            @if ($product->price_discount)
+                                <h3 class="price" style="color:#16A085;">
+                                    <span class="text-decoration-line-through text-muted" style="font-size: 15px"> Rp. {{ number_format($product->price_discount, 0) }}</span>  Rp. {{ number_format($product->price, 0) }}
+                                </h3>
+                            @else
+                                <h3 class="price" style="color:#16A085;">Rp. {{ number_format($product->price, 0) }}</h3>
+                            @endif
                             <p class="info-text">{{ $product->desc }}</p>
                             <div class="row">
                                 {{-- <div class="col-lg-4 col-md-4 col-12">
@@ -223,7 +236,7 @@
                     <div class="owl-carousel owl-theme">
                         @foreach ($product_new as $item)
                         <!-- Start Single Product -->
-                        <div class="mx-2 single-product shadow-none" style="height: 25.3rem">
+                        <div class="mx-2 single-product shadow-none" style="height: 27rem">
                             <div class="product-image">
                                 <a href="{{ url('home/'.$item->slug) }}">
                                     @if ($item->photo_product->count() > 0)
@@ -243,9 +256,19 @@
                                 </a>
                             </div>
                             <div class="product-info">
-                                <a href="{{ url('product-category/'.$item->product_category->slug) }}">
-                                    <span class="category">{{ $item->category_name }}</span>
-                                </a>
+                                @if ($item->discount != 0)
+                                    <div class="d-flex justify-content-between">
+                                        <a href="{{ url('product-category/'.$item->product_category->slug) }}">
+                                            <span class="category">{{ $item->category_name }}</span>
+                                        </a>
+                                        <p class="small category text-white badge bg-danger">{{ $item->discount }}% OFF</p>
+                                    </div>
+                                @else
+                                    <a href="{{ url('product-category/'.$item->product_category->slug) }}">
+                                        <span class="category">{{ $item->category_name }}</span>
+                                    </a>
+                                @endif
+                                <p class="small" style="color:#16A085;">Stok tersisa {{ $item->stoke }}</p>
                                 <h4 class="title text-capitalize">
                                     <a href="{{ url('home/'.$item->slug) }}" style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">{{ $item->name }}</a>
                                 </h4>
@@ -276,7 +299,11 @@
                                     @endfor
                                 </ul>
                                 <div class="fw-bold mt-2">
-                                    <span style="color:#16A085;">Rp. {{ number_format($item->price, 0) }}</span>
+                                    @if ($item->price_discount)
+                                        <span class="text-decoration-line-through text-muted " style="font-size: 13px">Rp. {{ number_format($item->price_discount, 0) }} <span style="color: #16A085">Rp. {{ number_format($item->price, 0) }}</span></span>
+                                    @else
+                                        <span style="color: #16A085">Rp. {{ number_format($item->price, 0) }}</span>
+                                    @endif
                                 </div>
                             </div>
                         </div>

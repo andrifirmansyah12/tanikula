@@ -217,11 +217,20 @@ class ProductController extends Controller
                                 }
                             $output .= '</a>
                         </div>
-                        <div class="product-info">
-                            <a href="product-category/'.$item->product_category->slug.'">
-                                <span class="category">'. $item->category_name .'</span>
-                            </a>
-                            <p class="small" style="color:#16A085;">Stok tersisa '. $item->stoke .'</p>
+                        <div class="product-info">';
+                            if ($item->discount != 0) {
+                                $output .= '<div class="d-flex justify-content-between">
+                                    <a href="product-category/'.$item->product_category->slug.'">
+                                        <span class="category">'. $item->category_name .'</span>
+                                    </a>
+                                    <p class="small badge bg-danger">'. $item->discount .'% OFF</p>
+                                </div>';
+                            } else {
+                                $output .= '<a href="product-category/'.$item->product_category->slug.'">
+                                    <span class="category">'. $item->category_name .'</span>
+                                </a>';
+                            }
+                            $output .= '<p class="small" style="color:#16A085;">Stok tersisa '. $item->stoke .'</p>
                             <h4 class="title">
                                 <a href="home/'.$item->slug.'"
                                     style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">'. $item->name .'</a>
@@ -249,9 +258,13 @@ class ProductController extends Controller
                                     $output .= '<li><i class="lni lni-star"></i></li>';
                                 }
                             $output .= '</ul>
-                            <div class="price">
-                                <span>Rp. '. number_format($item->price, 0) .'</span>
-                            </div>
+                            <div class="price">';
+                                if ($item->price_discount) {
+                                    $output .= '<span class="text-decoration-line-through text-muted " style="font-size: 13px">Rp. '. number_format($item->price_discount, 0) .' <span>Rp. '. number_format($item->price, 0) .'</span></span>';
+                                } else {
+                                    $output .= '<span>Rp. '. number_format($item->price, 0) .'</span>';
+                                }
+                            $output .= '</div>
                         </div>
                     </div>
                     <!-- End Single Product -->
@@ -362,11 +375,20 @@ class ProductController extends Controller
                                 }
                             $output .= '</a>
                         </div>
-                        <div class="product-info">
-                            <a href="product-category/'.$item->product_category->slug.'">
-                                <span class="category">'. $item->category_name .'</span>
-                            </a>
-                            <p class="small" style="color:#16A085;">Stok tersisa '. $item->stoke .'</p>
+                        <div class="product-info">';
+                            if ($item->discount != 0) {
+                                $output .= '<div class="d-flex justify-content-between">
+                                    <a href="product-category/'.$item->product_category->slug.'">
+                                        <span class="category">'. $item->category_name .'</span>
+                                    </a>
+                                    <p class="small badge bg-danger">'. $item->discount .'% OFF</p>
+                                </div>';
+                            } else {
+                                $output .= '<a href="product-category/'.$item->product_category->slug.'">
+                                    <span class="category">'. $item->category_name .'</span>
+                                </a>';
+                            }
+                            $output .= '<p class="small" style="color:#16A085;">Stok tersisa '. $item->stoke .'</p>
                             <h4 class="title">
                                 <a href="home/'.$item->slug.'"
                                     style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">'. $item->name .'</a>
@@ -394,9 +416,13 @@ class ProductController extends Controller
                                     $output .= '<li><i class="lni lni-star"></i></li>';
                                 }
                             $output .= '</ul>
-                            <div class="price">
-                                <span>Rp. '. number_format($item->price, 0) .'</span>
-                            </div>
+                            <div class="price">';
+                                if ($item->price_discount) {
+                                    $output .= '<span class="text-decoration-line-through text-muted " style="font-size: 13px">Rp. '. number_format($item->price_discount, 0) .' <span>Rp. '. number_format($item->price, 0) .'</span></span>';
+                                } else {
+                                    $output .= '<span>Rp. '. number_format($item->price, 0) .'</span>';
+                                }
+                            $output .= '</div>
                         </div>
                     </div>
                     <!-- End Single Product -->
@@ -487,11 +513,20 @@ class ProductController extends Controller
                                 }
                             $output .= '</a>
                         </div>
-                        <div class="product-info">
-                            <a href="../product-category/'.$item->product_category->slug.'">
-                                <span class="category">'. $item->category_name .'</span>
-                            </a>
-                            <p class="small" style="color:#16A085;">Stok tersisa '. $item->stoke .'</p>
+                        <div class="product-info">';
+                            if ($item->discount != 0) {
+                                $output .= '<div class="d-flex justify-content-between">
+                                    <a href="product-category/'.$item->product_category->slug.'">
+                                        <span class="category">'. $item->category_name .'</span>
+                                    </a>
+                                    <p class="small badge bg-danger">'. $item->discount .'% OFF</p>
+                                </div>';
+                            } else {
+                                $output .= '<a href="product-category/'.$item->product_category->slug.'">
+                                    <span class="category">'. $item->category_name .'</span>
+                                </a>';
+                            }
+                            $output .= '<p class="small" style="color:#16A085;">Stok tersisa '. $item->stoke .'</p>
                             <h4 class="title">
                                 <a href="../home/'.$item->slug.'"
                                     style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">'. $item->name .'</a>
@@ -519,9 +554,13 @@ class ProductController extends Controller
                                     $output .= '<li><i class="lni lni-star"></i></li>';
                                 }
                             $output .= '</ul>
-                            <div class="price">
-                                <span>Rp. '. number_format($item->price, 0) .'</span>
-                            </div>
+                            <div class="price">';
+                                if ($item->price_discount) {
+                                    $output .= '<span class="text-decoration-line-through text-muted " style="font-size: 13px">Rp. '. number_format($item->price_discount, 0) .' <span>Rp. '. number_format($item->price, 0) .'</span></span>';
+                                } else {
+                                    $output .= '<span>Rp. '. number_format($item->price, 0) .'</span>';
+                                }
+                            $output .= '</div>
                         </div>
                     </div>
                     <!-- End Single Product -->

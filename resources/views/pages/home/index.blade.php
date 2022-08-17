@@ -214,9 +214,18 @@
                         </div> --}}
                     </div>
                     <div class="product-info">
-                        <a href="{{ url('product-category/'.$item->product_category->slug) }}">
-                            <span class="category">{{ $item->category_name }}</span>
-                        </a>
+                        @if ($item->discount != 0)
+                            <div class="d-flex justify-content-between">
+                                <a href="{{ url('product-category/'.$item->product_category->slug) }}">
+                                    <span class="category">{{ $item->category_name }}</span>
+                                </a>
+                                <p class="small badge bg-danger">{{ $item->discount }}% OFF</p>
+                            </div>
+                        @else
+                            <a href="{{ url('product-category/'.$item->product_category->slug) }}">
+                                <span class="category">{{ $item->category_name }}</span>
+                            </a>
+                        @endif
                         <p class="small" style="color:#16A085;">Stok tersisa {{ $item->stoke }}</p>
                         <h4 class="title">
                             <a href="{{ url('home/'.$item->slug) }}" style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">{{ $item->name }}</a>
@@ -248,7 +257,11 @@
                             @endfor
                         </ul>
                         <div class="price">
-                            <span>Rp. {{ number_format($item->price, 0) }}</span>
+                            @if ($item->price_discount)
+                                <span class="text-decoration-line-through text-muted " style="font-size: 13px">Rp. {{ number_format($item->price_discount, 0) }} <span>Rp. {{ number_format($item->price, 0) }}</span></span>
+                            @else
+                                <span>Rp. {{ number_format($item->price, 0) }}</span>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -275,40 +288,6 @@
     </div>
 </section>
 <!-- End Trending Product Area -->
-
-<!-- Start Banner Area -->
-{{-- <section class="banner">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 col-md-6 col-12">
-                    <div class="single-banner"
-                        style="background-image:url('{{ asset('assets/images/banner/banner-1-bg.jpg') }}')">
-<div class="content">
-    <h2>Smart Watch 2.0</h2>
-    <p>Space Gray Aluminum Case with <br>Black/Volt Real Sport Band </p>
-    <div class="button">
-        <a href="product-grids.html" class="btn">View Details</a>
-    </div>
-</div>
-</div>
-</div>
-<div class="col-lg-6 col-md-6 col-12">
-    <div class="single-banner custom-responsive-margin"
-        style="background-image:url('{{ asset('assets/images/banner/banner-2-bg.jpg') }}')">
-        <div class="content">
-            <h2>Smart Headphone</h2>
-            <p>Lorem ipsum dolor sit amet, <br>eiusmod tempor
-                incididunt ut labore.</p>
-            <div class="button">
-                <a href="product-grids.html" class="btn">Shop Now</a>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-</div>
-</section> --}}
-<!-- End Banner Area -->
 
 <!-- Start Trending Product Area -->
 <section class="section mt-5">
@@ -350,9 +329,18 @@
                         </div> --}}
                     </div>
                     <div class="product-info">
-                        <a href="{{ url('product-category/'.$item->product_category->slug) }}">
-                            <span class="category">{{ $item->category_name }}</span>
-                        </a>
+                        @if ($item->discount != 0)
+                            <div class="d-flex justify-content-between">
+                                <a href="{{ url('product-category/'.$item->product_category->slug) }}">
+                                    <span class="category">{{ $item->category_name }}</span>
+                                </a>
+                                <p class="small badge bg-danger">{{ $item->discount }}% OFF</p>
+                            </div>
+                        @else
+                            <a href="{{ url('product-category/'.$item->product_category->slug) }}">
+                                <span class="category">{{ $item->category_name }}</span>
+                            </a>
+                        @endif
                         <p class="small" style="color:#16A085;">Stok tersisa {{ $item->stoke }}</p>
                         <h4 class="title">
                             <a href="{{ url('home/'.$item->slug) }}" style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">{{ $item->name }}</a>
@@ -384,7 +372,11 @@
                             @endfor
                         </ul>
                         <div class="price">
-                            <span>Rp. {{ number_format($item->price, 0) }}</span>
+                            @if ($item->price_discount)
+                                <span class="text-decoration-line-through text-muted " style="font-size: 13px">Rp. {{ number_format($item->price_discount, 0) }} <span>Rp. {{ number_format($item->price, 0) }}</span></span>
+                            @else
+                                <span>Rp. {{ number_format($item->price, 0) }}</span>
+                            @endif
                         </div>
                     </div>
                 </div>
