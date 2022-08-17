@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Customer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\BaseApiController as BaseController;
+use App\Http\Resources\DetailTranssactionResource;
 use App\Http\Resources\RiwayatPemesananResource;
 use App\Models\Order;
 
@@ -44,10 +45,13 @@ class TransactionListApiController extends BaseController
                 // ->where('orders.id', '=', $id)
                 ->find($id);
 
-            return $this->sendResponse($order, 'Data fetched');
+            $result = DetailTranssactionResource::make($order);
+
+            // return $this->sendResponse($order, 'Data fetched');
+            return $this->sendResponse($result, 'Data fetched');
             // return $order;
         } else {
-            return "nothing";
+            return $this->sendResponse([], 'Data fetched');
         }
     }
 }
