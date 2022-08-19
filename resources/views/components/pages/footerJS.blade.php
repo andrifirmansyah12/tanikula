@@ -223,6 +223,7 @@
             }
         });
 
+        $("#addToCartBtn").prop('disabled', true);
         $.ajax({
             method: "POST",
             url: "/add-to-cart",
@@ -234,12 +235,25 @@
                 if (response.status == 'Silahkan login!') {
                     window.location = '/login';
                 } else {
-                    iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
-                        title: 'Berhasil',
-                        message: response.status,
-                        position: 'topRight'
-                    });
-                    window.setTimeout(function(){location.reload()},1000)
+                    if (response.status == 'Kuantiti tidak boleh melebihi stok')
+                    {
+                        $("#addToCartBtn").prop('disabled', false);
+                        iziToast.warning({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                            title: 'Gagal',
+                            message: response.status,
+                            position: 'topRight'
+                        });
+                    }
+                        else
+                    {
+                        $("#addToCartBtn").prop('disabled', false);
+                        iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                            title: 'Berhasil',
+                            message: response.status,
+                            position: 'topRight'
+                        });
+                        window.setTimeout(function(){location.reload()},1000)
+                    }
                 }
             }
         });

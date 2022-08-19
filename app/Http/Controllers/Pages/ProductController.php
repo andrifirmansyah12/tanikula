@@ -57,6 +57,7 @@ class ProductController extends Controller
                     ->join('users', 'products.user_id', '=', 'users.id')
                     ->select('products.*', 'product_categories.name as category_name')
                     ->where('product_categories.is_active', '=', 1)
+                    ->where('products.slug', '!=',  $slug)
                     ->where('products.is_active', '=', 1)
                     ->orderBy('products.updated_at', 'desc')
                     ->get();
@@ -643,6 +644,7 @@ class ProductController extends Controller
                     ->join('users', 'products.user_id', '=', 'users.id')
                     ->select('products.*', 'product_categories.name as category_name')
                     ->where('product_categories.is_active', '=', 1)
+                    ->where('products.slug', '!=',  $product_slug)
                     ->where('products.is_active', '=', 1)
                     ->orderBy('products.updated_at', 'desc')
                     ->get();
@@ -681,7 +683,7 @@ class ProductController extends Controller
 		if ($fiverateds->count() > 0) {
 			foreach ($fiverateds as $review) {
 				$output .= '
-                <div class="mt-3 d-lg-flex align-items-center justify-content-start">
+                <div class="d-lg-flex border p-2 rounded align-items-center justify-content-start">
                     <div class="">
                         <div>';
                             foreach ($review->user->costumer as $potoProfile) {
@@ -709,7 +711,7 @@ class ProductController extends Controller
                         </div>
                     </div>
                     <div class="col-12 col-lg-8 col-xl-10 mt-2 mt-lg-0 ms-0 ms-lg-5">
-                        <ul class="normal-list">
+                        <div class="normal-list">
                             <li>
                                 <div class="ratings">
                                     <div class="star-icon" style="
@@ -729,8 +731,18 @@ class ProductController extends Controller
                             <span class="me-md-5">
                                 '. $review->review .'
                             </span>
-                        </div>
-                    </div>
+                        </div>';
+                        if ($review->reply_review) {
+                            $output .= '<div>
+                                <div class="d-flex flex-col">
+                                    <span for=""><i class="bi bi-arrow-return-right"></i> Balasan Ulasan</span>
+                                </div>
+                                <span class="me-md-5">
+                                    '. $review->reply_review .'
+                                </span>
+                            </div>';
+                        }
+                    $output .= '</div>
                 </div>
                 ';
 			}
@@ -747,7 +759,7 @@ class ProductController extends Controller
 		if ($fiverateds->count() > 0) {
 			foreach ($fiverateds as $review) {
 				$output .= '
-                <div class="mt-3 d-lg-flex align-items-center justify-content-start">
+                <div class="d-lg-flex border p-2 rounded align-items-center justify-content-start">
                     <div class="">
                         <div>';
                             foreach ($review->user->costumer as $potoProfile) {
@@ -775,7 +787,7 @@ class ProductController extends Controller
                         </div>
                     </div>
                     <div class="col-12 col-lg-8 col-xl-10 mt-2 mt-lg-0 ms-0 ms-lg-5">
-                        <ul class="normal-list">
+                        <div class="normal-list">
                             <li>
                                 <div class="ratings">
                                     <div class="star-icon" style="
@@ -795,8 +807,18 @@ class ProductController extends Controller
                             <span class="me-md-5">
                                 '. $review->review .'
                             </span>
-                        </div>
-                    </div>
+                        </div>';
+                        if ($review->reply_review) {
+                            $output .= '<div>
+                                <div class="d-flex flex-col">
+                                    <span for=""><i class="bi bi-arrow-return-right"></i> Balasan Ulasan</span>
+                                </div>
+                                <span class="me-md-5">
+                                    '. $review->reply_review .'
+                                </span>
+                            </div>';
+                        }
+                    $output .= '</div>
                 </div>
                 ';
 			}
@@ -813,7 +835,7 @@ class ProductController extends Controller
 		if ($fiverateds->count() > 0) {
 			foreach ($fiverateds as $review) {
 				$output .= '
-                <div class="mt-3 d-lg-flex align-items-center justify-content-start">
+                <div class="d-lg-flex border p-2 rounded align-items-center justify-content-start">
                     <div class="">
                         <div>';
                             foreach ($review->user->costumer as $potoProfile) {
@@ -841,7 +863,7 @@ class ProductController extends Controller
                         </div>
                     </div>
                     <div class="col-12 col-lg-8 col-xl-10 mt-2 mt-lg-0 ms-0 ms-lg-5">
-                        <ul class="normal-list">
+                        <div class="normal-list">
                             <li>
                                 <div class="ratings">
                                     <div class="star-icon" style="
@@ -861,8 +883,18 @@ class ProductController extends Controller
                             <span class="me-md-5">
                                 '. $review->review .'
                             </span>
-                        </div>
-                    </div>
+                        </div>';
+                        if ($review->reply_review) {
+                            $output .= '<div>
+                                <div class="d-flex flex-col">
+                                    <span for=""><i class="bi bi-arrow-return-right"></i> Balasan Ulasan</span>
+                                </div>
+                                <span class="me-md-5">
+                                    '. $review->reply_review .'
+                                </span>
+                            </div>';
+                        }
+                    $output .= '</div>
                 </div>
                 ';
 			}
@@ -879,7 +911,7 @@ class ProductController extends Controller
 		if ($fiverateds->count() > 0) {
 			foreach ($fiverateds as $review) {
 				$output .= '
-                <div class="mt-3 d-lg-flex align-items-center justify-content-start">
+                <div class="d-lg-flex border p-2 rounded align-items-center justify-content-start">
                     <div class="">
                         <div>';
                             foreach ($review->user->costumer as $potoProfile) {
@@ -907,7 +939,7 @@ class ProductController extends Controller
                         </div>
                     </div>
                     <div class="col-12 col-lg-8 col-xl-10 mt-2 mt-lg-0 ms-0 ms-lg-5">
-                        <ul class="normal-list">
+                        <div class="normal-list">
                             <li>
                                 <div class="ratings">
                                     <div class="star-icon" style="
@@ -927,8 +959,18 @@ class ProductController extends Controller
                             <span class="me-md-5">
                                 '. $review->review .'
                             </span>
-                        </div>
-                    </div>
+                        </div>';
+                        if ($review->reply_review) {
+                            $output .= '<div>
+                                <div class="d-flex flex-col">
+                                    <span for=""><i class="bi bi-arrow-return-right"></i> Balasan Ulasan</span>
+                                </div>
+                                <span class="me-md-5">
+                                    '. $review->reply_review .'
+                                </span>
+                            </div>';
+                        }
+                    $output .= '</div>
                 </div>
                 ';
 			}
@@ -945,7 +987,7 @@ class ProductController extends Controller
 		if ($fiverateds->count() > 0) {
 			foreach ($fiverateds as $review) {
 				$output .= '
-                <div class="mt-3 d-lg-flex align-items-center justify-content-start">
+                <div class="d-lg-flex border p-2 rounded align-items-center justify-content-start">
                     <div class="">
                         <div>';
                             foreach ($review->user->costumer as $potoProfile) {
@@ -973,7 +1015,7 @@ class ProductController extends Controller
                         </div>
                     </div>
                     <div class="col-12 col-lg-8 col-xl-10 mt-2 mt-lg-0 ms-0 ms-lg-5">
-                        <ul class="normal-list">
+                        <div class="normal-list">
                             <li>
                                 <div class="ratings">
                                     <div class="star-icon" style="
@@ -993,8 +1035,18 @@ class ProductController extends Controller
                             <span class="me-md-5">
                                 '. $review->review .'
                             </span>
-                        </div>
-                    </div>
+                        </div>';
+                        if ($review->reply_review) {
+                            $output .= '<div>
+                                <div class="d-flex flex-col">
+                                    <span for=""><i class="bi bi-arrow-return-right"></i> Balasan Ulasan</span>
+                                </div>
+                                <span class="me-md-5">
+                                    '. $review->reply_review .'
+                                </span>
+                            </div>';
+                        }
+                    $output .= '</div>
                 </div>
                 ';
 			}

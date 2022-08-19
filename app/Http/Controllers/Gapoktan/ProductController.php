@@ -223,7 +223,11 @@ class ProductController extends Controller
                 $product->price = $harga_akhir;
             } elseif ($request->discount == 0) {
                 $product->discount = $request->discount;
-                $product->price = $product->price_discount;
+                if ($product->price_discount == 0) {
+                    $product->price = $request->price;
+                } else {
+                    $product->price = $product->price_discount;
+                }
                 $product->price_discount = null;
             }
 

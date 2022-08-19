@@ -194,7 +194,7 @@
                                     @if ($product->stoke < 1)
                                     <div class="col-lg-4 col-md-4 col-12">
                                         <div class="button cart-button">
-                                            <button disabled class="btn" id="addToCartBtn" style="width: 100%;">+ Keranjang</button>
+                                            <button disabled class="btn" style="width: 100%;">+ Keranjang</button>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-12">
@@ -397,19 +397,19 @@
                                             </a>
                                         </li>
                                     </ul>
-                                    <div class="py-5 px-md-5" id="fiveStars">
+                                    <div class="py-4 px-md-5" id="fiveStars">
                                         <p class="h5 text-center" style="color: #16A085">Memuat</p>
                                     </div>
-                                    <div class="py-5 px-md-5" id="fourStars">
+                                    <div class="py-4 px-md-5" id="fourStars">
                                         <p class="h5 text-center" style="color: #16A085">Memuat</p>
                                     </div>
-                                    <div class="py-5 px-md-5" id="threeStars">
+                                    <div class="py-4 px-md-5" id="threeStars">
                                         <p class="h5 text-center" style="color: #16A085">Memuat</p>
                                     </div>
-                                    <div class="py-5 px-md-5" id="twoStars">
+                                    <div class="py-4 px-md-5" id="twoStars">
                                         <p class="h5 text-center" style="color: #16A085">Memuat</p>
                                     </div>
-                                    <div class="py-5 px-md-5" id="oneStars">
+                                    <div class="py-4 px-md-5" id="oneStars">
                                         <p class="h5 text-center" style="color: #16A085">Memuat</p>
                                     </div>
                                 </div>

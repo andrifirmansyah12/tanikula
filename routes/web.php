@@ -310,6 +310,7 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:gapoktan']], function
     Route::get('gapoktan/pesanan/fetchSelesai', [App\Http\Controllers\Gapoktan\OrderController::class, 'fetchSelesai'])->name('gapoktan.orders.fetchSelesai');
     Route::get('gapoktan/pesanan/detail-pesanan/{id}', [App\Http\Controllers\Gapoktan\OrderController::class, 'viewOrder'])->name('gapoktan.viewOrder');
     Route::post('gapoktan/pesanan/update-pesanan', [App\Http\Controllers\Gapoktan\OrderController::class, 'updateOrder'])->name('gapoktan.updateOrder');
+    Route::post('gapoktan/pesanan/reply-review', [App\Http\Controllers\Gapoktan\OrderController::class, 'replyReview'])->name('gapoktan.replyReview');
 
     // Daftar Petani
     Route::get('gapoktan/daftar-petani', [App\Http\Controllers\Gapoktan\FarmerController::class, 'index'])->name('gapoktan-petani');

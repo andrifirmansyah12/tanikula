@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Models\Review;
+use App\Models\Costumer;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 
@@ -81,7 +83,7 @@ class OrderController extends Controller
                             class="text-xs font-weight-bold text-capitalize">'. $emp->payment_status .'</span>
                     </td>
                     <td class="align-middle">
-                        <a href="/gapoktan/pesanan/detail-pesanan/'.$emp->id.'" class="text-secondary font-weight-bold text-xs">
+                        <a href="/gapoktan/pesanan/detail-pesanan/'.$emp->id.'" style="color: #16A085;" class="font-weight-bold text-xs">
                             Detail Pesanan
                         </a>
                     </td>
@@ -158,7 +160,7 @@ class OrderController extends Controller
                             class="text-xs font-weight-bold text-capitalize">'. $emp->payment_status .'</span>
                     </td>
                     <td class="align-middle">
-                        <a href="/gapoktan/pesanan/detail-pesanan/'.$emp->id.'" class="text-secondary font-weight-bold text-xs">
+                        <a href="/gapoktan/pesanan/detail-pesanan/'.$emp->id.'" style="color: #16A085;" class="font-weight-bold text-xs">
                             Detail Pesanan
                         </a>
                     </td>
@@ -235,7 +237,7 @@ class OrderController extends Controller
                             class="text-xs font-weight-bold text-capitalize">'. $emp->payment_status .'</span>
                     </td>
                     <td class="align-middle">
-                        <a href="/gapoktan/pesanan/detail-pesanan/'.$emp->id.'" class="text-secondary font-weight-bold text-xs">
+                        <a href="/gapoktan/pesanan/detail-pesanan/'.$emp->id.'" style="color: #16A085;" class="font-weight-bold text-xs">
                             Detail Pesanan
                         </a>
                     </td>
@@ -251,12 +253,23 @@ class OrderController extends Controller
     public function viewOrder($id)
     {
         $order = Order::join('users', 'orders.user_id', '=', 'users.id')
-                    ->join('addresses', 'orders.address_id', '=', 'addresses.id')
-                    ->select('orders.*', 'addresses.recipients_name as name_billing')
-                    ->orderBy('orders.created_at', 'desc')
-                    // ->where('orders.id', '=', $id)
-                    ->find($id);
-        return view('gapoktan.pesanan.detail', compact('order'));
+                ->join('addresses', 'orders.address_id', '=', 'addresses.id')
+                ->select('orders.*', 'addresses.recipients_name as name_billing')
+                ->orderBy('orders.created_at', 'desc')
+                ->find($id);
+
+        $reviews = Review::with('user', 'product')
+                ->join('users', 'reviews.user_id', '=', 'users.id')
+                ->join('products', 'reviews.product_id', '=', 'products.id')
+                ->select('reviews.*', 'users.name as name_reviewer')
+                ->where('products.user_id', '=', auth()->user()->id)
+                ->where('reviews.order_id', '=', $id)
+                ->get();
+
+        $userInfo = Costumer::with('user')
+                ->first();
+
+        return view('gapoktan.pesanan.detail', compact('order', 'reviews', 'userInfo'));
     }
 
     // handle update an employee ajax request
@@ -272,7 +285,7 @@ class OrderController extends Controller
                 'status' => 400,
                 'messages' => $validator->getMessageBag()
             ]);
-        } else 
+        } else
         {
             $orders = Order::find($request->emp_id);
             $orders->status = Order::DELIVERED;
@@ -281,6 +294,38 @@ class OrderController extends Controller
             return response()->json([
                     'status' => 200,
                 ]);
+        }
+	}
+
+    // handle insert a new employee ajax request
+	public function replyReview(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            //
+        ], [
+            //
+        ]);
+
+        if($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'messages' => $validator->getMessageBag()
+            ]);
+        } else {
+            $review_id =  $request->input('review_id', []);
+            $reply_review =  $request->input('reply_review', []);
+            foreach ($review_id as $index => $unit) {
+                $data = array(
+                    "reply_review" => $reply_review[$index],
+                );
+
+                Review::where('id', $review_id[$index])
+                ->update($data);
+            }
+
+            return response()->json([
+                'status' => 200,
+            ]);
         }
 	}
 }

@@ -114,7 +114,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="section-title">
-                    <h2>Kategori Produk</h2>
+                    <h2 style="color: #16A085">Kategori Produk</h2>
                 </div>
             </div>
         </div>
