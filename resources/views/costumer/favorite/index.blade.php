@@ -58,7 +58,7 @@
                 <div class="avatar avatar-xl position-relative">
                     @if ($userInfo->image)
                     <img id="image_preview" src="{{asset('../storage/profile/'. $userInfo->image)}}" alt="profile_image"
-                        class="border-radius-lg shadow-sm" style="width: 92px; height: 72px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                        class="border-radius-lg rounded-circle shadow-sm" style="width: 92px; height: 72px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                     @else
                     <img id="image_preview" src="{{ asset('stisla/assets/img/example-image.jpg') }}" alt="profile_image"
                         class="border-radius-lg rounded-circle shadow-sm" style="height: 72px;">
@@ -97,69 +97,118 @@
             </div>
         </div>
         <div class="row">
-            <div class="row">
-                <div class="col-12 mt-4">
-                    <div class="mb-2 ps-3">
-                        <h6 class="mb-1">Wishlist</h6>
-                        <p class="text-sm">Produk favorit yang dipilih.</p>
-                    </div>
-                    <div class="row WishlistItems">
-                        @if ($wishlist->count())
-                        @foreach ($wishlist as $item)
-                        <div class="col-xl-3 col-md-6 mb-xl-0 mb-4 mt-5" id="product_data">
-                            <div class="card card-blog card-plain">
-                                <div class="card-header p-0 mt-n4 mx-3">
-                                    <a class="d-block shadow-xl border-radius-xl">
-                                        @foreach ($item->product->photo_product->take(1) as $photos)
-                                            <img class="img-fluid" style="object-fit: contain;"
-                                            src="{{ asset('../storage/produk/'.$photos->name) }}" alt="{{ $item->product->name }}">
-                                        @endforeach
-                                    </a>
-                                </div>
-                                <div class="card-body p-3">
-                                    <p class="mb-0 text-sm"><a href="{{ url('product-category/'.$item->product->product_category->slug) }}">{{ $item->product->product_category->name }}</a></p>
-                                    <a href="{{ url('home/'.$item->product->slug) }}">
-                                        <h5>
-                                            {{ $item->product->name }}
-                                        </h5>
-                                    </a>
-                                    <p class="mb-4 text-sm">
-                                        Rp. {{ number_format($item->product->price, 0) }}
+            <div class="col-12 mt-4">
+                <div class="mb-2 ps-3">
+                    <h6 class="mb-1">Wishlist</h6>
+                    <p class="text-sm">Produk favorit yang dipilih.</p>
+                </div>
+                <div class="row WishlistItems">
+                    @if ($wishlist->count())
+                    @foreach ($wishlist as $item)
+                    <div class="col-xl-3 col-md-6 mb-xl-0 mt-3" id="product_data">
+                        <div class="card card-blog border rounded bg-white shadow card-plain" style="height: 26rem">
+                            <div>
+                                <a>
+                                    @if ($item->product->photo_product->count() > 0)
+                                    @foreach ($item->product->photo_product->take(1) as $photos)
+                                    @if ($photos->name)
+                                    <img src="{{ asset('../storage/produk/'.$photos->name) }}" alt="{{ $item->name }}"
+                                        class="rounded-top border-bottom"
+                                        style="width: 100%; height: 11rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                    @else
+                                    <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->name }}"
+                                        class="rounded-top border-bottom"
+                                        style="width: 100%; height: 11rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                    @endif
+                                    @endforeach
+                                    @else
+                                    <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->name }}"
+                                        class="rounded-top border-bottom"
+                                        style="width: 100%; height: 11rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                    @endif
+                                </a>
+                            </div>
+                            <div class="card-body p-3">
+                                @if ($item->product->discount != 0)
+                                <div class="d-flex justify-content-between">
+                                    <p class="m-0 text-sm"><a
+                                        class="text-secondary" href="{{ url('product-category/'.$item->product->product_category->slug) }}">{{ $item->product->product_category->name }}</a>
                                     </p>
-                                    <input type="hidden" name="quantity" class="form-control qty-input text-center" value="1">
-                                    <input type="hidden" value="{{ $item->product_id }}" id="prod_id">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <button type="button" id="addToCartBtn" class="btn btn-outline-primary btn-sm mb-0">+
-                                            Keranjang</button>
-                                        <button type="button" id="delete-cart-wishlistItem" class="btn btn-outline-primary btn-sm mb-0">
-                                            <i class="bi bi-trash h-5 text-danger"></i>
-                                        </button>
-                                    </div>
+                                    <p class="small m-0 badge bg-danger">{{ $item->product->discount }}% OFF</p>
+                                </div>
+                                @else
+                                <p class="m-0 text-sm"><a
+                                    class="text-secondary" href="{{ url('product-category/'.$item->product->product_category->slug) }}">{{ $item->product->product_category->name }}</a>
+                                </p>
+                                @endif
+                                <p class="small m-0">Stok tersisa {{ $item->product->stoke }}</p>
+                                <h6 class="title">
+                                    <a href="{{ url('home/'.$item->product->slug) }}"
+                                        style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; overflow: hidden;">{{ $item->product->name }}</a>
+                                </h6>
+                                <div>
+                                    @if ($item->product->stock_out)
+                                    <span class="small">{{$item->product->stock_out}} Terjual</span>
+                                    @else
+                                    <span class="small">0 Terjual</span>
+                                    @endif
+                                </div>
+                                @php
+                                $reviews = App\Models\Review::where('product_id', $item->product->id)->get();
+                                $ratingSum = App\Models\Review::where('product_id',
+                                $item->product->id)->sum('stars_rated');
+                                if ($reviews->count() > 0){
+                                $ratingValue = $ratingSum / $reviews->count();
+                                } else {
+                                $ratingValue = 0;
+                                }
+                                $rateNum = number_format($ratingValue)
+                                @endphp
+                                @for ($i = 1; $i <= $rateNum; $i++) <span><i class="lni lni-star-filled" style="color: #f0d800;"></i></span>
+                                    @endfor
+                                    @for ($j = $rateNum+1; $j <= 5; $j++) <span><i class="lni lni-star"></i>
+                                        </span>
+                                        @endfor
+                                        <p class="mb-4 text-sm fw-bold">
+                                    Rp. {{ number_format($item->product->price, 0) }}
+                                </p>
+                                <input type="hidden" name="quantity" class="form-control qty-input text-center"
+                                    value="1">
+                                <input type="hidden" value="{{ $item->product_id }}" id="prod_id">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <button type="button" id="addToCartBtn"
+                                        class="btn btn-outline-primary btn-sm mb-0">+
+                                        Keranjang</button>
+                                    <button type="button" id="delete-cart-wishlistItem"
+                                        class="btn btn-outline-primary btn-sm mb-0">
+                                        <i class="bi bi-trash h-5 text-danger"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                        @endforeach
-                        @else
-                        <div id="app">
-                            <section class="section">
-                                <div class="container">
-                                    <div class="page-error">
-                                        <div class="page-inner">
-                                            <div class="page-description">
-                                                Tidak ada produk favorit yang dipilih!
-                                            </div>
-                                            <div class="mt-3">
-                                                <a href="{{ url('new-product') }}" class="btn btn-outline-primary btn-sm mb-0">
-                                                    Belanja Sekarang
-                                                </a>
-                                            </div>
+                    </div>
+                    @endforeach
+                    @else
+                    <div id="app">
+                        <section class="section">
+                            <div class="container">
+                                <div class="page-error">
+                                    <div class="page-inner">
+                                        <div class="page-description">
+                                            Tidak ada produk favorit yang dipilih!
+                                        </div>
+                                        <div class="mt-3">
+                                            <a href="{{ url('new-product') }}"
+                                                class="btn btn-outline-primary btn-sm mb-0">
+                                                Belanja Sekarang
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
-                            </section>
-                        </div>
-                        @endif
+                            </div>
+                        </section>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -213,6 +262,55 @@
                             position: 'topRight'
                         });
                         $("#image").val('');
+                    }
+                }
+            });
+        });
+
+        // $('#addToCartBtn').click(function (e) {
+        $(document).on('click', '#addToCartBtn', function (e) {
+        e.preventDefault();
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        var product_id = $(this).closest('#product_data').find('#prod_id').val();
+        var product_qty = $(this).closest('#product_data').find('.qty-input').val();
+
+        $("#addToCartBtn").prop('disabled', true);
+            $.ajax({
+                method: "POST",
+                url: "/add-to-cart",
+                data: {
+                    'product_id': product_id,
+                    'product_qty': product_qty,
+                },
+                success: function (response) {
+                    if (response.status == 'Silahkan login!') {
+                        window.location = '/login';
+                    } else {
+                        if (response.status == 'Kuantiti tidak boleh melebihi stok')
+                        {
+                            $("#addToCartBtn").prop('disabled', false);
+                            iziToast.warning({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                                title: 'Gagal',
+                                message: response.status,
+                                position: 'topRight'
+                            });
+                        }
+                            else
+                        {
+                            $("#addToCartBtn").prop('disabled', false);
+                            iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                                title: 'Berhasil',
+                                message: response.status,
+                                position: 'topRight'
+                            });
+                            window.setTimeout(function(){location.reload()},1000)
+                        }
                     }
                 }
             });

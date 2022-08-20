@@ -270,6 +270,7 @@
             }
         });
 
+        $("#addToWishlistBtn").prop('disabled', true);
         $.ajax({
             method: "POST",
             url: "/add-to-wishlist",
@@ -281,6 +282,7 @@
                     window.location = '/login';
                 } else {
                     // window.location.reload();
+                    $("#addToWishlistBtn").prop('disabled', false);
                     iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
                         title: 'Berhasil',
                         message: response.status,

@@ -47,10 +47,10 @@
                                             placeholder="Ke Tanggal" readonly />
                                     </div>
                                     <div class="col-md-4 mt-md-0 mt-3">
-                                        <button type="button" name="filter" id="filter"
-                                            class="btn btn-primary shadow-none">Filter</button>
                                         <button type="button" name="refresh" id="refresh"
-                                            class="text-dark btn btn-secondary shadow-none">Refresh</button>
+                                            class="btn shadow-none border" style="background: #FFFACD;">Refresh</button>
+                                        <button type="button" name="filter" id="filter"
+                                            style="background: #16A085; color: white" class="btn shadow-none border">Filter</button>
                                     </div>
                                 </div>
                                 <p class="d-inline-flex font-weight-bold text-white py-1 px-3 border border-light rounded" style="background: #16A085; cursor: pointer;" href="#" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">

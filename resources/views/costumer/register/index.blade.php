@@ -99,8 +99,8 @@
                             </div>
 
                             <div class="form-group">
-                                <input type="submit" value="Daftar" id="register_btn"
-                                    class="btn btn-primary btn-lg btn-block">
+                                <input type="submit" style="background: #16A085" value="Daftar" id="register_btn"
+                                    class="btn text-white btn-lg btn-block">
                             </div>
                         </form>
                     </div>

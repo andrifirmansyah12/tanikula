@@ -21,7 +21,7 @@
                     <div class="card-body">
                         <p class="text-muted">Klik tautan di bawah ini untuk mengatur ulang kata sandi Anda: </p>
                         <div class="form-group">
-                            <a href="{{ $details['body'] }}" class="btn btn-primary btn-lg btn-block">Reset Password</a>
+                            <a href="{{ $details['body'] }}" style="background: #16A085" class="btn text-white btn-lg btn-block">Reset Password</a>
                         </div>
                     </div>
                 </div>

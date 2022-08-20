@@ -210,7 +210,7 @@
                                     </div>
                                 @elseif ( $order->status == 'completed')
                                     @if ($order->review == 'reviewed')
-                                        <button type="button" class="mt-3 mt-md-0 btn border bg-light" data-toggle="modal" data-target="#editReviewModal">
+                                        <button type="button" class="mt-3 shadow-none mt-md-0 btn border" style="background: #FFFACD;" data-toggle="modal" data-target="#editReviewModal">
                                             Lihat Ulasan
                                         </button>
                                     @endif
@@ -234,7 +234,7 @@
     <div class="modal fade" id="editReviewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header border">
                     <h5 class="modal-title" id="exampleModalLabel">Ulasan Pembeli</h5>
                 </div>
                 <div class="modal-body text-start text-black p-4">
@@ -319,8 +319,8 @@
                             @endif
                             @endforeach
                         </div>
-                        <div class="modal-footer d-flex justify-content-center border-top-0 py-4">
-                            <button type="submit" id="add_employee_btn" class="text-white btn bg-primary btn-lg mb-1">
+                        <div class="modal-footer d-flex justify-content-center border-top-0 pt-4">
+                            <button type="submit" id="add_employee_btn" style="background: #16A085; color: white" class="btn shadow-none border">
                                 Kirim Balasan
                             </button>
                         </div>

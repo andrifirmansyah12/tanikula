@@ -84,7 +84,7 @@
                             </div>
 
                             <div class="form-group">
-                                <input type="submit" value="Masuk" id="login_btn" class="btn btn-primary btn-lg btn-block" tabindex="4">
+                                <input type="submit" value="Masuk" id="login_btn" style="background: #16A085" class="btn text-white btn-lg btn-block" tabindex="4">
                             </div>
                         </form>
                         <div class="mt-3 text-center">

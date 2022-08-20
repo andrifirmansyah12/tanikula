@@ -17,7 +17,7 @@ integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifw
 <script src="{{ asset('js/custom.js') }}"></script>
 
 <!-- Page Specific JS File -->
-<script src="{{ asset('js/page/index-0.js') }}"></script>
+{{-- <script src="{{ asset('js/page/index-0.js') }}"></script> --}}
 
 <script src="{{ asset('js/function.js') }}"></script>
 

@@ -89,13 +89,15 @@
                     <div class="modal-body p-4">
                         <div class="form-group my-2">
                             <label for="title">Judul</label>
-                            <input type="text" name="title" class="titleCheck form-control" placeholder="Judul"
+                            <input type="text" id="add_title" name="title" class="titleCheck form-control" placeholder="Judul"
                                 required>
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="form-group my-2">
                             <label>Kategori Kegiatan</label>
                             @if ($category->count() > 0)
-                            <select class="form-control select2" name="category_activity_id" required>
+                            <select class="form-control select2" id="add_category_activity_id" name="category_activity_id" required>
                                 <option selected disabled>Pilih Kategori</option>
                                 @foreach ($category as $item)
                                     @if ( old('category_activity_id') == $item->id )
@@ -110,6 +112,8 @@
                                     <option selected disabled>Tidak ada kategori</option>
                             </select>
                             @endif
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="my-2 form-group">
                             <label for="date">Tanggal Kegiatan</label>
@@ -119,17 +123,21 @@
                                         <i class="bi bi-calendar"></i>
                                     </div>
                                 </div>
-                                <input type="text" name="date" v-model="plating_date" class="form-control datepicker" autocomplete="off">
+                                <input type="text" id="add_date" placeholder="Tanggal Kegiatan" name="date" v-model="plating_date" class="form-control datepicker" autocomplete="off">
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                         </div>
                         <div class="my-2 form-group">
                             <label for="desc">Deskripsi</label>
-                            <textarea class="form-control" style="height: 8rem" name="desc" rows="3" required placeholder="Deskripsi"></textarea>
+                            <textarea class="form-control" style="height: 8rem" id="add_desc" name="desc" rows="3" required placeholder="Deskripsi"></textarea>
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
-                        <button type="submit" id="add_employee_btn" class="btn btn-primary">Simpan</button>
+                        <button type="button" class="btn shadow-none border" style="background: #FFFACD;" data-dismiss="modal">Kembali</button>
+                        <button type="submit" id="add_employee_btn" style="background: #16A085; color: white" class="btn shadow-none border">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -153,6 +161,8 @@
                         <div class="form-group my-2">
                             <label for="title">Judul</label>
                             <input type="text" name="title" id="title" class="form-control titleCheck" placeholder="Judul" required>
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="form-group my-2">
                             <label>Kategori Kegiatan</label>
@@ -172,6 +182,8 @@
                                 <option selected disabled>Tidak ada kategori</option>
                             </select>
                             @endif
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="my-2 form-group">
                             <label for="date">Tanggal Kegiatan</label>
@@ -182,16 +194,20 @@
                                     </div>
                                 </div>
                                 <input type="text" name="date" id="date" v-model="plating_date" class="form-control datepicker" autocomplete="off">
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                         </div>
                         <div class="my-2 form-group">
                             <label for="desc">Deskripsi</label>
                             <textarea class="form-control" style="height: 8rem" name="desc" id="desc" rows="3" required placeholder="Deskripsi"></textarea>
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
-                        <button type="submit" id="edit_employee_btn" class="btn btn-primary">Simpan</button>
+                        <button type="button" class="btn shadow-none border" style="background: #FFFACD;" data-dismiss="modal">Kembali</button>
+                        <button type="submit" id="edit_employee_btn" style="background: #16A085; color: white" class="btn shadow-none border">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -235,7 +251,7 @@
 
                                         </div>
                                     </div>
-                                    <div id="desc_activity_gapoktan" style="padding-bottom: -2px;"
+                                    <div id="desc_activity_gapoktan" style="padding-bottom: -2px;">
 
                                     </div>
                                 </div>
@@ -371,10 +387,12 @@
                 dataType: 'json',
                 success: function(response) {
                     if (response.status == 400) {
-                        showError('title', response.messages.title);
-                        showError('category_activity_id', response.messages.category_activity_id);
-                        showError('desc', response.messages.desc);
-                        showError('date', response.messages.date);
+                        showError('add_title', response.messages.title);
+                        showError('add_category_activity_id', response.messages.category_activity_id);
+                        showError('add_desc', response.messages.desc);
+                        showError('add_date', response.messages.date);
+                        $("#add_employee_btn").text('Simpan');
+                        $("#add_employee_btn").prop('disabled', false);
                     }
                     else if (response.status == 200) {
                         Swal.fire(
@@ -386,9 +404,9 @@
                         fetchDraftActivity();
                         $("#add_employee_form")[0].reset();
                         $("#addEmployeeModal").modal('hide');
+                        $("#add_employee_btn").text('Simpan');
+                        $("#add_employee_btn").prop('disabled', false);
                     }
-                    $("#add_employee_btn").text('Simpan');
-                    $("#add_employee_btn").prop('disabled', false);
                 }
                 });
             });
@@ -434,6 +452,8 @@
                         showError('category_activity_id', response.messages.category_activity_id);
                         showError('desc', response.messages.desc);
                         showError('date', response.messages.date);
+                        $("#edit_employee_btn").text('Simpan');
+                        $("#edit_employee_btn").prop('disabled', false);
                     }
                     else if (response.status == 200) {
                         Swal.fire(
@@ -445,9 +465,9 @@
                         fetchDraftActivity();
                         $("#edit_employee_form")[0].reset();
                         $("#editEmployeeModal").modal('hide');
+                        $("#edit_employee_btn").text('Simpan');
+                        $("#edit_employee_btn").prop('disabled', false);
                     }
-                    $("#edit_employee_btn").text('Simpan');
-                    $("#edit_employee_btn").prop('disabled', false);
                 }
                 });
             });

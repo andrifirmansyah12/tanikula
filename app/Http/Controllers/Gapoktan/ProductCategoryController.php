@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ProductCategory;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
+use Illuminate\Support\Facades\Validator;
 
 class ProductCategoryController extends Controller
 {
@@ -55,13 +56,28 @@ class ProductCategoryController extends Controller
     // handle insert a new employee ajax request
 	public function store(Request $request)
     {
-        $is_active = $request->is_active ? 1 : 0;
-		$empData = ['name' => $request->name, 'slug' => $request->slug, 'is_active' => $is_active];
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|unique:product_categories|max:50',
+        ], [
+            'name.required' => 'Nama kategori produk diperlukan!',
+            'name.max' => 'Nama kategori produk maksimal 50 karakter!',
+            'name.unique' => 'Nama Kategori Produk yang anda masukkan sudah ada!',
+        ]);
 
-		ProductCategory::create($empData);
-		return response()->json([
-			'status' => 200,
-		]);
+        if($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'messages' => $validator->getMessageBag()
+            ]);
+        } else {
+            $is_active = $request->is_active ? 1 : 0;
+            $empData = ['name' => $request->name, 'slug' => $request->slug, 'is_active' => $is_active];
+
+            ProductCategory::create($empData);
+            return response()->json([
+                'status' => 200,
+            ]);
+        }
 	}
 
     // handle edit an employee ajax request
@@ -75,20 +91,34 @@ class ProductCategoryController extends Controller
     // handle update an employee ajax request
 	public function update(Request $request)
     {
-		$emp = ProductCategory::find($request->emp_id);
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:50',
+        ], [
+            'name.required' => 'Nama kategori produk diperlukan!',
+            'name.max' => 'Nama kategori produk maksimal 50 karakter!',
+        ]);
 
-		if ($request->is_active == 0) {
-            $is_active = $request->is_active ? 1 : 0;
-		    $empData = ['name' => $request->name, 'slug' => $request->slug, 'is_active' => $is_active];
-        } elseif ($request->is_active == 1) {
-            $is_active = $request->is_active ? 0 : 1;
-		    $empData = ['name' => $request->name, 'slug' => $request->slug, 'is_active' => $is_active];
+        if($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'messages' => $validator->getMessageBag()
+            ]);
+        } else {
+            $emp = ProductCategory::find($request->emp_id);
+
+            if ($request->is_active == 0) {
+                $is_active = $request->is_active ? 1 : 0;
+                $empData = ['name' => $request->name, 'slug' => $request->slug, 'is_active' => $is_active];
+            } elseif ($request->is_active == 1) {
+                $is_active = $request->is_active ? 0 : 1;
+                $empData = ['name' => $request->name, 'slug' => $request->slug, 'is_active' => $is_active];
+            }
+
+            $emp->update($empData);
+            return response()->json([
+                'status' => 200,
+            ]);
         }
-
-		$emp->update($empData);
-		return response()->json([
-			'status' => 200,
-		]);
 	}
 
     public function checkSlug(Request $request)

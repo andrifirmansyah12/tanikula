@@ -116,11 +116,13 @@
                                     </div>
                                 </div>
                                 <input type="file" id="imagesEdit" name="images[]" multiple class="form-control">
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
 
                             <div class="form-group">
-                                <input type="submit" value="Daftar" id="register_btn"
-                                    class="btn btn-primary btn-lg btn-block">
+                                <input type="submit" style="background: #16A085" value="Daftar" id="register_btn"
+                                    class="btn text-white btn-lg btn-block">
                             </div>
                         </form>
                     </div>
@@ -202,7 +204,7 @@
                     if (res.status == 400) {
                         showError('name', res.messages.name);
                         showError('email', res.messages.email);
-                        showError('images', res.messages.chairman);
+                        showError('imagesEdit', res.messages.images);
                         showError('password', res.messages.password);
                         showError('cpassword', res.messages.cpassword);
                         $("#register_btn").val('Daftar');
