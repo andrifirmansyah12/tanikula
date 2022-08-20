@@ -197,11 +197,19 @@ class ProductController extends Controller
 		if ($product_new->count() > 0) {
 			foreach ($product_new as $item) {
 				$output .= '
-                <div class="col-lg-3 col-md-6 col-12">
-                    <!-- Start Single Product -->
-                    <div class="single-product" style="height: 26rem">
-                        <div class="product-image">
+                <div class="col-lg-3 col-md-6 col-12">';
+                    if ($item->stoke === 0) {
+                        $output .= '<div class="single-product bg-light opacity-90" style="height: 26rem">
+                        <div class="product-image bg-light opacity-90">';
+                    } else {
+                        $output .= '<div class="single-product" style="height: 26rem">
+                        <div class="product-image">';
+                    }
+                        $output .= '
                             <a href="home/'.$item->slug.'">';
+                                if ($item->stoke === 0) {
+                                $output .= '<div style="z-index: 3" class="badge bg-danger px-3 position-absolute top-50 start-50 translate-middle"><h5 class="text-white">Stok Habis</h5></div>';
+                                }
                                 if ($item->photo_product->count() > 0) {
                                     foreach ($item->photo_product->take(1) as $photos) {
                                         if ($photos->name) {
@@ -217,8 +225,12 @@ class ProductController extends Controller
                                     style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
                                 }
                             $output .= '</a>
-                        </div>
-                        <div class="product-info">';
+                        </div>';
+                        if ($item->stoke === 0) {
+                        $output .= '<div class="product-info bg-light opacity-90">';
+                        } else {
+                        $output .= '<div class="product-info">';
+                        }
                             if ($item->discount != 0) {
                                 $output .= '<div class="d-flex justify-content-between">
                                     <a href="product-category/'.$item->product_category->slug.'">
@@ -355,11 +367,19 @@ class ProductController extends Controller
 		if ($based_search->count() > 0) {
 			foreach ($based_search as $item) {
 				$output .= '
-                <div class="col-lg-3 col-md-6 col-12">
-                    <!-- Start Single Product -->
-                    <div class="single-product" style="height: 26rem">
-                        <div class="product-image">
+                <div class="col-lg-3 col-md-6 col-12">';
+                    if ($item->stoke === 0) {
+                        $output .= '<div class="single-product bg-light opacity-90" style="height: 26rem">
+                        <div class="product-image bg-light opacity-90">';
+                    } else {
+                        $output .= '<div class="single-product" style="height: 26rem">
+                        <div class="product-image">';
+                    }
+                        $output .= '
                             <a href="home/'.$item->slug.'">';
+                                if ($item->stoke === 0) {
+                                $output .= '<div style="z-index: 3" class="badge bg-danger px-3 position-absolute top-50 start-50 translate-middle"><h5 class="text-white">Stok Habis</h5></div>';
+                                }
                                 if ($item->photo_product->count() > 0) {
                                     foreach ($item->photo_product->take(1) as $photos) {
                                         if ($photos->name) {
@@ -375,8 +395,12 @@ class ProductController extends Controller
                                     style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
                                 }
                             $output .= '</a>
-                        </div>
-                        <div class="product-info">';
+                        </div>';
+                        if ($item->stoke === 0) {
+                        $output .= '<div class="product-info bg-light opacity-90">';
+                        } else {
+                        $output .= '<div class="product-info">';
+                        }
                             if ($item->discount != 0) {
                                 $output .= '<div class="d-flex justify-content-between">
                                     <a href="product-category/'.$item->product_category->slug.'">
@@ -493,11 +517,19 @@ class ProductController extends Controller
 		if ($product_new->count() > 0) {
 			foreach ($product_new as $item) {
 				$output .= '
-                <div class="col-lg-3 col-md-6 col-12">
-                    <!-- Start Single Product -->
-                    <div class="single-product" style="height: 26rem">
-                        <div class="product-image">
+                <div class="col-lg-3 col-md-6 col-12">';
+                    if ($item->stoke === 0) {
+                        $output .= '<div class="single-product bg-light opacity-90" style="height: 26rem">
+                        <div class="product-image bg-light opacity-90">';
+                    } else {
+                        $output .= '<div class="single-product" style="height: 26rem">
+                        <div class="product-image">';
+                    }
+                        $output .= '
                             <a href="../home/'.$item->slug.'">';
+                                if ($item->stoke === 0) {
+                                $output .= '<div style="z-index: 3" class="badge bg-danger px-3 position-absolute top-50 start-50 translate-middle"><h5 class="text-white">Stok Habis</h5></div>';
+                                }
                                 if ($item->photo_product->count() > 0) {
                                     foreach ($item->photo_product->take(1) as $photos) {
                                         if ($photos->name) {
@@ -513,8 +545,12 @@ class ProductController extends Controller
                                     style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
                                 }
                             $output .= '</a>
-                        </div>
-                        <div class="product-info">';
+                        </div>';
+                        if ($item->stoke === 0) {
+                        $output .= '<div class="product-info bg-light opacity-90">';
+                        } else {
+                        $output .= '<div class="product-info">';
+                        }
                             if ($item->discount != 0) {
                                 $output .= '<div class="d-flex justify-content-between">
                                     <a href="product-category/'.$item->product_category->slug.'">

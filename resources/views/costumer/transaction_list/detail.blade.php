@@ -212,6 +212,17 @@
                     </div>
                 </div>
                 <div class="card-body p-4">
+                    @if ($order->status == 'cancelled')
+                        <div class="card shadow border mb-4 bg-primary text-white p-3">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <p class="m-0 fw-bold">Pesanan Dibatalkan</p>
+                                    <small>Kamu telah membatalkan pesanan ini. Cek Rincian Pembatalan untuk informasi lebih lanjut.</small>
+                                </div>
+                                <div><i class="bi bi-bag-x h1 text-white"></i></div>
+                            </div>
+                        </div>
+                    @endif
                     <div class="d-md-flex justify-content-between align-items-center mb-4">
                         <p class="fw-normal mb-0" style="font-size: 18px">Invoice ID :</p>
                         <p class="fw-bold mb-0" style="font-size: 18px">#{{ $order->code }}</p>
@@ -442,6 +453,10 @@
                             </button>
                         </form>
                     </div>
+                    @elseif ($order->status == 'cancelled')
+                    <button type="button" class="mt-3 mt-md-0 btn border bg-light" data-bs-toggle="modal" data-bs-target="#rincianPembatalan">
+                        Rincian Pembatalan
+                    </button>
                     @endif
                 </div>
             </div>
@@ -450,6 +465,31 @@
 </div>
 
 {{-- Modal Ulasan --}}
+<div class="modal fade" id="rincianPembatalan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="bi bi-arrow-left pe-3 h4" data-bs-dismiss="modal"></i>Rincian Pembatalan</h5>
+            </div>
+            <div class="modal-body text-start text-black p-4">
+                <div class="my-2">
+                    <label for="">Dibatalkan oleh</label>
+                    <input class="form-control border px-3" value="Pembeli" disabled disabled rows="5">
+                </div>
+                <div class="my-2">
+                    <label for="">Dibatalkan pada</label>
+                    <input class="form-control border px-3" value="{{ \App\Helpers\General::datetimeFormat($order->cancelled_at) }}" disabled disabled rows="5">
+                </div>
+                <div class="my-2">
+                    <label for="">Alasan batal</label>
+                    <textarea class="form-control border px-3" disabled rows="5">{{ $order->cancellation_note }}</textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- Modal Tambah Ulasan --}}
 <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">

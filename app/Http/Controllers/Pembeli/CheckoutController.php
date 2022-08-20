@@ -124,20 +124,20 @@ class CheckoutController extends Controller
             ->join('addresses', 'orders.address_id', '=', 'addresses.id')
             ->select('orders.*', 'addresses.recipients_name as name_billing')
             ->where('orders.user_id', '=', auth()->user()->id)
-            ->where('orders.payment_status', '=', 'unpaid')
-            ->where('orders.status', '=', 'cancelled')
+            ->where('orders.status', '!=', 'cancelled')
+            ->where('orders.status', '!=', 'completed')
             ->where('orders.id', '=', $orderId)
             ->exists();
         if ($checkOrder)
         {
-            return redirect('/');
-        } else {
             $order = Order::with('address', 'user', 'orderItems')
                 ->where('id', $orderId)
                 ->where('user_id', \Auth::user()->id)
                 ->firstOrFail();
 
             return view('pages.order.index', compact('order'));
+        } else {
+            return redirect('/');
         }
     }
 

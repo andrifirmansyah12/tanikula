@@ -39,6 +39,10 @@
                 padding-top: 0px;
             }
         }
+
+        .opacity-90 {
+            opacity: 90%;
+        }
     </style>
 @endsection
 
