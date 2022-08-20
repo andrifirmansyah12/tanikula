@@ -319,6 +319,7 @@
                                                 @php
                                                     if ($orderitem->product->discount) {
                                                         $discount += $orderitem->product->price_discount - $orderitem->product->price;
+                                                        $discount = $discount * $orderitem->qty;
                                                     } else {
                                                         $discount += 0;
                                                     }

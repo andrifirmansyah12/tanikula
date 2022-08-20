@@ -767,55 +767,6 @@
             }
         });
 
-        // ====================================== Message Firebase ==========================================
-        const messaging = firebase.messaging();
-        messaging.usePublicVapidKey("BOPzmY3tl0kiX3fUSsQBfurfNxn86-jBjjPCbJxObhqxEMu-RFxwwhHNQ-dGRF0SDQMIEuCTi3BOQz_pUYYBvxs");
-
-        function sendTokenToServer(fcm_token)
-        {
-            @auth
-                const user_id = '{{auth()->user()->id}}';
-            @endauth
-            axios.post('/api/save-token', {
-                fcm_token, user_id
-            })
-            .then(res => {
-                console.log(res);
-            })
-        }
-
-        function retrieveToken() {
-            messaging.getToken()
-            .then((currentToken) => {
-                if (currentToken) {
-                    console.log('Token Received : ' +  currentToken)
-                    sendTokenToServer(currentToken);
-                    // Track the token -> client mapping, by sending to backend server
-                    // show on the UI that permission is secured
-                } else {
-                    alert('You should allow notification!');
-                    // console.log('No registration token available. Request permission to generate one.');
-                    // shows on the UI that permission is required
-                }
-            }).catch((err) => {
-                console.log('An error occurred while retrieving token. ', err);
-                // catch error while creating client token
-            });
-        }
-
-        retrieveToken();
-
-        messaging.onTokenRefresh(() => {
-            retrieveToken();
-        });
-
-        messaging.onMessage((payload)=>{
-            console.log('Message received');
-            console.log(payload);
-
-            location.reload();
-        });
-
         $('.owl-carousel').owlCarousel({
             loop:false,
             responsiveClass:true,
@@ -905,6 +856,55 @@
                     $(this).closest('#product_data').find('.qty-input').val(value);
                 }
             });
+        });
+
+        // ====================================== Message Firebase ==========================================
+        const messaging = firebase.messaging();
+        messaging.usePublicVapidKey("BOPzmY3tl0kiX3fUSsQBfurfNxn86-jBjjPCbJxObhqxEMu-RFxwwhHNQ-dGRF0SDQMIEuCTi3BOQz_pUYYBvxs");
+
+        function sendTokenToServer(fcm_token)
+        {
+            @auth
+                const user_id = '{{auth()->user()->id}}';
+            @endauth
+            axios.post('/api/save-token', {
+                fcm_token, user_id
+            })
+            .then(res => {
+                console.log(res);
+            })
+        }
+
+        function retrieveToken() {
+            messaging.getToken()
+            .then((currentToken) => {
+                if (currentToken) {
+                    console.log('Token Received : ' +  currentToken)
+                    sendTokenToServer(currentToken);
+                    // Track the token -> client mapping, by sending to backend server
+                    // show on the UI that permission is secured
+                } else {
+                    alert('You should allow notification!');
+                    // console.log('No registration token available. Request permission to generate one.');
+                    // shows on the UI that permission is required
+                }
+            }).catch((err) => {
+                console.log('An error occurred while retrieving token. ', err);
+                // catch error while creating client token
+            });
+        }
+
+        retrieveToken();
+
+        messaging.onTokenRefresh(() => {
+            retrieveToken();
+        });
+
+        messaging.onMessage((payload)=>{
+            console.log('Message received');
+            console.log(payload);
+
+            location.reload();
         });
     </script>
 @endsection

@@ -680,12 +680,15 @@ class ProductController extends Controller
     {
 		$fiverateds = Review::where('product_id', $id)->where('stars_rated', 5)->get();
 		$output = '';
+        function get_starred($str) {
+            $len = strlen($str);
+            return substr($str, 0, 1).str_repeat('*', $len - 2).substr($str, $len - 1, 1);
+        }
 		if ($fiverateds->count() > 0) {
 			foreach ($fiverateds as $review) {
 				$output .= '
-                <div class="d-lg-flex border p-2 rounded align-items-center justify-content-start">
-                    <div class="">
-                        <div>';
+                <div class="d-lg-flex border p-2 mb-2 rounded align-items-center justify-content-start">
+                    <div class="col-lg-3">';
                             foreach ($review->user->costumer as $potoProfile) {
                                 if ($potoProfile->image) {
                                     $output .= '<img src="../storage/profile/'.$potoProfile->image.'"
@@ -697,20 +700,15 @@ class ProductController extends Controller
                                         alt="">';
                                 }
                             }
-                            function get_starred($str) {
-                                $len = strlen($str);
-                                return substr($str, 0, 1).str_repeat('*', $len - 2).substr($str, $len - 1, 1);
-                            }
                             $output .= '';
                                 if ($review->hide === 1) {
                                     $output .= '<span class="ms-1">'.get_starred(strtok($review->user->name, ' ')).'</span>';
-                                } else {
-                                    $output .= '<span class="ms-1">'.$review->user->name.'</span>';
+                                } elseif ($review->hide === 0) {
+                                    $output .= '<span class="ms-1">'. strtok($review->user->name, ' ') .'</span>';
                                 }
                             $output .= '
-                        </div>
                     </div>
-                    <div class="col-12 col-lg-8 col-xl-10 mt-2 mt-lg-0 ms-0 ms-lg-5">
+                    <div class="col-12 col-lg-9 mt-2 mt-lg-0">
                         <div class="normal-list">
                             <li>
                                 <div class="ratings">
@@ -733,7 +731,7 @@ class ProductController extends Controller
                             </span>
                         </div>';
                         if ($review->reply_review) {
-                            $output .= '<div>
+                            $output .= '<div class="border rounded p-2">
                                 <div class="d-flex flex-col">
                                     <span for=""><i class="bi bi-arrow-return-right"></i> Balasan Ulasan</span>
                                 </div>
@@ -756,12 +754,15 @@ class ProductController extends Controller
     {
 		$fiverateds = Review::where('product_id', $id)->where('stars_rated', 4)->get();
 		$output = '';
+        function get_starred($str) {
+            $len = strlen($str);
+            return substr($str, 0, 1).str_repeat('*', $len - 2).substr($str, $len - 1, 1);
+        }
 		if ($fiverateds->count() > 0) {
 			foreach ($fiverateds as $review) {
 				$output .= '
-                <div class="d-lg-flex border p-2 rounded align-items-center justify-content-start">
-                    <div class="">
-                        <div>';
+                <div class="d-lg-flex border p-2 mb-2 rounded align-items-center justify-content-start">
+                    <div class="col-lg-3">';
                             foreach ($review->user->costumer as $potoProfile) {
                                 if ($potoProfile->image) {
                                     $output .= '<img src="../storage/profile/'.$potoProfile->image.'"
@@ -773,20 +774,15 @@ class ProductController extends Controller
                                         alt="">';
                                 }
                             }
-                            function get_starred($str) {
-                                $len = strlen($str);
-                                return substr($str, 0, 1).str_repeat('*', $len - 2).substr($str, $len - 1, 1);
-                            }
                             $output .= '';
                                 if ($review->hide === 1) {
                                     $output .= '<span class="ms-1">'.get_starred(strtok($review->user->name, ' ')).'</span>';
-                                } else {
-                                    $output .= '<span class="ms-1">'.$review->user->name.'</span>';
+                                } elseif ($review->hide === 0) {
+                                    $output .= '<span class="ms-1">'. strtok($review->user->name, ' ') .'</span>';
                                 }
                             $output .= '
-                        </div>
                     </div>
-                    <div class="col-12 col-lg-8 col-xl-10 mt-2 mt-lg-0 ms-0 ms-lg-5">
+                    <div class="col-12 col-lg-9 mt-2 mt-lg-0">
                         <div class="normal-list">
                             <li>
                                 <div class="ratings">
@@ -809,7 +805,7 @@ class ProductController extends Controller
                             </span>
                         </div>';
                         if ($review->reply_review) {
-                            $output .= '<div>
+                            $output .= '<div class="border rounded p-2">
                                 <div class="d-flex flex-col">
                                     <span for=""><i class="bi bi-arrow-return-right"></i> Balasan Ulasan</span>
                                 </div>
@@ -832,12 +828,15 @@ class ProductController extends Controller
     {
 		$fiverateds = Review::where('product_id', $id)->where('stars_rated', 3)->get();
 		$output = '';
+        function get_starred($str) {
+            $len = strlen($str);
+            return substr($str, 0, 1).str_repeat('*', $len - 2).substr($str, $len - 1, 1);
+        }
 		if ($fiverateds->count() > 0) {
 			foreach ($fiverateds as $review) {
 				$output .= '
-                <div class="d-lg-flex border p-2 rounded align-items-center justify-content-start">
-                    <div class="">
-                        <div>';
+                <div class="d-lg-flex border p-2 mb-2 rounded align-items-center justify-content-start">
+                    <div class="col-lg-3">';
                             foreach ($review->user->costumer as $potoProfile) {
                                 if ($potoProfile->image) {
                                     $output .= '<img src="../storage/profile/'.$potoProfile->image.'"
@@ -849,20 +848,15 @@ class ProductController extends Controller
                                         alt="">';
                                 }
                             }
-                            function get_starred($str) {
-                                $len = strlen($str);
-                                return substr($str, 0, 1).str_repeat('*', $len - 2).substr($str, $len - 1, 1);
-                            }
                             $output .= '';
                                 if ($review->hide === 1) {
                                     $output .= '<span class="ms-1">'.get_starred(strtok($review->user->name, ' ')).'</span>';
-                                } else {
-                                    $output .= '<span class="ms-1">'.$review->user->name.'</span>';
+                                } elseif ($review->hide === 0) {
+                                    $output .= '<span class="ms-1">'. strtok($review->user->name, ' ') .'</span>';
                                 }
                             $output .= '
-                        </div>
                     </div>
-                    <div class="col-12 col-lg-8 col-xl-10 mt-2 mt-lg-0 ms-0 ms-lg-5">
+                    <div class="col-12 col-lg-9 mt-2 mt-lg-0">
                         <div class="normal-list">
                             <li>
                                 <div class="ratings">
@@ -885,7 +879,7 @@ class ProductController extends Controller
                             </span>
                         </div>';
                         if ($review->reply_review) {
-                            $output .= '<div>
+                            $output .= '<div class="border rounded p-2">
                                 <div class="d-flex flex-col">
                                     <span for=""><i class="bi bi-arrow-return-right"></i> Balasan Ulasan</span>
                                 </div>
@@ -908,12 +902,15 @@ class ProductController extends Controller
     {
 		$fiverateds = Review::where('product_id', $id)->where('stars_rated', 2)->get();
 		$output = '';
+        function get_starred($str) {
+            $len = strlen($str);
+            return substr($str, 0, 1).str_repeat('*', $len - 2).substr($str, $len - 1, 1);
+        }
 		if ($fiverateds->count() > 0) {
 			foreach ($fiverateds as $review) {
 				$output .= '
-                <div class="d-lg-flex border p-2 rounded align-items-center justify-content-start">
-                    <div class="">
-                        <div>';
+                <div class="d-lg-flex border p-2 mb-2 rounded align-items-center justify-content-start">
+                    <div class="col-lg-3">';
                             foreach ($review->user->costumer as $potoProfile) {
                                 if ($potoProfile->image) {
                                     $output .= '<img src="../storage/profile/'.$potoProfile->image.'"
@@ -925,20 +922,15 @@ class ProductController extends Controller
                                         alt="">';
                                 }
                             }
-                            function get_starred($str) {
-                                $len = strlen($str);
-                                return substr($str, 0, 1).str_repeat('*', $len - 2).substr($str, $len - 1, 1);
-                            }
                             $output .= '';
                                 if ($review->hide === 1) {
                                     $output .= '<span class="ms-1">'.get_starred(strtok($review->user->name, ' ')).'</span>';
-                                } else {
-                                    $output .= '<span class="ms-1">'.$review->user->name.'</span>';
+                                } elseif ($review->hide === 0) {
+                                    $output .= '<span class="ms-1">'. strtok($review->user->name, ' ') .'</span>';
                                 }
                             $output .= '
-                        </div>
                     </div>
-                    <div class="col-12 col-lg-8 col-xl-10 mt-2 mt-lg-0 ms-0 ms-lg-5">
+                    <div class="col-12 col-lg-9 mt-2 mt-lg-0">
                         <div class="normal-list">
                             <li>
                                 <div class="ratings">
@@ -961,7 +953,7 @@ class ProductController extends Controller
                             </span>
                         </div>';
                         if ($review->reply_review) {
-                            $output .= '<div>
+                            $output .= '<div class="border rounded p-2">
                                 <div class="d-flex flex-col">
                                     <span for=""><i class="bi bi-arrow-return-right"></i> Balasan Ulasan</span>
                                 </div>
@@ -984,12 +976,15 @@ class ProductController extends Controller
     {
 		$fiverateds = Review::where('product_id', $id)->where('stars_rated', 1)->get();
 		$output = '';
+        function get_starred($str) {
+            $len = strlen($str);
+            return substr($str, 0, 1).str_repeat('*', $len - 2).substr($str, $len - 1, 1);
+        }
 		if ($fiverateds->count() > 0) {
 			foreach ($fiverateds as $review) {
 				$output .= '
-                <div class="d-lg-flex border p-2 rounded align-items-center justify-content-start">
-                    <div class="">
-                        <div>';
+                <div class="d-lg-flex border p-2 mb-2 rounded align-items-center justify-content-start">
+                    <div class="col-lg-3">';
                             foreach ($review->user->costumer as $potoProfile) {
                                 if ($potoProfile->image) {
                                     $output .= '<img src="../storage/profile/'.$potoProfile->image.'"
@@ -1001,20 +996,15 @@ class ProductController extends Controller
                                         alt="">';
                                 }
                             }
-                            function get_starred($str) {
-                                $len = strlen($str);
-                                return substr($str, 0, 1).str_repeat('*', $len - 2).substr($str, $len - 1, 1);
-                            }
                             $output .= '';
                                 if ($review->hide === 1) {
                                     $output .= '<span class="ms-1">'.get_starred(strtok($review->user->name, ' ')).'</span>';
-                                } else {
-                                    $output .= '<span class="ms-1">'.$review->user->name.'</span>';
+                                } elseif ($review->hide === 0) {
+                                    $output .= '<span class="ms-1">'. strtok($review->user->name, ' ') .'</span>';
                                 }
                             $output .= '
-                        </div>
                     </div>
-                    <div class="col-12 col-lg-8 col-xl-10 mt-2 mt-lg-0 ms-0 ms-lg-5">
+                    <div class="col-12 col-lg-9 mt-2 mt-lg-0">
                         <div class="normal-list">
                             <li>
                                 <div class="ratings">
@@ -1037,7 +1027,7 @@ class ProductController extends Controller
                             </span>
                         </div>';
                         if ($review->reply_review) {
-                            $output .= '<div>
+                            $output .= '<div class="border rounded p-2">
                                 <div class="d-flex flex-col">
                                     <span for=""><i class="bi bi-arrow-return-right"></i> Balasan Ulasan</span>
                                 </div>

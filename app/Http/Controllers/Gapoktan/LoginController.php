@@ -94,7 +94,7 @@ class LoginController extends Controller
             'cpassword.required' => 'Konfirmasi kata sandi diperlukan!',
             'cpassword.min' => 'Kata sandi harus minimal 6 karakter!',
             'cpassword.max' => 'Kata sandi maksimal 50 karakter!',
-            'images.required' => 'Foto sertifikat diperlukan!',
+            'images.required' => 'Unggahan bukti gapoktan diperlukan!',
         ]);
 
         if($validator->fails()) {

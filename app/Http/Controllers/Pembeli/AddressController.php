@@ -142,7 +142,8 @@ class AddressController extends Controller
 	}
 
     // handle insert a new employee ajax request
-	public function addAlamat(Request $request) {
+	public function addAlamat(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'recipients_name' => 'required|max:255',
             'telp' => 'required',
@@ -153,14 +154,19 @@ class AddressController extends Controller
             'village_id' => 'required',
             'postal_code' => 'required|max:5',
             'complete_address' => 'required',
-            'note_for_courier' => 'required',
+            // 'note_for_courier' => 'required',
         ], [
-            'recipients_name.required' => 'Nama Penerima diperlukan!',
-            'recipients_name.max' => 'Nama Penerima maksimal 255 karakter!',
-            'address_label.required' => 'Label Alamat diperlukan!',
-            'postal_code.required' => 'Kode Pos diperlukan!',
-            'complete_address.required' => 'Alamat Lengkap diperlukan!',
-            'note_for_courier.required' => 'Catatan untuk kurir diperlukan!',
+            'recipients_name.required' => 'Nama penerima diperlukan!',
+            'recipients_name.max' => 'Nama penerima maksimal 255 karakter!',
+            'telp.required' => 'Nomor telephone diperlukan!',
+            'address_label.required' => 'Label alamat diperlukan!',
+            'province_id.required' => 'Provinsi diperlukan!',
+            'city_id.required' => 'Kota/Kabupaten diperlukan!',
+            'district_id.required' => 'Kecamatan diperlukan!',
+            'village_id.required' => 'Kelurahan/Desa diperlukan!',
+            'postal_code.required' => 'Kode pos diperlukan!',
+            'complete_address.required' => 'Alamat lengkap diperlukan!',
+            // 'note_for_courier.required' => 'Catatan untuk kurir diperlukan!',
         ]);
 
         if($validator->fails()) {
@@ -215,21 +221,23 @@ class AddressController extends Controller
     }
 
     // handle update an employee ajax request
-	public function updateAddress(Request $request) {
+	public function updateAddress(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'recipients_name' => 'required|max:255',
             'telp' => 'required',
             'address_label' => 'required',
             'postal_code' => 'required|max:5',
             'complete_address' => 'required',
-            'note_for_courier' => 'required',
+            // 'note_for_courier' => 'required',
         ], [
-            'recipients_name.required' => 'Nama Penerima diperlukan!',
-            'recipients_name.max' => 'Nama Penerima maksimal 255 karakter!',
-            'address_label.required' => 'Label Alamat diperlukan!',
-            'postal_code.required' => 'Kode Pos diperlukan!',
-            'complete_address.required' => 'Alamat Lengkap diperlukan!',
-            'note_for_courier.required' => 'Catatan untuk kurir diperlukan!',
+            'recipients_name.required' => 'Nama penerima diperlukan!',
+            'recipients_name.max' => 'Nama penerima maksimal 255 karakter!',
+            'telp.required' => 'Nomor telephone diperlukan!',
+            'address_label.required' => 'Label alamat diperlukan!',
+            'postal_code.required' => 'Kode pos diperlukan!',
+            'complete_address.required' => 'Alamat lengkap diperlukan!',
+            // 'note_for_courier.required' => 'Catatan untuk kurir diperlukan!',
         ]);
 
         if($validator->fails()) {

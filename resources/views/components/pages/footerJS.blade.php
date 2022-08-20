@@ -7,6 +7,7 @@
 <script src="{{ asset('js/tiny-slider.js') }}"></script>
 <script src="{{ asset('js/glightbox.min.js') }}"></script>
 <script src="{{ asset('js/main.js') }}"></script>
+<script src="{{ asset('js/function.js') }}"></script>
 {{-- <script src="{{ asset('js/market.js') }}"></script> --}}
 @yield('script')
 <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>

@@ -152,19 +152,23 @@
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Nama
                                 Penerima:</label>
-                            <input type="text" name="recipients_name" id="recipients_name" class="form-control border px-3"
-                                id="recipient-name">
+                            <input type="text" name="recipients_name" id="recipients_name" class="form-control border px-3">
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">No. Hp:</label>
-                            <input type="tel" name="telp" id="telp" class="form-control border px-3" id="recipient-name">
+                            <input type="tel" name="telp" id="telp" class="form-control border px-3">
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="row mb-3 ">
                             <div class="col-6">
                                 <label for="recipient-name" class="col-form-label">Label Alamat:</label>
-                                <input type="text" name="address_label" id="address_label" class="form-control border px-3"
-                                    id="recipient-name">
+                                <input type="text" name="address_label" id="address_label" class="form-control border px-3">
                                 <small class="d-flex text-danger pb-1">*Contoh: Rumah, Kantor</small>
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                             <div class="form-group col-6">
                                 <label class="col-form-label" for="provinsi">Provinsi</label>
@@ -178,6 +182,8 @@
                                     <option value="{{ $item->id ?? '' }}">{{ $item->name ?? '' }}</option>
                                     @endforeach
                                 </select>
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                         </div>
                         <div class="row mb-3 ">
@@ -186,37 +192,48 @@
                                 <select class="form-control border px-3" name="city_id" id="kota" required>
                                     <option selected disabled>==Pilih Salah Satu==</option>
                                 </select>
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                             <div class="form-group col-6">
                                 <label class="col-form-label" for="kecamatan">Kecamatan</label>
                                 <select class="form-control border px-3" name="district_id" id="kecamatan" required>
                                     <option selected disabled>==Pilih Salah Satu==</option>
                                 </select>
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <div class="form-group col-6">
+                            <div class="form-group col-8">
                                 <label class="col-form-label" for="desa">Desa</label>
                                 <select class="form-control border px-3" name="village_id" id="desa" required>
                                     <option selected disabled>==Pilih Salah Satu==</option>
                                 </select>
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                             <div class="col-4">
                                 <label for="recipient-name" class="col-form-label">Kode Pos:</label>
                                 <input type="text" name="postal_code" id="postal_code" class="form-control border px-3">
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                         </div>
                         <div class="mb-3">
                             <label for="message-text" class="col-form-label">Alamat Lengkap:</label>
                             <textarea class="form-control border px-3" name="complete_address" id="complete_address" rows="3"
                                 id="message-text"></textarea>
+                            <div class="invalid-feedback">
+                                </div>
                         </div>
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Catatan untuk
                                 kurir:</label>
-                            <input type="text" name="note_for_courier" id="note_for_courier" class="form-control border px-3"
-                                id="recipient-name">
-                            <small class="d-flex text-danger pb-1">Warna rumah, patokan, pesan khusus, dll.</small>
+                            <small class="d-flex text-danger pb-1">*Warna rumah, patokan, pesan khusus, dll.</small>
+                            <input type="text" name="note_for_courier" id="note_for_courier" class="form-control border px-3">
+                            <div class="invalid-feedback">
+                                </div>
                         </div>
                         <div class="mb-3">
                             <div class="px-3 input-group-text bg-white" id="main_address">
@@ -249,18 +266,23 @@
                     <div>
                         <div class="mb-3">
                             <label for="recipients_name" class="col-form-label">Nama Penerima:</label>
-                            <input type="text" name="recipients_name" class="form-control border px-3" id="recipient-name">
+                            <input type="text" name="recipients_name" class="form-control border px-3" id="add_recipients_name">
+                            <div class="invalid-feedback">
+                                </div>
                         </div>
                         <div class="mb-3">
                             <label for="telp" class="col-form-label">No. Hp:</label>
-                            <input type="tel" name="telp" class="form-control border px-3" id="recipient-name">
+                            <input type="tel" name="telp" id="add_telp" class="form-control border px-3">
+                            <div class="invalid-feedback">
+                                </div>
                         </div>
                         <div class="row mb-3 ">
                             <div class="col-6">
                                 <label for="recipient-name" class="col-form-label">Label Alamat:</label>
-                                <input type="text" name="address_label" class="form-control border px-3"
-                                    id="recipient-name">
+                                <input type="text" id="add_address_label" name="address_label" class="form-control border px-3">
                                 <small class="d-flex text-danger pb-1">*Contoh: Rumah, Kantor</small>
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                             <div class="form-group col-6">
                                 <label class="col-form-label" for="provinsi">Provinsi</label>
@@ -274,6 +296,8 @@
                                     <option value="{{ $item->id ?? '' }}">{{ $item->name ?? '' }}</option>
                                     @endforeach
                                 </select>
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                         </div>
                         <div class="row mb-3 ">
@@ -282,35 +306,47 @@
                                 <select class="form-control border px-3" name="city_id" id="city_id" required>
                                     <option selected disabled>==Pilih Salah Satu==</option>
                                 </select>
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                             <div class="form-group col-6">
                                 <label class="col-form-label" for="kecamatan">Kecamatan</label>
                                 <select class="form-control border px-3" name="district_id" id="district_id" required>
                                     <option selected disabled>==Pilih Salah Satu==</option>
                                 </select>
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <div class="form-group col-6">
+                            <div class="form-group col-8">
                                 <label class="col-form-label" for="desa">Desa</label>
                                 <select class="form-control border px-3" name="village_id" id="village_id" required>
                                     <option selected disabled>==Pilih Salah Satu==</option>
                                 </select>
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                             <div class="col-4">
                                 <label for="recipient-name" class="col-form-label">Kode Pos:</label>
-                                <input type="text" name="postal_code" class="form-control border px-3">
+                                <input type="text" id="add_postal_code" name="postal_code" class="form-control border px-3">
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                         </div>
                         <div class="mb-3">
                             <label for="complete_address" class="col-form-label">Alamat Lengkap:</label>
-                            <textarea class="form-control border px-3" name="complete_address" rows="3"
+                            <textarea class="form-control border px-3" id="add_complete_address" name="complete_address" rows="3"
                                 id="message-text"></textarea>
+                            <div class="invalid-feedback">
+                                </div>
                         </div>
                         <div class="mb-3">
                             <label for="note_for_courier" class="col-form-label">Catatan untuk kurir:</label>
-                            <input type="text" name="note_for_courier" class="form-control border px-3" id="recipient-name">
-                            <small class="d-flex text-danger pb-1">Warna rumah, patokan, pesan khusus, dll.</small>
+                            <small class="d-flex text-danger pb-1">*Warna rumah, patokan, pesan khusus, dll.</small>
+                            <input type="text" name="note_for_courier" class="form-control border px-3">
+                            <div class="invalid-feedback">
+                                </div>
                         </div>
                         <div class="mb-3">
                             <div class="px-3 input-group-text bg-white">
@@ -462,12 +498,16 @@
                 dataType: 'json',
                 success: function(response) {
                     if (response.status == 400) {
-                        showError('recipients_name', response.messages.recipients_name);
-                        showError('telp', response.messages.telp);
-                        showError('address_label', response.messages.address_label);
-                        showError('postal_code', response.messages.postal_code);
-                        showError('complete_address', response.messages.complete_address);
-                        showError('note_for_courier', response.messages.note_for_courier);
+                        showError('add_recipients_name', response.messages.recipients_name);
+                        showError('add_telp', response.messages.telp);
+                        showError('add_address_label', response.messages.address_label);
+                        showError('province_id', response.messages.province_id);
+                        showError('city_id', response.messages.city_id);
+                        showError('district_id', response.messages.district_id);
+                        showError('village_id', response.messages.village_id);
+                        showError('add_postal_code', response.messages.postal_code);
+                        showError('add_complete_address', response.messages.complete_address);
+                        // showError('note_for_courier', response.messages.note_for_courier);
                         $("#add_employee_btn").text('Simpan');
                         $("#add_employee_btn").prop('disabled', false);
                     } else if (response.status == 200){
@@ -536,7 +576,7 @@
                         showError('address_label', response.messages.address_label);
                         showError('postal_code', response.messages.postal_code);
                         showError('complete_address', response.messages.complete_address);
-                        showError('note_for_courier', response.messages.note_for_courier);
+                        // showError('note_for_courier', response.messages.note_for_courier);
                         $("#edit_employee_btn").text('Simpan');
                         $("#edit_employee_btn").prop('disabled', false);
                     } else if (response.status == 200) {
