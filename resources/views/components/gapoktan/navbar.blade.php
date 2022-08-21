@@ -175,7 +175,16 @@
         </li>
         <li class="dropdown"><a href="#" data-toggle="dropdown"
                 class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                <img alt="image" src="{{ asset('assets/img/avatar/avatar-1.png') }}" class="rounded-circle mr-1') }}">
+                @php
+                    $gapoktan = App\Models\Gapoktan::where('user_id', auth()->user()->id)->first();
+                @endphp
+                @if ($gapoktan->image)
+                    <img alt="image" src="../storage/profile/{{ $gapoktan->image }}"
+                        class="border rounded-circle border-white shadow-sm mr-1" style="width: 43px; height: 40px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                @else
+                    <img alt="image" src="{{ asset('assets/img/avatar/avatar-1.png') }}"
+                        class="rounded-circle mr-1">
+                @endif
                 <div class="d-sm-none d-lg-inline-block">{{ strtok(Auth::user()->name, ' ') }}</div>
             </a>
             <div class="dropdown-menu dropdown-menu-right">

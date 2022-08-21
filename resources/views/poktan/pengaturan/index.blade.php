@@ -167,7 +167,18 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-body row">
+                        {{-- <div class="card-body">
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" style="background: #16A085" href="{{ url('poktan/pengaturan') }}">Biodata
+                                        Poktan</a>
+                                </li>
+                            </ul>
+                        </div> --}}
+                        <div class="card-body pt-4 px-4">
+                            <h4 class="border p-3 text-center rounded">Biodata Poktan</h4>
+                        </div>
+                        <div class="card-body mb-4 row">
                             <div class="col-12 col-md-12 col-lg-5">
                                 <div id="profile_alert"></div>
                                 <div class="card align-items-center justify-content-center">
@@ -178,13 +189,12 @@
                                                     @if ($userInfo->image)
                                                     <img alt="image" id="image_preview"
                                                         src="../storage/profile/{{ $userInfo->image }}"
-                                                        class="img-fluid img-thumbnail">
+                                                        class="img-fluid img-thumbnail" style="width: 30rem; height: 14rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"">
                                                     @else
                                                     <img alt="image" id="image_preview"
                                                         src="{{ asset('stisla/assets/img/example-image.jpg') }}"
-                                                        class="img-fluid img-thumbnail">
+                                                        class="img-fluid img-thumbnail" style="width: 30rem; height: 14rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"">
                                                     @endif
-
                                                 </div>
                                             </a>
                                         </div>
@@ -200,9 +210,9 @@
                             <input type="hidden" name="user_id" id="user_id" value="{{ $userInfo->id }}">
                             <div class="col-12 col-md-12 col-lg-7">
                                 <div class="">
-                                    <div class="pb-2">
+                                    {{-- <div class="pb-2">
                                         <h4 class="text-center">Biodata Poktan</h4>
-                                    </div>
+                                    </div> --}}
                                     <div class="table-responsive">
                                         <table class="table table-borderless">
                                             <tbody>
@@ -370,6 +380,7 @@
                                 position: 'topRight'
                             });
                             $("#image").val('');
+                            window.location.reload();
                         }
                     }
                 });
