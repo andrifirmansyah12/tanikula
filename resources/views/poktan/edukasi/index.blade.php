@@ -61,13 +61,15 @@
                     <div class="modal-body p-4">
                         <div class="form-group my-2">
                             <label for="title">Judul</label>
-                            <input type="text" name="title" class="titleCheck form-control" placeholder="Judul"
+                            <input type="text" id="add_title" name="title" class="titleCheck form-control" placeholder="Judul"
                                 required>
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="form-group my-2">
                             <label>Kategori Edukasi</label>
                             @if ($category->count() > 0)
-                            <select class="form-control select2" name="category_education_id" required>
+                            <select class="form-control select2" id="add_category_education_id" name="category_education_id" required>
                                 <option selected disabled>Pilih Kategori</option>
                                 @foreach ($category as $item)
                                     @if ( old('category_education_id') == $item->id )
@@ -78,14 +80,18 @@
                                 @endforeach
                             </select>
                             @else
-                            <select class="form-control select2" disabled required>
+                            <select class="form-control select2" disabled >
                                     <option selected disabled>Tidak ada kategori</option>
                             </select>
                             @endif
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="my-2 form-group">
                             <label for="desc">Deskripsi</label>
-                            <textarea class="form-control" style="height: 8rem" name="desc" rows="3" required placeholder="Deskripsi"></textarea>
+                            <textarea class="form-control" style="height: 8rem" id="add_desc" name="desc" rows="3" required placeholder="Deskripsi"></textarea>
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="my-2 form-group">
                             <label for="file">Unggah File</label>
@@ -117,11 +123,13 @@
                                 </div>
                             </div>
                             <input type="file" name="file" id="addFiles" class="form-control" accept="image/*, video/*" required>
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
-                        <button type="submit" id="add_employee_btn" class="btn btn-primary">Simpan</button>
+                        <button type="button" class="btn shadow-none border" style="background: #FFFACD;" data-dismiss="modal">Kembali</button>
+                        <button type="submit" id="add_employee_btn" style="background: #16A085; color: white" class="btn shadow-none border">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -146,11 +154,13 @@
                         <div class="form-group my-2">
                             <label for="title">Judul</label>
                             <input type="text" name="title" id="title" class="form-control titleCheck" placeholder="Judul" required>
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="form-group my-2">
                             <label>Kategori Edukasi</label>
                             @if ($category->count() > 0)
-                            <select class="form-control select2" id="category_education_id" name="category_education_id">
+                            <select class="form-control select2" id="category_education_id" name="category_education_id" required>
                                 <option selected disabled>Pilih Kategori</option>
                                 @foreach ($category as $item)
                                     @if ( old('category_education_id') == $item->id )
@@ -161,14 +171,18 @@
                                 @endforeach
                             </select>
                             @else
-                            <select class="form-control select2" disabled required>
-                                    <option selected disabled>Tidak ada kategori</option>
+                            <select class="form-control select2" disabled >
+                                <option selected disabled>Tidak ada kategori</option>
                             </select>
                             @endif
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="my-2 form-group">
                             <label for="desc">Deskripsi</label>
                             <textarea class="form-control" style="height: 8rem" name="desc" id="desc" rows="3" required placeholder="Deskripsi"></textarea>
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="my-2 form-group">
                             <label for="file">Unggah File</label>
@@ -189,11 +203,13 @@
                                 </div>
                             </div>
                             <input type="file" name="file" id="files" accept="image/*, video/*" class="form-control">
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
-                        <button type="submit" id="edit_employee_btn" class="btn btn-primary">Simpan</button>
+                        <button type="button" class="btn shadow-none border" style="background: #FFFACD;" data-dismiss="modal">Kembali</button>
+                        <button type="submit" id="edit_employee_btn" style="background: #16A085; color: white" class="btn shadow-none border">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -275,14 +291,13 @@
                 dataType: 'json',
                 success: function(response) {
                     if (response.status == 400) {
-                        showError('title', response.messages.title);
-                        showError('category_education_id', response.messages.category_education_id);
-                        showError('desc', response.messages.desc);
-                        showError('file', response.messages.file);
+                        showError('add_title', response.messages.title);
+                        showError('add_category_education_id', response.messages.category_education_id);
+                        showError('add_desc', response.messages.desc);
+                        showError('addFiles', response.messages.file);
                         $("#add_employee_btn").text('Simpan');
                         $("#add_employee_btn").prop('disabled', false);
-                    }
-                    else if (response.status == 200) {
+                    } else if (response.status == 200) {
                         Swal.fire(
                             'Menambahkan!',
                             'Edukasi Berhasil Ditambahkan!',
@@ -363,11 +378,9 @@
                         showError('title', response.messages.title);
                         showError('category_education_id', response.messages.category_education_id);
                         showError('desc', response.messages.desc);
-                        showError('file', response.messages.file);
                         $("#edit_employee_btn").text('Simpan');
                         $("#edit_employee_btn").prop('disabled', false);
-                    }
-                    else if (response.status == 200) {
+                    } else if (response.status == 200) {
                         Swal.fire(
                             'Memperbarui!',
                             'Edukasi Berhasil Diperbarui!',

@@ -95,12 +95,14 @@
                                     </div>
                                 </div>
                                 <input type="text" name="date_planting" id="date_planting" class="form-control datepicker" placeholder="Tanggal Tandur" autocomplete="off">
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
-                        <button type="submit" id="edit_employee_btn" class="btn btn-primary">Simpan</button>
+                        <button type="button" class="btn shadow-none border" style="background: #FFFACD;" data-dismiss="modal">Kembali</button>
+                        <button type="submit" id="edit_employee_btn" style="background: #16A085; color: white" class="btn shadow-none border">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -184,19 +186,23 @@
                 processData: false,
                 dataType: 'json',
                 success: function(response) {
-                    if (response.status == 200) {
-                    Swal.fire(
-                        'Memperbarui!',
-                        'Tandur Berhasil Diperbarui!',
-                        'success'
-                    )
-                    fetchAllEmployees();
-                    fetchAllEmployeesFields();
+                    if (response.status == 400) {
+                        showError('date_planting', response.messages.date_planting);
+                        $("#edit_employee_btn").text('Simpan');
+                        $("#edit_employee_btn").prop('disabled', false);
+                    } else if (response.status == 200) {
+                        Swal.fire(
+                            'Memperbarui!',
+                            'Tandur Berhasil Diperbarui!',
+                            'success'
+                        )
+                        fetchAllEmployees();
+                        fetchAllEmployeesFields();
+                        $("#edit_employee_btn").text('Simpan');
+                        $("#edit_employee_btn").prop('disabled', false);
+                        $("#edit_employee_form")[0].reset();
+                        $("#editEmployeeModal").modal('hide');
                     }
-                    $("#edit_employee_btn").text('Simpan');
-                    $("#edit_employee_btn").prop('disabled', false);
-                    $("#edit_employee_form")[0].reset();
-                    $("#editEmployeeModal").modal('hide');
                 }
                 });
             });

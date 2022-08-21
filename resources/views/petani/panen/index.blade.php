@@ -97,6 +97,8 @@
                                 </div>
                                 <input type="text" name="date_harvest" placeholder="Tanggal Panen" id="date_harvest_edit"
                                     class="form-control datepicker" autocomplete="off">
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                         </div>
                         <div class="input-group mb-3">
@@ -108,11 +110,13 @@
                                 <option value="panen">Selesai Panen</option>
                                 <option value="belum selesai panen">Belum Selesai Panen</option>
                             </select>
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
-                        <button type="submit" id="edit_panen_btn" class="btn btn-primary">Simpan</button>
+                        <button type="button" class="btn shadow-none border" style="background: #FFFACD;" data-dismiss="modal">Kembali</button>
+                        <button type="submit" id="edit_panen_btn" style="background: #16A085; color: white" class="btn shadow-none border">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -146,6 +150,8 @@
                                 </div>
                                 <input type="text" name="date_harvest" placeholder="Tanggal Panen" id="date_harvest"
                                     class="form-control datepicker" autocomplete="off">
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                         </div>
                         <div class="input-group mb-3">
@@ -157,11 +163,13 @@
                                 <option value="panen">Selesai Panen</option>
                                 <option value="belum selesai panen">Belum Selesai Panen</option>
                             </select>
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
-                        <button type="submit" id="edit_employee_btn" class="btn btn-primary">Simpan</button>
+                        <button type="button" class="btn shadow-none border" style="background: #FFFACD;" data-dismiss="modal">Kembali</button>
+                        <button type="submit" id="edit_employee_btn" style="background: #16A085; color: white" class="btn shadow-none border">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -247,19 +255,24 @@
                 processData: false,
                 dataType: 'json',
                 success: function(response) {
-                    if (response.status == 200) {
-                    Swal.fire(
-                        'Memperbarui!',
-                        'Panen Berhasil Diperbarui!',
-                        'success'
-                    )
-                    fetchAllEmployees();
-                    fetchAllEmployeesFields();
+                    if (response.status == 400) {
+                        showError('date_harvest_edit', response.messages.date_harvest);
+                        showError('status_edit', response.messages.status);
+                        $("#edit_panen_btn").text('Simpan');
+                        $("#edit_panen_btn").prop('disabled', false);
+                    } else if (response.status == 200) {
+                        Swal.fire(
+                            'Memperbarui!',
+                            'Panen Berhasil Diperbarui!',
+                            'success'
+                        )
+                        fetchAllEmployees();
+                        fetchAllEmployeesFields();
+                        $("#edit_panen_btn").text('Simpan');
+                        $("#edit_panen_btn").prop('disabled', false);
+                        $("#edit_panen_form")[0].reset();
+                        $("#editPanenModal").modal('hide');
                     }
-                    $("#edit_panen_btn").text('Simpan');
-                    $("#edit_panen_btn").prop('disabled', false);
-                    $("#edit_panen_form")[0].reset();
-                    $("#editPanenModal").modal('hide');
                 }
                 });
             });
@@ -299,19 +312,24 @@
                 processData: false,
                 dataType: 'json',
                 success: function(response) {
-                    if (response.status == 200) {
-                    Swal.fire(
-                        'Memperbarui!',
-                        'Panen Berhasil Diperbarui!',
-                        'success'
-                    )
-                    fetchAllEmployees();
-                    fetchAllEmployeesFields();
+                    if (response.status == 400) {
+                        showError('date_harvest', response.messages.date_harvest);
+                        showError('status', response.messages.status);
+                        $("#edit_employee_btn").text('Simpan');
+                        $("#edit_employee_btn").prop('disabled', false);
+                    } else if (response.status == 200) {
+                        Swal.fire(
+                            'Memperbarui!',
+                            'Panen Berhasil Diperbarui!',
+                            'success'
+                        )
+                        fetchAllEmployees();
+                        fetchAllEmployeesFields();
+                        $("#edit_employee_btn").text('Simpan');
+                        $("#edit_employee_btn").prop('disabled', false);
+                        $("#edit_employee_form")[0].reset();
+                        $("#editEmployeeModal").modal('hide');
                     }
-                    $("#edit_employee_btn").text('Simpan');
-                    $("#edit_employee_btn").prop('disabled', false);
-                    $("#edit_employee_form")[0].reset();
-                    $("#editEmployeeModal").modal('hide');
                 }
                 });
             });

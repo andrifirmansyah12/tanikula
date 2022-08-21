@@ -15,7 +15,6 @@
 @endsection
 
 @section('content')
-
     <!-- Modal -->
     <div class="modal fade" id="editEmployeeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -35,12 +34,14 @@
                                 <br>1. Jika tidak ingin ubah password biarkan kosong,
                                 <br>2. Dan jika ingin ubah password, silahkan masukkan password.
                             </small>
-                            <input type="password"  id="password" name="password" class="form-control" placeholder="Password" required>
+                            <input type="password"  id="password" name="password" class="form-control" placeholder="Password">
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
-                        <button type="submit" id="password_btn" class="btn btn-primary">Ubah Password</button>
+                        <button type="button" class="btn shadow-none border" style="background: #FFFACD;" data-dismiss="modal">Kembali</button>
+                        <input type="submit" id="password_btn" style="background: #16A085; color: white" class="btn shadow-none border" value="Ubah Password">
                     </div>
                 </form>
             </div>
@@ -63,7 +64,7 @@
                         <div class="form-group my-2">
                             <label for="name">Nama Petani</label>
                             <input type="text" class="form-control" name="name" id="name"
-                                value="{{ $userInfo->user->name }}" required="">
+                                value="{{ $userInfo->user->name }}">
                             <div class="invalid-feedback">
                             </div>
                         </div>
@@ -71,7 +72,7 @@
                             <label class="m-0" for="email">Email</label>
                             <p class="m-0 small text-danger">*gunakan email aktif</p>
                             <input type="text" class="form-control" name="email" id="email"
-                                value="{{ $userInfo->user->email }}" required="">
+                                value="{{ $userInfo->user->email }}">
                             <div class="invalid-feedback">
                             </div>
                         </div>
@@ -85,8 +86,8 @@
                                 </div>
                                 <input type="number" name="phone" id="phone" value="{{ $userInfo->phone}}"
                                     class="form-control phone-number">
-                            </div>
-                            <div class="invalid-feedback">
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                         </div>
                         <div class="form-group my-2">
@@ -95,7 +96,7 @@
                                 $provinces = new App\Http\Controllers\Pages\DependantDropdownController;
                                 $provinces = $provinces->provinces();
                             @endphp
-                            <select class="form-control" name="province_id" id="provinsi" required>
+                            <select class="form-control" name="province_id" id="provinsi">
                                 <option selected disabled>==Pilih Salah Satu==</option>
                                 @foreach ($provinces as $item)
                                 <option value="{{ $item->id ?? '' }}">{{ $item->name ?? '' }}</option>
@@ -104,40 +105,40 @@
                         </div>
                         <div class="form-group my-2">
                             <label class="col-form-label" for="kota">Kabupaten / Kota</label>
-                            <select class="form-control" name="city_id" id="kota" required>
+                            <select class="form-control" name="city_id" id="kota">
                                 <option selected disabled>==Pilih Salah Satu==</option>
                             </select>
                         </div>
                         <div class="form-group my-2">
                             <label class="col-form-label" for="kecamatan">Kecamatan</label>
-                            <select class="form-control" name="district_id" id="kecamatan" required>
+                            <select class="form-control" name="district_id" id="kecamatan">
                                 <option selected disabled>==Pilih Salah Satu==</option>
                             </select>
                         </div>
                         <div class="form-group my-2">
                             <label class="col-form-label" for="desa">Desa</label>
-                            <select class="form-control" name="village_id" id="desa" required>
+                            <select class="form-control" name="village_id" id="desa">
                                 <option selected disabled>==Pilih Salah Satu==</option>
                             </select>
                         </div>
                         <div class="form-group my-2">
                             <label for="street">Jalan / Gang</label>
                             <input type="text" class="form-control" name="street" id="street"
-                                value="{{ $userInfo->street }}" required="">
+                                value="{{ $userInfo->street }}">
                             <div class="invalid-feedback">
                             </div>
                         </div>
                         <div class="form-group my-2">
                             <label for="number">Nomor</label>
                             <input type="number" class="form-control" name="number" id="number"
-                                value="{{ $userInfo->number }}" required="">
+                                value="{{ $userInfo->number }}">
                             <div class="invalid-feedback">
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
-                        <button type="submit" id="profile_btn" class="btn btn-primary">Simpan</button>
+                        <button type="button" class="btn shadow-none border" style="background: #FFFACD;" data-dismiss="modal">Kembali</button>
+                        <input type="submit" id="profile_btn" style="background: #16A085; color: white" class="btn shadow-none border" value="Perbarui Biodata">
                     </div>
                 </form>
             </div>
@@ -249,9 +250,9 @@
                                                     <th>Status Akun Petani</th>
                                                     <td>
                                                         @if ($userInfo->is_active)
-                                                            <span class="badge badge-success">Terverifikasi</span>
+                                                            <span class="badge bg-primary text-white">Terverifikasi</span>
                                                         @else
-                                                            <span class="badge badge-danger">Belum diverifikasi</span>
+                                                            <span class="badge bg-danger text-white">Belum diverifikasi</span>
                                                         @endif
                                                     </td>
                                                 </tr>
@@ -260,7 +261,7 @@
                                     </div>
                                     <div class="card-footer row align-items-center justify-content-end mb-3">
                                         <input type="button" value="Ubah Password"
-                                            class="btn btn-light shadow-none m-1" data-toggle="modal" data-target="#editEmployeeModal">
+                                            class="btn shadow-none border" style="background: #FFFACD;" data-toggle="modal" data-target="#editEmployeeModal">
                                         <input type="button" value="Ubah Biodata Petani"
                                             class="btn btn-primary shadow-none m-1" data-toggle="modal" data-target="#exampleModal">
                                     </div>
@@ -369,7 +370,19 @@
                     data: $(this).serialize()+ `&id=${id}`,
                     dataType: 'json',
                     success: function(res){
-                        if (res.status == 200) {
+                        if (res.status == 400) {
+                            showError('name', res.messages.name);
+                            showError('email', res.messages.email);
+                            showError('phone', res.messages.phone);
+                            showError('provinsi', res.messages.province_id);
+                            showError('kota', res.messages.city_id);
+                            showError('kecamatan', res.messages.district_id);
+                            showError('desa', res.messages.village_id);
+                            showError('street', res.messages.street);
+                            showError('number', res.messages.number);
+                            $("#profile_btn").val('Perbarui Biodata');
+                            $("#profile_btn").prop('disabled', false);
+                        } else if (res.status == 200) {
                             // $("#profile_alert").html(showMessage('success', res.messages));
                             iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
                                 title: 'Berhasil',
@@ -395,7 +408,11 @@
                     data: $(this).serialize()+ `&id=${id}`,
                     dataType: 'json',
                     success: function(res){
-                        if (res.status == 200) {
+                        if (res.status == 400) {
+                            showError('password', res.messages.password);
+                            $("#password_btn").val('Ubah Password');
+                            $("#password_btn").prop('disabled', false);
+                        } else if (res.status == 200) {
                             // $("#profile_alert").html(showMessage('success', res.messages));
                             iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
                                 title: 'Berhasil',
