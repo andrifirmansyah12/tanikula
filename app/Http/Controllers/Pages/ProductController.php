@@ -714,7 +714,7 @@ class ProductController extends Controller
 
     public function fetchAllFiveStar(Request $request, $id)
     {
-		$fiverateds = Review::where('product_id', $id)->where('stars_rated', 5)->get();
+		$fiverateds = Review::where('product_id', $id)->where('stars_rated', 5)->latest()->get();
 		$output = '';
         function get_starred($str) {
             $len = strlen($str);
@@ -760,6 +760,7 @@ class ProductController extends Controller
                                             $output .= '<i class="lni lni-star-filled"></i>';
                                         }
                                     $output .= '</div>
+                                    <p class="m-0">'. \App\Helpers\General::datetimeFormat($review->created_at) .'</p>
                                 </div>
                             </li>
                             <span class="me-md-5">
@@ -788,7 +789,7 @@ class ProductController extends Controller
 
     public function fetchAllFourStar(Request $request, $id)
     {
-		$fiverateds = Review::where('product_id', $id)->where('stars_rated', 4)->get();
+		$fiverateds = Review::where('product_id', $id)->where('stars_rated', 4)->latest()->get();
 		$output = '';
         function get_starred($str) {
             $len = strlen($str);
@@ -834,6 +835,7 @@ class ProductController extends Controller
                                             $output .= '<i class="lni lni-star-filled"></i>';
                                         }
                                     $output .= '</div>
+                                    <p class="m-0">'. \App\Helpers\General::datetimeFormat($review->created_at) .'</p>
                                 </div>
                             </li>
                             <span class="me-md-5">
@@ -862,7 +864,7 @@ class ProductController extends Controller
 
     public function fetchAllThreeStar(Request $request, $id)
     {
-		$fiverateds = Review::where('product_id', $id)->where('stars_rated', 3)->get();
+		$fiverateds = Review::where('product_id', $id)->where('stars_rated', 3)->latest()->get();
 		$output = '';
         function get_starred($str) {
             $len = strlen($str);
@@ -908,6 +910,7 @@ class ProductController extends Controller
                                             $output .= '<i class="lni lni-star-filled"></i>';
                                         }
                                     $output .= '</div>
+                                    <p class="m-0">'. \App\Helpers\General::datetimeFormat($review->created_at) .'</p>
                                 </div>
                             </li>
                             <span class="me-md-5">
@@ -936,7 +939,7 @@ class ProductController extends Controller
 
     public function fetchAllTwoStar(Request $request, $id)
     {
-		$fiverateds = Review::where('product_id', $id)->where('stars_rated', 2)->get();
+		$fiverateds = Review::where('product_id', $id)->where('stars_rated', 2)->latest()->get();
 		$output = '';
         function get_starred($str) {
             $len = strlen($str);
@@ -982,6 +985,7 @@ class ProductController extends Controller
                                             $output .= '<i class="lni lni-star-filled"></i>';
                                         }
                                     $output .= '</div>
+                                    <p class="m-0">'. \App\Helpers\General::datetimeFormat($review->created_at) .'</p>
                                 </div>
                             </li>
                             <span class="me-md-5">
@@ -1010,7 +1014,7 @@ class ProductController extends Controller
 
     public function fetchAllOneStar(Request $request, $id)
     {
-		$fiverateds = Review::where('product_id', $id)->where('stars_rated', 1)->get();
+		$fiverateds = Review::where('product_id', $id)->where('stars_rated', 1)->latest()->get();
 		$output = '';
         function get_starred($str) {
             $len = strlen($str);
@@ -1056,6 +1060,7 @@ class ProductController extends Controller
                                             $output .= '<i class="lni lni-star-filled"></i>';
                                         }
                                     $output .= '</div>
+                                    <p class="m-0">'. \App\Helpers\General::datetimeFormat($review->created_at) .'</p>
                                 </div>
                             </li>
                             <span class="me-md-5">

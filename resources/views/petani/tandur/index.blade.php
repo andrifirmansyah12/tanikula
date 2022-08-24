@@ -192,8 +192,8 @@
                         $("#edit_employee_btn").prop('disabled', false);
                     } else if (response.status == 200) {
                         Swal.fire(
-                            'Memperbarui!',
-                            'Tandur Berhasil Diperbarui!',
+                            'Berhasil!',
+                            'Tandur Berhasil Ditambahkan!',
                             'success'
                         )
                         fetchAllEmployees();

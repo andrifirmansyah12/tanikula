@@ -23,7 +23,8 @@ class ContactUsController extends Controller
             'email' => 'required|email|max:100',
             'subject' => 'required',
             'message' => 'required',
-            'phone_number' => 'required'
+            'phone_number' => 'required',
+            'screenshot' => 'required',
         ], [
             'fullname.required' => 'Nama diperlukan!',
             'fullname.max' => 'Nama maksimal 50 karakter!',
@@ -31,7 +32,8 @@ class ContactUsController extends Controller
             'email.max' => 'Email maksimal 100 karakter!',
             'subject.required' => 'Subjek diperlukan!',
             'message.required' => 'Pesan diperlukan!',
-            'phone_number.required' => 'Telp diperlukan!',
+            'phone_number.required' => 'Nomor telp diperlukan!',
+            'screenshot.required' => 'Foto diperlukan!',
         ]);
 
         if($validator->fails()) {

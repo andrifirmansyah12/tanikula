@@ -82,10 +82,10 @@
                 </div>
                 <form action="#" method="POST" id="edit_panen_form" enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" name="emp_id" id="emp_id">
-                    <input type="hidden" name="field_id" id="field_id_edit">
-                    <input type="hidden" name="plant_id" id="plant_id_edit">
-                    <input type="hidden" name="farmer_id" id="farmer_id_edit">
+                    <input type="text" name="emp_id" id="emp_id_edit">
+                    <input type="text" name="field_id" id="field_id_edit">
+                    <input type="text" name="plant_id" id="plant_id_edit">
+                    <input type="text" name="farmer_id" id="farmer_id_edit">
                     <div class="modal-body p-4">
                         <div class="form-group">
                             <label for="plating_date">Tanggal Panen</label>
@@ -135,10 +135,10 @@
                 </div>
                 <form action="#" method="POST" id="edit_employee_form" enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" name="emp_id" id="emp_id">
-                    <input type="hidden" name="plant_id" id="plant_id">
-                    <input type="hidden" name="farmer_id" id="farmer_id">
-                    <input type="hidden" name="field_id" id="field_id">
+                    <input type="text" name="emp_id" id="emp_id">
+                    <input type="text" name="plant_id" id="plant_id">
+                    <input type="text" name="farmer_id" id="farmer_id">
+                    <input type="text" name="field_id" id="field_id">
                     <div class="modal-body p-4">
                         <div class="form-group">
                             <label for="plating_date">Tanggal Panen</label>
@@ -235,7 +235,7 @@
                     $("#plant_id_edit").val(response.planting_id);
                     $("#farmer_id_edit").val(response.farmer_id);
                     $("#field_id_edit").val(response.field_recap_planting.field_id);
-                    $("#emp_id").val(response.id);
+                    $("#emp_id_edit").val(response.id);
                 }
                 });
             });
@@ -319,8 +319,8 @@
                         $("#edit_employee_btn").prop('disabled', false);
                     } else if (response.status == 200) {
                         Swal.fire(
-                            'Memperbarui!',
-                            'Panen Berhasil Diperbarui!',
+                            'Berhasil!',
+                            'Panen Berhasil Ditambahkan!',
                             'success'
                         )
                         fetchAllEmployees();

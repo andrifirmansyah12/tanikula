@@ -43,8 +43,8 @@ class CheckoutController extends Controller
         if($request->has('service'))
         {
             $data_origin = 149;
-            $data_destination = $request->destination_costumer;
-            // $data_destination = 149;
+            // $data_destination = $request->destination_costumer;
+            $data_destination = 149;
             $data_weight = $request->weight_product;
             $data_courier = $request->courier;
             $data_service = $request->service;
@@ -95,8 +95,8 @@ class CheckoutController extends Controller
             if($request->courier)
             {
                 $data_origin = 149;
-                $data_destination = $request->destination_costumer;
-                // $data_destination = 149;
+                // $data_destination = $request->destination_costumer;
+                $data_destination = 149;
                 $data_weight = $request->weight_product;
                 $data_courier = $request->courier;
 

@@ -392,8 +392,8 @@
                     $("#add_employee_btn").prop('disabled', false);
                 } else if (response.status == 200){
                     Swal.fire(
-                        'Membuat Ulasan!',
-                        'Berhasil membuat ulasan!',
+                        'Berhasil!',
+                        'Berhasil membuat komentar pada ulasan pembeli!',
                         'success'
                     )
                     $("#reviewModal").modal('hide');

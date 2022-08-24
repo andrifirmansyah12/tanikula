@@ -377,7 +377,7 @@
                                 <option value="tiki">TIKI</option>
                                 <option value="pos">POS</option>
                             </select>
-                            <button id="btn-check" class="my-2 border btn btn-light col-12">Check Kurir</button>
+                            <button id="btn-check" class="my-2 border btn btn-light col-12">Cek Kurir</button>
                         </div>
 
                         <div class="form-group mt-5">

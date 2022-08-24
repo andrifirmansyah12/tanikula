@@ -469,7 +469,7 @@
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"><i class="bi bi-arrow-left pe-3 h4" data-bs-dismiss="modal"></i>Rincian Pembatalan</h5>
+                <h5 class="modal-title align-middle" id="exampleModalLabel"><span class="bi bi-arrow-left pe-3 h4 align-middle" data-bs-dismiss="modal"></span>Rincian Pembatalan</h5>
             </div>
             <div class="modal-body text-start text-black p-4">
                 <div class="my-2">
@@ -494,7 +494,7 @@
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Ulasan Produk</h5>
+                <h5 class="modal-title align-middle" id="exampleModalLabel"><span class="bi bi-arrow-left pe-3 h4 align-middle" data-bs-dismiss="modal"></span>Ulasan Produk</h5>
             </div>
             <div class="modal-body text-start text-black p-4">
                 <form action="#" method="POST" id="add_employee_form" accept-charset="utf-8" enctype="multipart/form-data">
@@ -528,13 +528,15 @@
                         <div class="rating-produkUlasan">
                             <div>
                                 <input id="stars_rated" name="stars_rated[]" type="number" class="rating" step=1
-                                    data-showClear="false" data-showCaption="false" data-animate="false">
+                                    data-showClear="false" required data-showCaption="false" data-animate="false">
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                         </div>
                         <div class="mb-5">
                             <textarea class="form-control border px-3"
                                 placeholder="Beritahu kepada pengguna lain mengapa anda sangat menyukai produk ini."
-                                name="review[]" rows="5" id="message-text"></textarea>
+                                name="review[]" required rows="5" id="message-text"></textarea>
                             <div class="invalid-feedback">
                             </div>
                         </div>
@@ -549,9 +551,9 @@
                                         return substr($str, 0, 1).str_repeat('*', $len - 2).substr($str, $len - 1, 1);
                                     }
                                     @endphp
-                                    <div>Username yang akan ditampilkan adalah <span id="console-event">{{ strtok(auth()->user()->name, ' ') }}</span></div>
+                                    <div>Username yang akan ditampilkan adalah <span id="console-event">{{ get_starred(strtok(auth()->user()->name, ' ')) }}</span></div>
                                 </div>
-                                <input id="toggle-event" name="hide" type="checkbox" data-toggle="toggle">
+                                <input id="toggle-event" name="hide" checked type="checkbox" data-toggle="toggle">
                             </div>
                             <div class="invalid-feedback">
                             </div>
@@ -573,7 +575,7 @@
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Ulasan Saya</h5>
+                <h5 class="modal-title align-middle" id="exampleModalLabel"><span class="bi bi-arrow-left pe-3 h4 align-middle" data-bs-dismiss="modal"></span>Ulasan Saya</h5>
             </div>
             <div class="modal-body text-start text-black p-4">
                 <div>
@@ -654,12 +656,15 @@
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Ulasan Produk</h5>
+                <h5 class="modal-title align-middle" id="exampleModalLabel"><span class="bi bi-arrow-left pe-3 h4 align-middle" data-bs-dismiss="modal"></span>Edit Ulasan Produk</h5>
             </div>
             <div class="modal-body text-start text-black p-4">
                 <form action="#" method="POST" id="edit_employee_form" accept-charset="utf-8" enctype="multipart/form-data">
                     @csrf
                     <div>
+                        @php
+                            $checked = 0;
+                        @endphp
                         @foreach ($reviews as $review)
                         <input type="hidden" name="reviewed_id[]" value="{{ $review->id }}">
                         <input type="hidden" name="reviewed_product_id[]" value="{{ $review->product_id }}">
@@ -687,18 +692,46 @@
                         </div>
                         <div class="rating-produkUlasan">
                             <div>
-                                <input id="stars_rated" value="{{ $review->stars_rated }}" name="reviewed_stars_rated[]" type="number" class="rating" step=1
-                                    data-showClear="false" data-showCaption="false" data-animate="false">
+                                <input id="reviewed_stars_rated" value="{{ $review->stars_rated }}" name="reviewed_stars_rated[]" type="number" class="rating" step=1
+                                    data-showClear="false" data-showCaption="false" data-animate="false" required>
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                         </div>
+                        @php
+                            $checked = $review->hide;
+                        @endphp
                         <div class="mb-5">
-                            <textarea class="form-control border px-3"
+                            <textarea class="form-control border px-3" required
                                 placeholder="Beritahu kepada pengguna lain mengapa anda sangat menyukai produk ini."
-                                name="reviewed_review[]" rows="5" id="message-text">{{ $review->review }}</textarea>
+                                name="reviewed_review[]" rows="5" id="reviewed_message-text">{{ $review->review }}</textarea>
                             <div class="invalid-feedback">
                             </div>
                         </div>
                         @endforeach
+                        <div class="mt-3">
+                            <div class="px-3 border text-sm p-2 rounded bg-white d-flex justify-content-between">
+                                <div>
+                                    <span>Tampilkan username pada penilaian</span>
+                                    @php
+                                    function hideReview($str) {
+                                        $len = strlen($str);
+                                        return substr($str, 0, 1).str_repeat('*', $len - 2).substr($str, $len - 1, 1);
+                                    }
+                                    @endphp
+                                    <div>Username yang akan ditampilkan adalah <span id="edit-event">
+                                        @if ($checked == 1)
+                                            {{ hideReview(strtok(auth()->user()->name, ' ')) }}
+                                        @elseif ($checked == 0)
+                                            {{ strtok(auth()->user()->name, ' ') }}
+                                        @endif</span>
+                                    </div>
+                                </div>
+                                <input id="edit-event-toogle" {{ $checked == 1 ? 'checked' : '' }} name="hide" type="checkbox" data-toggle="toggle">
+                            </div>
+                            <div class="invalid-feedback">
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer d-flex justify-content-center border-top-0">
                         <button type="submit" id="edit_employee_btn" class="text-white btn bg-primary btn-lg mb-1" style="background-color: #35558a;">
@@ -781,7 +814,7 @@
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header d-flex justify-content-center border-bottom-0">
-                <h5 class="modal-title" id="exampleModalLabel">Pilih Alasan Pembatalan</h5>
+                <h5 class="modal-title align-middle" id="exampleModalLabel"><span class="bi bi-arrow-left pe-3 h4 align-middle" data-bs-dismiss="modal"></span>Pilih Alasan Pembatalan</h5>
             </div>
             <form action="#" method="POST" id="cancelled_orders_form" enctype="multipart/form-data">
                 @csrf
@@ -863,6 +896,16 @@
         });
     });
 
+    $(function() {
+        $('#edit-event-toogle').change(function() {
+            if ($(this).prop('checked') == true) {
+                $('#edit-event').html('{{ hideReview(strtok(auth()->user()->name, ' ')) }}')
+            } else if ($(this).prop('checked') == false){
+                $('#edit-event').html('{{ strtok(auth()->user()->name, ' ') }}')
+            }
+        });
+    });
+
     // initialize with defaults
     $("#input-id").rating({
         showClear: 'false',
@@ -933,7 +976,7 @@
             success: function(response) {
                 if (response.status == 400) {
                     showError('stars_rated', response.messages.stars_rated);
-                    showError('review', response.messages.review);
+                    showError('message-text', response.messages.review);
                     $("#add_employee_btn").text('Kirim');
                     $("#add_employee_btn").prop('disabled', false);
                 } else if (response.status == 200){
@@ -969,8 +1012,8 @@
                 dataType: 'json',
                 success: function (response) {
                     if (response.status == 400) {
-                        showError('stars_rated', response.messages.stars_rated);
-                        showError('review', response.messages.review);
+                        showError('reviewed_stars_rated', response.messages.stars_rated);
+                        showError('reviewed_message-text', response.messages.review);
                         $("#edit_employee_btn").text('Kirim');
                         $("#edit_employee_btn").prop('disabled', false);
                     } else if (response.status == 200) {

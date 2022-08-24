@@ -88,7 +88,7 @@ class PengaturanController extends Controller
             if ($request->birth) {
                 Costumer::with('user')->where('id', $request->id)->update([
                     'telp' => $request->telp,
-                    'birth' => $request->birth,
+                    'birth' => Carbon::createFromFormat('d-M-Y', $request->birth)->format('Y-m-d h:i:s'),
                     'gender' => $request->gender,
                 ]);
             } else {

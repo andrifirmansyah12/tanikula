@@ -43,7 +43,7 @@ class WishlistController extends Controller
                     $wishlist->user_id = Auth::id();
                     $wishlist->product_id = $product_id;
                     $wishlist->save();
-                    return response()->json(['status' => "Ditambahkan ke Wishlist"]);
+                    return response()->json(['status' => $prod_check->name . " Ditambahkan ke Wishlist"]);
                 }
             }
         } else {

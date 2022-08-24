@@ -43,6 +43,14 @@
             padding-top: 0px;
         }
     }
+
+    .opacity-90 {
+        opacity: 90%;
+    }
+
+    .top-30{
+        top: 90px;
+    }
     </style>
 @endsection
 
@@ -83,12 +91,12 @@
                 <div class="nav-wrapper position-relative end-0">
                     <ul class="nav nav-fill p-1">
                         <li class="nav-item">
-                            <a class="btn {{ Request::is('pembeli') ? 'active text-white bg-primary' : '' }}" onclick="pembeli_dashboard('{{ url('pembeli') }}')" href="#">
+                            <a class="btn {{ Request::is('pembeli') ? 'active text-white bg-primary shadow' : 'border' }}" onclick="pembeli_dashboard('{{ url('pembeli') }}')" href="#">
                                 <span class="ms-1 fw-bold">Biodata Diri</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn {{ Request::is('pembeli/alamat*') ? 'active text-white bg-primary' : '' }}" onclick="pembeli_alamat('{{ url('pembeli/alamat') }}')" href="#">
+                            <a class="btn {{ Request::is('pembeli/alamat*') ? 'active text-white bg-primary shadow' : 'border' }}" onclick="pembeli_alamat('{{ url('pembeli/alamat') }}')" href="#">
                                 <span class="ms-1 fw-bold">Daftar Alamat</span>
                             </a>
                         </li>
@@ -106,9 +114,12 @@
                     @if ($wishlist->count())
                     @foreach ($wishlist as $item)
                     <div class="col-xl-3 col-md-6 mb-xl-0 mt-3" id="product_data">
-                        <div class="card card-blog border rounded bg-white shadow card-plain" style="height: 26rem">
-                            <div>
-                                <a>
+                        <div class="card card-blog border rounded bg-white shadow card-plain {{ $item->product->stoke === 0 ? 'bg-light opacity-90' : '' }}" style="height: 26rem">
+                            <div class="{{ $item->product->stoke === 0 ? 'bg-light opacity-90' : '' }}">
+                                <a href="{{ url('home/'.$item->product->slug) }}">
+                                    @if ($item->product->stoke === 0)
+                                    <div style="z-index: 3" class="badge bg-danger px-3 position-absolute top-30 start-50 translate-middle"><h5 class="text-white m-0">Stok Habis</h5></div>
+                                    @endif
                                     @if ($item->product->photo_product->count() > 0)
                                     @foreach ($item->product->photo_product->take(1) as $photos)
                                     @if ($photos->name)
@@ -128,7 +139,7 @@
                                     @endif
                                 </a>
                             </div>
-                            <div class="card-body p-3">
+                            <div class="card-body p-3 {{ $item->product->stoke === 0 ? 'bg-light opacity-90' : '' }}">
                                 @if ($item->product->discount != 0)
                                 <div class="d-flex justify-content-between">
                                     <p class="m-0 text-sm"><a
@@ -176,9 +187,15 @@
                                     value="1">
                                 <input type="hidden" value="{{ $item->product_id }}" id="prod_id">
                                 <div class="d-flex align-items-center justify-content-between">
+                                    @if ($item->product->stoke === 0)
+                                    <button type="button" disabled
+                                        class="btn btn-outline-primary btn-sm mb-0">+
+                                        Keranjang</button>
+                                    @else
                                     <button type="button" id="addToCartBtn"
                                         class="btn btn-outline-primary btn-sm mb-0">+
                                         Keranjang</button>
+                                    @endif
                                     <button type="button" id="delete-cart-wishlistItem"
                                         class="btn btn-outline-primary btn-sm mb-0">
                                         <i class="bi bi-trash h-5 text-danger"></i>

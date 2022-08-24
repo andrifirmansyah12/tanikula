@@ -68,10 +68,10 @@
                             <h3>Aplikasi Seluler Kami</h3>
                             <ul class="app-btn">
                                 <li>
-                                    <a href="javascript:void(0)">
+                                    <a href="javascript:void(0)" style="background: #16A085; color: white">
                                         <i class="lni lni-play-store"></i>
-                                        <span class="small-title">Download on the</span>
-                                        <span class="big-title">Google Play</span>
+                                        <span class="small-title fw-bold" style="color: white">Download on the</span>
+                                        <span class="big-title fw-bold" style="color: white">Google Play</span>
                                     </a>
                                 </li>
                             </ul>

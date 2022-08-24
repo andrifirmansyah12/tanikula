@@ -83,12 +83,12 @@
                 <div class="nav-wrapper position-relative end-0">
                     <ul class="nav nav-fill p-1">
                         <li class="nav-item">
-                            <a class="btn {{ Request::is('pembeli') ? 'active text-white bg-primary' : '' }}" onclick="pembeli_dashboard('{{ url('pembeli') }}')" href="#">
+                            <a class="btn {{ Request::is('pembeli') ? 'active text-white bg-primary shadow' : 'border' }}" onclick="pembeli_dashboard('{{ url('pembeli') }}')" href="#">
                                 <span class="ms-1 fw-bold">Biodata Diri</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn {{ Request::is('pembeli/alamat*') ? 'active text-white bg-primary' : '' }}" onclick="pembeli_alamat('{{ url('pembeli/alamat') }}')" href="#">
+                            <a class="btn {{ Request::is('pembeli/alamat*') ? 'active text-white bg-primary shadow' : 'border' }}" onclick="pembeli_alamat('{{ url('pembeli/alamat') }}')" href="#">
                                 <span class="ms-1 fw-bold">Daftar Alamat</span>
                             </a>
                         </li>

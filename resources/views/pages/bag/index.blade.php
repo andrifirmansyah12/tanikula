@@ -96,25 +96,23 @@
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-6 mt-2 ms-md-3 mt-md-0">
+                                                @if ($item->product->discount != 0)
+                                                    <p class="small mb-2 badge bg-danger">{{ $item->product->discount }}% OFF</p>
+                                                @endif
                                                 <h3 class="mb-2 fs-6 fw-bold"><a style="color:#16A085;" href="{{ url('home/'.$item->product->slug) }}">{{ $item->product->name }}</a></h3>
-                                                {{-- <label for="color">Tipe</label>
-                                                <div class="dropdown mt-1">
-                                                    <button class="btn border dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        Pilih Tipe
-                                                    </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                        <li><a class="dropdown-item" href="#">Tipe A</a></li>
-                                                        <li><a class="dropdown-item" href="#">Tipe B</a></li>
-                                                        <li><a class="dropdown-item" href="#">Tipe C</a></li>
-                                                    </ul>
-                                                </div> --}}
-                                                <p class="mb-0 fs-6 fw-bold mt-2">Rp. {{ number_format($item->product->price, 0) }}</p>
+                                                <p class="small" style="color:#16A085;">Stok tersisa {{ $item->product->stoke }}</p>
+                                                @if ($item->product->price_discount)
+                                                    <span class="text-decoration-line-through text-muted text-danger" style="font-size: 13px">Rp. {{ number_format($item->product->price_discount, 0) }} <span class="fs-6 fw-bold" style="color:#16A085;">Rp. {{ number_format($item->product->price, 0) }}</span></span>
+                                                @else
+                                                    <span>Rp. {{ number_format($item->product->price, 0) }}</span>
+                                                @endif
+                                                {{-- <p class="mb-0 fs-6 fw-bold mt-2">Rp. {{ number_format($item->product->price, 0) }}</p> --}}
                                             </div>
                                             <div class="col-12 mt-3 mt-md-0">
                                                 <div class="d-flex flex-md-row flex-column-reverse justify-content-end align-items-end align-items-md-center">
                                                     <div class="d-flex flex-row mt-2 mt-md-0">
-                                                        <div class="border-end text-black border-dark pe-3">
-                                                            <button class="btn btn-success" id="addToWishlistBtn">+
+                                                        <div class="text-black pe-3">
+                                                            <button class="btn" style="background: #16A085; color: white" id="addToWishlistBtn">+
                                                                 Wishlist</button>
                                                         </div>
                                                         <div>
@@ -129,16 +127,16 @@
                                                                 var stoke = '{{ $item->product->stoke }}';
                                                             </script>
                                                             <button
-                                                                class="input-group-text changeQuantity decrement-btn me-1">-</button>
+                                                                class="input-group-text changeQuantity decrement-btn me-1" style="background: #16A085; color: white">-</button>
                                                             <input type="text" name="quantity"
                                                                 class="form-control qty-input text-center"
                                                                 value="{{ $item->product_qty }}">
                                                             @if ($item->product->stoke > $item->product_qty)
                                                             <button
-                                                                class="input-group-text changeQuantity increment-btn ms-1">+</button>
+                                                                class="input-group-text changeQuantity increment-btn ms-1" style="background: #16A085; color: white">+</button>
                                                             @else
                                                             <button disabled
-                                                                class="input-group-text changeQuantity increment-btn ms-1">+</button>
+                                                                class="input-group-text changeQuantity increment-btn ms-1" style="background: #16A085; color: white">+</button>
                                                             @endif
                                                         </div>
                                                     </div>

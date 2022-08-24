@@ -27,6 +27,8 @@
                                                 <label class="label pb-2" for="name">{{ __('Nama Lengkap') }}</label>
                                                 <input type="text" class="form-control @error('name') is-invalid @enderror" name="fullname" id="fullname"
                                                     placeholder="Nama">
+                                                <div class="invalid-feedback">
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -34,6 +36,8 @@
                                                 <label class="label pb-2" for="email">{{ __('Email') }}</label>
                                                 <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email"
                                                     placeholder="Email">
+                                                <div class="invalid-feedback">
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-8">
@@ -41,6 +45,8 @@
                                                 <label class="label pb-2" for="subject">{{ __('Subjek') }}</label>
                                                 <input type="text" class="form-control @error('subject') is-invalid @enderror" name="subject" id="subject"
                                                     placeholder="Subjek">
+                                                <div class="invalid-feedback">
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
@@ -48,6 +54,8 @@
                                                 <label class="label pb-2" for="subject">{{ __('Telp') }}</label>
                                                 <input type="text" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" id="phone_number"
                                                     placeholder="Telp">
+                                                <div class="invalid-feedback">
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
@@ -55,6 +63,8 @@
                                                 <label class="label pb-2" for="#">{{ __('Pesan') }}</label>
                                                 <textarea name="message" class="form-control @error('message') is-invalid @enderror" id="message" cols="30"
                                                     rows="4" placeholder="Pesan"></textarea>
+                                                <div class="invalid-feedback">
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -66,6 +76,8 @@
                                                         style="width: 20rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                                                 </div>
                                                 <input type="file" accept="image/*" class="form-control @error('screenshot') is-invalid @enderror" id="screenshot" name="screenshot" autofocus>
+                                                <div class="invalid-feedback">
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
@@ -193,10 +205,12 @@
                 success: function(response) {
                     if (response.status == 400)
                     {
-                        showError('name', response.messages.name);
+                        showError('fullname', response.messages.fullname);
                         showError('email', response.messages.email);
                         showError('subject', response.messages.subject);
                         showError('message', response.messages.message);
+                        showError('phone_number', response.messages.phone_number);
+                        showError('screenshot', response.messages.screenshot);
                         $("#send_contact_us").val('Kirim Pesan');
                         $("#send_contact_us").prop('disabled', false);
                     }

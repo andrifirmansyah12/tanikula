@@ -15,6 +15,10 @@
         input[type='file'] {
             opacity:0
         }
+
+        .datepicker {
+            z-index: 1600 !important; /* has to be larger than 1050 */
+        }
     </style>
 @endsection
 
@@ -54,12 +58,12 @@
                 <div class="nav-wrapper position-relative end-0">
                     <ul class="nav nav-fill p-1">
                         <li class="nav-item">
-                            <a class="btn {{ Request::is('pembeli') ? 'active text-white bg-primary' : '' }}" onclick="pembeli_dashboard('{{ url('pembeli') }}')" href="#">
+                            <a class="btn {{ Request::is('pembeli') ? 'active text-white bg-primary shadow' : 'border' }}" onclick="pembeli_dashboard('{{ url('pembeli') }}')" href="#">
                                 <span class="ms-1 fw-bold">Biodata Diri</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn {{ Request::is('pembeli/alamat*') ? 'active text-white bg-primary' : '' }}" onclick="pembeli_alamat('{{ url('pembeli/alamat') }}')" href="#">
+                            <a class="btn {{ Request::is('pembeli/alamat*') ? 'active text-white bg-primary shadow' : 'border' }}" onclick="pembeli_alamat('{{ url('pembeli/alamat') }}')" href="#">
                                 <span class="ms-1 fw-bold">Daftar Alamat</span>
                             </a>
                         </li>
@@ -186,10 +190,10 @@
                             <small class="text-danger">*kosongkan jika tidak ingin ubah tanggal lahir</small>
                             <div class="input-group">
                                 @if ($userInfo->birth)
-                                <input type="date" name="birth" id="birth" class="form-control datepicker border px-3"
+                                <input type="text" name="birth" id="birth" class="form-control datepicker border px-3"
                                     value="{{ date("d-F-Y", strtotime($userInfo->birth)) }}">
                                 @else
-                                <input type="date" name="birth" id="birth" class="form-control datepicker border px-3"
+                                <input type="text" name="birth" id="birth" class="form-control datepicker border px-3"
                                     placeholder="Tanggal lahir">
                                 @endif
                                 <div class="invalid-feedback">
@@ -275,8 +279,7 @@
     <script>
         $( function() {
             $( ".datepicker" ).datepicker({
-                dayNames: [ "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu" ],
-                dateFormat: 'dd-MM-yy'
+                dateFormat: 'dd-M-yy',
             });
         });
 

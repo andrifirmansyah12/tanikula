@@ -104,16 +104,37 @@ class HarvestController extends Controller
                 'messages' => $validator->getMessageBag()
             ]);
         } else {
-            $planting = FieldRecapHarvest::find($request->emp_id)->update([
-                'planting_id' => $request->plant_id,
-                'farmer_id' => $request->farmer_id,
-                'date_harvest' => Carbon::createFromFormat('d-M-Y', $request->date_harvest)->format('Y-m-d h:i:s'),
-                'status' => $request->status,
-            ]);
+            if ($request->status === 'panen') {
+                $harvest = FieldRecapHarvest::find($request->emp_id);
+                $harvest->planting_id = $request->plant_id;
+                $harvest->farmer_id = $request->farmer_id;
+                $harvest->date_harvest = Carbon::createFromFormat('d-M-Y', $request->date_harvest)->format('Y-m-d h:i:s');
+                $harvest->status = $request->status;
+                $harvest->save();
 
-            $plant = Field::where('id', $request->field_id)->first();
-            $plant->status = $request->status;
-            $plant->save();
+                $field = Field::find($request->field_id);
+                $field->status = $request->status;
+                $field->save();
+
+                $plant = FieldRecapPlanting::find($request->plant_id);
+                $plant->status = 'sudah panen';
+                $plant->save();
+            } elseif ($request->status === 'belum selesai panen') {
+                $harvest = FieldRecapHarvest::find($request->emp_id);
+                $harvest->planting_id = $request->plant_id;
+                $harvest->farmer_id = $request->farmer_id;
+                $harvest->date_harvest = Carbon::createFromFormat('d-M-Y', $request->date_harvest)->format('Y-m-d h:i:s');
+                $harvest->status = $request->status;
+                $harvest->save();
+
+                $field = Field::find($request->field_id);
+                $field->status = $request->status;
+                $field->save();
+
+                $plant = FieldRecapPlanting::find($request->plant_id);
+                $plant->status = $request->status;
+                $plant->save();
+            }
 
             return response()->json([
                 'status' => 200,
@@ -193,31 +214,31 @@ class HarvestController extends Controller
             ]);
         } else {
             if ($request->status === 'panen') {
-                $planting = FieldRecapHarvest::where('planting_id', $request->emp_id)->create([
-                    'planting_id' => $request->plant_id,
-                    'farmer_id' => $request->farmer_id,
-                    'date_harvest' => Carbon::createFromFormat('d-M-Y', $request->date_harvest)->format('Y-m-d h:i:s'),
-                    'status' => $request->status,
-                ]);
+                $harvest = new FieldRecapHarvest();
+                $harvest->planting_id = $request->plant_id;
+                $harvest->farmer_id = $request->farmer_id;
+                $harvest->date_harvest = Carbon::createFromFormat('d-M-Y', $request->date_harvest)->format('Y-m-d h:i:s');
+                $harvest->status = $request->status;
+                $harvest->save();
 
-                $plant = Field::find($request->field_id);
-                $plant->status = $request->status;
-                $plant->save();
+                $field = Field::find($request->field_id);
+                $field->status = $request->status;
+                $field->save();
 
                 $planting = FieldRecapPlanting::where('field_id', $request->field_id)->update([
                     'status' => 'sudah panen',
                 ]);
             } elseif ($request->status === 'belum selesai panen') {
-                $planting = FieldRecapHarvest::where('planting_id', $request->emp_id)->create([
-                    'planting_id' => $request->plant_id,
-                    'farmer_id' => $request->farmer_id,
-                    'date_harvest' => Carbon::createFromFormat('d-M-Y', $request->date_harvest)->format('Y-m-d h:i:s'),
-                    'status' => $request->status,
-                ]);
+                $harvest = new FieldRecapHarvest();
+                $harvest->planting_id = $request->plant_id;
+                $harvest->farmer_id = $request->farmer_id;
+                $harvest->date_harvest = Carbon::createFromFormat('d-M-Y', $request->date_harvest)->format('Y-m-d h:i:s');
+                $harvest->status = $request->status;
+                $harvest->save();
 
-                $plant = Field::find($request->field_id);
-                $plant->status = $request->status;
-                $plant->save();
+                $field = Field::find($request->field_id);
+                $field->status = $request->status;
+                $field->save();
 
                 $planting = FieldRecapPlanting::where('field_id', $request->field_id)->update([
                     'status' => $request->status,

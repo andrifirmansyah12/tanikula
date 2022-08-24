@@ -76,6 +76,10 @@
         .costum-color {
             background-image: linear-gradient(195deg, rgb(255, 255, 255) 0%, #ffffff 100%);
         }
+
+        .opacity-90 {
+            opacity: 90%;
+        }
     </style>
 @endsection
 
@@ -236,9 +240,12 @@
                     <div class="owl-carousel owl-theme">
                         @foreach ($product_new as $item)
                         <!-- Start Single Product -->
-                        <div class="mx-2 single-product shadow-none" style="height: 27rem">
-                            <div class="product-image">
+                        <div class="mx-2 single-product shadow-none {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}"" style="height: 27rem">
+                            <div class="product-image {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}"">
                                 <a href="{{ url('home/'.$item->slug) }}">
+                                    @if ($item->stoke === 0)
+                                    <div style="z-index: 3" class="badge bg-danger px-3 position-absolute top-50 start-50 translate-middle"><h5 class="text-white">Stok Habis</h5></div>
+                                    @endif
                                     @if ($item->photo_product->count() > 0)
                                         @foreach ($item->photo_product->take(1) as $photos)
                                             @if ($photos->name)
@@ -255,7 +262,7 @@
                                     @endif
                                 </a>
                             </div>
-                            <div class="product-info">
+                            <div class="product-info {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}"">
                                 @if ($item->discount != 0)
                                     <div class="d-flex justify-content-between">
                                         <a href="{{ url('product-category/'.$item->product_category->slug) }}">
