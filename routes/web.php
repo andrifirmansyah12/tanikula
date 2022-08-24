@@ -606,6 +606,8 @@ Route::get('payments/unfinish', [App\Http\Controllers\Pembeli\PaymentController:
 // Home Tani Kula
 Route::get('/', [App\Http\Controllers\Pages\ProductController::class, 'index']);
 Route::get('/home', [App\Http\Controllers\Pages\ProductController::class, 'index'])->name('home');
+Route::get('/fetchallHomeNewProduct', [App\Http\Controllers\Pages\ProductController::class, 'fetchallHomeNewProduct'])->name('fetchallHomeNewProduct');
+Route::get('/fetchallHomeSearchProduct', [App\Http\Controllers\Pages\ProductController::class, 'fetchallHomeSearchProduct'])->name('fetchallHomeSearchProduct');
 Route::get('/home/{product:slug}', [App\Http\Controllers\Pages\ProductController::class, 'detailProduct']);
 
 // Produk Berdasarkan Pencarian
@@ -639,6 +641,7 @@ Route::get('/product-category/all-category/fetchallCategory', [App\Http\Controll
 
 // Nama Kategori Produk
 Route::get('/product-category/{slug}', [App\Http\Controllers\Pages\ProductController::class, 'viewCategory'])->name('view.category');
+Route::get('/product-category/fetchallNameCategory/{slug}', [App\Http\Controllers\Pages\ProductController::class, 'fetchallNameCategory'])->name('fetchallNameCategory');
 Route::get('/product-category/{category_slug}/{product_slug}', [App\Http\Controllers\Pages\ProductController::class, 'productView'])->name('view.product');
 
 // Keranjang
