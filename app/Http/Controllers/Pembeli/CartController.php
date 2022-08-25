@@ -32,7 +32,7 @@ class CartController extends Controller
                             $updateCart->product_qty = $updateCart->product_qty + $product_qty;
                             $updateCart->update();
                             return response()->json([
-                                'status' => $prod_check->name . " Ditambahkan ke Keranjang"
+                                'status' => $prod_check->name . " ditambahkan ke Keranjang"
                             ]);
                         }
                     }
@@ -42,7 +42,7 @@ class CartController extends Controller
                     $cartItem->user_id = Auth::id();
                     $cartItem->product_qty = $product_qty;
                     $cartItem->save();
-                    return response()->json(['status' => $prod_check->name . " Ditambahkan ke Keranjang"]);
+                    return response()->json(['status' => $prod_check->name . " ditambahkan ke Keranjang"]);
                 }
             }
         } else {

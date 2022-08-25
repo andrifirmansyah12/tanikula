@@ -22,6 +22,7 @@ class WishlistController extends Controller
 
         $data2 = ['wishlist' => Wishlist::with('user', 'product')
             ->where('user_id', '=', auth()->user()->id)
+            ->latest()
             ->get()
         ];
 
@@ -37,13 +38,19 @@ class WishlistController extends Controller
             $prod_check = Product::where('id', $product_id)->first();
             if ($prod_check) {
                 if (Wishlist::where('product_id', $product_id)->where('user_id', Auth::id())->exists()) {
-                    return response()->json(['status' => "Produk sudah ditambahkan ke Wishlist!"]);
+                    return response()->json([
+                        'message' => 'gagal',
+                        'status' => $prod_check->name . " sudah ditambahkan ke Wishlist!"]
+                    );
                 } else {
                     $wishlist = new Wishlist();
                     $wishlist->user_id = Auth::id();
                     $wishlist->product_id = $product_id;
                     $wishlist->save();
-                    return response()->json(['status' => $prod_check->name . " Ditambahkan ke Wishlist"]);
+                    return response()->json([
+                        'message' => 'berhasil',
+                        'status' => $prod_check->name . " ditambahkan ke Wishlist"
+                    ]);
                 }
             }
         } else {
@@ -58,7 +65,7 @@ class WishlistController extends Controller
             if (Wishlist::where('product_id', $product_id)->where('user_id', Auth::id())->exists()) {
                 $wishlist = Wishlist::where('product_id', $product_id)->where('user_id', Auth::id())->first();
                 $wishlist->delete();
-                return response()->json(['status' => "Produk berhasil dihapus dari Wishlist!"]);
+                return response()->json(['status' => $wishlist->product->name . " berhasil dihapus dari Wishlist!"]);
             }
         } else {
             return response()->json(['status' => "Silahkan login!"]);

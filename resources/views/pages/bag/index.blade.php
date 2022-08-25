@@ -108,11 +108,12 @@
                                                 @endif
                                                 {{-- <p class="mb-0 fs-6 fw-bold mt-2">Rp. {{ number_format($item->product->price, 0) }}</p> --}}
                                             </div>
+                                            <input type="hidden" value="{{ $item->product_id }}" id="prod_id">
                                             <div class="col-12 mt-3 mt-md-0">
                                                 <div class="d-flex flex-md-row flex-column-reverse justify-content-end align-items-end align-items-md-center">
                                                     <div class="d-flex flex-row mt-2 mt-md-0">
                                                         <div class="text-black pe-3">
-                                                            <button class="btn" style="background: #16A085; color: white" id="addToWishlistBtn">+
+                                                            <button class="btn addToWishlistBtn" style="background: #16A085; color: white">+
                                                                 Wishlist</button>
                                                         </div>
                                                         <div>
@@ -121,7 +122,6 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-8 col-md-3 form-group ps-0 ps-md-3">
-                                                        <input type="hidden" value="{{ $item->product_id }}" id="prod_id">
                                                         <div class="d-flex justify-content-between">
                                                             <script>
                                                                 var stoke = '{{ $item->product->stoke }}';
@@ -224,6 +224,49 @@
                 if (value > 1) {
                     value--;
                     $(this).closest('#product_data').find('.qty-input').val(value);
+                }
+            });
+        });
+
+        $('.addToWishlistBtn').click(function (e) {
+            e.preventDefault();
+
+            var product_id = $(this).closest('#product_data').find('#prod_id').val();
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+                method: "POST",
+                url: "/add-to-wishlist",
+                data: {
+                    'product_id': product_id,
+                },
+                success: function (response) {
+                    if (response.status == 'Silahkan login!') {
+                        window.location = '/login';
+                    } else {
+                        if (response.message == 'gagal')
+                        {
+                            iziToast.warning({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                                title: 'Gagal',
+                                message: response.status,
+                                position: 'topRight'
+                            });
+                        }
+                            else if(response.message == 'berhasil')
+                        {
+                            // window.location.reload();
+                            iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                                title: 'Berhasil',
+                                message: response.status,
+                                position: 'topRight'
+                            });
+                        }
+                    }
                 }
             });
         });

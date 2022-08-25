@@ -318,7 +318,7 @@
                     message: response.status,
                     position: 'topRight'
                 });
-                window.setTimeout(function(){location.reload()},3000)
+                window.setTimeout(function(){location.reload()},1000)
             }
         });
     });
