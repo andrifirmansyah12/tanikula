@@ -28,7 +28,7 @@ class WaitingPaymentController extends Controller
                     ->orderBy('orders.created_at', 'desc')
                     ->get();
 		$output = '';
-                    $output .= '<table class="table align-items-center mb-0">
+                    $output .= '<table id="tableWaitingPayment" class="table align-items-center mb-0">
                         <thead>
                             <tr>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">

@@ -113,63 +113,63 @@
                                     </a>
                                 </div>
                                 <div class="cart-items">
-                                    <!-- Shopping Item -->
+                                <!-- Shopping Item -->
+                                @php
+                                $cartItemSum = App\Models\Cart::with('product')->where('user_id', Auth::id())->sum('product_qty');
+                                $cartItem = App\Models\Cart::with('product')->where('user_id', Auth::id())->get();
+                                @endphp
+                                <a href="javascript:void(0)" class="main-btn">
+                                    <i class="lni lni-cart"></i>
+                                    <span class="total-items cart-count">0</span>
+                                </a>
+
+                                <div class="shopping-item">
+                                    <div class="dropdown-cart-header">
+                                        <span>Keranjang ({{ $cartItemSum }})</span>
+                                        <a style="color:#16A085;" href="{{ url('cart') }}">Lihat Sekarang</a>
+                                    </div>
                                     @php
-                                    $cartItem = App\Models\Cart::with('product')->where('user_id', Auth::id())->get();
+                                    $total = 0;
                                     @endphp
-                                    <a href="javascript:void(0)" class="main-btn">
-                                        <i class="lni lni-cart"></i>
-                                        <span class="total-items cart-count">0</span>
-                                    </a>
-
-                                    <div class="shopping-item">
-                                        <div class="dropdown-cart-header">
-                                            <span>Keranjang ({{ $cartItem->count() }})</span>
-                                            <a style="color:#16A085;" href="{{ url('cart') }}">Lihat Sekarang</a>
-                                        </div>
-                                        @php
-                                        $total = 0;
-                                        @endphp
-                                        @if ($cartItem->count())
-                                        @foreach ($cartItem as $item)
-                                        <ul class="shopping-list" id="product_data">
-                                            <li>
-                                                <input type="hidden" value="{{ $item->product_id }}" id="prod_id">
-                                                {{-- <button class="remove delete-cart-item" title="Remove this item"><i
+                                    @if ($cartItem->count())
+                                    @foreach ($cartItem as $item)
+                                    <ul class="shopping-list" id="product_data">
+                                        <li>
+                                            <input type="hidden" value="{{ $item->product_id }}" id="prod_id">
+                                            {{-- <button class="remove delete-cart-item" title="Remove this item"><i
                                                     class="lni lni-close"></i></button> --}}
-                                                <div class="cart-img-head">
-                                                    <a class="cart-img" href="{{ url('home/'.$item->product->slug) }}">
-                                                        @if ($item->product->photo_product->count() > 0)
-                                                            @foreach ($item->product->photo_product->take(1) as $photos)
-                                                                @if ($photos->name)
-                                                                    <img src="{{ asset('../storage/produk/'.$photos->name) }}" alt="{{ $item->product->name }}"
-                                                                        style="width: 10rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
-                                                                @else
-                                                                    <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->product->name }}"
-                                                                        style="width: 10rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
-                                                                @endif
-                                                            @endforeach
-                                                        @else
-                                                            <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->product->name }}"
-                                                                style="width: 10rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
-                                                        @endif
-                                                    </a>
-                                                </div>
+                                            <div class="cart-img-head">
+                                                <a class="cart-img" href="{{ url('home/'.$item->product->slug) }}">
+                                                    @if ($item->product->photo_product->count() > 0)
+                                                        @foreach ($item->product->photo_product->take(1) as $photos)
+                                                            @if ($photos->name)
+                                                                <img src="{{ asset('../storage/produk/'.$photos->name) }}" alt="{{ $item->product->name }}"
+                                                                    style="width: 10rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                                            @else
+                                                                <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->product->name }}"
+                                                                    style="width: 10rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                                            @endif
+                                                        @endforeach
+                                                    @else
+                                                        <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->product->name }}"
+                                                            style="width: 10rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                                    @endif
+                                                </a>
+                                            </div>
 
-                                                <div class="content">
-                                                    <h4><a style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;" href="{{ url('home/'.$item->product->slug) }}">
-                                                            {{ $item->product->name }}</a></h4>
-                                                    <p class="quantity">{{ $item->product_qty }}x - <span
-                                                            class="amount">Rp.
-                                                            {{ number_format($item->product->price, 0) }}</span></p>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                        @php
-                                        $total += $item->product->price * $item->product_qty;
-                                        @endphp
-                                        @endforeach
-                                        @else
+                                            <div class="content">
+                                                <h4><a style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;" href="{{ url('home/'.$item->product->slug) }}">
+                                                        {{ $item->product->name }}</a></h4>
+                                                <p class="quantity">{{ $item->product_qty }}x - <span class="amount">Rp.
+                                                        {{ number_format($item->product->price, 0) }}</span></p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    @php
+                                    $total += $item->product->price * $item->product_qty;
+                                    @endphp
+                                    @endforeach
+                                    @else
                                         <div id="app">
                                             <div class="container">
                                                 <div class="page-error-notification">
@@ -182,24 +182,23 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        @endif
-                                        <div class="bottom">
-                                            <div class="total">
-                                                <span>Total</span>
-                                                <span class="total-amount">Rp. {{ number_format($total, 0) }}</span>
-                                            </div>
-                                            <div class="button">
-                                                @if ($cartItem->count())
+                                    @endif
+                                    <div class="bottom">
+                                        <div class="total">
+                                            <span>Total</span>
+                                            <span class="total-amount">Rp. {{ number_format($total, 0) }}</span>
+                                        </div>
+                                        <div class="button">
+                                            @if ($cartItem->count())
                                                 <a href="{{ url('cart/shipment') }}" class="btn animate">Checkout</a>
-                                                @else
-                                                <a href="{{ url('new-product') }}" class="btn animate">Belanja
-                                                    Sekarang</a>
-                                                @endif
-                                            </div>
+                                            @else
+                                                <a href="{{ url('new-product') }}" class="btn animate">Belanja Sekarang</a>
+                                            @endif
                                         </div>
                                     </div>
-                                    <!--/ End Shopping Item -->
                                 </div>
+                                <!--/ End Shopping Item -->
+                            </div>
                             </div>
                         </div>
                     </div>

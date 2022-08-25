@@ -147,7 +147,7 @@ class ProductController extends Controller
                         <div class="container">
                             <div class="page-error">
                                 <div class="page-inner">
-                                    <img src="img/undraw_empty_re_opql.svg" alt="">
+                                    <img src="../img/undraw_empty_re_opql.svg" alt="">
                                     <div class="page-description">
                                         Tidak ada produk yang diposting!
                                     </div>
@@ -286,7 +286,7 @@ class ProductController extends Controller
                         <div class="container">
                             <div class="page-error">
                                 <div class="page-inner">
-                                    <img src="img/undraw_empty_re_opql.svg" alt="">
+                                    <img src="../img/undraw_empty_re_opql.svg" alt="">
                                     <div class="page-description">
                                         Tidak ada produk yang diposting!
                                     </div>
@@ -341,7 +341,7 @@ class ProductController extends Controller
     public function countCart()
     {
         if (Auth::user()) {
-            $countCart = Cart::where('user_id', auth()->user()->id)->count();
+            $countCart = Cart::where('user_id', auth()->user()->id)->sum('product_qty');
         } elseif (Auth::guest()) {
             $countCart = 0;
         }
@@ -573,7 +573,7 @@ class ProductController extends Controller
                         <div class="container">
                             <div class="page-error">
                                 <div class="page-inner">
-                                    <img src="img/undraw_empty_re_opql.svg" alt="">
+                                    <img src="../img/undraw_empty_re_opql.svg" alt="">
                                     <div class="page-description">
                                         Tidak ada produk yang diposting!
                                     </div>
@@ -735,7 +735,7 @@ class ProductController extends Controller
                     <div class="container">
                         <div class="page-error">
                             <div class="page-inner">
-                                <img src="img/undraw_empty_re_opql.svg" alt="">
+                                <img src="../img/undraw_empty_re_opql.svg" alt="">
                                 <div class="page-description">
                                     Tidak ada produk yang diposting!
                                 </div>
@@ -893,7 +893,7 @@ class ProductController extends Controller
                     <div class="container">
                         <div class="page-error">
                             <div class="page-inner">
-                                <img src="img/undraw_empty_re_opql.svg" alt="">
+                                <img src="../img/undraw_empty_re_opql.svg" alt="">
                                 <div class="page-description">
                                     Tidak ada produk yang diposting!
                                 </div>
@@ -1073,7 +1073,7 @@ class ProductController extends Controller
                     <div class="container">
                         <div class="page-error">
                             <div class="page-inner">
-                                <img src="img/undraw_empty_re_opql.svg" alt="">
+                                <img src="../img/undraw_empty_re_opql.svg" alt="">
                                 <div class="page-description">
                                     Tidak ada produk yang diposting!
                                 </div>

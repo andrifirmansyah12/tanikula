@@ -28,7 +28,7 @@ class TransactionListController extends Controller
             ->orderBy('orders.created_at', 'desc')
             ->get();
         $output = '';
-        $output .= '<table class="table align-items-center mb-0">
+        $output .= '<table id="listTableSemua" class="table align-items-center mb-0">
                         <thead>
                             <tr>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -114,7 +114,7 @@ class TransactionListController extends Controller
             ->orderBy('orders.created_at', 'desc')
             ->get();
         $output = '';
-        $output .= '<table class="table align-items-center mb-0">
+        $output .= '<table id="listTableDikemas" class="table align-items-center mb-0">
                         <thead>
                             <tr>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -200,7 +200,7 @@ class TransactionListController extends Controller
             ->orderBy('orders.created_at', 'desc')
             ->get();
         $output = '';
-        $output .= '<table class="table align-items-center mb-0">
+        $output .= '<table id="listTableDikirim" class="table align-items-center mb-0">
                         <thead>
                             <tr>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -286,7 +286,7 @@ class TransactionListController extends Controller
             ->orderBy('orders.created_at', 'desc')
             ->get();
         $output = '';
-        $output .= '<table class="table align-items-center mb-0">
+        $output .= '<table id="listTableSelesai" class="table align-items-center mb-0">
                         <thead>
                             <tr>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -372,7 +372,7 @@ class TransactionListController extends Controller
             ->orderBy('orders.created_at', 'desc')
             ->get();
         $output = '';
-        $output .= '<table class="table align-items-center mb-0">
+        $output .= '<table id="listTableDibatalkan" class="table align-items-center mb-0">
                         <thead>
                             <tr>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -485,7 +485,7 @@ class TransactionListController extends Controller
     }
 
     // handle update an employee ajax request
-	public function orderCompleted(Request $request) 
+	public function orderCompleted(Request $request)
     {
         $validator = Validator::make($request->all(), [
             // Required
@@ -498,7 +498,7 @@ class TransactionListController extends Controller
                 'status' => 400,
                 'messages' => $validator->getMessageBag()
             ]);
-        } else 
+        } else
         {
             $orders = Order::find($request->emp_id);
             $orders->status = Order::COMPLETED;

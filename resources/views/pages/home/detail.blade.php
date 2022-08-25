@@ -4,6 +4,7 @@
 @section('breadcrumb-subTitle', substr($product->name,0,20). '...')
 
 @section('style')
+    <link rel="stylesheet" href="https://unpkg.com/placeholder-loading/dist/css/placeholder-loading.min.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
@@ -638,11 +639,67 @@
             countStarsTwo();
             countStarsOne();
 
-            fetchAllFiveStar();
-            fetchAllFourStar();
-            fetchAllThreeStar();
-            fetchAllTwoStar();
-            fetchAllOneStar();
+            // fetchAllFiveStar();
+            // fetchAllFourStar();
+            // fetchAllThreeStar();
+            // fetchAllTwoStar();
+            // fetchAllOneStar();
+
+            // fetch all employees ajax request
+            var displayProduct = 1;
+            $('#fiveStars').html(createSkeleton(displayProduct));
+            $('#fourStars').html(createSkeleton(displayProduct));
+            $('#threeStars').html(createSkeleton(displayProduct));
+            $('#twoStars').html(createSkeleton(displayProduct));
+            $('#oneStars').html(createSkeleton(displayProduct));
+
+            // jalankan fungsi load content setelah 2 detik
+            function createSkeleton(limit)
+            {
+                var skeletonHTML = '';
+                for(var i = 0; i < limit; i++){
+                    // skeletonHTML += '<div class="row">';
+                            skeletonHTML += '<div class="ph-item mt-4 rounded">';
+                                skeletonHTML += '<div class="ph-col-2">';
+                                    skeletonHTML += '<div class="ph-avatar"></div>';
+                                skeletonHTML += '</div>';
+
+                                skeletonHTML += '<div class="ph-col-2">';
+                                    skeletonHTML += '<div class="ph-col-2 big empty"></div>';
+                                    skeletonHTML += '<div class="ph-col-2 big empty"></div>';
+                                    skeletonHTML += '<div class="ph-row">';
+                                        skeletonHTML += '<div class="ph-col-6 rounded"></div>';
+                                    skeletonHTML += '</div>';
+                                skeletonHTML += '</div>';
+
+                                skeletonHTML += '<div class="ph-col-8">';
+                                    skeletonHTML += '<div class="ph-row">';
+                                        skeletonHTML += '<div class="ph-col-2 rounded"></div>';
+                                        skeletonHTML += '<div class="ph-col-4 empty"></div>';
+                                        skeletonHTML += '<div class="ph-col-4 empty"></div>';
+                                        skeletonHTML += '<div class="ph-col-4 rounded"></div>';
+                                        skeletonHTML += '<div class="ph-col-6 empty"></div>';
+                                        skeletonHTML += '<div class="ph-col-12 big empty"></div>';
+                                        skeletonHTML += '<div class="ph-col-12 big rounded"></div>';
+                                        skeletonHTML += '<div class="ph-col-12 empty"></div>';
+                                        skeletonHTML += '<div class="ph-col-2 rounded"></div>';
+                                        skeletonHTML += '<div class="ph-col-12 big rounded"></div>';
+                                    skeletonHTML += '</div>';
+                                skeletonHTML += '</div>';
+
+                            skeletonHTML += '</div>';
+                    // skeletonHTML += '</div>';
+                }
+                return skeletonHTML;
+            }
+
+            setTimeout(function(){
+                fetchAllFiveStar(displayProduct);
+                fetchAllFourStar(displayProduct);
+                fetchAllThreeStar(displayProduct);
+                fetchAllTwoStar(displayProduct);
+                fetchAllOneStar(displayProduct);
+            }, 2000);
 
             // ==================================== Count Star Review ===============================
 

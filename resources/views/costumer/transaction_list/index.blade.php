@@ -47,6 +47,42 @@
     .costum-color {
         background-image: linear-gradient(195deg, #16A085 0%, #16A085 100%);
     }
+
+    div.dataTables_filter > label > input[type="search"] {
+        font-family: Arial, sans-serif;
+        border: 2px solid #16A085;
+        border-radius: 10px;
+    }
+
+    div.dataTables_length > label > select[name="listTableSemua_length"] {
+        font-family: Arial, sans-serif;
+        border: 2px solid #16A085;
+        border-radius: 10px;
+    }
+
+    div.dataTables_length > label > select[name="listTableDikemas_length"] {
+        font-family: Arial, sans-serif;
+        border: 2px solid #16A085;
+        border-radius: 10px;
+    }
+
+    div.dataTables_length > label > select[name="listTableDikirim_length"] {
+        font-family: Arial, sans-serif;
+        border: 2px solid #16A085;
+        border-radius: 10px;
+    }
+
+    div.dataTables_length > label > select[name="listTableSelesai_length"] {
+        font-family: Arial, sans-serif;
+        border: 2px solid #16A085;
+        border-radius: 10px;
+    }
+
+    div.dataTables_length > label > select[name="listTableDibatalkan_length"] {
+        font-family: Arial, sans-serif;
+        border: 2px solid #16A085;
+        border-radius: 10px;
+    }
     </style>
 @endsection
 
@@ -78,7 +114,7 @@
                             <a class="nav-link listDibatalkan text-black bg-white" href="#listDibatalkan">Dibatalkan</a>
                         </li>
                     </ul>
-                    <div class="table-responsive" id="listSemua">
+                    <div class="table-responsive border m-3 rounded" id="listSemua">
                         {{-- Table --}}
                         <div id="app">
                             <section class="section">
@@ -94,7 +130,7 @@
                             </section>
                         </div>
                     </div>
-                    <div class="table-responsive" id="listDikemas">
+                    <div class="table-responsive border m-3 rounded" id="listDikemas">
                         {{-- Table --}}
                         <div id="app">
                             <section class="section">
@@ -110,7 +146,7 @@
                             </section>
                         </div>
                     </div>
-                    <div class="table-responsive" id="listDikirim">
+                    <div class="table-responsive border m-3 rounded" id="listDikirim">
                         {{-- Table --}}
                         <div id="app">
                             <section class="section">
@@ -126,7 +162,7 @@
                             </section>
                         </div>
                     </div>
-                    <div class="table-responsive" id="listSelesai">
+                    <div class="table-responsive border m-3 rounded" id="listSelesai">
                         {{-- Table --}}
                         <div id="app">
                             <section class="section">
@@ -142,7 +178,7 @@
                             </section>
                         </div>
                     </div>
-                    <div class="table-responsive" id="listDibatalkan">
+                    <div class="table-responsive border m-3 rounded" id="listDibatalkan">
                         {{-- Table --}}
                         <div id="app">
                             <section class="section">
@@ -240,6 +276,15 @@
             method: 'get',
             success: function(response) {
                 $("#listSemua").html(response);
+                $("#listTableSemua").DataTable({
+                    order: [0, 'asc'],
+                    "oLanguage": {
+                        "oPaginate": {
+                            "sNext": '<i class="fa fa-chevron-right" ></i>',
+                            "sPrevious": '<i class="fa fa-chevron-left" ></i>'
+                        }
+                    }
+                });
             }
             });
         }
@@ -250,6 +295,15 @@
             method: 'get',
             success: function(response) {
                 $("#listDikemas").html(response);
+                $("#listTableDikemas").DataTable({
+                    order: [0, 'asc'],
+                    "oLanguage": {
+                        "oPaginate": {
+                            "sNext": '<i class="fa fa-chevron-right" ></i>',
+                            "sPrevious": '<i class="fa fa-chevron-left" ></i>'
+                        }
+                    }
+                });
             }
             });
         }
@@ -260,6 +314,15 @@
             method: 'get',
             success: function(response) {
                 $("#listDikirim").html(response);
+                $("#listTableDikirim").DataTable({
+                    order: [0, 'asc'],
+                    "oLanguage": {
+                        "oPaginate": {
+                            "sNext": '<i class="fa fa-chevron-right" ></i>',
+                            "sPrevious": '<i class="fa fa-chevron-left" ></i>'
+                        }
+                    }
+                });
             }
             });
         }
@@ -270,6 +333,15 @@
             method: 'get',
             success: function(response) {
                 $("#listSelesai").html(response);
+                $("#listTableSelesai").DataTable({
+                    order: [0, 'asc'],
+                    "oLanguage": {
+                        "oPaginate": {
+                            "sNext": '<i class="fa fa-chevron-right" ></i>',
+                            "sPrevious": '<i class="fa fa-chevron-left" ></i>'
+                        }
+                    }
+                });
             }
             });
         }
@@ -280,6 +352,15 @@
             method: 'get',
             success: function(response) {
                 $("#listDibatalkan").html(response);
+                $("#listTableDibatalkan").DataTable({
+                    order: [0, 'asc'],
+                    "oLanguage": {
+                        "oPaginate": {
+                            "sNext": '<i class="fa fa-chevron-right" ></i>',
+                            "sPrevious": '<i class="fa fa-chevron-left" ></i>'
+                        }
+                    }
+                });
             }
             });
         }
