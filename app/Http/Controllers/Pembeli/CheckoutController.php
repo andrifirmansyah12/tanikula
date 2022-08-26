@@ -185,14 +185,14 @@ class CheckoutController extends Controller
                 'price' => $item->product->price,
             ]);
 
-            $prod = Product::where('id', $item->product_id)->first();
-            $prod->stoke = $prod->stoke - $item->product_qty;
-            if ($prod->stock_out == null) {
-                $prod->stock_out = $item->product_qty;
-            } else {
-                $prod->stock_out = $prod->stock_out + $item->product_qty;
-            }
-            $prod->update();
+            // $prod = Product::where('id', $item->product_id)->first();
+            // $prod->stoke = $prod->stoke - $item->product_qty;
+            // if ($prod->stock_out == null) {
+            //     $prod->stock_out = $item->product_qty;
+            // } else {
+            //     $prod->stock_out = $prod->stock_out + $item->product_qty;
+            // }
+            // $prod->update();
         }
 
         $this->initPaymentGateway();
@@ -226,8 +226,8 @@ class CheckoutController extends Controller
         }
 
         if ($order) {
-            $cartItem = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
-            Cart::destroy($cartItem);
+            // $cartItem = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
+            // Cart::destroy($cartItem);
 
             \Session::flash('success', 'Thank you. Your order has been received!');
             return redirect('cart/shipment/place-order/received/' . $order->id);
@@ -306,7 +306,7 @@ class CheckoutController extends Controller
             //     <a href="#" id="' . $emp->id . '" class="text-danger fw-bold deleteIcon"><i class="bi-trash h4"></i></a>
             // </div>
         } else {
-            echo '<h1 class="text-center text-secondary my-5">Tidak ada Alamat!</h1>';
+            echo '<h5 class="text-center text-secondary my-5">Tidak ada Alamat!</h5>';
         }
     }
 

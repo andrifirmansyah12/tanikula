@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Payment;
+use App\Models\Cart;
+use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {
@@ -101,6 +104,19 @@ class PaymentController extends Controller
 				}
 			);
 		}
+
+        $cartItem = Cart::with('product')->where('user_id', $order->user_id)->latest()->get();
+        foreach ($cartItem as $item) {
+            $prod = Product::where('id', $item->product_id)->first();
+            $prod->stoke = $prod->stoke - $item->product_qty;
+            if ($prod->stock_out == null) {
+                $prod->stock_out = $item->product_qty;
+            } else {
+                $prod->stock_out = $prod->stock_out + $item->product_qty;
+            }
+            $prod->update();
+        }
+        Cart::destroy($cartItem);
 
 		$message = 'Payment status is : '. $paymentStatus;
 

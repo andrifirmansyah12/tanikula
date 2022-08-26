@@ -277,7 +277,7 @@
             success: function(response) {
                 $("#listSemua").html(response);
                 $("#listTableSemua").DataTable({
-                    order: [0, 'asc'],
+                    order: [0, 'desc'],
                     "oLanguage": {
                         "oPaginate": {
                             "sNext": '<i class="fa fa-chevron-right" ></i>',
@@ -296,7 +296,7 @@
             success: function(response) {
                 $("#listDikemas").html(response);
                 $("#listTableDikemas").DataTable({
-                    order: [0, 'asc'],
+                    order: [0, 'desc'],
                     "oLanguage": {
                         "oPaginate": {
                             "sNext": '<i class="fa fa-chevron-right" ></i>',
@@ -315,7 +315,7 @@
             success: function(response) {
                 $("#listDikirim").html(response);
                 $("#listTableDikirim").DataTable({
-                    order: [0, 'asc'],
+                    order: [0, 'desc'],
                     "oLanguage": {
                         "oPaginate": {
                             "sNext": '<i class="fa fa-chevron-right" ></i>',
@@ -334,7 +334,7 @@
             success: function(response) {
                 $("#listSelesai").html(response);
                 $("#listTableSelesai").DataTable({
-                    order: [0, 'asc'],
+                    order: [0, 'desc'],
                     "oLanguage": {
                         "oPaginate": {
                             "sNext": '<i class="fa fa-chevron-right" ></i>',
@@ -353,7 +353,7 @@
             success: function(response) {
                 $("#listDibatalkan").html(response);
                 $("#listTableDibatalkan").DataTable({
-                    order: [0, 'asc'],
+                    order: [0, 'desc'],
                     "oLanguage": {
                         "oPaginate": {
                             "sNext": '<i class="fa fa-chevron-right" ></i>',

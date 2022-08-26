@@ -135,7 +135,7 @@
             success: function(response) {
                 $("#show_all_employees").html(response);
                 $("#tableWaitingPayment").DataTable({
-                    order: [0, 'asc'],
+                    order: [0, 'desc'],
                     "oLanguage": {
                         "oPaginate": {
                             "sNext": '<i class="fa fa-chevron-right" ></i>',
