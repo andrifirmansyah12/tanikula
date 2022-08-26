@@ -82,12 +82,14 @@
                     <div class="modal-body p-4">
                         <div class="form-group my-2">
                             <label for="name">Nama Produk</label>
-                            <input type="text" name="name" class="nameCheck form-control" placeholder="Nama Produk" required>
+                            <input type="text" id="add_name" name="name" class="nameCheck form-control" placeholder="Nama Produk" required>
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="form-group my-2">
                             <label>Kategori Produk</label>
                             @if ($category->count() > 0)
-                            <select class="form-control select2" name="category_product_id" required>
+                            <select class="form-control select2" id="add_category_product_id" name="category_product_id" required>
                                 <option selected value="" disabled>Pilih Kategori</option>
                                     @foreach ($category as $item)
                                         @if ( old('category_product_id') == $item->id )
@@ -102,30 +104,42 @@
                                     <option selected disabled>Tidak ada kategori</option>
                             </select>
                             @endif
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="row my-2 form-group">
                             <div class="col-md-4">
                                 <label for="stoke" style="font-size: 12px">Stok</label>
-                                <input type="number" name="stoke" class="form-control" placeholder="Stok" required>
+                                <input type="number" id="add_stoke" name="stoke" class="form-control" placeholder="Stok" required>
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                             <div class="col-md-8">
                                 <label for="price" style="font-size: 12px">Harga</label>
-                                <input type="number" name="price" class="form-control" placeholder="Harga" required>
+                                <input type="number" id="add_price" name="price" class="form-control" placeholder="Harga" required>
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                         </div>
                         <div class="row my-2 form-group">
                             <div class="col-md-6">
                                 <label for="stoke" style="font-size: 12px">Berat (gram)</label>
-                                <input type="number" name="weight" class="form-control" placeholder="Berat" required>
+                                <input type="number" id="add_weight" name="weight" class="form-control" placeholder="Berat" required>
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <label for="stoke" style="font-size: 12px">Diskon (Persen)</label>
-                                <input type="number" name="discount" value="0" class="form-control" placeholder="Diskon" required>
+                                <input type="number" id="add_discount" name="discount" value="0" class="form-control" placeholder="Diskon" required>
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                         </div>
                         <div class="my-2 form-group">
                             <label for="desc">Deskripsi</label>
-                            <textarea class="form-control" style="height: 8rem" name="desc" rows="3" required placeholder="Deskripsi"></textarea>
+                            <textarea class="form-control" style="height: 8rem" id="add_desc" name="desc" rows="3" required placeholder="Deskripsi"></textarea>
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="my-2 form-group">
                             <label for="is_active">Status Produk</label>
@@ -136,26 +150,10 @@
                                 </label>
                             </div>
                         </div>
-                        {{-- <div class="my-2 form-group">
-                            <label for="image">Unggah Foto</label>
-                            <small class="d-flex text-danger pb-1">*Unggah berupa foto produk</small>
-                            <div>
-                                <div class="tab-content" id="myTabContent2">
-                                    <div class="tab-pane fade show active" id="home3" role="tabpanel"
-                                        aria-labelledby="home-tab3">
-                                        <div class="preview-image"> </div> --}}
-                                        {{-- <img id="preview" class="img-fluid img-thumbnail image"
-                                        src="{{ asset('stisla/assets/img/example-image.jpg') }}" alt="edukasi"
-                                        style="width: 20rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"> --}}
-                                    {{-- </div>
-                                </div>
-                            </div>
-                            <input type="file" id="images" name="images[]" multiple class="form-control" accept="image/*" required>
-                        </div> --}}
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
-                        <button type="submit" id="add_employee_btn" class="btn btn-primary">Simpan</button>
+                        <button type="button" class="btn shadow-none border" style="background: #FFFACD;" data-dismiss="modal">Kembali</button>
+                        <button type="submit" id="add_employee_btn" style="background: #16A085; color: white" class="btn shadow-none border">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -180,6 +178,8 @@
                         <div class="form-group my-2">
                             <label for="name">Nama</label>
                             <input type="text" name="name" id="name" class="nameCheck form-control" placeholder="Nama" required>
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="form-group my-2">
                             <label>Kategori Produk</label>
@@ -199,30 +199,42 @@
                                 <option selected disabled>Tidak ada kategori</option>
                             </select>
                             @endif
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="row my-2 form-group">
                             <div class="col-md-4">
                                 <label for="stoke" style="font-size: 12px">Stok</label>
                                 <input type="number" name="stoke" id="stoke" class="form-control" placeholder="Stok" required>
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                             <div class="col-md-8">
                                 <label for="price" style="font-size: 12px">Harga</label>
                                 <input type="number" name="price" id="price" class="form-control" placeholder="Harga" required>
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                         </div>
                         <div class="row my-2 form-group">
                             <div class="col-md-6">
                                 <label for="stoke" style="font-size: 12px">Berat (gram)</label>
                                 <input type="number" name="weight" id="weight" class="form-control" placeholder="Berat" required>
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <label for="stoke" style="font-size: 12px">Diskon (Persen)</label>
                                 <input type="number" name="discount" id="discount" class="form-control" placeholder="Diskon" required>
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                         </div>
                         <div class="my-2 form-group">
                             <label for="desc">Deskripsi</label>
                             <textarea class="form-control" style="height: 8rem" name="desc" id="desc" rows="3" required placeholder="Deskripsi"></textarea>
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="my-2 form-group">
                             <label for="is_active">Status Produk</label>
@@ -230,29 +242,10 @@
 
                             </div>
                         </div>
-                        {{-- <div class="my-2 form-group">
-                            <label for="image">Unggah Foto</label>
-                            <small class="d-flex text-danger pb-1">*Unggah berupa foto produk</small>
-                            <div>
-                                <div class="tab-content" id="myTabContent2">
-                                    <div class="tab-pane fade show active" id="home3" role="tabpanel"
-                                        aria-labelledby="home-tab3">
-                                        <div class="preview-image-edit"> </div>
-                                        <div class="tab-content editFile" id="myTabContent2">
-
-                                        </div>
-                                        {{-- <img id="preview" class="img-fluid img-thumbnail image"
-                                        src="{{ asset('stisla/assets/img/example-image.jpg') }}" alt="edukasi"
-                                        style="width: 20rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"> --}}
-                                    {{-- </div>
-                                </div>
-                            </div>
-                            <input type="file" id="imagesEdit" name="images[]" multiple class="form-control" accept="image/*">
-                        </div> --}}
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
-                        <button type="submit" id="edit_employee_btn" class="btn btn-primary">Simpan</button>
+                        <button type="button" class="btn shadow-none border" style="background: #FFFACD;" data-dismiss="modal">Kembali</button>
+                        <button type="submit" id="edit_employee_btn" style="background: #16A085; color: white" class="btn shadow-none border">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -282,18 +275,17 @@
                                     <div class="tab-pane fade show active" id="home3" role="tabpanel"
                                         aria-labelledby="home-tab3">
                                         <div class="preview-image-edit"> </div>
-                                        {{-- <img id="preview" class="img-fluid img-thumbnail image"
-                                        src="{{ asset('stisla/assets/img/example-image.jpg') }}" alt="edukasi"
-                                        style="width: 20rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"> --}}
                                     </div>
                                 </div>
                             </div>
-                            <input type="file" id="imagesEdit" name="images[]" multiple class="form-control" accept="image/*">
+                            <input type="file" id="imagesEdit" name="images[]" required multiple class="form-control" accept="image/*">
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
-                        <button type="submit" id="addPhotoProductBtn" class="btn btn-primary">Simpan</button>
+                        <button type="button" class="btn shadow-none border" style="background: #FFFACD;" data-dismiss="modal">Kembali</button>
+                        <button type="submit" id="addPhotoProductBtn" style="background: #16A085; color: white" class="btn shadow-none border">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -315,10 +307,6 @@
                             <div class="tab-pane fade show active" id="home3" role="tabpanel"
                                 aria-labelledby="home-tab3">
                                 <div class="editFile"> </div>
-                                {{-- <img id="preview" class="img-fluid img-thumbnail image"
-                                        src="{{ asset('stisla/assets/img/example-image.jpg') }}" alt="edukasi"
-                                style="width: 20rem; height: 10rem; -o-object-fit: cover; object-fit: cover;
-                                -o-object-position: center; object-position: center;"> --}}
                             </div>
                         </div>
                     </div>
@@ -426,11 +414,15 @@
                 dataType: 'json',
                 success: function(response) {
                     if (response.status == 400) {
-                        showError('name', response.messages.name);
-                        showError('category_product_id', response.messages.category_product_id);
-                        showError('stoke', response.messages.stoke);
-                        showError('price', response.messages.price);
-                        showError('desc', response.messages.desc);
+                        showError('add_name', response.messages.name);
+                        showError('add_category_product_id', response.messages.category_product_id);
+                        showError('add_stoke', response.messages.stoke);
+                        showError('add_price', response.messages.price);
+                        showError('add_weight', response.messages.weight);
+                        showError('add_discount', response.messages.discount);
+                        showError('add_desc', response.messages.desc);
+                        $("#add_employee_btn").text('Simpan');
+                        $("#add_employee_btn").prop('disabled', false);
                     } else if (response.status == 200){
                         Swal.fire(
                             'Menambahkan!',
@@ -440,9 +432,9 @@
                         fetchAllEmployees();
                         $("#addEmployeeModal").modal('hide');
                         $("#add_employee_form")[0].reset();
+                        $("#add_employee_btn").text('Simpan');
+                        $("#add_employee_btn").prop('disabled', false);
                     }
-                    $("#add_employee_btn").text('Simpan');
-                    $("#add_employee_btn").prop('disabled', false);
                 }
                 });
             });
@@ -471,16 +463,6 @@
                             <input type="checkbox" name="is_active" ${response.is_active ? 'checked' : ''} class="custom-switch-input">
                             <span class="custom-switch-indicator"></span>
                         </label>`);
-                    // if (response.file) {
-                    //     $(".editFile").html(
-                    //         `<div class="tab-pane fade show active" id="home2" role="tabpanel"
-                    //             aria-labelledby="home-tab2">
-                    //             <img id="preview" class="img-fluid img-thumbnail image"
-                    //             src="../storage/edukasi/${response.photo_product}" alt="edukasi"
-                    //             style="width: 20rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
-                    //         </div>
-                    //         `);
-                    // }
                     $("#emp_id").val(response.id);
                     $("#emp_avatar").val(response.photo_product);
                 }
@@ -508,20 +490,23 @@
                         showError('category_product_id', response.messages.category_product_id);
                         showError('stoke', response.messages.stoke);
                         showError('price', response.messages.price);
+                        showError('weight', response.messages.weight);
+                        showError('discount', response.messages.discount);
                         showError('desc', response.messages.desc);
-                        showError('images', response.messages.images);
+                        $("#edit_employee_btn").text('Simpan');
+                        $("#edit_employee_btn").prop('disabled', false);
                     } else if (response.status == 200){
                         Swal.fire(
-                            'Menambahkan!',
+                            'Berhasil!',
                             'Produk Berhasil diperbarui!',
                             'success'
                         )
                         fetchAllEmployees();
                         $("#editEmployeeModal").modal('hide');
                         $("#edit_employee_form")[0].reset();
+                        $("#edit_employee_btn").text('Simpan');
+                        $("#edit_employee_btn").prop('disabled', false);
                     }
-                    $("#edit_employee_btn").text('Simpan');
-                    $("#edit_employee_btn").prop('disabled', false);
                 }
                 });
             });
@@ -553,7 +538,7 @@
                         console.log(response);
                         Swal.fire(
                         'Dihapus!',
-                        'File Anda telah dihapus.',
+                        'Data produk telah dihapus.',
                         'success'
                         )
                         fetchAllEmployees();
@@ -576,13 +561,6 @@
                 },
                 success: function(response) {
                     var customHtml = '';
-                    // if(response.success){
-                    //     var response = response.success;
-                    //     for (var i in response) {
-                    //         customHtml = customHtml + '<div class="my-2 tab-pane fade show active" id="home2" role="tabpanel"aria-labelledby="home-tab2"><img id="preview" class="img-fluid img-thumbnail image" src="../storage/produk/'+ response[i].name +'" alt="edukasi" style="width: 22rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"><a href="#" id="'+ response[i].id +'" class="text-danger mx-1 deletePhotoProduct">Hapus</a></div>';
-                    //     }
-                    //     $('.editFile').html(customHtml)
-                    // }
                     $.each(response, function (i, item) {
                         customHtml = customHtml + '<div class="my-2 tab-pane fade show active" id="home2" role="tabpanel"aria-labelledby="home-tab2"><img id="preview" class="img-fluid img-thumbnail image" src="../storage/produk/'+ response[i].name +'" alt="edukasi" style="width: 22rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"><a href="#" id="'+ response[i].id +'" class="text-danger mx-1 deletePhotoProduct">Hapus</a></div>';
                         })
@@ -618,7 +596,7 @@
                         console.log(response);
                         Swal.fire(
                         'Dihapus!',
-                        'File Anda telah dihapus.',
+                        'Foto produk telah dihapus.',
                         'success'
                         )
                         $("#viewPhotoProduct").modal('hide');
@@ -670,8 +648,11 @@
                 dataType: 'json',
                 success: function(response) {
                     if (response.status == 400) {
-                        showError('name', response.messages.photo_product.name);
+                        showError('imagesEdit', response.messages.images);
                         $("#addPhotoProductForm")[0].reset();
+                        $('.preview-image-edit').html("");
+                        $("#addPhotoProductBtn").text('Simpan');
+                        $("#addPhotoProductBtn").prop('disabled', false);
                     } else if (response.status == 200){
                         Swal.fire(
                             'Menambahkan!',
@@ -681,6 +662,9 @@
                         fetchAllEmployees();
                         $("#addPhotoProduct").modal('hide');
                         $("#addPhotoProductForm")[0].reset();
+                        $('.preview-image-edit').html("");
+                        $("#addPhotoProductBtn").text('Simpan');
+                        $("#addPhotoProductBtn").prop('disabled', false);
                     } else if (response.status == 401) {
                         Swal.fire(
                             'Gagal!',
@@ -690,11 +674,10 @@
                         fetchAllEmployees();
                         $("#addPhotoProduct").modal('hide');
                         $("#addPhotoProductForm")[0].reset();
+                        $('.preview-image-edit').html("");
+                        $("#addPhotoProductBtn").text('Simpan');
                         $("#addPhotoProductBtn").prop('disabled', false);
                     }
-                    $('.preview-image-edit').html("");
-                    $("#addPhotoProductBtn").text('Simpan');
-                    $("#addPhotoProductBtn").prop('disabled', false);
                 }
                 });
             });

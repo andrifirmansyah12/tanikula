@@ -58,38 +58,76 @@ class PengaturanController extends Controller
         ]);
     }
 
-    public function pengaturanUpdate(Request $request){
-        User::where('id', auth()->user()->id)->update([
-            'name' => $request->name,
-            'email' => $request->email,
+    public function pengaturanUpdate(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:50',
+            'email' => 'required|email|max:100',
+            'telp' => 'required',
+            'gender' => 'required',
+        ], [
+            'name.required' => 'Nama gapoktan diperlukan!',
+            'name.max' => 'Nama gapoktan maksimal 50 karakter!',
+            'email.required' => 'Email diperlukan!',
+            'email.max' => 'Email maksimal 100 karakter!',
+            'telp.required' => 'Nomor telephone diperlukan!',
+            'gender.required' => 'Jenis kelamin diperlukan!',
         ]);
 
-        if ($request->birth) {
-            Costumer::with('user')->where('id', $request->id)->update([
-                'telp' => $request->telp,
-                'birth' => $request->birth,
-                'gender' => $request->gender,
+        if($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'messages' => $validator->getMessageBag()
             ]);
         } else {
-            Costumer::with('user')->where('id', $request->id)->update([
-                'telp' => $request->telp,
-                'gender' => $request->gender,
+            User::where('id', auth()->user()->id)->update([
+                'name' => $request->name,
+                'email' => $request->email,
+            ]);
+
+            if ($request->birth) {
+                Costumer::with('user')->where('id', $request->id)->update([
+                    'telp' => $request->telp,
+                    'birth' => Carbon::createFromFormat('d-M-Y', $request->birth)->format('Y-m-d h:i:s'),
+                    'gender' => $request->gender,
+                ]);
+            } else {
+                Costumer::with('user')->where('id', $request->id)->update([
+                    'telp' => $request->telp,
+                    'gender' => $request->gender,
+                ]);
+            }
+
+            return response()->json([
+                'status' => 200,
+                'messages' => 'Biodata diri berhasil diupdate!'
             ]);
         }
-
-        return response()->json([
-            'status' => 200,
-            'messages' => 'Biodata diri berhasil diupdate!'
-        ]);
     }
 
-    public function pengaturanUpdatePassword(Request $request){
-        User::where('id', auth()->user()->id)->update([
-            'password' => Hash::make($request->password)
+    public function pengaturanUpdatePassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'password' => 'required|min:6|max:50',
+        ], [
+            'password.required' => 'Kata sandi diperlukan!',
+            'password.min' => 'Kata sandi harus minimal 6 karakter!',
+            'password.max' => 'Kata sandi maksimal 50 karakter!',
         ]);
-        return response()->json([
-            'status' => 200,
-            'messages' => 'Password berhasil diperbarui!'
-        ]);
+
+        if($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'messages' => $validator->getMessageBag()
+            ]);
+        } else {
+            User::where('id', auth()->user()->id)->update([
+                'password' => Hash::make($request->password)
+            ]);
+            return response()->json([
+                'status' => 200,
+                'messages' => 'Password berhasil diperbarui!'
+            ]);
+        }
     }
 }

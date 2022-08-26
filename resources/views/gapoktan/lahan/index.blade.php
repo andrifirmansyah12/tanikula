@@ -71,10 +71,10 @@
                         <input type="hidden" name="gapoktan_id" value="{{ $gapoktans->id }}" class="titleCheck form-control" placeholder="{{ $gapoktans->user->name }}"
                            required>
                         <div class="form-group my-2">
-                            <label>Poktan</label>
+                            <label>Pilih Petani</label>
                             @if ($farmers->count() > 0)
-                            <select class="form-control select2" name="farmer_id">
-                                <option selected disabled>Pilih Kategori</option>
+                            <select class="form-control select2" id="add_farmer_id" name="farmer_id">
+                                <option selected disabled>Pilih Petani</option>
                                 @foreach ($farmers as $farmer)
                                     @if ( old('farmer_id') == $farmer->id )
                                         <option value="{{ $farmer->id }}" selected>{{ $farmer->user->name }}</option>
@@ -88,11 +88,13 @@
                                 <option selected disabled>Tidak ada kategori</option>
                             </select>
                             @endif
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="form-group my-2">
                             <label>Kategori Lahan</label>
                             @if ($category->count() > 0)
-                            <select class="form-control select2" name="field_category_id" required>
+                            <select class="form-control select2" id="add_field_category_id" name="field_category_id" required>
                                 <option selected disabled>Pilih Kategori</option>
                                 @foreach ($category as $item)
                                     @if ( old('field_category_id') == $item->id )
@@ -107,11 +109,13 @@
                                     <option selected disabled>Tidak ada kategori</option>
                             </select>
                             @endif
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
-                        <button type="submit" id="add_employee_btn" class="btn btn-primary">Simpan</button>
+                        <button type="button" class="btn shadow-none border" style="background: #FFFACD;" data-dismiss="modal">Kembali</button>
+                        <button type="submit" id="add_employee_btn" style="background: #16A085; color: white" class="btn shadow-none border">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -135,10 +139,10 @@
                         <input type="hidden" name="gapoktan_id" value="{{ $gapoktans->id }}" class="titleCheck form-control" placeholder="{{ $gapoktans->user->name }}"
                            required>
                         <div class="form-group my-2">
-                            <label>Poktan</label>
+                            <label>Pilih Petani</label>
                             @if ($farmers->count() > 0)
                             <select class="form-control select2" id="farmer_id" name="farmer_id">
-                                <option selected disabled>Pilih Kategori</option>
+                                <option selected disabled>Pilih Petani</option>
                                 @foreach ($farmers as $farmer)
                                     @if ( old('farmer_id') == $farmer->id )
                                         <option value="{{ $farmer->id }}" selected>{{ $farmer->user->name }}</option>
@@ -152,6 +156,8 @@
                                 <option selected disabled>Tidak ada kategori</option>
                             </select>
                             @endif
+                            <div class="invalid-feedback">
+                                </div>
                         </div>
                         <div class="form-group my-2">
                             <label>Kategori Lahan</label>
@@ -171,11 +177,13 @@
                                 <option selected disabled>Tidak ada kategori</option>
                             </select>
                             @endif
+                            <div class="invalid-feedback">
+                                </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
-                        <button type="submit" id="edit_employee_btn" class="btn btn-primary">Simpan</button>
+                        <button type="button" class="btn shadow-none border" style="background: #FFFACD;" data-dismiss="modal">Kembali</button>
+                        <button type="submit" id="edit_employee_btn" style="background: #16A085; color: white" class="btn shadow-none border">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -241,10 +249,10 @@
                 dataType: 'json',
                 success: function(response) {
                     if (response.status == 400) {
-                        showError('gapoktan_id', response.messages.gapoktan_id);
-                        showError('field_category_id', response.messages.field_category_id);
-                        showError('farmer_id', response.messages.farmer_id);
-                        showError('status', response.messages.status);
+                        showError('add_field_category_id', response.messages.field_category_id);
+                        showError('add_farmer_id', response.messages.farmer_id);
+                        $("#add_employee_btn").text('Simpan');
+                        $("#add_employee_btn").prop('disabled', false);
                     }
                     else if (response.status == 200) {
                         Swal.fire(
@@ -255,9 +263,9 @@
                         fetchAllEmployees();
                         $("#add_employee_form")[0].reset();
                         $("#addEmployeeModal").modal('hide');
+                        $("#add_employee_btn").text('Simpan');
+                        $("#add_employee_btn").prop('disabled', false);
                     }
-                    $("#add_employee_btn").text('Simpan');
-                    $("#add_employee_btn").prop('disabled', false);
                 }
                 });
             });
@@ -297,10 +305,10 @@
                 dataType: 'json',
                 success: function(response) {
                     if (response.status == 400) {
-                        showError('gapoktan_id', response.messages.gapoktan_id);
                         showError('field_category_id', response.messages.field_category_id);
                         showError('farmer_id', response.messages.farmer_id);
-                        showError('status', response.messages.status);
+                        $("#edit_employee_btn").text('Simpan');
+                        $("#edit_employee_btn").prop('disabled', false);
                     }
                     else if (response.status == 200) {
                         Swal.fire(
@@ -311,9 +319,9 @@
                         fetchAllEmployees();
                         $("#edit_employee_form")[0].reset();
                         $("#editEmployeeModal").modal('hide');
+                        $("#edit_employee_btn").text('Simpan');
+                        $("#edit_employee_btn").prop('disabled', false);
                     }
-                    $("#edit_employee_btn").text('Simpan');
-                    $("#edit_employee_btn").prop('disabled', false);
                 }
                 });
             });

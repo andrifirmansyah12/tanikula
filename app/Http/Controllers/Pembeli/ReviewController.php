@@ -297,23 +297,49 @@ class ReviewController extends Controller
                 'messages' => $validator->getMessageBag()
             ]);
         } else {
-            $id =  $request->input('reviewed_id', []);
-            $product_id =  $request->input('reviewed_product_id', []);
-            $stars_rated =  $request->input('reviewed_stars_rated', []);
-            $review =  $request->input('reviewed_review', []);
-            foreach ($id as $index => $unit) {
-                $data = array(
-                    "product_id" => $product_id[$index],
-                    "user_id" => auth()->user()->id,
-                    "stars_rated" => $stars_rated[$index],
-                    "review" => $review[$index],
-                    "created_at" => Carbon::now(),
-                    "updated_at" => Carbon::now(),
-                );
+            if ($request->input('hide') == 0) {
+                $id =  $request->input('reviewed_id', []);
+                $product_id =  $request->input('reviewed_product_id', []);
+                $stars_rated =  $request->input('reviewed_stars_rated', []);
+                $hide =  $request->input('hide') ? 1 : 0;
+                $review =  $request->input('reviewed_review', []);
+                foreach ($id as $index => $unit) {
+                    $data = array(
+                        "product_id" => $product_id[$index],
+                        "user_id" => auth()->user()->id,
+                        "stars_rated" => $stars_rated[$index],
+                        "review" => $review[$index],
+                        "hide" => $hide,
+                        "created_at" => Carbon::now(),
+                        "updated_at" => Carbon::now(),
+                    );
 
-                Review::where('id', $id[$index])
-                ->update($data);
+                    Review::where('id', $id[$index])
+                    ->update($data);
+                }
+            } elseif ($request->input('hide') == 1) {
+                $id =  $request->input('reviewed_id', []);
+                $product_id =  $request->input('reviewed_product_id', []);
+                $stars_rated =  $request->input('reviewed_stars_rated', []);
+                $unhide =  $request->input('hide') ? 0 : 1;
+                $review =  $request->input('reviewed_review', []);
+                foreach ($id as $index => $unit) {
+                    $data = array(
+                        "product_id" => $product_id[$index],
+                        "user_id" => auth()->user()->id,
+                        "stars_rated" => $stars_rated[$index],
+                        "review" => $review[$index],
+                        "hide" => $unhide,
+                        "created_at" => Carbon::now(),
+                        "updated_at" => Carbon::now(),
+                    );
+
+                    Review::where('id', $id[$index])
+                    ->update($data);
+                }
             }
+
+
 
             return response()->json([
                 'status' => 200,

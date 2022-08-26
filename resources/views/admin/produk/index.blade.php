@@ -113,19 +113,25 @@
                             </select>
                             @endif
                         </div>
-                        <div class="d-lg-flex justify-content-between my-2 form-group">
-                            <div>
+                        <div class="row my-2 form-group">
+                            <div class="col-md-4">
                                 <label for="stoke" style="font-size: 12px">Stok</label>
                                 <input type="number" name="stoke" class="form-control" placeholder="Stok" required>
                             </div>
-                            <div class="pt-2 pt-lg-0">
+                            <div class="col-md-8">
                                 <label for="price" style="font-size: 12px">Harga</label>
                                 <input type="number" name="price" class="form-control" placeholder="Harga" required>
                             </div>
                         </div>
-                        <div class="my-2 form-group">
-                            <label for="stoke" style="font-size: 12px">Berat (gram)</label>
+                        <div class="row my-2 form-group">
+                            <div class="col-md-6">
+                                <label for="stoke" style="font-size: 12px">Berat (gram)</label>
                                 <input type="number" name="weight" class="form-control" placeholder="Berat" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="stoke" style="font-size: 12px">Diskon (Persen)</label>
+                                <input type="number" name="discount" value="0" class="form-control" placeholder="Diskon" required>
+                            </div>
                         </div>
                         <div class="my-2 form-group">
                             <label for="desc">Deskripsi</label>
@@ -225,19 +231,25 @@
                             </select>
                             @endif
                         </div>
-                        <div class="d-lg-flex justify-content-between my-2 form-group">
-                            <div>
+                        <div class="row my-2 form-group">
+                            <div class="col-md-4">
                                 <label for="stoke" style="font-size: 12px">Stok</label>
                                 <input type="number" name="stoke" id="stoke" class="form-control" placeholder="Stok" required>
                             </div>
-                            <div class="pt-2 pt-lg-0">
+                            <div class="col-md-8">
                                 <label for="price" style="font-size: 12px">Harga</label>
                                 <input type="number" name="price" id="price" class="form-control" placeholder="Harga" required>
                             </div>
                         </div>
-                        <div class="my-2 form-group">
-                            <label for="stoke" style="font-size: 12px">Berat (gram)</label>
+                        <div class="row my-2 form-group">
+                            <div class="col-md-6">
+                                <label for="stoke" style="font-size: 12px">Berat (gram)</label>
                                 <input type="number" name="weight" id="weight" class="form-control" placeholder="Berat" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="stoke" style="font-size: 12px">Diskon (Persen)</label>
+                                <input type="number" name="discount" id="discount" class="form-control" placeholder="Diskon" required>
+                            </div>
                         </div>
                         <div class="my-2 form-group">
                             <label for="desc">Deskripsi</label>
@@ -488,6 +500,7 @@
                     $("#stoke").val(response.stoke);
                     $("#price").val(response.price);
                     $("#weight").val(response.weight);
+                    $("#discount").val(response.discount);
                     $("#desc").val(response.desc);
                     $("#is_active").html(
                         `<label class="custom-switch">

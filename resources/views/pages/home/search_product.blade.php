@@ -39,6 +39,10 @@
                 padding-top: 0px;
             }
         }
+
+        .opacity-90 {
+            opacity: 90%;
+        }
     </style>
 @endsection
 
@@ -72,9 +76,12 @@
                 @foreach ($product_new as $item)
                 <div class="col-lg-3 col-md-6 col-12">
                     <!-- Start Single Product -->
-                    <div class="single-product" style="height: 26">
-                        <div class="product-image">
+                    <div class="single-product {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}" style="height: 26">
+                        <div class="product-image {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}">
                             <a href="{{ url('home/'.$item->slug) }}">
+                                @if ($item->stoke === 0)
+                                <div style="z-index: 3" class="badge bg-danger px-3 position-absolute top-50 start-50 translate-middle"><h5 class="text-white">Stok Habis</h5></div>
+                                @endif
                                 @if ($item->photo_product->count() > 0)
                                     @foreach ($item->photo_product->take(1) as $photos)
                                         @if ($photos->name)
@@ -91,7 +98,7 @@
                                 @endif
                             </a>
                         </div>
-                        <div class="product-info">
+                        <div class="product-info {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}">
                             @if ($item->discount != 0)
                                 <div class="d-flex justify-content-between">
                                     <a href="{{ url('product-category/'.$item->product_category->slug) }}">

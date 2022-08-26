@@ -4,6 +4,7 @@
 @section('breadcrumb-subTitle', substr($product->name,0,20). '...')
 
 @section('style')
+    <link rel="stylesheet" href="https://unpkg.com/placeholder-loading/dist/css/placeholder-loading.min.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
@@ -75,6 +76,10 @@
 
         .costum-color {
             background-image: linear-gradient(195deg, rgb(255, 255, 255) 0%, #ffffff 100%);
+        }
+
+        .opacity-90 {
+            opacity: 90%;
         }
     </style>
 @endsection
@@ -194,7 +199,7 @@
                                     @if ($product->stoke < 1)
                                     <div class="col-lg-4 col-md-4 col-12">
                                         <div class="button cart-button">
-                                            <button disabled class="btn" id="addToCartBtn" style="width: 100%;">+ Keranjang</button>
+                                            <button disabled class="btn" style="width: 100%;">+ Keranjang</button>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-12">
@@ -236,9 +241,12 @@
                     <div class="owl-carousel owl-theme">
                         @foreach ($product_new as $item)
                         <!-- Start Single Product -->
-                        <div class="mx-2 single-product shadow-none" style="height: 27rem">
-                            <div class="product-image">
+                        <div class="mx-2 single-product shadow-none {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}"" style="height: 27rem">
+                            <div class="product-image {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}"">
                                 <a href="{{ url('home/'.$item->slug) }}">
+                                    @if ($item->stoke === 0)
+                                    <div style="z-index: 3" class="badge bg-danger px-3 position-absolute top-50 start-50 translate-middle"><h5 class="text-white">Stok Habis</h5></div>
+                                    @endif
                                     @if ($item->photo_product->count() > 0)
                                         @foreach ($item->photo_product->take(1) as $photos)
                                             @if ($photos->name)
@@ -255,7 +263,7 @@
                                     @endif
                                 </a>
                             </div>
-                            <div class="product-info">
+                            <div class="product-info {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}"">
                                 @if ($item->discount != 0)
                                     <div class="d-flex justify-content-between">
                                         <a href="{{ url('product-category/'.$item->product_category->slug) }}">
@@ -397,19 +405,19 @@
                                             </a>
                                         </li>
                                     </ul>
-                                    <div class="py-5 px-md-5" id="fiveStars">
+                                    <div class="py-4 px-md-5" id="fiveStars">
                                         <p class="h5 text-center" style="color: #16A085">Memuat</p>
                                     </div>
-                                    <div class="py-5 px-md-5" id="fourStars">
+                                    <div class="py-4 px-md-5" id="fourStars">
                                         <p class="h5 text-center" style="color: #16A085">Memuat</p>
                                     </div>
-                                    <div class="py-5 px-md-5" id="threeStars">
+                                    <div class="py-4 px-md-5" id="threeStars">
                                         <p class="h5 text-center" style="color: #16A085">Memuat</p>
                                     </div>
-                                    <div class="py-5 px-md-5" id="twoStars">
+                                    <div class="py-4 px-md-5" id="twoStars">
                                         <p class="h5 text-center" style="color: #16A085">Memuat</p>
                                     </div>
-                                    <div class="py-5 px-md-5" id="oneStars">
+                                    <div class="py-4 px-md-5" id="oneStars">
                                         <p class="h5 text-center" style="color: #16A085">Memuat</p>
                                     </div>
                                 </div>
@@ -631,11 +639,67 @@
             countStarsTwo();
             countStarsOne();
 
-            fetchAllFiveStar();
-            fetchAllFourStar();
-            fetchAllThreeStar();
-            fetchAllTwoStar();
-            fetchAllOneStar();
+            // fetchAllFiveStar();
+            // fetchAllFourStar();
+            // fetchAllThreeStar();
+            // fetchAllTwoStar();
+            // fetchAllOneStar();
+
+            // fetch all employees ajax request
+            var displayProduct = 1;
+            $('#fiveStars').html(createSkeleton(displayProduct));
+            $('#fourStars').html(createSkeleton(displayProduct));
+            $('#threeStars').html(createSkeleton(displayProduct));
+            $('#twoStars').html(createSkeleton(displayProduct));
+            $('#oneStars').html(createSkeleton(displayProduct));
+
+            // jalankan fungsi load content setelah 2 detik
+            function createSkeleton(limit)
+            {
+                var skeletonHTML = '';
+                for(var i = 0; i < limit; i++){
+                    // skeletonHTML += '<div class="row">';
+                            skeletonHTML += '<div class="ph-item mt-4 rounded">';
+                                skeletonHTML += '<div class="ph-col-2">';
+                                    skeletonHTML += '<div class="ph-avatar"></div>';
+                                skeletonHTML += '</div>';
+
+                                skeletonHTML += '<div class="ph-col-2">';
+                                    skeletonHTML += '<div class="ph-col-2 big empty"></div>';
+                                    skeletonHTML += '<div class="ph-col-2 big empty"></div>';
+                                    skeletonHTML += '<div class="ph-row">';
+                                        skeletonHTML += '<div class="ph-col-6 rounded"></div>';
+                                    skeletonHTML += '</div>';
+                                skeletonHTML += '</div>';
+
+                                skeletonHTML += '<div class="ph-col-8">';
+                                    skeletonHTML += '<div class="ph-row">';
+                                        skeletonHTML += '<div class="ph-col-2 rounded"></div>';
+                                        skeletonHTML += '<div class="ph-col-4 empty"></div>';
+                                        skeletonHTML += '<div class="ph-col-4 empty"></div>';
+                                        skeletonHTML += '<div class="ph-col-4 rounded"></div>';
+                                        skeletonHTML += '<div class="ph-col-6 empty"></div>';
+                                        skeletonHTML += '<div class="ph-col-12 big empty"></div>';
+                                        skeletonHTML += '<div class="ph-col-12 big rounded"></div>';
+                                        skeletonHTML += '<div class="ph-col-12 empty"></div>';
+                                        skeletonHTML += '<div class="ph-col-2 rounded"></div>';
+                                        skeletonHTML += '<div class="ph-col-12 big rounded"></div>';
+                                    skeletonHTML += '</div>';
+                                skeletonHTML += '</div>';
+
+                            skeletonHTML += '</div>';
+                    // skeletonHTML += '</div>';
+                }
+                return skeletonHTML;
+            }
+
+            setTimeout(function(){
+                fetchAllFiveStar(displayProduct);
+                fetchAllFourStar(displayProduct);
+                fetchAllThreeStar(displayProduct);
+                fetchAllTwoStar(displayProduct);
+                fetchAllOneStar(displayProduct);
+            }, 2000);
 
             // ==================================== Count Star Review ===============================
 
@@ -767,55 +831,6 @@
             }
         });
 
-        // ====================================== Message Firebase ==========================================
-        const messaging = firebase.messaging();
-        messaging.usePublicVapidKey("BOPzmY3tl0kiX3fUSsQBfurfNxn86-jBjjPCbJxObhqxEMu-RFxwwhHNQ-dGRF0SDQMIEuCTi3BOQz_pUYYBvxs");
-
-        function sendTokenToServer(fcm_token)
-        {
-            @auth
-                const user_id = '{{auth()->user()->id}}';
-            @endauth
-            axios.post('/api/save-token', {
-                fcm_token, user_id
-            })
-            .then(res => {
-                console.log(res);
-            })
-        }
-
-        function retrieveToken() {
-            messaging.getToken()
-            .then((currentToken) => {
-                if (currentToken) {
-                    console.log('Token Received : ' +  currentToken)
-                    sendTokenToServer(currentToken);
-                    // Track the token -> client mapping, by sending to backend server
-                    // show on the UI that permission is secured
-                } else {
-                    alert('You should allow notification!');
-                    // console.log('No registration token available. Request permission to generate one.');
-                    // shows on the UI that permission is required
-                }
-            }).catch((err) => {
-                console.log('An error occurred while retrieving token. ', err);
-                // catch error while creating client token
-            });
-        }
-
-        retrieveToken();
-
-        messaging.onTokenRefresh(() => {
-            retrieveToken();
-        });
-
-        messaging.onMessage((payload)=>{
-            console.log('Message received');
-            console.log(payload);
-
-            location.reload();
-        });
-
         $('.owl-carousel').owlCarousel({
             loop:false,
             responsiveClass:true,
@@ -905,6 +920,55 @@
                     $(this).closest('#product_data').find('.qty-input').val(value);
                 }
             });
+        });
+
+        // ====================================== Message Firebase ==========================================
+        const messaging = firebase.messaging();
+        messaging.usePublicVapidKey("BOPzmY3tl0kiX3fUSsQBfurfNxn86-jBjjPCbJxObhqxEMu-RFxwwhHNQ-dGRF0SDQMIEuCTi3BOQz_pUYYBvxs");
+
+        function sendTokenToServer(fcm_token)
+        {
+            @auth
+                const user_id = '{{auth()->user()->id}}';
+            @endauth
+            axios.post('/api/save-token', {
+                fcm_token, user_id
+            })
+            .then(res => {
+                console.log(res);
+            })
+        }
+
+        function retrieveToken() {
+            messaging.getToken()
+            .then((currentToken) => {
+                if (currentToken) {
+                    console.log('Token Received : ' +  currentToken)
+                    sendTokenToServer(currentToken);
+                    // Track the token -> client mapping, by sending to backend server
+                    // show on the UI that permission is secured
+                } else {
+                    alert('You should allow notification!');
+                    // console.log('No registration token available. Request permission to generate one.');
+                    // shows on the UI that permission is required
+                }
+            }).catch((err) => {
+                console.log('An error occurred while retrieving token. ', err);
+                // catch error while creating client token
+            });
+        }
+
+        retrieveToken();
+
+        messaging.onTokenRefresh(() => {
+            retrieveToken();
+        });
+
+        messaging.onMessage((payload)=>{
+            console.log('Message received');
+            console.log(payload);
+
+            location.reload();
         });
     </script>
 @endsection

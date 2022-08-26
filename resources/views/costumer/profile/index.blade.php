@@ -15,6 +15,10 @@
         input[type='file'] {
             opacity:0
         }
+
+        .datepicker {
+            z-index: 1600 !important; /* has to be larger than 1050 */
+        }
     </style>
 @endsection
 
@@ -30,7 +34,7 @@
                 <div class="avatar avatar-xl position-relative">
                     @if ($userInfo->image)
                     <img id="image_preview" src="{{asset('../storage/profile/'. $userInfo->image)}}" alt="profile_image"
-                        class="border-radius-lg shadow-sm" style="width: 92px; height: 72px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                        class="border-radius-lg rounded-circle shadow-sm" style="width: 92px; height: 72px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                     @else
                     <img id="image_preview" src="{{ asset('stisla/assets/img/example-image.jpg') }}" alt="profile_image"
                         class="border-radius-lg rounded-circle shadow-sm" style="height: 72px;">
@@ -54,12 +58,12 @@
                 <div class="nav-wrapper position-relative end-0">
                     <ul class="nav nav-fill p-1">
                         <li class="nav-item">
-                            <a class="btn {{ Request::is('pembeli') ? 'active text-white bg-primary' : '' }}" onclick="pembeli_dashboard('{{ url('pembeli') }}')" href="#">
+                            <a class="btn {{ Request::is('pembeli') ? 'active text-white bg-primary shadow' : 'border' }}" onclick="pembeli_dashboard('{{ url('pembeli') }}')" href="#">
                                 <span class="ms-1 fw-bold">Biodata Diri</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn {{ Request::is('pembeli/alamat*') ? 'active text-white bg-primary' : '' }}" onclick="pembeli_alamat('{{ url('pembeli/alamat') }}')" href="#">
+                            <a class="btn {{ Request::is('pembeli/alamat*') ? 'active text-white bg-primary shadow' : 'border' }}" onclick="pembeli_alamat('{{ url('pembeli/alamat') }}')" href="#">
                                 <span class="ms-1 fw-bold">Daftar Alamat</span>
                             </a>
                         </li>
@@ -178,20 +182,22 @@
                             <label for="telp">No Handphone</label>
                             <input type="tel" name="telp" id="telp" value="{{ $userInfo->telp }}"
                                 class="form-control phone-number border px-3">
+                                <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="row form-group mb-3">
                             <label for="birth">Tanggal Lahir</label>
+                            <small class="text-danger">*kosongkan jika tidak ingin ubah tanggal lahir</small>
                             <div class="input-group">
                                 @if ($userInfo->birth)
-                                <input type="date" name="birth" id="birth" class="form-control datepicker border px-3"
+                                <input type="text" name="birth" id="birth" class="form-control datepicker border px-3"
                                     value="{{ date("d-F-Y", strtotime($userInfo->birth)) }}">
                                 @else
-                                <input type="date" name="birth" id="birth" class="form-control datepicker border px-3"
+                                <input type="text" name="birth" id="birth" class="form-control datepicker border px-3"
                                     placeholder="Tanggal lahir">
                                 @endif
-                            </div>
-                            <small class="text-danger">*kosongkan jika tidak ingin ubah tanggal lahir</small>
-                            <div class="invalid-feedback">
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                         </div>
                         <div class="form-group mb-3">
@@ -203,6 +209,8 @@
                                 <option value="Perempuan" class="py-1" {{ $userInfo->gender == 'Perempuan' ? 'selected' : '' }}>
                                     Perempuan</option>
                             </select>
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -227,18 +235,20 @@
                 <form action="#" method="POST" id="editPasswordForm" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body p-4">
-                        <div class="form-group my-2">
+                        <div class="form-group">
                             <label for="password">Password</label>
                             <small class="d-flex text-danger pb-1">*Catatan:
                                 <br>1. Jika tidak ingin ubah password biarkan kosong,
                                 <br>2. Dan jika ingin ubah password, silahkan masukkan password.
                             </small>
                             <input type="password" id="password" name="password" class="form-control border px-3" placeholder="Password" required>
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
-                        <button type="submit" id="password_btn" class="btn btn-primary">Ubah Password</button>
+                        <input type="submit" id="password_btn" class="btn btn-primary" value="Ubah Password">
                     </div>
                 </form>
             </div>
@@ -269,8 +279,7 @@
     <script>
         $( function() {
             $( ".datepicker" ).datepicker({
-                dayNames: [ "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu" ],
-                dateFormat: 'dd-MM-yy'
+                dateFormat: 'dd-M-yy',
             });
         });
 
@@ -316,7 +325,15 @@
                     data: $(this).serialize()+ `&id=${id}`,
                     dataType: 'json',
                     success: function(res){
-                        if (res.status == 200) {
+                        if (res.status == 400) {
+                            showError('name', res.messages.name);
+                            showError('email', res.messages.email);
+                            showError('telp', res.messages.telp);
+                            showError('birth', res.messages.birth);
+                            showError('gender', res.messages.gender);
+                            $("#profile_btn").val('Perbarui Biodata');
+                            $("#profile_btn").prop('disabled', false);
+                        } else if (res.status == 200) {
                             // $("#profile_alert").html(showMessage('success', res.messages));
                             iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
                                 title: 'Berhasil',
@@ -343,7 +360,11 @@
                     data: $(this).serialize()+ `&id=${id}`,
                     dataType: 'json',
                     success: function(res){
-                        if (res.status == 200) {
+                        if (res.status == 400) {
+                            showError('password', res.messages.password);
+                            $("#password_btn").val('Ubah Password');
+                            $("#password_btn").prop('disabled', false);
+                        } else if (res.status == 200) {
                             // $("#profile_alert").html(showMessage('success', res.messages));
                             iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
                                 title: 'Berhasil',

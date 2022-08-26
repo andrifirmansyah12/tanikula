@@ -286,8 +286,8 @@
                                     </a>
                                 </div>
                                 <div class="col-8">
-                                    <a href="{{ url('/edukasi'.'/'.$item->slug) }}" class="d-flex" style="color: var(--primary);">
-                                        <p class="card-text pb-2 text-capitalize">{{$item->title}}</p>
+                                    <a href="{{ url('/edukasi'.'/'.$item->slug) }}" class="d-flex mb-2" style="color: var(--primary);">
+                                        <p class="card-text p-0 text-capitalize" style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">{{$item->title}}</p>
                                     </a>
                                     <small><i class="fas fa-solid fa-calendar-day"></i> {{ date("d-F-Y", strtotime($item->date))}}</small>
                                 </div>

@@ -108,19 +108,24 @@ class ProductController extends Controller
 	}
 
     // handle insert a new employee ajax request
-	public function store(Request $request) {
+	public function store(Request $request)
+    {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|max:255',
+            'name' => 'required|max:100',
             'category_product_id' => 'required',
-            'stoke' => 'required|max:50',
-            'price' => 'required|max:50',
+            'stoke' => 'required',
+            'price' => 'required',
+            'weight' => 'required',
+            'discount' => 'required',
             'desc' => 'required',
         ], [
-            'name.required' => 'Nama diperlukan!',
-            'name.max' => 'Nama maksimal 255 karakter!',
+            'name.required' => 'Nama produk diperlukan!',
+            'name.max' => 'Nama produk maksimal 100 karakter!',
             'category_product_id.required' => 'Kategori produk diperlukan!',
             'stoke.required' => 'Stok produk diperlukan!',
             'price.required' => 'Harga produk diperlukan!',
+            'weight.required' => 'Berat produk diperlukan!',
+            'discount.required' => 'Diskon produk diperlukan!',
             'desc.required' => 'Deskripsi produk diperlukan!',
         ]);
 
@@ -179,19 +184,24 @@ class ProductController extends Controller
 	}
 
 	// handle update an employee ajax request
-	public function update(Request $request) {
+	public function update(Request $request)
+    {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|max:255',
+            'name' => 'required|max:100',
             'category_product_id' => 'required',
-            'stoke' => 'required|max:50',
-            'price' => 'required|max:50',
+            'stoke' => 'required',
+            'price' => 'required',
+            'weight' => 'required',
+            'discount' => 'required',
             'desc' => 'required',
         ], [
-            'name.required' => 'Nama diperlukan!',
-            'name.max' => 'Nama maksimal 255 karakter!',
+            'name.required' => 'Nama produk diperlukan!',
+            'name.max' => 'Nama produk maksimal 100 karakter!',
             'category_product_id.required' => 'Kategori produk diperlukan!',
             'stoke.required' => 'Stok produk diperlukan!',
             'price.required' => 'Harga produk diperlukan!',
+            'weight.required' => 'Berat produk diperlukan!',
+            'discount.required' => 'Diskon produk diperlukan!',
             'desc.required' => 'Deskripsi produk diperlukan!',
         ]);
 
@@ -223,7 +233,11 @@ class ProductController extends Controller
                 $product->price = $harga_akhir;
             } elseif ($request->discount == 0) {
                 $product->discount = $request->discount;
-                $product->price = $product->price_discount;
+                if ($product->price_discount == 0) {
+                    $product->price = $request->price;
+                } else {
+                    $product->price = $product->price_discount;
+                }
                 $product->price_discount = null;
             }
 
@@ -304,9 +318,9 @@ class ProductController extends Controller
     // handle update an employee ajax request
 	public function addPhotoProduct(Request $request) {
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
+            'images' => 'required',
         ], [
-            'name.required' => 'Nama produk diperlukan!',
+            'images.required' => 'Foto produk diperlukan!',
         ]);
 
         if($validator->fails()) {

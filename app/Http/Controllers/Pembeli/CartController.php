@@ -22,13 +22,18 @@ class CartController extends Controller
                 if (Cart::where('product_id', $product_id)->where('user_id', Auth::id())->exists()) {
                     $checkCart = Cart::where('product_id', $product_id)->where('user_id', Auth::id())->get();
                     foreach ($checkCart as $cart) {
-                        if ($cart->product_qty >= $cart->product->stoke) {
-                            return response()->json(['status' => "Kuantiti tidak boleh melebihi stok"]);
+                        $qtyProduct = $cart->product_qty + $product_qty;
+                        if ($qtyProduct > $cart->product->stoke) {
+                            return response()->json([
+                                'status' => "Kuantiti tidak boleh melebihi stok"
+                            ]);
                         } else {
                             $updateCart = Cart::where('id', $cart->id)->first();
                             $updateCart->product_qty = $updateCart->product_qty + $product_qty;
                             $updateCart->update();
-                            return response()->json(['status' => $prod_check->name . " Ditambahkan ke Keranjang"]);
+                            return response()->json([
+                                'status' => $prod_check->name . " ditambahkan ke Keranjang"
+                            ]);
                         }
                     }
                 } else {
@@ -37,7 +42,7 @@ class CartController extends Controller
                     $cartItem->user_id = Auth::id();
                     $cartItem->product_qty = $product_qty;
                     $cartItem->save();
-                    return response()->json(['status' => $prod_check->name . " Ditambahkan ke Keranjang"]);
+                    return response()->json(['status' => $prod_check->name . " ditambahkan ke Keranjang"]);
                 }
             }
         } else {

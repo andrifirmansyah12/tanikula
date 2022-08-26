@@ -68,7 +68,7 @@
                             </div>
 
                             <div class="form-group">
-                                <input type="submit" value="Lupa Password" id="forgot_btn" class="btn btn-primary btn-lg btn-block" tabindex="4">
+                                <input type="submit" value="Lupa Password" style="background: #16A085" id="forgot_btn" class="btn text-white btn-lg btn-block" tabindex="4">
                             </div>
                         </form>
                         <div class="mt-3 text-muted text-center">

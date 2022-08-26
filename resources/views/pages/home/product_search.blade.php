@@ -5,6 +5,7 @@
 
 @section('style')
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="https://unpkg.com/placeholder-loading/dist/css/placeholder-loading.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
     <style>
         /* 4.3 Page */
@@ -39,6 +40,10 @@
                 padding-top: 0px;
             }
         }
+
+        .opacity-90 {
+            opacity: 90%;
+        }
     </style>
 @endsection
 
@@ -62,6 +67,9 @@
         </div>
     </div>
     <!-- Start Trending Product Area -->
+    <script>
+        var countProductSearch = '{{ $countProduct }}';
+    </script>
     <section class="section">
         <div class="container">
             <div class="row" id="show_all_employees">
@@ -86,14 +94,57 @@
         });
     });
 
-    $(function() {
+    $(document).ready(function () {
         // fetch all employees ajax request
-        fetchAllEmployees();
+        // fetchAllEmployees();
 
-        function fetchAllEmployees(max_price = '') {
+        var displayProduct = countProductSearch;
+        $('#show_all_employees').html(createSkeleton(displayProduct));
+
+        // jalankan fungsi load content setelah 2 detik
+        function createSkeleton(limit){
+        var skeletonHTML = '';
+        for(var i = 0; i < limit; i++){
+            // skeletonHTML += '<div class="row">';
+                skeletonHTML += '<div class="col-lg-3 mt-4 col-md-6 col-12">';
+                    skeletonHTML += '<div class="ph-item rounded">';
+                        skeletonHTML += '<div class="ph-col-12">';
+                            skeletonHTML += '<div class="ph-picture rounded"></div>';
+                        skeletonHTML += '</div>';
+
+                        skeletonHTML += '<div>';
+                            skeletonHTML += '<div class="ph-row">';
+                                skeletonHTML += '<div class="ph-col-12 rounded"></div>';
+                                skeletonHTML += '<div class="ph-col-12 rounded"></div>';
+                                skeletonHTML += '<div class="ph-col-12 rounded"></div>';
+                                skeletonHTML += '<div class="ph-col-12 empty"></div>';
+                                skeletonHTML += '<div class="ph-col-12 rounded big"></div>';
+                            skeletonHTML += '</div>';
+                        skeletonHTML += '</div>';
+
+                        skeletonHTML += '<div>';
+                            skeletonHTML += '<div class="ph-row">';
+                                skeletonHTML += '<div class="ph-col-12 big rounded"></div>';
+                            skeletonHTML += '</div>';
+                        skeletonHTML += '</div>';
+                    skeletonHTML += '</div>';
+                skeletonHTML += '</div>';
+            // skeletonHTML += '</div>';
+        }
+        return skeletonHTML;
+        }
+
+        setTimeout(function(){
+            fetchAllEmployees(displayProduct);
+        }, 2000);
+
+        function fetchAllEmployees(max_price = 'max_price' , min_price = 'min_price') {
             $.ajax({
                 url: '{{ route('fetchAllBasedSearch') }}',
-                data:{max_price:max_price},
+                data:{
+                    max_price:max_price,
+                    min_price:min_price,
+                },
                 method: 'get',
                 success: function(response) {
                     $("#show_all_employees").html(response);

@@ -71,4 +71,9 @@ class Payment extends Model
 	{
 		return self::where('number', '=', $orderCode)->exists();
 	}
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
 }

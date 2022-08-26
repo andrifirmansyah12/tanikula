@@ -141,6 +141,7 @@
                             <div class="cart-items">
                                 <!-- Shopping Item -->
                                 @php
+                                $cartItemSum = App\Models\Cart::with('product')->where('user_id', Auth::id())->sum('product_qty');
                                 $cartItem = App\Models\Cart::with('product')->where('user_id', Auth::id())->get();
                                 @endphp
                                 <a href="javascript:void(0)" class="main-btn">
@@ -150,7 +151,7 @@
 
                                 <div class="shopping-item">
                                     <div class="dropdown-cart-header">
-                                        <span>Keranjang ({{ $cartItem->count() }})</span>
+                                        <span>Keranjang ({{ $cartItemSum }})</span>
                                         <a style="color:#16A085;" href="{{ url('cart') }}">Lihat Sekarang</a>
                                     </div>
                                     @php

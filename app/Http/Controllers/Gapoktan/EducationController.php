@@ -78,7 +78,8 @@ class EducationController extends Controller
 	}
 
     // handle insert a new employee ajax request
-	public function store(Request $request) {
+	public function store(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'title' => 'required|max:255',
             'category_education_id' => 'required',
@@ -89,7 +90,7 @@ class EducationController extends Controller
             'title.max' => 'Judul edukasi maksimal 255 karakter!',
             'category_education_id.required' => 'Kategori edukasi diperlukan!',
             'desc.required' => 'Deskripsi edukasi diperlukan!',
-            'file.required' => 'Foto dan video edukasi diperlukan!',
+            'file.required' => 'Foto maupun video edukasi diperlukan!',
         ]);
 
         if($validator->fails()) {
@@ -125,7 +126,8 @@ class EducationController extends Controller
 	}
 
 	// handle update an employee ajax request
-	public function update(Request $request) {
+	public function update(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'title' => 'required|max:255',
             'category_education_id' => 'required',

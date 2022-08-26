@@ -102,11 +102,9 @@ class HeroController extends Controller
     {
 		$validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
-            'image' => 'required',
         ], [
             'name.required' => 'Judul edukasi diperlukan!',
             'name.max' => 'Judul edukasi maksimal 255 karakter!',
-            'image.required' => 'Foto Hero diperlukan!',
         ]);
 
         if($validator->fails()) {
@@ -124,10 +122,11 @@ class HeroController extends Controller
                 if ($emp->image) {
                     Storage::delete('hero/' . $emp->image);
                 }
+                $empData = ['name' => $request->name, 'image' => $fileName];
             } else {
                 $fileName = $request->emp_avatar;
+                $empData = ['name' => $request->name];
             }
-            $empData = ['name' => $request->name, 'image' => $fileName];
             $emp->update($empData);
             return response()->json([
                 'status' => 200,

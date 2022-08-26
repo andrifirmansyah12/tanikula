@@ -43,8 +43,8 @@ class CheckoutController extends Controller
         if($request->has('service'))
         {
             $data_origin = 149;
-            $data_destination = $request->destination_costumer;
-            // $data_destination = 149;
+            // $data_destination = $request->destination_costumer;
+            $data_destination = 149;
             $data_weight = $request->weight_product;
             $data_courier = $request->courier;
             $data_service = $request->service;
@@ -95,8 +95,8 @@ class CheckoutController extends Controller
             if($request->courier)
             {
                 $data_origin = 149;
-                $data_destination = $request->destination_costumer;
-                // $data_destination = 149;
+                // $data_destination = $request->destination_costumer;
+                $data_destination = 149;
                 $data_weight = $request->weight_product;
                 $data_courier = $request->courier;
 
@@ -124,20 +124,20 @@ class CheckoutController extends Controller
             ->join('addresses', 'orders.address_id', '=', 'addresses.id')
             ->select('orders.*', 'addresses.recipients_name as name_billing')
             ->where('orders.user_id', '=', auth()->user()->id)
-            ->where('orders.payment_status', '=', 'unpaid')
-            ->where('orders.status', '=', 'cancelled')
+            ->where('orders.status', '!=', 'cancelled')
+            ->where('orders.status', '!=', 'completed')
             ->where('orders.id', '=', $orderId)
             ->exists();
         if ($checkOrder)
         {
-            return redirect('/');
-        } else {
             $order = Order::with('address', 'user', 'orderItems')
                 ->where('id', $orderId)
                 ->where('user_id', \Auth::user()->id)
                 ->firstOrFail();
 
             return view('pages.order.index', compact('order'));
+        } else {
+            return redirect('/');
         }
     }
 
@@ -185,14 +185,14 @@ class CheckoutController extends Controller
                 'price' => $item->product->price,
             ]);
 
-            $prod = Product::where('id', $item->product_id)->first();
-            $prod->stoke = $prod->stoke - $item->product_qty;
-            if ($prod->stock_out == null) {
-                $prod->stock_out = $item->product_qty;
-            } else {
-                $prod->stock_out = $prod->stock_out + $item->product_qty;
-            }
-            $prod->update();
+            // $prod = Product::where('id', $item->product_id)->first();
+            // $prod->stoke = $prod->stoke - $item->product_qty;
+            // if ($prod->stock_out == null) {
+            //     $prod->stock_out = $item->product_qty;
+            // } else {
+            //     $prod->stock_out = $prod->stock_out + $item->product_qty;
+            // }
+            // $prod->update();
         }
 
         $this->initPaymentGateway();
@@ -226,8 +226,8 @@ class CheckoutController extends Controller
         }
 
         if ($order) {
-            $cartItem = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
-            Cart::destroy($cartItem);
+            // $cartItem = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
+            // Cart::destroy($cartItem);
 
             \Session::flash('success', 'Thank you. Your order has been received!');
             return redirect('cart/shipment/place-order/received/' . $order->id);
@@ -306,7 +306,7 @@ class CheckoutController extends Controller
             //     <a href="#" id="' . $emp->id . '" class="text-danger fw-bold deleteIcon"><i class="bi-trash h4"></i></a>
             // </div>
         } else {
-            echo '<h1 class="text-center text-secondary my-5">Tidak ada Alamat!</h1>';
+            echo '<h5 class="text-center text-secondary my-5">Tidak ada Alamat!</h5>';
         }
     }
 
@@ -317,16 +317,25 @@ class CheckoutController extends Controller
             'recipients_name' => 'required|max:255',
             'telp' => 'required',
             'address_label' => 'required',
+            'province_id' => 'required',
+            'city_id' => 'required',
+            'district_id' => 'required',
+            'village_id' => 'required',
             'postal_code' => 'required|max:5',
             'complete_address' => 'required',
-            'note_for_courier' => 'required',
+            // 'note_for_courier' => 'required',
         ], [
-            'recipients_name.required' => 'Nama Penerima diperlukan!',
-            'recipients_name.max' => 'Nama Penerima maksimal 255 karakter!',
-            'address_label.required' => 'Label Alamat diperlukan!',
-            'postal_code.required' => 'Kode Pos diperlukan!',
-            'complete_address.required' => 'Alamat Lengkap diperlukan!',
-            'note_for_courier.required' => 'Catatan untuk kurir diperlukan!',
+            'recipients_name.required' => 'Nama penerima diperlukan!',
+            'recipients_name.max' => 'Nama penerima maksimal 255 karakter!',
+            'telp.required' => 'Nomor telephone diperlukan!',
+            'address_label.required' => 'Label alamat diperlukan!',
+            'province_id.required' => 'Provinsi diperlukan!',
+            'city_id.required' => 'Kota/Kabupaten diperlukan!',
+            'district_id.required' => 'Kecamatan diperlukan!',
+            'village_id.required' => 'Kelurahan/Desa diperlukan!',
+            'postal_code.required' => 'Kode pos diperlukan!',
+            'complete_address.required' => 'Alamat lengkap diperlukan!',
+            // 'note_for_courier.required' => 'Catatan untuk kurir diperlukan!',
         ]);
 
         if ($validator->fails()) {
@@ -389,14 +398,15 @@ class CheckoutController extends Controller
             'address_label' => 'required',
             'postal_code' => 'required|max:5',
             'complete_address' => 'required',
-            'note_for_courier' => 'required',
+            // 'note_for_courier' => 'required',
         ], [
-            'recipients_name.required' => 'Nama Penerima diperlukan!',
-            'recipients_name.max' => 'Nama Penerima maksimal 255 karakter!',
-            'address_label.required' => 'Label Alamat diperlukan!',
-            'postal_code.required' => 'Kode Pos diperlukan!',
-            'complete_address.required' => 'Alamat Lengkap diperlukan!',
-            'note_for_courier.required' => 'Catatan untuk kurir diperlukan!',
+            'recipients_name.required' => 'Nama penerima diperlukan!',
+            'recipients_name.max' => 'Nama penerima maksimal 255 karakter!',
+            'telp.required' => 'Nomor telephone diperlukan!',
+            'address_label.required' => 'Label alamat diperlukan!',
+            'postal_code.required' => 'Kode pos diperlukan!',
+            'complete_address.required' => 'Alamat lengkap diperlukan!',
+            // 'note_for_courier.required' => 'Catatan untuk kurir diperlukan!',
         ]);
 
         if ($validator->fails()) {

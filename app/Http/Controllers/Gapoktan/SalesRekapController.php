@@ -59,8 +59,10 @@ class SalesRekapController extends Controller
             </thead>
             <tbody>';
             $nomor=1;
+            $total=0;
 			foreach ($orderRekap as $emp) {
                 // if ($emp->gapoktan->user->name == auth()->user()->name) {
+                $total += $emp->total_price;
                 $output .= '<tr>';
                 $output .= '<td>' . $nomor++ . '</td>';
                 $output .= '<td>
@@ -90,7 +92,23 @@ class SalesRekapController extends Controller
                     </td>
                 </tr>';
 			}
-			$output .= '</tbody></table>';
+			$output .= '</tbody><tfooter>
+            <td class="align-middle">
+            </td>
+            <td class="align-middle">
+            </td>
+            <td class="align-middle">
+            </td>
+            <td class="align-middle">
+            </td>
+            <td class="align-middle">
+                <p class="text-xs font-weight-bold m-0">Total</p>
+            </td>
+            <td class="align-middle">
+                <p class="text-xs font-weight-bold m-0">Rp.
+                    '. number_format($total, 0) .'</p>
+            </td>
+            </tfooter></table>';
 			echo $output;
 		} else {
 			echo '<h1 class="text-center text-secondary my-5">Tidak ada data Penjualan!</h1>';

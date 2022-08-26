@@ -10,11 +10,20 @@
         href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css' />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.css"
         integrity="sha256-pODNVtK3uOhL8FUNWWvFQK0QoQoV3YA9wGGng6mbZ0E=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="{{ asset('css/LineIcons.3.0.css') }}" />
     <!-- AKHIR STYLE CSS -->
     <style>
         /* STYLE CSS */
         .dt-buttons {
             display: none;
+        }
+
+        .rating-produkView div {
+            color: #f0d800;
+            font-size: 10px;
+            font-family: sans-serif;
+            font-weight: 800;
+            text-transform: uppercase;
         }
     </style>
 @endsection
@@ -102,6 +111,7 @@
                                                         $total = 0;
                                                         $totalPrice = 0;
                                                         $totalQty = 0;
+                                                        $discount = 0;
                                                         @endphp
                                                         @foreach ($order->orderItems as $orderitem)
                                                         <tr>
@@ -140,6 +150,12 @@
                                                                     class="text-secondary text-xs font-weight-bold">Rp. {{ number_format($orderitem->price, 0) }}</span>
                                                             </td>
                                                             @php
+                                                                if ($orderitem->product->discount) {
+                                                                    $discount += $orderitem->product->price_discount - $orderitem->product->price;
+                                                                    $discount = $discount * $orderitem->qty;
+                                                                } else {
+                                                                    $discount += 0;
+                                                                }
                                                                 $subTotal = $orderitem->price * $orderitem->qty;
                                                                 $total += $orderitem->price * $orderitem->qty;
                                                                 $totalQty += $orderitem->product_qty;
@@ -174,8 +190,8 @@
                                     <div class="mt-3 mt-md-0">
                                         <p class="text-muted mb-0"><span class="font-weight-bold me-4">Total</span> Rp.
                                             {{ number_format($total, 0) }}</p>
-                                        <p class="text-muted mb-0"><span class="fw-bold me-4">Ongkir</span> Rp. {{ number_format($ongkirTotal, 0) }}</p>
-                                        <p class="text-muted mb-0"><span class="font-weight-bold me-4">Discount</span> 0</p>
+                                        <p class="text-muted mb-0"><span class="font-weight-bold me-4">Ongkir</span> Rp. {{ number_format($ongkirTotal, 0) }}</p>
+                                        <p class="text-muted mb-0"><span class="font-weight-bold me-4">Diskon</span> Rp. {{ number_format($discount, 0) }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -193,6 +209,12 @@
                                             </button>
                                         </form>
                                     </div>
+                                @elseif ( $order->status == 'completed')
+                                    @if ($order->review == 'reviewed')
+                                        <button type="button" class="mt-3 shadow-none mt-md-0 btn border" style="background: #FFFACD;" data-toggle="modal" data-target="#editReviewModal">
+                                            Lihat Ulasan
+                                        </button>
+                                    @endif
                                 @endif
                             </div>
                         </div>
@@ -201,6 +223,112 @@
                 </div>
             </div>
         </section>
+    </div>
+
+    @php
+        function get_starred($str) {
+            $len = strlen($str);
+            return substr($str, 0, 1).str_repeat('*', $len - 2).substr($str, $len - 1, 1);
+        }
+    @endphp
+    {{-- Lihat Ulasan --}}
+    <div class="modal fade" id="editReviewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header border">
+                    <h5 class="modal-title" id="exampleModalLabel">Ulasan Pembeli</h5>
+                </div>
+                <div class="modal-body text-start text-black p-4">
+                    <form action="#" method="POST" id="add_employee_form" accept-charset="utf-8"
+                        enctype="multipart/form-data">
+                        @csrf
+                        <div>
+                            @foreach ($reviews as $review)
+                            <input type="hidden" name="review_id[]" value="{{ $review->id }}">
+                            <div class="d-flex align-items-center pt-3">
+                                @if ($userInfo->image)
+                                <img src="{{asset('../storage/profile/'. $userInfo->image)}}"
+                                    class="img-fluid rounded-circle" style="width: 55px; height: 55px;"
+                                    alt="{{ $userInfo->user->name }}">
+                                @else
+                                <img src="{{ asset('stisla/assets/img/example-image.jpg') }}"
+                                    class="img-fluid rounded-circle" style="width: 55px; height: 55px;"
+                                    alt="{{ $userInfo->user->name }}">
+                                @endif
+                                <div>
+                                    <p class="my-0 mx-3 text-xs font-weight-bold">
+                                        @if ($review->hide === 1)
+                                        {{ get_starred(strtok($order->user->name, ' ')) }}
+                                        @else
+                                        {{ $order->user->name }}
+                                        @endif
+                                    </p>
+                                    <div class="my-0 mx-3 rating-produkView">
+                                        <div class="star-icon">
+                                            @for ($i=1; $i<=$review->stars_rated; $i++)
+                                                <i class="lni lni-star-filled checked"></i>
+                                                @endfor
+                                                @for ($j = $review->stars_rated+1; $j <=5; $j++) <i
+                                                    class="lni lni-star"></i>
+                                                    @endfor
+                                        </div>
+                                        <div class="invalid-feedback">
+                                        </div>
+                                    </div>
+                                    <p class="my-1 mx-3 text-xs">
+                                        {{ \App\Helpers\General::datetimeFormat($review->created_at) }}</p>
+                                </div>
+                            </div>
+                            <div class="m-3">
+                                <p class="my-0 mx-3 text-xs font-weight-bold">{{ $review->review }}</p>
+                            </div>
+
+                            <div class="d-flex align-items-center py-2 rounded bg-light px-3">
+                                @if ($review->product->photo_product->count() > 0)
+                                @foreach ($review->product->photo_product->take(1) as
+                                $photos)
+                                @if ($photos->name)
+                                <img src="{{ asset('../storage/produk/'.$photos->name) }}" class="img-fluid"
+                                    style="object-fit: contain; width: 60px" alt="{{ $review->product->name }}">
+                                @else
+                                <img src="{{ asset('img/no-image.png') }}" class="img-fluid"
+                                    style="object-fit: contain; width: 60px" alt="{{ $review->product->name }}">
+                                @endif
+                                @endforeach
+                                @else
+                                <img src="{{ asset('img/no-image.png') }}" class="img-fluid"
+                                    style="object-fit: contain; width: 60px" alt="{{ $review->product->name }}">
+                                @endif
+                                <div>
+                                    <p class="my-0 mx-3 text-xs font-weight-bold text-truncate col-9">
+                                        {{ $review->product->name }}</p>
+                                </div>
+                            </div>
+                            @if ($review->reply_review)
+                                <div class="my-2">
+                                    <label for=""><i class="bi bi-arrow-return-right"></i> Balasan Ulasan</label>
+                                    <textarea class="form-control border px-3" placeholder="Balasan ulasan untuk pembeli."
+                                        name="reply_review[]" style="height: 6rem" rows="5" id="message-text">{{ $review->reply_review }}</textarea>
+                                </div>
+                            @else
+                                <div class="my-2">
+                                    <textarea class="form-control border px-3" placeholder="Balasan ulasan untuk pembeli."
+                                        name="reply_review[]" style="height: 6rem" rows="5" id="message-text"></textarea>
+                                    <div class="invalid-feedback">
+                                    </div>
+                                </div>
+                            @endif
+                            @endforeach
+                        </div>
+                        <div class="modal-footer d-flex justify-content-center border-top-0 pt-4">
+                            <button type="submit" id="add_employee_btn" style="background: #16A085; color: white" class="btn shadow-none border">
+                                Kirim Balasan
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
@@ -244,6 +372,40 @@
     });
 
     $(function() {
+        // add new employee ajax request
+        $("#add_employee_form").submit(function(e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            $("#add_employee_btn").text('Tunggu..');
+            $("#add_employee_btn").prop('disabled', true);
+            $.ajax({
+            url: '{{ route('gapoktan.replyReview') }}',
+            method: 'post',
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: 'json',
+            success: function(response) {
+                if (response.status == 400) {
+                    $("#add_employee_btn").text('Kirim Balasan');
+                    $("#add_employee_btn").prop('disabled', false);
+                } else if (response.status == 200){
+                    Swal.fire(
+                        'Berhasil!',
+                        'Berhasil membuat komentar pada ulasan pembeli!',
+                        'success'
+                    )
+                    $("#reviewModal").modal('hide');
+                    $("#add_employee_form")[0].reset();
+                    $("#add_employee_btn").text('Kirim Balasan');
+                    $("#add_employee_btn").prop('disabled', false);
+                    window.setTimeout(function(){location.reload()},1000)
+                }
+            }
+            });
+        });
+
         // update employee ajax request
         $("#edit_employee_form").submit(function (e) {
             e.preventDefault();

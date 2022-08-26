@@ -7,6 +7,7 @@
 <script src="{{ asset('js/tiny-slider.js') }}"></script>
 <script src="{{ asset('js/glightbox.min.js') }}"></script>
 <script src="{{ asset('js/main.js') }}"></script>
+<script src="{{ asset('js/function.js') }}"></script>
 {{-- <script src="{{ asset('js/market.js') }}"></script> --}}
 @yield('script')
 <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
@@ -223,6 +224,7 @@
             }
         });
 
+        $("#addToCartBtn").prop('disabled', true);
         $.ajax({
             method: "POST",
             url: "/add-to-cart",
@@ -234,12 +236,25 @@
                 if (response.status == 'Silahkan login!') {
                     window.location = '/login';
                 } else {
-                    iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
-                        title: 'Berhasil',
-                        message: response.status,
-                        position: 'topRight'
-                    });
-                    window.setTimeout(function(){location.reload()},1000)
+                    if (response.status == 'Kuantiti tidak boleh melebihi stok')
+                    {
+                        $("#addToCartBtn").prop('disabled', false);
+                        iziToast.warning({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                            title: 'Gagal',
+                            message: response.status,
+                            position: 'topRight'
+                        });
+                    }
+                        else
+                    {
+                        $("#addToCartBtn").prop('disabled', false);
+                        iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                            title: 'Berhasil',
+                            message: response.status,
+                            position: 'topRight'
+                        });
+                        window.setTimeout(function(){location.reload()},1000)
+                    }
                 }
             }
         });
@@ -256,6 +271,7 @@
             }
         });
 
+        $("#addToWishlistBtn").prop('disabled', true);
         $.ajax({
             method: "POST",
             url: "/add-to-wishlist",
@@ -267,6 +283,7 @@
                     window.location = '/login';
                 } else {
                     // window.location.reload();
+                    $("#addToWishlistBtn").prop('disabled', false);
                     iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
                         title: 'Berhasil',
                         message: response.status,
@@ -301,7 +318,7 @@
                     message: response.status,
                     position: 'topRight'
                 });
-                window.setTimeout(function(){location.reload()},3000)
+                window.setTimeout(function(){location.reload()},1000)
             }
         });
     });

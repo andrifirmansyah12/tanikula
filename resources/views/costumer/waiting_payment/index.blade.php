@@ -43,6 +43,18 @@
             padding-top: 0px;
         }
     }
+
+    div.dataTables_filter > label > input[type="search"] {
+        font-family: Arial, sans-serif;
+        border: 2px solid #16A085;
+        border-radius: 10px;
+    }
+
+    div.dataTables_length > label > select[name="tableWaitingPayment_length"] {
+        font-family: Arial, sans-serif;
+        border: 2px solid #16A085;
+        border-radius: 10px;
+    }
     </style>
 @endsection
 
@@ -56,8 +68,8 @@
                         <h6 class="text-white text-capitalize ps-3">@yield('title')</h6>
                     </div>
                 </div>
-                <div class="card-body px-0 pb-2">
-                    <div class="table-responsive p-0" id="show_all_employees">
+                <div class="card-body m-3 rounded border">
+                    <div class="table-responsive" id="show_all_employees">
                         {{-- Table --}}
                         <div id="app">
                             <section class="section">
@@ -122,6 +134,15 @@
             method: 'get',
             success: function(response) {
                 $("#show_all_employees").html(response);
+                $("#tableWaitingPayment").DataTable({
+                    order: [0, 'desc'],
+                    "oLanguage": {
+                        "oPaginate": {
+                            "sNext": '<i class="fa fa-chevron-right" ></i>',
+                            "sPrevious": '<i class="fa fa-chevron-left" ></i>'
+                        }
+                    }
+                });
             }
             });
         }

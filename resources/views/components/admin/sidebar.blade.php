@@ -3,7 +3,14 @@
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-            <img src="{{ asset('plus-admin/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
+            @php
+                $admin = App\Models\Admin::where('user_id', auth()->user()->id)->first();
+            @endphp
+            @if ($admin->image)
+                <img src="../storage/profile/{{ $admin->image }}" class="border-white border img-circle elevation-2" alt="User Image">
+            @else
+                <img src="{{ asset('assets/img/avatar/avatar-1.png') }}" class="img-circle elevation-2" alt="User Image">
+            @endif
         </div>
         <div class="info">
             <a href="#" onclick="admin_dashboard('{{ url('admin') }}')" class="d-block">{{ auth()->user()->name }}</a>

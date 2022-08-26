@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Farmer;
 use App\Models\Field;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 
@@ -144,20 +145,33 @@ class PlantController extends Controller
     // handle update an employee ajax request
     public function update(Request $request)
     {
-        $plant = Field::find($request->emp_id);
-        $plant->status = 'tandur';
-        $plant->save();
-
-        $planting = FieldRecapPlanting::where('field_id', $request->emp_id)->create([
-            'field_id' => $request->field_id,
-            'farmer_id' => $request->farmer_id,
-            'date_planting' => Carbon::createFromFormat('d-M-Y', $request->date_planting)->format('Y-m-d h:i:s'),
-            'status' => 'melakukan tandur',
+        $validator = Validator::make($request->all(), [
+            'date_planting' => 'required',
+        ], [
+            'date_planting.required' => 'Tanggal tandur diperlukan!',
         ]);
 
-        return response()->json([
-            'status' => 200,
-        ]);
+        if($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'messages' => $validator->getMessageBag()
+            ]);
+        } else {
+            $plant = Field::find($request->emp_id);
+            $plant->status = 'tandur';
+            $plant->save();
+
+            $planting = FieldRecapPlanting::where('field_id', $request->emp_id)->create([
+                'field_id' => $request->field_id,
+                'farmer_id' => $request->farmer_id,
+                'date_planting' => Carbon::createFromFormat('d-M-Y', $request->date_planting)->format('Y-m-d h:i:s'),
+                'status' => 'melakukan tandur',
+            ]);
+
+            return response()->json([
+                'status' => 200,
+            ]);
+        }
     }
 
     // handle delete an employee ajax request

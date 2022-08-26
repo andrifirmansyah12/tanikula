@@ -59,22 +59,26 @@
                 <form action="#" method="POST" id="add_employee_form" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body p-4">
-                        <div class="row">
+                        <div class="row my-2">
                             <div class="col-lg">
                                 <label for="name">Nama Lahan</label>
-                                <input type="text" name="name" class="nameCheck form-control" placeholder="Nama" required>
+                                <input type="text" id="add_name" name="name" class="nameCheck form-control" placeholder="Nama" required>
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row my-2">
                             <div class="col-lg">
                                 <label for="name">Keterangan Lahan</label>
-                                <input type="text" name="details" class="form-control nameCheck" placeholder="Keterangan" required>
+                                <input type="text" id="add_details" name="details" class="form-control nameCheck" placeholder="Keterangan" required>
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
-                        <button type="submit" id="add_employee_btn" class="btn btn-primary">Simpan</button>
+                        <button type="button" class="btn shadow-none border" style="background: #FFFACD;" data-dismiss="modal">Kembali</button>
+                        <button type="submit" id="add_employee_btn" style="background: #16A085; color: white" class="btn shadow-none border">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -95,22 +99,26 @@
                     @csrf
                     <input type="hidden" name="emp_id" id="emp_id">
                     <div class="modal-body p-4">
-                        <div class="row">
+                        <div class="row my-2">
                             <div class="col-lg">
                                 <label for="name">Nama Lahan</label>
                                 <input type="text" name="name" id="name" class="form-control nameCheck" placeholder="Nama" required>
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row my-2">
                             <div class="col-lg">
                                 <label for="name">Keterangan Lahan</label>
                                 <input type="text" name="details" id="details" class="form-control nameCheck" placeholder="Keterangan" required>
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
-                        <button type="submit" id="edit_employee_btn" class="btn btn-primary">Simpan</button>
+                        <button type="button" class="btn shadow-none border" style="background: #FFFACD;" data-dismiss="modal">Kembali</button>
+                        <button type="submit" id="edit_employee_btn" style="background: #16A085; color: white" class="btn shadow-none border">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -166,18 +174,23 @@
                 processData: false,
                 dataType: 'json',
                 success: function(response) {
-                    if (response.status == 200) {
-                    Swal.fire(
-                        'Menambahkan!',
-                        'Kategori Lahan Berhasil Ditambahkan!',
-                        'success'
-                    )
-                    fetchAllEmployees();
+                    if (response.status == 400) {
+                        showError('add_name', response.messages.name);
+                        showError('add_details', response.messages.details);
+                        $("#add_employee_btn").text('Simpan');
+                        $("#add_employee_btn").prop('disabled', false);
+                    } else if (response.status == 200) {
+                        Swal.fire(
+                            'Menambahkan!',
+                            'Kategori Lahan Berhasil Ditambahkan!',
+                            'success'
+                        )
+                        fetchAllEmployees();
+                        $("#add_employee_btn").text('Simpan');
+                        $("#add_employee_btn").prop('disabled', false);
+                        $("#add_employee_form")[0].reset();
+                        $("#addEmployeeModal").modal('hide');
                     }
-                    $("#add_employee_btn").text('Simpan');
-                    $("#add_employee_btn").prop('disabled', false);
-                    $("#add_employee_form")[0].reset();
-                    $("#addEmployeeModal").modal('hide');
                 }
                 });
             });
@@ -216,18 +229,23 @@
                 processData: false,
                 dataType: 'json',
                 success: function(response) {
-                    if (response.status == 200) {
-                    Swal.fire(
-                        'Memperbarui!',
-                        'Kategori Lahan Berhasil Diperbarui!',
-                        'success'
-                    )
-                    fetchAllEmployees();
+                    if (response.status == 400) {
+                        showError('name', response.messages.name);
+                        showError('details', response.messages.details);
+                        $("#edit_employee_btn").text('Simpan');
+                        $("#edit_employee_btn").prop('disabled', false);
+                    } else if (response.status == 200) {
+                        Swal.fire(
+                            'Memperbarui!',
+                            'Kategori Lahan Berhasil Diperbarui!',
+                            'success'
+                        )
+                        fetchAllEmployees();
+                        $("#edit_employee_btn").text('Simpan');
+                        $("#edit_employee_btn").prop('disabled', false);
+                        $("#edit_employee_form")[0].reset();
+                        $("#editEmployeeModal").modal('hide');
                     }
-                    $("#edit_employee_btn").text('Simpan');
-                    $("#edit_employee_btn").prop('disabled', false);
-                    $("#edit_employee_form")[0].reset();
-                    $("#editEmployeeModal").modal('hide');
                 }
                 });
             });

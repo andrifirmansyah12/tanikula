@@ -25,12 +25,16 @@ class LoginController extends Controller
         return view('admin.login.index');
     }
 
-    public function loginAdmin(Request $request) {
+    public function loginAdmin(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email|max:100',
             'password' => 'required|min:6|max:50',
         ], [
             'email.required' => 'Email diperlukan!',
+            'email.max' => 'Email maksimal 100 karakter!',
+            'password.min' => 'Kata sandi harus minimal 6 karakter!',
+            'password.max' => 'Kata sandi maksimal 50 karakter!',
             'password.required' => 'Kata sandi diperlukan!',
         ]);
 
@@ -163,7 +167,8 @@ class LoginController extends Controller
         ]);
     }
 
-    public function resetPassword(Request $request) {
+    public function resetPassword(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'npass' => 'required|min:6|max:50',
             'cnpass' => 'required|min:6|max:50|same:npass',

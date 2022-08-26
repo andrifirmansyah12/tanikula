@@ -51,6 +51,11 @@ class Order extends Model
         return $this->hasMany(Review::class);
     }
 
+    public function payment()
+    {
+        return $this->hasMany(Payment::class);
+    }
+
     public function isPaid()
 	{
 		return $this->payment_status == self::PAID;

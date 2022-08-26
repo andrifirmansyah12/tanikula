@@ -73,10 +73,10 @@ class LoginController extends Controller
         }
     }
 
-    public function registerGapoktan(Request $request) {
+    public function registerGapoktan(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:users|max:50',
-            // 'chairman' => 'required|max:255',
             'email' => 'required|email|unique:users|max:100',
             'password' => 'required|min:6|max:50',
             'cpassword' => 'required|min:6|same:password',
@@ -86,8 +86,6 @@ class LoginController extends Controller
             'name.required' => 'Nama diperlukan!',
             'name.max' => 'Nama maksimal 50 karakter!',
             'name.unique' => 'Nama Gapoktan yang anda masukkan sudah ada!',
-            // 'chairman.required' => 'Nama Ketua diperlukan!',
-            // 'chairman.max' => 'Nama Ketua maksimal 255 karakter!',
             'email.required' => 'Email diperlukan!',
             'email.unique' => 'Email yang anda masukkan sudah ada!',
             'password.required' => 'Kata sandi diperlukan!',
@@ -96,7 +94,7 @@ class LoginController extends Controller
             'cpassword.required' => 'Konfirmasi kata sandi diperlukan!',
             'cpassword.min' => 'Kata sandi harus minimal 6 karakter!',
             'cpassword.max' => 'Kata sandi maksimal 50 karakter!',
-            'images.required' => 'Foto sertifikat diperlukan!',
+            'images.required' => 'Unggahan bukti gapoktan diperlukan!',
         ]);
 
         if($validator->fails()) {

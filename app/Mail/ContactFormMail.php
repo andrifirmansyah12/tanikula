@@ -29,7 +29,7 @@ class ContactFormMail extends Mailable
      */
     public function build()
     {
-        return $this->from($this->contacts['email'])
+        return $this->to($this->contacts['email'])
                 ->markdown('pages.contact.contactUsEmail')
                 ->attachFromStorage($this->contacts['screenshot'])
                 ->with([
