@@ -26,7 +26,7 @@
     <!-- CSS Files -->
     <link id="pagestyle" href="{{asset('../costumer/assets/css/material-dashboard.css?v=3.0.')}}" rel="stylesheet" />
 
-    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
+    {{-- <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-messaging.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
@@ -42,5 +42,5 @@
         };
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
-    </script>
+    </script> --}}
 </head>

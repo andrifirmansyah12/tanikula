@@ -50,7 +50,7 @@
 {{$message}}
 
 ## Informasi Lainnya:
-Anda dapat menghubungi saya melalui email atau telepon : {{$email}} or {{$phone_number}}<br/>.
+Anda dapat menghubungi saya melalui email atau telepon : {{$email}} or {{$phone_number}}.<br/>
 
 Salam Hormat,<br>
 {{$fullname}}

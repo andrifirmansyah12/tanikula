@@ -226,8 +226,8 @@ class CheckoutController extends Controller
         }
 
         if ($order) {
-            $cartItem = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
-            Cart::destroy($cartItem);
+            // $cartItem = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
+            // Cart::destroy($cartItem);
             $this->_sendEmailOrderReceived($order);
 
             \Session::flash('success', 'Thank you. Your order has been received!');

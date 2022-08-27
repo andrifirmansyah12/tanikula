@@ -42,7 +42,7 @@ class OrderReceived extends Mailable
 	 */
 	public function build()
 	{
-		return $this->markdown('costumer.emails.received');
+		return $this->subject('Pesanan Dibuat')->markdown('costumer.emails.received');
 	}
 }
 

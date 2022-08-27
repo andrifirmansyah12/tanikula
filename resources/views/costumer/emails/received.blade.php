@@ -1,5 +1,5 @@
 @component('mail::message')
-# Terima Kasih, pesanan anda sedang diproses!
+# Terima kasih. Pesanan Anda telah dibuat, silahkan melanjutkan untuk pembayaran!
 
 Pesanan Anda ditangguhkan hingga kami mengonfirmasi pembayaran telah diterima. Detail pesanan Anda ditunjukkan di bawah ini untuk referensi Anda:
 

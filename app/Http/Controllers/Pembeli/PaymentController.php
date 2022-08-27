@@ -116,6 +116,7 @@ class PaymentController extends Controller
             }
             $prod->update();
         }
+        Cart::destroy($cartItem);
 
 		$message = 'Payment status is : '. $paymentStatus;
 
