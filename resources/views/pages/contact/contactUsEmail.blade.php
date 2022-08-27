@@ -1,4 +1,4 @@
-@extends('components.auth.template')
+{{-- @extends('components.auth.template')
 @section('title', 'Hubungi Kami')
 
 @section('style')
@@ -42,4 +42,16 @@
 
 
 </script>
-@endsection
+@endsection --}}
+
+@component('mail::message')
+# {{$subject}}!
+
+{{$message}}
+
+## Informasi Lainnya:
+Anda dapat menghubungi saya melalui email atau telepon : {{$email}} or {{$phone_number}}<br/>.
+
+Salam Hormat,<br>
+{{$fullname}}
+@endcomponent

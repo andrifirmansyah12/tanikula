@@ -1,4 +1,4 @@
-@extends('components.auth.template')
+{{-- @extends('components.auth.template')
 @section('title', 'TaniKula | Password Reset')
 
 @section('style')
@@ -44,4 +44,17 @@
 
 
 </script>
-@endsection
+@endsection --}}
+
+@component('mail::message')
+# Reset password Anda!
+
+Klik tautan di bawah ini untuk mengatur ulang kata sandi Anda:
+
+@component('mail::button', ['url' => url($details['body'])])
+Reset Password
+@endcomponent
+
+Terima kasih,<br>
+{{ config('app.name') }}
+@endcomponent

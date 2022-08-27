@@ -71,4 +71,19 @@
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
     </script>
+    @if (Request::is('cart/shipment*'))
+        <script language='javascript' type='text/javascript'>
+            window.history.pushState(null, null, window.location.href);
+            window.onpopstate = function () {
+                window.location = '{{ route('home') }}';
+            };
+            // function DisableBackButton() {
+            //     window.history.forward()
+            // }
+            // DisableBackButton();
+            // window.onload = DisableBackButton;
+            // window.onpageshow = function(evt) { if (evt.persisted) DisableBackButton() }
+            // window.onunload = function() { void (0) }
+        </script>
+    @endif
 </head>

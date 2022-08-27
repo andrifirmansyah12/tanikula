@@ -72,7 +72,8 @@
     <div class="container">
         <div class="bg-white">
             <h2 class="mb-3 fs-3 mb-md-4">Checkout</h2>
-            <form action="{{ url('cart/shipment/place-order') }}" method="POST">
+            <form action="#" method="POST" id="create_orders" accept-charset="utf-8"
+                    enctype="multipart/form-data">
             @csrf
                 <div class="row">
                     <div class="col-12 col-xl-8 mb-3 mb-xl-0 mb-5 mb-md-0">
@@ -315,21 +316,21 @@
                                     @endif
                                 @endif
                                 @if (!$result_cost)
-                                    <button disabled class="btn border col-12" style="background: #16A085; color: white;" data-bs-toggle="modal" data-bs-target="#PilihPembayaran">
+                                    <button disabled class="btn border col-12" style="background: #16A085; color: white;">
                                         Buat Pesanan
                                     </button>
                                 @else
                                     @if ($address->count() < 1 )
-                                        <button disabled class="btn border col-12" style="background: #16A085; color: white;" data-bs-toggle="modal" data-bs-target="#PilihPembayaran">
+                                        <button disabled class="btn border col-12" style="background: #16A085; color: white;">
                                             Buat Pesanan
                                         </button>
                                     @else
                                         @if ($cartItem->count() > 0)
-                                            <button type="submit" class="btn border col-12" style="background: #16A085; color: white;" data-bs-toggle="modal" data-bs-target="#PilihPembayaran">
+                                            <button id="create_orders_btn" type="submit" class="btn border col-12" style="background: #16A085; color: white;">
                                                 Buat Pesanan
                                             </button>
                                         @else
-                                            <button disabled class="btn border col-12" style="background: #16A085; color: white;" data-bs-toggle="modal" data-bs-target="#PilihPembayaran">
+                                            <button disabled class="btn border col-12" style="background: #16A085; color: white;">
                                                 Buat Pesanan
                                             </button>
                                         @endif
@@ -344,7 +345,7 @@
     </div>
 </section>
 
-<!-- Modal Pilih Alamat -->
+<!-- Modal Pilih Kurir -->
 <div class="modal fade" id="PilihCourier" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
@@ -748,6 +749,36 @@
     });
 
     $(function() {
+
+        // add new employee ajax request
+            $("#create_orders").submit(function(e) {
+                e.preventDefault();
+                var formData = new FormData(this);
+                $("#create_orders_btn").text('Silahkan Tunggu..');
+                $("#create_orders_btn").prop('disabled', true);
+                var id = $("input[name=passingIdProduct]").val();
+                $.ajax({
+                url: '{{ route('place-order-costumer') }}',
+                method: 'post',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status == 401) {
+                        window.location = '{{ route('cart.shipment.pembeli') }}';
+                        $("#create_orders_btn").text('Buat Pesanan');
+                        $("#create_orders_btn").prop('disabled', false);
+                    } else if (response.status == 200){
+                        window.location = '/cart/shipment/place-order/received/' + response.id;
+                        $("#create_orders")[0].reset();
+                        $("#create_orders_btn").text('Buat Pesanan');
+                        $("#create_orders_btn").prop('disabled', false);
+                    }
+                }
+                });
+            });
 
         // add new employee ajax request
             $("#add_employee_form").submit(function(e) {

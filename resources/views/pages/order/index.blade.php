@@ -64,7 +64,7 @@
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-lg-10 col-xl-12">
                 <div class="card shadow rounded">
-                    <div class="d-flex flex-row justify-content-between align-items-center card-header px-4 py-5" style="background: #16A085;">
+                    <div class="d-md-flex flex-row justify-content-between align-items-center card-header px-4 py-5" style="background: #16A085;">
                         @if (!$order->isPaid())
                         <div>
                             <h5 class="mb-0 text-white">Pesanan Anda telah dibuat.</h5>
@@ -109,7 +109,7 @@
                             }
                         </script>
                         @if (!$order->isPaid())
-                        <div>
+                        <div class="mt-md-0 mt-3">
                             <h6 class="mb-0 text-white" id="countdown"></h6>
                         </div>
                         @endif
@@ -186,7 +186,7 @@
                                             </thead>
                                             @php
                                             $total = 0;
-                                            $totalPrice = 0;
+                                            $ongkirTotal = 0;
                                             $totalQty = 0;
                                             $discount = 0;
                                             @endphp
