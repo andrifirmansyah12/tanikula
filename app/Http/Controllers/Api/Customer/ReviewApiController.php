@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Api\Customer;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\BaseApiController as BaseController;
+use App\Models\Order;
 use App\Models\Review;
+use Carbon\Carbon;
 
 class ReviewApiController extends BaseController
 {
@@ -54,5 +57,53 @@ class ReviewApiController extends BaseController
         // $orders->update();
 
         // return $this->sendResponse($units, 'Data fetched');
+    }
+
+    // handle insert a new employee ajax request
+    public function addReview(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'stars_rated' => 'required',
+            'review' => 'required',
+        ], [
+            'stars_rated.required' => 'Rating produk diperlukan!',
+            'review.required' => 'Catatan review produk diperlukan!',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'messages' => $validator->getMessageBag()
+            ]);
+        } else {
+            $product_id =  $request->input('product_id', []);
+            $order_id =  $request->input('order_id', []);
+            $stars_rated =  $request->input('stars_rated', []);
+            $review =  $request->input('review', []);
+            $hide =  $request->input('hide') ? 1 : 0;
+            $units = [];
+            foreach ($stars_rated as $index => $unit) {
+                $units[] = [
+                    "product_id" => $product_id[$index],
+                    "user_id" => auth()->user()->id,
+                    "order_id" => $order_id[$index],
+                    "stars_rated" => $stars_rated[$index],
+                    "review" => $review[$index],
+                    "hide" => $hide,
+                    "created_at" => Carbon::now(),
+                    "updated_at" => Carbon::now(),
+                ];
+            }
+
+            Review::insert($units);
+
+            $orders = Order::where('id', $request->input('rev_order_id'))->first();
+            $orders->review = Order::REVIEWED;
+            $orders->update();
+
+            return response()->json([
+                'status' => 200,
+            ]);
+        }
     }
 }

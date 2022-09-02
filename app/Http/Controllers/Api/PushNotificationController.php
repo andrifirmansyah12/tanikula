@@ -56,13 +56,14 @@ class PushNotificationController extends BaseController
         $response = Http::withHeaders($headers)->post($url, [
             // "to" => "cWmdLu_QQqa6CR28k2aDtJ:APA91bHs2-K9fkZ7rOIUOvrq2bEtlxNpTUoZSn7-TpOcNpfmbwFRfhY1NPBCjYv53uCHJLfFPmsmG84pSWXmG2ezDVkv-opbrM-AaQ42j_UKso-qAqGWlMoJv0AhffI2NAaKTv9DIe0v",
             // 'to' => '/topics/all',
-            'to' => '/topics/topic_user_id_5',
+            // 'to' => '/topics/topic_user_id_5',
+            'to' => '/topics/petani',
             "notification" => [
                 "title" => "Pembayaran Berhasil",
                 "body" => "Rich Notification testing (body)",
                 "mutable_content" => true,
                 "sound" => "Tri-tone",
-                "imageUrl" => "http://192.168.43.123:8000/img/no-image.png"
+                "imageUrl" => "https://asset-a.grid.id//crop/0x0:0x0/360x240/photo/2021/07/13/gambar-ilustrasi-bisa-memperjela-20210713123218.jpg"
             ]
         ]);
 

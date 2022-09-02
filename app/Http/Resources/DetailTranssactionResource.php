@@ -67,6 +67,7 @@ class DetailTranssactionResource extends JsonResource
             "cancelled_by" => $this->cancelled_by,
             "cancelled_at" => $this->cancelled_at,
             "cancellation_note" => $this->cancellation_note,
+            "review" => $this->review,
             "created_at" => $this->created_at,
             "updated_at" => $this->updated_at,
             "name_billing" => $this->name_billing,

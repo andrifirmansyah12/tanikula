@@ -1,4 +1,4 @@
-<!-- Header -->
+    <!-- Header -->
 @include('components.costumer.header')
 
 <body class="g-sidenav-show bg-gray-100">
