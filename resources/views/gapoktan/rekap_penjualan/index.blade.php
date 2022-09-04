@@ -129,10 +129,13 @@
                     order: [0, 'asc'],
                     dom: "Blfrtip",
                     "bLengthChange": false,
+                    fixedHeader: true,
                     buttons: [
                         {
                             text: 'Csv',
                             extend: 'csvHtml5',
+                            footer: true,
+                            title: 'Laporan Penjualan',
                             exportOptions: {
                                 columns: ':visible:not(.not-export-col)'
                             }
@@ -140,6 +143,8 @@
                         {
                             text: 'Excel',
                             extend: 'excelHtml5',
+                            footer: true,
+                            title: 'Laporan Penjualan',
                             exportOptions: {
                                 columns: ':visible:not(.not-export-col)'
                             }
@@ -147,16 +152,21 @@
                         {
                             text: 'Pdf',
                             extend: 'pdfHtml5',
+                            footer: true,
+                            title: 'Laporan Penjualan',
+                            // download: 'open',
                             exportOptions: {
                                 columns: ':visible:not(.not-export-col)'
-                            }
+                            },
                         },
                         {
                             text: 'Print',
                             extend: 'print',
+                            footer: true,
+                            title: 'Laporan Penjualan',
                             exportOptions: {
                                 columns: ':visible:not(.not-export-col)'
-                            }
+                            },
                         },
                     ],
                     columnDefs: [{

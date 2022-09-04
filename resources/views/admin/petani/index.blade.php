@@ -50,29 +50,39 @@
                     <div class="modal-body p-4">
                         <div class="form-group my-2">
                             <label for="name">Pilih Gapoktan</label>
-                            <select class="form-control select2 text-capitalize" name="gapoktan_id" required>
+                            <select class="form-control select2 text-capitalize" id="add_gapoktan_id" name="gapoktan_id">
                                 <option selected disabled>Pilih Gapoktan</option>
                                 @foreach ($gapoktans as $item)
                                     <option value="{{ $item->id }}">{{ $item->user->name }}</option>
                                 @endforeach
                             </select>
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="form-group my-2">
                             <label for="name">Pilih Poktan</label>
-                            <select class="form-control select2 text-capitalize" name="poktan_id" required>
+                            <select class="form-control select2 text-capitalize" id="add_poktan_id" name="poktan_id">
                             </select>
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="form-group my-2">
                             <label for="name">Nama Petani</label>
-                            <input type="text" name="name" class="form-control" placeholder="Nama Petani" required>
+                            <input type="text" id="add_name" name="name" class="form-control" placeholder="Nama Petani">
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="my-2 form-group">
                             <label for="email">Email</label>
-                            <input type="email" name="email" class="form-control" placeholder="Email" required>
+                            <input type="email" id="add_email" name="email" class="form-control" placeholder="Email">
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="my-2 form-group">
                             <label for="password">Password</label>
-                            <input type="password" name="password" class="form-control" placeholder="Password" required>
+                            <input type="password" id="add_password" name="password" class="form-control" placeholder="Password">
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="my-2 form-group">
                             <label for="is_active">Status Akun</label>
@@ -81,6 +91,8 @@
                                     <input type="checkbox" name="is_active" class="custom-switch-input">
                                     <span class="custom-switch-indicator"></span>
                                 </label>
+                            </div>
+                            <div class="invalid-feedback">
                             </div>
                         </div>
                     </div>
@@ -114,34 +126,46 @@
                                 <br>1. Jika tidak ingin ubah Gapoktan dan Poktan biarkan kosong,
                                 <br>2. Dan jika ingin ubah Gapoktan dan Poktan, silahkan pilih Gapoktan kemudian Poktan.
                             </small>
-                            <select class="form-control select2 text-capitalize" name="edit_gapoktan_id" required>
+                            <select class="form-control select2 text-capitalize" name="edit_gapoktan_id">
                                 <option selected disabled>Ubah Gapoktan</option>
                                 @foreach ($gapoktans as $item)
                                     <option value="{{ $item->id }}">{{ $item->user->name }}</option>
                                 @endforeach
                             </select>
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="form-group mb-5">
                             <label for="name">Ubah Poktan</label>
-                            <select class="form-control select2" name="edit_poktan_id" required>
+                            <select class="form-control select2" name="edit_poktan_id">
                             </select>
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="form-group my-2">
                             <label for="name">Nama Poktan</label>
-                            <input disabled type="text" id="poktan_id" class="form-control text-capitalize" placeholder="Nama Poktan" required>
+                            <input disabled type="text" id="poktan_id" class="form-control text-capitalize" placeholder="Nama Poktan">
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="form-group my-2">
                             <label for="name">Nama Petani</label>
-                            <input type="text" name="name" id="name" class="form-control" placeholder="Nama Petani" required>
+                            <input type="text" name="name" id="name" class="form-control" placeholder="Nama Petani">
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="my-2 form-group">
                             <label for="email">Email</label>
-                            <input type="email" name="email" id="email" class="form-control" placeholder="Email" required>
+                            <input type="email" name="email" id="email" class="form-control" placeholder="Email">
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="my-2 form-group">
                             <label for="password">Password</label>
                             <div id="password_edit">
 
+                            </div>
+                            <div class="invalid-feedback">
                             </div>
                         </div>
                         <div class="my-2 form-group">
@@ -251,7 +275,15 @@
                 processData: false,
                 dataType: 'json',
                 success: function(response) {
-                    if (response.status == 200) {
+                    if (response.status == 400) {
+                        showError('add_name', response.messages.name);
+                        showError('add_gapoktan_id', response.messages.gapoktan_id);
+                        showError('add_poktan_id', response.messages.poktan_id);
+                        showError('add_email', response.messages.email);
+                        showError('add_password', response.messages.password);
+                        $("#add_employee_btn").text('Simpan');
+                        $("#add_employee_btn").prop('disabled', false);
+                    } else if (response.status == 200) {
                     Swal.fire(
                         'Menambahkan!',
                         'Petani Berhasil Ditambahkan!',
@@ -315,7 +347,12 @@
                 processData: false,
                 dataType: 'json',
                 success: function(response) {
-                    if (response.status == 200) {
+                    if (response.status == 400) {
+                        showError('name', response.messages.name);
+                        showError('email', response.messages.email);
+                        $("#edit_employee_btn").text('Simpan');
+                        $("#edit_employee_btn").prop('disabled', false);
+                    } else if (response.status == 200) {
                     Swal.fire(
                         'Memperbarui!',
                         'Petani Berhasil Diperbarui!',

@@ -12,7 +12,9 @@ use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
 
 class GapoktanController extends Controller
 {
@@ -77,6 +79,8 @@ class GapoktanController extends Controller
                         $output .= '<td><span class="badge badge-danger">Belum diverifikasi</span></td>';
                     }
                     $output .= '<td>
+                    <a href="#" id="' . $emp->id . '" class="text-success mx-1 addPhotoProductIcon" data-toggle="modal" data-target="#addPhotoProduct"><i class="bi bi-images h4"></i></a>
+                    <a href="#" id="' . $emp->id . '" class="text-success mx-1 viewPhotoProductIcon" data-toggle="modal" data-target="#viewPhotoProduct"><i class="bi bi-eye h4"></i></a>
                     <a href="#" id="' . $emp->id . '" class="text-success mx-1 editIcon" data-toggle="modal" data-target="#editEmployeeModal"><i class="bi-pencil-square h4"></i></a>
                     <a href="#" id="' . $emp->user->id . '" class="text-danger mx-1 deleteIcon"><i class="bi-trash h4"></i></a>
                     </td>
@@ -96,46 +100,71 @@ class GapoktanController extends Controller
     // handle insert a new employee ajax request
 	public function store(Request $request)
     {
-		$user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->assignRole('gapoktan');
-        $user->save();
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|unique:users|max:50',
+            'email' => 'required|email|unique:users|max:100',
+            'chairman' => 'required',
+            'password' => 'required',
+        ], [
+            'name.required' => 'Nama Gapoktan diperlukan!',
+            'name.max' => 'Nama Gapoktan maksimal 50 karakter!',
+            'name.unique' => 'Nama Gapoktan yang anda masukkan sudah ada!',
+            'email.required' => 'Email diperlukan!',
+            'email.unique' => 'Email yang anda masukkan sudah ada!',
+            'email.max' => 'Email maksimal 100 karakter!',
+            'password.required' => 'Kata sandi diperlukan!',
+            'password.min' => 'Kata sandi harus minimal 6 karakter!',
+            'password.max' => 'Kata sandi maksimal 50 karakter!',
+            'chairman.required' => 'Nama ketua Gapoktan diperlukan!',
+        ]);
 
-        $gapoktan = new Gapoktan();
-        $gapoktan->user_id = $user->id;
-        $gapoktan->chairman = $request->chairman;
-        $gapoktan->is_verified = 1;
-        $gapoktan->save();
+        if($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'messages' => $validator->getMessageBag()
+            ]);
+        } else {
+            $user = new User();
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = Hash::make($request->password);
+            $user->assignRole('gapoktan');
+            $user->save();
 
-        $userGapoktans = new UserGapoktan();
-        $userGapoktans->user_id = $user->id;
-        $userGapoktans->gapoktan_id = $gapoktan->id;
-        $userGapoktans->is_active = 1;
-        $userGapoktans->save();
+            $gapoktan = new Gapoktan();
+            $gapoktan->user_id = $user->id;
+            $gapoktan->chairman = $request->chairman;
+            $gapoktan->is_verified = 1;
+            $gapoktan->save();
 
-        for ($x = 0; $x < $request->TotalImages; $x++)
-        {
-            if ($request->file('images'.$x))
+            $userGapoktans = new UserGapoktan();
+            $userGapoktans->user_id = $user->id;
+            $userGapoktans->gapoktan_id = $gapoktan->id;
+            $userGapoktans->is_active = 1;
+            $userGapoktans->save();
+
+            for ($x = 0; $x < $request->TotalImages; $x++)
             {
-                $file = $request->file('images'.$x);
-                $fileName = $file->getClientOriginalName() . '.' . $file->getClientOriginalExtension();
-                if ($fileName) {
-                    $file->storeAs('sertifikat', $fileName);
-                    $insert[$x]['gapoktan_id'] = $gapoktan->id;
-                    $insert[$x]['evidence'] = $fileName;
-                    $insert[$x]['created_at'] = Carbon::now();
-                    $insert[$x]['updated_at'] = Carbon::now();
+                if ($request->file('images'.$x))
+                {
+                    $file = $request->file('images'.$x);
+                    $fileName = $file->getClientOriginalName() . '.' . $file->getClientOriginalExtension();
+                    if ($fileName) {
+                        $file->storeAs('sertifikat', $fileName);
+                        $insert[$x]['gapoktan_id'] = $gapoktan->id;
+                        $insert[$x]['evidence'] = $fileName;
+                        $insert[$x]['created_at'] = Carbon::now();
+                        $insert[$x]['updated_at'] = Carbon::now();
+                    }
                 }
             }
+
+            CertificateGapoktan::insert($insert);
+
+            return response()->json([
+                'status' => 200,
+            ]);
         }
-
-        CertificateGapoktan::insert($insert);
-
-		return response()->json([
-			'status' => 200,
-		]);
 	}
 
     // handle edit an employee ajax request
@@ -148,42 +177,61 @@ class GapoktanController extends Controller
 	// handle update an employee ajax request
 	public function update(Request $request)
     {
-        $user = User::find($request->user_id);
-        if($request->password) {
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->password = Hash::make($request->password);
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:50',
+            'email' => 'required|email|max:100',
+            'chairman' => 'required',
+        ], [
+            'name.required' => 'Nama Gapoktan diperlukan!',
+            'name.max' => 'Nama Gapoktan maksimal 50 karakter!',
+            'email.required' => 'Email diperlukan!',
+            'email.max' => 'Email maksimal 100 karakter!',
+            'chairman.required' => 'Nama ketua Gapoktan diperlukan!',
+        ]);
+
+        if($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'messages' => $validator->getMessageBag()
+            ]);
         } else {
-            $user->name = $request->name;
-            $user->email = $request->email;
+            $user = User::find($request->user_id);
+            if($request->password) {
+                $user->name = $request->name;
+                $user->email = $request->email;
+                $user->password = Hash::make($request->password);
+            } else {
+                $user->name = $request->name;
+                $user->email = $request->email;
+            }
+            $user->save();
+
+            // if ($request->is_verified == 0) {
+                $gapoktan = Gapoktan::with('user')->find($request->emp_id);
+                $gapoktan->user_id = $user->id;
+                $gapoktan->chairman = $request->chairman;
+                $gapoktan->is_verified = $request->is_verified ? 1 : 0;
+                $gapoktan->save();
+
+                $userGapoktans = UserGapoktan::where('gapoktan_id', $request->emp_id)->first();
+                $userGapoktans->is_active = $request->is_verified ? 1 : 0;
+                $userGapoktans->save();
+            // } elseif ($request->is_verified == 1) {
+            //     $gapoktan = Gapoktan::with('user')->find($request->emp_id);
+            //     $gapoktan->user_id = $user->id;
+            //     $gapoktan->chairman = $request->chairman;
+            //     $gapoktan->is_verified = $request->is_verified ? 0 : 1;
+            //     $gapoktan->save();
+
+            //     $userGapoktans = UserGapoktan::where('gapoktan_id', $request->emp_id)->first();
+            //     $userGapoktans->is_active = $request->is_verified ? 0 : 1;
+            //     $userGapoktans->save();
+            // }
+
+            return response()->json([
+                'status' => 200,
+            ]);
         }
-        $user->save();
-
-        if ($request->is_verified == 0) {
-            $gapoktan = Gapoktan::with('user')->find($request->emp_id);
-            $gapoktan->user_id = $user->id;
-            $gapoktan->chairman = $request->chairman;
-            $gapoktan->is_verified = $request->is_verified ? 1 : 0;
-            $gapoktan->save();
-
-            $userGapoktans = UserGapoktan::where('gapoktan_id', $request->emp_id)->first();
-            $userGapoktans->is_active = $request->is_verified ? 1 : 0;
-            $userGapoktans->save();
-        } elseif ($request->is_verified == 1) {
-            $gapoktan = Gapoktan::with('user')->find($request->emp_id);
-            $gapoktan->user_id = $user->id;
-            $gapoktan->chairman = $request->chairman;
-            $gapoktan->is_verified = $request->is_verified ? 0 : 1;
-            $gapoktan->save();
-
-            $userGapoktans = UserGapoktan::where('gapoktan_id', $request->emp_id)->first();
-            $userGapoktans->is_active = $request->is_verified ? 0 : 1;
-            $userGapoktans->save();
-        }
-
-		return response()->json([
-			'status' => 200,
-		]);
 	}
 
     // handle delete an employee ajax request
@@ -191,5 +239,88 @@ class GapoktanController extends Controller
 		$id = $request->id;
 		Gapoktan::where('user_id', $id)->delete();
         User::where('id', $id)->delete();
+	}
+
+    // handle edit an employee ajax request
+	public function viewPhoto(Request $request) 
+    {
+		$id = $request->id;
+		$emp = CertificateGapoktan::distinct()->join('gapoktans', 'certificate_gapoktans.gapoktan_id', '=', 'gapoktans.id')
+                    ->select('certificate_gapoktans.*', 'gapoktans.chairman as name_chairman')
+                    ->where('certificate_gapoktans.gapoktan_id', '=', $id)
+                    ->get();
+		return response()->json($emp);
+	}
+
+    // handle delete an employee ajax request
+	public function deletePhoto(Request $request) {
+        $id = $request->id;
+		$emp = CertificateGapoktan::find($id);
+		if (Storage::delete('sertifikat/' . $emp->evidence)) {
+			CertificateGapoktan::destroy($id);
+		} else {
+            $emp->delete();
+        }
+	}
+
+    // handle edit an employee ajax request
+	public function addPhoto(Request $request) {
+		$id = $request->id;
+		$emp = Gapoktan::join('users', 'gapoktans.user_id', '=', 'users.id')
+                    ->leftJoin('certificate_gapoktans', function ($join) {
+                            $join->on('gapoktans.id', '=', 'certificate_gapoktans.gapoktan_id');
+                        })
+                    ->select('gapoktans.*', 'users.name as gapoktan_name')
+                    ->find($id);
+		return response()->json($emp);
+	}
+
+    // handle update an employee ajax request
+	public function addPhotoProduct(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'images' => 'required',
+        ], [
+            'images.required' => 'Unggah bukti gapoktan diperlukan!',
+        ]);
+
+        if($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'messages' => $validator->getMessageBag()
+            ]);
+        } else {
+            if($request->TotalImages > 0)
+            {
+                $gapoktan = Gapoktan::find($request->id);
+                $gapoktan->chairman = $request->chairman;
+                $gapoktan->update();
+
+                for ($x = 0; $x < $request->TotalImages; $x++)
+                {
+                    if ($request->hasFile('images'.$x))
+                    {
+                        $file = $request->file('images'.$x);
+                        $fileName = $file->getClientOriginalName() . '.' . $file->getClientOriginalExtension();
+                        if ($fileName) {
+                            $file->storeAs('sertifikat', $fileName);
+                            $insert[$x]['gapoktan_id'] = $gapoktan->id;
+                            $insert[$x]['evidence'] = $fileName;
+                            $insert[$x]['created_at'] = Carbon::now();
+                            $insert[$x]['updated_at'] = Carbon::now();
+                        }
+                    }
+                }
+                CertificateGapoktan::insert($insert);
+                return response()->json([
+                    'status' => 200,
+                ]);
+            }
+            else
+            {
+            return response()->json([
+                    'status' => 401,
+                ]);
+            }
+        }
 	}
 }

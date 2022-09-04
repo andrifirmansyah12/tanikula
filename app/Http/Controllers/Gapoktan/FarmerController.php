@@ -189,17 +189,17 @@ class FarmerController extends Controller
             $emp = Farmer::with('user', 'poktan')->find($request->emp_id);
             if ($request->poktan_id) {
                 $emp->poktan_id = $request->poktan_id;
-                if ($request->is_active == 0) {
+                // if ($request->is_active == 0) {
                     $emp->is_active = $request->is_active ? 1 : 0;
-                } elseif ($request->is_active == 1) {
-                    $emp->is_active = $request->is_active ? 0 : 1;
-                }
+                // } elseif ($request->is_active == 1) {
+                //     $emp->is_active = $request->is_active ? 0 : 1;
+                // }
             } else {
-                if ($request->is_active == 0) {
+                // if ($request->is_active == 0) {
                     $emp->is_active = $request->is_active ? 1 : 0;
-                } elseif ($request->is_active == 1) {
-                    $emp->is_active = $request->is_active ? 0 : 1;
-                }
+                // } elseif ($request->is_active == 1) {
+                //     $emp->is_active = $request->is_active ? 0 : 1;
+                // }
             }
             $emp->gapoktan_id = auth()->user()->id;
             $emp->save();

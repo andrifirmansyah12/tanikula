@@ -80,7 +80,7 @@
                     @csrf
                     <div class="modal-body p-4">
                         <label for="name">Pilih Gapoktan</label>
-                        <select class="form-control select2" name="gapoktan_id" required>
+                        <select class="form-control select2" name="gapoktan_id" id="add_gapoktan_id">
                             <option selected disabled>Pilih Gapoktan</option>
                             @foreach ($user as $item)
                                 @if ( old('gapoktan_id') == $item->id )
@@ -90,14 +90,18 @@
                                 @endif
                             @endforeach
                         </select>
+                        <div class="invalid-feedback">
+                        </div>
                         <div class="form-group my-2">
                             <label for="name">Nama Produk</label>
-                            <input type="text" name="name" class="nameCheck form-control" placeholder="Nama Produk" required>
+                            <input type="text" name="name" id="add_name" class="nameCheck form-control" placeholder="Nama Produk">
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="form-group my-2">
                             <label>Kategori Produk</label>
                             @if ($category->count() > 0)
-                            <select class="form-control select2" name="category_product_id" required>
+                            <select class="form-control select2" name="category_product_id" id="add_category_product_id">
                                 <option selected value="" disabled>Pilih Kategori</option>
                                     @foreach ($category as $item)
                                         @if ( old('category_product_id') == $item->id )
@@ -108,34 +112,46 @@
                                     @endforeach
                             </select>
                             @else
-                            <select class="form-control select2" disabled required>
+                            <select class="form-control select2" disabled>
                                     <option selected disabled>Tidak ada kategori</option>
                             </select>
                             @endif
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="row my-2 form-group">
                             <div class="col-md-4">
                                 <label for="stoke" style="font-size: 12px">Stok</label>
-                                <input type="number" name="stoke" class="form-control" placeholder="Stok" required>
+                                <input type="number" id="add_stoke" name="stoke" class="form-control" placeholder="Stok">
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                             <div class="col-md-8">
                                 <label for="price" style="font-size: 12px">Harga</label>
-                                <input type="number" name="price" class="form-control" placeholder="Harga" required>
+                                <input type="number" id="add_price" name="price" class="form-control" placeholder="Harga">
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                         </div>
                         <div class="row my-2 form-group">
                             <div class="col-md-6">
                                 <label for="stoke" style="font-size: 12px">Berat (gram)</label>
-                                <input type="number" name="weight" class="form-control" placeholder="Berat" required>
+                                <input type="number" id="add_weight" name="weight" class="form-control" placeholder="Berat">
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <label for="stoke" style="font-size: 12px">Diskon (Persen)</label>
-                                <input type="number" name="discount" value="0" class="form-control" placeholder="Diskon" required>
+                                <input type="number" id="add_discount" name="discount" value="0" class="form-control" placeholder="Diskon">
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                         </div>
                         <div class="my-2 form-group">
                             <label for="desc">Deskripsi</label>
-                            <textarea class="form-control" name="desc" rows="3" placeholder="Deskripsi"></textarea>
+                            <textarea class="form-control" id="add_desc" name="desc" rows="3" placeholder="Deskripsi"></textarea>
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="my-2 form-group">
                             <label for="is_active">Status Produk</label>
@@ -146,22 +162,6 @@
                                 </label>
                             </div>
                         </div>
-                        {{-- <div class="my-2 form-group">
-                            <label for="image">Unggah Foto</label>
-                            <small class="d-flex text-danger pb-1">*Unggah berupa foto produk</small>
-                            <div>
-                                <div class="tab-content" id="myTabContent2">
-                                    <div class="tab-pane fade show active" id="home3" role="tabpanel"
-                                        aria-labelledby="home-tab3">
-                                        <div class="preview-image"> </div> --}}
-                                        {{-- <img id="preview" class="img-fluid img-thumbnail image"
-                                        src="{{ asset('stisla/assets/img/example-image.jpg') }}" alt="edukasi"
-                                        style="width: 20rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"> --}}
-                                    {{-- </div>
-                                </div>
-                            </div>
-                            <input type="file" id="images" name="images[]" multiple class="form-control" accept="image/*" required>
-                        </div> --}}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
@@ -193,7 +193,7 @@
                                 <br>1. Jika tidak ingin ubah Gapoktan biarkan kosong,
                                 <br>2. Dan jika ingin ubah Gapoktan, silahkan pilih Gapoktan.
                             </small>
-                            <select class="form-control select2" name="gapoktan_id" required>
+                            <select class="form-control select2" name="gapoktan_id">
                                 <option selected disabled>Pilih Gapoktan</option>
                                 @foreach ($user as $item)
                                     @if ( old('gapoktan_id') == $item->id )
@@ -203,14 +203,20 @@
                                     @endif
                                 @endforeach
                             </select>
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="form-group my-2">
                             <label for="name">Nama Gapoktan</label>
-                            <input type="text" disabled id="gapoktan_id" class="form-control" required>
+                            <input type="text" disabled id="gapoktan_id" class="form-control">
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="form-group my-2">
                             <label for="name">Nama</label>
-                            <input type="text" name="name" id="name" class="nameCheck form-control" placeholder="Nama" required>
+                            <input type="text" name="name" id="name" class="nameCheck form-control" placeholder="Nama">
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="form-group my-2">
                             <label>Kategori Produk</label>
@@ -226,34 +232,46 @@
                                 @endforeach
                             </select>
                             @else
-                            <select class="form-control select2" disabled required>
+                            <select class="form-control select2" disabled>
                                     <option selected disabled>Tidak ada kategori</option>
                             </select>
                             @endif
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="row my-2 form-group">
                             <div class="col-md-4">
                                 <label for="stoke" style="font-size: 12px">Stok</label>
-                                <input type="number" name="stoke" id="stoke" class="form-control" placeholder="Stok" required>
+                                <input type="number" name="stoke" id="stoke" class="form-control" placeholder="Stok">
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                             <div class="col-md-8">
                                 <label for="price" style="font-size: 12px">Harga</label>
-                                <input type="number" name="price" id="price" class="form-control" placeholder="Harga" required>
+                                <input type="number" name="price" id="price" class="form-control" placeholder="Harga">
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                         </div>
                         <div class="row my-2 form-group">
                             <div class="col-md-6">
                                 <label for="stoke" style="font-size: 12px">Berat (gram)</label>
-                                <input type="number" name="weight" id="weight" class="form-control" placeholder="Berat" required>
+                                <input type="number" name="weight" id="weight" class="form-control" placeholder="Berat">
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <label for="stoke" style="font-size: 12px">Diskon (Persen)</label>
-                                <input type="number" name="discount" id="discount" class="form-control" placeholder="Diskon" required>
+                                <input type="number" name="discount" id="discount" class="form-control" placeholder="Diskon">
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                         </div>
                         <div class="my-2 form-group">
                             <label for="desc">Deskripsi</label>
                             <textarea class="form-control" name="desc" id="desc" rows="3" placeholder="Deskripsi"></textarea>
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="my-2 form-group">
                             <label for="is_active">Status Produk</label>
@@ -261,25 +279,6 @@
 
                             </div>
                         </div>
-                        {{-- <div class="my-2 form-group">
-                            <label for="image">Unggah Foto</label>
-                            <small class="d-flex text-danger pb-1">*Unggah berupa foto produk</small>
-                            <div>
-                                <div class="tab-content" id="myTabContent2">
-                                    <div class="tab-pane fade show active" id="home3" role="tabpanel"
-                                        aria-labelledby="home-tab3">
-                                        <div class="preview-image-edit"> </div>
-                                        <div class="tab-content editFile" id="myTabContent2">
-
-                                        </div>
-                                        {{-- <img id="preview" class="img-fluid img-thumbnail image"
-                                        src="{{ asset('stisla/assets/img/example-image.jpg') }}" alt="edukasi"
-                                        style="width: 20rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"> --}}
-                                    {{-- </div>
-                                </div>
-                            </div>
-                            <input type="file" id="imagesEdit" name="images[]" multiple class="form-control" accept="image/*">
-                        </div> --}}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
@@ -304,7 +303,7 @@
                     <input type="hidden" name="id" id="id">
                     <input type="hidden" name="photoProduct" id="photoProduct">
                     <div class="modal-body p-4">
-                        <input hidden type="text" name="name" id="namaProduct" class="form-control" placeholder="Nama" required>
+                        <input hidden type="text" name="name" id="namaProduct" class="form-control" placeholder="Nama">
                         <div class="form-group">
                             <label for="image">Unggah Foto</label>
                             <small class="d-flex text-danger pb-1">*Unggah berupa foto produk</small>
@@ -320,6 +319,8 @@
                                 </div>
                             </div>
                             <input type="file" id="imagesEdit" name="images[]" multiple class="form-control" accept="image/*">
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -459,11 +460,14 @@
                 dataType: 'json',
                 success: function(response) {
                     if (response.status == 400) {
-                        showError('name', response.messages.name);
-                        showError('category_product_id', response.messages.category_product_id);
-                        showError('stoke', response.messages.stoke);
-                        showError('price', response.messages.price);
-                        showError('desc', response.messages.desc);
+                        showError('add_gapoktan_id', response.messages.gapoktan_id);
+                        showError('add_name', response.messages.name);
+                        showError('add_category_product_id', response.messages.category_product_id);
+                        showError('add_stoke', response.messages.stoke);
+                        showError('add_price', response.messages.price);
+                        showError('add_weight', response.messages.weight);
+                        showError('add_discount', response.messages.discount);
+                        showError('add_desc', response.messages.desc);
                         $("#add_employee_btn").text('Simpan');
                         $("#add_employee_btn").prop('disabled', false);
                     } else if (response.status == 200){
@@ -544,8 +548,11 @@
                         showError('category_product_id', response.messages.category_product_id);
                         showError('stoke', response.messages.stoke);
                         showError('price', response.messages.price);
+                        showError('weight', response.messages.weight);
+                        showError('discount', response.messages.discount);
                         showError('desc', response.messages.desc);
-                        showError('images', response.messages.images);
+                        $("#edit_employee_btn").text('Simpan');
+                        $("#edit_employee_btn").prop('disabled', false);
                     } else if (response.status == 200){
                         Swal.fire(
                             'Menambahkan!',
@@ -555,9 +562,9 @@
                         fetchAllEmployees();
                         $("#editEmployeeModal").modal('hide');
                         $("#edit_employee_form")[0].reset();
+                        $("#edit_employee_btn").text('Simpan');
+                        $("#edit_employee_btn").prop('disabled', false);
                     }
-                    $("#edit_employee_btn").text('Simpan');
-                    $("#edit_employee_btn").prop('disabled', false);
                 }
                 });
             });
@@ -707,8 +714,11 @@
                 dataType: 'json',
                 success: function(response) {
                     if (response.status == 400) {
-                        showError('name', response.messages.photo_product.name);
+                        showError('imagesEdit', response.messages.images);
                         $("#addPhotoProductForm")[0].reset();
+                        $('.preview-image-edit').html("");
+                        $("#addPhotoProductBtn").text('Simpan');
+                        $("#addPhotoProductBtn").prop('disabled', false);
                     } else if (response.status == 200){
                         Swal.fire(
                             'Menambahkan!',
@@ -718,6 +728,9 @@
                         fetchAllEmployees();
                         $("#addPhotoProduct").modal('hide');
                         $("#addPhotoProductForm")[0].reset();
+                        $('.preview-image-edit').html("");
+                        $("#addPhotoProductBtn").text('Simpan');
+                        $("#addPhotoProductBtn").prop('disabled', false);
                     } else if (response.status == 401) {
                         Swal.fire(
                             'Gagal!',
@@ -727,12 +740,10 @@
                         fetchAllEmployees();
                         $("#addPhotoProduct").modal('hide');
                         $("#addPhotoProductForm")[0].reset();
+                        $('.preview-image-edit').html("");
+                        $("#addPhotoProductBtn").text('Simpan');
                         $("#addPhotoProductBtn").prop('disabled', false);
                     }
-                    $('.preview-image-edit').html("");
-                    $("#addPhotoProductBtn").text('Simpan');
-                    $("#addPhotoProductBtn").prop('disabled', false);
-                    window.location.reload();
                 }
                 });
             });

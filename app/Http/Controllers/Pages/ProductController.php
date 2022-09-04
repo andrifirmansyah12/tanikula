@@ -13,6 +13,7 @@ use App\Models\RoomChat;
 use App\Models\OrderItem;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Review;
+use App\Models\PushNotification;
 
 class ProductController extends Controller
 {
@@ -346,6 +347,16 @@ class ProductController extends Controller
             $countCart = 0;
         }
         return response()->json(['count'=> $countCart]);
+    }
+
+    public function countNotif()
+    {
+        if (Auth::user()) {
+            $countNotif = PushNotification::where('user_id',Auth::id())->where('is_read', 0)->count();
+        } elseif (Auth::guest()) {
+            $countNotif = 0;
+        }
+        return response()->json(['count'=> $countNotif]);
     }
 
     public function cartIncrement($id)
@@ -1198,7 +1209,9 @@ class ProductController extends Controller
 			}
 			echo $output;
 		} else {
-            echo '<p class="h5 text-center" style="color: #16A085">Belum ada ulasan produk!</p>';
+            echo '<div class="border p-4 my-4 rounded">
+                    <p class="h5 text-center" style="color: #16A085">Belum ada ulasan produk!</p>
+                </div>';
 		}
 	}
 
@@ -1273,7 +1286,9 @@ class ProductController extends Controller
 			}
 			echo $output;
 		} else {
-            echo '<p class="h5 text-center" style="color: #16A085">Belum ada ulasan produk!</p>';
+            echo '<div class="border p-4 my-4 rounded">
+                    <p class="h5 text-center" style="color: #16A085">Belum ada ulasan produk!</p>
+                </div>';
 		}
 	}
 
@@ -1348,7 +1363,9 @@ class ProductController extends Controller
 			}
 			echo $output;
 		} else {
-            echo '<p class="h5 text-center" style="color: #16A085">Belum ada ulasan produk!</p>';
+            echo '<div class="border p-4 my-4 rounded">
+                    <p class="h5 text-center" style="color: #16A085">Belum ada ulasan produk!</p>
+                </div>';
 		}
 	}
 
@@ -1423,7 +1440,9 @@ class ProductController extends Controller
 			}
 			echo $output;
 		} else {
-            echo '<p class="h5 text-center" style="color: #16A085">Belum ada ulasan produk!</p>';
+            echo '<div class="border p-4 my-4 rounded">
+                    <p class="h5 text-center" style="color: #16A085">Belum ada ulasan produk!</p>
+                </div>';
 		}
 	}
 
@@ -1498,7 +1517,9 @@ class ProductController extends Controller
 			}
 			echo $output;
 		} else {
-            echo '<p class="h5 text-center" style="color: #16A085">Belum ada ulasan produk!</p>';
+            echo '<div class="border p-4 my-4 rounded">
+                    <p class="h5 text-center" style="color: #16A085">Belum ada ulasan produk!</p>
+                </div>';
 		}
 	}
 

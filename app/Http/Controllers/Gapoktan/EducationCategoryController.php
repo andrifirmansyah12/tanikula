@@ -106,15 +106,11 @@ class EducationCategoryController extends Controller
         } else {
             $emp = EducationCategory::find($request->emp_id);
 
-            if ($request->is_active == 0) {
-                $is_active = $request->is_active ? 1 : 0;
-                $empData = ['name' => $request->name, 'slug' => $request->slug, 'is_active' => $is_active];
-            } elseif ($request->is_active == 1) {
-                $is_active = $request->is_active ? 0 : 1;
-                $empData = ['name' => $request->name, 'slug' => $request->slug, 'is_active' => $is_active];
-            }
+            $emp->is_active = $request->is_active ? 1 : 0;
+            $emp->name = $request->name;
+            $emp->slug = $request->slug;
 
-            $emp->update($empData);
+            $emp->update();
             return response()->json([
                 'status' => 200,
             ]);

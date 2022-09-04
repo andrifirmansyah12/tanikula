@@ -34,7 +34,9 @@
                                 <br>1. Jika tidak ingin ubah password biarkan kosong,
                                 <br>2. Dan jika ingin ubah password, silahkan masukkan password.
                             </small>
-                            <input type="password"  id="password" name="password" class="form-control" placeholder="Password" required>
+                            <input type="password"  id="password" name="password" class="form-control" placeholder="Password">
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -62,7 +64,7 @@
                         <div class="form-group my-2">
                             <label for="name">Nama Admin</label>
                             <input type="text" class="form-control" name="name" id="name"
-                                value="{{ $userInfo->user->name }}" required="">
+                                value="{{ $userInfo->user->name }}">
                             <div class="invalid-feedback">
                             </div>
                         </div>
@@ -70,7 +72,7 @@
                             <label class="m-0" for="email">Email</label>
                             <p class="m-1 small text-danger">*gunakan email aktif</p>
                             <input type="text" class="form-control" name="email" id="email"
-                                value="{{ $userInfo->user->email }}" required="">
+                                value="{{ $userInfo->user->email }}">
                             <div class="invalid-feedback">
                             </div>
                         </div>
@@ -94,7 +96,7 @@
                             $provinces = new App\Http\Controllers\Pages\DependantDropdownController;
                             $provinces = $provinces->provinces();
                             @endphp
-                            <select class="form-control" name="province_id" id="provinsi" required>
+                            <select class="form-control" name="province_id" id="provinsi">
                                 <option disabled selected>==Pilih Salah Satu==</option>
                                 @foreach ($provinces as $item)
                                 <option value="{{ $item->id ?? '' }}">{{ $item->name ?? '' }}</option>
@@ -103,33 +105,33 @@
                         </div>
                         <div class="form-group my-2">
                             <label class="col-form-label" for="kota">Kabupaten / Kota</label>
-                            <select class="form-control" name="city_id" id="kota" required>
+                            <select class="form-control" name="city_id" id="kota">
                                 <option disabled selected>==Pilih Salah Satu==</option>
                             </select>
                         </div>
                         <div class="form-group my-2">
                             <label class="col-form-label" for="kecamatan">Kecamatan</label>
-                            <select class="form-control" name="district_id" id="kecamatan" required>
+                            <select class="form-control" name="district_id" id="kecamatan">
                                 <option disabled selected>==Pilih Salah Satu==</option>
                             </select>
                         </div>
                         <div class="form-group my-2">
                             <label class="col-form-label" for="desa">Desa</label>
-                            <select class="form-control" name="village_id" id="desa" required>
+                            <select class="form-control" name="village_id" id="desa">
                                 <option disabled selected>==Pilih Salah Satu==</option>
                             </select>
                         </div>
                         <div class="form-group my-2">
                             <label for="street">Jalan / Gang</label>
                             <input type="text" class="form-control" name="street" id="street"
-                                value="{{ $userInfo->street }}" required="">
+                                value="{{ $userInfo->street }}">
                             <div class="invalid-feedback">
                             </div>
                         </div>
                         <div class="form-group my-2">
                             <label for="number">Nomor</label>
                             <input type="number" class="form-control" name="number" id="number"
-                                value="{{ $userInfo->number }}" required="">
+                                value="{{ $userInfo->number }}">
                             <div class="invalid-feedback">
                             </div>
                         </div>
@@ -160,7 +162,7 @@
                                         <div class="card align-items-center justify-content-center">
                                             <div class="card-body">
                                                 <div class="chocolat-parent">
-                                                    <a href="" class="chocolat-image" title="{{ $userInfo->user->name }}">
+                                                    <a href class="chocolat-image" title="{{ $userInfo->user->name }}">
                                                         <div>
                                                             @if ($userInfo->image)
                                                             <img alt="image" id="image_preview"
@@ -210,7 +212,7 @@
                                                             <th>No Hp</th>
                                                             <td>
                                                                 @if ($userInfo->phone)
-                                                                    {{ $userInfo->phone }}
+                                                                    (+62) {{ $userInfo->phone }}
                                                                 @else
                                                                     <span class="text-danger">Belum diisi</span>
                                                                 @endif
@@ -356,7 +358,20 @@
                     data: $(this).serialize()+ `&id=${id}`,
                     dataType: 'json',
                     success: function(res){
-                        if (res.status == 200) {
+                        if (res.status == 400) {
+                            showError('name', res.messages.name);
+                            showError('email', res.messages.email);
+                            showError('chairman', res.messages.chairman);
+                            showError('phone', res.messages.phone);
+                            showError('provinsi', res.messages.province_id);
+                            showError('kota', res.messages.city_id);
+                            showError('kecamatan', res.messages.district_id);
+                            showError('desa', res.messages.village_id);
+                            showError('street', res.messages.street);
+                            showError('number', res.messages.number);
+                            $("#profile_btn").val('Perbarui Biodata');
+                            $("#profile_btn").prop('disabled', false);
+                        } else if (res.status == 200) {
                             // $("#profile_alert").html(showMessage('success', res.messages));
                             iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
                                 title: 'Berhasil',
@@ -382,15 +397,19 @@
                     data: $(this).serialize()+ `&id=${id}`,
                     dataType: 'json',
                     success: function(res){
-                        if (res.status == 200) {
+                        if (res.status == 400) {
+                            showError('password', res.messages.password);
+                            $("#password_btn").val('Ubah Password');
+                            $("#password_btn").prop('disabled', false);
+                        } else if (res.status == 200) {
                             // $("#profile_alert").html(showMessage('success', res.messages));
                             iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
                                 title: 'Berhasil',
                                 message: res.messages,
                                 position: 'topRight'
                             });
-                            $("#profile_btn").val('Ubah Password');
-                            $("#profile_btn").prop('disabled', false);
+                            $("#password_btn").val('Ubah Password');
+                            $("#password_btn").prop('disabled', false);
                             window.location.reload();
                         }
                     }

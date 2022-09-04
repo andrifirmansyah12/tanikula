@@ -191,13 +191,18 @@ class ActivityController extends Controller
                 'messages' => $validator->getMessageBag()
             ]);
         } else {
-            $emp = Activity::find($request->emp_id);
+            $activity = Activity::find($request->emp_id);
+            $activity->title = $request->title;
+            $activity->slug = $request->slug;
+            $activity->category_activity_id = $request->category_activity_id;
+            $activity->desc = $request->desc;
+            $activity->date = Carbon::createFromFormat('d-M-Y', $request->date)->format('Y-m-d h:i:s');
+            $activity->user_id = auth()->user()->id;
+            $activity->save();
 
-            $empData = ['title' => $request->title, 'slug' => $request->slug, 'category_activity_id' => $request->category_activity_id, 'desc' => $request->desc];
-
-            $empData['date'] = Carbon::createFromFormat('d-M-Y', $request->date)->format('Y-m-d h:i:s');
-            $empData['user_id'] = auth()->user()->id;
-            $emp->update($empData);
+            $notification = new NotificationActivity();
+            $notification->activity_id = $activity->id;
+            $notification->save();
             return response()->json([
                 'status' => 200,
             ]);

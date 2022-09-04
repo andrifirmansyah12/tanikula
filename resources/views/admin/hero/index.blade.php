@@ -51,7 +51,9 @@
                         <div class="row">
                             <div class="col-lg my-2">
                                 <label for="name">Nama Hero</label>
-                                <input type="text" name="name" class="nameCheck form-control" placeholder="Nama" required>
+                                <input type="text" name="name" id="add_name" class="nameCheck form-control" placeholder="Nama">
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                         </div>
                         <div class="my-2 form-group">
@@ -67,7 +69,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <input type="file" name="image" id="addFiles" class="form-control" accept="image/*" required>
+                            <input type="file" name="image" id="addFiles" class="form-control" accept="image/*">
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -96,7 +100,9 @@
                         <div class="row my-2">
                             <div class="col-lg">
                                 <label for="name">Nama Hero</label>
-                                <input type="text" name="name" id="name" class="form-control nameCheck" placeholder="Nama" required>
+                                <input type="text" name="name" id="name" class="form-control nameCheck" placeholder="Nama">
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                         </div>
                         <div class="my-2 form-group">
@@ -108,6 +114,8 @@
                                 </div>
                             </div>
                             <input type="file" name="image" id="files" accept="image/*, video/*" class="form-control">
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -192,10 +200,10 @@
                 dataType: 'json',
                 success: function(response) {
                     if (response.status == 400) {
-                        showError('title', response.messages.title);
-                        showError('category_education_id', response.messages.category_education_id);
-                        showError('desc', response.messages.desc);
-                        showError('file', response.messages.file);
+                        showError('add_name', response.messages.name);
+                        showError('addFiles', response.messages.image);
+                        $("#add_employee_btn").text('Simpan');
+                        $("#add_employee_btn").prop('disabled', false);
                     }
                     else if (response.status == 200) {
                         Swal.fire(
@@ -206,9 +214,9 @@
                         fetchAllEmployees();
                         $("#add_employee_form")[0].reset();
                         $("#addEmployeeModal").modal('hide');
+                        $("#add_employee_btn").text('Simpan');
+                        $("#add_employee_btn").prop('disabled', false);
                     }
-                    $("#add_employee_btn").text('Simpan');
-                    $("#add_employee_btn").prop('disabled', false);
                 }
                 });
             });
@@ -267,10 +275,9 @@
                 dataType: 'json',
                 success: function(response) {
                     if (response.status == 400) {
-                        showError('title', response.messages.title);
-                        showError('category_education_id', response.messages.category_education_id);
-                        showError('desc', response.messages.desc);
-                        showError('file', response.messages.file);
+                        showError('name', response.messages.name);
+                        $("#edit_employee_btn").text('Simpan');
+                        $("#edit_employee_btn").prop('disabled', false);
                     }
                     else if (response.status == 200) {
                         Swal.fire(
@@ -281,9 +288,9 @@
                         fetchAllEmployees();
                         $("#edit_employee_form")[0].reset();
                         $("#editEmployeeModal").modal('hide');
+                        $("#edit_employee_btn").text('Simpan');
+                        $("#edit_employee_btn").prop('disabled', false);
                     }
-                    $("#edit_employee_btn").text('Simpan');
-                    $("#edit_employee_btn").prop('disabled', false);
                 }
                 });
             });

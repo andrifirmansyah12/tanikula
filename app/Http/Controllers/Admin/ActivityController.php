@@ -74,14 +74,16 @@ class ActivityController extends Controller
 	}
 
     // handle insert a new employee ajax request
-	public function store(Request $request) {
-
+	public function store(Request $request)
+    {
         $validator = Validator::make($request->all(), [
+            'user_id' => 'required',
             'title' => 'required|max:255',
             'category_activity_id' => 'required',
             'desc' => 'required',
             'date' => 'required',
         ], [
+            'user_id.required' => 'Pilih user diperlukan!',
             'title.required' => 'Judul kegiatan diperlukan!',
             'title.max' => 'Judul kegiatan maksimal 255 karakter!',
             'category_activity_id.required' => 'Kategori kegiatan diperlukan!',

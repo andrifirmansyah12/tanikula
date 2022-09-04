@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\FieldCategory;
+use Illuminate\Support\Facades\Validator;
 
 class FieldCategoryController extends Controller
 {
@@ -50,12 +51,29 @@ class FieldCategoryController extends Controller
     // handle insert a new employee ajax request
 	public function store(Request $request)
     {
-		$empData = ['name' => $request->name, 'details' => $request->details];
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:50',
+            'details' => 'required|max:255',
+        ], [
+            'name.required' => 'Nama Lahan diperlukan!',
+            'name.max' => 'Nama lahan maksimal 50 karakter!',
+            'details.required' => 'Nama keterangan lahan diperlukan!',
+            'details.max' => 'Nama keterangan lahan maksimal 255 karakter!',
+        ]);
 
-		FieldCategory::create($empData);
-		return response()->json([
-			'status' => 200,
-		]);
+        if($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'messages' => $validator->getMessageBag()
+            ]);
+        } else {
+            $empData = ['name' => $request->name, 'details' => $request->details];
+
+            FieldCategory::create($empData);
+            return response()->json([
+                'status' => 200,
+            ]);
+        }
 	}
 
     // handle edit an employee ajax request
@@ -69,12 +87,29 @@ class FieldCategoryController extends Controller
     // handle update an employee ajax request
 	public function update(Request $request)
     {
-		$emp = FieldCategory::find($request->emp_id);
-		$empData = ['name' => $request->name, 'details' => $request->details];
-		$emp->update($empData);
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:50',
+            'details' => 'required|max:255',
+        ], [
+            'name.required' => 'Nama Lahan diperlukan!',
+            'name.max' => 'Nama lahan maksimal 50 karakter!',
+            'details.required' => 'Nama keterangan lahan diperlukan!',
+            'details.max' => 'Nama keterangan lahan maksimal 255 karakter!',
+        ]);
 
-		return response()->json([
-			'status' => 200,
-		]);
+        if($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'messages' => $validator->getMessageBag()
+            ]);
+        } else {
+            $emp = FieldCategory::find($request->emp_id);
+            $empData = ['name' => $request->name, 'details' => $request->details];
+            $emp->update($empData);
+
+            return response()->json([
+                'status' => 200,
+            ]);
+        }
 	}
 }

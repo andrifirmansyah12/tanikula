@@ -86,15 +86,17 @@ class EducationController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'title' => 'required|max:255',
+            'user_id' => 'required',
             'category_education_id' => 'required',
             'desc' => 'required',
             'file' => 'required',
         ], [
+            'user_id.required' => 'Pilih user diperlukan!',
             'title.required' => 'Judul edukasi diperlukan!',
             'title.max' => 'Judul edukasi maksimal 255 karakter!',
             'category_education_id.required' => 'Kategori edukasi diperlukan!',
             'desc.required' => 'Deskripsi edukasi diperlukan!',
-            'file.required' => 'Foto edukasi diperlukan!',
+            'file.required' => 'Foto maupun video edukasi diperlukan!',
         ]);
 
         if($validator->fails()) {

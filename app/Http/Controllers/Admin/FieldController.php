@@ -87,13 +87,12 @@ class FieldController extends Controller
 	public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'field_category_id' => 'required|max:255',
+            'field_category_id' => 'required',
             'gapoktan_id' => 'required',
             'farmer_id' => 'required',
             // 'status' => 'required',
         ], [
-            'field_category_id.required' => 'Lanah diperlukan!',
-            'field_category_id.max' => 'Lanah maksimal 255 karakter!',
+            'field_category_id.required' => 'Kategori lahan diperlukan!',
             'gapoktan_id.required' => 'Gapoktan diperlukan!',
             'farmer_id.required' => 'Petani diperlukan!',
             // 'status.required' => 'Status diperlukan!',
@@ -130,15 +129,14 @@ class FieldController extends Controller
 	public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'field_category_id' => 'required|max:255',
-            'edit_gapoktan_id' => 'required',
-            'edit_farmer_id' => 'required',
+            'field_category_id' => 'required',
+            'gapoktan_id' => 'required',
+            'farmer_id' => 'required',
             // 'status' => 'required',
         ], [
-            'field_category_id.required' => 'Lanah diperlukan!',
-            'field_category_id.max' => 'Lanah maksimal 255 karakter!',
-            'edit_gapoktan_id.required' => 'Gapoktan diperlukan!',
-            'edit_farmer_id.required' => 'Petani diperlukan!',
+            'field_category_id.required' => 'Kategori lahan diperlukan!',
+            'gapoktan_id.required' => 'Gapoktan diperlukan!',
+            'farmer_id.required' => 'Petani diperlukan!',
             // 'status.required' => 'Status diperlukan!',
         ]);
 
