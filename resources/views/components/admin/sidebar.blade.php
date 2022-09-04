@@ -50,6 +50,15 @@
                     </p>
                 </a>
             </li>
+            <li class="nav-header">PESANAN MASUK</li>
+            <li class="nav-item">
+                <a href="#" onclick="admin_pesanan('{{ url('admin/pesanan') }}')" class="nav-link {{ Request::is('admin/pesanan*') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-solid fa-shop"></i>
+                    <p>
+                        Pesanan
+                    </p>
+                </a>
+            </li>
             <li class="nav-header">MANAJEMEN</li>
             <li class="nav-item">
                 <a href="#" class="nav-link {{ Request::is('admin/kategori*') ? 'active' : '' }}">
