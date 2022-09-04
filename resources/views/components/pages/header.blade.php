@@ -54,7 +54,7 @@
         }
     </style>
 
-    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
+    {{-- <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-messaging.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
@@ -70,5 +70,20 @@
         };
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
-    </script>
+    </script> --}}
+    @if (Request::is('cart/shipment*'))
+        <script language='javascript' type='text/javascript'>
+            window.history.pushState(null, null, window.location.href);
+            window.onpopstate = function () {
+                window.location = '{{ route('home') }}';
+            };
+            // function DisableBackButton() {
+            //     window.history.forward()
+            // }
+            // DisableBackButton();
+            // window.onload = DisableBackButton;
+            // window.onpageshow = function(evt) { if (evt.persisted) DisableBackButton() }
+            // window.onunload = function() { void (0) }
+        </script>
+    @endif
 </head>

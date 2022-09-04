@@ -287,7 +287,7 @@
                                         <tbody>
                                             @php
                                             $total = 0;
-                                            $totalPrice = 0;
+                                            $ongkirTotal = 0;
                                             $totalQty = 0;
                                             $discount = 0;
                                             @endphp

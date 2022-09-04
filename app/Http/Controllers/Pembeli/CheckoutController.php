@@ -228,12 +228,20 @@ class CheckoutController extends Controller
         if ($order) {
             // $cartItem = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
             // Cart::destroy($cartItem);
+            $this->_sendEmailOrderReceived($order);
 
             \Session::flash('success', 'Thank you. Your order has been received!');
-            return redirect('cart/shipment/place-order/received/' . $order->id);
+            return response()->json([
+                'status' => 200,
+                'id' => $order->id
+            ]);
+            // return redirect('cart/shipment/place-order/received/' . $order->id);
         }
 
-        return redirect('cart/shipment');
+        // return redirect('cart/shipment');
+        return response()->json([
+            'status' => 401,
+        ]);
     }
 
     // handle fetch all eamployees ajax request
@@ -479,6 +487,18 @@ class CheckoutController extends Controller
             'status' => 200,
         ]);
     }
+
+    /**
+	 * Send email order detail to current user
+	 *
+	 * @param Order $order order object
+	 *
+	 * @return void
+	 */
+	private function _sendEmailOrderReceived($order)
+	{
+		\App\Jobs\SendMailOrderReceived::dispatch($order, \Auth::user());
+	}
 
     private function initPaymentGateway()
     {

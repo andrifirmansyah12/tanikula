@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Pembeli;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Mail\ForgotPassword;
+use App\Mail\RegisterAccount;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
@@ -261,10 +262,11 @@ class LoginController extends Controller
                 'token' => $token
             ]);
 
-            Mail::send('costumer.register.emailVerificationEmail', ['token' => $token], function ($message) use ($request) {
-                $message->to($request->email);
-                $message->subject('Verifikasi Email');
-            });
+            Mail::to($request->email)->send(new RegisterAccount($token));
+            // Mail::send('costumer.register.emailVerificationEmail', ['token' => $token], function ($message) use ($request) {
+            //     $message->to($request->email);
+            //     $message->subject('Verifikasi Email');
+            // });
 
             return response()->json([
                 'status' => 200,

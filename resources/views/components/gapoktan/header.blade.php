@@ -61,7 +61,7 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/components.css') }}">
 
-    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
+    {{-- <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-messaging.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
@@ -77,5 +77,5 @@
         };
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
-    </script>
+    </script> --}}
 </head>
