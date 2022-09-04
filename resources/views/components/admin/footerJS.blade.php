@@ -60,6 +60,10 @@
     function admin_hero(url) {
         window.location = url;
     }
+    // Hero
+    function admin_pesanan(url) {
+        window.location = url;
+    }
     // Akun Poktan
     function admin_daftar_poktan(url) {
         window.location = url;

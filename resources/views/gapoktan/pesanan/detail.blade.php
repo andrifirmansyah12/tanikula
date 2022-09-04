@@ -233,12 +233,33 @@
     @endphp
     {{-- Lihat Ulasan --}}
     <div class="modal fade" id="editReviewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <style>
+            #style-1::-webkit-scrollbar-track
+            {
+                -webkit-box-shadow: inset 0 0 6px #16A085;
+                border-radius: 10px;
+                background-color: #F5F5F5;
+            }
+
+            #style-1::-webkit-scrollbar
+            {
+                width: 12px;
+                background-color: #F5F5F5;
+            }
+
+            #style-1::-webkit-scrollbar-thumb
+            {
+                border-radius: 10px;
+                -webkit-box-shadow: inset 0 0 6px #16A085;
+                background-color: #16A085;
+            }
+        </style>
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header border">
                     <h5 class="modal-title" id="exampleModalLabel">Ulasan Pembeli</h5>
                 </div>
-                <div class="modal-body text-start text-black p-4">
+                <div class="modal-body text-start text-black p-4" id="style-1">
                     <form action="#" method="POST" id="add_employee_form" accept-charset="utf-8"
                         enctype="multipart/form-data">
                         @csrf

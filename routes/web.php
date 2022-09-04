@@ -64,6 +64,15 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:admin']], function ()
     Route::get('admin/hero/edit', [App\Http\Controllers\Admin\HeroController::class, 'edit'])->name('admin-hero-edit');
     Route::post('admin/hero/update', [App\Http\Controllers\Admin\HeroController::class, 'update'])->name('admin-hero-update');
 
+    // Pesanan Masuk
+    Route::get('admin/pesanan', [App\Http\Controllers\Admin\OrderController::class, 'index'])->name('admin.orders');
+    Route::get('admin/pesanan/fetchDikemas', [App\Http\Controllers\Admin\OrderController::class, 'fetchDikemas'])->name('admin.orders.fetchDikemas');
+    Route::get('admin/pesanan/fetchDikirim', [App\Http\Controllers\Admin\OrderController::class, 'fetchDikirim'])->name('admin.orders.fetchDikirim');
+    Route::get('admin/pesanan/fetchSelesai', [App\Http\Controllers\Admin\OrderController::class, 'fetchSelesai'])->name('admin.orders.fetchSelesai');
+    Route::get('admin/pesanan/detail-pesanan/{id}', [App\Http\Controllers\Admin\OrderController::class, 'viewOrder'])->name('admin.viewOrder');
+    Route::post('admin/pesanan/update-pesanan', [App\Http\Controllers\Admin\OrderController::class, 'updateOrder'])->name('admin.updateOrder');
+    Route::post('admin/pesanan/reply-review', [App\Http\Controllers\Admin\OrderController::class, 'replyReview'])->name('admin.replyReview');
+
     // Lahan
     Route::get('admin/lahan', [App\Http\Controllers\Admin\FieldController::class, 'index'])->name('admin-lahan');
     Route::post('admin/lahan/store', [App\Http\Controllers\Admin\FieldController::class, 'store'])->name('admin-lahan-store');

@@ -82,7 +82,7 @@ class GapoktanController extends Controller
                     <a href="#" id="' . $emp->id . '" class="text-success mx-1 addPhotoProductIcon" data-toggle="modal" data-target="#addPhotoProduct"><i class="bi bi-images h4"></i></a>
                     <a href="#" id="' . $emp->id . '" class="text-success mx-1 viewPhotoProductIcon" data-toggle="modal" data-target="#viewPhotoProduct"><i class="bi bi-eye h4"></i></a>
                     <a href="#" id="' . $emp->id . '" class="text-success mx-1 editIcon" data-toggle="modal" data-target="#editEmployeeModal"><i class="bi-pencil-square h4"></i></a>
-                    <a href="#" id="' . $emp->user->id . '" class="text-danger mx-1 deleteIcon"><i class="bi-trash h4"></i></a>
+                    <a href="#" id="' . $emp->id . '" class="text-danger mx-1 deleteIcon"><i class="bi-trash h4"></i></a>
                     </td>
                 </tr>';
                 // }
@@ -237,12 +237,19 @@ class GapoktanController extends Controller
     // handle delete an employee ajax request
 	public function delete(Request $request) {
 		$id = $request->id;
-		Gapoktan::where('user_id', $id)->delete();
-        User::where('id', $id)->delete();
+		$emp = Gapoktan::where('id', $id)->first();
+        $data = CertificateGapoktan::where('gapoktan_id', $id)->get();
+        foreach ($data as $key => $value) {
+            Storage::delete('sertifikat/' . $value->evidence);
+        }
+        CertificateGapoktan::where('gapoktan_id', $id)->delete();
+        UserGapoktan::where('gapoktan_id', $id)->delete();
+        User::where('id', $emp->user_id)->delete();
+        $emp->delete();
 	}
 
     // handle edit an employee ajax request
-	public function viewPhoto(Request $request) 
+	public function viewPhoto(Request $request)
     {
 		$id = $request->id;
 		$emp = CertificateGapoktan::distinct()->join('gapoktans', 'certificate_gapoktans.gapoktan_id', '=', 'gapoktans.id')
