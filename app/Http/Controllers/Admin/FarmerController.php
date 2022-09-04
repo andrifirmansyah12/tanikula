@@ -10,6 +10,7 @@ use App\Models\Farmer;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 
@@ -106,25 +107,52 @@ class FarmerController extends Controller
     // handle insert a new employee ajax request
 	public function store(Request $request)
     {
-		$user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->assignRole('petani');
-        $user->save();
-
-        $poktan_id = $request->poktan_id;
-        $gapoktan_id = $request->gapoktan_id;
-        $is_active = $request->is_active ? 1 : 0;
-        Farmer::create([
-            'user_id' => $user->id,
-            'gapoktan_id' => $gapoktan_id,
-            'poktan_id' => $poktan_id,
-            'is_active' => $is_active,
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|unique:users|max:50',
+            'email' => 'required|email|unique:users|max:100',
+            'gapoktan_id' => 'required',
+            'poktan_id' => 'required',
+            'password' => 'required',
+        ], [
+            'name.required' => 'Nama petani diperlukan!',
+            'name.max' => 'Nama petani maksimal 50 karakter!',
+            'name.unique' => 'Nama petani yang anda masukkan sudah ada!',
+            'email.required' => 'Email diperlukan!',
+            'email.unique' => 'Email yang anda masukkan sudah ada!',
+            'email.max' => 'Email maksimal 100 karakter!',
+            'password.required' => 'Kata sandi diperlukan!',
+            'password.min' => 'Kata sandi harus minimal 6 karakter!',
+            'password.max' => 'Kata sandi maksimal 50 karakter!',
+            'poktan_id.required' => 'Nama poktan diperlukan!',
+            'gapoktan_id.required' => 'Nama Gapoktan diperlukan!',
         ]);
-		return response()->json([
-			'status' => 200,
-		]);
+
+        if($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'messages' => $validator->getMessageBag()
+            ]);
+        } else {
+            $user = new User();
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = Hash::make($request->password);
+            $user->assignRole('petani');
+            $user->save();
+
+            $poktan_id = $request->poktan_id;
+            $gapoktan_id = $request->gapoktan_id;
+            $is_active = $request->is_active ? 1 : 0;
+            Farmer::create([
+                'user_id' => $user->id,
+                'gapoktan_id' => $gapoktan_id,
+                'poktan_id' => $poktan_id,
+                'is_active' => $is_active,
+            ]);
+            return response()->json([
+                'status' => 200,
+            ]);
+        }
 	}
 
     // handle edit an employee ajax request
@@ -143,39 +171,56 @@ class FarmerController extends Controller
 	// handle update an employee ajax request
 	public function update(Request $request)
     {
-        $user = User::find($request->user_id);
-        if($request->password) {
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->password = Hash::make($request->password);
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:50',
+            'email' => 'required|email|max:100',
+        ], [
+            'name.required' => 'Nama petani diperlukan!',
+            'name.max' => 'Nama petani maksimal 50 karakter!',
+            'email.required' => 'Email diperlukan!',
+            'email.max' => 'Email maksimal 100 karakter!',
+        ]);
+
+        if($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'messages' => $validator->getMessageBag()
+            ]);
         } else {
-            $user->name = $request->name;
-            $user->email = $request->email;
-        }
-        $user->save();
-
-        $emp = Farmer::with('user', 'poktan')->find($request->emp_id);
-        if ($request->edit_poktan_id && $request->edit_gapoktan_id) {
-            $emp->poktan_id = $request->edit_poktan_id;
-            $emp->gapoktan_id = $request->edit_gapoktan_id;
-            if ($request->is_active == 0) {
-                $emp->is_active = $request->is_active ? 1 : 0;
-            } elseif ($request->is_active == 1) {
-                $emp->is_active = $request->is_active ? 0 : 1;
+            $user = User::find($request->user_id);
+            if($request->password) {
+                $user->name = $request->name;
+                $user->email = $request->email;
+                $user->password = Hash::make($request->password);
+            } else {
+                $user->name = $request->name;
+                $user->email = $request->email;
             }
-        } else {
-            if ($request->is_active == 0) {
-                $emp->is_active = $request->is_active ? 1 : 0;
-            } elseif ($request->is_active == 1) {
-                $emp->is_active = $request->is_active ? 0 : 1;
+            $user->save();
+
+            $emp = Farmer::with('user', 'poktan')->find($request->emp_id);
+            if ($request->edit_poktan_id && $request->edit_gapoktan_id) {
+                $emp->poktan_id = $request->edit_poktan_id;
+                $emp->gapoktan_id = $request->edit_gapoktan_id;
+                // if ($request->is_active == 0) {
+                    $emp->is_active = $request->is_active ? 1 : 0;
+                // } elseif ($request->is_active == 1) {
+                //     $emp->is_active = $request->is_active ? 0 : 1;
+                // }
+            } else {
+                // if ($request->is_active == 0) {
+                    $emp->is_active = $request->is_active ? 1 : 0;
+                // } elseif ($request->is_active == 1) {
+                //     $emp->is_active = $request->is_active ? 0 : 1;
+                // }
             }
+
+            $emp->save();
+
+            return response()->json([
+                'status' => 200,
+            ]);
         }
-
-        $emp->save();
-
-		return response()->json([
-			'status' => 200,
-		]);
 	}
 
     // handle delete an employee ajax request

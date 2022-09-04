@@ -1,6 +1,6 @@
 <?php
 
-// use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -142,6 +142,11 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:admin']], function ()
     Route::delete('admin/daftar-gapoktan/delete', [App\Http\Controllers\Admin\GapoktanController::class, 'delete'])->name('admin-gapoktan-delete');
     Route::get('admin/daftar-gapoktan/edit', [App\Http\Controllers\Admin\GapoktanController::class, 'edit'])->name('admin-gapoktan-edit');
     Route::post('admin/daftar-gapoktan/update', [App\Http\Controllers\Admin\GapoktanController::class, 'update'])->name('admin-gapoktan-update');
+    Route::get('admin/certificate/viewPhoto', [App\Http\Controllers\Admin\GapoktanController::class, 'viewPhoto'])->name('admin-certificate-viewPhoto');
+    Route::delete('admin/certificate/deletePhoto', [App\Http\Controllers\Admin\GapoktanController::class, 'deletePhoto'])->name('admin-certificate-deletePhoto');
+    Route::get('admin/certificate/addPhoto', [App\Http\Controllers\Admin\GapoktanController::class, 'addPhoto'])->name('admin-certificate-addPhoto');
+    Route::post('admin/certificate/addPhotoProduct', [App\Http\Controllers\Admin\GapoktanController::class, 'addPhotoProduct'])->name('admin-certificate-addPhotoProduct');
+
 
     // Daftar Poktan
     Route::get('admin/daftar-poktan', [App\Http\Controllers\Admin\PoktanController::class, 'index'])->name('admin-poktan');
@@ -178,6 +183,10 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:admin']], function ()
     Route::get('admin/riwayat-penanam', [App\Http\Controllers\Admin\PlantingHistoryController::class, 'index'])->name('admin-riwayat-penanam');
     Route::get('admin/riwayat-penanam/fetchall', [App\Http\Controllers\Admin\PlantingHistoryController::class, 'fetchAll'])->name('admin-riwayat-penanam-fetchAll');
     Route::get('admin/riwayat-penanam/edit', [App\Http\Controllers\Admin\PlantingHistoryController::class, 'edit'])->name('admin-riwayat-penanam-edit');
+
+    // Rekap Penjualan
+    Route::get('admin/rekap-penjualan', [App\Http\Controllers\Admin\SalesRekapController::class, 'index'])->name('admin-sales-rekap');
+    Route::get('admin/rekap-penjualan/fetchall', [App\Http\Controllers\Admin\SalesRekapController::class, 'fetchAll'])->name('admin-salesRekap-fetchAll');
 
     // Pengaturan
     Route::get('admin/pengaturan', [App\Http\Controllers\Admin\PengaturanController::class, 'pengaturan'])->name('admin-pengaturan');
@@ -656,6 +665,9 @@ Route::post('/hubungi-kami', [App\Http\Controllers\Pages\ContactUsController::cl
 // Count Keranjang
 Route::get('/load-cart', [App\Http\Controllers\Pages\ProductController::class, 'countCart']);
 
+// Count Notifikasi
+Route::get('/load-notifications', [App\Http\Controllers\Pages\ProductController::class, 'countNotif']);
+
 // List Pencarian Product
 Route::get('/product-list', [App\Http\Controllers\Pages\ProductController::class, 'productListAjax'])->name('productListAjax');
 // Route::post('/product-searchProduct', [App\Http\Controllers\Pages\ProductController::class, 'searchProduct']);
@@ -667,7 +679,7 @@ Route::post('/delete-cart-wishlist', [App\Http\Controllers\Pembeli\WishlistContr
 // Auth::routes();
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/logout', function () {
-    Auth::logout();
-    return Redirect::to('login');
-});
+// Route::get('/logout', function () {
+//     Auth::logout();
+//     return Redirect::to('login');
+// });

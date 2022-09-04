@@ -164,7 +164,7 @@
                                 <!-- End Navbar -->
                                 <div class="card-body px-0 pb-2">
                                     <div class="table-responsive p-0">
-                                        <table class="table align-items-center mb-0">
+                                        <table class="table table-borderless align-items-center mb-0">
                                             <thead class="border-bottom-0">
                                                 <tr>
                                                     <th
@@ -199,16 +199,16 @@
                                                                 @foreach ($orderitem->product->photo_product->take(1) as
                                                                 $photos)
                                                                     @if ($photos->name)
-                                                                        <img src="{{ asset('../storage/produk/'.$photos->name) }}" class="img-fluid"
-                                                                            style="width: 10rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="{{ $orderitem->product->name }}">
+                                                                        <img src="{{ asset('../storage/produk/'.$photos->name) }}" class="img-fluid rounded"
+                                                                            style="width: 7rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="{{ $orderitem->product->name }}">
                                                                     @else
-                                                                        <img src="{{ asset('img/no-image.png') }}" class="img-fluid"
-                                                                            style="width: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="{{ $orderitem->product->name }}">
+                                                                        <img src="{{ asset('img/no-image.png') }}" class="img-fluid rounded"
+                                                                            style="width: 7rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="{{ $orderitem->product->name }}">
                                                                     @endif
                                                                 @endforeach
                                                             @else
-                                                                <img src="{{ asset('img/no-image.png') }}" class="img-fluid"
-                                                                    style="width: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="{{ $orderitem->product->name }}">
+                                                                <img src="{{ asset('img/no-image.png') }}" class="img-fluid rounded"
+                                                                    style="width: 7rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="{{ $orderitem->product->name }}">
                                                             @endif
                                                         </div>
                                                     </td>

@@ -82,15 +82,15 @@
                                                     @if ($item->product->photo_product->count() > 0)
                                                         @foreach ($item->product->photo_product->take(1) as $photos)
                                                             @if ($photos->name)
-                                                                <img class="img-fluid" style="object-fit: contain;"
+                                                                <img class="img-fluid rounded" style="width: 9rem; height: 7rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
                                                                     src="{{ asset('../storage/produk/'.$photos->name) }}" alt="{{ $item->product->name }}">
                                                             @else
-                                                                <img class="img-fluid" style="object-fit: contain;"
+                                                                <img class="img-fluid rounded" style="width: 9rem; height: 7rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
                                                                     src="{{ asset('img/no-image.png') }}" alt="{{ $item->product->name }}">
                                                             @endif
                                                         @endforeach
                                                     @else
-                                                        <img class="img-fluid" style="object-fit: contain;"
+                                                        <img class="img-fluid rounded" style="width: 9rem; height: 7rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
                                                             src="{{ asset('img/no-image.png') }}" alt="{{ $item->product->name }}">
                                                     @endif
                                                 </div>

@@ -20,7 +20,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('plus-admin/dist/js/demo.js') }}"></script>
-
+<script src="{{ asset('js/function.js') }}"></script>
 @yield('script')
 <script>
     // <-- Route Link -->

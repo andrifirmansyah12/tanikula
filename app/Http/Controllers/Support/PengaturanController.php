@@ -48,44 +48,81 @@ class PengaturanController extends Controller
 
     public function pengaturanUpdate(Request $request)
     {
-        User::where('id', auth()->user()->id)->update([
-            'name' => $request->name,
-            'email' => $request->email,
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:50',
+            'email' => 'required|email|max:100',
+            'phone' => 'required',
+            'street' => 'required',
+            'number' => 'required',
+        ], [
+            'name.required' => 'Nama gapoktan diperlukan!',
+            'name.max' => 'Nama gapoktan maksimal 50 karakter!',
+            'email.required' => 'Email diperlukan!',
+            'email.max' => 'Email maksimal 100 karakter!',
+            'phone.required' => 'Nomor telephone diperlukan!',
+            'street.required' => 'Jalan diperlukan!',
+            'number.required' => 'Nomor jalan/gang diperlukan!',
         ]);
 
-        if ($request->province_id && $request->city_id && $request->district_id && $request->village_id) {
-            Support::where('id', $request->id)->update([
-                'province_id' => $request->province_id,
-                'city_id' => $request->city_id,
-                'district_id' => $request->district_id,
-                'village_id' => $request->village_id,
-                'street' => $request->street,
-                'number' => $request->number,
-                'phone' => $request->phone,
+        if($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'messages' => $validator->getMessageBag()
             ]);
         } else {
-            Support::where('id', $request->id)->update([
-                'street' => $request->street,
-                'number' => $request->number,
-                'phone' => $request->phone,
+            User::where('id', auth()->user()->id)->update([
+                'name' => $request->name,
+                'email' => $request->email,
+            ]);
+
+            if ($request->province_id && $request->city_id && $request->district_id && $request->village_id) {
+                Support::where('id', $request->id)->update([
+                    'province_id' => $request->province_id,
+                    'city_id' => $request->city_id,
+                    'district_id' => $request->district_id,
+                    'village_id' => $request->village_id,
+                    'street' => $request->street,
+                    'number' => $request->number,
+                    'phone' => $request->phone,
+                ]);
+            } else {
+                Support::where('id', $request->id)->update([
+                    'street' => $request->street,
+                    'number' => $request->number,
+                    'phone' => $request->phone,
+                ]);
+            }
+
+            return response()->json([
+                'status' => 200,
+                'messages' => 'Biodata Support berhasil diupdate!'
             ]);
         }
-
-
-
-        return response()->json([
-            'status' => 200,
-            'messages' => 'Biodata Support berhasil diupdate!'
-        ]);
     }
 
-    public function pengaturanUpdatePassword(Request $request){
-        User::where('id', auth()->user()->id)->update([
-            'password' => Hash::make($request->password)
+    public function pengaturanUpdatePassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'password' => 'required|min:6|max:50',
+        ], [
+            'password.required' => 'Kata sandi diperlukan!',
+            'password.min' => 'Kata sandi harus minimal 6 karakter!',
+            'password.max' => 'Kata sandi maksimal 50 karakter!',
         ]);
-        return response()->json([
-            'status' => 200,
-            'messages' => 'Password berhasil diperbarui!'
-        ]);
+
+        if($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'messages' => $validator->getMessageBag()
+            ]);
+        } else {
+            User::where('id', auth()->user()->id)->update([
+                'password' => Hash::make($request->password)
+            ]);
+            return response()->json([
+                'status' => 200,
+                'messages' => 'Password berhasil diperbarui!'
+            ]);
+        }
     }
 }

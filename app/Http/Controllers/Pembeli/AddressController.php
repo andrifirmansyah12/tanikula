@@ -270,11 +270,7 @@ class AddressController extends Controller
             }
             $address->complete_address = $request->complete_address;
             $address->note_for_courier = $request->note_for_courier;
-            if ($request->main_address == 0) {
-                $address->main_address = $request->main_address ? 1 : 0;
-            } elseif ($request->main_address == 1) {
-                $address->main_address = $request->main_address ? 0 : 1;
-            }
+            $address->main_address = $request->main_address ? 1 : 0;
             $address->user_id = auth()->user()->id;
             $address->update();
 

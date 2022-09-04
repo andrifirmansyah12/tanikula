@@ -50,30 +50,30 @@ class PlantingHistoryController extends Controller
         }
 		$output = '';
 		if ($emps->count() > 0) {
-			$output .= '<table class="table table-striped table-sm text-center align-middle">
+			$output .= '<table class="table table-bordered table-sm text-center align-middle">
             <thead>
               <tr>
-                <th>No</th>
-                <th>Lahan</th>
-                <th>Petani</th>
-                <th>Tanggal Tandur</th>
-                <th>Tanggal Panen</th>
-                <th>Status</th>
+                <th class="align-middle text-center">No</th>
+                <th class="align-middle text-center">Lahan</th>
+                <th class="align-middle text-center">Petani</th>
+                <th class="align-middle text-center">Tanggal Tandur</th>
+                <th class="align-middle text-center">Tanggal Panen</th>
+                <th class="align-middle text-center">Status</th>
               </tr>
             </thead>
             <tbody>';
             $nomor=1;
 			foreach ($emps as $emp) {
 				$output .= '<tr>';
-                $output .= '<td>' . $nomor++ . '</td>';
-                $output .= '<td>' . $emp->fieldRecapPlanting->field->fieldCategory->name . '</td>';
-                $output .= '<td>' . $emp->farmer->user->name . '</td>
-                <td>' . date("d-F-Y", strtotime($emp->fieldRecapPlanting->date_planting)) . '</td>
-                <td>' . date("d-F-Y", strtotime($emp->date_harvest)) . '</td>';
+                $output .= '<td class="align-middle text-center">' . $nomor++ . '</td>';
+                $output .= '<td class="align-middle text-center">' . $emp->fieldRecapPlanting->field->fieldCategory->name . '</td>';
+                $output .= '<td class="align-middle text-center">' . $emp->farmer->user->name . '</td>
+                <td class="align-middle text-center">' . date("d-F-Y", strtotime($emp->fieldRecapPlanting->date_planting)) . '</td>
+                <td class="align-middle text-center">' . date("d-F-Y", strtotime($emp->date_harvest)) . '</td>';
                 if ($emp->status) {
-                    $output .= '<td><span class="text-capitalize">' . $emp->status . '</span></td>';
+                    $output .= '<td class="align-middle text-center"><span class="text-capitalize">' . $emp->status . '</span></td>';
                 } else {
-                    $output .= '<td><span class="text-danger">Belum ada status</span></td>';
+                    $output .= '<td class="align-middle text-center"><span class="text-danger">Belum ada status</span></td>';
                 }
                 $output .= '
               </tr>';

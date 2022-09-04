@@ -134,6 +134,7 @@
                         {
                             text: 'Csv',
                             extend: 'csvHtml5',
+                            title: 'Laporan Panen',
                             exportOptions: {
                                 columns: ':visible:not(.not-export-col)'
                             }
@@ -141,6 +142,7 @@
                         {
                             text: 'Excel',
                             extend: 'excelHtml5',
+                            title: 'Laporan Panen',
                             exportOptions: {
                                 columns: ':visible:not(.not-export-col)'
                             }
@@ -148,6 +150,7 @@
                         {
                             text: 'Pdf',
                             extend: 'pdfHtml5',
+                            title: 'Laporan Panen',
                             exportOptions: {
                                 columns: ':visible:not(.not-export-col)'
                             }
@@ -155,6 +158,7 @@
                         {
                             text: 'Print',
                             extend: 'print',
+                            title: 'Laporan Panen',
                             exportOptions: {
                                 columns: ':visible:not(.not-export-col)'
                             }

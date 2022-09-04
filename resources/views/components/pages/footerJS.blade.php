@@ -39,6 +39,14 @@
     function petani(route) {
         window.location = route;
     }
+    // Admin Dashboard
+    function admin(route) {
+        window.location = route;
+    }
+    // Support Dashboard
+    function support(route) {
+        window.location = route;
+    }
     // Login
     function login(url) {
         window.location = url;
@@ -191,6 +199,7 @@
 <script>
     $(document).ready(function () {
 
+    LoadNotif();
     LoadCart();
 
     $.ajaxSetup({
@@ -207,6 +216,19 @@
             success: function (response) {
                 $('.cart-count').html('');
                 $('.cart-count').html(response.count);
+                // alert(response.count);
+            }
+        });
+    }
+
+    function LoadNotif()
+    {
+        $.ajax({
+            method: "GET",
+            url: "/load-notifications",
+            success: function (response) {
+                $('.notif-count').html('');
+                $('.notif-count').html(response.count);
                 // alert(response.count);
             }
         });

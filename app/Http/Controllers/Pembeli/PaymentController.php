@@ -8,7 +8,11 @@ use App\Models\Order;
 use App\Models\Payment;
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\PushNotification;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
 
 class PaymentController extends Controller
 {
@@ -93,30 +97,57 @@ class PaymentController extends Controller
 		$payment = Payment::create($paymentParams);
 
 		if ($paymentStatus && $payment) {
-			\DB::transaction(
+			DB::transaction(
 				function () use ($order, $payment) {
 					if (in_array($payment->status, [Payment::SUCCESS, Payment::SETTLEMENT])) {
 						$order->payment_status = Order::PAID;
 						$order->status = Order::CONFIRMED;
                         // $order->payment_due = Carbon::now()->format('Y-m-d H:i:s');
 						$order->save();
+
+                        $cartItem = Cart::with('product')->where('user_id', $order->user_id)->latest()->get();
+                        foreach ($cartItem as $item) {
+                            $prod = Product::where('id', $item->product_id)->first();
+                            $prod->stoke = $prod->stoke - $item->product_qty;
+                            if ($prod->stock_out == null) {
+                                $prod->stock_out = $item->product_qty;
+                            } else {
+                                $prod->stock_out = $prod->stock_out + $item->product_qty;
+                            }
+                            $prod->update();
+                        }
+                        Cart::destroy($cartItem);
+
+                        // Push Notification
+                        $user_id = $order->user_id;
+                        $url = "https://fcm.googleapis.com/fcm/send";
+                        $SERVER_API_KEY = 'AAAASSWA7hI:APA91bGkfIJFNGyqIJAiKtLXI79XdZpDuicn7pQrFv-yXdbLmLQETRkRkCY5VnGZBfwRevDkUJdA0ADnJ7Z5r1rnS4flS-ds8yxe_bp4sXouzH8Nfj-PHYCGl8-pVKkE49WqsSuPkKtd';
+                        $headers = [
+                            'Authorization' => 'key=' . $SERVER_API_KEY,
+                            'Content-Type' => 'application/json',
+                        ];
+
+                        PushNotification::create([
+                            'user_id' => $order->user_id,
+                            "title" => "Pembayaran berhasil",
+                            "body" => "Berhasil melakukan pembayaran, Pesanan anda sedang diproses!",
+                            "img" => "icons8-purchase-order-90.png",
+                        ]);
+
+                        Http::withHeaders($headers)->post($url, [
+                            // "to" => "cWmdLu_QQqa6CR28k2aDtJ:APA91bHs2-K9fkZ7rOIUOvrq2bEtlxNpTUoZSn7-TpOcNpfmbwFRfhY1NPBCjYv53uCHJLfFPmsmG84pSWXmG2ezDVkv-opbrM-AaQ42j_UKso-qAqGWlMoJv0AhffI2NAaKTv9DIe0v",
+                            'to' => '/topics/topic_user_id_' . $user_id,
+                            "notification" => [
+                                "title" => "Pembayaran berhasil",
+                                "body" => "Berhasil melakukan pembayaran, Pesanan anda sedang diproses!",
+                                "mutable_content" => true,
+                                "sound" => "Tri-tone"
+                            ]
+                        ]);
 					}
 				}
 			);
 		}
-
-        $cartItem = Cart::with('product')->where('user_id', $order->user_id)->latest()->get();
-        foreach ($cartItem as $item) {
-            $prod = Product::where('id', $item->product_id)->first();
-            $prod->stoke = $prod->stoke - $item->product_qty;
-            if ($prod->stock_out == null) {
-                $prod->stock_out = $item->product_qty;
-            } else {
-                $prod->stock_out = $prod->stock_out + $item->product_qty;
-            }
-            $prod->update();
-        }
-        Cart::destroy($cartItem);
 
 		$message = 'Payment status is : '. $paymentStatus;
 
@@ -144,7 +175,7 @@ class PaymentController extends Controller
 			return redirect('payments/failed?order_id='. $code);
 		}
 
-		\Session::flash('success', "Thank you for completing the payment process!");
+		Session::flash('success', "Thank you for completing the payment process!");
 
 		return redirect('cart/shipment/place-order/received/'. $order->id);
 	}
@@ -161,7 +192,7 @@ class PaymentController extends Controller
 		$code = $request->query('order_id');
 		$order = Order::where('code', $code)->firstOrFail();
 
-		\Session::flash('error', "Sorry, we couldn't process your payment.");
+		Session::flash('error', "Sorry, we couldn't process your payment.");
 
 		return redirect('cart/shipment/place-order/received/'. $order->id);
 	}
@@ -178,7 +209,7 @@ class PaymentController extends Controller
 		$code = $request->query('order_id');
 		$order = Order::where('code', $code)->firstOrFail();
 
-		\Session::flash('error', "Sorry, we couldn't process your payment.");
+		Session::flash('error', "Sorry, we couldn't process your payment.");
 
 		return redirect('cart/shipment/place-order/received/'. $order->id);
 	}

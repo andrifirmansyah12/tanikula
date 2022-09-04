@@ -51,7 +51,9 @@
                         <div class="row">
                             <div class="col-lg">
                                 <label for="name">Nama</label>
-                                <input type="text" name="name" class="nameCheck form-control" placeholder="Nama" required>
+                                <input type="text" name="name" id="add_name" class="nameCheck form-control" placeholder="Nama">
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                         </div>
                         <div class="my-2 form-group">
@@ -90,7 +92,9 @@
                         <div class="row">
                             <div class="col-lg">
                                 <label for="name">Nama</label>
-                                <input type="text" name="name" id="name" class="form-control nameCheck" placeholder="Nama" required>
+                                <input type="text" name="name" id="name" class="form-control nameCheck" placeholder="Nama">
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                         </div>
                         <div class="my-2 form-group">
@@ -167,18 +171,23 @@
                 processData: false,
                 dataType: 'json',
                 success: function(response) {
-                    if (response.status == 200) {
-                    Swal.fire(
-                        'Menambahkan!',
-                        'Kategori Edukasi Berhasil Ditambahkan!',
-                        'success'
-                    )
-                    fetchAllEmployees();
+                    if (response.status == 400) {
+                        showError('add_name', response.messages.name);
+                        $("#add_employee_btn").text('Simpan');
+                        $("#add_employee_btn").prop('disabled', false);
+                    } else if (response.status == 200) {
+                        Swal.fire(
+                            'Menambahkan!',
+                            'Kategori Edukasi Berhasil Ditambahkan!',
+                            'success'
+                        )
+                        fetchAllEmployees();
+                        $("#add_employee_btn").text('Simpan');
+                        $("#add_employee_btn").prop('disabled', false);
+                        $("#add_employee_form")[0].reset();
+                        $("#addEmployeeModal").modal('hide');
                     }
-                    $("#add_employee_btn").text('Simpan');
-                    $("#add_employee_btn").prop('disabled', false);
-                    $("#add_employee_form")[0].reset();
-                    $("#addEmployeeModal").modal('hide');
+                    
                 }
                 });
             });
@@ -221,18 +230,22 @@
                 processData: false,
                 dataType: 'json',
                 success: function(response) {
-                    if (response.status == 200) {
-                    Swal.fire(
-                        'Memperbarui!',
-                        'Kategori Edukasi Berhasil Diperbarui!',
-                        'success'
-                    )
-                    fetchAllEmployees();
+                    if (response.status == 400) {
+                        showError('name', response.messages.name);
+                        $("#edit_employee_btn").text('Simpan');
+                        $("#edit_employee_btn").prop('disabled', false);
+                    } else if (response.status == 200) {
+                        Swal.fire(
+                            'Memperbarui!',
+                            'Kategori Edukasi Berhasil Diperbarui!',
+                            'success'
+                        )
+                        fetchAllEmployees();
+                        $("#edit_employee_btn").text('Simpan');
+                        $("#edit_employee_btn").prop('disabled', false);
+                        $("#edit_employee_form")[0].reset();
+                        $("#editEmployeeModal").modal('hide');
                     }
-                    $("#edit_employee_btn").text('Simpan');
-                    $("#edit_employee_btn").prop('disabled', false);
-                    $("#edit_employee_form")[0].reset();
-                    $("#editEmployeeModal").modal('hide');
                 }
                 });
             });

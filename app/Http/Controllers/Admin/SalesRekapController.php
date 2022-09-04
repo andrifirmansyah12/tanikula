@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Gapoktan;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -11,7 +11,7 @@ class SalesRekapController extends Controller
     // set index page view
 	public function index(Request $request) {
 
-		return view('gapoktan.rekap_penjualan.index');
+		return view('admin.rekap_penjualan.index');
 	}
 
         // handle fetch all eamployees ajax request

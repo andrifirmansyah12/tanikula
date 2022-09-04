@@ -51,13 +51,17 @@
                         <div class="row">
                             <div class="col-lg my-2">
                                 <label for="name">Nama Lahan</label>
-                                <input type="text" name="name" class="nameCheck form-control" placeholder="Nama" required>
+                                <input type="text" name="name" id="add_name" class="nameCheck form-control" placeholder="Nama">
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                         </div>
                         <div class="row my-2">
                             <div class="col-lg">
                                 <label for="name">Keterangan Lahan</label>
-                                <input type="text" name="details" class="form-control nameCheck" placeholder="Keterangan" required>
+                                <input type="text" name="details" id="add_details" class="form-control nameCheck" placeholder="Keterangan">
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -87,13 +91,17 @@
                         <div class="row my-2">
                             <div class="col-lg">
                                 <label for="name">Nama Lahan</label>
-                                <input type="text" name="name" id="name" class="form-control nameCheck" placeholder="Nama" required>
+                                <input type="text" name="name" id="name" class="form-control nameCheck" placeholder="Nama">
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                         </div>
                         <div class="row my-2">
                             <div class="col-lg">
                                 <label for="name">Keterangan Lahan</label>
-                                <input type="text" name="details" id="details" class="form-control nameCheck" placeholder="Keterangan" required>
+                                <input type="text" name="details" id="details" class="form-control nameCheck" placeholder="Keterangan">
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -155,18 +163,23 @@
                 processData: false,
                 dataType: 'json',
                 success: function(response) {
-                    if (response.status == 200) {
-                    Swal.fire(
-                        'Menambahkan!',
-                        'Kategori Lahan Berhasil Ditambahkan!',
-                        'success'
-                    )
-                    fetchAllEmployees();
+                    if (response.status == 400) {
+                        showError('add_name', response.messages.name);
+                        showError('add_details', response.messages.details);
+                        $("#add_employee_btn").text('Simpan');
+                        $("#add_employee_btn").prop('disabled', false);
+                    } else if (response.status == 200) {
+                        Swal.fire(
+                            'Menambahkan!',
+                            'Kategori Lahan Berhasil Ditambahkan!',
+                            'success'
+                        )
+                        fetchAllEmployees();
+                        $("#add_employee_btn").text('Simpan');
+                        $("#add_employee_btn").prop('disabled', false);
+                        $("#add_employee_form")[0].reset();
+                        $("#addEmployeeModal").modal('hide');
                     }
-                    $("#add_employee_btn").text('Simpan');
-                    $("#add_employee_btn").prop('disabled', false);
-                    $("#add_employee_form")[0].reset();
-                    $("#addEmployeeModal").modal('hide');
                 }
                 });
             });
@@ -205,18 +218,23 @@
                 processData: false,
                 dataType: 'json',
                 success: function(response) {
-                    if (response.status == 200) {
-                    Swal.fire(
-                        'Memperbarui!',
-                        'Kategori Lahan Berhasil Diperbarui!',
-                        'success'
-                    )
-                    fetchAllEmployees();
+                    if (response.status == 400) {
+                        showError('name', response.messages.name);
+                        showError('details', response.messages.details);
+                        $("#edit_employee_btn").text('Simpan');
+                        $("#edit_employee_btn").prop('disabled', false);
+                    } else if (response.status == 200) {
+                        Swal.fire(
+                            'Memperbarui!',
+                            'Kategori Lahan Berhasil Diperbarui!',
+                            'success'
+                        )
+                        fetchAllEmployees();
+                        $("#edit_employee_btn").text('Simpan');
+                        $("#edit_employee_btn").prop('disabled', false);
+                        $("#edit_employee_form")[0].reset();
+                        $("#editEmployeeModal").modal('hide');
                     }
-                    $("#edit_employee_btn").text('Simpan');
-                    $("#edit_employee_btn").prop('disabled', false);
-                    $("#edit_employee_form")[0].reset();
-                    $("#editEmployeeModal").modal('hide');
                 }
                 });
             });

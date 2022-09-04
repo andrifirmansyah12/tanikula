@@ -1,5 +1,5 @@
 @extends('admin.template')
-@section('title', 'Riwayat Penanam')
+@section('title', 'Rekap Penjualan')
 
 @section('style')
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -20,7 +20,6 @@
 @endsection
 
 @section('content')
-
     <!-- Main Content -->
     <section class="content">
         <div class="container-fluid">
@@ -70,56 +69,6 @@
             </div>
         </div>
     </section>
-
-    <!-- Modal -->
-    <div class="modal fade" id="editEmployeeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Detail Riwayat Penanam</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form action="#" method="POST" id="edit_employee_form" enctype="multipart/form-data">
-                    @csrf
-                    <input type="hidden" name="emp_id" id="emp_id">
-                    <div class="modal-body p-4">
-                        <div class="form-group my-2">
-                            <label for="plant_tanaman">Tanaman</label>
-                            <input type="text" disabled name="plant_tanaman" id="plant_tanaman" class="form-control" placeholder="Nama Tanaman" required>
-                        </div>
-                        <div class="form-group my-2">
-                            <label for="surface_area">Luas Tanah</label>
-                            <input type="text" disabled name="surface_area" id="surface_area" class="form-control" placeholder="Luas Tanah" required>
-                        </div>
-                        <div class="form-group my-2">
-                            <label for="address">Alamat</label>
-                            <textarea class="form-control" disabled name="address" id="address" rows="3" placeholder="Deskripsi required"></textarea>
-                        </div>
-                        <div class="my-2 form-group">
-                            <label for="plating_date">Tanggal Tandur</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                        <i class="bi bi-calendar"></i>
-                                    </div>
-                                </div>
-                                <input type="text" name="plating_date" disabled id="plating_date" v-model="plating_date" class="form-control datepicker">
-                            </div>
-                        </div>
-                        <div class="my-2 form-group">
-                            <label for="plating_date">Tanggal Panen</label>
-                            <div class="input-group" id="harvest_date">
-
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
 @endsection
 
 @section('script')
@@ -163,7 +112,7 @@
 
             function fetchAllEmployees(from_date = '', to_date = '') {
                 $.ajax({
-                url: '{{ route('admin-riwayat-penanam-fetchAll') }}',
+                url: '{{ route('admin-salesRekap-fetchAll') }}',
                 data:{from_date:from_date, to_date:to_date},
                 method: 'get',
                 success: function(response) {
@@ -172,11 +121,13 @@
                     order: [0, 'asc'],
                     dom: "Blfrtip",
                     "bLengthChange": false,
+                    fixedHeader: true,
                     buttons: [
                         {
                             text: 'Csv',
                             extend: 'csvHtml5',
-                            title: 'Laporan Panen',
+                            footer: true,
+                            title: 'Laporan Penjualan',
                             exportOptions: {
                                 columns: ':visible:not(.not-export-col)'
                             }
@@ -184,7 +135,8 @@
                         {
                             text: 'Excel',
                             extend: 'excelHtml5',
-                            title: 'Laporan Panen',
+                            footer: true,
+                            title: 'Laporan Penjualan',
                             exportOptions: {
                                 columns: ':visible:not(.not-export-col)'
                             }
@@ -192,18 +144,21 @@
                         {
                             text: 'Pdf',
                             extend: 'pdfHtml5',
-                            title: 'Laporan Panen',
+                            footer: true,
+                            title: 'Laporan Penjualan',
+                            // download: 'open',
                             exportOptions: {
                                 columns: ':visible:not(.not-export-col)'
-                            }
+                            },
                         },
                         {
                             text: 'Print',
                             extend: 'print',
-                            title: 'Laporan Panen',
+                            footer: true,
+                            title: 'Laporan Penjualan',
                             exportOptions: {
                                 columns: ':visible:not(.not-export-col)'
-                            }
+                            },
                         },
                     ],
                     columnDefs: [{

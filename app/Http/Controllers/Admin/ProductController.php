@@ -50,6 +50,7 @@ class ProductController extends Controller
                 <th>Stok</th>
                 <th>Berat</th>
                 <th>Harga</th>
+                <th>Diskon</th>
                 <th>Status</th>
                 <th>Aksi</th>
               </tr>
@@ -81,6 +82,11 @@ class ProductController extends Controller
                 $output .= '<td>' . $emp->stoke . '</td>
                 <td>' . $emp->weight . ' gram</td>
                 <td>Rp. ' . number_format($emp->price, 0) . '</td>';
+                if ($emp->discount) {
+                    $output .= '<td>'. $emp->discount . '%</td>';
+                } else {
+                    $output .= '<td>0%</td>';
+                }
                 if ($emp->is_active == 1) {
                     $output .= '<td><div class="badge badge-success">Aktif</div></td>';
                 } elseif ($emp->is_active == 0) {
@@ -105,17 +111,23 @@ class ProductController extends Controller
 	public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|max:255',
+            'gapoktan_id' => 'required',
+            'name' => 'required|max:100',
             'category_product_id' => 'required',
-            'stoke' => 'required|max:50',
-            'price' => 'required|max:50',
+            'stoke' => 'required',
+            'price' => 'required',
+            'weight' => 'required',
+            'discount' => 'required',
             'desc' => 'required',
         ], [
-            'name.required' => 'Nama diperlukan!',
-            'name.max' => 'Nama maksimal 255 karakter!',
+            'gapoktan_id.required' => 'Nama Gapoktan diperlukan!',
+            'name.required' => 'Nama produk diperlukan!',
+            'name.max' => 'Nama produk maksimal 100 karakter!',
             'category_product_id.required' => 'Kategori produk diperlukan!',
             'stoke.required' => 'Stok produk diperlukan!',
             'price.required' => 'Harga produk diperlukan!',
+            'weight.required' => 'Berat produk diperlukan!',
+            'discount.required' => 'Diskon produk diperlukan!',
             'desc.required' => 'Deskripsi produk diperlukan!',
         ]);
 
@@ -174,19 +186,26 @@ class ProductController extends Controller
 	}
 
 	// handle update an employee ajax request
-	public function update(Request $request) {
+	public function update(Request $request) 
+    {
 		$validator = Validator::make($request->all(), [
-            'name' => 'required|max:255',
+            // 'gapoktan_id' => 'required',
+            'name' => 'required|max:100',
             'category_product_id' => 'required',
-            'stoke' => 'required|max:50',
-            'price' => 'required|max:50',
+            'stoke' => 'required',
+            'price' => 'required',
+            'weight' => 'required',
+            'discount' => 'required',
             'desc' => 'required',
         ], [
-            'name.required' => 'Nama diperlukan!',
-            'name.max' => 'Nama maksimal 255 karakter!',
+            // 'gapoktan_id.required' => 'Nama Gapoktan diperlukan!',
+            'name.required' => 'Nama produk diperlukan!',
+            'name.max' => 'Nama produk maksimal 100 karakter!',
             'category_product_id.required' => 'Kategori produk diperlukan!',
             'stoke.required' => 'Stok produk diperlukan!',
             'price.required' => 'Harga produk diperlukan!',
+            'weight.required' => 'Berat produk diperlukan!',
+            'discount.required' => 'Diskon produk diperlukan!',
             'desc.required' => 'Deskripsi produk diperlukan!',
         ]);
 
@@ -196,59 +215,42 @@ class ProductController extends Controller
                 'messages' => $validator->getMessageBag()
             ]);
         } else {
-
             $product = Product::find($request->emp_id);
-            if ($request->gapoktan_id) {
-                $product->name = $request->name;
-                $product->slug = $request->slug;
-                $product->category_product_id = $request->category_product_id;
-                $product->weight = $request->weight;
-                $product->stoke = $request->stoke;
-                $product->desc = $request->desc;
-                // Diskon
-                if ($request->discount != 0)
-                {
-                    // Rumus Diskon
-                    $product->discount = $request->discount;
-                    $harga_awal = $request->discount/100 * $request->price;
-                    $harga_akhir = $request->price - $harga_awal;
-
-                    // Database
-                    $product->price_discount = $request->price;
-                    $product->price = $harga_akhir;
-                } elseif ($request->discount == 0) {
-                    $product->discount = $request->discount;
-                    if ($product->price_discount == 0) {
-                        $product->price = $request->price;
-                    } else {
-                        $product->price = $product->price_discount;
-                    }
-                    $product->price_discount = null;
-                }
-                if ($request->is_active == 0) {
-                    $product->is_active = $request->is_active ? 1 : 0;
-                } elseif ($request->is_active == 1) {
-                    $product->is_active = $request->is_active ? 0 : 1;
-                }
-                $product->user_id = $request->gapoktan_id;
+            $product->name = $request->name;
+            $product->slug = $request->slug;
+            $product->category_product_id = $request->category_product_id;
+            $product->weight = $request->weight;
+            $product->stoke = $request->stoke;
+            $product->desc = $request->desc;
+            if ($request->price != $product->price) {
+                $product->price = $request->price;
+                $product->discount = 0;
+                $product->price_discount = null;
             } else {
-                $product->name = $request->name;
-                $product->slug = $request->slug;
-                $product->category_product_id = $request->category_product_id;
-                $product->weight = $request->weight;
-                $product->stoke = $request->stoke;
-                $product->desc = $request->desc;
                 // Diskon
                 if ($request->discount != 0)
                 {
-                    // Rumus Diskon
-                    $product->discount = $request->discount;
-                    $harga_awal = $request->discount/100 * $request->price;
-                    $harga_akhir = $request->price - $harga_awal;
+                    if ($product->discount != $request->discount) {
+                        // Rumus Diskon
+                        if ($product->price_discount != null) {
+                            $product->discount = $request->discount;
+                            $harga_awal = $request->discount/100 * $product->price_discount;
+                            $harga_akhir = $product->price_discount - $harga_awal;
 
-                    // Database
-                    $product->price_discount = $request->price;
-                    $product->price = $harga_akhir;
+                            // Database
+                            $product->price_discount = $product->price_discount;
+                            $product->price = $harga_akhir;
+                        } elseif ($product->price_discount == null) {
+                            // Rumus Diskon
+                            $product->discount = $request->discount;
+                            $harga_awal = $request->discount/100 * $request->price;
+                            $harga_akhir = $request->price - $harga_awal;
+
+                            // Database
+                            $product->price_discount = $request->price;
+                            $product->price = $harga_akhir;
+                        }
+                    }
                 } elseif ($request->discount == 0) {
                     $product->discount = $request->discount;
                     if ($product->price_discount == 0) {
@@ -257,13 +259,12 @@ class ProductController extends Controller
                         $product->price = $product->price_discount;
                     }
                     $product->price_discount = null;
-                }
-                if ($request->is_active == 0) {
-                    $product->is_active = $request->is_active ? 1 : 0;
-                } elseif ($request->is_active == 1) {
-                    $product->is_active = $request->is_active ? 0 : 1;
                 }
             }
+            if ($request->gapoktan_id) {
+                $product->user_id = $request->gapoktan_id;
+            }
+            $product->is_active = $request->is_active ? 1 : 0;
             $product->update();
             return response()->json([
                     'status' => 200,
@@ -335,9 +336,9 @@ class ProductController extends Controller
     // handle update an employee ajax request
 	public function addPhotoProduct(Request $request) {
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
+            'images' => 'required',
         ], [
-            'name.required' => 'Nama produk diperlukan!',
+            'images.required' => 'Foto produk diperlukan!',
         ]);
 
         if($validator->fails()) {

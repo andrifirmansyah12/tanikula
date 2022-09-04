@@ -11,8 +11,10 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use App\Models\PushNotification;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Session;
 
 class CheckoutController extends Controller
 {
@@ -132,7 +134,7 @@ class CheckoutController extends Controller
         {
             $order = Order::with('address', 'user', 'orderItems')
                 ->where('id', $orderId)
-                ->where('user_id', \Auth::user()->id)
+                ->where('user_id', Auth::user()->id)
                 ->firstOrFail();
 
             return view('pages.order.index', compact('order'));
@@ -228,9 +230,37 @@ class CheckoutController extends Controller
         if ($order) {
             // $cartItem = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
             // Cart::destroy($cartItem);
+
+            // Push Notification
+            $user_id = auth()->user()->id;
+            $url = "https://fcm.googleapis.com/fcm/send";
+            $SERVER_API_KEY = 'AAAASSWA7hI:APA91bGkfIJFNGyqIJAiKtLXI79XdZpDuicn7pQrFv-yXdbLmLQETRkRkCY5VnGZBfwRevDkUJdA0ADnJ7Z5r1rnS4flS-ds8yxe_bp4sXouzH8Nfj-PHYCGl8-pVKkE49WqsSuPkKtd';
+            $headers = [
+                'Authorization' => 'key=' . $SERVER_API_KEY,
+                'Content-Type' => 'application/json',
+            ];
+
+            PushNotification::create([
+                'user_id' => auth()->user()->id,
+                "title" => "Pemesanan berhasil dibuat",
+                "body" => "Pesanan Anda telah dibuat, Silahkan melanjutkan pembayaran!",
+                "img" => "icons8-create-order-96.png",
+            ]);
+
+            Http::withHeaders($headers)->post($url, [
+                // "to" => "cWmdLu_QQqa6CR28k2aDtJ:APA91bHs2-K9fkZ7rOIUOvrq2bEtlxNpTUoZSn7-TpOcNpfmbwFRfhY1NPBCjYv53uCHJLfFPmsmG84pSWXmG2ezDVkv-opbrM-AaQ42j_UKso-qAqGWlMoJv0AhffI2NAaKTv9DIe0v",
+                'to' => '/topics/topic_user_id_' . $user_id,
+                "notification" => [
+                    "title" => "Pemesanan berhasil dibuat",
+                    "body" => "Pesanan Anda telah dibuat, Silahkan melanjutkan pembayaran!",
+                    "mutable_content" => true,
+                    "sound" => "Tri-tone"
+                ]
+            ]);
+
             $this->_sendEmailOrderReceived($order);
 
-            \Session::flash('success', 'Thank you. Your order has been received!');
+            Session::flash('success', 'Thank you. Your order has been received!');
             return response()->json([
                 'status' => 200,
                 'id' => $order->id
@@ -447,11 +477,7 @@ class CheckoutController extends Controller
             $address->telp = $request->telp;
             $address->complete_address = $request->complete_address;
             $address->note_for_courier = $request->note_for_courier;
-            if ($request->main_address == 0) {
-                $address->main_address = $request->main_address ? 1 : 0;
-            } elseif ($request->main_address == 1) {
-                $address->main_address = $request->main_address ? 0 : 1;
-            }
+            $address->main_address = $request->main_address ? 1 : 0;
             $address->user_id = auth()->user()->id;
             $address->update();
 
@@ -497,7 +523,7 @@ class CheckoutController extends Controller
 	 */
 	private function _sendEmailOrderReceived($order)
 	{
-		\App\Jobs\SendMailOrderReceived::dispatch($order, \Auth::user());
+		\App\Jobs\SendMailOrderReceived::dispatch($order, Auth::user());
 	}
 
     private function initPaymentGateway()

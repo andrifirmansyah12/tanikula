@@ -47,44 +47,59 @@
                 </div>
                 <div class="col-lg-4 col-md-4 col-12">
                     <div class="top-end">
-                    @auth
+                        @auth
                         @hasrole('pembeli')
-                            <a onclick="pembeli('{{ route('pembeli') }}')" href="#" class="user">
-                                <i class="lni lni-user"></i>
-                                {{ auth()->user()->name }}
-                            </a>
+                        <a onclick="pembeli('{{ route('pembeli') }}')" href="#" class="user">
+                            <i class="lni lni-user"></i>
+                            {{ auth()->user()->name }}
+                        </a>
                         @elserole('gapoktan')
-                            <a onclick="gapoktan('{{ route('gapoktan') }}')" href="#" class="user">
-                                <i class="lni lni-user"></i>
-                                {{ auth()->user()->name }}
-                            </a>
+                        <a onclick="gapoktan('{{ route('gapoktan') }}')" href="#" class="user">
+                            <i class="lni lni-user"></i>
+                            {{ auth()->user()->name }}
+                        </a>
                         @elserole('poktan')
-                            <a onclick="poktan('{{ route('poktan') }}')" href="#" class="user">
-                                <i class="lni lni-user"></i>
-                                {{ auth()->user()->name }}
-                            </a>
+                        <a onclick="poktan('{{ route('poktan') }}')" href="#" class="user">
+                            <i class="lni lni-user"></i>
+                            {{ auth()->user()->name }}
+                        </a>
                         @elserole('petani')
-                            <a onclick="petani('{{ route('petani') }}')" href="#" class="user">
-                                <i class="lni lni-user"></i>
-                                {{ auth()->user()->name }}
-                            </a>
+                        <a onclick="petani('{{ route('petani') }}')" href="#" class="user">
+                            <i class="lni lni-user"></i>
+                            {{ auth()->user()->name }}
+                        </a>
+                        @elserole('admin')
+                        <a onclick="admin('{{ route('admin') }}')" href="#" class="user">
+                            <i class="lni lni-user"></i>
+                            {{ auth()->user()->name }}
+                        </a>
+                        @elserole('support')
+                        <a onclick="support('{{ route('support') }}')" href="#" class="user">
+                            <i class="lni lni-user"></i>
+                            {{ auth()->user()->name }}
+                        </a>
                         @endhasrole
-                    @else
+                        @else
                         <ul class="user-login">
                             <li>
-                                <a class="btn" style="background: #16A085; color: #ffff;" onclick="login('{{ route('login') }}')" href="#">Masuk</a>
+                                <a class="btn" style="background: #16A085; color: #ffff;"
+                                    onclick="login('{{ route('login') }}')" href="#">Masuk</a>
                             </li>
                             <li>
                                 <div class="dropdown">
-                                    <a style="cursor: pointer; background: #16A085; color: #ffff;" class="btn" data-toggle="dropdown" aria-expanded="false">Daftar</a>
+                                    <a style="cursor: pointer; background: #16A085; color: #ffff;" class="btn"
+                                        data-toggle="dropdown" aria-expanded="false">Daftar</a>
                                     <div class="dropdown-menu mt-2">
-                                        <a class="dropdown-item" onclick="register('{{ url('/register') }}')" href="#">Sebagai Pembeli</a>
-                                        <a class="dropdown-item" onclick="registerGapoktan('{{ url('/gapoktan/register') }}')" href="#">Sebagai Gapoktan</a>
+                                        <a class="dropdown-item" onclick="register('{{ url('/register') }}')"
+                                            href="#">Sebagai Pembeli</a>
+                                        <a class="dropdown-item"
+                                            onclick="registerGapoktan('{{ url('/gapoktan/register') }}')"
+                                            href="#">Sebagai Gapoktan</a>
                                     </div>
                                 </div>
                             </li>
                         </ul>
-                    @endauth
+                        @endauth
                     </div>
                 </div>
             </div>
@@ -110,8 +125,8 @@
                         <form action="{{ url('/search-product') }}">
                             <div class="navbar-search search-style-5">
                                 <div class="search-input">
-                                    <input type="search" class="form-control typeaheadProduct" value="{{ request('pencarian') }}"
-                                        name="pencarian"
+                                    <input type="search" class="form-control typeaheadProduct"
+                                        value="{{ request('pencarian') }}" name="pencarian"
                                         placeholder="Pencarian produk" autocomplete="off">
                                 </div>
                                 <div class="search-btn">
@@ -132,16 +147,67 @@
                             </h3>
                         </div>
                         <div class="navbar-cart">
-                            <div class="wishlist">
-                                <a href="javascript:void(0)">
+                            <div class="notification-items">
+                                @php
+                                $notificationsSum =
+                                App\Models\PushNotification::where('user_id',Auth::id())->sum('is_read', 0);
+                                $notifications = App\Models\PushNotification::where('user_id', Auth::id())->latest()->get();
+                                @endphp
+                                <a href="javascript:void(0)" class="main-btn">
                                     <i class="lni lni-alarm"></i>
-                                    <span class="total-items">0</span>
+                                    <span class="total-items notif-count">0</span>
                                 </a>
+
+                                <div class="shopping-item">
+                                    <div class="dropdown-cart-header">
+                                        <span>Pemberitahuan (<span class="notif-count">0</span>)</span>
+                                        <a style="color:#16A085;" href="#">Baca Semua</a>
+                                    </div>
+                                    <ul class="shopping-list" id="style-1">
+                                        @if ($notifications->count())
+                                        @foreach ($notifications as $notif)
+                                        <li>
+                                            <div class="cart-img-head">
+                                                <a class="cart-img" href="">
+                                                    <img src="{{ asset('img/'.$notif->img) }}" alt="#"
+                                                        style="width: 5rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                                </a>
+                                            </div>
+
+                                            <div class="content">
+                                                <h4><a style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;"
+                                                        href="#">
+                                                        {{ $notif->title }}</a></h4>
+                                                <span class="small"
+                                                    style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">{{ $notif->body }}</span>
+                                            </div>
+                                        </li>
+                                        @endforeach
+                                        @else
+                                        <div id="app">
+                                            <div class="container">
+                                                <div class="page-error-notification">
+                                                    <div class="page-inner-notification">
+                                                        <img src="{{ asset('img/undraw_empty_re_opql.svg') }}" alt="">
+                                                        <div class="page-description-notification">
+                                                            Tidak ada pemberitahuan!
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @endif
+                                    </ul>
+                                </div>
                             </div>
+
+                            {{-- ==================================================================================== Cart ============================================================================ --}}
+
                             <div class="cart-items">
                                 <!-- Shopping Item -->
                                 @php
-                                $cartItemSum = App\Models\Cart::with('product')->where('user_id', Auth::id())->sum('product_qty');
+                                $cartItemSum = App\Models\Cart::with('product')->where('user_id',
+                                Auth::id())->sum('product_qty');
                                 $cartItem = App\Models\Cart::with('product')->where('user_id', Auth::id())->get();
                                 @endphp
                                 <a href="javascript:void(0)" class="main-btn">
@@ -151,15 +217,15 @@
 
                                 <div class="shopping-item">
                                     <div class="dropdown-cart-header">
-                                        <span>Keranjang ({{ $cartItemSum }})</span>
+                                        <span>Keranjang (<span class="cart-count">0</span>)</span>
                                         <a style="color:#16A085;" href="{{ url('cart') }}">Lihat Sekarang</a>
                                     </div>
                                     @php
                                     $total = 0;
                                     @endphp
-                                    @if ($cartItem->count())
-                                    @foreach ($cartItem as $item)
-                                    <ul class="shopping-list" id="product_data">
+                                    <ul class="shopping-list" id="style-2">
+                                        @if ($cartItem->count())
+                                        @foreach ($cartItem as $item)
                                         <li>
                                             <input type="hidden" value="{{ $item->product_id }}" id="prod_id">
                                             {{-- <button class="remove delete-cart-item" title="Remove this item"><i
@@ -167,35 +233,38 @@
                                             <div class="cart-img-head">
                                                 <a class="cart-img" href="{{ url('home/'.$item->product->slug) }}">
                                                     @if ($item->product->photo_product->count() > 0)
-                                                        @foreach ($item->product->photo_product->take(1) as $photos)
-                                                            @if ($photos->name)
-                                                                <img src="{{ asset('../storage/produk/'.$photos->name) }}" alt="{{ $item->product->name }}"
-                                                                    style="width: 10rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
-                                                            @else
-                                                                <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->product->name }}"
-                                                                    style="width: 10rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
-                                                            @endif
-                                                        @endforeach
+                                                    @foreach ($item->product->photo_product->take(1) as $photos)
+                                                    @if ($photos->name)
+                                                    <img src="{{ asset('../storage/produk/'.$photos->name) }}"
+                                                        alt="{{ $item->product->name }}"
+                                                        style="width: 10rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                                                     @else
-                                                        <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->product->name }}"
-                                                            style="width: 10rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                                    <img src="{{ asset('img/no-image.png') }}"
+                                                        alt="{{ $item->product->name }}"
+                                                        style="width: 10rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                                    @endif
+                                                    @endforeach
+                                                    @else
+                                                    <img src="{{ asset('img/no-image.png') }}"
+                                                        alt="{{ $item->product->name }}"
+                                                        style="width: 10rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                                                     @endif
                                                 </a>
                                             </div>
 
                                             <div class="content">
-                                                <h4><a style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;" href="{{ url('home/'.$item->product->slug) }}">
+                                                <h4><a style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;"
+                                                        href="{{ url('home/'.$item->product->slug) }}">
                                                         {{ $item->product->name }}</a></h4>
                                                 <p class="quantity">{{ $item->product_qty }}x - <span class="amount">Rp.
                                                         {{ number_format($item->product->price, 0) }}</span></p>
                                             </div>
                                         </li>
-                                    </ul>
-                                    @php
-                                    $total += $item->product->price * $item->product_qty;
-                                    @endphp
-                                    @endforeach
-                                    @else
+                                        @php
+                                        $total += $item->product->price * $item->product_qty;
+                                        @endphp
+                                        @endforeach
+                                        @else
                                         <div id="app">
                                             <div class="container">
                                                 <div class="page-error-notification">
@@ -208,7 +277,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    @endif
+                                        @endif
+                                    </ul>
                                     <div class="bottom">
                                         <div class="total">
                                             <span>Total</span>
@@ -216,9 +286,9 @@
                                         </div>
                                         <div class="button">
                                             @if ($cartItem->count())
-                                                <a href="{{ url('cart/shipment') }}" class="btn animate">Checkout</a>
+                                            <a href="{{ url('cart/shipment') }}" class="btn animate">Checkout</a>
                                             @else
-                                                <a href="{{ url('new-product') }}" class="btn animate">Belanja Sekarang</a>
+                                            <a href="{{ url('new-product') }}" class="btn animate">Belanja Sekarang</a>
                                             @endif
                                         </div>
                                     </div>
@@ -241,16 +311,20 @@
                         @php
                         $category_product = App\Models\ProductCategory::where('is_active', '=', 1)->get();
                         @endphp
-                        <a href="#" class="nav-link text-black fw-bold" data-bs-display="static" data-bs-toggle="dropdown"><i class="lni lni-menu text-black fw-bold pe-2"></i>Semua Kategori</a>
-                        <div class="dropdown-menu" >
+                        <a href="#" class="nav-link text-black fw-bold" data-bs-display="static"
+                            data-bs-toggle="dropdown"><i class="lni lni-menu text-black fw-bold pe-2"></i>Semua
+                            Kategori</a>
+                        <div class="dropdown-menu">
                             <div class="row" style="width: 32rem">
                                 @foreach ($category_product as $item)
                                 <div class="col-4">
-                                    <a href="{{ url('product-category/'.$item->slug) }}" class="dropdown-item">{{ $item->name }}</a>
+                                    <a href="{{ url('product-category/'.$item->slug) }}"
+                                        class="dropdown-item">{{ $item->name }}</a>
                                 </div>
                                 @endforeach
                                 <div class="col-4">
-                                    <a href="{{ url('product-category/all-category') }}" class="dropdown-item">Semua Kategori</a>
+                                    <a href="{{ url('product-category/all-category') }}" class="dropdown-item">Semua
+                                        Kategori</a>
                                 </div>
                             </div>
                         </div>
@@ -268,10 +342,14 @@
                         <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                             <ul id="nav" class="navbar-nav ms-auto">
                                 <li class="nav-item">
-                                    <a onclick="home('{{ url('home') }}')" href="#" class="{{ Request::is('home') ? 'active' : '' }}" aria-label="Toggle navigation">Home</a>
+                                    <a onclick="home('{{ url('home') }}')" href="#"
+                                        class="{{ Request::is('home') ? 'active' : '' }}"
+                                        aria-label="Toggle navigation">Home</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a onclick="hubungi_kami('{{ url('hubungi-kami') }}')" href="#" class="{{ Request::is('hubungi-kami') ? 'active' : '' }}" aria-label="Toggle navigation">Hubungi kami</a>
+                                    <a onclick="hubungi_kami('{{ url('hubungi-kami') }}')" href="#"
+                                        class="{{ Request::is('hubungi-kami') ? 'active' : '' }}"
+                                        aria-label="Toggle navigation">Hubungi kami</a>
                                 </li>
                             </ul>
                         </div> <!-- navbar collapse -->

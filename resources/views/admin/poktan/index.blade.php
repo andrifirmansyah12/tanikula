@@ -48,7 +48,7 @@
                     @csrf
                     <div class="modal-body p-4">
                         <label for="name">Pilih Gapoktan</label>
-                        <select class="form-control select2" name="gapoktan_id" required>
+                        <select class="form-control select2" id="add_gapoktan_id" name="gapoktan_id">
                             <option selected disabled>Pilih Gapoktan</option>
                             @foreach ($gapoktan as $item)
                                 @if ( old('gapoktan_id') == $item->id )
@@ -58,21 +58,31 @@
                                 @endif
                             @endforeach
                         </select>
+                        <div class="invalid-feedback">
+                        </div>
                         <div class="form-group my-2">
                             <label for="name">Nama Poktan</label>
-                            <input type="text" name="name" class="form-control" placeholder="Nama Poktan" required>
+                            <input type="text" id="add_name" name="name" class="form-control" placeholder="Nama Poktan">
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="form-group my-2">
                             <label for="chairman">Ketua Poktan</label>
-                            <input type="text" name="chairman" class="form-control" placeholder="Ketua Poktan" required>
+                            <input type="text" id="add_chairman" name="chairman" class="form-control" placeholder="Ketua Poktan">
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="my-2 form-group">
                             <label for="email">Email</label>
-                            <input type="email" name="email" class="form-control" placeholder="Email" required>
+                            <input type="email" id="add_email" name="email" class="form-control" placeholder="Email">
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="my-2 form-group">
                             <label for="password">Password</label>
-                            <input type="password" name="password" class="form-control" placeholder="Password" required>
+                            <input type="password" id="add_password" name="password" class="form-control" placeholder="Password">
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="my-2 form-group">
                             <label for="is_active">Status Akun</label>
@@ -114,7 +124,7 @@
                                 <br>1. Jika tidak ingin ubah Gapoktan biarkan kosong,
                                 <br>2. Dan jika ingin ubah Gapoktan, silahkan pilih Gapoktan.
                             </small>
-                            <select class="form-control select2 text-capitalize" name="gapoktan_id" required>
+                            <select class="form-control select2 text-capitalize" name="gapoktan_id">
                                 <option selected disabled>Pilih Gapoktan</option>
                                 @foreach ($gapoktan as $item)
                                     @if ( old('poktan_id') == $item->id )
@@ -127,20 +137,28 @@
                         </div>
                         <div class="form-group my-2">
                             <label for="name">Nama Poktan</label>
-                            <input type="text" name="name" id="name" class="form-control text-capitalize" placeholder="Nama Poktan" required>
+                            <input type="text" name="name" id="name" class="form-control text-capitalize" placeholder="Nama Poktan">
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="form-group my-2">
                             <label for="chairman">Ketua Poktan</label>
-                            <input type="text" name="chairman" id="chairman" class="form-control text-capitalize" placeholder="Ketua Poktan" required>
+                            <input type="text" name="chairman" id="chairman" class="form-control text-capitalize" placeholder="Ketua Poktan">
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="my-2 form-group">
                             <label for="email">Email</label>
-                            <input type="email" name="email" id="email" class="form-control" placeholder="Email" required>
+                            <input type="email" name="email" id="email" class="form-control" placeholder="Email">
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="my-2 form-group">
                             <label for="password">Password</label>
                             <div id="password_edit">
 
+                            </div>
+                            <div class="invalid-feedback">
                             </div>
                         </div>
                         <div class="my-2 form-group">
@@ -208,18 +226,26 @@
                 processData: false,
                 dataType: 'json',
                 success: function(response) {
-                    if (response.status == 200) {
-                    Swal.fire(
-                        'Menambahkan!',
-                        'Poktan Berhasil Ditambahkan!',
-                        'success'
-                    )
-                    fetchAllEmployees();
+                    if (response.status == 400) {
+                        showError('add_gapoktan_id', response.messages.gapoktan_id);
+                        showError('add_name', response.messages.name);
+                        showError('add_chairman', response.messages.chairman);
+                        showError('add_email', response.messages.email);
+                        showError('add_password', response.messages.password);
+                        $("#add_employee_btn").text('Simpan');
+                        $("#add_employee_btn").prop('disabled', false);
+                    } else if (response.status == 200) {
+                        Swal.fire(
+                            'Menambahkan!',
+                            'Poktan Berhasil Ditambahkan!',
+                            'success'
+                        )
+                        fetchAllEmployees();
+                        $("#add_employee_btn").text('Simpan');
+                        $("#add_employee_btn").prop('disabled', false);
+                        $("#add_employee_form")[0].reset();
+                        $("#addEmployeeModal").modal('hide');
                     }
-                    $("#add_employee_btn").text('Simpan');
-                    $("#add_employee_btn").prop('disabled', false);
-                    $("#add_employee_form")[0].reset();
-                    $("#addEmployeeModal").modal('hide');
                 }
                 });
             });
@@ -271,18 +297,25 @@
                 processData: false,
                 dataType: 'json',
                 success: function(response) {
-                    if (response.status == 200) {
-                    Swal.fire(
-                        'Memperbarui!',
-                        'Poktan Berhasil Diperbarui!',
-                        'success'
-                    )
-                    fetchAllEmployees();
+                    if (response.status == 400) {
+                        showError('name', response.messages.name);
+                        showError('chairman', response.messages.chairman);
+                        showError('email', response.messages.email);
+                        showError('password', response.messages.password);
+                        $("#edit_employee_btn").text('Simpan');
+                        $("#edit_employee_btn").prop('disabled', false);
+                    } else if (response.status == 200) {
+                        Swal.fire(
+                            'Memperbarui!',
+                            'Poktan Berhasil Diperbarui!',
+                            'success'
+                        )
+                        fetchAllEmployees();
+                        $("#edit_employee_btn").text('Simpan');
+                        $("#edit_employee_btn").prop('disabled', false);
+                        $("#edit_employee_form")[0].reset();
+                        $("#editEmployeeModal").modal('hide');
                     }
-                    $("#edit_employee_btn").text('Simpan');
-                    $("#edit_employee_btn").prop('disabled', false);
-                    $("#edit_employee_form")[0].reset();
-                    $("#editEmployeeModal").modal('hide');
                 }
                 });
             });
