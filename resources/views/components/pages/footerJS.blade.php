@@ -316,6 +316,50 @@
         });
     });
 
+    // $('#idNotif').click(function (e) {
+    //     e.preventDefault();
+
+    //     // var id = $("input[name=passingIdNotif]").val();
+    //     var id = $(this).closest('#style-1').find('#passingIdNotif').val();
+
+    //     $.ajaxSetup({
+    //         headers: {
+    //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //         }
+    //     });
+
+    //     $.ajax({
+    //         method: "POST",
+    //         url: '/read-notif-data',
+    //         data: {
+    //             'id': id,
+    //         },
+    //         success: function (response) {
+    //             window.setTimeout(function(){location.reload()},1000)
+    //         }
+    //     });
+    // });
+
+    // add new employee ajax request
+    $("#readNotif").submit(function(e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        $.ajax({
+            url: '{{ route('read.all.notif') }}',
+            method: 'get',
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: 'json',
+            success: function(response) {
+                if (response.status == 200){
+                    window.setTimeout(function(){location.reload()},1000)
+                }
+            }
+        });
+    });
+
     $('.delete-cart-item').click(function (e) {
         e.preventDefault();
 

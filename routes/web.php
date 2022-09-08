@@ -532,11 +532,19 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function 
     // Logout
     Route::post('/logout', [App\Http\Controllers\Pembeli\LoginController::class, 'logout'])->name('logout');
 
+    // Notifikasi
+    Route::get('read-allnotif', [App\Http\Controllers\Pages\ProductController::class, 'readNotif'])->name('read.all.notif');
+    Route::post('read-notif-data', [App\Http\Controllers\Pages\ProductController::class, 'readNotifData'])->name('read.notif.data');
+
     // Profile
     Route::get('pembeli', [App\Http\Controllers\Pembeli\PengaturanController::class, 'pengaturan'])->name('pembeli');
     Route::post('pembeli-image', [App\Http\Controllers\Pembeli\PengaturanController::class, 'pengaturanImage'])->name('pembeli.pengaturan.image');
     Route::post('pembeli-update', [App\Http\Controllers\Pembeli\PengaturanController::class, 'pengaturanUpdate'])->name('pembeli.pengaturan.update');
     Route::post('pembeli-updatePassword', [App\Http\Controllers\Pembeli\PengaturanController::class, 'pengaturanUpdatePassword'])->name('pembeli.pengaturan.updatePassword');
+
+    // Menunggu Pembayaran
+    Route::get('/pembeli/pemberitahuan', [App\Http\Controllers\Pembeli\NotificationController::class, 'index'])->name('pembeli.notifications');
+    Route::get('/pembeli/pemberitahuan/fetchall', [App\Http\Controllers\Pembeli\NotificationController::class, 'fetchAll'])->name('pembeli.notifications.fetchAll');
 
     // Menunggu Pembayaran
     Route::get('/pembeli/menunggu-pembayaran', [App\Http\Controllers\Pembeli\WaitingPaymentController::class, 'index'])->name('pembeli.waitingPayment');

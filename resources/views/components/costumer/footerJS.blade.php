@@ -29,28 +29,32 @@
     function pembeli_dashboard(url) {
         window.location = url;
     }
-    // Kategori Wishlist
+    // Halaman Wishlist
     function pembeli_wishlist(url) {
         window.location = url;
     }
-    // Kategori Daftar Transaksi
+    // Halaman Daftar Transaksi
     function pembeli_daftar_transaksi(url) {
         window.location = url;
     }
-    // Kategori Menunggu Pembayaran
+    // Halaman Menunggu Pembayaran
     function pembeli_menunggu_pembayaran(url) {
         window.location = url;
     }
-    // Kategori Ulasan
+    // Halaman Ulasan
     function pembeli_ulasan(url) {
         window.location = url;
     }
-    // Kategori Chat
+    // Halaman Chat
     function pembeli_chat(url) {
         window.location = url;
     }
-    // Kategori Alamat
+    // Halaman Alamat
     function pembeli_alamat(url) {
+        window.location = url;
+    }
+    // Halaman Pemberitahuan
+    function pembeli_pemberitahuan(url) {
         window.location = url;
     }
 </script>
