@@ -150,13 +150,19 @@
 
                                     <div class="shopping-item">
                                         <div class="dropdown-cart-header">
-                                            <span>Pemberitahuan (<span class="notif-count">0</span>)</span>
-                                            <a style="color:#16A085;" href="#">Baca Semua</a>
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <span>Pemberitahuan (<span class="notif-count">0</span>)</span>
+                                                <form action="#" id="readNotif" method="get">
+                                                    @csrf
+                                                    <button style="color:#16A085;" class="p-0 bg-white btn btn-sm shadow-none border-white fw-bold" type="submit">Baca Semua</button>
+                                                </form>
+                                            </div>
                                         </div>
                                         <ul class="shopping-list" id="style-1">
                                             @if ($notifications->count())
                                             @foreach ($notifications as $notif)
-                                            <li>
+                                            <li class="border p-2 rounded" style="{{ $notif->is_read == 0 ? 'background: antiquewhite' : '' }}">
+                                                {{-- <input type="hidden" name="passingIdNotif" value="{{ $notif->id }}"> --}}
                                                 <div class="cart-img-head">
                                                     <a class="cart-img" href="">
                                                         <img src="{{ asset('img/'.$notif->img) }}" alt="#"

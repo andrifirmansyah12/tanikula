@@ -17,6 +17,37 @@ use App\Models\PushNotification;
 
 class ProductController extends Controller
 {
+    public function readNotif()
+    {
+        $readNotif = PushNotification::where('user_id', auth()->user()->id)->get();
+        foreach ($readNotif as $read) {
+            $read_notifs = PushNotification::find($read->id);
+            $read_notifs->is_read = 1;
+            $read_notifs->update();
+        }
+
+        return response()->json([
+            'status' => 200,
+        ]);
+    }
+
+    // public function readNotifData(Request $request)
+    // {
+    //     $id = $request->input('id');
+    //     $readNotif = PushNotification::where('user_id', auth()->user()->id)->where('id', $id)->first();
+    //     foreach ($readNotif as $read) {
+    //         $read_notifs = PushNotification::find($read->id);
+    //         if ($read->is_read == 0) {
+    //             $read_notifs->is_read = 1;
+    //         }
+    //         $read_notifs->update();
+    //     }
+
+    //     return response()->json([
+    //         'status' => 200,
+    //     ]);
+    // }
+
     public function index()
     {
         $category_product = ProductCategory::where('is_active', '=', 1)->latest()->get();

@@ -281,7 +281,7 @@
                                         @if ($review->hide === 1)
                                         {{ get_starred(strtok($order->user->name, ' ')) }}
                                         @else
-                                        {{ $order->user->name }}
+                                        {{ strtok($order->user->name, ' ') }}
                                         @endif
                                     </p>
                                     <div class="my-0 mx-3 rating-produkView">

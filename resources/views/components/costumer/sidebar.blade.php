@@ -9,7 +9,7 @@
         </a>
     </div>
     <hr class="horizontal light mt-0 mb-2">
-    <div class="collapse navbar-collapse w-auto" style="height: 80%" id="sidenav-collapse-main">
+    <div class="collapse navbar-collapse w-auto" style="height: 83%" id="sidenav-collapse-main">
         <ul class="navbar-nav">
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs  font-weight-bolder opacity-8">Kotak Masuk</h6>
@@ -55,9 +55,17 @@
             <li class="nav-item">
                 <a class="nav-link {{ Request::is('pembeli/wishlist*') ? 'active bg-primary' : 'text-dark fw-bold' }}" onclick="pembeli_wishlist('{{ url('pembeli/wishlist') }}')" href="#">
                     <div class=" text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="bi bi-heart-fill h-4"></i>
+                        <i class="bi bi-heart h-4"></i>
                     </div>
                     <span class="nav-link-text ms-1">Wishlist</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ Request::is('pembeli/pemberitahuan*') ? 'active bg-primary' : 'text-dark fw-bold' }}" onclick="pembeli_pemberitahuan('{{ url('pembeli/pemberitahuan') }}')" href="#">
+                    <div class=" text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="bi bi-bell h-4"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Pemberitahuan</span>
                 </a>
             </li>
             <li class="nav-item">

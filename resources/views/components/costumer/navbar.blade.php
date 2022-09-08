@@ -62,7 +62,7 @@
                         max-height: 230px;">
                         @if ($notifications->count())
                         @foreach ($notifications as $notif)
-                        <li class="mb-2" style="overflow: hidden;">
+                        <li class="mb-2 rounded" style="overflow: hidden; {{ $notif->is_read == 0 ? 'background: antiquewhite' : '' }}"">
                             <a class="dropdown-item border-radius-md" href="javascript:;">
                                 <div class="d-flex py-1">
                                     <div class="my-auto">

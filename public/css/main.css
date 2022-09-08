@@ -1838,8 +1838,6 @@ ol {
 
 .header .navbar-cart .notification-items .shopping-item .shopping-list li {
     overflow: hidden;
-    border-bottom: 1px solid #e6e6e6;
-    padding-bottom: 15px;
     margin-bottom: 15px;
     position: relative;
     display: -webkit-box;
@@ -2095,8 +2093,6 @@ ol {
 
 .header .navbar-cart .cart-items .shopping-item .shopping-list li {
     overflow: hidden;
-    border-bottom: 1px solid #e6e6e6;
-    padding-bottom: 15px;
     margin-bottom: 15px;
     position: relative;
     display: -webkit-box;

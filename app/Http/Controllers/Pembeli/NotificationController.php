@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Pembeli;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\PushNotification;
 
 class NotificationController extends Controller
 {
@@ -56,4 +57,74 @@ class NotificationController extends Controller
         // FCM response
         dd($result);
     }
+
+    public function index()
+    {
+        return view('costumer.pemberitahuan.index');
+    }
+
+    public function fetchAll()
+    {
+		$emps = PushNotification::join('users', 'push_notifications.user_id', '=', 'users.id')
+                    ->select('push_notifications.*', 'users.name as name')
+                    ->where('push_notifications.user_id', '=', auth()->user()->id)
+                    ->orderBy('push_notifications.created_at', 'desc')
+                    ->get();
+		$output = '';
+                    $output .= '<table id="tableWaitingPayment" class="table align-items-center mb-0">
+                        <thead>
+                            <tr>
+                                <th class="text-uppercase text-secondary align-middle text-center  text-xxs font-weight-bolder opacity-7">
+                                Nama</th>
+                                <th
+                                    class="text-uppercase text-secondary align-middle text-center  text-xxs font-weight-bolder opacity-7 ps-2">
+                                    Isi Pemberitahuan</th>
+                                <th
+                                    class="text-uppercase align-middle text-center text-secondary text-xxs font-weight-bolder opacity-7">
+                                    Tanggal Pemberitahuan</th>
+                            </tr>
+                        </thead>
+                        <tbody>';
+                        if ($emps->count() > 0) {
+                        foreach ($emps as $emp) {
+                            $output .= '
+                                <tr>
+                                    <td class="align-middle text-center ">
+                                        <div class="px-2 py-1">
+                                            <div class="d-flex flex-column justify-content-center">
+                                                <h6 class="mb-0 text-sm">'. $emp->user->name .'</h6>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="align-middle text-center text-sm">
+                                        <div class="d-flex flex-column justify-content-center">
+                                            <h6 class="mb-0 text-sm">'. $emp->title .'</h6>
+                                            <p class="text-xs text-secondary mb-0">'. $emp->body .'</p>
+                                        </div>
+                                    </td>
+                                    <td class="align-middle text-center ">
+                                        <p class="text-xs font-weight-bold mb-0">'. \App\Helpers\General::datetimeFormat($emp->created_at) .'</p>
+                                    </td>
+                                </tr>';
+			                    }
+                            $output .= '</tbody>
+                        </table>
+                ';
+			echo $output;
+		} else {
+			echo '<div id="app">
+                    <section class="section">
+                        <div class="container">
+                            <div class="page-error">
+                                <div class="page-inner">
+                                    <div class="page-description">
+                                        Tidak ada pesanan!
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>';
+		}
+	}
 }

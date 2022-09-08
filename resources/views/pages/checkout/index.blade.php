@@ -424,13 +424,34 @@
 
 <!-- Modal Edit Alamat -->
 <div class="modal fade" id="EditAlamat" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <style>
+        #style-1::-webkit-scrollbar-track
+        {
+            -webkit-box-shadow: inset 0 0 6px #16A085;
+            border-radius: 10px;
+            background-color: #F5F5F5;
+        }
+
+        #style-1::-webkit-scrollbar
+        {
+            width: 12px;
+            background-color: #F5F5F5;
+        }
+
+        #style-1::-webkit-scrollbar-thumb
+        {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 6px #16A085;
+            background-color: #16A085;
+        }
+    </style>
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Edit Alamat</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" id="style-1">
                 <form action="#" method="POST" id="edit_employee_form" enctype="multipart/form-data">
                     @csrf
                     <div>
@@ -540,13 +561,34 @@
 
 <!-- Modal Tambah Alamat -->
 <div class="modal fade" id="TambahAlamat" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <style>
+        #style-2::-webkit-scrollbar-track
+        {
+            -webkit-box-shadow: inset 0 0 6px #16A085;
+            border-radius: 10px;
+            background-color: #F5F5F5;
+        }
+
+        #style-2::-webkit-scrollbar
+        {
+            width: 12px;
+            background-color: #F5F5F5;
+        }
+
+        #style-2::-webkit-scrollbar-thumb
+        {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 6px #16A085;
+            background-color: #16A085;
+        }
+    </style>
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Tambah Alamat Baru</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" id="style-2">
                 <form action="#" method="POST" id="add_employee_form" accept-charset="utf-8"
                     enctype="multipart/form-data">
                     @csrf
