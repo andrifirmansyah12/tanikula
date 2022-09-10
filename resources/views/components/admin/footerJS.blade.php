@@ -60,8 +60,12 @@
     function admin_hero(url) {
         window.location = url;
     }
-    // Hero
+    // Pesanan Masuk
     function admin_pesanan(url) {
+        window.location = url;
+    }
+    // Reply Review
+    function admin_reply_ulasan(url) {
         window.location = url;
     }
     // Akun Poktan
@@ -103,13 +107,27 @@
 
     $(document).ready(function () {
 
+        LoadReview();
         LoadOrder();
+
+        function LoadReview()
+        {
+            $.ajax({
+            method: "GET",
+                url: "/admin/load-review",
+                success: function (response) {
+                    $('.review-count').html('');
+                    $('.review-count').html(response.count);
+                    // alert(response.count);
+                }
+            });
+        }
 
         function LoadOrder()
         {
             $.ajax({
                 method: "GET",
-                url: "/load-order",
+                url: "/admin/load-order",
                 success: function (response) {
                     $('.order-count').html('');
                     $('.order-count').html(response.count);

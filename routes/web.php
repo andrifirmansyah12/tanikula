@@ -75,9 +75,16 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:admin']], function ()
     Route::post('admin/pesanan/update-pesanan', [App\Http\Controllers\Admin\OrderController::class, 'updateOrder'])->name('admin.updateOrder');
     Route::post('admin/pesanan/reply-review', [App\Http\Controllers\Admin\OrderController::class, 'replyReview'])->name('admin.replyReview');
 
+    // Jumlah Pesanan Masuk
+    Route::get('admin/load-order', [App\Http\Controllers\Admin\OrderController::class, 'countOrder']);
+
+    // Reply Ulasan
+    Route::get('/admin/reply-ulasan', [App\Http\Controllers\Admin\ReviewController::class, 'index'])->name('admin.review');
+    Route::get('/admin/reply-ulasan/fetchBelumDiulas', [App\Http\Controllers\Admin\ReviewController::class, 'fetchBelumDiulas'])->name('admin.review.fetchBelumDiulas');
+    Route::get('/admin/reply-ulasan/fetchUlasanSaya', [App\Http\Controllers\Admin\ReviewController::class, 'fetchUlasanSaya'])->name('admin.review.fetchUlasanSaya');
 
     // Jumlah Pesanan Masuk
-    Route::get('/load-order', [App\Http\Controllers\Admin\OrderController::class, 'countOrder']);
+    Route::get('admin/load-review', [App\Http\Controllers\Admin\ReviewController::class, 'countReview']);
 
     // Lahan
     Route::get('admin/lahan', [App\Http\Controllers\Admin\FieldController::class, 'index'])->name('admin-lahan');
@@ -338,6 +345,14 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:gapoktan']], function
 
     // Jumlah Pesanan Masuk
     Route::get('/load-order', [App\Http\Controllers\Gapoktan\OrderController::class, 'countOrder']);
+
+    // Reply Ulasan
+    Route::get('/gapoktan/reply-ulasan', [App\Http\Controllers\Gapoktan\ReviewController::class, 'index'])->name('gapoktan.review');
+    Route::get('/gapoktan/reply-ulasan/fetchBelumDiulas', [App\Http\Controllers\Gapoktan\ReviewController::class, 'fetchBelumDiulas'])->name('gapoktan.review.fetchBelumDiulas');
+    Route::get('/gapoktan/reply-ulasan/fetchUlasanSaya', [App\Http\Controllers\Gapoktan\ReviewController::class, 'fetchUlasanSaya'])->name('gapoktan.review.fetchUlasanSaya');
+
+    // Jumlah Pesanan Masuk
+    Route::get('/load-review', [App\Http\Controllers\Gapoktan\ReviewController::class, 'countReview']);
 
     // Daftar Petani
     Route::get('gapoktan/daftar-petani', [App\Http\Controllers\Gapoktan\FarmerController::class, 'index'])->name('gapoktan-petani');

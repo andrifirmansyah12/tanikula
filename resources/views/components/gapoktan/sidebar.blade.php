@@ -14,6 +14,12 @@
             </a>
         </li>
         <li class="menu-header">Pesanan Masuk</li>
+        <li class="nav-item dropdown {{ Request::is('gapoktan/reply-ulasan*') ? 'active' : '' }}">
+            <a href="#" onclick="gapoktan_reply_ulasan('{{ url('gapoktan/reply-ulasan') }}')" class="nav-link">
+                <i class="fas fa-solid fa-star"></i>
+                <span>Reply Ulasan <p class="badge badge-warning m-1 review-count">0</p></span>
+            </a>
+        </li>
         <li class="nav-item dropdown {{ Request::is('gapoktan/pesanan*') ? 'active' : '' }}">
             <a href="#" onclick="gapoktan_pesanan('{{ url('gapoktan/pesanan') }}')" class="nav-link">
                 <i class="fas fa-solid fa-shop"></i>

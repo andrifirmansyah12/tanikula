@@ -118,7 +118,7 @@ class DashboardController extends Controller
                         <p>'. $countGapoktan .' Akun</p>
                     </div>
                     <div class="icon">
-                        <i class="far fa-solid fa-user"></i>
+                        <i class="far fa-solid fa-user text-warning"></i>
                     </div>
                     <a href="admin/daftar-gapoktan" class="mt-3 small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
@@ -134,7 +134,7 @@ class DashboardController extends Controller
                         <div style="font-size: 9px"><i class="fas fa-circle text-danger"></i> Belum aktif ('.$countPoktanDeactive.')</div>
                     </div>
                     <div class="icon">
-                        <i class="far fa-solid fa-user"></i>
+                        <i class="far fa-solid fa-user text-primary"></i>
                     </div>
                     <a href="admin/daftar-poktan" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
@@ -150,7 +150,7 @@ class DashboardController extends Controller
                         <div style="font-size: 9px"><i class="fas fa-circle text-danger"></i> Belum aktif ('.$countFarmerDeactive.')</div>
                     </div>
                     <div class="icon">
-                        <i class="far fa-solid fa-user"></i>
+                        <i class="far fa-solid fa-user text-success"></i>
                     </div>
                     <a href="admin/daftar-petani" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
