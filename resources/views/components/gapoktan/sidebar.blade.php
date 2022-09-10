@@ -17,7 +17,7 @@
         <li class="nav-item dropdown {{ Request::is('gapoktan/pesanan*') ? 'active' : '' }}">
             <a href="#" onclick="gapoktan_pesanan('{{ url('gapoktan/pesanan') }}')" class="nav-link">
                 <i class="fas fa-solid fa-shop"></i>
-                <span>Pesanan</span>
+                <span>Pesanan <p class="badge badge-warning m-1 order-count">0</p></span>
             </a>
         </li>
         <li class="menu-header">Kotak Masuk</li>

@@ -168,8 +168,8 @@
                                             </form>
                                         </div>
                                     </div>
-                                    <ul class="shopping-list" id="style-1">
-                                        @if ($notifications->count())
+                                    <ul class="shopping-list" id="{{ $notifications->count() > 2 ? 'style-1' : ''}}">
+                                        @if ($notifications->count() > 0)
                                         @foreach ($notifications as $notif)
                                         <li class="border p-2 rounded" style="{{ $notif->is_read == 0 ? 'background: antiquewhite' : '' }}">
                                             {{-- <input type="hidden" name="passingIdNotif" value="{{ $notif->id }}"> --}}
@@ -229,10 +229,10 @@
                                     @php
                                     $total = 0;
                                     @endphp
-                                    <ul class="shopping-list" id="style-2">
-                                        @if ($cartItem->count())
+                                    <ul class="shopping-list" id="{{ $cartItem->count() > 2 ? 'style-2' : ''}}">
+                                        @if ($cartItem->count() > 0)
                                         @foreach ($cartItem as $item)
-                                        <li class="border p-2 rounded" style="background: antiquewhite">
+                                        <li>
                                             <input type="hidden" value="{{ $item->product_id }}" id="prod_id">
                                             {{-- <button class="remove delete-cart-item" title="Remove this item"><i
                                                     class="lni lni-close"></i></button> --}}

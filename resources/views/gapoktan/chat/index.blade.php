@@ -123,7 +123,7 @@
                                 @foreach ($chats as $chat)
                                 <a href="#" class="mt-3 list-group-item list-group-item-action border-0">
                                     <div class="d-flex align-items-center">
-                                        <img src="https://bootdey.com/img/Content/avatar/avatar5.png"
+                                        <img src="{{ asset('assets/img/avatar/avatar-1.png') }}"
                                             class="rounded-circle mr-1" alt="Vanessa Tucker" width="40" height="40">
                                         <div class="flex-grow-1 ml-3">
                                             {{ $chat->userSender->name }} <span class="badge bg-success mr-3">5</span>
@@ -136,7 +136,7 @@
                                 <div class="py-2 px-4 border-bottom d-none d-lg-block">
                                     <div class="d-flex align-items-center py-3">
                                         <div class="position-relative">
-                                            <img src="https://bootdey.com/img/Content/avatar/avatar5.png"
+                                            <img src="{{ asset('assets/img/avatar/avatar-1.png') }}"
                                                 class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">
                                         </div>
                                         <div class="flex-grow-1 pl-3">
@@ -205,7 +205,7 @@
                                         @else
                                         <div class="chat-message-left pb-4">
                                             <div>
-                                                <img src="https://bootdey.com/img/Content/avatar/avatar5.png"
+                                                <img src="{{ asset('assets/img/avatar/avatar-1.png') }}"
                                                     class="rounded-circle ms-1" alt="Pembeli" width="40" height="40">
                                                 <div class="text-muted small text-nowrap mt-2">{{ date('H:i', strtotime($roomChat->created_at)) }}</div>
                                             </div>

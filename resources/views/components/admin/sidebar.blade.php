@@ -55,7 +55,7 @@
                 <a href="#" onclick="admin_pesanan('{{ url('admin/pesanan') }}')" class="nav-link {{ Request::is('admin/pesanan*') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-solid fa-shop"></i>
                     <p>
-                        Pesanan
+                        Pesanan <span class="badge badge-warning float-right order-count">0</span>
                     </p>
                 </a>
             </li>

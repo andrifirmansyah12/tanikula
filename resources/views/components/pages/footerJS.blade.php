@@ -7,6 +7,8 @@
 <script src="{{ asset('js/tiny-slider.js') }}"></script>
 <script src="{{ asset('js/glightbox.min.js') }}"></script>
 <script src="{{ asset('js/main.js') }}"></script>
+@include('vendor.lara-izitoast.toast')
+    <!-- Page Specific JS File -->
 <script src="{{ asset('js/function.js') }}"></script>
 {{-- <script src="{{ asset('js/market.js') }}"></script> --}}
 @yield('script')

@@ -88,153 +88,156 @@
     <!-- Start Item Details -->
     <section class="item-details section bg-white mt-md-5">
         <div class="container">
-            <div class="top-area shadow" id="product_data">
-                <div class="row align-items-center">
-                    <div class="col-lg-6 col-md-12 col-12">
-                        <div class="product-images">
-                            <main id="">
-                                <div class="main-img">
-                                    @if ($product->photo_product->count() > 0)
-                                        @foreach ($product->photo_product->take(1) as $photos)
-                                            @if ($photos->name)
-                                                <img src="{{ asset('../storage/produk/'.$photos->name) }}" id="current" alt="{{ $product->name }}" style="height: 25rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
-                                            @else
-                                                <img src="{{ asset('img/no-image.png') }}" id="current" alt="{{ $product->name }}">
-                                            @endif
+            <form action="{{ url('/buy-now') }}" method="post" enctype="multipart/form-data">
+                @csrf
+                <div class="top-area shadow" id="product_data">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6 col-md-12 col-12">
+                            <div class="product-images">
+                                <main id="">
+                                    <div class="main-img">
+                                        @if ($product->photo_product->count() > 0)
+                                            @foreach ($product->photo_product->take(1) as $photos)
+                                                @if ($photos->name)
+                                                    <img src="{{ asset('../storage/produk/'.$photos->name) }}" id="current" alt="{{ $product->name }}" style="height: 25rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                                @else
+                                                    <img src="{{ asset('img/no-image.png') }}" id="current" alt="{{ $product->name }}">
+                                                @endif
+                                            @endforeach
+                                        @else
+                                            <img src="{{ asset('img/no-image.png') }}" id="current" alt="{{ $product->name }}">
+                                        @endif
+                                    </div>
+                                    <div class="images">
+                                        @foreach ($product->photo_product as $photos)
+                                            <img src="{{ asset('../storage/produk/'.$photos->name) }}" class="img" style="height: 6rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="#">
                                         @endforeach
-                                    @else
-                                        <img src="{{ asset('img/no-image.png') }}" id="current" alt="{{ $product->name }}">
-                                    @endif
-                                </div>
-                                <div class="images">
-                                    @foreach ($product->photo_product as $photos)
-                                        <img src="{{ asset('../storage/produk/'.$photos->name) }}" class="img" style="height: 6rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="#">
-                                    @endforeach
-                                </div>
-                            </main>
+                                    </div>
+                                </main>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6 col-md-12 col-12">
-                        <div class="product-info">
-                            @if ($product->stoke < 1)
-                            <p class="h5 mb-3">
-                                <label class="badge bg-danger">Habis</label>
-                            </p>
-                            @elseif($product->stoke < 10)
-                            <p class="h5 mb-3">
-                                <label class="badge bg-danger">Tersisa {{ $product->stoke }}</label>
-                            </p>
-                            @endif
-                            <h2 class="title text-capitalize" style="color:#16A085;">
-                                {{ $product->name }}
-                                @if ($product->discount != 0)
-                                    <p class="small ms-3 badge bg-danger">{{ $product->discount }}% OFF</p>
+                        <div class="col-lg-6 col-md-12 col-12">
+                            <div class="product-info">
+                                @if ($product->stoke < 1)
+                                <p class="h5 mb-3">
+                                    <label class="badge bg-danger">Habis</label>
+                                </p>
+                                @elseif($product->stoke < 10)
+                                <p class="h5 mb-3">
+                                    <label class="badge bg-danger">Tersisa {{ $product->stoke }}</label>
+                                </p>
                                 @endif
-                            </h2>
-                            @php
-                                $rateNum = number_format($ratingValue)
-                            @endphp
-                            <div class="pb-3 rating-produk">
-                                <div class="star-icon" style="
-                                        font-size: 20px;
-                                        font-family: sans-serif;
-                                        font-weight: 800;
-                                        text-transform: uppercase;">
-                                    @for ($i = 1; $i <= $rateNum; $i++)
-                                        <i class="lni lni-star-filled ratings-color"></i>
-                                    @endfor
-                                    @for ($j = $rateNum+1; $j <= 5; $j++)
-                                        <i class="lni lni-star-filled"></i>
-                                    @endfor
-                                </div>
-                            </div>
-                            <p class="category"><i class="lni lni-tag"></i> Kategori:<a
-                                    href="{{ url('product-category/'.$product->product_category->slug) }}">{{ $product->product_category->name }}</a></p>
-                            <p class="category">Stok {{ $product->stoke }}</p>
-                            {{-- <h3 class="price">Rp. {{ number_format($product->price, 0) }}<span>Rp. {{ number_format(0, 0) }}</span></h3> --}}
-                            @if ($product->price_discount)
-                                <h3 class="price" style="color:#16A085;">
-                                    <span class="text-decoration-line-through text-muted" style="font-size: 15px"> Rp. {{ number_format($product->price_discount, 0) }}</span>  Rp. {{ number_format($product->price, 0) }}
-                                </h3>
-                            @else
-                                <h3 class="price" style="color:#16A085;">Rp. {{ number_format($product->price, 0) }}</h3>
-                            @endif
-                            <p class="info-text">{{ $product->desc }}</p>
-                            <div class="row">
-                                {{-- <div class="col-lg-4 col-md-4 col-12">
-                                    <div class="form-group">
-                                        <label for="color">Tipe</label>
-                                        <select class="form-control" id="color">
-                                            <option>Tipe A</option>
-                                            <option>Tipe B</option>
-                                            <option>Tipe C</option>
-                                        </select>
-                                    </div>
-                                </div> --}}
-                                <div class="col-lg-4 col-md-4 col-12">
-                                    <div class="form-group">
-                                        <input type="hidden" value="{{ $product->id }}" id="prod_id">
-                                        <label for="quantity">Kuantitas</label>
-                                        <div class="d-flex">
-                                            <script>
-                                                var stoke = '{{ $product->stoke }}';
-                                            </script>
-                                            <button class="input-group-text decrement-btn me-1">-</button>
-                                            <input type="text" name="quantity" class="form-control qty-input text-center" value="1">
-                                            <button class="input-group-text increment-btn ms-1">+</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-12">
-                                    <div class="form-group">
-                                        <label for="color">Lainnya</label>
-                                        <div class="wish-button">
-                                            <button class="btn" data-bs-toggle="modal" data-bs-target="#chatModal"><i class="bi bi-chat-dots"></i> Chat</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bottom-content">
-                                <div class="row align-items-end">
-                                    @if ($product->stoke < 1)
-                                    <div class="col-lg-4 col-md-4 col-12">
-                                        <div class="button cart-button">
-                                            <button disabled class="btn" style="width: 100%;">+ Keranjang</button>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-12">
-                                        <div class="wish-button">
-                                            <button disabled class="btn">Beli Langsung</button>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-12">
-                                        <div class="wish-button">
-                                            <button disabled class="btn" id="addToWishlistBtn">+ Wishlist</button>
-                                        </div>
-                                    </div>
-                                    @else
-                                    <div class="col-lg-4 col-md-4 col-12">
-                                        <div class="button cart-button">
-                                            <button class="btn" id="addToCartBtn" style="width: 100%;">+ Keranjang</button>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-12">
-                                        <div class="wish-button">
-                                            <button class="btn">Beli Langsung</button>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-12">
-                                        <div class="wish-button">
-                                            <button class="btn" id="addToWishlistBtn">+ Wishlist</button>
-                                        </div>
-                                    </div>
+                                <h2 class="title text-capitalize" style="color:#16A085;">
+                                    {{ $product->name }}
+                                    @if ($product->discount != 0)
+                                        <p class="small ms-3 badge bg-danger">{{ $product->discount }}% OFF</p>
                                     @endif
+                                </h2>
+                                @php
+                                    $rateNum = number_format($ratingValue)
+                                @endphp
+                                <div class="pb-3 rating-produk">
+                                    <div class="star-icon" style="
+                                            font-size: 20px;
+                                            font-family: sans-serif;
+                                            font-weight: 800;
+                                            text-transform: uppercase;">
+                                        @for ($i = 1; $i <= $rateNum; $i++)
+                                            <i class="lni lni-star-filled ratings-color"></i>
+                                        @endfor
+                                        @for ($j = $rateNum+1; $j <= 5; $j++)
+                                            <i class="lni lni-star-filled"></i>
+                                        @endfor
+                                    </div>
+                                </div>
+                                <p class="category"><i class="lni lni-tag"></i> Kategori:<a
+                                        href="{{ url('product-category/'.$product->product_category->slug) }}">{{ $product->product_category->name }}</a></p>
+                                <p class="category">Stok {{ $product->stoke }}</p>
+                                {{-- <h3 class="price">Rp. {{ number_format($product->price, 0) }}<span>Rp. {{ number_format(0, 0) }}</span></h3> --}}
+                                @if ($product->price_discount)
+                                    <h3 class="price" style="color:#16A085;">
+                                        <span class="text-decoration-line-through text-muted" style="font-size: 15px"> Rp. {{ number_format($product->price_discount, 0) }}</span>  Rp. {{ number_format($product->price, 0) }}
+                                    </h3>
+                                @else
+                                    <h3 class="price" style="color:#16A085;">Rp. {{ number_format($product->price, 0) }}</h3>
+                                @endif
+                                <p class="info-text">{{ $product->desc }}</p>
+                                <div class="row">
+                                    {{-- <div class="col-lg-4 col-md-4 col-12">
+                                        <div class="form-group">
+                                            <label for="color">Tipe</label>
+                                            <select class="form-control" id="color">
+                                                <option>Tipe A</option>
+                                                <option>Tipe B</option>
+                                                <option>Tipe C</option>
+                                            </select>
+                                        </div>
+                                    </div> --}}
+                                    <div class="col-lg-4 col-md-4 col-12">
+                                        <div class="form-group">
+                                            <input type="hidden" value="{{ $product->id }}" name="prod_id" id="prod_id">
+                                            <label for="quantity">Kuantitas</label>
+                                            <div class="d-flex">
+                                                <script>
+                                                    var stoke = '{{ $product->stoke }}';
+                                                </script>
+                                                <button class="input-group-text decrement-btn me-1">-</button>
+                                                <input type="text" name="quantity" class="form-control qty-input text-center" value="1">
+                                                <button class="input-group-text increment-btn ms-1">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-12">
+                                        <div class="form-group">
+                                            <label for="color">Lainnya</label>
+                                            <div class="wish-button">
+                                                <button class="btn" data-bs-toggle="modal" data-bs-target="#chatModal"><i class="bi bi-chat-dots"></i> Chat</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bottom-content">
+                                    <div class="row align-items-end">
+                                        @if ($product->stoke < 1)
+                                        <div class="col-lg-4 col-md-4 col-12">
+                                            <div class="button cart-button">
+                                                <button disabled class="btn" style="width: 100%;">+ Keranjang</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-12">
+                                            <div class="wish-button">
+                                                <button disabled class="btn">Beli Langsung</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-12">
+                                            <div class="wish-button">
+                                                <button disabled class="btn" id="addToWishlistBtn">+ Wishlist</button>
+                                            </div>
+                                        </div>
+                                        @else
+                                        <div class="col-lg-4 col-md-4 col-12">
+                                            <div class="button cart-button">
+                                                <button class="btn" id="addToCartBtn" style="width: 100%;">+ Keranjang</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-12">
+                                            <div class="wish-button">
+                                                <button class="btn" id="buyNow">Beli Langsung</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-12">
+                                            <div class="wish-button">
+                                                <button class="btn" id="addToWishlistBtn">+ Wishlist</button>
+                                            </div>
+                                        </div>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
             <div class="product-details-info shadow">
                 <div class="single-block">
                     <h5 class="mx-2 fw-bold" style="color:#16A085;">Produk Lainnnya</h5>
@@ -501,7 +504,7 @@
     </section>
 
     <!-- Modal -->
-    <div class="modal fade" id="chatModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    {{-- <div class="modal fade" id="chatModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
@@ -593,7 +596,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection
 
 @section('script')

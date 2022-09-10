@@ -98,12 +98,28 @@ integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifw
         window.location = url;
     }
 
-    $(document).ready(function () {
+    $(document).ready(function () 
+    {
+        LoadOrder();
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+            function LoadOrder()
+            {
+                $.ajax({
+                    method: "GET",
+                    url: "/load-order",
+                    success: function (response) {
+                        $('.order-count').html('');
+                        $('.order-count').html(response.count);
+                        // alert(response.count);
+                    }
+                });
+            }
 
             $(document).on('click', '.notifUser', function(e) {
                 e.preventDefault();

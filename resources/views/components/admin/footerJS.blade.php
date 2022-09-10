@@ -100,4 +100,22 @@
     function admin_pengaturan(url) {
         window.location = url;
     }
+
+    $(document).ready(function () {
+
+        LoadOrder();
+
+        function LoadOrder()
+        {
+            $.ajax({
+                method: "GET",
+                url: "/load-order",
+                success: function (response) {
+                    $('.order-count').html('');
+                    $('.order-count').html(response.count);
+                    // alert(response.count);
+                }
+            });
+        }
+    });
 </script>
