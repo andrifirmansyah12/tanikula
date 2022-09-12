@@ -58,10 +58,10 @@
                 <div class="avatar avatar-xl position-relative">
                     @if ($userInfo->image)
                     <img id="image_preview" src="{{asset('../storage/profile/'. $userInfo->image)}}" alt="profile_image"
-                        class="border-radius-lg rounded-circle shadow-sm" style="width: 92px; height: 72px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                        class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 80px; height: 77px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                     @else
-                    <img id="image_preview" src="{{ asset('stisla/assets/img/example-image.jpg') }}" alt="profile_image"
-                        class="border-radius-lg rounded-circle shadow-sm" style="height: 72px;">
+                    <img id="image_preview" src="{{ asset('../stisla/assets/img/example-image.jpg') }}" alt="profile_image"
+                    class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 80px; height: 77px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                     @endif
                 </div>
             </div>
