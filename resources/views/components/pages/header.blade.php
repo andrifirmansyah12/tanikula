@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html class="no-js" lang="zxx" lang="en" class="light-style customizer-hide" dir="ltr" data-theme="theme-default"
-    data-assets-path="../assets/" data-template="vertical-menu-template-free">
+    data-assets-path="../assets/" data-template="vertical-menu-template-free" xmlns="http://www.w3.org/1999/xhtml">
 
-<head>
+<head runat="server">
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <title>TaniKula | @yield('title')</title>
@@ -84,6 +84,13 @@
             // window.onload = DisableBackButton;
             // window.onpageshow = function(evt) { if (evt.persisted) DisableBackButton() }
             // window.onunload = function() { void (0) }
+        </script>
+    @elseif (Request::is('buy-now'))
+        <script language='javascript' type='text/javascript'>
+            window.history.pushState(null, null, window.location.href);
+            window.onpopstate = function () {
+                window.location = '{{ route('home') }}';
+            };
         </script>
     @endif
 </head>

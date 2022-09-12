@@ -7,7 +7,7 @@
                 $admin = App\Models\Admin::where('user_id', auth()->user()->id)->first();
             @endphp
             @if ($admin->image)
-                <img src="../storage/profile/{{ $admin->image }}" class="border-white border img-circle elevation-2" alt="User Image">
+                <img src="../storage/profile/{{ $admin->image }}" class="border rounded-circle border-white shadow-sm mr-1" style="width: 43px; height: 43px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="User Image">
             @else
                 <img src="{{ asset('assets/img/avatar/avatar-1.png') }}" class="img-circle elevation-2" alt="User Image">
             @endif
@@ -52,10 +52,18 @@
             </li>
             <li class="nav-header">PESANAN MASUK</li>
             <li class="nav-item">
+                <a href="#" onclick="admin_reply_ulasan('{{ url('admin/reply-ulasan') }}')" class="nav-link {{ Request::is('admin/reply-ulasan*') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-solid fa-star"></i>
+                    <p>
+                        Reply Ulasan <span class="badge badge-warning float-right review-count">0</span>
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="#" onclick="admin_pesanan('{{ url('admin/pesanan') }}')" class="nav-link {{ Request::is('admin/pesanan*') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-solid fa-shop"></i>
                     <p>
-                        Pesanan
+                        Pesanan <span class="badge badge-warning float-right order-count">0</span>
                     </p>
                 </a>
             </li>

@@ -66,12 +66,25 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:admin']], function ()
 
     // Pesanan Masuk
     Route::get('admin/pesanan', [App\Http\Controllers\Admin\OrderController::class, 'index'])->name('admin.orders');
+    Route::get('admin/pesanan/fetchall', [App\Http\Controllers\Admin\OrderController::class, 'fetchAll'])->name('admin.orders.fetchAll');
     Route::get('admin/pesanan/fetchDikemas', [App\Http\Controllers\Admin\OrderController::class, 'fetchDikemas'])->name('admin.orders.fetchDikemas');
     Route::get('admin/pesanan/fetchDikirim', [App\Http\Controllers\Admin\OrderController::class, 'fetchDikirim'])->name('admin.orders.fetchDikirim');
     Route::get('admin/pesanan/fetchSelesai', [App\Http\Controllers\Admin\OrderController::class, 'fetchSelesai'])->name('admin.orders.fetchSelesai');
+    Route::get('admin/pesanan/fetchDibatalkan', [App\Http\Controllers\Admin\OrderController::class, 'fetchDibatalkan'])->name('admin.orders.fetchDibatalkan');
     Route::get('admin/pesanan/detail-pesanan/{id}', [App\Http\Controllers\Admin\OrderController::class, 'viewOrder'])->name('admin.viewOrder');
     Route::post('admin/pesanan/update-pesanan', [App\Http\Controllers\Admin\OrderController::class, 'updateOrder'])->name('admin.updateOrder');
     Route::post('admin/pesanan/reply-review', [App\Http\Controllers\Admin\OrderController::class, 'replyReview'])->name('admin.replyReview');
+
+    // Jumlah Pesanan Masuk
+    Route::get('admin/load-order', [App\Http\Controllers\Admin\OrderController::class, 'countOrder']);
+
+    // Reply Ulasan
+    Route::get('/admin/reply-ulasan', [App\Http\Controllers\Admin\ReviewController::class, 'index'])->name('admin.review');
+    Route::get('/admin/reply-ulasan/fetchBelumDiulas', [App\Http\Controllers\Admin\ReviewController::class, 'fetchBelumDiulas'])->name('admin.review.fetchBelumDiulas');
+    Route::get('/admin/reply-ulasan/fetchUlasanSaya', [App\Http\Controllers\Admin\ReviewController::class, 'fetchUlasanSaya'])->name('admin.review.fetchUlasanSaya');
+
+    // Jumlah Pesanan Masuk
+    Route::get('admin/load-review', [App\Http\Controllers\Admin\ReviewController::class, 'countReview']);
 
     // Lahan
     Route::get('admin/lahan', [App\Http\Controllers\Admin\FieldController::class, 'index'])->name('admin-lahan');
@@ -330,6 +343,17 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:gapoktan']], function
     Route::post('gapoktan/pesanan/update-pesanan', [App\Http\Controllers\Gapoktan\OrderController::class, 'updateOrder'])->name('gapoktan.updateOrder');
     Route::post('gapoktan/pesanan/reply-review', [App\Http\Controllers\Gapoktan\OrderController::class, 'replyReview'])->name('gapoktan.replyReview');
 
+    // Jumlah Pesanan Masuk
+    Route::get('/load-order', [App\Http\Controllers\Gapoktan\OrderController::class, 'countOrder']);
+
+    // Reply Ulasan
+    Route::get('/gapoktan/reply-ulasan', [App\Http\Controllers\Gapoktan\ReviewController::class, 'index'])->name('gapoktan.review');
+    Route::get('/gapoktan/reply-ulasan/fetchBelumDiulas', [App\Http\Controllers\Gapoktan\ReviewController::class, 'fetchBelumDiulas'])->name('gapoktan.review.fetchBelumDiulas');
+    Route::get('/gapoktan/reply-ulasan/fetchUlasanSaya', [App\Http\Controllers\Gapoktan\ReviewController::class, 'fetchUlasanSaya'])->name('gapoktan.review.fetchUlasanSaya');
+
+    // Jumlah Pesanan Masuk
+    Route::get('/load-review', [App\Http\Controllers\Gapoktan\ReviewController::class, 'countReview']);
+
     // Daftar Petani
     Route::get('gapoktan/daftar-petani', [App\Http\Controllers\Gapoktan\FarmerController::class, 'index'])->name('gapoktan-petani');
     Route::post('gapoktan/daftar-petani/store', [App\Http\Controllers\Gapoktan\FarmerController::class, 'store'])->name('gapoktan-petani-store');
@@ -542,7 +566,7 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function 
     Route::post('pembeli-update', [App\Http\Controllers\Pembeli\PengaturanController::class, 'pengaturanUpdate'])->name('pembeli.pengaturan.update');
     Route::post('pembeli-updatePassword', [App\Http\Controllers\Pembeli\PengaturanController::class, 'pengaturanUpdatePassword'])->name('pembeli.pengaturan.updatePassword');
 
-    // Menunggu Pembayaran
+    // Pemberitahuan
     Route::get('/pembeli/pemberitahuan', [App\Http\Controllers\Pembeli\NotificationController::class, 'index'])->name('pembeli.notifications');
     Route::get('/pembeli/pemberitahuan/fetchall', [App\Http\Controllers\Pembeli\NotificationController::class, 'fetchAll'])->name('pembeli.notifications.fetchAll');
 
@@ -590,6 +614,13 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function 
     Route::get('/cart/shipment', [App\Http\Controllers\Pembeli\CheckoutController::class, 'index'])->name('cart.shipment.pembeli');
     Route::post('/cart/shipment', [App\Http\Controllers\Pembeli\CheckoutController::class, 'index'])->name('cart.shipment.pembeliPost');
     Route::post('/cart/shipment/place-order', [App\Http\Controllers\Pembeli\CheckoutController::class, 'placeOrder'])->name('place-order-costumer');
+
+    // Beli Sekarang
+    Route::post('/buy-now', [App\Http\Controllers\Pembeli\BuyNowController::class, 'buyNow']);
+    Route::post('/buy-now', [App\Http\Controllers\Pembeli\BuyNowController::class, 'buyNowPost'])->name('buy.now.pembeli');
+    Route::post('/ongkir/buy-now', [App\Http\Controllers\Pembeli\BuyNowController::class, 'check_ongkir']);
+    Route::post('/buy-now/shipment/place-order', [App\Http\Controllers\Pembeli\BuyNowController::class, 'placeOrder'])->name('buy.now.place_order');
+    // Route::get('/checkout', [App\Http\Controllers\Pembeli\BuyNowController::class, 'index'])->name('buy.now.pembeli');
 
     // Crud Address
     Route::post('/cart/shipment/addAddress', [App\Http\Controllers\Pembeli\CheckoutController::class, 'addAlamat'])->name('add-alamat-costumer');

@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{{ asset('plus-admin/plugins/mdi/css/materialdesignicons.min.css') }}">
     <!-- Theme style -->
+    <link rel="stylesheet" href="{{ asset('css/LineIcons.3.0.css') }}" />
     <link rel="stylesheet" href="{{ asset('plus-admin/dist/css/adminlte.min.css') }}">
 
     @yield('style')

@@ -147,7 +147,7 @@
                                         <i class="lni lni-alarm"></i>
                                         <span class="total-items notif-count">0</span>
                                     </a>
-
+    
                                     <div class="shopping-item">
                                         <div class="dropdown-cart-header">
                                             <div class="d-flex align-items-center justify-content-between">
@@ -158,8 +158,8 @@
                                                 </form>
                                             </div>
                                         </div>
-                                        <ul class="shopping-list" id="style-1">
-                                            @if ($notifications->count())
+                                        <ul class="shopping-list" id="{{ $notifications->count() > 2 ? 'style-1' : ''}}">
+                                            @if ($notifications->count() > 0)
                                             @foreach ($notifications as $notif)
                                             <li class="border p-2 rounded" style="{{ $notif->is_read == 0 ? 'background: antiquewhite' : '' }}">
                                                 {{-- <input type="hidden" name="passingIdNotif" value="{{ $notif->id }}"> --}}
@@ -169,7 +169,7 @@
                                                             style="width: 5rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                                                     </a>
                                                 </div>
-
+    
                                                 <div class="content">
                                                     <h4><a style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;"
                                                             href="#">
@@ -196,9 +196,9 @@
                                         </ul>
                                     </div>
                                 </div>
-
+    
                                 {{-- ==================================================================================== Cart ============================================================================ --}}
-
+    
                                 <div class="cart-items">
                                     <!-- Shopping Item -->
                                     @php
@@ -210,7 +210,7 @@
                                         <i class="lni lni-cart"></i>
                                         <span class="total-items cart-count">0</span>
                                     </a>
-
+    
                                     <div class="shopping-item">
                                         <div class="dropdown-cart-header">
                                             <span>Keranjang (<span class="cart-count">0</span>)</span>
@@ -219,8 +219,8 @@
                                         @php
                                         $total = 0;
                                         @endphp
-                                        <ul class="shopping-list" id="style-2">
-                                            @if ($cartItem->count())
+                                        <ul class="shopping-list" id="{{ $cartItem->count() > 2 ? 'style-2' : ''}}">
+                                            @if ($cartItem->count() > 0)
                                             @foreach ($cartItem as $item)
                                             <li>
                                                 <input type="hidden" value="{{ $item->product_id }}" id="prod_id">
@@ -247,7 +247,7 @@
                                                         @endif
                                                     </a>
                                                 </div>
-
+    
                                                 <div class="content">
                                                     <h4><a style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;"
                                                             href="{{ url('home/'.$item->product->slug) }}">

@@ -14,6 +14,19 @@ use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
 {
+    public function countOrder()
+    {
+        $countOrder = Order::join('users', 'orders.user_id', '=', 'users.id')
+            ->join('addresses', 'orders.address_id', '=', 'addresses.id')
+            ->select('orders.*', 'addresses.recipients_name as name_billing')
+            ->where('orders.payment_status', '=', 'paid')
+            ->where('orders.status', '=', 'confirmed')
+            ->orderBy('orders.created_at', 'desc')
+            ->count();
+
+        return response()->json(['count'=> $countOrder]);
+    }
+
     public function index()
     {
         return view('gapoktan.pesanan.index');

@@ -187,7 +187,7 @@ body {
 
 @section('content')
     <div class="wrapper">
-        <div class="card">
+        <div class="card border shadow">
             <form method="POST" action="#" id="login_form" class="d-flex flex-column">
             @csrf
                 <div class="h3 text-center mt-3" style="color: #16A085"><a href="{{ url('home') }}">TANIKULA</a></div>

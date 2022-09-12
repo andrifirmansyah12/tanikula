@@ -464,7 +464,7 @@
     </div>
 </div>
 
-{{-- Modal Ulasan --}}
+{{-- Modal Rincian Pembatalan --}}
 <div class="modal fade" id="rincianPembatalan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
@@ -693,7 +693,7 @@
     </div>
 </div>
 
-{{-- Eidt Ulasan --}}
+{{-- Edit Ulasan --}}
 <div class="modal fade" id="editUlasanModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <style>
         #style-2::-webkit-scrollbar-track

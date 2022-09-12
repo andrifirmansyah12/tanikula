@@ -1832,7 +1832,7 @@ ol {
 }
 
 .header .navbar-cart .notification-items .shopping-item .shopping-list {
-    overflow-y: scroll;
+    overflow-y: auto;
     max-height: 230px;
 }
 
@@ -2087,12 +2087,15 @@ ol {
 }
 
 .header .navbar-cart .cart-items .shopping-item .shopping-list {
-    overflow-y: scroll;
+    overflow-y: auto;
     max-height: 230px;
 }
 
 .header .navbar-cart .cart-items .shopping-item .shopping-list li {
     overflow: hidden;
+    background: antiquewhite;
+    border-radius: 4px;
+    padding: 10px;
     margin-bottom: 15px;
     position: relative;
     display: -webkit-box;

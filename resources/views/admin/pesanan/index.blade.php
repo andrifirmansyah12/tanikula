@@ -31,6 +31,9 @@
                         <div class="card-body px-0 pb-2">
                             <ul class="mx-3 p-1 nav bg-white rounded nav-fill">
                                 <li class="nav-item">
+                                    <a class="nav-link listSemua col-12" href="#listSemua">Semua</a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link listDikemas col-12" href="#listDikemas">Dikemas</a>
                                 </li>
                                 <li class="nav-item">
@@ -39,16 +42,27 @@
                                 <li class="nav-item">
                                     <a class="nav-link listSelesai col-12" href="#listSelesai">Selesai</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link listDibatalkan col-12" href="#listDibatalkan">Dibatalkan</a>
+                                </li>
                             </ul>
-                            <div class="card mt-4 table-responsive" id="listDikemas">
+                            <div class="mt-4 table-responsive" id="listSemua">
                                 {{-- Table --}}
                                 <h5 class="text-center text-secondary my-5">Memuat..</h5>
                             </div>
-                            <div class="card mt-4 table-responsive" id="listDikirim">
+                            <div class="mt-4 table-responsive" id="listDikemas">
                                 {{-- Table --}}
                                 <h5 class="text-center text-secondary my-5">Memuat..</h5>
                             </div>
-                            <div class="card mt-4 table-responsive" id="listSelesai">
+                            <div class="mt-4 table-responsive" id="listDikirim">
+                                {{-- Table --}}
+                                <h5 class="text-center text-secondary my-5">Memuat..</h5>
+                            </div>
+                            <div class="mt-4 table-responsive" id="listSelesai">
+                                {{-- Table --}}
+                                <h5 class="text-center text-secondary my-5">Memuat..</h5>
+                            </div>
+                            <div class="mt-4 table-responsive" id="listDibatalkan">
                                 {{-- Table --}}
                                 <h5 class="text-center text-secondary my-5">Memuat..</h5>
                             </div>
@@ -84,6 +98,11 @@
 <script>
     $(function () {
         $("#tabs").tabs();
+        $( ".listSemua" ).tabs({
+            classes: {
+                "ui-tabs": "costum-color"
+            }
+        });
         $(".listDikemas").tabs({
             classes: {
                 "ui-tabs": "costum-color"
@@ -95,6 +114,11 @@
             }
         });
         $(".listSelesai").tabs({
+            classes: {
+                "ui-tabs": "costum-color"
+            }
+        });
+        $( ".listDibatalkan" ).tabs({
             classes: {
                 "ui-tabs": "costum-color"
             }
@@ -114,9 +138,24 @@
     $(function () {
 
         // fetch all employees ajax request
+        fetchAllEmployees();
         fetchDikemasEmployees();
         fetchDikirimEmployees();
         fetchSelesaiEmployees();
+        fetchDibatalkanEmployees();
+
+        function fetchAllEmployees() {
+            $.ajax({
+            url: '{{ route('admin.orders.fetchAll') }}',
+            method: 'get',
+            success: function(response) {
+                $("#listSemua").html(response);
+                $("#listTableSemua").DataTable({
+                    order: [0, 'asc'],
+                });
+            }
+            });
+        }
 
         function fetchDikemasEmployees() {
             $.ajax({
@@ -154,6 +193,19 @@
                         order: [0, 'asc']
                     });
                 }
+            });
+        }
+
+        function fetchDibatalkanEmployees() {
+            $.ajax({
+            url: '{{ route('admin.orders.fetchDibatalkan') }}',
+            method: 'get',
+            success: function(response) {
+                $("#listDibatalkan").html(response);
+                $("#listTableDibatalkan").DataTable({
+                    order: [0, 'asc'],
+                });
+            }
             });
         }
     });

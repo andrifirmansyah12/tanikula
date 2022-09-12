@@ -37,7 +37,7 @@ class DashboardController extends Controller
                         <p>'. $countGapoktan .' Akun</p>
                     </div>
                     <div class="icon">
-                        <i class="far fa-solid fa-user"></i>
+                        <i class="far fa-solid fa-user text-warning"></i>
                     </div>
                     <a href="support/verifikasi-gapoktan" class="mt-3 small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
