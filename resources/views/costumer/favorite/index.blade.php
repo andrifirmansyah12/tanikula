@@ -110,7 +110,7 @@
                     <h6 class="mb-1">Wishlist</h6>
                     <p class="text-sm">Produk favorit yang dipilih.</p>
                 </div>
-                <div class="row WishlistItems">
+                <div class="row mx-4 mx-sm-0 WishlistItems">
                     @if ($wishlist->count())
                     @foreach ($wishlist as $item)
                     <div class="col-xl-3 col-md-6 mb-xl-0 mt-3" id="product_data">
