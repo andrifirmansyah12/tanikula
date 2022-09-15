@@ -125,7 +125,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row mx-4 mx-sm-0">
             @if ($category_product->count())
             @foreach ($category_product as $item)
             <div class="col-lg-3 col-md-6 col-12">
@@ -192,7 +192,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" id="homeNewProduct">
+        <div class="row mx-4 mx-sm-0" id="homeNewProduct">
             {{-- Content --}}
         </div>
     </div>
@@ -210,7 +210,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" id="homeSearchProduct">
+        <div class="row mx-4 mx-sm-0" id="homeSearchProduct">
             {{-- Content --}}
         </div>
     </div>

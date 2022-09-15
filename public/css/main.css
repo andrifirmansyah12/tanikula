@@ -1790,7 +1790,7 @@ ol {
 
 @media (max-width: 767px) {
     .header .navbar-cart .notification-items .shopping-item {
-        width: 250px;
+        width: 285px;
     }
 }
 
@@ -2045,7 +2045,7 @@ ol {
 
 @media (max-width: 767px) {
     .header .navbar-cart .cart-items .shopping-item {
-        width: 250px;
+        width: 285px;
     }
 }
 
