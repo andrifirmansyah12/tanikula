@@ -64,10 +64,11 @@
         }
     }
 </style>
-{{-- <script>
+<script>
     var stateObj = { foo: "bar" };
-    history.pushState(stateObj, "page without extension", "buy-now");
-</script> --}}
+    // history.pushState(stateObj, "page without extension", "buy-now");
+    history.replaceState(stateObj, '', 'buy-now');
+</script>
 @endsection
 
 @section('content')

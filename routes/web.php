@@ -616,7 +616,7 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function 
     Route::post('/cart/shipment/place-order', [App\Http\Controllers\Pembeli\CheckoutController::class, 'placeOrder'])->name('place-order-costumer');
 
     // Beli Sekarang
-    Route::post('/buy-now', [App\Http\Controllers\Pembeli\BuyNowController::class, 'buyNow']);
+    Route::get('/buy-now', [App\Http\Controllers\Pembeli\BuyNowController::class, 'buyNow']);
     Route::post('/buy-now', [App\Http\Controllers\Pembeli\BuyNowController::class, 'buyNowPost'])->name('buy.now.pembeli');
     Route::post('/ongkir/buy-now', [App\Http\Controllers\Pembeli\BuyNowController::class, 'check_ongkir']);
     Route::post('/buy-now/shipment/place-order', [App\Http\Controllers\Pembeli\BuyNowController::class, 'placeOrder'])->name('buy.now.place_order');

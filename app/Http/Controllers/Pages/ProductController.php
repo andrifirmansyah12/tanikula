@@ -1185,7 +1185,7 @@ class ProductController extends Controller
                             foreach ($review->user->costumer as $potoProfile) {
                                 if ($potoProfile->image) {
                                     $output .= '<img src="../storage/profile/'.$potoProfile->image.'"
-                                        style="max-width: 4rem;" class="img-fluid img-thumbnail rounded-circle"
+                                        class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 70px; height: 67px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
                                         alt="">';
                                 } else {
                                     $output .= '<img src="../stisla/assets/img/avatar/avatar-1.png"
@@ -1262,7 +1262,7 @@ class ProductController extends Controller
                             foreach ($review->user->costumer as $potoProfile) {
                                 if ($potoProfile->image) {
                                     $output .= '<img src="../storage/profile/'.$potoProfile->image.'"
-                                        style="max-width: 4rem;" class="img-fluid img-thumbnail rounded-circle"
+                                        class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 70px; height: 67px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
                                         alt="">';
                                 } else {
                                     $output .= '<img src="../stisla/assets/img/avatar/avatar-1.png"
@@ -1339,7 +1339,7 @@ class ProductController extends Controller
                             foreach ($review->user->costumer as $potoProfile) {
                                 if ($potoProfile->image) {
                                     $output .= '<img src="../storage/profile/'.$potoProfile->image.'"
-                                        style="max-width: 4rem;" class="img-fluid img-thumbnail rounded-circle"
+                                        class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 70px; height: 67px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
                                         alt="">';
                                 } else {
                                     $output .= '<img src="../stisla/assets/img/avatar/avatar-1.png"
@@ -1416,7 +1416,7 @@ class ProductController extends Controller
                             foreach ($review->user->costumer as $potoProfile) {
                                 if ($potoProfile->image) {
                                     $output .= '<img src="../storage/profile/'.$potoProfile->image.'"
-                                        style="max-width: 4rem;" class="img-fluid img-thumbnail rounded-circle"
+                                        class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 70px; height: 67px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
                                         alt="">';
                                 } else {
                                     $output .= '<img src="../stisla/assets/img/avatar/avatar-1.png"
@@ -1493,7 +1493,7 @@ class ProductController extends Controller
                             foreach ($review->user->costumer as $potoProfile) {
                                 if ($potoProfile->image) {
                                     $output .= '<img src="../storage/profile/'.$potoProfile->image.'"
-                                        style="max-width: 4rem;" class="img-fluid img-thumbnail rounded-circle"
+                                        class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 70px; height: 67px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
                                         alt="">';
                                 } else {
                                     $output .= '<img src="../stisla/assets/img/avatar/avatar-1.png"

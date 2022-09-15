@@ -31,7 +31,7 @@ class ReviewController extends Controller
                     ->where('reviews.reply_review', '=', null)
                     ->orderBy('orders.updated_at', 'desc')
                     ->count();
-            
+
             return response()->json(['count'=> $countOrder]);
     }
 
@@ -67,11 +67,9 @@ class ReviewController extends Controller
                     <a href="/gapoktan/pesanan/detail-pesanan/'.$order->id.'" class="my-0 text-xs font-weight-bold">'. $order->code .'</a>';
                     $output .= '<div class="d-flex align-items-center pt-3">';
                         if ($userInfo->image) {
-                        $output .= '<img src="../storage/profile/'. $userInfo->image .'" class="img-fluid rounded-circle"
-                            style="width: 55px; height: 55px;" alt="'. $userInfo->user->name .'">';
+                        $output .= '<img src="../storage/profile/'. $userInfo->image .'" class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 55px; height: 55px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="'. $userInfo->user->name .'">';
                         } else {
-                        $output .= '<img src="../stisla/assets/img/example-image.jpg" class="img-fluid rounded-circle"
-                            style="width: 55px; height: 55px;" alt="'. $userInfo->user->name .'">';
+                        $output .= '<img src="../stisla/assets/img/example-image.jpg" class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 55px; height: 55px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="'. $userInfo->user->name .'">';
                         }
                         $output .= '<div>
                             <p class="my-0 mx-3 text-xs font-weight-bold">'. $userInfo->user->name .'</p>';
@@ -180,11 +178,9 @@ class ReviewController extends Controller
                     <a href="/gapoktan/pesanan/detail-pesanan/'.$order->id.'" class="my-0 text-xs font-weight-bold">'. $order->code .'</a>';
                     $output .= '<div class="d-flex align-items-center pt-3">';
                         if ($userInfo->image) {
-                        $output .= '<img src="../storage/profile/'. $userInfo->image .'" class="img-fluid rounded-circle"
-                            style="width: 55px; height: 55px;" alt="'. $userInfo->user->name .'">';
+                        $output .= '<img src="../storage/profile/'. $userInfo->image .'" class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 55px; height: 55px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="'. $userInfo->user->name .'">';
                         } else {
-                        $output .= '<img src="../stisla/assets/img/example-image.jpg" class="img-fluid rounded-circle"
-                            style="width: 55px; height: 55px;" alt="'. $userInfo->user->name .'">';
+                        $output .= '<img src="../stisla/assets/img/example-image.jpg" class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 55px; height: 55px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="'. $userInfo->user->name .'">';
                         }
                         $output .= '<div>
                             <p class="my-0 mx-3 text-xs font-weight-bold">'. $userInfo->user->name .'</p>';
