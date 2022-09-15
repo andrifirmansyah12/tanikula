@@ -373,6 +373,7 @@
                         </div>
                     </div>
                 </div>
+                <input type="hidden" name="passingIdOrder" value="{{ $order->id }}">
                 <div class="card-footer border-0 px-4 bg-primary shadow-primary border-radius-lg py-5 d-md-flex align-items-center justify-content-between">
                     <h5 class="text-white text-uppercase mb-0">Total
                         Pembayaran: <span class="d-flex h2 mb-0 text-white text-capitalize">Rp.
@@ -395,8 +396,27 @@
                                         var distance = end - now;
                                         if (distance < 0) {
                                             clearInterval(timer);
-                                            document.getElementById(id).innerHTML = '<b>Pembayaran Sudah Kadaluarsa';
-                                            return;
+                                            // document.getElementById(id).innerHTML = '<b>Pembayaran Sudah Kadaluarsa';
+                                            // return;
+
+                                            return deleteOrders();
+
+                                            function deleteOrders()
+                                            {
+                                                var id = $("input[name=passingIdOrder]").val();
+                                                $.ajax({
+                                                    method: "GET",
+                                                    url: '/delete-orders/' +id,
+                                                    success: function (response) {
+                                                        iziToast.warning({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                                                            title: 'Peringatan',
+                                                            message: 'Maaf pesanan anda sudah kadaluarsa',
+                                                            position: 'topRight'
+                                                        });
+                                                        window.setTimeout(function(){location.reload()},3000);
+                                                    }
+                                                });
+                                            }
                                         }
                                         var days = Math.floor(distance / _day);
                                         var hours = Math.floor((distance % _day) / _hour);

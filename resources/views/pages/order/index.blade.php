@@ -58,7 +58,6 @@
 @endsection
 
 @section('content')
-
 <section class="h-100 gradient-custom">
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
@@ -69,6 +68,7 @@
                         <div>
                             <h5 class="mb-0 text-white">Pesanan Anda telah dibuat.</h5>
                             <h5 class="mb-0 text-white">Silahkan melanjutkan untuk pembayaran!</h5>
+                            <input type="hidden" name="passingIdOrder" class="text-white" value="{{ $order->id }}">
                         </div>
                         @else
                         <div>
@@ -92,8 +92,27 @@
                                     var distance = end - now;
                                     if (distance < 0) {
                                         clearInterval(timer);
-                                        document.getElementById(id).innerHTML = '<b>Pembayaran Sudah Kadaluarsa';
-                                        return;
+                                        // document.getElementById(id).innerHTML = '<b>Pembayaran Sudah Kadaluarsa';
+                                        // return;
+
+                                        return deleteOrders();
+
+                                        function deleteOrders()
+                                        {
+                                            var id = $("input[name=passingIdOrder]").val();
+                                            $.ajax({
+                                                method: "GET",
+                                                url: '/delete-orders/' +id,
+                                                success: function (response) {
+                                                    iziToast.warning({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                                                        title: 'Peringatan',
+                                                        message: 'Maaf pesanan anda sudah kadaluarsa',
+                                                        position: 'topRight'
+                                                    });
+                                                    window.setTimeout(function(){location.reload()},3000);
+                                                }
+                                            });
+                                        }
                                     }
                                     var days = Math.floor(distance / _day);
                                     var hours = Math.floor((distance % _day) / _hour);

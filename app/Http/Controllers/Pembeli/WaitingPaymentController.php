@@ -168,4 +168,14 @@ class WaitingPaymentController extends Controller
                 ]);
         }
 	}
+
+    public function deleteOrders(Request $request, $id)
+    {
+        $deleteOrder = Order::where('id', $id);
+        $deleteOrder->delete();
+
+        return response()->json([
+            'status' => 200,
+        ]);
+    }
 }

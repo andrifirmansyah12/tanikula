@@ -632,6 +632,9 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function 
     // Check Ongkir (RajaOngkir)
     Route::post('/ongkir', [App\Http\Controllers\Pembeli\CheckoutController::class, 'check_ongkir']);
 
+    // Hapus Order Ketika Hitungan Mundur Sudah Habis
+    Route::get('/delete-orders/{id}', [App\Http\Controllers\Pembeli\WaitingPaymentController::class, 'deleteOrders'])->name('delete.orders');
+
     // Chat
     Route::get('/pembeli/chat', [App\Http\Controllers\Pembeli\ChatController::class, 'index'])->name('pembeli.chat');
     Route::post('/pembeli/createChat', [App\Http\Controllers\Pembeli\ChatController::class, 'createChat'])->name('pembeli.createChat');
