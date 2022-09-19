@@ -67,7 +67,7 @@ class CartController extends Controller
                     ->orderBy('products.updated_at', 'desc')
                     ->get();
         }
-        
+
         return view('pages.bag.index', compact('cartItem', 'product_new'));
     }
 
@@ -99,5 +99,37 @@ class CartController extends Controller
                 return response()->json(['status' => "Memperbarui kuantiti!"]);
             }
         }
+    }
+
+    public function countBeliKeranjang(Request $request)
+    {
+        if (Auth::user()) {
+            $countCart = $request->totalCheckboxes;
+            $countQty = $request->sum;
+            $totalPrice = number_format($request->total, 0);
+        } elseif (Auth::guest()) {
+            $countCart = 0;
+        }
+        return response()->json([
+            'countCart'=> $countCart,
+            'countQty'=> $countQty,
+            'totalPrice'=> $totalPrice,
+        ]);
+    }
+
+    public function navbarCountBeliKeranjang(Request $request)
+    {
+        if (Auth::user()) {
+            $countCart = $request->totalCheckboxes;
+            $countQty = $request->sum;
+            $totalPrice = number_format($request->total, 0);
+        } elseif (Auth::guest()) {
+            $countCart = 0;
+        }
+        return response()->json([
+            'countCart'=> $countCart,
+            'countQty'=> $countQty,
+            'totalPrice'=> $totalPrice,
+        ]);
     }
 }

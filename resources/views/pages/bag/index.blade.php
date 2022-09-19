@@ -16,7 +16,6 @@
     .icon-sm {
         width: 2rem;
         height: 2rem;
-
     }
 
     /* 4.3 Page */
@@ -74,8 +73,11 @@
                                 <div class="row align-items-center mb-6 mb-md-3">
                                     <div class="col-12 col-md-12 col-lg-12 mb-6 mb-md-0">
                                         <div class="row align-items-center">
-                                            <div>
-                                                <p class="fw-bold mb-2"><i class="bi bi-shop"></i> {{ $item->product->user->name }}</p>
+                                            <div class="d-flex checkProductCart">
+                                                <input class="form-check-input" type="checkbox" name="cart_id[]" value="{{ $item->id }}" id="checkProductCart">
+                                                <input class="form-check-input" type="hidden" name="cart_qty" value="{{ $item->product_qty }}" id="checkProductQty">
+                                                <input class="form-check-input" type="hidden" name="cart_total" value="{{ $item->product->price }}" id="checkProductTotal">
+                                                <p class="fw-bold ps-3 mb-2"><i class="bi bi-shop"></i> {{ $item->product->user->name }}</p>
                                             </div>
                                             <div class="col-12 col-md-3 col-lg-3">
                                                 <div class="d-flex align-items-center justify-content-center bg-light"
@@ -176,15 +178,15 @@
                         <h3 class="mb-3 fs-4">Ringkasan Belanja</h3>
                         <div
                             class="d-flex mb-8 align-items-center justify-content-between pb-3 border-bottom border-info-light">
-                            <span class="">Total Harga({{$totalQty}} Barang)</span>
-                            <span class="fs-6 fw-bold">Rp. {{ number_format($total, 0) }}</span>
+                            <span class="">Total Harga(<span class="count-product">0</span> Barang)</span>
+                            <span class="fs-6 fw-bold">Rp. <span class="total-price">0</span></span>
                         </div>
                         <div class="d-flex mb-10 mt-3 justify-content-between align-items-center">
                             <span class="fw-bold">Total Harga</span>
-                            <span class="fs-6 fw-bold">Rp. {{ number_format($total, 0) }}</span>
+                            <span class="fs-6 fw-bold">Rp. <span class="total-price">0</span></span>
                         </div>
                         @if ($cartItem->count())
-                            <a class="btn w-100 text-uppercase text-white" style="background: #16A085;" href="{{ url('cart/shipment') }}">Beli ({{$totalQty}})</a>
+                            <a class="btn w-100 text-uppercase text-white" style="background: #16A085;" href="{{ url('cart/shipment') }}">Checkout (<span class="beli-keranjang-count">0</span>)</a>
                         @else
                             <a class="btn w-100 text-uppercase text-white" style="background: #16A085;" href="{{ url('new-product') }}">Belanja Sekarang</a>
                         @endif
@@ -197,8 +199,8 @@
                     <div class="owl-carousel owl-theme">
                         @foreach ($product_new as $item)
                         <!-- Start Single Product -->
-                        <div class="mx-2 single-product shadow-none {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}"" style="height: 27rem">
-                            <div class="product-image {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}"">
+                        <div class="mx-2 single-product shadow-none {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}" style="height: 27rem">
+                            <div class="product-image {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}">
                                 <a href="{{ url('home/'.$item->slug) }}">
                                     @if ($item->stoke === 0)
                                     <div style="z-index: 3" class="badge bg-danger px-3 position-absolute top-50 start-50 translate-middle"><h5 class="text-white">Stok Habis</h5></div>
@@ -304,7 +306,49 @@
         });
     });
 
-    $(document).ready(function () {
+    $(document).ready(function ()
+    {
+        $('.checkProductCart').click( function()
+        {
+            var totalCheckboxes = $("input#checkProductCart:checked").length;
+            var sum = 0;
+            var total = 0;
+            if (totalCheckboxes) {
+                var checkedInputs = $("input#checkProductCart:checked");
+                var sum_qty = 0;
+                var total_price = 0;
+                $.each(checkedInputs, function(i, val) {
+                    var qty = $(this).closest('.checkProductCart').find("input[name=cart_qty]").val();
+                    var price = $(this).closest('.checkProductCart').find("input[name=cart_total]").val();
+                    sum_qty += parseInt(qty);
+                    total_price += parseInt(price * qty);
+                });
+                sum = sum_qty;
+                total = total_price
+            } else {
+                var qty = 0;
+            }
+            $.ajax({
+                method: "POST",
+                url: "/load-beli-keranjang",
+                data: {
+                    'totalCheckboxes': totalCheckboxes,
+                    'sum': sum,
+                    'total': total
+                },
+                success: function (response)
+                {
+                    $('.beli-keranjang-count').html('');
+                    $('.beli-keranjang-count').html(response.countCart);
+
+                    $('.count-product').html('');
+                    $('.count-product').html(response.countQty);
+
+                    $('.total-price').html('');
+                    $('.total-price').html(response.totalPrice);
+                }
+            });
+        });
 
             $('.increment-btn').click(function (e) {
                 e.preventDefault();

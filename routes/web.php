@@ -713,6 +713,12 @@ Route::post('/update-cart-item', [App\Http\Controllers\Pembeli\CartController::c
 Route::get('/hubungi-kami', [App\Http\Controllers\Pages\ContactUsController::class, 'index'])->name('contact.us');
 Route::post('/hubungi-kami', [App\Http\Controllers\Pages\ContactUsController::class, 'addContactUs'])->name('addContactUs');
 
+// Count Beli di Halaman Keranjang
+Route::post('/load-beli-keranjang', [App\Http\Controllers\Pembeli\CartController::class, 'countBeliKeranjang']);
+
+// Count Beli Keranjang di Navbar
+Route::post('/navbar-keranjang', [App\Http\Controllers\Pembeli\CartController::class, 'navbarCountBeliKeranjang']);
+
 // Count Keranjang
 Route::get('/load-cart', [App\Http\Controllers\Pages\ProductController::class, 'countCart']);
 

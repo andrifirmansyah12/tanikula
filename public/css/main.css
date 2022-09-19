@@ -3203,14 +3203,24 @@ ol {
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
     .hero-area .hero-slider .single-slider {
-        height: 400px;
+        width: 100px;
+        height: 250px;
+        -o-object-fit: cover;
+        object-fit: cover;
+        -o-object-position: center;
+        object-position: center;
         margin-bottom: 12px;
     }
 }
 
 @media (max-width: 767px) {
     .hero-area .hero-slider .single-slider {
-        height: 350px;
+        width: 100px;
+        height: 250px;
+        -o-object-fit: cover;
+        object-fit: cover;
+        -o-object-position: center;
+        object-position: center;
         margin-bottom: 12px;
     }
 }

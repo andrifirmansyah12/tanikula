@@ -9,11 +9,11 @@
             <!-- Start Single Slider -->
             <div class="single-slider"
                 style="background-image: url('{{ asset('../storage/hero/' . $hero->image) }}');">
-                <div class="content">
+                {{-- <div class="content">
                     <h2 class="fw-bold text-secondary">
                         {{ $hero->name }}
                     </h2>
-                </div>
+                </div> --}}
             </div>
             <!-- End Single Slider -->
             @endforeach

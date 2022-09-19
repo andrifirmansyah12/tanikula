@@ -147,7 +147,7 @@
                                         <i class="lni lni-alarm"></i>
                                         <span class="total-items notif-count">0</span>
                                     </a>
-    
+
                                     <div class="shopping-item">
                                         <div class="dropdown-cart-header">
                                             <div class="d-flex align-items-center justify-content-between">
@@ -169,7 +169,7 @@
                                                             style="width: 5rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                                                     </a>
                                                 </div>
-    
+
                                                 <div class="content">
                                                     <h4><a style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;"
                                                             href="#">
@@ -196,9 +196,9 @@
                                         </ul>
                                     </div>
                                 </div>
-    
+
                                 {{-- ==================================================================================== Cart ============================================================================ --}}
-    
+
                                 <div class="cart-items">
                                     <!-- Shopping Item -->
                                     @php
@@ -210,7 +210,7 @@
                                         <i class="lni lni-cart"></i>
                                         <span class="total-items cart-count">0</span>
                                     </a>
-    
+
                                     <div class="shopping-item">
                                         <div class="dropdown-cart-header">
                                             <span>Keranjang (<span class="cart-count">0</span>)</span>
@@ -222,6 +222,12 @@
                                         <ul class="shopping-list" id="{{ $cartItem->count() > 2 ? 'style-2' : ''}}">
                                             @if ($cartItem->count() > 0)
                                             @foreach ($cartItem as $item)
+                                            <div class="d-flex navbarCheckProductCart">
+                                                <input class="form-check-input" type="checkbox" name="navbar_cart_id[]" value="{{ $item->id }}" id="navbarCheckProductCart">
+                                                <input class="form-check-input" type="hidden" name="navbar_cart_qty" value="{{ $item->product_qty }}" id="navbarCheckProductQty">
+                                                <input class="form-check-input" type="hidden" name="navbar_cart_total" value="{{ $item->product->price }}" id="navbarCheckProductTotal">
+                                                <p class="fw-bold ps-3 mb-2"><i class="bi bi-shop"></i> {{ $item->product->user->name }}</p>
+                                            </div>
                                             <li>
                                                 <input type="hidden" value="{{ $item->product_id }}" id="prod_id">
                                                 {{-- <button class="remove delete-cart-item" title="Remove this item"><i
@@ -247,7 +253,7 @@
                                                         @endif
                                                     </a>
                                                 </div>
-    
+
                                                 <div class="content">
                                                     <h4><a style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;"
                                                             href="{{ url('home/'.$item->product->slug) }}">
@@ -278,11 +284,11 @@
                                         <div class="bottom">
                                             <div class="total">
                                                 <span>Total</span>
-                                                <span class="total-amount">Rp. {{ number_format($total, 0) }}</span>
+                                                <span class="total-amount d-flex align-items-center">Rp. <p class="navbar-total-price ps-2 py-0 pe-0 m-0">0</p></span>
                                             </div>
                                             <div class="button">
                                                 @if ($cartItem->count())
-                                                <a href="{{ url('cart/shipment') }}" class="btn animate">Checkout</a>
+                                                <a href="{{ url('cart/shipment') }}" class="btn animate">Checkout (<span class="navbar-beli-keranjang-count">0</span>)</a>
                                                 @else
                                                 <a href="{{ url('new-product') }}" class="btn animate">Belanja Sekarang</a>
                                                 @endif

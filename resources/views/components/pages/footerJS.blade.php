@@ -415,5 +415,47 @@
             }
         });
     });
+
+    $('.navbarCheckProductCart').click( function()
+        {
+            var totalCheckboxes = $("input#navbarCheckProductCart:checked").length;
+            var sum = 0;
+            var total = 0;
+            if (totalCheckboxes) {
+                var checkedInputs = $("input#navbarCheckProductCart:checked");
+                var sum_qty = 0;
+                var total_price = 0;
+                $.each(checkedInputs, function(i, val) {
+                    var qty = $(this).closest('.navbarCheckProductCart').find("input[name=navbar_cart_qty]").val();
+                    var price = $(this).closest('.navbarCheckProductCart').find("input[name=navbar_cart_total]").val();
+                    sum_qty += parseInt(qty);
+                    total_price += parseInt(price * qty);
+                });
+                sum = sum_qty;
+                total = total_price
+            } else {
+                var qty = 0;
+            }
+            $.ajax({
+                method: "POST",
+                url: "/navbar-keranjang",
+                data: {
+                    'totalCheckboxes': totalCheckboxes,
+                    'sum': sum,
+                    'total': total
+                },
+                success: function (response)
+                {
+                    $('.navbar-beli-keranjang-count').html('');
+                    $('.navbar-beli-keranjang-count').html(response.countCart);
+
+                    $('.navbar-count-product').html('');
+                    $('.navbar-count-product').html(response.countQty);
+
+                    $('.navbar-total-price').html('');
+                    $('.navbar-total-price').html(response.totalPrice);
+                }
+            });
+        });
 });
 </script>
