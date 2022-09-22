@@ -611,7 +611,7 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function 
 
     // Keranjang dan Order
     Route::get('/cart', [App\Http\Controllers\Pembeli\CartController::class, 'viewCart']);
-    Route::get('/cart/shipment', [App\Http\Controllers\Pembeli\CheckoutController::class, 'index'])->name('cart.shipment.pembeli');
+    Route::post('/checkout', [App\Http\Controllers\Pembeli\CheckoutController::class, 'index'])->name('checkout.pembeli');
     Route::post('/cart/shipment', [App\Http\Controllers\Pembeli\CheckoutController::class, 'index'])->name('cart.shipment.pembeliPost');
     Route::post('/cart/shipment/place-order', [App\Http\Controllers\Pembeli\CheckoutController::class, 'placeOrder'])->name('place-order-costumer');
 
@@ -728,6 +728,10 @@ Route::get('/load-notifications', [App\Http\Controllers\Pages\ProductController:
 // List Pencarian Product
 Route::get('/product-list', [App\Http\Controllers\Pages\ProductController::class, 'productListAjax'])->name('productListAjax');
 // Route::post('/product-searchProduct', [App\Http\Controllers\Pages\ProductController::class, 'searchProduct']);
+
+// Profile Gapoktan
+Route::get('/profile/{name}', [App\Http\Controllers\Pages\ProductController::class, 'profileGapoktan'])->name('profile.gapoktan');
+Route::get('/fetchall-produk-gapoktan/{name}', [App\Http\Controllers\Pages\ProductController::class, 'fetchallprodukGapoktan'])->name('fetchallprodukGapoktan');
 
 // Wishlist
 Route::post('/add-to-wishlist', [App\Http\Controllers\Pembeli\WishlistController::class, 'addToWishlist'])->name('pembeli.addToWishlist');

@@ -848,7 +848,7 @@
                         $("#add_employee_form")[0].reset();
                         $("#add_employee_btn").text('Simpan');
                         $("#add_employee_btn").prop('disabled', false);
-                        window.setTimeout(function(){location = '{{ route('cart.shipment.pembeli') }}'},1000)
+                        window.setTimeout(function(){location.reload()},1000);
                     }
                 }
                 });
@@ -918,7 +918,7 @@
                         $("#edit_employee_form")[0].reset();
                         $("#edit_employee_btn").text('Simpan');
                         $("#edit_employee_btn").prop('disabled', false);
-                        window.setTimeout(function(){location = '{{ route('cart.shipment.pembeli') }}'},1000)
+                        window.setTimeout(function(){location.reload()},1000);
                     }
                 }
             });
@@ -954,7 +954,7 @@
                             'Berhasil menjadikan alamat utama!',
                             'success'
                         )
-                        window.setTimeout(function(){location = '{{ route('cart.shipment.pembeli') }}'},1000)
+                        window.setTimeout(function(){location.reload()},1000);
                     }
                 }
                 });

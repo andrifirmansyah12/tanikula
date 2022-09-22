@@ -134,6 +134,7 @@
                         @endphp
                         @if ($cartItem->count() > 0)
                         @foreach ($cartItem as $item)
+                        <input type="hidden" name="cart_id_order[]" value="{{ $item->id }}" id="checkProductCart">
                         <div class="mb-12 py-3 mt-3 border-top border-bottom" id="product_data">
                             <div class="row align-items-center mb-6 mb-md-3">
                                 <div class="col-12 col-md-12 col-lg-12 mb-6 mb-md-0">
@@ -368,6 +369,9 @@
                         @csrf
                         @foreach ($address as $item)
                             <input type="hidden" name="destination_costumer" id="destination_costumer" value="{{ $item->city_id }}">
+                        @endforeach
+                        @foreach ($cartItem as $item)
+                            <input type="hidden" name="cart_id[]" value="{{ $item->id }}" id="checkProductCart">
                         @endforeach
                         <input type="hidden" name="weight_product" id="weight_product" value="{{ $totalWeightProduct }}">
                         <div class="my-2">
@@ -809,7 +813,7 @@
                 dataType: 'json',
                 success: function(response) {
                     if (response.status == 401) {
-                        window.location = '{{ route('cart.shipment.pembeli') }}';
+                        window.location = '{{ route('home') }}';
                         $("#create_orders_btn").text('Buat Pesanan');
                         $("#create_orders_btn").prop('disabled', false);
                     } else if (response.status == 200){
@@ -861,7 +865,7 @@
                         $("#add_employee_form")[0].reset();
                         $("#add_employee_btn").text('Simpan');
                         $("#add_employee_btn").prop('disabled', false);
-                        window.setTimeout(function(){location = '{{ route('cart.shipment.pembeli') }}'},1000)
+                        window.setTimeout(function(){location.reload()},1000);
                     }
                 }
                 });
@@ -931,7 +935,7 @@
                         $("#edit_employee_form")[0].reset();
                         $("#edit_employee_btn").text('Simpan');
                         $("#edit_employee_btn").prop('disabled', false);
-                        window.setTimeout(function(){location = '{{ route('cart.shipment.pembeli') }}'},1000)
+                        window.setTimeout(function(){location.reload()},1000);
                     }
                 }
             });
@@ -967,7 +971,7 @@
                             'Berhasil menjadikan alamat utama!',
                             'success'
                         )
-                        window.setTimeout(function(){location = '{{ route('cart.shipment.pembeli') }}'},1000)
+                        window.setTimeout(function(){location.reload()},1000);
                     }
                 }
                 });

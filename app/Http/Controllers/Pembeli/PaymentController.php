@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Pembeli;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Payment;
 use App\Models\Cart;
 use App\Models\Product;
@@ -105,18 +106,30 @@ class PaymentController extends Controller
                         // $order->payment_due = Carbon::now()->format('Y-m-d H:i:s');
 						$order->save();
 
-                        $cartItem = Cart::with('product')->where('user_id', $order->user_id)->latest()->get();
-                        foreach ($cartItem as $item) {
-                            $prod = Product::where('id', $item->product_id)->first();
-                            $prod->stoke = $prod->stoke - $item->product_qty;
-                            if ($prod->stock_out == null) {
-                                $prod->stock_out = $item->product_qty;
-                            } else {
-                                $prod->stock_out = $prod->stock_out + $item->product_qty;
-                            }
+                        $orderItemCheck = OrderItem::where('order_id', $order->id)->get();
+                        foreach ($orderItemCheck as $orderItem) {
+                            $prod = Product::where('id', $orderItem->product_id)->first();
+                            $prod->stoke = $prod->stoke - $orderItem->qty;
+                            // if ($prod->stock_out == null) {
+                            //     $prod->stock_out = $orderItem->qty;
+                            // } else {
+                                $prod->stock_out = $prod->stock_out + $orderItem->qty;
+                            // }
                             $prod->update();
                         }
-                        Cart::destroy($cartItem);
+
+                        // $cartItem = Cart::with('product')->where('user_id', $order->user_id)->latest()->get();
+                        // foreach ($cartItem as $item) {
+                        //     $prod = Product::where('id', $item->product_id)->first();
+                        //     $prod->stoke = $prod->stoke - $item->product_qty;
+                        //     if ($prod->stock_out == null) {
+                        //         $prod->stock_out = $item->product_qty;
+                        //     } else {
+                        //         $prod->stock_out = $prod->stock_out + $item->product_qty;
+                        //     }
+                        //     $prod->update();
+                        // }
+                        // Cart::destroy($cartItem);
 
                         // Push Notification
                         $user_id = $order->user_id;

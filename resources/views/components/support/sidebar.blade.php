@@ -7,7 +7,7 @@
                 $support = App\Models\Support::where('user_id', auth()->user()->id)->first();
             @endphp
             @if ($support->image)
-                <img src="../storage/profile/{{ $support->image }}" class="border rounded-circle border-white shadow-sm mr-1" style="width: 43px; height: 43px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="User Image">
+                <img src="{{ asset('../storage/profile/'. $support->image) }}" class="border rounded-circle border-white shadow-sm mr-1" style="width: 43px; height: 43px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="User Image">
             @else
                 <img src="{{ asset('assets/img/avatar/avatar-1.png') }}" class="img-circle elevation-2" alt="User Image">
             @endif
