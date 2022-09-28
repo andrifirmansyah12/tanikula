@@ -48,14 +48,14 @@
     }
 
     .page-error img {
-        width: 30rem;
+        width: 15rem;
     }
 
     .page-error .page-description {
         padding-top: 30px;
-        font-size: 18px;
+        font-size: 15px;
         font-weight: 400;
-        color: color: var(--primary);;
+        color: color: var(--primary);
     }
 
     @media (max-width: 575.98px) {
@@ -64,6 +64,11 @@
         }
     }
 </style>
+{{-- <script>
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+</script> --}}
 @endsection
 
 @section('content')
@@ -365,7 +370,7 @@
                         </select>
                     </div>
                     @else --}}
-                    <form action="{{ url('/cart/shipment') }}" method="post">
+                    <form action="{{ url('/checkout') }}" method="post">
                         @csrf
                         @foreach ($address as $item)
                             <input type="hidden" name="destination_costumer" id="destination_costumer" value="{{ $item->city_id }}">

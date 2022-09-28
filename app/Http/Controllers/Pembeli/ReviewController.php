@@ -185,7 +185,12 @@ class ReviewController extends Controller
                     foreach ($order->orderItems as $orderitem) {
                         foreach ($orderitem->product->review as $review) {
                             if ($review->order_id == $order->id) {
-                                $output .= '<p class="my-0 mx-3 text-secondary text-justify text-xs font-weight-bold">'. $review->review .'</p>';
+                                $output .= '<p class="my-0 mx-md-3 text-secondary text-justify text-xs font-weight-bold">'. $review->review .'</p>';
+                                if ($review->reply_review) {
+                                    $output .= '
+                                        <div class="my-2 mx-md-3 border bg-primary text-white rounded p-2 text-justify text-xs"><p class="text-xs m-0 font-weight-bold pb-1">Respon Penjual :</p>'. $review->reply_review .'</div>
+                                    ';
+                                }
                             }
                         }
                     }

@@ -109,7 +109,7 @@ class ReviewController extends Controller
                     foreach ($order->orderItems as $orderitem) {
                         foreach ($orderitem->product->review as $review) {
                             if ($review->order_id == $order->id) {
-                                $output .= '<p class="my-0 mx-3 text-justify text-xs font-weight-bold">'. $review->review .'</p>';
+                                $output .= '<p class="my-0 mx-md-3 text-justify text-xs font-weight-bold">'. $review->review .'</p>';
                             }
                         }
                     }
@@ -223,10 +223,10 @@ class ReviewController extends Controller
                     foreach ($order->orderItems as $orderitem) {
                         foreach ($orderitem->product->review as $review) {
                             if ($review->order_id == $order->id) {
-                                $output .= '<p class="my-0 mx-3 text-justify text-xs font-weight-bold">'. $review->review .'</p>';
+                                $output .= '<p class="my-0 mx-md-3 text-justify text-xs font-weight-bold">'. $review->review .'</p>';
                                 $output .= '
-                                    <label class="mx-3"><i class="bi bi-arrow-return-right"></i> Balasan Ulasan</label>
-                                    <p class="my-0 mx-3 border rounded p-2 text-justify text-xs font-weight-bold">'. $review->reply_review .'</p>
+                                    <label class="mx-md-3"><i class="bi bi-arrow-return-right"></i> Balasan Ulasan</label>
+                                    <p class="my-0 mx-md-3 border rounded bg-primary text-white p-2 text-justify text-xs font-weight-bold">'. $review->reply_review .'</p>
                                 ';
                             }
                         }

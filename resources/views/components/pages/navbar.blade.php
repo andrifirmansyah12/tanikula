@@ -168,7 +168,7 @@
                                             </form>
                                         </div>
                                     </div>
-                                    <ul class="shopping-list" id="{{ $notifications->count() > 2 ? 'style-1' : ''}}">
+                                    <ul class="shopping-list" id="{{ $notifications->count() > 1 ? 'style-1' : ''}}">
                                         @if ($notifications->count() > 0)
                                         @foreach ($notifications as $notif)
                                         <li class="border p-2 rounded" style="{{ $notif->is_read == 0 ? 'background: antiquewhite' : '' }}">
@@ -231,7 +231,7 @@
                                     @endphp
                                     <form action="{{ route('checkout.pembeli') }}" method="post" enctype="multipart/form-data">
                                         @csrf
-                                        <ul class="shopping-list" id="{{ $cartItem->count() > 2 ? 'style-2' : ''}}">
+                                        <ul class="shopping-list" id="{{ $cartItem->count() > 1 ? 'style-2' : ''}}">
                                             @if ($cartItem->count() > 0)
                                             @foreach ($cartItem as $item)
                                             <div class="d-flex navbarCheckProductCart">

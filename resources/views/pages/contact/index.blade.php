@@ -223,7 +223,7 @@
                         });
                         $("#send_contact_us").val('Kirim Pesan');
                         $("#send_contact_us").prop('disabled', false);
-                        window.location.reload();
+                        window.setTimeout(function(){location.reload()},1000);
                     }
                 }
                 });

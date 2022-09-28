@@ -48,12 +48,12 @@
     }
 
     .page-error img {
-        width: 30rem;
+        width: 15rem;
     }
 
     .page-error .page-description {
         padding-top: 30px;
-        font-size: 18px;
+        font-size: 15px;
         font-weight: 400;
         color: color: var(--primary);;
     }
@@ -68,6 +68,10 @@
     var stateObj = { foo: "bar" };
     // history.pushState(stateObj, "page without extension", "buy-now");
     history.replaceState(stateObj, '', 'buy-now');
+
+    // if ( window.history.replaceState ) {
+    //     window.history.replaceState( null, null, window.location.reload() );
+    // }
 </script>
 @endsection
 

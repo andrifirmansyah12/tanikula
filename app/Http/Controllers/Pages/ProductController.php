@@ -1208,7 +1208,7 @@ class ProductController extends Controller
                             $output .= '
                     </div>
                     <div class="col-12 col-lg-9 mt-2 mt-lg-0">
-                        <div class="normal-list">
+                        <div class="normal-list mb-2">
                             <li>
                                 <div class="ratings">
                                     <div class="star-icon" style="
@@ -1231,14 +1231,7 @@ class ProductController extends Controller
                             </span>
                         </div>';
                         if ($review->reply_review) {
-                            $output .= '<div class="border rounded p-2">
-                                <div class="d-flex flex-col">
-                                    <span for=""><i class="bi bi-arrow-return-right"></i> Balasan Ulasan</span>
-                                </div>
-                                <span class="me-md-5">
-                                    '. $review->reply_review .'
-                                </span>
-                            </div>';
+                            $output .= '<div style="background: #16A085" class="border text-white rounded p-2 text-justify text-xs"><p class="text-xs m-0 fw-bold">Respon Penjual:</p>'. $review->reply_review .'</div>';
                         }
                     $output .= '</div>
                 </div>
@@ -1285,7 +1278,7 @@ class ProductController extends Controller
                             $output .= '
                     </div>
                     <div class="col-12 col-lg-9 mt-2 mt-lg-0">
-                        <div class="normal-list">
+                        <div class="normal-list mb-2">
                             <li>
                                 <div class="ratings">
                                     <div class="star-icon" style="
@@ -1308,14 +1301,7 @@ class ProductController extends Controller
                             </span>
                         </div>';
                         if ($review->reply_review) {
-                            $output .= '<div class="border rounded p-2">
-                                <div class="d-flex flex-col">
-                                    <span for=""><i class="bi bi-arrow-return-right"></i> Balasan Ulasan</span>
-                                </div>
-                                <span class="me-md-5">
-                                    '. $review->reply_review .'
-                                </span>
-                            </div>';
+                            $output .= '<div style="background: #16A085" class="border text-white rounded p-2 text-justify text-xs"><p class="text-xs m-0 fw-bold">Respon Penjual:</p>'. $review->reply_review .'</div>';
                         }
                     $output .= '</div>
                 </div>
@@ -1362,7 +1348,7 @@ class ProductController extends Controller
                             $output .= '
                     </div>
                     <div class="col-12 col-lg-9 mt-2 mt-lg-0">
-                        <div class="normal-list">
+                        <div class="normal-list mb-2">
                             <li>
                                 <div class="ratings">
                                     <div class="star-icon" style="
@@ -1385,14 +1371,7 @@ class ProductController extends Controller
                             </span>
                         </div>';
                         if ($review->reply_review) {
-                            $output .= '<div class="border rounded p-2">
-                                <div class="d-flex flex-col">
-                                    <span for=""><i class="bi bi-arrow-return-right"></i> Balasan Ulasan</span>
-                                </div>
-                                <span class="me-md-5">
-                                    '. $review->reply_review .'
-                                </span>
-                            </div>';
+                            $output .= '<div style="background: #16A085" class="border text-white rounded p-2 text-justify text-xs"><p class="text-xs m-0 fw-bold">Respon Penjual:</p>'. $review->reply_review .'</div>';
                         }
                     $output .= '</div>
                 </div>
@@ -1439,7 +1418,7 @@ class ProductController extends Controller
                             $output .= '
                     </div>
                     <div class="col-12 col-lg-9 mt-2 mt-lg-0">
-                        <div class="normal-list">
+                        <div class="normal-list mb-2">
                             <li>
                                 <div class="ratings">
                                     <div class="star-icon" style="
@@ -1462,14 +1441,7 @@ class ProductController extends Controller
                             </span>
                         </div>';
                         if ($review->reply_review) {
-                            $output .= '<div class="border rounded p-2">
-                                <div class="d-flex flex-col">
-                                    <span for=""><i class="bi bi-arrow-return-right"></i> Balasan Ulasan</span>
-                                </div>
-                                <span class="me-md-5">
-                                    '. $review->reply_review .'
-                                </span>
-                            </div>';
+                            $output .= '<div style="background: #16A085" class="border text-white rounded p-2 text-justify text-xs"><p class="text-xs m-0 fw-bold">Respon Penjual:</p>'. $review->reply_review .'</div>';
                         }
                     $output .= '</div>
                 </div>
@@ -1516,7 +1488,7 @@ class ProductController extends Controller
                             $output .= '
                     </div>
                     <div class="col-12 col-lg-9 mt-2 mt-lg-0">
-                        <div class="normal-list">
+                        <div class="normal-list mb-2">
                             <li>
                                 <div class="ratings">
                                     <div class="star-icon" style="
@@ -1539,14 +1511,7 @@ class ProductController extends Controller
                             </span>
                         </div>';
                         if ($review->reply_review) {
-                            $output .= '<div class="border rounded p-2">
-                                <div class="d-flex flex-col">
-                                    <span for=""><i class="bi bi-arrow-return-right"></i> Balasan Ulasan</span>
-                                </div>
-                                <span class="me-md-5">
-                                    '. $review->reply_review .'
-                                </span>
-                            </div>';
+                            $output .= '<div style="background: #16A085" class="border text-white rounded p-2 text-justify text-xs"><p class="text-xs m-0 fw-bold">Respon Penjual:</p>'. $review->reply_review .'</div>';
                         }
                     $output .= '</div>
                 </div>
