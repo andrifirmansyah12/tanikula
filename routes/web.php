@@ -565,6 +565,7 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function 
     Route::post('pembeli-image', [App\Http\Controllers\Pembeli\PengaturanController::class, 'pengaturanImage'])->name('pembeli.pengaturan.image');
     Route::post('pembeli-update', [App\Http\Controllers\Pembeli\PengaturanController::class, 'pengaturanUpdate'])->name('pembeli.pengaturan.update');
     Route::post('pembeli-updatePassword', [App\Http\Controllers\Pembeli\PengaturanController::class, 'pengaturanUpdatePassword'])->name('pembeli.pengaturan.updatePassword');
+    Route::delete('pembeli-delete-image', [App\Http\Controllers\Pembeli\PengaturanController::class, 'delete'])->name('pembeli.delete.profile');
 
     // Pemberitahuan
     Route::get('/pembeli/pemberitahuan', [App\Http\Controllers\Pembeli\NotificationController::class, 'index'])->name('pembeli.notifications');

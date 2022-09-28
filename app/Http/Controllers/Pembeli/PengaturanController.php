@@ -130,4 +130,14 @@ class PengaturanController extends Controller
             ]);
         }
     }
+
+    // handle delete an employee ajax request
+	public function delete(Request $request)
+    {
+		$id = $request->id;
+		$emp = Costumer::find($id);
+        Storage::delete('profile/' . $emp->image);
+		$emp->image = null;
+        $emp->update();
+	}
 }
