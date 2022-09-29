@@ -25,13 +25,16 @@ class ReviewController extends Controller
                     ->join('users', 'orders.user_id', '=', 'users.id')
                     ->join('addresses', 'orders.address_id', '=', 'addresses.id')
                     ->join('reviews', 'reviews.order_id', '=', 'orders.id')
+                    ->join('order_items', 'order_items.order_id', '=', 'orders.id')
+                    ->join('products', '.order_items.product_id', '=', 'products.id')
                     ->select('orders.*', 'addresses.recipients_name as name_billing')
                     ->where('orders.status', '=', 'completed')
                     ->where('orders.review', '=', 'reviewed')
+                    ->where('products.user_id', '=', auth()->user()->id)
                     ->where('reviews.reply_review', '=', null)
                     ->orderBy('orders.updated_at', 'desc')
                     ->count();
-            
+
             return response()->json(['count'=> $countOrder]);
     }
 
@@ -41,9 +44,12 @@ class ReviewController extends Controller
                     ->join('users', 'orders.user_id', '=', 'users.id')
                     ->join('addresses', 'orders.address_id', '=', 'addresses.id')
                     ->join('reviews', 'reviews.order_id', '=', 'orders.id')
+                    ->join('order_items', 'order_items.order_id', '=', 'orders.id')
+                    ->join('products', '.order_items.product_id', '=', 'products.id')
                     ->select('orders.*', 'addresses.recipients_name as name_billing')
                     ->where('orders.status', '=', 'completed')
                     ->where('orders.review', '=', 'reviewed')
+                    ->where('products.user_id', '=', auth()->user()->id)
                     ->where('reviews.reply_review', '=', null)
                     ->orderBy('orders.updated_at', 'desc')
                     ->get();
@@ -67,11 +73,9 @@ class ReviewController extends Controller
                     <a href="/gapoktan/pesanan/detail-pesanan/'.$order->id.'" class="my-0 text-xs font-weight-bold">'. $order->code .'</a>';
                     $output .= '<div class="d-flex align-items-center pt-3">';
                         if ($userInfo->image) {
-                        $output .= '<img src="../storage/profile/'. $userInfo->image .'" class="img-fluid rounded-circle"
-                            style="width: 55px; height: 55px;" alt="'. $userInfo->user->name .'">';
+                        $output .= '<img src="../storage/profile/'. $userInfo->image .'" class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 55px; height: 55px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="'. $userInfo->user->name .'">';
                         } else {
-                        $output .= '<img src="../stisla/assets/img/example-image.jpg" class="img-fluid rounded-circle"
-                            style="width: 55px; height: 55px;" alt="'. $userInfo->user->name .'">';
+                        $output .= '<img src="../stisla/assets/img/example-image.jpg" class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 55px; height: 55px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="'. $userInfo->user->name .'">';
                         }
                         $output .= '<div>
                             <p class="my-0 mx-3 text-xs font-weight-bold">'. $userInfo->user->name .'</p>';
@@ -105,7 +109,7 @@ class ReviewController extends Controller
                     foreach ($order->orderItems as $orderitem) {
                         foreach ($orderitem->product->review as $review) {
                             if ($review->order_id == $order->id) {
-                                $output .= '<p class="my-0 mx-3 text-justify text-xs font-weight-bold">'. $review->review .'</p>';
+                                $output .= '<p class="my-0 mx-md-3 text-justify text-xs font-weight-bold">'. $review->review .'</p>';
                             }
                         }
                     }
@@ -154,9 +158,12 @@ class ReviewController extends Controller
                     ->join('users', 'orders.user_id', '=', 'users.id')
                     ->join('addresses', 'orders.address_id', '=', 'addresses.id')
                     ->join('reviews', 'reviews.order_id', '=', 'orders.id')
+                    ->join('order_items', 'order_items.order_id', '=', 'orders.id')
+                    ->join('products', '.order_items.product_id', '=', 'products.id')
                     ->select('orders.*', 'addresses.recipients_name as name_billing')
                     ->where('orders.status', '=', 'completed')
                     ->where('orders.review', '=', 'reviewed')
+                    ->where('products.user_id', '=', auth()->user()->id)
                     ->whereNotNull('reviews.reply_review')
                     ->orderBy('orders.updated_at', 'desc')
                     ->get();
@@ -180,11 +187,9 @@ class ReviewController extends Controller
                     <a href="/gapoktan/pesanan/detail-pesanan/'.$order->id.'" class="my-0 text-xs font-weight-bold">'. $order->code .'</a>';
                     $output .= '<div class="d-flex align-items-center pt-3">';
                         if ($userInfo->image) {
-                        $output .= '<img src="../storage/profile/'. $userInfo->image .'" class="img-fluid rounded-circle"
-                            style="width: 55px; height: 55px;" alt="'. $userInfo->user->name .'">';
+                        $output .= '<img src="../storage/profile/'. $userInfo->image .'" class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 55px; height: 55px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="'. $userInfo->user->name .'">';
                         } else {
-                        $output .= '<img src="../stisla/assets/img/example-image.jpg" class="img-fluid rounded-circle"
-                            style="width: 55px; height: 55px;" alt="'. $userInfo->user->name .'">';
+                        $output .= '<img src="../stisla/assets/img/example-image.jpg" class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 55px; height: 55px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="'. $userInfo->user->name .'">';
                         }
                         $output .= '<div>
                             <p class="my-0 mx-3 text-xs font-weight-bold">'. $userInfo->user->name .'</p>';
@@ -218,10 +223,10 @@ class ReviewController extends Controller
                     foreach ($order->orderItems as $orderitem) {
                         foreach ($orderitem->product->review as $review) {
                             if ($review->order_id == $order->id) {
-                                $output .= '<p class="my-0 mx-3 text-justify text-xs font-weight-bold">'. $review->review .'</p>';
+                                $output .= '<p class="my-0 mx-md-3 text-justify text-xs font-weight-bold">'. $review->review .'</p>';
                                 $output .= '
-                                    <label class="mx-3"><i class="bi bi-arrow-return-right"></i> Balasan Ulasan</label>
-                                    <p class="my-0 mx-3 border rounded p-2 text-justify text-xs font-weight-bold">'. $review->reply_review .'</p>
+                                    <label class="mx-md-3"><i class="bi bi-arrow-return-right"></i> Balasan Ulasan</label>
+                                    <p class="my-0 mx-md-3 border rounded bg-primary text-white p-2 text-justify text-xs font-weight-bold">'. $review->reply_review .'</p>
                                 ';
                             }
                         }

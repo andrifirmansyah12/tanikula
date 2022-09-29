@@ -57,4 +57,43 @@
     function pembeli_pemberitahuan(url) {
         window.location = url;
     }
+
+    $(function() {
+        // delete employee ajax request
+        $(document).on('click', '.deletePhoto', function(e) {
+            e.preventDefault();
+            let id = $(this).attr('id');
+            let csrf = '{{ csrf_token() }}';
+            Swal.fire({
+            title: 'Hapus Foto Profil',
+            text: "Apa kamu yakin Ingin menghapus foto profil?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Hapus!',
+            cancelButtonText: 'Cancel!'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                url: '{{ route('pembeli.delete.profile') }}',
+                method: 'delete',
+                data: {
+                    id: id,
+                    _token: csrf
+                },
+                success: function(response) {
+                    console.log(response);
+                    Swal.fire(
+                    'Berhasil!',
+                    'Foto profil telah dihapus!',
+                    'success'
+                    )
+                    window.setTimeout(function(){location.reload()},1000);
+                }
+                });
+            }
+            })
+        });
+    });
 </script>

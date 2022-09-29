@@ -39,7 +39,29 @@ class CheckoutController extends Controller
                 $removeItem->delete();
             }
         }
-        $cartItem = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
+
+        $cart_id =  $request->input('cart_id', []);
+        $navbar_cart_id =  $request->input('navbar_cart_id', []);
+        // $authorizedRoles = [$cart_id];
+        // dd($authorizedRoles);
+        if ($cart_id)
+        {
+            $cartItem = Cart::with('product')->where('user_id', '=', auth()->user()->id)->where(static function ($query) use ($cart_id) {
+                return $query->whereIn('id', $cart_id);
+            })->latest()->get();
+        }
+            elseif ($navbar_cart_id)
+        {
+            $cartItem = Cart::with('product')->where('user_id', '=', auth()->user()->id)->where(static function ($query) use ($navbar_cart_id) {
+                return $query->whereIn('id', $navbar_cart_id);
+            })->latest()->get();
+        } else {
+            $cartItem = Cart::with('product')->where('user_id', '=', auth()->user()->id)->where(static function ($query) use ($cart_id) {
+                return $query->whereIn('id', $cart_id);
+            })->latest()->get();
+        }
+
+        // $cartItem = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
 
         //Variabel yang valuenya didapat dari request()
         if($request->has('service'))
@@ -178,23 +200,37 @@ class CheckoutController extends Controller
         $order->payment_status = Order::UNPAID;
         $order->save();
 
-        $cartItem = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
+        $cart_id =  $request->input('cart_id_order', []);
+        // $authorizedRoles = [$cart_id];
+        // dd($authorizedRoles);
+        $cartItem = Cart::with('product')->where('user_id', '=', auth()->user()->id)->where(static function ($query) use ($cart_id) {
+            return $query->whereIn('id', $cart_id);
+        })->latest()->get();
         foreach ($cartItem as $item) {
-            OrderItem::create([
-                'order_id' => $order->id,
-                'product_id' => $item->product_id,
-                'qty' => $item->product_qty,
-                'price' => $item->product->price,
-            ]);
+            // OrderItem::create([
+            //     'order_id' => $order->id,
+            //     'product_id' => $item->product_id,
+            //     'qty' => $item->product_qty,
+            //     'price' => $item->product->price,
+            // ]);
+            $orderItemCreate = new OrderItem();
+            $orderItemCreate->order_id = $order->id;
+            $orderItemCreate->product_id = $item->product_id;
+            $orderItemCreate->qty = $item->product_qty;
+            $orderItemCreate->price = $item->product->price;
+            $orderItemCreate->save();
 
-            // $prod = Product::where('id', $item->product_id)->first();
-            // $prod->stoke = $prod->stoke - $item->product_qty;
-            // if ($prod->stock_out == null) {
-            //     $prod->stock_out = $item->product_qty;
-            // } else {
-            //     $prod->stock_out = $prod->stock_out + $item->product_qty;
+            // $orderItemCheck = OrderItem::where('order_id', $orderItemCreate->id)->get();
+            // foreach ($orderItemCheck as $orderItem) {
+            //     $prod = Product::where('id', $orderItem->product_id)->first();
+            //     $prod->stoke = $prod->stoke - $orderItem->qty;
+            //     if ($prod->stock_out == null) {
+            //         $prod->stock_out = $orderItem->qty;
+            //     } else {
+            //         $prod->stock_out = $prod->stock_out + $orderItem->qty;
+            //     }
+            //     $prod->update();
             // }
-            // $prod->update();
         }
 
         $this->initPaymentGateway();
@@ -228,8 +264,14 @@ class CheckoutController extends Controller
         }
 
         if ($order) {
+            $cart_id =  $request->input('cart_id_order', []);
+            // $authorizedRoles = [$cart_id];
+            // dd($authorizedRoles);
+            $cartItemDestroy = Cart::with('product')->where('user_id', '=', auth()->user()->id)->where(static function ($query) use ($cart_id) {
+                return $query->whereIn('id', $cart_id);
+            })->latest()->get();
             // $cartItem = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
-            // Cart::destroy($cartItem);
+            Cart::destroy($cartItemDestroy);
 
             // Push Notification
             $user_id = auth()->user()->id;

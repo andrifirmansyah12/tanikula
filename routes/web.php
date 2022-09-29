@@ -565,6 +565,7 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function 
     Route::post('pembeli-image', [App\Http\Controllers\Pembeli\PengaturanController::class, 'pengaturanImage'])->name('pembeli.pengaturan.image');
     Route::post('pembeli-update', [App\Http\Controllers\Pembeli\PengaturanController::class, 'pengaturanUpdate'])->name('pembeli.pengaturan.update');
     Route::post('pembeli-updatePassword', [App\Http\Controllers\Pembeli\PengaturanController::class, 'pengaturanUpdatePassword'])->name('pembeli.pengaturan.updatePassword');
+    Route::delete('pembeli-delete-image', [App\Http\Controllers\Pembeli\PengaturanController::class, 'delete'])->name('pembeli.delete.profile');
 
     // Pemberitahuan
     Route::get('/pembeli/pemberitahuan', [App\Http\Controllers\Pembeli\NotificationController::class, 'index'])->name('pembeli.notifications');
@@ -611,12 +612,13 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function 
 
     // Keranjang dan Order
     Route::get('/cart', [App\Http\Controllers\Pembeli\CartController::class, 'viewCart']);
-    Route::get('/cart/shipment', [App\Http\Controllers\Pembeli\CheckoutController::class, 'index'])->name('cart.shipment.pembeli');
-    Route::post('/cart/shipment', [App\Http\Controllers\Pembeli\CheckoutController::class, 'index'])->name('cart.shipment.pembeliPost');
+    Route::get('/checkout', [App\Http\Controllers\Pembeli\CheckoutController::class, 'index'])->name('checkout.pembeli');
+    Route::post('/checkout', [App\Http\Controllers\Pembeli\CheckoutController::class, 'index'])->name('checkout.pembeli');
+    // Route::post('/cart/shipment', [App\Http\Controllers\Pembeli\CheckoutController::class, 'index'])->name('cart.shipment.pembeliPost');
     Route::post('/cart/shipment/place-order', [App\Http\Controllers\Pembeli\CheckoutController::class, 'placeOrder'])->name('place-order-costumer');
 
     // Beli Sekarang
-    Route::post('/buy-now', [App\Http\Controllers\Pembeli\BuyNowController::class, 'buyNow']);
+    Route::get('/buy-now', [App\Http\Controllers\Pembeli\BuyNowController::class, 'buyNow'])->name('buy.now');
     Route::post('/buy-now', [App\Http\Controllers\Pembeli\BuyNowController::class, 'buyNowPost'])->name('buy.now.pembeli');
     Route::post('/ongkir/buy-now', [App\Http\Controllers\Pembeli\BuyNowController::class, 'check_ongkir']);
     Route::post('/buy-now/shipment/place-order', [App\Http\Controllers\Pembeli\BuyNowController::class, 'placeOrder'])->name('buy.now.place_order');
@@ -631,6 +633,9 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function 
 
     // Check Ongkir (RajaOngkir)
     Route::post('/ongkir', [App\Http\Controllers\Pembeli\CheckoutController::class, 'check_ongkir']);
+
+    // Hapus Order Ketika Hitungan Mundur Sudah Habis
+    Route::get('/delete-orders/{id}', [App\Http\Controllers\Pembeli\WaitingPaymentController::class, 'deleteOrders'])->name('delete.orders');
 
     // Chat
     Route::get('/pembeli/chat', [App\Http\Controllers\Pembeli\ChatController::class, 'index'])->name('pembeli.chat');
@@ -710,6 +715,12 @@ Route::post('/update-cart-item', [App\Http\Controllers\Pembeli\CartController::c
 Route::get('/hubungi-kami', [App\Http\Controllers\Pages\ContactUsController::class, 'index'])->name('contact.us');
 Route::post('/hubungi-kami', [App\Http\Controllers\Pages\ContactUsController::class, 'addContactUs'])->name('addContactUs');
 
+// Count Beli di Halaman Keranjang
+Route::post('/load-beli-keranjang', [App\Http\Controllers\Pembeli\CartController::class, 'countBeliKeranjang']);
+
+// Count Beli Keranjang di Navbar
+Route::post('/navbar-keranjang', [App\Http\Controllers\Pembeli\CartController::class, 'navbarCountBeliKeranjang']);
+
 // Count Keranjang
 Route::get('/load-cart', [App\Http\Controllers\Pages\ProductController::class, 'countCart']);
 
@@ -719,6 +730,10 @@ Route::get('/load-notifications', [App\Http\Controllers\Pages\ProductController:
 // List Pencarian Product
 Route::get('/product-list', [App\Http\Controllers\Pages\ProductController::class, 'productListAjax'])->name('productListAjax');
 // Route::post('/product-searchProduct', [App\Http\Controllers\Pages\ProductController::class, 'searchProduct']);
+
+// Profile Gapoktan
+Route::get('/profile/{name}', [App\Http\Controllers\Pages\ProductController::class, 'profileGapoktan'])->name('profile.gapoktan');
+Route::get('/fetchall-produk-gapoktan/{name}', [App\Http\Controllers\Pages\ProductController::class, 'fetchallprodukGapoktan'])->name('fetchallprodukGapoktan');
 
 // Wishlist
 Route::post('/add-to-wishlist', [App\Http\Controllers\Pembeli\WishlistController::class, 'addToWishlist'])->name('pembeli.addToWishlist');

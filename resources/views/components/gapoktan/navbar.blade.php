@@ -145,9 +145,14 @@
                 </div>
             </div>
         </li> --}}
+        @php
+            $authorizedRoles = ['Kegiatan Terbaru', 'Edukasi Terbaru'];
+            $countNotificationActivity = App\Models\PushNotification::where('user_id', '!=', auth()->user()->id)->where(static function ($query) use ($authorizedRoles) {
+                return $query->whereIn('title', $authorizedRoles);
+            })->count();
+        @endphp
         <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
-                class="nav-link notification-toggle nav-link-lg beep"><i class="far fa-bell"></i><span
-                    class="position-absolute">0</span></a>
+                class="nav-link notification-toggle nav-link-lg {{ $countNotificationActivity == null ? '' : 'beep' }}"><i class="far fa-bell"></i><span class="position-absolute">{{ $countNotificationActivity }}</span></a>
             <div class="dropdown-menu dropdown-list dropdown-menu-right">
                 <div class="dropdown-header">Notifikasi
                     {{-- <div class="float-right">
@@ -155,22 +160,48 @@
                     </div> --}}
                 </div>
                 <div class="dropdown-list-content dropdown-list-icons">
+                    @php
+                        $authorizedRoles = ['Kegiatan Terbaru', 'Edukasi Terbaru'];
+                        $notificationActivity = App\Models\PushNotification::where('user_id', '!=', auth()->user()->id)->where(static function ($query) use ($authorizedRoles) {
+                            return $query->whereIn('title', $authorizedRoles);
+                        })->latest()->get();
+                    @endphp
 
-                    <div id="app">
-                        <section class="section">
-                            <div class="container">
-                                <div class="page-error-notification">
-                                    <div class="page-inner-notification">
-                                        <img src="{{ asset('img/undraw_empty_re_opql.svg') }}" alt="">
-                                        <div class="page-description-notification">
-                                            Tidak ada notifikasi!
+                    @if ($notificationActivity->count() > 0)
+
+                    @foreach ($notificationActivity as $item)
+                        <div class="dropdown-item {{ $item->read_at == null ? 'dropdown-item-unread' : '' }}">
+                            <div class="dropdown-item-icon bg-info text-white">
+                                <i class="{{ $item->img }}"></i>
+                            </div>
+                            <div class="dropdown-item-desc">
+                                <b>{{ $item->title }}</b> {{ $item->body }}.
+                                <div class="time">{{$item->created_at->diffForHumans()}}</div>
+                                {{-- <a href="#" id="{{ $item->id }}" class="notifActivity float-right mx-1">Lihat</a> --}}
+                            </div>
+                        </div>
+                    @endforeach
+
+                    @else
+                        <div id="app">
+                            <section class="section">
+                                <div class="container">
+                                    <div class="page-error-notification">
+                                        <div class="page-inner-notification">
+                                            <img src="{{ asset('img/undraw_empty_re_opql.svg') }}" alt="">
+                                            <div class="page-description-notification pb-5">
+                                                Tidak ada notifikasi!
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </section>
-                    </div>
+                            </section>
+                        </div>
+                    @endif
                 </div>
+                {{-- <div class="dropdown-footer text-center">
+                    <a href="#">View All <i class="fas fa-chevron-right"></i></a>
+                </div> --}}
             </div>
         </li>
         <li class="dropdown"><a href="#" data-toggle="dropdown"

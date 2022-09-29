@@ -12,7 +12,7 @@
 @section('content')
 <section class="item-details section bg-white overflow-hidden">
     <div class="container">
-        <div class="row justify-content-center shadow rounded mt-5">
+        <div class="row justify-content-center shadow rounded">
             <div class="col-md-12 p-5">
                 <div class="wrapper">
                     <div class="row no-gutters">
@@ -223,7 +223,7 @@
                         });
                         $("#send_contact_us").val('Kirim Pesan');
                         $("#send_contact_us").prop('disabled', false);
-                        window.location.reload();
+                        window.setTimeout(function(){location.reload()},1000);
                     }
                 }
                 });
@@ -247,45 +247,45 @@
             });
         });
 
-        const messaging = firebase.messaging();
-        function startFCM() {
-            messaging
-                .requestPermission()
-                .then(function () {
-                    return messaging.getToken()
-                })
-                .then(function (response) {
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-                    $.ajax({
-                        url: '{{ route("store.token") }}',
-                        type: 'POST',
-                        data: {
-                            token: response
-                        },
-                        dataType: 'JSON',
-                        success: function (response) {
-                            alert('Token stored.');
-                        },
-                        error: function (error) {
-                            alert(error);
-                        },
-                    });
-                }).catch(function (error) {
-                    alert(error);
-                });
-        }
+        // const messaging = firebase.messaging();
+        // function startFCM() {
+        //     messaging
+        //         .requestPermission()
+        //         .then(function () {
+        //             return messaging.getToken()
+        //         })
+        //         .then(function (response) {
+        //             $.ajaxSetup({
+        //                 headers: {
+        //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //                 }
+        //             });
+        //             $.ajax({
+        //                 url: '{{ route("store.token") }}',
+        //                 type: 'POST',
+        //                 data: {
+        //                     token: response
+        //                 },
+        //                 dataType: 'JSON',
+        //                 success: function (response) {
+        //                     alert('Token stored.');
+        //                 },
+        //                 error: function (error) {
+        //                     alert(error);
+        //                 },
+        //             });
+        //         }).catch(function (error) {
+        //             alert(error);
+        //         });
+        // }
 
-        messaging.onMessage(function (payload) {
-            const title = payload.notification.title;
-            const options = {
-                body: payload.notification.body,
-                icon: payload.notification.icon,
-            };
-            new Notification(title, options);
-        });
+        // messaging.onMessage(function (payload) {
+        //     const title = payload.notification.title;
+        //     const options = {
+        //         body: payload.notification.body,
+        //         icon: payload.notification.icon,
+        //     };
+        //     new Notification(title, options);
+        // });
     </script>
 @endsection

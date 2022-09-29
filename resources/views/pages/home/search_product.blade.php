@@ -72,7 +72,7 @@
     <!-- Start Trending Product Area -->
     <section class="section">
         <div class="container">
-            <div class="row">
+            <div class="row mx-4 mx-sm-0">
                 @foreach ($product_new as $item)
                 <div class="col-lg-3 col-md-6 col-12">
                     <!-- Start Single Product -->

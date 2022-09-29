@@ -48,12 +48,12 @@
     }
 
     .page-error img {
-        width: 30rem;
+        width: 15rem;
     }
 
     .page-error .page-description {
         padding-top: 30px;
-        font-size: 18px;
+        font-size: 15px;
         font-weight: 400;
         color: color: var(--primary);;
     }
@@ -64,13 +64,30 @@
         }
     }
 </style>
-{{-- <script>
+<script>
     var stateObj = { foo: "bar" };
-    history.pushState(stateObj, "page without extension", "buy-now");
-</script> --}}
+    // history.pushState(stateObj, "page without extension", "buy-now");
+    history.replaceState(stateObj, '', '{{ route('buy.now') }}');
+
+    // if ( window.history.replaceState ) {
+    //     window.history.replaceState( null, null, window.location.reload() );
+    // }
+</script>
 @endsection
 
 @section('content')
+<!-- Preloader -->
+<div class="preloader">
+    <div class="preloader-inner">
+        <div class="preloader-icon">
+            <span></span>
+            <span></span>
+        </div>
+        {{-- <p class="text-center p-0 m-0 fw-bold">Tanikula</p> --}}
+    </div>
+</div>
+<!-- /End Preloader -->
+
 <!-- Start Item Details -->
 <section class="item-details mt-md-4 section bg-white overflow-hidden">
     <div class="container">
@@ -847,7 +864,7 @@
                         $("#add_employee_form")[0].reset();
                         $("#add_employee_btn").text('Simpan');
                         $("#add_employee_btn").prop('disabled', false);
-                        window.setTimeout(function(){location = '{{ route('cart.shipment.pembeli') }}'},1000)
+                        window.setTimeout(function(){location.reload()},1000);
                     }
                 }
                 });
@@ -917,7 +934,7 @@
                         $("#edit_employee_form")[0].reset();
                         $("#edit_employee_btn").text('Simpan');
                         $("#edit_employee_btn").prop('disabled', false);
-                        window.setTimeout(function(){location = '{{ route('cart.shipment.pembeli') }}'},1000)
+                        window.setTimeout(function(){location.reload()},1000);
                     }
                 }
             });
@@ -953,7 +970,7 @@
                             'Berhasil menjadikan alamat utama!',
                             'success'
                         )
-                        window.setTimeout(function(){location = '{{ route('cart.shipment.pembeli') }}'},1000)
+                        window.setTimeout(function(){location.reload()},1000);
                     }
                 }
                 });

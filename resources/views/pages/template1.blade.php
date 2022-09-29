@@ -147,7 +147,7 @@
                                         <i class="lni lni-alarm"></i>
                                         <span class="total-items notif-count">0</span>
                                     </a>
-    
+
                                     <div class="shopping-item">
                                         <div class="dropdown-cart-header">
                                             <div class="d-flex align-items-center justify-content-between">
@@ -169,7 +169,7 @@
                                                             style="width: 5rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                                                     </a>
                                                 </div>
-    
+
                                                 <div class="content">
                                                     <h4><a style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;"
                                                             href="#">
@@ -196,9 +196,9 @@
                                         </ul>
                                     </div>
                                 </div>
-    
+
                                 {{-- ==================================================================================== Cart ============================================================================ --}}
-    
+
                                 <div class="cart-items">
                                     <!-- Shopping Item -->
                                     @php
@@ -210,7 +210,7 @@
                                         <i class="lni lni-cart"></i>
                                         <span class="total-items cart-count">0</span>
                                     </a>
-    
+
                                     <div class="shopping-item">
                                         <div class="dropdown-cart-header">
                                             <span>Keranjang (<span class="cart-count">0</span>)</span>
@@ -219,75 +219,86 @@
                                         @php
                                         $total = 0;
                                         @endphp
-                                        <ul class="shopping-list" id="{{ $cartItem->count() > 2 ? 'style-2' : ''}}">
-                                            @if ($cartItem->count() > 0)
-                                            @foreach ($cartItem as $item)
-                                            <li>
-                                                <input type="hidden" value="{{ $item->product_id }}" id="prod_id">
-                                                {{-- <button class="remove delete-cart-item" title="Remove this item"><i
-                                                        class="lni lni-close"></i></button> --}}
-                                                <div class="cart-img-head">
-                                                    <a class="cart-img" href="{{ url('home/'.$item->product->slug) }}">
-                                                        @if ($item->product->photo_product->count() > 0)
-                                                        @foreach ($item->product->photo_product->take(1) as $photos)
-                                                        @if ($photos->name)
-                                                        <img src="{{ asset('../storage/produk/'.$photos->name) }}"
-                                                            alt="{{ $item->product->name }}"
-                                                            style="width: 10rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
-                                                        @else
-                                                        <img src="{{ asset('img/no-image.png') }}"
-                                                            alt="{{ $item->product->name }}"
-                                                            style="width: 10rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
-                                                        @endif
-                                                        @endforeach
-                                                        @else
-                                                        <img src="{{ asset('img/no-image.png') }}"
-                                                            alt="{{ $item->product->name }}"
-                                                            style="width: 10rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
-                                                        @endif
-                                                    </a>
+                                        <form action="{{ route('checkout.pembeli') }}" method="post" enctype="multipart/form-data">
+                                            @csrf
+                                            <ul class="shopping-list" id="{{ $cartItem->count() > 2 ? 'style-2' : ''}}">
+                                                @if ($cartItem->count() > 0)
+                                                @foreach ($cartItem as $item)
+                                                <div class="d-flex navbarCheckProductCart">
+                                                    <input class="form-check-input" type="checkbox" name="navbar_cart_id[]" value="{{ $item->id }}" id="navbarCheckProductCart">
+                                                    <input class="form-check-input" type="hidden" name="navbar_cart_qty" value="{{ $item->product_qty }}" id="navbarCheckProductQty">
+                                                    <input class="form-check-input" type="hidden" name="navbar_cart_total" value="{{ $item->product->price }}" id="navbarCheckProductTotal">
+                                                    <p class="fw-bold ps-3 mb-2 col-10" style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; overflow: hidden;">
+                                                        <i class="bi bi-shop"></i> {{ $item->product->user->name }}
+                                                    </p>
                                                 </div>
-    
-                                                <div class="content">
-                                                    <h4><a style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;"
-                                                            href="{{ url('home/'.$item->product->slug) }}">
-                                                            {{ $item->product->name }}</a></h4>
-                                                    <p class="quantity">{{ $item->product_qty }}x - <span class="amount">Rp.
-                                                            {{ number_format($item->product->price, 0) }}</span></p>
-                                                </div>
-                                            </li>
-                                            @php
-                                            $total += $item->product->price * $item->product_qty;
-                                            @endphp
-                                            @endforeach
-                                            @else
-                                            <div id="app">
-                                                <div class="container">
-                                                    <div class="page-error-notification">
-                                                        <div class="page-inner-notification">
-                                                            <img src="{{ asset('img/undraw_empty_re_opql.svg') }}" alt="">
-                                                            <div class="page-description-notification">
-                                                                Tidak ada produk dikeranjang!
+                                                <li>
+                                                    <input type="hidden" value="{{ $item->product_id }}" id="prod_id">
+                                                    {{-- <button class="remove delete-cart-item" title="Remove this item"><i
+                                                            class="lni lni-close"></i></button> --}}
+                                                    <div class="cart-img-head">
+                                                        <a class="cart-img" href="{{ url('home/'.$item->product->slug) }}">
+                                                            @if ($item->product->photo_product->count() > 0)
+                                                            @foreach ($item->product->photo_product->take(1) as $photos)
+                                                            @if ($photos->name)
+                                                            <img src="{{ asset('../storage/produk/'.$photos->name) }}"
+                                                                alt="{{ $item->product->name }}"
+                                                                style="width: 10rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                                            @else
+                                                            <img src="{{ asset('img/no-image.png') }}"
+                                                                alt="{{ $item->product->name }}"
+                                                                style="width: 10rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                                            @endif
+                                                            @endforeach
+                                                            @else
+                                                            <img src="{{ asset('img/no-image.png') }}"
+                                                                alt="{{ $item->product->name }}"
+                                                                style="width: 10rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                                            @endif
+                                                        </a>
+                                                    </div>
+
+                                                    <div class="content">
+                                                        <h4><a style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;"
+                                                                href="{{ url('home/'.$item->product->slug) }}">
+                                                                {{ $item->product->name }}</a></h4>
+                                                        <p class="quantity">{{ $item->product_qty }}x - <span class="amount">Rp.
+                                                                {{ number_format($item->product->price, 0) }}</span></p>
+                                                    </div>
+                                                </li>
+                                                @php
+                                                $total += $item->product->price * $item->product_qty;
+                                                @endphp
+                                                @endforeach
+                                                @else
+                                                <div id="app">
+                                                    <div class="container">
+                                                        <div class="page-error-notification">
+                                                            <div class="page-inner-notification">
+                                                                <img src="{{ asset('img/undraw_empty_re_opql.svg') }}" alt="">
+                                                                <div class="page-description-notification">
+                                                                    Tidak ada produk dikeranjang!
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            @endif
-                                        </ul>
-                                        <div class="bottom">
-                                            <div class="total">
-                                                <span>Total</span>
-                                                <span class="total-amount">Rp. {{ number_format($total, 0) }}</span>
-                                            </div>
-                                            <div class="button">
-                                                @if ($cartItem->count())
-                                                <a href="{{ url('cart/shipment') }}" class="btn animate">Checkout</a>
-                                                @else
-                                                <a href="{{ url('new-product') }}" class="btn animate">Belanja Sekarang</a>
                                                 @endif
+                                            </ul>
+                                            <div class="bottom">
+                                                <div class="total">
+                                                    <span>Total</span>
+                                                    <span class="total-amount d-flex align-items-center">Rp. <p class="navbar-total-price ps-2 py-0 pe-0 m-0">0</p></span>
+                                                </div>
+                                                <div class="button">
+                                                    @if ($cartItem->count())
+                                                    <button type="submit" style="background: #16A085" class="btn animate">Checkout (<span class="navbar-beli-keranjang-count">0</span>)</a>
+                                                    @else
+                                                    <a href="{{ url('new-product') }}" class="btn animate">Belanja Sekarang</a>
+                                                    @endif
+                                                </div>
                                             </div>
-                                        </div>
+                                        </form>
                                     </div>
                                     <!--/ End Shopping Item -->
                                 </div>

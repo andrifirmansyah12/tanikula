@@ -373,6 +373,7 @@
                         </div>
                     </div>
                 </div>
+                <input type="hidden" name="passingIdOrder" value="{{ $order->id }}">
                 <div class="card-footer border-0 px-4 bg-primary shadow-primary border-radius-lg py-5 d-md-flex align-items-center justify-content-between">
                     <h5 class="text-white text-uppercase mb-0">Total
                         Pembayaran: <span class="d-flex h2 mb-0 text-white text-capitalize">Rp.
@@ -395,8 +396,27 @@
                                         var distance = end - now;
                                         if (distance < 0) {
                                             clearInterval(timer);
-                                            document.getElementById(id).innerHTML = '<b>Pembayaran Sudah Kadaluarsa';
-                                            return;
+                                            // document.getElementById(id).innerHTML = '<b>Pembayaran Sudah Kadaluarsa';
+                                            // return;
+
+                                            return deleteOrders();
+
+                                            function deleteOrders()
+                                            {
+                                                var id = $("input[name=passingIdOrder]").val();
+                                                $.ajax({
+                                                    method: "GET",
+                                                    url: '/delete-orders/' +id,
+                                                    success: function (response) {
+                                                        iziToast.warning({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                                                            title: 'Peringatan',
+                                                            message: 'Maaf pesanan anda sudah kadaluarsa',
+                                                            position: 'topRight'
+                                                        });
+                                                        window.setTimeout(function(){location.reload()},3000);
+                                                    }
+                                                });
+                                            }
                                         }
                                         var days = Math.floor(distance / _day);
                                         var hours = Math.floor((distance % _day) / _hour);
@@ -624,11 +644,9 @@
                     @foreach ($reviews as $review)
                     <div class="d-flex align-items-center pt-3">
                         @if ($userInfo->image)
-                        <img src="{{asset('../storage/profile/'. $userInfo->image)}}" class="img-fluid rounded-circle"
-                            style="width: 55px; height: 55px;" alt="{{ $userInfo->user->name }}">
+                        <img src="{{asset('../storage/profile/'. $userInfo->image)}}" class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 55px; height: 55px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="{{ $userInfo->user->name }}">
                         @else
-                        <img src="{{ asset('stisla/assets/img/example-image.jpg') }}" class="img-fluid rounded-circle"
-                            style="width: 55px; height: 55px;" alt="{{ $userInfo->user->name }}">
+                        <img src="{{ asset('stisla/assets/img/example-image.jpg') }}" class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 55px; height: 55px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="{{ $userInfo->user->name }}">
                         @endif
                         <div>
                             <p class="my-0 mx-3 text-secondary text-xs font-weight-bold">

@@ -52,6 +52,260 @@
             font-weight: 400;
             color: color: var(--primary);;
         }
+
+        #style-1::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px #16A085;
+            border-radius: 10px;
+            background-color: #F5F5F5;
+        }
+
+        #style-1::-webkit-scrollbar {
+            width: 12px;
+            background-color: #F5F5F5;
+        }
+
+        #style-1::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 6px #16A085;
+            background-color: #16A085;
+        }
+
+        .header .navbar-cart .notification-items {
+            margin-right: 12px;
+            position: relative;
+        }
+
+        .header .navbar-cart .notification-items:hover .main-btn {
+            color: #fff;
+            background-color: #16A085;
+            border-color: transparent;
+        }
+
+        .header .navbar-cart .notification-items .main-btn {
+            height: 40px;
+            width: 40px;
+            line-height: 40px;
+            display: inline-block;
+            border-radius: 50%;
+            border: 1px solid #eee;
+            color: #555;
+            font-size: 18px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header .navbar-cart .notification-items .main-btn .total-items {
+            position: absolute;
+            right: -6px;
+            top: -5px;
+            height: 19px;
+            width: 19px;
+            line-height: 19px;
+            background-color: #081828;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 500;
+            text-align: center;
+            border-radius: 50%;
+        }
+
+        .header .navbar-cart .notification-items:hover .shopping-item {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .header .navbar-cart .notification-items .shopping-item {
+            position: absolute;
+            top: 72px;
+            right: 0;
+            width: 300px;
+            background: #fff;
+            padding: 20px 25px;
+            -webkit-transition: all 0.3s ease 0s;
+            transition: all 0.3s ease 0s;
+            z-index: 99;
+            border-radius: 4px;
+            -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.137);
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.137);
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        @media (max-width: 767px) {
+            .header .navbar-cart .notification-items .shopping-item {
+                width: 285px;
+            }
+        }
+
+        @media only screen and (min-width: 768px) and (max-width: 991px) {
+            .header .navbar-cart .notification-items .shopping-item {
+                top: 68px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .header .navbar-cart .notification-items .shopping-item {
+                top: 66px;
+            }
+        }
+
+        .header .navbar-cart .notification-items .shopping-item .dropdown-cart-header {
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #e6e6e6;
+        }
+
+        .header .navbar-cart .notification-items .shopping-item .dropdown-cart-header span {
+            text-transform: capitalize;
+            color: #222;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .header .navbar-cart .notification-items .shopping-item .dropdown-cart-header a {
+            float: right;
+            text-transform: capitalize;
+            color: #222;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .header .navbar-cart .notification-items .shopping-item .dropdown-cart-header a:hover {
+            color: #16A085;
+        }
+
+        .header .navbar-cart .notification-items .shopping-item .shopping-list {
+            overflow-y: auto;
+            max-height: 230px;
+        }
+
+        .header .navbar-cart .notification-items .shopping-item .shopping-list li {
+            overflow: hidden;
+            margin-bottom: 15px;
+            position: relative;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+        }
+
+        .header .navbar-cart .notification-items .shopping-item .shopping-list li .remove {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 18px;
+            width: 18px;
+            line-height: 16px;
+            text-align: center;
+            background: #fff;
+            color: #222;
+            border-radius: 50%;
+            font-size: 8px;
+            border: 1px solid #ededed;
+            padding-left: 1px;
+        }
+
+        .header .navbar-cart .notification-items .shopping-item .shopping-list li .remove:hover {
+            border-color: transparent;
+            color: #fff;
+            background-color: #16A085;
+        }
+
+        .header .navbar-cart .notification-items .shopping-item .shopping-list li .cart-img-head {
+            width: 40%;
+        }
+
+        @media (max-width: 767px) {
+            .header .navbar-cart .notification-items .shopping-item .shopping-list li .cart-img-head {
+                width: 30%;
+                margin-right: 12px;
+            }
+        }
+
+        .header .navbar-cart .notification-items .shopping-item .shopping-list li .cart-img {
+            border: 1px solid #ededed;
+            overflow: hidden;
+            height: 80px;
+            width: 80px;
+            border-radius: 4px;
+            float: left;
+            margin-right: 20px;
+        }
+
+        @media (max-width: 767px) {
+            .header .navbar-cart .notification-items .shopping-item .shopping-list li .cart-img {
+                height: 60px;
+                width: 60px;
+                margin-right: 10px;
+            }
+        }
+
+        .header .navbar-cart .notification-items .shopping-item .shopping-list li .content {
+            padding-right: 25px;
+            width: 60%;
+        }
+
+        @media (max-width: 767px) {
+            .header .navbar-cart .notification-items .shopping-item .shopping-list li .content {
+                width: 70%;
+            }
+        }
+
+        .header .navbar-cart .notification-items .shopping-item .shopping-list li .content h4 {
+            margin-bottom: 5px;
+        }
+
+        .header .navbar-cart .notification-items .shopping-item .shopping-list li .content h4 a {
+            font-size: 13px;
+            font-weight: 600;
+            color: #081828;
+        }
+
+        @media (max-width: 767px) {
+            .header .navbar-cart .notification-items .shopping-item .shopping-list li .content h4 a {
+                font-size: 13px;
+            }
+        }
+
+        .header .navbar-cart .notification-items .shopping-item .shopping-list li .content h4 a:hover {
+            color: #16A085;
+        }
+
+        .header .navbar-cart .notification-items .shopping-item .shopping-list li .content .quantity {
+            line-height: 22px;
+            font-size: 14px;
+        }
+
+        .header .navbar-cart .notification-items .shopping-item .bottom {
+            text-align: center;
+        }
+
+        .header .navbar-cart .notification-items .shopping-item .bottom .total {
+            overflow: hidden;
+            display: block;
+            padding-bottom: 10px;
+        }
+
+        .header .navbar-cart .notification-items .shopping-item .bottom .total span {
+            text-transform: capitalize;
+            color: #222;
+            font-size: 14px;
+            font-weight: 600;
+            float: left;
+        }
+
+        .header .navbar-cart .notification-items .shopping-item .bottom .total .total-amount {
+            float: right;
+            font-size: 14px;
+        }
+
+        .header .navbar-cart .notification-items .shopping-item .bottom .button {
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .header .navbar-cart .notification-items .shopping-item .bottom .button .btn {
+            width: 100%;
+        }
     </style>
 
     {{-- <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>

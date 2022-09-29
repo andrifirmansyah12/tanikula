@@ -16,7 +16,6 @@
     .icon-sm {
         width: 2rem;
         height: 2rem;
-
     }
 
     /* 4.3 Page */
@@ -59,146 +58,152 @@
 <section class="item-details section bg-white overflow-hidden">
     <div class="container">
         <div class="bg-white">
-            <div class="row mb-5">
-                <div class="shadow border mt-md-4 rounded col-12 col-xl-8 mb-3 mb-xl-0">
-                    <div class="p-5 CartItems">
-                        <h2 class="mb-3 fs-3 mb-md-4">Keranjang</h2>
-                        @php
-                            $total = 0;
-                            $totalPrice = 0;
-                            $totalQty = 0;
-                        @endphp
-                        @if ($cartItem->count())
-                        @foreach ($cartItem as $item)
-                            <div class="border-bottom mb-4 pb-4 pb-md-0" id="product_data">
-                                <div class="row align-items-center mb-6 mb-md-3">
-                                    <div class="col-12 col-md-12 col-lg-12 mb-6 mb-md-0">
-                                        <div class="row align-items-center">
-                                            <div>
-                                                <p class="fw-bold mb-2"><i class="bi bi-shop"></i> {{ $item->product->user->name }}</p>
-                                            </div>
-                                            <div class="col-12 col-md-3 col-lg-3">
-                                                <div class="d-flex align-items-center justify-content-center bg-light"
-                                                    style="width: 160px; height: 150px;">
-                                                    @if ($item->product->photo_product->count() > 0)
-                                                        @foreach ($item->product->photo_product->take(1) as $photos)
-                                                            @if ($photos->name)
-                                                                <img class="img-fluid rounded" style="width: 9rem; height: 7rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
-                                                                    src="{{ asset('../storage/produk/'.$photos->name) }}" alt="{{ $item->product->name }}">
-                                                            @else
-                                                                <img class="img-fluid rounded" style="width: 9rem; height: 7rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
-                                                                    src="{{ asset('img/no-image.png') }}" alt="{{ $item->product->name }}">
-                                                            @endif
-                                                        @endforeach
-                                                    @else
-                                                        <img class="img-fluid rounded" style="width: 9rem; height: 7rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
-                                                            src="{{ asset('img/no-image.png') }}" alt="{{ $item->product->name }}">
+            <form action="{{ route('checkout.pembeli') }}" method="post" enctype="multipart/form-data">
+                @csrf
+                <div class="row mb-5">
+                    <div class="shadow border mt-md-4 rounded col-12 col-xl-8 mb-3 mb-xl-0">
+                        <div class="p-5 CartItems">
+                            <h2 class="mb-3 fs-3 mb-md-4">Keranjang</h2>
+                            @php
+                                $total = 0;
+                                $totalPrice = 0;
+                                $totalQty = 0;
+                            @endphp
+                            @if ($cartItem->count())
+                            @foreach ($cartItem as $item)
+                                <div class="border-bottom mb-4 pb-4 pb-md-0" id="product_data">
+                                    <div class="row align-items-center mb-6 mb-md-3">
+                                        <div class="col-12 col-md-12 col-lg-12 mb-6 mb-md-0">
+                                            <div class="row align-items-center">
+                                                <div class="d-flex checkProductCart">
+                                                    <input class="form-check-input" type="checkbox" name="cart_id[]" value="{{ $item->id }}" id="checkProductCart">
+                                                    <input class="form-check-input" type="hidden" name="cart_qty" value="{{ $item->product_qty }}" id="checkProductQty">
+                                                    <input class="form-check-input" type="hidden" name="cart_total" value="{{ $item->product->price }}" id="checkProductTotal">
+                                                    <p class="fw-bold ps-3 mb-2"><i class="bi bi-shop"></i> {{ $item->product->user->name }}</p>
+                                                </div>
+                                                <div class="col-12 col-md-3 col-lg-3">
+                                                    <div class="d-flex align-items-center justify-content-center bg-light"
+                                                        style="width: 160px; height: 150px;">
+                                                        @if ($item->product->photo_product->count() > 0)
+                                                            @foreach ($item->product->photo_product->take(1) as $photos)
+                                                                @if ($photos->name)
+                                                                    <img class="img-fluid rounded" style="width: 9rem; height: 7rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
+                                                                        src="{{ asset('../storage/produk/'.$photos->name) }}" alt="{{ $item->product->name }}">
+                                                                @else
+                                                                    <img class="img-fluid rounded" style="width: 9rem; height: 7rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
+                                                                        src="{{ asset('img/no-image.png') }}" alt="{{ $item->product->name }}">
+                                                                @endif
+                                                            @endforeach
+                                                        @else
+                                                            <img class="img-fluid rounded" style="width: 9rem; height: 7rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
+                                                                src="{{ asset('img/no-image.png') }}" alt="{{ $item->product->name }}">
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-6 mt-2 ms-md-3 mt-md-0">
+                                                    @if ($item->product->discount != 0)
+                                                        <p class="small mb-2 badge bg-danger">{{ $item->product->discount }}% OFF</p>
                                                     @endif
+                                                    <h3 class="mb-2 fs-6 fw-bold"><a style="color:#16A085;" href="{{ url('home/'.$item->product->slug) }}">{{ $item->product->name }}</a></h3>
+                                                    <p class="small" style="color:#16A085;">Stok tersisa {{ $item->product->stoke }}</p>
+                                                    @if ($item->product->price_discount)
+                                                        <span class="text-decoration-line-through text-muted text-danger" style="font-size: 13px">Rp. {{ number_format($item->product->price_discount, 0) }} <span class="fs-6 fw-bold" style="color:#16A085;">Rp. {{ number_format($item->product->price, 0) }}</span></span>
+                                                    @else
+                                                        <span>Rp. {{ number_format($item->product->price, 0) }}</span>
+                                                    @endif
+                                                    {{-- <p class="mb-0 fs-6 fw-bold mt-2">Rp. {{ number_format($item->product->price, 0) }}</p> --}}
                                                 </div>
-                                            </div>
-                                            <div class="col-12 col-md-6 mt-2 ms-md-3 mt-md-0">
-                                                @if ($item->product->discount != 0)
-                                                    <p class="small mb-2 badge bg-danger">{{ $item->product->discount }}% OFF</p>
-                                                @endif
-                                                <h3 class="mb-2 fs-6 fw-bold"><a style="color:#16A085;" href="{{ url('home/'.$item->product->slug) }}">{{ $item->product->name }}</a></h3>
-                                                <p class="small" style="color:#16A085;">Stok tersisa {{ $item->product->stoke }}</p>
-                                                @if ($item->product->price_discount)
-                                                    <span class="text-decoration-line-through text-muted text-danger" style="font-size: 13px">Rp. {{ number_format($item->product->price_discount, 0) }} <span class="fs-6 fw-bold" style="color:#16A085;">Rp. {{ number_format($item->product->price, 0) }}</span></span>
-                                                @else
-                                                    <span>Rp. {{ number_format($item->product->price, 0) }}</span>
-                                                @endif
-                                                {{-- <p class="mb-0 fs-6 fw-bold mt-2">Rp. {{ number_format($item->product->price, 0) }}</p> --}}
-                                            </div>
-                                            <input type="hidden" value="{{ $item->product_id }}" id="prod_id">
-                                            <div class="col-12 mt-3 mt-md-0">
-                                                <div class="d-flex flex-md-row flex-column-reverse justify-content-end align-items-end align-items-md-center">
-                                                    <div class="d-flex flex-row mt-2 mt-md-0">
-                                                        <div class="text-black pe-3">
-                                                            <button class="btn addToWishlistBtn" style="background: #16A085; color: white">+
-                                                                Wishlist</button>
+                                                <input type="hidden" value="{{ $item->product_id }}" id="prod_id">
+                                                <div class="col-12 mt-3 mt-md-0">
+                                                    <div class="d-flex flex-md-row flex-column-reverse justify-content-end align-items-end align-items-md-center">
+                                                        <div class="d-flex flex-row mt-2 mt-md-0">
+                                                            <div class="text-black pe-3">
+                                                                <button class="btn addToWishlistBtn" style="background: #16A085; color: white">+
+                                                                    Wishlist</button>
+                                                            </div>
+                                                            <div>
+                                                                <button class="delete-cart-item btn btn-danger ms-3"><i
+                                                                    class="lni lni-trash-can"></i></button>
+                                                            </div>
                                                         </div>
-                                                        <div>
-                                                            <button class="delete-cart-item btn btn-danger ms-3"><i
-                                                                class="lni lni-trash-can"></i></button>
+                                                        <div class="col-8 col-md-3 form-group ps-0 ps-md-3">
+                                                            <div class="d-flex justify-content-between">
+                                                                <script>
+                                                                    var stoke = '{{ $item->product->stoke }}';
+                                                                </script>
+                                                                <button
+                                                                    class="input-group-text changeQuantity decrement-btn me-1" style="background: #16A085; color: white">-</button>
+                                                                <input type="text" name="quantity"
+                                                                    class="form-control qty-input text-center"
+                                                                    value="{{ $item->product_qty }}">
+                                                                @if ($item->product->stoke > $item->product_qty)
+                                                                <button
+                                                                    class="input-group-text changeQuantity increment-btn ms-1" style="background: #16A085; color: white">+</button>
+                                                                @else
+                                                                <button disabled
+                                                                    class="input-group-text changeQuantity increment-btn ms-1" style="background: #16A085; color: white">+</button>
+                                                                @endif
+                                                            </div>
                                                         </div>
+                                                        @php
+                                                        $total += $item->product->price * $item->product_qty;
+                                                        $totalQty += $item->product_qty;
+                                                        $totalPrice += $item->product->price;
+                                                        @endphp
                                                     </div>
-                                                    <div class="col-8 col-md-3 form-group ps-0 ps-md-3">
-                                                        <div class="d-flex justify-content-between">
-                                                            <script>
-                                                                var stoke = '{{ $item->product->stoke }}';
-                                                            </script>
-                                                            <button
-                                                                class="input-group-text changeQuantity decrement-btn me-1" style="background: #16A085; color: white">-</button>
-                                                            <input type="text" name="quantity"
-                                                                class="form-control qty-input text-center"
-                                                                value="{{ $item->product_qty }}">
-                                                            @if ($item->product->stoke > $item->product_qty)
-                                                            <button
-                                                                class="input-group-text changeQuantity increment-btn ms-1" style="background: #16A085; color: white">+</button>
-                                                            @else
-                                                            <button disabled
-                                                                class="input-group-text changeQuantity increment-btn ms-1" style="background: #16A085; color: white">+</button>
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                                                    @php
-                                                    $total += $item->product->price * $item->product_qty;
-                                                    $totalQty += $item->product_qty;
-                                                    $totalPrice += $item->product->price;
-                                                    @endphp
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                            @endforeach
+                            @else
+                            <div id="app">
+                                <section class="section">
+                                    <div class="container">
+                                        <div class="page-error">
+                                            <div class="page-inner">
+                                                <img src="{{ asset('img/undraw_empty_re_opql.svg') }}" alt="">
+                                                <div class="page-description">
+                                                    Tidak ada produk dikeranjang!
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
                             </div>
-                        @endforeach
-                        @else
-                        <div id="app">
-                            <section class="section">
-                                <div class="container">
-                                    <div class="page-error">
-                                        <div class="page-inner">
-                                            <img src="{{ asset('img/undraw_empty_re_opql.svg') }}" alt="">
-                                            <div class="page-description">
-                                                Tidak ada produk dikeranjang!
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
+                            @endif
                         </div>
-                        @endif
+                    </div>
+                    <div class="col-12 col-xl-4">
+                        <div class="m-0 m-xl-4 p-4 shadow border rounded">
+                            <h3 class="mb-3 fs-4">Ringkasan Belanja</h3>
+                            <div
+                                class="d-flex mb-8 align-items-center justify-content-between pb-3 border-bottom border-info-light">
+                                <span class="">Total Harga(<span class="count-product">0</span> Barang)</span>
+                                <span class="fs-6 fw-bold">Rp. <span class="total-price">0</span></span>
+                            </div>
+                            <div class="d-flex mb-10 mt-3 justify-content-between align-items-center">
+                                <span class="fw-bold">Total Harga</span>
+                                <span class="fs-6 fw-bold">Rp. <span class="total-price">0</span></span>
+                            </div>
+                            @if ($cartItem->count())
+                                <button type="submit" class="btn w-100 text-uppercase text-white" style="background: #16A085;" href="{{ url('cart/shipment') }}">Checkout (<span class="beli-keranjang-count">0</span>)</a>
+                            @else
+                                <a class="btn w-100 text-uppercase text-white" style="background: #16A085;" href="{{ url('new-product') }}">Belanja Sekarang</a>
+                            @endif
+                        </div>
                     </div>
                 </div>
-                <div class="col-12 col-xl-4">
-                    <div class="m-0 m-xl-4 p-4 shadow border rounded">
-                        <h3 class="mb-3 fs-4">Ringkasan Belanja</h3>
-                        <div
-                            class="d-flex mb-8 align-items-center justify-content-between pb-3 border-bottom border-info-light">
-                            <span class="">Total Harga({{$totalQty}} Barang)</span>
-                            <span class="fs-6 fw-bold">Rp. {{ number_format($total, 0) }}</span>
-                        </div>
-                        <div class="d-flex mb-10 mt-3 justify-content-between align-items-center">
-                            <span class="fw-bold">Total Harga</span>
-                            <span class="fs-6 fw-bold">Rp. {{ number_format($total, 0) }}</span>
-                        </div>
-                        @if ($cartItem->count())
-                            <a class="btn w-100 text-uppercase text-white" style="background: #16A085;" href="{{ url('cart/shipment') }}">Beli ({{$totalQty}})</a>
-                        @else
-                            <a class="btn w-100 text-uppercase text-white" style="background: #16A085;" href="{{ url('new-product') }}">Belanja Sekarang</a>
-                        @endif
-                    </div>
-                </div>
-            </div>
+            </form>
             <div class="product-details-info shadow">
                 <div class="single-block">
                     <h5 class="mx-2 fw-bold" style="color:#16A085;">Produk Lainnnya</h5>
                     <div class="owl-carousel owl-theme">
                         @foreach ($product_new as $item)
                         <!-- Start Single Product -->
-                        <div class="mx-2 single-product shadow-none {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}"" style="height: 27rem">
-                            <div class="product-image {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}"">
+                        <div class="mx-2 single-product shadow-none {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}" style="height: 27rem">
+                            <div class="product-image {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}">
                                 <a href="{{ url('home/'.$item->slug) }}">
                                     @if ($item->stoke === 0)
                                     <div style="z-index: 3" class="badge bg-danger px-3 position-absolute top-50 start-50 translate-middle"><h5 class="text-white">Stok Habis</h5></div>
@@ -304,7 +309,49 @@
         });
     });
 
-    $(document).ready(function () {
+    $(document).ready(function ()
+    {
+        $('.checkProductCart').click( function()
+        {
+            var totalCheckboxes = $("input#checkProductCart:checked").length;
+            var sum = 0;
+            var total = 0;
+            if (totalCheckboxes) {
+                var checkedInputs = $("input#checkProductCart:checked");
+                var sum_qty = 0;
+                var total_price = 0;
+                $.each(checkedInputs, function(i, val) {
+                    var qty = $(this).closest('.checkProductCart').find("input[name=cart_qty]").val();
+                    var price = $(this).closest('.checkProductCart').find("input[name=cart_total]").val();
+                    sum_qty += parseInt(qty);
+                    total_price += parseInt(price * qty);
+                });
+                sum = sum_qty;
+                total = total_price
+            } else {
+                var qty = 0;
+            }
+            $.ajax({
+                method: "POST",
+                url: "/load-beli-keranjang",
+                data: {
+                    'totalCheckboxes': totalCheckboxes,
+                    'sum': sum,
+                    'total': total
+                },
+                success: function (response)
+                {
+                    $('.beli-keranjang-count').html('');
+                    $('.beli-keranjang-count').html(response.countCart);
+
+                    $('.count-product').html('');
+                    $('.count-product').html(response.countQty);
+
+                    $('.total-price').html('');
+                    $('.total-price').html(response.totalPrice);
+                }
+            });
+        });
 
             $('.increment-btn').click(function (e) {
                 e.preventDefault();

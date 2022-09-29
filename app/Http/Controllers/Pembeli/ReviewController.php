@@ -52,11 +52,9 @@ class ReviewController extends Controller
                     <a href="/pembeli/daftar-transaksi/detail-order/'.$order->id.'" class="my-0 text-secondary text-xs font-weight-bold">'. $order->code .'</a>';
                     $output .= '<div class="d-flex align-items-center pt-3">';
                         if ($userInfo->image) {
-                        $output .= '<img src="../storage/profile/'. $userInfo->image .'" class="img-fluid rounded-circle"
-                            style="width: 55px; height: 55px;" alt="'. $userInfo->user->name .'">';
+                        $output .= '<img src="../storage/profile/'. $userInfo->image .'" class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 55px; height: 55px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="'. $userInfo->user->name .'">';
                         } else {
-                        $output .= '<img src="../stisla/assets/img/example-image.jpg" class="img-fluid rounded-circle"
-                            style="width: 55px; height: 55px;" alt="'. $userInfo->user->name .'">';
+                        $output .= '<img src="../stisla/assets/img/example-image.jpg" class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 55px; height: 55px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="'. $userInfo->user->name .'">';
                         }
                         $output .= '<div>
                             <p class="my-0 mx-3 text-secondary text-xs font-weight-bold">'. $userInfo->user->name .'</p>';
@@ -151,11 +149,9 @@ class ReviewController extends Controller
                     <a href="/pembeli/daftar-transaksi/detail-order/'.$order->id.'" class="my-0 text-secondary text-xs font-weight-bold">'. $order->code .'</a>';
                     $output .= '<div class="d-flex align-items-center pt-3">';
                         if ($userInfo->image) {
-                        $output .= '<img src="../storage/profile/'. $userInfo->image .'" class="img-fluid rounded-circle"
-                            style="width: 55px; height: 55px;" alt="'. $userInfo->user->name .'">';
+                        $output .= '<img src="../storage/profile/'. $userInfo->image .'" class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 55px; height: 55px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="'. $userInfo->user->name .'">';
                         } else {
-                        $output .= '<img src="../stisla/assets/img/example-image.jpg" class="img-fluid rounded-circle"
-                            style="width: 55px; height: 55px;" alt="'. $userInfo->user->name .'">';
+                        $output .= '<img src="../stisla/assets/img/example-image.jpg" class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 55px; height: 55px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="'. $userInfo->user->name .'">';
                         }
                         $output .= '<div>
                             <p class="my-0 mx-3 text-secondary text-xs font-weight-bold">'. $userInfo->user->name .'</p>';
@@ -189,7 +185,12 @@ class ReviewController extends Controller
                     foreach ($order->orderItems as $orderitem) {
                         foreach ($orderitem->product->review as $review) {
                             if ($review->order_id == $order->id) {
-                                $output .= '<p class="my-0 mx-3 text-secondary text-justify text-xs font-weight-bold">'. $review->review .'</p>';
+                                $output .= '<p class="my-0 mx-md-3 text-secondary text-justify text-xs font-weight-bold">'. $review->review .'</p>';
+                                if ($review->reply_review) {
+                                    $output .= '
+                                        <div class="my-2 mx-md-3 border bg-primary text-white rounded p-2 text-justify text-xs"><p class="text-xs m-0 font-weight-bold pb-1">Respon Penjual :</p>'. $review->reply_review .'</div>
+                                    ';
+                                }
                             }
                         }
                     }

@@ -20,12 +20,12 @@
     }
 
     .page-error img {
-        width: 30rem;
+        width: 15rem;
     }
 
     .page-error .page-description {
         padding-top: 30px;
-        font-size: 18px;
+        font-size: 15px;
         font-weight: 400;
         color: color: var(--primary);;
     }
@@ -216,7 +216,7 @@
                             <div class="blog-image-edukasi">
                                 <a href="{{ url('/edukasi'.'/'.$item->slug) }}">
                                     @php
-                                    $ext = pathinfo($item->file, PATHINFO_EXTENSION)
+                                        $ext = pathinfo($item->file, PATHINFO_EXTENSION)
                                     @endphp
                                     @if($ext == 'mp4' || $ext == 'mov' || $ext == 'vob' || $ext == 'mpeg' ||
                                     $ext == '3gp' || $ext == 'avi' || $ext == 'wmv' || $ext == 'mov' || $ext ==
@@ -257,7 +257,7 @@
                                     </a>
                                     @foreach ($item->historyEducation->take(1) as $history)
                                         @if ($history->education_id == $item->id)
-                                            <i class="bi bi-star-fill h-4" style="color: orange"></i>
+                                            <i class="bi bi-star-fill h-4 ps-3" style="color: orange"></i>
                                         @endif
                                     @endforeach
                                 </h5>
@@ -378,6 +378,11 @@
                                         <div class="video-content textMore-center">
                                             <video src="{{ asset('../storage/edukasi/' . $item->file) }}" alt="Video"
                                                 style="width: 92px; height: 60px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" />
+                                            <a class="video-popup glightbox" style="color: #16A085;"
+                                                href="{{ asset('../storage/edukasi/' . $item->file) }}">
+                                                <i class="lni lni-play"
+                                                    style="position: absolute; top: 32%; left: 16%;"></i>
+                                            </a>
                                         </div>
                                         @elseif ($extMore == 'PNG' || $extMore == 'png' || $extMore == 'jpg' ||
                                         $extMore == 'jpeg' || $extMore == 'svg' || $extMore == 'gif' || $extMore

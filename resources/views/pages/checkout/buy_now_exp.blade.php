@@ -67,7 +67,7 @@
 <script>
     var stateObj = { foo: "bar" };
     // history.pushState(stateObj, "page without extension", "buy-now");
-    history.replaceState(stateObj, '', 'checkout');
+    history.replaceState(stateObj, '', 'buy-now');
     // if ( window.history.replaceState ) {
     //     window.history.replaceState( null, null, window.location.href );
     // }
@@ -79,7 +79,7 @@
 <div class="preloader">
     <div class="preloader-inner">
         <div class="preloader-icon">
-            <span></span>
+            <span>Tanikula</span>
             <span></span>
         </div>
         {{-- <p class="text-center p-0 m-0 fw-bold">Tanikula</p> --}}

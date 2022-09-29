@@ -46,14 +46,31 @@
                 </div>
             </div>
 
-            <div class="section-body">
+            @php
+                $addressCheck = App\Models\Gapoktan::where('user_id', auth()->user()->id)
+                            ->whereNotNull('province_id')
+                            ->whereNotNull('city_id')
+                            ->whereNotNull('district_id')
+                            ->whereNotNull('village_id')
+                            ->first();
+            @endphp
+            @if (!$addressCheck)
+                <h6 style="font-size: 13px; font-weight: normal;" class="text-white shadow rounded border py-1 px-2 bg-danger">*Sebelum menambahkan produk, pastikan alamat anda sudah ditambahkan! Jika belum, <a href="#" onclick="gapoktan_pengaturan('{{ url('gapoktan/pengaturan') }}')" style="font-weight: bold;" class="text-warning">klik disini</a> dan pilih Ubah Biodata Gapoktan.</h6>
+            @endif
+
+            <div class="section-body {{ !$addressCheck ? 'mt-2' : '' }}">
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <button type="button" style="border-radius: 5px;" class="btn shadow-none py-1 btn-primary" data-toggle="modal"
-                                    data-target="#addEmployeeModal">Tambah
-                                    @yield('title')</button>
+                                @if (!$addressCheck)
+                                    <button type="button" disabled style="border-radius: 5px; background: #16A085" class="btn shadow-none py-1 text-white">Tambah
+                                        @yield('title')</button>
+                                @else
+                                    <button type="button" style="border-radius: 5px;" class="btn shadow-none py-1 btn-primary" data-toggle="modal"
+                                        data-target="#addEmployeeModal">Tambah
+                                        @yield('title')</button>
+                                @endif
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive" id="show_all_employees">
