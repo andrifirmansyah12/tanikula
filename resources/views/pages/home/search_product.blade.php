@@ -56,13 +56,13 @@
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                 <li>
                     <form action="{{ url('/search-product') }}">
-                        <input type="hidden" name="max_price" id="max_price" value="max_price">
+                        <input type="hidden" name="harga_tertinggi" id="harga_tertinggi" value="harga_tertinggi">
                         <button type="submit" id="max_price_btn" class="dropdown-item">Harga Tertinggi</button>
                     </form>
                 </li>
                 <li>
                     <form action="{{ url('/search-product') }}">
-                        <input type="hidden" name="min_price" id="min_price" value="min_price">
+                        <input type="hidden" name="harga_terendah" id="harga_terendah" value="harga_terendah">
                         <button type="submit" id="min_price_btn" class="dropdown-item">Harga Terendah</button>
                     </form>
                 </li>

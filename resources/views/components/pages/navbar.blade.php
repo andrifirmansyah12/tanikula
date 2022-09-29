@@ -368,6 +368,24 @@
                                         class="{{ Request::is('hubungi-kami') ? 'active' : '' }}"
                                         aria-label="Toggle navigation">Hubungi kami</a>
                                 </li>
+                                <li class="nav-item d-block d-md-none mt-md-0 mt-3">
+                                    <div class="main-menu-search-mobile">
+                                        <!-- navbar search start -->
+                                        <form action="{{ url('/search-product') }}">
+                                            <div class="navbar-search-mobile search-style-5">
+                                                <div class="search-input-mobile">
+                                                    <input type="search" class="form-control typeaheadProduct"
+                                                        value="{{ request('pencarian') }}" name="pencarian"
+                                                        placeholder="Pencarian produk" autocomplete="off">
+                                                </div>
+                                                <div class="search-btn-mobile">
+                                                    <button type="submit"><i class="lni lni-search-alt"></i></button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <!-- navbar search Ends -->
+                                    </div>
+                                </li>
                             </ul>
                         </div> <!-- navbar collapse -->
                     </nav>

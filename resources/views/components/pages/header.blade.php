@@ -46,12 +46,70 @@
             width: 10rem;
         }
 
+        /* ======================== */
+                /* Pencarian */
+                /* =========================== */
+        .header .main-menu-search-mobile .navbar-search-mobile {
+            position: relative;
+            display: -moz-flex;
+            display: -ms-flex;
+            display: -o-flex;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+        }
+
+        .header .main-menu-search-mobile .search-input-mobile {
+            width: 100%;
+        }
+
+        .header .main-menu-search-mobile .search-input-mobile input {
+            width: 100%;
+            height: 45px;
+            border: 1px solid #e2e2e2;
+            background-color: #fff;
+            color: #000;
+            border-radius: 0;
+            padding: 0 15px;
+            -webkit-transition: all 0.3s linear;
+            transition: all 0.3s linear;
+            font-size: 14px;
+        }
+
+        .header .main-menu-search-mobile .search-btn-mobile button {
+            background-color: #16A085;
+            color: #fff;
+            width: 45px;
+            height: 45px;
+            padding: 0;
+            font-size: 20px;
+            border: 0;
+            border-radius: 0 4px 4px 0;
+            margin-left: -2px;
+            -webkit-transition: all 0.4s ease;
+            transition: all 0.4s ease;
+            font-size: 18px;
+        }
+
+        .header .main-menu-search-mobile .search-btn-mobile button:hover {
+            color: #fff;
+            background-color: #081828;
+        }
+
+        /* ======================== */
+                /* Error */
+                /* =========================== */
+
         .page-error-notification .page-description-notification {
             padding-top: 30px;
             font-size: 18px;
             font-weight: 400;
             color: color: var(--primary);;
         }
+
+        /* ======================== */
+                /* Notifikasi Pemberitahuan */
+                /* =========================== */
 
         #style-1::-webkit-scrollbar-track {
             -webkit-box-shadow: inset 0 0 6px #16A085;
