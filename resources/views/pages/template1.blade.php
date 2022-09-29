@@ -228,7 +228,9 @@
                                                     <input class="form-check-input" type="checkbox" name="navbar_cart_id[]" value="{{ $item->id }}" id="navbarCheckProductCart">
                                                     <input class="form-check-input" type="hidden" name="navbar_cart_qty" value="{{ $item->product_qty }}" id="navbarCheckProductQty">
                                                     <input class="form-check-input" type="hidden" name="navbar_cart_total" value="{{ $item->product->price }}" id="navbarCheckProductTotal">
-                                                    <p class="fw-bold ps-3 mb-2"><i class="bi bi-shop"></i> {{ $item->product->user->name }}</p>
+                                                    <p class="fw-bold ps-3 mb-2 col-10" style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; overflow: hidden;">
+                                                        <i class="bi bi-shop"></i> {{ $item->product->user->name }}
+                                                    </p>
                                                 </div>
                                                 <li>
                                                     <input type="hidden" value="{{ $item->product_id }}" id="prod_id">

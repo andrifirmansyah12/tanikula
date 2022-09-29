@@ -129,7 +129,7 @@
             @if ($category_product->count())
             @foreach ($category_product as $item)
             <div class="col-lg-3 col-md-6 col-12">
-                <div class="single-category shadow rounded bg-body">
+                <div class="single-category shadow border rounded bg-body">
                     <h4 class="heading"><a style="color:#16A085;" href="{{ url('product-category/'.$item->slug) }}"> {{ $item->name }}</a></h4>
                     <div class="images d-block">
                         @if ($item->id == '1')

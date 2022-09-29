@@ -21,76 +21,78 @@ class BuyNowController extends Controller
 {
     public function buyNow(Request $request)
     {
-        $product_id = $request->prod_id;
-        $product_qty = $request->quantity;
+        //Variabel key dan url API raja ongkir
+        $key = 'f5ed16cb52b0f2936e98e7e22a4a02f5'; //Buat akun atau pakai API akun Tahu Coding
+        $cost_url = 'https://api.rajaongkir.com/starter/cost';
 
-            $prod_check = Product::where('id', $product_id)->first();
-
-            if ($prod_check) {
-                if ($product_qty > $prod_check->stoke) {
-                    notify()->warning("Kuantiti tidak boleh melebihi stok", "Peringatan", "topRight");
-                    // return redirect()->back();
-                } else {
-                    //Variabel key dan url API raja ongkir
-                    $key = 'f5ed16cb52b0f2936e98e7e22a4a02f5'; //Buat akun atau pakai API akun Tahu Coding
-                    $cost_url = 'https://api.rajaongkir.com/starter/cost';
-
-                    $address = Address::with('user')
-                        ->join('users', 'addresses.user_id', '=', 'users.id')
-                        ->select('addresses.*', 'users.email as email')
-                        ->where('user_id', auth()->user()->id)
-                        ->where('addresses.main_address', 1)
-                        ->orderBy('addresses.updated_at', 'desc')
-                        ->take(1)
-                        ->get();
-                    $old_cartItem = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
-                    foreach ($old_cartItem as $item) {
-                        if (!Product::where('id', $item->product_id)->where('stoke', '>=', $item->product_qty)->exists()) {
-                            $removeItem = Cart::where('user_id', Auth::id())->where('product_id', $item->product_id)->first();
-                            $removeItem->delete();
-                        }
-                    }
-
-                    $cartItem = Product::where('id', $product_id)->first();
-                    $cartItem->id = $product_id;
-                    $cartItem->user_id = $cartItem->user->name;
-                    $cartItem->photo_product = $cartItem->photo_product->take(1);
-                    $cartItem->stoke = $product_qty;
-                    $cartItem->price = $cartItem->price;
-                    $cartItem->name = $cartItem->name;
-                    $cartItem->slug = $cartItem->slug;
-
-                    //Variabel yang valuenya didapat dari request()
-                    if($request->has('service'))
-                    {
-                        $data_origin = 149;
-                        // $data_destination = $request->destination_costumer;
-                        $data_destination = 149;
-                        $data_weight = $request->weight_product;
-                        $data_courier = $request->courier;
-                        $data_service = $request->service;
-
-                        //logic untuk calculate cost
-                        $response = Http::retry(10, 200)->asForm()->withHeaders([
-                            'key' => $key
-                        ])->post($cost_url, [
-                            'origin' => $data_origin,
-                            'destination' => $data_destination,
-                            'weight' => $data_weight,
-                            'courier' => $data_courier
-                        ]);
-
-                        $result_cost = $response['rajaongkir']['results'][0]['costs'];
-                    }
-                    else{
-                        $data_courier = "";
-                        $data_service = "";
-                        $result_cost = null;
-                    }
-
-                    return view('pages.checkout.buy_now', compact('cartItem', 'address', 'result_cost', 'data_service'));
-                }
+        $address = Address::with('user')
+            ->join('users', 'addresses.user_id', '=', 'users.id')
+            ->select('addresses.*', 'users.email as email')
+            ->where('user_id', auth()->user()->id)
+            ->where('addresses.main_address', 1)
+            ->orderBy('addresses.updated_at', 'desc')
+            ->take(1)
+            ->get();
+        $old_cartItem = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
+        foreach ($old_cartItem as $item) {
+            if (!Product::where('id', $item->product_id)->where('stoke', '>=', $item->product_qty)->exists()) {
+                $removeItem = Cart::where('user_id', Auth::id())->where('product_id', $item->product_id)->first();
+                $removeItem->delete();
             }
+        }
+
+        $cart_id =  $request->input('cart_id', []);
+        $navbar_cart_id =  $request->input('navbar_cart_id', []);
+        // $authorizedRoles = [$cart_id];
+        // dd($authorizedRoles);
+        if ($cart_id)
+        {
+            $cartItem = Cart::with('product')->where('user_id', '=', auth()->user()->id)->where(static function ($query) use ($cart_id) {
+                return $query->whereIn('id', $cart_id);
+            })->latest()->get();
+        }
+            elseif ($navbar_cart_id)
+        {
+            $cartItem = Cart::with('product')->where('user_id', '=', auth()->user()->id)->where(static function ($query) use ($navbar_cart_id) {
+                return $query->whereIn('id', $navbar_cart_id);
+            })->latest()->get();
+        } else {
+            $cartItem = Cart::with('product')->where('user_id', '=', auth()->user()->id)->where(static function ($query) use ($cart_id) {
+                return $query->whereIn('id', $cart_id);
+            })->latest()->get();
+        }
+
+        // $cartItem = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
+
+        //Variabel yang valuenya didapat dari request()
+        if($request->has('service'))
+        {
+            $data_origin = 149;
+            // $data_destination = $request->destination_costumer;
+            $data_destination = 149;
+            $data_weight = $request->weight_product;
+            $data_courier = $request->courier;
+            $data_service = $request->service;
+
+            //logic untuk calculate cost
+            $response = Http::retry(10, 200)->asForm()->withHeaders([
+                'key' => $key
+            ])->post($cost_url, [
+                'origin' => $data_origin,
+                'destination' => $data_destination,
+                'weight' => $data_weight,
+                'courier' => $data_courier
+            ]);
+
+            $result_cost = $response['rajaongkir']['results'][0]['costs'];
+        }
+        else{
+            $data_courier = "";
+            $data_service = "";
+            $result_cost = null;
+        }
+
+        return view('pages.checkout.buy_now_exp', compact('cartItem', 'address', 'result_cost', 'data_service'));
     }
 
     public function buyNowPost(Request $request)
@@ -126,6 +128,7 @@ class BuyNowController extends Controller
                     }
 
                     $cartItem = Product::where('id', $product_id)->first();
+                    $cartItem->id = $product_id;
                     $cartItem->user_id = $cartItem->user->name;
                     $cartItem->photo_product = $cartItem->photo_product->take(1);
                     $cartItem->stoke = $product_qty;

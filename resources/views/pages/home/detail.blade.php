@@ -91,7 +91,7 @@
 <!-- Start Item Details -->
 <section class="item-details section bg-white mt-md-5">
     <div class="container">
-        <form action="{{ url('/buy-now') }}" method="get" enctype="multipart/form-data">
+        <form action="{{ url('/buy-now') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="top-area border" id="product_data">
                 <div class="row align-items-center">

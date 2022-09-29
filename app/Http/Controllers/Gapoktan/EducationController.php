@@ -12,6 +12,7 @@ use \Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Http;
 
 class EducationController extends Controller
 {

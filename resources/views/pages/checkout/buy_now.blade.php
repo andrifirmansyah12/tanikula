@@ -67,7 +67,7 @@
 <script>
     var stateObj = { foo: "bar" };
     // history.pushState(stateObj, "page without extension", "buy-now");
-    history.replaceState(stateObj, '', 'buy-now');
+    history.replaceState(stateObj, '', '{{ route('buy.now') }}');
 
     // if ( window.history.replaceState ) {
     //     window.history.replaceState( null, null, window.location.reload() );
@@ -76,6 +76,18 @@
 @endsection
 
 @section('content')
+<!-- Preloader -->
+<div class="preloader">
+    <div class="preloader-inner">
+        <div class="preloader-icon">
+            <span></span>
+            <span></span>
+        </div>
+        {{-- <p class="text-center p-0 m-0 fw-bold">Tanikula</p> --}}
+    </div>
+</div>
+<!-- /End Preloader -->
+
 <!-- Start Item Details -->
 <section class="item-details mt-md-4 section bg-white overflow-hidden">
     <div class="container">

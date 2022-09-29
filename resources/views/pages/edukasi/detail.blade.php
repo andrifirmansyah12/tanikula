@@ -277,6 +277,11 @@
                                         @if($extMore == 'mp4' || $extMore == 'mov' || $extMore == 'vob' || $extMore == 'mpeg' || $extMore == '3gp' || $extMore == 'avi' || $extMore == 'wmv' || $extMore == 'mov' || $extMore == 'amv' || $extMore == 'svi' || $extMore == 'flv' || $extMore == 'mkv' || $extMore == 'webm' || $extMore == 'gif' || $extMore == 'asf')
                                         <div class="text-center">
                                             <video src="{{ asset('../storage/edukasi/' . $item->file) }}" alt="Video" style="width: 92px; height: 60px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"/>
+                                            <a class="video-popup glightbox" style="color: #16A085;"
+                                                href="{{ asset('../storage/edukasi/' . $item->file) }}">
+                                                <i class="lni lni-play"
+                                                    style="position: absolute; top: 32%; left: 16%;"></i>
+                                            </a>
                                         </div>
                                         @elseif ($extMore == 'PNG' || $extMore == 'png' || $extMore == 'jpg' || $extMore == 'jpeg' || $extMore == 'svg' || $extMore == 'gif' || $extMore == 'tiff' || $extMore == 'psd' || $extMore == 'pdf' || $extMore == 'eps' || $extMore == 'ai' || $extMore == 'indd' || $extMore == 'raw')
                                             <img src="{{ asset('../storage/edukasi/' . $item->file) }}" class="img-responsive" alt="Edukasi" style="width: 92px; height: 60px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"/>

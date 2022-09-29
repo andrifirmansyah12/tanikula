@@ -612,12 +612,13 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function 
 
     // Keranjang dan Order
     Route::get('/cart', [App\Http\Controllers\Pembeli\CartController::class, 'viewCart']);
+    Route::get('/checkout', [App\Http\Controllers\Pembeli\CheckoutController::class, 'index'])->name('checkout.pembeli');
     Route::post('/checkout', [App\Http\Controllers\Pembeli\CheckoutController::class, 'index'])->name('checkout.pembeli');
     // Route::post('/cart/shipment', [App\Http\Controllers\Pembeli\CheckoutController::class, 'index'])->name('cart.shipment.pembeliPost');
     Route::post('/cart/shipment/place-order', [App\Http\Controllers\Pembeli\CheckoutController::class, 'placeOrder'])->name('place-order-costumer');
 
     // Beli Sekarang
-    Route::get('/buy-now', [App\Http\Controllers\Pembeli\BuyNowController::class, 'buyNow']);
+    Route::get('/buy-now', [App\Http\Controllers\Pembeli\BuyNowController::class, 'buyNow'])->name('buy.now');
     Route::post('/buy-now', [App\Http\Controllers\Pembeli\BuyNowController::class, 'buyNowPost'])->name('buy.now.pembeli');
     Route::post('/ongkir/buy-now', [App\Http\Controllers\Pembeli\BuyNowController::class, 'check_ongkir']);
     Route::post('/buy-now/shipment/place-order', [App\Http\Controllers\Pembeli\BuyNowController::class, 'placeOrder'])->name('buy.now.place_order');
