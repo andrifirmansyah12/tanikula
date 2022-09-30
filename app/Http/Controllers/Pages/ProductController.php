@@ -417,7 +417,7 @@ class ProductController extends Controller
 
     public function searchAllProduct(Request $request)
     {
-        if($request->max_price == 'max_price')
+        if($request->harga_tertinggi == 'harga_tertinggi')
         {
             $product_new = Product::with('photo_product')
                         ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
@@ -429,7 +429,7 @@ class ProductController extends Controller
                         ->orderBy('products.price', 'desc')
                         ->get();
         }
-        else if ($request->min_price == 'min_price')
+        else if ($request->harga_terendah == 'harga_terendah')
         {
             $product_new = Product::with('photo_product')
                         ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
