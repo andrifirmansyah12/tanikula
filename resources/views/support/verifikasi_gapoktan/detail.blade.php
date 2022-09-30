@@ -63,7 +63,7 @@
                                         <tr>
                                             <th scope="row">Status Gapoktan</th>
                                             <td>
-                                                @if ($gapoktans->is_verified === 1)
+                                                @if ($gapoktans->is_verified == 1)
                                                 <h6 class="badge badge-success">Terverifikasi</h6>
                                                 @else
                                                 <h6 class="badge badge-danger">Belum diverifikasi</h6>
@@ -74,7 +74,7 @@
                                 </table>
                             </div>
                             <div class="text-right">
-                                @if ($gapoktans->is_verified === 0)
+                                @if ($gapoktans->is_verified == 0)
                                     <button type="submit" id="verifikasiGapoktanBtn" class="btn btn-success">Verifikasi
                                         Gapoktan</button>
                                 @else

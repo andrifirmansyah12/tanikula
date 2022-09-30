@@ -60,7 +60,7 @@ class EducationController extends Controller
                 } elseif(empty($emp->file)) {
                     $output .= '<td><img src="../stisla/assets/img/example-image.jpg" class="img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"></td>';
                 }
-                $output .= '<td>' . $emp->title . '</td>';
+                $output .= '<td style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;" class="p-0">' . $emp->title . '</td>';
                 if (empty($emp->name)) {
                     $output .= '<td><span class="text-danger">Tidak ada kategori</span></td>';
                 } else {

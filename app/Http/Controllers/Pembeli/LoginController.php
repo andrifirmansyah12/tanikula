@@ -459,7 +459,7 @@ class LoginController extends Controller
                 $costumer->user_id = $create->id;
                 $costumer->save();
                 \auth()->login($create, true);
-                return redirect()->route('home');
+                return redirect()->route('pembeli');
             }
         } catch (\Exception $e) {
             return redirect()->route('redirectToGoogle');
