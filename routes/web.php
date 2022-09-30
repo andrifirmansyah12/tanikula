@@ -548,6 +548,10 @@ Route::group(['middleware' => ['guest']], function () {
     Route::get('/reset-password/{email}/{token}', [App\Http\Controllers\Pembeli\LoginController::class, 'reset'])->name('resetPassword-pembeli');
     Route::post('/reset-password', [App\Http\Controllers\Pembeli\LoginController::class, 'resetPassword'])->name('resetPassword');
     Route::get('/account/verify/{token}', [App\Http\Controllers\Pembeli\LoginController::class, 'verifyAccount'])->name('user.verify');
+
+    // Login dengan Google
+    Route::get('auth/google', [App\Http\Controllers\Pembeli\LoginController::class, 'redirectToGoogle'])->name('redirectToGoogle');
+    Route::get('auth/callback', [App\Http\Controllers\Pembeli\LoginController::class, 'handleGoogleCallback']);
 });
 
 // Pembeli
