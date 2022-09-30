@@ -24,6 +24,8 @@ class CreateUsersTable extends Migration
             $table->longText('fcm_token')->nullable();
             $table->rememberToken();
             $table->timestamps();
+
+            $table->string('google_id')->nullable();
         });
     }
 
