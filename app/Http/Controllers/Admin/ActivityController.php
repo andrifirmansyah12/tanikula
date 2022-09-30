@@ -52,7 +52,7 @@ class ActivityController extends Controller
 			foreach ($emps as $emp) {
 				$output .= '<tr>';
                 $output .= '<td>' . $nomor++ . '</td>';
-                $output .= '<td>' . $emp->title . '</td>';
+                $output .= '<td style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;" class="p-0">' . $emp->title . '</td>';
                 if (empty($emp->name)) {
                     $output .= '<td><a class="text-danger">Tidak ada kategori</a></p>';
                 } else {

@@ -165,7 +165,28 @@
                 <h5 class="modal-title" id="exampleModalLabel">Ubah Biodata Diri</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <style>
+                #style-2::-webkit-scrollbar-track
+                {
+                    -webkit-box-shadow: inset 0 0 6px #16A085;
+                    border-radius: 10px;
+                    background-color: #F5F5F5;
+                }
+
+                #style-2::-webkit-scrollbar
+                {
+                    width: 12px;
+                    background-color: #F5F5F5;
+                }
+
+                #style-2::-webkit-scrollbar-thumb
+                {
+                    border-radius: 10px;
+                    -webkit-box-shadow: inset 0 0 6px #16A085;
+                    background-color: #16A085;
+                }
+            </style>
+            <div class="modal-body" id="style-2">
                 <form action="#" method="POST" id="profile_form" accept-charset="utf-8"
                     enctype="multipart/form-data">
                     @csrf
@@ -186,14 +207,13 @@
                         </div>
                         <div class="mb-3">
                             <label for="telp">No Handphone</label>
-                            <input type="tel" name="telp" id="telp" value="{{ $userInfo->telp }}"
+                            <input type="tel" name="telp" id="telp" value="{{ $userInfo->telp }}" placeholder="+62"
                                 class="form-control phone-number border px-3">
                                 <div class="invalid-feedback">
                             </div>
                         </div>
                         <div class="row form-group mb-3">
                             <label for="birth">Tanggal Lahir</label>
-                            <small class="text-danger">*kosongkan jika tidak ingin ubah tanggal lahir</small>
                             <div class="input-group">
                                 @if ($userInfo->birth)
                                 <input type="text" name="birth" id="birth" class="form-control datepicker border px-3"
