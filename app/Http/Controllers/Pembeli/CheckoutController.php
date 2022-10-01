@@ -32,13 +32,13 @@ class CheckoutController extends Controller
             ->orderBy('addresses.updated_at', 'desc')
             ->take(1)
             ->get();
-        $old_cartItem = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
-        foreach ($old_cartItem as $item) {
-            if (!Product::where('id', $item->product_id)->where('stoke', '>=', $item->product_qty)->exists()) {
-                $removeItem = Cart::where('user_id', Auth::id())->where('product_id', $item->product_id)->first();
-                $removeItem->delete();
-            }
-        }
+        // $old_cartItem = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
+        // foreach ($old_cartItem as $item) {
+        //     if (!Product::where('id', $item->product_id)->where('stoke', '>=', $item->product_qty)->exists()) {
+        //         $removeItem = Cart::where('user_id', Auth::id())->where('product_id', $item->product_id)->first();
+        //         $removeItem->delete();
+        //     }
+        // }
 
         $cart_id =  $request->input('cart_id', []);
         $navbar_cart_id =  $request->input('navbar_cart_id', []);

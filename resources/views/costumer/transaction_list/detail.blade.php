@@ -215,11 +215,21 @@
                     @if ($order->status == 'cancelled')
                         <div class="card shadow border mb-4 bg-primary text-white p-3">
                             <div class="d-flex justify-content-between align-items-center">
-                                <div>
+                                <div class="pe-3">
                                     <p class="m-0 fw-bold">Pesanan Dibatalkan</p>
                                     <small>Kamu telah membatalkan pesanan ini. Cek Rincian Pembatalan untuk informasi lebih lanjut.</small>
                                 </div>
                                 <div><i class="bi bi-bag-x h1 text-white"></i></div>
+                            </div>
+                        </div>
+                    @elseif ($order->status == 'confirmed')
+                        <div class="card shadow border mb-4 bg-primary text-white p-3">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="pe-3">
+                                    <p class="m-0 fw-bold">Pesanan Sedang Diproses</p>
+                                    <small>Pesanan anda sedang diproses oleh penjual. Penjual memerlukan beberapa waktu untuk mengecek pesanan anda.</small>
+                                </div>
+                                <div><i class="bi bi-truck h1 text-white"></i></div>
                             </div>
                         </div>
                     @endif

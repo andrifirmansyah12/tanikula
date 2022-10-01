@@ -391,6 +391,35 @@
         });
     });
 
+    $('.delete-out-of-stock-product').click(function (e) {
+        e.preventDefault();
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        var prod_id_outof_stock = $(this).closest('#product_outof_stock').find('#prod_id_outof_stock').val();
+
+        $.ajax({
+            method: "POST",
+            url: "delete-out-of-stock-product",
+            data: {
+                'prod_id_outof_stock': prod_id_outof_stock,
+            },
+            success: function (response) {
+                LoadCart();
+                iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                    title: 'Berhasil',
+                    message: response.status,
+                    position: 'topRight'
+                });
+                window.setTimeout(function(){location.reload()},1000)
+            }
+        });
+    });
+
     $('.changeQuantity').click(function (e) {
         e.preventDefault();
 

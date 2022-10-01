@@ -85,8 +85,8 @@
                             </div>
 
                             <div class="form-group">
-                                <input type="submit" value="Masuk" id="login_btn" style="background: #16A085" class="btn text-white btn-block" tabindex="4">
-                                <a class="btn col-12 mt-3 text-white" style="background: #007bff" href="{{ url('auth/google') }}"><i class="bi bi-google text-white"></i> Google Sign In</a>
+                                <input type="submit" value="Masuk" id="login_btn" style="background: #16A085" class="btn py-2 text-white btn-block" tabindex="4">
+                                <a class="btn col-12 mt-3 text-white py-2" style="background: #007bff" href="{{ url('auth/google') }}"><i class="bi bi-google text-white"></i> Google Sign In</a>
                             </div>
                         </form>
                         <div class="mt-3 text-center">

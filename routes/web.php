@@ -713,6 +713,7 @@ Route::get('/product-category/{category_slug}/{product_slug}', [App\Http\Control
 // Keranjang
 Route::post('/add-to-cart', [App\Http\Controllers\Pembeli\CartController::class, 'addProduct']);
 Route::post('/delete-cart-item', [App\Http\Controllers\Pembeli\CartController::class, 'deleteCartItem']);
+Route::post('/delete-out-of-stock-product', [App\Http\Controllers\Pembeli\CartController::class, 'deleteCartOutOfStockProduct']);
 Route::post('/update-cart-item', [App\Http\Controllers\Pembeli\CartController::class, 'updateCartItem']);
 
 // Hubungi Kami
