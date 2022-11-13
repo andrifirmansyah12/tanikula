@@ -82,6 +82,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/transaction_list/order_completed', [TransactionListApiController::class, 'orderCompleted']);
     Route::post('/transaction_list/order_cancel', [TransactionListApiController::class, 'cancelOrder']);
     Route::resource('review', ReviewApiController::class);
+    Route::post('/review_multiple', [ReviewApiController::class, 'addReview']);
     Route::get('notification_list/{user_id}', [PushNotificationController::class, 'indexByid']);
     Route::get('notification_list/delete-all/{user_id}', [PushNotificationController::class, 'deleteall']);
 

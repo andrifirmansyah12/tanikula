@@ -76,7 +76,7 @@ class TransactionListApiController extends BaseController
             $orders->update();
 
             // mengurangi stock
-            $orderItem = OrderItem::where('id', $orders->id)->get();
+            $orderItem = OrderItem::where('order_id', $orders->id)->get();
             foreach ($orderItem as $key => $value) {
                 $produk = Product::where('id', $value->product_id)->first();
                 $produk->stoke = $produk->stoke - $value->qty;
