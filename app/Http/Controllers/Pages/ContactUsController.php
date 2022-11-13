@@ -53,7 +53,7 @@ class ContactUsController extends Controller
                 'screenshot' => $request->file('screenshot')->store('contact', 'public')
             ];
 
-            Mail::to('emailbaruguys10@gmail.com')->send(new ContactFormMail($contact));
+            Mail::to('tanikula.app@gmail.com')->send(new ContactFormMail($contact));
 
             return response()->json([
                 'status' => 200,

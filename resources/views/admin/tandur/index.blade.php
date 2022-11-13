@@ -1,4 +1,4 @@
-@extends('Admin.template')
+@extends('admin.template')
 @section('title', 'Laporan Tandur')
 
 @section('style')

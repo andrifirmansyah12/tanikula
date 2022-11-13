@@ -30,6 +30,6 @@ class ForgotPassword extends Mailable
      */
     public function build()
     {
-        return $this->subject('Reset Password')->view('costumer.login.password.email');
+        return $this->subject('Reset Password')->markdown('costumer.login.password.email');
     }
 }

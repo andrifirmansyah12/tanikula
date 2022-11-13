@@ -6,12 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Activity;
 use App\Models\ActivityCategory;
-use App\Models\NotificationActivity;
+use App\Models\PushNotification;
 use Illuminate\Support\Facades\Storage;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Http;
 
 class ActivityController extends Controller
 {
@@ -151,9 +152,36 @@ class ActivityController extends Controller
             $activity->user_id = auth()->user()->id;
             $activity->save();
 
-            $notification = new NotificationActivity();
-            $notification->activity_id = $activity->id;
-            $notification->save();
+            // $notification = new NotificationActivity();
+            // $notification->activity_id = $activity->id;
+            // $notification->save();
+
+            // Push Notification
+            $user_id = auth()->user()->id;
+            $url = "https://fcm.googleapis.com/fcm/send";
+            $SERVER_API_KEY = 'AAAASSWA7hI:APA91bGkfIJFNGyqIJAiKtLXI79XdZpDuicn7pQrFv-yXdbLmLQETRkRkCY5VnGZBfwRevDkUJdA0ADnJ7Z5r1rnS4flS-ds8yxe_bp4sXouzH8Nfj-PHYCGl8-pVKkE49WqsSuPkKtd';
+            $headers = [
+                'Authorization' => 'key=' . $SERVER_API_KEY,
+                'Content-Type' => 'application/json',
+            ];
+
+            PushNotification::create([
+                'user_id' => auth()->user()->id,
+                "title" => "Kegiatan Terbaru",
+                "body" => $request->title,
+                "img" => "fas fa-clipboard",
+            ]);
+
+            Http::withHeaders($headers)->post($url, [
+                // "to" => "cWmdLu_QQqa6CR28k2aDtJ:APA91bHs2-K9fkZ7rOIUOvrq2bEtlxNpTUoZSn7-TpOcNpfmbwFRfhY1NPBCjYv53uCHJLfFPmsmG84pSWXmG2ezDVkv-opbrM-AaQ42j_UKso-qAqGWlMoJv0AhffI2NAaKTv9DIe0v",
+                'to' => '/topics/topic_user_id_' . $user_id,
+                "notification" => [
+                    "title" => "Kegiatan Terbaru",
+                    "body" => $request->title,
+                    "mutable_content" => true,
+                    "sound" => "Tri-tone"
+                ]
+            ]);
 
             return response()->json([
                 'status' => 200,
@@ -191,13 +219,18 @@ class ActivityController extends Controller
                 'messages' => $validator->getMessageBag()
             ]);
         } else {
-            $emp = Activity::find($request->emp_id);
+            $activity = Activity::find($request->emp_id);
+            $activity->title = $request->title;
+            $activity->slug = $request->slug;
+            $activity->category_activity_id = $request->category_activity_id;
+            $activity->desc = $request->desc;
+            $activity->date = Carbon::createFromFormat('d-M-Y', $request->date)->format('Y-m-d h:i:s');
+            $activity->user_id = auth()->user()->id;
+            $activity->save();
 
-            $empData = ['title' => $request->title, 'slug' => $request->slug, 'category_activity_id' => $request->category_activity_id, 'desc' => $request->desc];
-
-            $empData['date'] = Carbon::createFromFormat('d-M-Y', $request->date)->format('Y-m-d h:i:s');
-            $empData['user_id'] = auth()->user()->id;
-            $emp->update($empData);
+            $notification = new NotificationActivity();
+            $notification->activity_id = $activity->id;
+            $notification->save();
             return response()->json([
                 'status' => 200,
             ]);

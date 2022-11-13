@@ -1,4 +1,4 @@
-@extends('components.auth.template')
+{{-- @extends('components.auth.template')
 @section('title', 'Verifikasi Email')
 
 @section('style')
@@ -41,4 +41,17 @@
 
 
 </script>
-@endsection
+@endsection --}}
+
+@component('mail::message')
+# Verifikasi Email!
+
+Silakan verifikasi email Anda dengan tautan di bawah ini:
+
+@component('mail::button', ['url' => url('/account/verify/' . $token)])
+Verifikasi Email
+@endcomponent
+
+Terima kasih,<br>
+{{ config('app.name') }}
+@endcomponent

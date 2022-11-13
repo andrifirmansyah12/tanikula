@@ -3,7 +3,14 @@
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-            <img src="{{ asset('plus-admin/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
+            @php
+                $support = App\Models\Support::where('user_id', auth()->user()->id)->first();
+            @endphp
+            @if ($support->image)
+                <img src="{{ asset('../storage/profile/'. $support->image) }}" class="border rounded-circle border-white shadow-sm mr-1" style="width: 43px; height: 43px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="User Image">
+            @else
+                <img src="{{ asset('assets/img/avatar/avatar-1.png') }}" class="img-circle elevation-2" alt="User Image">
+            @endif
         </div>
         <div class="info">
             <a href="#" onclick="support_dashboard('{{ url('support') }}')" class="d-block">{{ auth()->user()->name }}</a>

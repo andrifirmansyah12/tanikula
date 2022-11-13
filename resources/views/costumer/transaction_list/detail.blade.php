@@ -215,11 +215,21 @@
                     @if ($order->status == 'cancelled')
                         <div class="card shadow border mb-4 bg-primary text-white p-3">
                             <div class="d-flex justify-content-between align-items-center">
-                                <div>
+                                <div class="pe-3">
                                     <p class="m-0 fw-bold">Pesanan Dibatalkan</p>
                                     <small>Kamu telah membatalkan pesanan ini. Cek Rincian Pembatalan untuk informasi lebih lanjut.</small>
                                 </div>
                                 <div><i class="bi bi-bag-x h1 text-white"></i></div>
+                            </div>
+                        </div>
+                    @elseif ($order->status == 'confirmed')
+                        <div class="card shadow border mb-4 bg-primary text-white p-3">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="pe-3">
+                                    <p class="m-0 fw-bold">Pesanan Sedang Diproses</p>
+                                    <small>Pesanan anda sedang diproses oleh penjual. Penjual memerlukan beberapa waktu untuk mengecek pesanan anda.</small>
+                                </div>
+                                <div><i class="bi bi-truck h1 text-white"></i></div>
                             </div>
                         </div>
                     @endif
@@ -264,7 +274,7 @@
                             <!-- End Navbar -->
                             <div class="card-body px-0 pb-2">
                                 <div class="table-responsive p-0">
-                                    <table class="table align-items-center mb-0">
+                                    <table class="table table-borderless align-items-center mb-0">
                                         <thead>
                                             <tr>
                                                 <th
@@ -287,7 +297,7 @@
                                         <tbody>
                                             @php
                                             $total = 0;
-                                            $totalPrice = 0;
+                                            $ongkirTotal = 0;
                                             $totalQty = 0;
                                             $discount = 0;
                                             @endphp
@@ -300,18 +310,18 @@
                                                         $photos)
                                                         @if ($photos->name)
                                                         <img src="{{ asset('../storage/produk/'.$photos->name) }}"
-                                                            class="img-fluid"
-                                                            style="width: 10rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
+                                                            class="img-fluid rounded"
+                                                            style="width: 7rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
                                                             alt="{{ $orderitem->product->name }}">
                                                         @else
-                                                        <img src="{{ asset('img/no-image.png') }}" class="img-fluid"
-                                                            style="width: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
+                                                        <img src="{{ asset('img/no-image.png') }}" class="img-fluid rounded"
+                                                            style="width: 7rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
                                                             alt="{{ $orderitem->product->name }}">
                                                         @endif
                                                         @endforeach
                                                         @else
-                                                        <img src="{{ asset('img/no-image.png') }}" class="img-fluid"
-                                                            style="width: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
+                                                        <img src="{{ asset('img/no-image.png') }}" class="img-fluid rounded"
+                                                            style="width: 7rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
                                                             alt="{{ $orderitem->product->name }}">
                                                         @endif
                                                     </div>
@@ -373,6 +383,7 @@
                         </div>
                     </div>
                 </div>
+                <input type="hidden" name="passingIdOrder" value="{{ $order->id }}">
                 <div class="card-footer border-0 px-4 bg-primary shadow-primary border-radius-lg py-5 d-md-flex align-items-center justify-content-between">
                     <h5 class="text-white text-uppercase mb-0">Total
                         Pembayaran: <span class="d-flex h2 mb-0 text-white text-capitalize">Rp.
@@ -395,8 +406,27 @@
                                         var distance = end - now;
                                         if (distance < 0) {
                                             clearInterval(timer);
-                                            document.getElementById(id).innerHTML = '<b>Pembayaran Sudah Kadaluarsa';
-                                            return;
+                                            // document.getElementById(id).innerHTML = '<b>Pembayaran Sudah Kadaluarsa';
+                                            // return;
+
+                                            return deleteOrders();
+
+                                            function deleteOrders()
+                                            {
+                                                var id = $("input[name=passingIdOrder]").val();
+                                                $.ajax({
+                                                    method: "GET",
+                                                    url: '/delete-orders/' +id,
+                                                    success: function (response) {
+                                                        iziToast.warning({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                                                            title: 'Peringatan',
+                                                            message: 'Maaf pesanan anda sudah kadaluarsa',
+                                                            position: 'topRight'
+                                                        });
+                                                        window.setTimeout(function(){location.reload()},3000);
+                                                    }
+                                                });
+                                            }
                                         }
                                         var days = Math.floor(distance / _day);
                                         var hours = Math.floor((distance % _day) / _hour);
@@ -464,7 +494,7 @@
     </div>
 </div>
 
-{{-- Modal Ulasan --}}
+{{-- Modal Rincian Pembatalan --}}
 <div class="modal fade" id="rincianPembatalan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
@@ -491,12 +521,33 @@
 
 {{-- Modal Tambah Ulasan --}}
 <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <style>
+        #style-0::-webkit-scrollbar-track
+        {
+            -webkit-box-shadow: inset 0 0 6px #16A085;
+            border-radius: 10px;
+            background-color: #F5F5F5;
+        }
+
+        #style-0::-webkit-scrollbar
+        {
+            width: 12px;
+            background-color: #F5F5F5;
+        }
+
+        #style-0::-webkit-scrollbar-thumb
+        {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 6px #16A085;
+            background-color: #16A085;
+        }
+    </style>
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title align-middle" id="exampleModalLabel"><span class="bi bi-arrow-left pe-3 h4 align-middle" data-bs-dismiss="modal"></span>Ulasan Produk</h5>
             </div>
-            <div class="modal-body text-start text-black p-4">
+            <div class="modal-body text-start text-black p-4" id="style-0">
                 <form action="#" method="POST" id="add_employee_form" accept-charset="utf-8" enctype="multipart/form-data">
                     @csrf
                     <div>
@@ -509,16 +560,16 @@
                                 @foreach ($orderitem->product->photo_product->take(1) as
                                 $photos)
                                     @if ($photos->name)
-                                        <img src="{{ asset('../storage/produk/'.$photos->name) }}" class="img-fluid"
-                                            style="object-fit: contain; width: 60px" alt="{{ $orderitem->product->name }}">
+                                        <img src="{{ asset('../storage/produk/'.$photos->name) }}" class="img-fluid rounded"
+                                            style="width: 7rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="{{ $orderitem->product->name }}">
                                     @else
-                                        <img src="{{ asset('img/no-image.png') }}" class="img-fluid"
-                                            style="object-fit: contain; width: 60px" alt="{{ $orderitem->product->name }}">
+                                        <img src="{{ asset('img/no-image.png') }}" class="img-fluid rounded"
+                                            style="width: 7rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="{{ $orderitem->product->name }}">
                                     @endif
                                 @endforeach
                             @else
-                                <img src="{{ asset('img/no-image.png') }}" class="img-fluid"
-                                    style="object-fit: contain; width: 60px" alt="{{ $orderitem->product->name }}">
+                                <img src="{{ asset('img/no-image.png') }}" class="img-fluid rounded"
+                                    style="width: 7rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="{{ $orderitem->product->name }}">
                             @endif
                             <div>
                                 <p class="my-0 mx-3 text-secondary text-xs font-weight-bold">{{ $orderitem->product->name }}</p>
@@ -572,21 +623,40 @@
 
 {{-- Lihat Ulasan --}}
 <div class="modal fade" id="editReviewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <style>
+        #style-1::-webkit-scrollbar-track
+        {
+            -webkit-box-shadow: inset 0 0 6px #16A085;
+            border-radius: 10px;
+            background-color: #F5F5F5;
+        }
+
+        #style-1::-webkit-scrollbar
+        {
+            width: 12px;
+            background-color: #F5F5F5;
+        }
+
+        #style-1::-webkit-scrollbar-thumb
+        {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 6px #16A085;
+            background-color: #16A085;
+        }
+    </style>
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title align-middle" id="exampleModalLabel"><span class="bi bi-arrow-left pe-3 h4 align-middle" data-bs-dismiss="modal"></span>Ulasan Saya</h5>
             </div>
-            <div class="modal-body text-start text-black p-4">
+            <div class="modal-body text-start text-black p-4" id="style-1">
                 <div>
                     @foreach ($reviews as $review)
                     <div class="d-flex align-items-center pt-3">
                         @if ($userInfo->image)
-                        <img src="{{asset('../storage/profile/'. $userInfo->image)}}" class="img-fluid rounded-circle"
-                            style="width: 55px; height: 55px;" alt="{{ $userInfo->user->name }}">
+                        <img src="{{asset('../storage/profile/'. $userInfo->image)}}" class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 55px; height: 55px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="{{ $userInfo->user->name }}">
                         @else
-                        <img src="{{ asset('stisla/assets/img/example-image.jpg') }}" class="img-fluid rounded-circle"
-                            style="width: 55px; height: 55px;" alt="{{ $userInfo->user->name }}">
+                        <img src="{{ asset('stisla/assets/img/example-image.jpg') }}" class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 55px; height: 55px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="{{ $userInfo->user->name }}">
                         @endif
                         <div>
                             <p class="my-0 mx-3 text-secondary text-xs font-weight-bold">
@@ -621,16 +691,16 @@
                             @foreach ($review->product->photo_product->take(1) as
                             $photos)
                                 @if ($photos->name)
-                                    <img src="{{ asset('../storage/produk/'.$photos->name) }}" class="img-fluid"
-                                        style="object-fit: contain; width: 60px" alt="{{ $review->product->name }}">
+                                    <img src="{{ asset('../storage/produk/'.$photos->name) }}" class="img-fluid rounded"
+                                        style="width: 7rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="{{ $review->product->name }}">
                                 @else
-                                    <img src="{{ asset('img/no-image.png') }}" class="img-fluid"
-                                        style="object-fit: contain; width: 60px" alt="{{ $review->product->name }}">
+                                    <img src="{{ asset('img/no-image.png') }}" class="img-fluid rounded"
+                                        style="width: 7rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="{{ $review->product->name }}">
                                 @endif
                             @endforeach
                         @else
-                            <img src="{{ asset('img/no-image.png') }}" class="img-fluid"
-                                style="object-fit: contain; width: 60px" alt="{{ $review->product->name }}">
+                            <img src="{{ asset('img/no-image.png') }}" class="img-fluid rounded"
+                                style="width: 7rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="{{ $review->product->name }}">
                          @endif
                         <div>
                             <p class="my-0 mx-3 text-secondary text-xs font-weight-bold text-truncate col-9">
@@ -651,14 +721,35 @@
     </div>
 </div>
 
-{{-- Eidt Ulasan --}}
+{{-- Edit Ulasan --}}
 <div class="modal fade" id="editUlasanModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <style>
+        #style-2::-webkit-scrollbar-track
+        {
+            -webkit-box-shadow: inset 0 0 6px #16A085;
+            border-radius: 10px;
+            background-color: #F5F5F5;
+        }
+
+        #style-2::-webkit-scrollbar
+        {
+            width: 12px;
+            background-color: #F5F5F5;
+        }
+
+        #style-2::-webkit-scrollbar-thumb
+        {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 6px #16A085;
+            background-color: #16A085;
+        }
+    </style>
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title align-middle" id="exampleModalLabel"><span class="bi bi-arrow-left pe-3 h4 align-middle" data-bs-dismiss="modal"></span>Edit Ulasan Produk</h5>
             </div>
-            <div class="modal-body text-start text-black p-4">
+            <div class="modal-body text-start text-black p-4" id="style-2">
                 <form action="#" method="POST" id="edit_employee_form" accept-charset="utf-8" enctype="multipart/form-data">
                     @csrf
                     <div>
@@ -673,16 +764,16 @@
                                 @foreach ($review->product->photo_product->take(1) as
                                 $photos)
                                     @if ($photos->name)
-                                        <img src="{{ asset('../storage/produk/'.$photos->name) }}" class="img-fluid"
-                                            style="object-fit: contain; width: 60px" alt="{{ $review->product->name }}">
+                                        <img src="{{ asset('../storage/produk/'.$photos->name) }}" class="img-fluid rounded"
+                                            style="width: 7rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="{{ $review->product->name }}">
                                     @else
-                                        <img src="{{ asset('img/no-image.png') }}" class="img-fluid"
-                                            style="object-fit: contain; width: 60px" alt="{{ $review->product->name }}">
+                                        <img src="{{ asset('img/no-image.png') }}" class="img-fluid rounded"
+                                            style="width: 7rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="{{ $review->product->name }}">
                                     @endif
                                 @endforeach
                             @else
-                                <img src="{{ asset('img/no-image.png') }}" class="img-fluid"
-                                    style="object-fit: contain; width: 60px" alt="{{ $review->product->name }}">
+                                <img src="{{ asset('img/no-image.png') }}" class="img-fluid rounded"
+                                    style="width: 7rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="{{ $review->product->name }}">
                             @endif
                             <div>
                                 <p class="my-0 mx-3 text-secondary text-xs font-weight-bold">{{ $review->product->name }}</p>

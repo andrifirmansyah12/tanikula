@@ -58,17 +58,17 @@
 @endsection
 
 @section('content')
-
 <section class="h-100 gradient-custom">
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-lg-10 col-xl-12">
                 <div class="card shadow rounded">
-                    <div class="d-flex flex-row justify-content-between align-items-center card-header px-4 py-5" style="background: #16A085;">
+                    <div class="d-md-flex flex-row justify-content-between align-items-center card-header px-4 py-5" style="background: #16A085;">
                         @if (!$order->isPaid())
                         <div>
                             <h5 class="mb-0 text-white">Pesanan Anda telah dibuat.</h5>
                             <h5 class="mb-0 text-white">Silahkan melanjutkan untuk pembayaran!</h5>
+                            <input type="hidden" name="passingIdOrder" class="text-white" value="{{ $order->id }}">
                         </div>
                         @else
                         <div>
@@ -92,8 +92,27 @@
                                     var distance = end - now;
                                     if (distance < 0) {
                                         clearInterval(timer);
-                                        document.getElementById(id).innerHTML = '<b>Pembayaran Sudah Kadaluarsa';
-                                        return;
+                                        // document.getElementById(id).innerHTML = '<b>Pembayaran Sudah Kadaluarsa';
+                                        // return;
+
+                                        return deleteOrders();
+
+                                        function deleteOrders()
+                                        {
+                                            var id = $("input[name=passingIdOrder]").val();
+                                            $.ajax({
+                                                method: "GET",
+                                                url: '/delete-orders/' +id,
+                                                success: function (response) {
+                                                    iziToast.warning({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                                                        title: 'Peringatan',
+                                                        message: 'Maaf pesanan anda sudah kadaluarsa',
+                                                        position: 'topRight'
+                                                    });
+                                                    window.setTimeout(function(){location.reload()},3000);
+                                                }
+                                            });
+                                        }
                                     }
                                     var days = Math.floor(distance / _day);
                                     var hours = Math.floor((distance % _day) / _hour);
@@ -109,7 +128,7 @@
                             }
                         </script>
                         @if (!$order->isPaid())
-                        <div>
+                        <div class="mt-md-0 mt-3">
                             <h6 class="mb-0 text-white" id="countdown"></h6>
                         </div>
                         @endif
@@ -164,7 +183,7 @@
                                 <!-- End Navbar -->
                                 <div class="card-body px-0 pb-2">
                                     <div class="table-responsive p-0">
-                                        <table class="table align-items-center mb-0">
+                                        <table class="table table-borderless align-items-center mb-0">
                                             <thead class="border-bottom-0">
                                                 <tr>
                                                     <th
@@ -186,7 +205,7 @@
                                             </thead>
                                             @php
                                             $total = 0;
-                                            $totalPrice = 0;
+                                            $ongkirTotal = 0;
                                             $totalQty = 0;
                                             $discount = 0;
                                             @endphp
@@ -199,16 +218,16 @@
                                                                 @foreach ($orderitem->product->photo_product->take(1) as
                                                                 $photos)
                                                                     @if ($photos->name)
-                                                                        <img src="{{ asset('../storage/produk/'.$photos->name) }}" class="img-fluid"
-                                                                            style="width: 10rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="{{ $orderitem->product->name }}">
+                                                                        <img src="{{ asset('../storage/produk/'.$photos->name) }}" class="img-fluid rounded"
+                                                                            style="width: 7rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="{{ $orderitem->product->name }}">
                                                                     @else
-                                                                        <img src="{{ asset('img/no-image.png') }}" class="img-fluid"
-                                                                            style="width: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="{{ $orderitem->product->name }}">
+                                                                        <img src="{{ asset('img/no-image.png') }}" class="img-fluid rounded"
+                                                                            style="width: 7rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="{{ $orderitem->product->name }}">
                                                                     @endif
                                                                 @endforeach
                                                             @else
-                                                                <img src="{{ asset('img/no-image.png') }}" class="img-fluid"
-                                                                    style="width: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="{{ $orderitem->product->name }}">
+                                                                <img src="{{ asset('img/no-image.png') }}" class="img-fluid rounded"
+                                                                    style="width: 7rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="{{ $orderitem->product->name }}">
                                                             @endif
                                                         </div>
                                                     </td>

@@ -11,8 +11,10 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use App\Models\PushNotification;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Session;
 
 class CheckoutController extends Controller
 {
@@ -30,14 +32,36 @@ class CheckoutController extends Controller
             ->orderBy('addresses.updated_at', 'desc')
             ->take(1)
             ->get();
-        $old_cartItem = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
-        foreach ($old_cartItem as $item) {
-            if (!Product::where('id', $item->product_id)->where('stoke', '>=', $item->product_qty)->exists()) {
-                $removeItem = Cart::where('user_id', Auth::id())->where('product_id', $item->product_id)->first();
-                $removeItem->delete();
-            }
+        // $old_cartItem = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
+        // foreach ($old_cartItem as $item) {
+        //     if (!Product::where('id', $item->product_id)->where('stoke', '>=', $item->product_qty)->exists()) {
+        //         $removeItem = Cart::where('user_id', Auth::id())->where('product_id', $item->product_id)->first();
+        //         $removeItem->delete();
+        //     }
+        // }
+
+        $cart_id =  $request->input('cart_id', []);
+        $navbar_cart_id =  $request->input('navbar_cart_id', []);
+        // $authorizedRoles = [$cart_id];
+        // dd($authorizedRoles);
+        if ($cart_id)
+        {
+            $cartItem = Cart::with('product')->where('user_id', '=', auth()->user()->id)->where(static function ($query) use ($cart_id) {
+                return $query->whereIn('id', $cart_id);
+            })->latest()->get();
         }
-        $cartItem = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
+            elseif ($navbar_cart_id)
+        {
+            $cartItem = Cart::with('product')->where('user_id', '=', auth()->user()->id)->where(static function ($query) use ($navbar_cart_id) {
+                return $query->whereIn('id', $navbar_cart_id);
+            })->latest()->get();
+        } else {
+            $cartItem = Cart::with('product')->where('user_id', '=', auth()->user()->id)->where(static function ($query) use ($cart_id) {
+                return $query->whereIn('id', $cart_id);
+            })->latest()->get();
+        }
+
+        // $cartItem = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
 
         //Variabel yang valuenya didapat dari request()
         if($request->has('service'))
@@ -132,7 +156,7 @@ class CheckoutController extends Controller
         {
             $order = Order::with('address', 'user', 'orderItems')
                 ->where('id', $orderId)
-                ->where('user_id', \Auth::user()->id)
+                ->where('user_id', Auth::user()->id)
                 ->firstOrFail();
 
             return view('pages.order.index', compact('order'));
@@ -176,23 +200,37 @@ class CheckoutController extends Controller
         $order->payment_status = Order::UNPAID;
         $order->save();
 
-        $cartItem = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
+        $cart_id =  $request->input('cart_id_order', []);
+        // $authorizedRoles = [$cart_id];
+        // dd($authorizedRoles);
+        $cartItem = Cart::with('product')->where('user_id', '=', auth()->user()->id)->where(static function ($query) use ($cart_id) {
+            return $query->whereIn('id', $cart_id);
+        })->latest()->get();
         foreach ($cartItem as $item) {
-            OrderItem::create([
-                'order_id' => $order->id,
-                'product_id' => $item->product_id,
-                'qty' => $item->product_qty,
-                'price' => $item->product->price,
-            ]);
+            // OrderItem::create([
+            //     'order_id' => $order->id,
+            //     'product_id' => $item->product_id,
+            //     'qty' => $item->product_qty,
+            //     'price' => $item->product->price,
+            // ]);
+            $orderItemCreate = new OrderItem();
+            $orderItemCreate->order_id = $order->id;
+            $orderItemCreate->product_id = $item->product_id;
+            $orderItemCreate->qty = $item->product_qty;
+            $orderItemCreate->price = $item->product->price;
+            $orderItemCreate->save();
 
-            // $prod = Product::where('id', $item->product_id)->first();
-            // $prod->stoke = $prod->stoke - $item->product_qty;
-            // if ($prod->stock_out == null) {
-            //     $prod->stock_out = $item->product_qty;
-            // } else {
-            //     $prod->stock_out = $prod->stock_out + $item->product_qty;
+            // $orderItemCheck = OrderItem::where('order_id', $orderItemCreate->id)->get();
+            // foreach ($orderItemCheck as $orderItem) {
+            //     $prod = Product::where('id', $orderItem->product_id)->first();
+            //     $prod->stoke = $prod->stoke - $orderItem->qty;
+            //     if ($prod->stock_out == null) {
+            //         $prod->stock_out = $orderItem->qty;
+            //     } else {
+            //         $prod->stock_out = $prod->stock_out + $orderItem->qty;
+            //     }
+            //     $prod->update();
             // }
-            // $prod->update();
         }
 
         $this->initPaymentGateway();
@@ -226,14 +264,56 @@ class CheckoutController extends Controller
         }
 
         if ($order) {
+            $cart_id =  $request->input('cart_id_order', []);
+            // $authorizedRoles = [$cart_id];
+            // dd($authorizedRoles);
+            $cartItemDestroy = Cart::with('product')->where('user_id', '=', auth()->user()->id)->where(static function ($query) use ($cart_id) {
+                return $query->whereIn('id', $cart_id);
+            })->latest()->get();
             // $cartItem = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
-            // Cart::destroy($cartItem);
+            Cart::destroy($cartItemDestroy);
 
-            \Session::flash('success', 'Thank you. Your order has been received!');
-            return redirect('cart/shipment/place-order/received/' . $order->id);
+            // Push Notification
+            $user_id = auth()->user()->id;
+            $url = "https://fcm.googleapis.com/fcm/send";
+            $SERVER_API_KEY = 'AAAASSWA7hI:APA91bGkfIJFNGyqIJAiKtLXI79XdZpDuicn7pQrFv-yXdbLmLQETRkRkCY5VnGZBfwRevDkUJdA0ADnJ7Z5r1rnS4flS-ds8yxe_bp4sXouzH8Nfj-PHYCGl8-pVKkE49WqsSuPkKtd';
+            $headers = [
+                'Authorization' => 'key=' . $SERVER_API_KEY,
+                'Content-Type' => 'application/json',
+            ];
+
+            PushNotification::create([
+                'user_id' => auth()->user()->id,
+                "title" => "Pemesanan berhasil dibuat",
+                "body" => "Pesanan Anda telah dibuat, Silahkan melanjutkan pembayaran!",
+                "img" => "icons8-create-order-96.png",
+            ]);
+
+            Http::withHeaders($headers)->post($url, [
+                // "to" => "cWmdLu_QQqa6CR28k2aDtJ:APA91bHs2-K9fkZ7rOIUOvrq2bEtlxNpTUoZSn7-TpOcNpfmbwFRfhY1NPBCjYv53uCHJLfFPmsmG84pSWXmG2ezDVkv-opbrM-AaQ42j_UKso-qAqGWlMoJv0AhffI2NAaKTv9DIe0v",
+                'to' => '/topics/topic_user_id_' . $user_id,
+                "notification" => [
+                    "title" => "Pemesanan berhasil dibuat",
+                    "body" => "Pesanan Anda telah dibuat, Silahkan melanjutkan pembayaran!",
+                    "mutable_content" => true,
+                    "sound" => "Tri-tone"
+                ]
+            ]);
+
+            $this->_sendEmailOrderReceived($order);
+
+            Session::flash('success', 'Thank you. Your order has been received!');
+            return response()->json([
+                'status' => 200,
+                'id' => $order->id
+            ]);
+            // return redirect('cart/shipment/place-order/received/' . $order->id);
         }
 
-        return redirect('cart/shipment');
+        // return redirect('cart/shipment');
+        return response()->json([
+            'status' => 401,
+        ]);
     }
 
     // handle fetch all eamployees ajax request
@@ -439,11 +519,7 @@ class CheckoutController extends Controller
             $address->telp = $request->telp;
             $address->complete_address = $request->complete_address;
             $address->note_for_courier = $request->note_for_courier;
-            if ($request->main_address == 0) {
-                $address->main_address = $request->main_address ? 1 : 0;
-            } elseif ($request->main_address == 1) {
-                $address->main_address = $request->main_address ? 0 : 1;
-            }
+            $address->main_address = $request->main_address ? 1 : 0;
             $address->user_id = auth()->user()->id;
             $address->update();
 
@@ -479,6 +555,18 @@ class CheckoutController extends Controller
             'status' => 200,
         ]);
     }
+
+    /**
+	 * Send email order detail to current user
+	 *
+	 * @param Order $order order object
+	 *
+	 * @return void
+	 */
+	private function _sendEmailOrderReceived($order)
+	{
+		\App\Jobs\SendMailOrderReceived::dispatch($order, Auth::user());
+	}
 
     private function initPaymentGateway()
     {

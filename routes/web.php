@@ -1,6 +1,6 @@
 <?php
 
-// use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +63,28 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:admin']], function ()
     Route::delete('admin/hero/delete', [App\Http\Controllers\Admin\HeroController::class, 'delete'])->name('admin-hero-delete');
     Route::get('admin/hero/edit', [App\Http\Controllers\Admin\HeroController::class, 'edit'])->name('admin-hero-edit');
     Route::post('admin/hero/update', [App\Http\Controllers\Admin\HeroController::class, 'update'])->name('admin-hero-update');
+
+    // Pesanan Masuk
+    Route::get('admin/pesanan', [App\Http\Controllers\Admin\OrderController::class, 'index'])->name('admin.orders');
+    Route::get('admin/pesanan/fetchall', [App\Http\Controllers\Admin\OrderController::class, 'fetchAll'])->name('admin.orders.fetchAll');
+    Route::get('admin/pesanan/fetchDikemas', [App\Http\Controllers\Admin\OrderController::class, 'fetchDikemas'])->name('admin.orders.fetchDikemas');
+    Route::get('admin/pesanan/fetchDikirim', [App\Http\Controllers\Admin\OrderController::class, 'fetchDikirim'])->name('admin.orders.fetchDikirim');
+    Route::get('admin/pesanan/fetchSelesai', [App\Http\Controllers\Admin\OrderController::class, 'fetchSelesai'])->name('admin.orders.fetchSelesai');
+    Route::get('admin/pesanan/fetchDibatalkan', [App\Http\Controllers\Admin\OrderController::class, 'fetchDibatalkan'])->name('admin.orders.fetchDibatalkan');
+    Route::get('admin/pesanan/detail-pesanan/{id}', [App\Http\Controllers\Admin\OrderController::class, 'viewOrder'])->name('admin.viewOrder');
+    Route::post('admin/pesanan/update-pesanan', [App\Http\Controllers\Admin\OrderController::class, 'updateOrder'])->name('admin.updateOrder');
+    Route::post('admin/pesanan/reply-review', [App\Http\Controllers\Admin\OrderController::class, 'replyReview'])->name('admin.replyReview');
+
+    // Jumlah Pesanan Masuk
+    Route::get('admin/load-order', [App\Http\Controllers\Admin\OrderController::class, 'countOrder']);
+
+    // Reply Ulasan
+    Route::get('/admin/reply-ulasan', [App\Http\Controllers\Admin\ReviewController::class, 'index'])->name('admin.review');
+    Route::get('/admin/reply-ulasan/fetchBelumDiulas', [App\Http\Controllers\Admin\ReviewController::class, 'fetchBelumDiulas'])->name('admin.review.fetchBelumDiulas');
+    Route::get('/admin/reply-ulasan/fetchUlasanSaya', [App\Http\Controllers\Admin\ReviewController::class, 'fetchUlasanSaya'])->name('admin.review.fetchUlasanSaya');
+
+    // Jumlah Pesanan Masuk
+    Route::get('admin/load-review', [App\Http\Controllers\Admin\ReviewController::class, 'countReview']);
 
     // Lahan
     Route::get('admin/lahan', [App\Http\Controllers\Admin\FieldController::class, 'index'])->name('admin-lahan');
@@ -142,6 +164,11 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:admin']], function ()
     Route::delete('admin/daftar-gapoktan/delete', [App\Http\Controllers\Admin\GapoktanController::class, 'delete'])->name('admin-gapoktan-delete');
     Route::get('admin/daftar-gapoktan/edit', [App\Http\Controllers\Admin\GapoktanController::class, 'edit'])->name('admin-gapoktan-edit');
     Route::post('admin/daftar-gapoktan/update', [App\Http\Controllers\Admin\GapoktanController::class, 'update'])->name('admin-gapoktan-update');
+    Route::get('admin/certificate/viewPhoto', [App\Http\Controllers\Admin\GapoktanController::class, 'viewPhoto'])->name('admin-certificate-viewPhoto');
+    Route::delete('admin/certificate/deletePhoto', [App\Http\Controllers\Admin\GapoktanController::class, 'deletePhoto'])->name('admin-certificate-deletePhoto');
+    Route::get('admin/certificate/addPhoto', [App\Http\Controllers\Admin\GapoktanController::class, 'addPhoto'])->name('admin-certificate-addPhoto');
+    Route::post('admin/certificate/addPhotoProduct', [App\Http\Controllers\Admin\GapoktanController::class, 'addPhotoProduct'])->name('admin-certificate-addPhotoProduct');
+
 
     // Daftar Poktan
     Route::get('admin/daftar-poktan', [App\Http\Controllers\Admin\PoktanController::class, 'index'])->name('admin-poktan');
@@ -178,6 +205,10 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:admin']], function ()
     Route::get('admin/riwayat-penanam', [App\Http\Controllers\Admin\PlantingHistoryController::class, 'index'])->name('admin-riwayat-penanam');
     Route::get('admin/riwayat-penanam/fetchall', [App\Http\Controllers\Admin\PlantingHistoryController::class, 'fetchAll'])->name('admin-riwayat-penanam-fetchAll');
     Route::get('admin/riwayat-penanam/edit', [App\Http\Controllers\Admin\PlantingHistoryController::class, 'edit'])->name('admin-riwayat-penanam-edit');
+
+    // Rekap Penjualan
+    Route::get('admin/rekap-penjualan', [App\Http\Controllers\Admin\SalesRekapController::class, 'index'])->name('admin-sales-rekap');
+    Route::get('admin/rekap-penjualan/fetchall', [App\Http\Controllers\Admin\SalesRekapController::class, 'fetchAll'])->name('admin-salesRekap-fetchAll');
 
     // Pengaturan
     Route::get('admin/pengaturan', [App\Http\Controllers\Admin\PengaturanController::class, 'pengaturan'])->name('admin-pengaturan');
@@ -311,6 +342,17 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:gapoktan']], function
     Route::get('gapoktan/pesanan/detail-pesanan/{id}', [App\Http\Controllers\Gapoktan\OrderController::class, 'viewOrder'])->name('gapoktan.viewOrder');
     Route::post('gapoktan/pesanan/update-pesanan', [App\Http\Controllers\Gapoktan\OrderController::class, 'updateOrder'])->name('gapoktan.updateOrder');
     Route::post('gapoktan/pesanan/reply-review', [App\Http\Controllers\Gapoktan\OrderController::class, 'replyReview'])->name('gapoktan.replyReview');
+
+    // Jumlah Pesanan Masuk
+    Route::get('/load-order', [App\Http\Controllers\Gapoktan\OrderController::class, 'countOrder']);
+
+    // Reply Ulasan
+    Route::get('/gapoktan/reply-ulasan', [App\Http\Controllers\Gapoktan\ReviewController::class, 'index'])->name('gapoktan.review');
+    Route::get('/gapoktan/reply-ulasan/fetchBelumDiulas', [App\Http\Controllers\Gapoktan\ReviewController::class, 'fetchBelumDiulas'])->name('gapoktan.review.fetchBelumDiulas');
+    Route::get('/gapoktan/reply-ulasan/fetchUlasanSaya', [App\Http\Controllers\Gapoktan\ReviewController::class, 'fetchUlasanSaya'])->name('gapoktan.review.fetchUlasanSaya');
+
+    // Jumlah Pesanan Masuk
+    Route::get('/load-review', [App\Http\Controllers\Gapoktan\ReviewController::class, 'countReview']);
 
     // Daftar Petani
     Route::get('gapoktan/daftar-petani', [App\Http\Controllers\Gapoktan\FarmerController::class, 'index'])->name('gapoktan-petani');
@@ -506,6 +548,10 @@ Route::group(['middleware' => ['guest']], function () {
     Route::get('/reset-password/{email}/{token}', [App\Http\Controllers\Pembeli\LoginController::class, 'reset'])->name('resetPassword-pembeli');
     Route::post('/reset-password', [App\Http\Controllers\Pembeli\LoginController::class, 'resetPassword'])->name('resetPassword');
     Route::get('/account/verify/{token}', [App\Http\Controllers\Pembeli\LoginController::class, 'verifyAccount'])->name('user.verify');
+
+    // Login dengan Google
+    Route::get('auth/google', [App\Http\Controllers\Pembeli\LoginController::class, 'redirectToGoogle'])->name('redirectToGoogle');
+    Route::get('auth/callback', [App\Http\Controllers\Pembeli\LoginController::class, 'handleGoogleCallback']);
 });
 
 // Pembeli
@@ -514,11 +560,20 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function 
     // Logout
     Route::post('/logout', [App\Http\Controllers\Pembeli\LoginController::class, 'logout'])->name('logout');
 
+    // Notifikasi
+    Route::get('read-allnotif', [App\Http\Controllers\Pages\ProductController::class, 'readNotif'])->name('read.all.notif');
+    Route::post('read-notif-data', [App\Http\Controllers\Pages\ProductController::class, 'readNotifData'])->name('read.notif.data');
+
     // Profile
     Route::get('pembeli', [App\Http\Controllers\Pembeli\PengaturanController::class, 'pengaturan'])->name('pembeli');
     Route::post('pembeli-image', [App\Http\Controllers\Pembeli\PengaturanController::class, 'pengaturanImage'])->name('pembeli.pengaturan.image');
     Route::post('pembeli-update', [App\Http\Controllers\Pembeli\PengaturanController::class, 'pengaturanUpdate'])->name('pembeli.pengaturan.update');
     Route::post('pembeli-updatePassword', [App\Http\Controllers\Pembeli\PengaturanController::class, 'pengaturanUpdatePassword'])->name('pembeli.pengaturan.updatePassword');
+    Route::delete('pembeli-delete-image', [App\Http\Controllers\Pembeli\PengaturanController::class, 'delete'])->name('pembeli.delete.profile');
+
+    // Pemberitahuan
+    Route::get('/pembeli/pemberitahuan', [App\Http\Controllers\Pembeli\NotificationController::class, 'index'])->name('pembeli.notifications');
+    Route::get('/pembeli/pemberitahuan/fetchall', [App\Http\Controllers\Pembeli\NotificationController::class, 'fetchAll'])->name('pembeli.notifications.fetchAll');
 
     // Menunggu Pembayaran
     Route::get('/pembeli/menunggu-pembayaran', [App\Http\Controllers\Pembeli\WaitingPaymentController::class, 'index'])->name('pembeli.waitingPayment');
@@ -561,9 +616,17 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function 
 
     // Keranjang dan Order
     Route::get('/cart', [App\Http\Controllers\Pembeli\CartController::class, 'viewCart']);
-    Route::get('/cart/shipment', [App\Http\Controllers\Pembeli\CheckoutController::class, 'index'])->name('cart.shipment.pembeli');
-    Route::post('/cart/shipment', [App\Http\Controllers\Pembeli\CheckoutController::class, 'index'])->name('cart.shipment.pembeli');
+    Route::get('/checkout', [App\Http\Controllers\Pembeli\CheckoutController::class, 'index'])->name('checkout.pembeli');
+    Route::post('/checkout', [App\Http\Controllers\Pembeli\CheckoutController::class, 'index'])->name('checkout.pembeli');
+    // Route::post('/cart/shipment', [App\Http\Controllers\Pembeli\CheckoutController::class, 'index'])->name('cart.shipment.pembeliPost');
     Route::post('/cart/shipment/place-order', [App\Http\Controllers\Pembeli\CheckoutController::class, 'placeOrder'])->name('place-order-costumer');
+
+    // Beli Sekarang
+    Route::get('/buy-now', [App\Http\Controllers\Pembeli\BuyNowController::class, 'buyNow'])->name('buy.now');
+    Route::post('/buy-now', [App\Http\Controllers\Pembeli\BuyNowController::class, 'buyNowPost'])->name('buy.now.pembeli');
+    Route::post('/ongkir/buy-now', [App\Http\Controllers\Pembeli\BuyNowController::class, 'check_ongkir']);
+    Route::post('/buy-now/shipment/place-order', [App\Http\Controllers\Pembeli\BuyNowController::class, 'placeOrder'])->name('buy.now.place_order');
+    // Route::get('/checkout', [App\Http\Controllers\Pembeli\BuyNowController::class, 'index'])->name('buy.now.pembeli');
 
     // Crud Address
     Route::post('/cart/shipment/addAddress', [App\Http\Controllers\Pembeli\CheckoutController::class, 'addAlamat'])->name('add-alamat-costumer');
@@ -574,6 +637,9 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function 
 
     // Check Ongkir (RajaOngkir)
     Route::post('/ongkir', [App\Http\Controllers\Pembeli\CheckoutController::class, 'check_ongkir']);
+
+    // Hapus Order Ketika Hitungan Mundur Sudah Habis
+    Route::get('/delete-orders/{id}', [App\Http\Controllers\Pembeli\WaitingPaymentController::class, 'deleteOrders'])->name('delete.orders');
 
     // Chat
     Route::get('/pembeli/chat', [App\Http\Controllers\Pembeli\ChatController::class, 'index'])->name('pembeli.chat');
@@ -647,18 +713,32 @@ Route::get('/product-category/{category_slug}/{product_slug}', [App\Http\Control
 // Keranjang
 Route::post('/add-to-cart', [App\Http\Controllers\Pembeli\CartController::class, 'addProduct']);
 Route::post('/delete-cart-item', [App\Http\Controllers\Pembeli\CartController::class, 'deleteCartItem']);
+Route::post('/delete-out-of-stock-product', [App\Http\Controllers\Pembeli\CartController::class, 'deleteCartOutOfStockProduct']);
 Route::post('/update-cart-item', [App\Http\Controllers\Pembeli\CartController::class, 'updateCartItem']);
 
 // Hubungi Kami
 Route::get('/hubungi-kami', [App\Http\Controllers\Pages\ContactUsController::class, 'index'])->name('contact.us');
 Route::post('/hubungi-kami', [App\Http\Controllers\Pages\ContactUsController::class, 'addContactUs'])->name('addContactUs');
 
+// Count Beli di Halaman Keranjang
+Route::post('/load-beli-keranjang', [App\Http\Controllers\Pembeli\CartController::class, 'countBeliKeranjang']);
+
+// Count Beli Keranjang di Navbar
+Route::post('/navbar-keranjang', [App\Http\Controllers\Pembeli\CartController::class, 'navbarCountBeliKeranjang']);
+
 // Count Keranjang
 Route::get('/load-cart', [App\Http\Controllers\Pages\ProductController::class, 'countCart']);
+
+// Count Notifikasi
+Route::get('/load-notifications', [App\Http\Controllers\Pages\ProductController::class, 'countNotif']);
 
 // List Pencarian Product
 Route::get('/product-list', [App\Http\Controllers\Pages\ProductController::class, 'productListAjax'])->name('productListAjax');
 // Route::post('/product-searchProduct', [App\Http\Controllers\Pages\ProductController::class, 'searchProduct']);
+
+// Profile Gapoktan
+Route::get('/profile/{name}', [App\Http\Controllers\Pages\ProductController::class, 'profileGapoktan'])->name('profile.gapoktan');
+Route::get('/fetchall-produk-gapoktan/{name}', [App\Http\Controllers\Pages\ProductController::class, 'fetchallprodukGapoktan'])->name('fetchallprodukGapoktan');
 
 // Wishlist
 Route::post('/add-to-wishlist', [App\Http\Controllers\Pembeli\WishlistController::class, 'addToWishlist'])->name('pembeli.addToWishlist');
@@ -667,7 +747,7 @@ Route::post('/delete-cart-wishlist', [App\Http\Controllers\Pembeli\WishlistContr
 // Auth::routes();
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/logout', function () {
-    Auth::logout();
-    return Redirect::to('login');
-});
+// Route::get('/logout', function () {
+//     Auth::logout();
+//     return Redirect::to('login');
+// });

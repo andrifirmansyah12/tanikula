@@ -34,10 +34,10 @@
                 <div class="avatar avatar-xl position-relative">
                     @if ($userInfo->image)
                     <img id="image_preview" src="{{asset('../storage/profile/'. $userInfo->image)}}" alt="profile_image"
-                        class="border-radius-lg rounded-circle shadow-sm" style="width: 92px; height: 72px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                        class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 80px; height: 80px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                     @else
-                    <img id="image_preview" src="{{ asset('stisla/assets/img/example-image.jpg') }}" alt="profile_image"
-                        class="border-radius-lg rounded-circle shadow-sm" style="height: 72px;">
+                    <img id="image_preview" src="{{ asset('../stisla/assets/img/example-image.jpg') }}" alt="profile_image"
+                        class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 80px; height: 80px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                     @endif
                 </div>
             </div>
@@ -51,10 +51,16 @@
                     <div class="custom-file">
                         <input type="file" class="custom-file-input hidden" style="width: 0px;" accept="image/*" id="image" name="image">
                         <label class="custom-file-label" for="image"><i class="bi bi-camera h-4"></i> Ubah foto</label>
+                        <label class="custom-file-label ps-5" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" for="">
+                            <i class="bi bi-three-dots h-4"></i>
+                        </label>
+                        <ul class="dropdown-menu" style="border: 1px solid" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item deletePhoto" id="{{ $userInfo->id }}" style="font-size: 12px; color: red;" href="#"><i class="bi bi-trash"></i> Hapus Foto Profil</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
+            <div class="col-lg-5 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
                 <div class="nav-wrapper position-relative end-0">
                     <ul class="nav nav-fill p-1">
                         <li class="nav-item">
@@ -159,7 +165,28 @@
                 <h5 class="modal-title" id="exampleModalLabel">Ubah Biodata Diri</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <style>
+                #style-2::-webkit-scrollbar-track
+                {
+                    -webkit-box-shadow: inset 0 0 6px #16A085;
+                    border-radius: 10px;
+                    background-color: #F5F5F5;
+                }
+
+                #style-2::-webkit-scrollbar
+                {
+                    width: 12px;
+                    background-color: #F5F5F5;
+                }
+
+                #style-2::-webkit-scrollbar-thumb
+                {
+                    border-radius: 10px;
+                    -webkit-box-shadow: inset 0 0 6px #16A085;
+                    background-color: #16A085;
+                }
+            </style>
+            <div class="modal-body" id="style-2">
                 <form action="#" method="POST" id="profile_form" accept-charset="utf-8"
                     enctype="multipart/form-data">
                     @csrf
@@ -180,14 +207,13 @@
                         </div>
                         <div class="mb-3">
                             <label for="telp">No Handphone</label>
-                            <input type="tel" name="telp" id="telp" value="{{ $userInfo->telp }}"
+                            <input type="tel" name="telp" id="telp" value="{{ $userInfo->telp }}" placeholder="+62"
                                 class="form-control phone-number border px-3">
                                 <div class="invalid-feedback">
                             </div>
                         </div>
                         <div class="row form-group mb-3">
                             <label for="birth">Tanggal Lahir</label>
-                            <small class="text-danger">*kosongkan jika tidak ingin ubah tanggal lahir</small>
                             <div class="input-group">
                                 @if ($userInfo->birth)
                                 <input type="text" name="birth" id="birth" class="form-control datepicker border px-3"
@@ -343,7 +369,7 @@
                             $("#editProfile").modal('hide');
                             $("#profile_btn").val('Update Biodata Diri');
                             $("#profile_btn").prop('disabled', false);
-                            window.setTimeout(function(){location.reload()},1000)
+                            window.setTimeout(function(){location.reload()},1000);
                         }
                     }
                 });
@@ -374,7 +400,7 @@
                             $("#editPassword").modal('hide');
                             $("#password_btn").val('Ubah Password');
                             $("#password_btn").prop('disabled', false);
-                            window.setTimeout(function(){location.reload()},1000)
+                            window.setTimeout(function(){location.reload()},1000);
                         }
                     }
                 });

@@ -11,6 +11,16 @@
         integrity="sha256-pODNVtK3uOhL8FUNWWvFQK0QoQoV3YA9wGGng6mbZ0E=" crossorigin="anonymous" />
     <!-- AKHIR STYLE CSS -->
     <style>
+        .preview-image img {
+            padding: 10px;
+            width: 7rem;
+            height: 7rem;
+            -o-object-fit: cover;
+            object-fit: cover;
+            -o-object-position: center;
+            object-position: center;
+        }
+
         .preview-image-edit img {
             padding: 10px;
             width: 7rem;
@@ -60,19 +70,27 @@
                     <div class="modal-body p-4">
                         <div class="form-group my-2">
                             <label for="name">Nama Gapoktan</label>
-                            <input type="text" name="name" class="form-control" placeholder="Nama Gapoktan" required>
+                            <input type="text" name="name" id="add_name" class="form-control" placeholder="Nama Gapoktan">
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="form-group my-2">
                             <label for="chairman">Ketua Gapoktan</label>
-                            <input type="text" name="chairman" class="form-control" placeholder="Ketua Gapoktan" required>
+                            <input type="text" name="chairman" id="add_chairman" class="form-control" placeholder="Ketua Gapoktan">
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="my-2 form-group">
                             <label for="email">Email</label>
-                            <input type="email" name="email" class="form-control" placeholder="Email" required>
+                            <input type="email" name="email" id="add_email" class="form-control" placeholder="Email">
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="my-2 form-group">
                             <label for="password">Password</label>
-                            <input type="password" name="password" class="form-control" placeholder="Password" required>
+                            <input type="password" name="password" id="add_password" class="form-control" placeholder="Password">
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="images">Unggah Bukti</label>
@@ -86,6 +104,8 @@
                                 </div>
                             </div>
                             <input type="file" id="imagesEdit" name="images[]" multiple class="imagesEdit form-control">
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         {{-- <div class="my-2 form-group">
                             <label for="is_active">Status Akun</label>
@@ -123,20 +143,28 @@
                     <div class="modal-body p-4">
                         <div class="form-group my-2">
                             <label for="name">Nama Gapoktan</label>
-                            <input type="text" name="name" id="name" class="form-control" placeholder="Nama Gapoktan" required>
+                            <input type="text" name="name" id="name" class="form-control" placeholder="Nama Gapoktan">
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="form-group my-2">
                             <label for="chairman">Ketua Gapoktan</label>
-                            <input type="text" name="chairman" id="chairman" class="form-control" placeholder="Ketua Gapoktan" required>
+                            <input type="text" name="chairman" id="chairman" class="form-control" placeholder="Ketua Gapoktan">
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="my-2 form-group">
                             <label for="email">Email</label>
-                            <input type="email" name="email" id="email" class="form-control" placeholder="Email" required>
+                            <input type="email" name="email" id="email" class="form-control" placeholder="Email">
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="my-2 form-group">
                             <label for="password">Password</label>
                             <div id="password_edit">
 
+                            </div>
+                            <div class="invalid-feedback">
                             </div>
                         </div>
                         <div class="my-2 form-group">
@@ -155,6 +183,75 @@
         </div>
     </div>
 
+    <div class="modal fade" id="addPhotoProduct" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Unggah Bukti Gapoktan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="#" method="POST" id="addPhotoProductForm" enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" name="id" id="id">
+                    <input type="hidden" name="photoProduct" id="photoProduct">
+                    <div class="modal-body p-4">
+                        <input type="hidden" name="chairman" id="namaProduct" class="form-control" placeholder="Nama">
+                        <div class="form-group">
+                            <label for="image">Unggah Bukti</label>
+                            <small class="d-flex text-danger pb-1">*Unggah berupa bukti Gapoktan</small>
+                            <div>
+                                <div class="tab-content" id="myTabContent2">
+                                    <div class="tab-pane fade show active" id="home3" role="tabpanel"
+                                        aria-labelledby="home-tab3">
+                                        <div class="preview-image"> </div>
+                                        {{-- <img id="preview" class="img-fluid img-thumbnail image"
+                                        src="{{ asset('stisla/assets/img/example-image.jpg') }}" alt="edukasi"
+                                        style="width: 20rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"> --}}
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="file" id="images" name="images[]" multiple class="form-control" accept="image/*">
+                            <div class="invalid-feedback">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
+                        <button type="submit" id="addPhotoProductBtn" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="viewPhotoProduct" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Kelola Bukti Gapoktan</h5>
+                    <button type="button" id="closeBtnPhoto" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="form-group">
+                        <div class="tab-content" id="myTabContent2">
+                            <div class="tab-pane fade show active" id="home3" role="tabpanel"
+                                aria-labelledby="home-tab3">
+                                <div class="editFile"> </div>
+                                {{-- <img id="preview" class="img-fluid img-thumbnail image"
+                                        src="{{ asset('stisla/assets/img/example-image.jpg') }}" alt="edukasi"
+                                style="width: 20rem; height: 10rem; -o-object-fit: cover; object-fit: cover;
+                                -o-object-position: center; object-position: center;"> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('script')
@@ -225,6 +322,11 @@
 
         $(function() {
 
+            $("#viewPhotoProduct").on("hidden.bs.modal", function (e) {
+                console.log("Modal hidden");
+                $(".editFile").html("");
+            });
+
             // add new employee ajax request
             $("#add_employee_form").submit(function(e) {
                 e.preventDefault();
@@ -248,19 +350,26 @@
                 processData: false,
                 dataType: 'json',
                 success: function(response) {
-                    if (response.status == 200) {
-                    Swal.fire(
-                        'Menambahkan!',
-                        'Gapoktan Berhasil Ditambahkan!',
-                        'success'
-                    )
-                    fetchAllEmployees();
+                    if (response.status == 400) {
+                        showError('add_name', response.messages.name);
+                        showError('add_chairman', response.messages.chairman);
+                        showError('add_email', response.messages.email);
+                        showError('add_password', response.messages.password);
+                        $("#add_employee_btn").text('Simpan');
+                        $("#add_employee_btn").prop('disabled', false);
+                    } else if (response.status == 200) {
+                        Swal.fire(
+                            'Menambahkan!',
+                            'Gapoktan Berhasil Ditambahkan!',
+                            'success'
+                        )
+                        fetchAllEmployees();
+                        $("#add_employee_btn").text('Simpan');
+                        $("#add_employee_btn").prop('disabled', false);
+                        $("#add_employee_form")[0].reset();
+                        $("#addEmployeeModal").modal('hide');
+                        window.setTimeout(function(){location.reload()},1000)
                     }
-                    $("#add_employee_btn").text('Simpan');
-                    $("#add_employee_btn").prop('disabled', false);
-                    $("#add_employee_form")[0].reset();
-                    $("#addEmployeeModal").modal('hide');
-                    window.setTimeout(function(){location.reload()},1000)
                 }
                 });
             });
@@ -317,18 +426,25 @@
                 processData: false,
                 dataType: 'json',
                 success: function(response) {
-                    if (response.status == 200) {
-                    Swal.fire(
-                        'Memperbarui!',
-                        'Gapoktan Berhasil Diperbarui!',
-                        'success'
-                    )
-                    fetchAllEmployees();
+                    if (response.status == 400) {
+                        showError('name', response.messages.name);
+                        showError('chairman', response.messages.chairman);
+                        showError('email', response.messages.email);
+                        showError('password', response.messages.password);
+                        $("#edit_employee_btn").text('Simpan');
+                        $("#edit_employee_btn").prop('disabled', false);
+                    } else if (response.status == 200) {
+                        Swal.fire(
+                            'Memperbarui!',
+                            'Gapoktan Berhasil Diperbarui!',
+                            'success'
+                        )
+                        fetchAllEmployees();
+                        $("#edit_employee_btn").text('Simpan');
+                        $("#edit_employee_btn").prop('disabled', false);
+                        $("#edit_employee_form")[0].reset();
+                        $("#editEmployeeModal").modal('hide');
                     }
-                    $("#edit_employee_btn").text('Simpan');
-                    $("#edit_employee_btn").prop('disabled', false);
-                    $("#edit_employee_form")[0].reset();
-                    $("#editEmployeeModal").modal('hide');
                 }
                 });
             });
@@ -368,6 +484,150 @@
                     });
                 }
                 })
+            });
+
+            // edit employee ajax request
+            $(document).on('click', '.viewPhotoProductIcon', function(e) {
+                e.preventDefault();
+                let id = $(this).attr('id');
+                $.ajax({
+                url: '{{ route('admin-certificate-viewPhoto') }}',
+                method: 'get',
+                data: {
+                    id: id,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    var customHtml = '';
+                    // if(response.success){
+                    //     var response = response.success;
+                    //     for (var i in response) {
+                    //         customHtml = customHtml + '<div class="my-2 tab-pane fade show active" id="home2" role="tabpanel"aria-labelledby="home-tab2"><img id="preview" class="img-fluid img-thumbnail image" src="../storage/produk/'+ response[i].name +'" alt="edukasi" style="width: 22rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"><a href="#" id="'+ response[i].id +'" class="text-danger mx-1 deletePhotoProduct">Hapus</a></div>';
+                    //     }
+                    //     $('.editFile').html(customHtml)
+                    // }
+                    $.each(response, function (i, item) {
+                        customHtml = customHtml + '<div class="my-2 tab-pane fade show active" id="home2" role="tabpanel"aria-labelledby="home-tab2"><img id="preview" class="img-fluid img-thumbnail image" src="../storage/sertifikat/'+ response[i].evidence +'" alt="'+response[i].evidence+'" style="width: 22rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"><a href="#" id="'+ response[i].id +'" class="text-danger mx-1 deletePhotoProduct">Hapus</a></div>';
+                        })
+                    $('.editFile').append(customHtml);
+                }
+                });
+            });
+
+            // delete employee ajax request
+            $(document).on('click', '.deletePhotoProduct', function(e) {
+                e.preventDefault();
+                let id = $(this).attr('id');
+                let csrf = '{{ csrf_token() }}';
+                Swal.fire({
+                title: 'Apa kamu yakin?',
+                text: "Anda tidak akan dapat mengembalikan ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Cancel!'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                    url: '{{ route('admin-certificate-deletePhoto') }}',
+                    method: 'delete',
+                    data: {
+                        id: id,
+                        _token: csrf
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        Swal.fire(
+                        'Dihapus!',
+                        'File Anda telah dihapus.',
+                        'success'
+                        )
+                        $("#viewPhotoProduct").modal('hide');
+                        window.location.reload();
+                    }
+                    });
+                }
+                })
+            });
+
+            // edit employee ajax request
+            $(document).on('click', '.addPhotoProductIcon', function(e) {
+                e.preventDefault();
+                let id = $(this).attr('id');
+                $.ajax({
+                url: '{{ route('admin-certificate-addPhoto') }}',
+                method: 'get',
+                data: {
+                    id: id,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    $("#namaProduct").val(response.chairman);
+                    $("#id").val(response.id);
+                }
+                });
+            });
+
+            // update employee ajax request
+            $("#addPhotoProductForm").submit(function(e) {
+                e.preventDefault();
+
+                var formData = new FormData(this);
+                let TotalImages = $('#images')[0].files.length; //Total Images
+                let images = $('#images')[0];
+                for (let i = 0; i < TotalImages; i++) {
+                    formData.append('images' + i, images.files[i]);
+                }
+                formData.append('TotalImages', TotalImages);
+
+                $("#addPhotoProductBtn").text('Tunggu..');
+                $("#addPhotoProductBtn").prop('disabled', true);
+                $.ajax({
+                url: '{{ route('admin-certificate-addPhotoProduct') }}',
+                method: 'post',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status == 400) {
+                        showError('images', response.messages.images);
+                        $("#addPhotoProductForm")[0].reset();
+                        $('.preview-image-edit').html("");
+                        $("#addPhotoProductBtn").text('Simpan');
+                        $("#addPhotoProductBtn").prop('disabled', false);
+                    } else if (response.status == 200){
+                        Swal.fire(
+                            'Menambahkan!',
+                            'Foto Produk Berhasil ditambahkan!',
+                            'success'
+                        )
+                        fetchAllEmployees();
+                        $("#addPhotoProduct").modal('hide');
+                        $("#addPhotoProductForm")[0].reset();
+                        $('.preview-image-edit').html("");
+                        $("#addPhotoProductBtn").text('Simpan');
+                        $("#addPhotoProductBtn").prop('disabled', false);
+                        window.setTimeout(function(){location.reload()},1000)
+                    } else if (response.status == 401) {
+                        Swal.fire(
+                            'Gagal!',
+                            'Silahkan coba lagi!',
+                            'warning'
+                        )
+                        fetchAllEmployees();
+                        $("#addPhotoProduct").modal('hide');
+                        $("#addPhotoProductForm")[0].reset();
+                        $('.preview-image-edit').html("");
+                        $("#addPhotoProductBtn").text('Simpan');
+                        $("#addPhotoProductBtn").prop('disabled', false);
+                        window.setTimeout(function(){location.reload()},1000)
+                    }
+                }
+                });
             });
 
             // fetch all employees ajax request

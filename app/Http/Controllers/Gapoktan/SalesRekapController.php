@@ -38,22 +38,22 @@ class SalesRekapController extends Controller
         }
 		$output = '';
 		if ($orderRekap->count() > 0) {
-			$output .= '<table class="p-0 table table-striped table-sm text-center align-middle">
-            <thead class="text-darken">
-                <th>No.</th>
-                <th>
+			$output .= '<table class="p-0 table table-bordered table-sm text-center align-middle">
+            <thead>
+                <th class="align-middle text-center">No.</th>
+                <th class="align-middle text-center">
                     ID Pesanan
                 </th>
-                <th class="text-center">
+                <th class="align-middle text-center">
                     Total Bayar
                 </th>
-                <th class="text-center">
+                <th class="align-middle text-center">
                     Nama Pemesan
                 </th>
-                <th class="text-center">
+                <th class="align-middle text-center">
                     Status Pesanan
                 </th>
-                <th class="text-center">
+                <th class="align-middle text-center">
                     Status Pembayaran
                 </th>
             </thead>
@@ -64,15 +64,15 @@ class SalesRekapController extends Controller
                 // if ($emp->gapoktan->user->name == auth()->user()->name) {
                 $total += $emp->total_price;
                 $output .= '<tr>';
-                $output .= '<td>' . $nomor++ . '</td>';
-                $output .= '<td>
+                $output .= '<td class="align-middle text-center">' . $nomor++ . '</td>';
+                $output .= '<td class="align-middle text-center">
                     <div class="d-flex flex-column justify-content-center">
                         <p class="m-0 text-sm font-weight-bold">'. $emp->code .'</p>
                         <p class="text-xs m-0">
                             '. \App\Helpers\General::datetimeFormat($emp->order_date) .'</p>
                         </div>
                     </td>
-                    <td>
+                    <td class="align-middle text-center">
                         <p class="text-xs font-weight-bold m-0">Rp.
                             '. number_format($emp->total_price, 0) .'</p>
                         </td>
@@ -92,23 +92,22 @@ class SalesRekapController extends Controller
                     </td>
                 </tr>';
 			}
-			$output .= '</tbody><tfooter>
-            <td class="align-middle">
+			$output .= '</tbody><tfoot>
+            <td class="align-middle text-center">
             </td>
-            <td class="align-middle">
+            <td class="align-middle text-center">
             </td>
-            <td class="align-middle">
+            <td class="align-middle text-center">
             </td>
-            <td class="align-middle">
+            <td class="align-middle text-center">
             </td>
-            <td class="align-middle">
-                <p class="text-xs font-weight-bold m-0">Total</p>
+            <td class="align-middle text-center text-xs font-weight-bold m-0">
+                Total
             </td>
-            <td class="align-middle">
-                <p class="text-xs font-weight-bold m-0">Rp.
-                    '. number_format($total, 0) .'</p>
+            <td class="align-middle text-center text-xs font-weight-bold m-0">
+                Rp. '. number_format($total, 0) .'
             </td>
-            </tfooter></table>';
+            </tfoot></table>';
 			echo $output;
 		} else {
 			echo '<h1 class="text-center text-secondary my-5">Tidak ada data Penjualan!</h1>';

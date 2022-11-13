@@ -151,16 +151,16 @@ class WaitingPaymentController extends Controller
             $orders->cancelled_by = auth()->user()->id;
             $orders->cancelled_at = Carbon::now()->format('Y-m-d H:i:s');
             $orders->cancellation_note = $request->input('cancellation_note');
-            if ($orders->orderItems->count() > 0) {
-                foreach ($orders->orderItems as $item) {
-					$products = Product::where('id', $item->product_id)->first();
-                    $countProduct = $products->stoke + $item->qty;
-                    $stockOutProduct = $products->stock_out - $item->qty;
-                    $products->stoke = $countProduct;
-                    $products->stock_out = $stockOutProduct;
-                    $products->update();
-				}
-            }
+            // if ($orders->orderItems->count() > 0) {
+            //     foreach ($orders->orderItems as $item) {
+			// 		$products = Product::where('id', $item->product_id)->first();
+            //         $countProduct = $products->stoke + $item->qty;
+            //         $stockOutProduct = $products->stock_out - $item->qty;
+            //         $products->stoke = $countProduct;
+            //         $products->stock_out = $stockOutProduct;
+            //         $products->update();
+			// 	}
+            // }
             $orders->update();
 
             return response()->json([
@@ -168,4 +168,14 @@ class WaitingPaymentController extends Controller
                 ]);
         }
 	}
+
+    public function deleteOrders(Request $request, $id)
+    {
+        $deleteOrder = Order::where('id', $id);
+        $deleteOrder->delete();
+
+        return response()->json([
+            'status' => 200,
+        ]);
+    }
 }

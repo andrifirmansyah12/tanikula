@@ -52,11 +52,9 @@ class ReviewController extends Controller
                     <a href="/pembeli/daftar-transaksi/detail-order/'.$order->id.'" class="my-0 text-secondary text-xs font-weight-bold">'. $order->code .'</a>';
                     $output .= '<div class="d-flex align-items-center pt-3">';
                         if ($userInfo->image) {
-                        $output .= '<img src="../storage/profile/'. $userInfo->image .'" class="img-fluid rounded-circle"
-                            style="width: 55px; height: 55px;" alt="'. $userInfo->user->name .'">';
+                        $output .= '<img src="../storage/profile/'. $userInfo->image .'" class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 55px; height: 55px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="'. $userInfo->user->name .'">';
                         } else {
-                        $output .= '<img src="../stisla/assets/img/example-image.jpg" class="img-fluid rounded-circle"
-                            style="width: 55px; height: 55px;" alt="'. $userInfo->user->name .'">';
+                        $output .= '<img src="../stisla/assets/img/example-image.jpg" class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 55px; height: 55px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="'. $userInfo->user->name .'">';
                         }
                         $output .= '<div>
                             <p class="my-0 mx-3 text-secondary text-xs font-weight-bold">'. $userInfo->user->name .'</p>';
@@ -85,12 +83,12 @@ class ReviewController extends Controller
                 $output .= '<div class="d-flex mb-1 align-items-center py-2 rounded bg-light px-3">';
                         if ($orderitem->product->photo_product->count() > 0) {
                             foreach ($orderitem->product->photo_product->take(1) as $photos) {
-                            $output .= '<img src="../storage/produk/'.$photos->name.'" class="img-fluid"
-                                style="object-fit: contain; width: 60px" alt="'. $orderitem->product->name .'">';
+                            $output .= '<img src="../storage/produk/'.$photos->name.'" class="img-fluid rounded"
+                                style="width: 7rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="'. $orderitem->product->name .'">';
                             }
                         } else {
-                            $output .= '<img src="../img/no-image.png" class="img-fluid"
-                                style="object-fit: contain; width: 60px" alt="'. $orderitem->product->name .'">';
+                            $output .= '<img src="../img/no-image.png" class="img-fluid rounded"
+                                style="width: 7rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="'. $orderitem->product->name .'">';
                         }
                         $output .= '<div>
                             <p class="my-0 mx-3 text-secondary text-xs font-weight-bold text-truncate col-9">
@@ -151,11 +149,9 @@ class ReviewController extends Controller
                     <a href="/pembeli/daftar-transaksi/detail-order/'.$order->id.'" class="my-0 text-secondary text-xs font-weight-bold">'. $order->code .'</a>';
                     $output .= '<div class="d-flex align-items-center pt-3">';
                         if ($userInfo->image) {
-                        $output .= '<img src="../storage/profile/'. $userInfo->image .'" class="img-fluid rounded-circle"
-                            style="width: 55px; height: 55px;" alt="'. $userInfo->user->name .'">';
+                        $output .= '<img src="../storage/profile/'. $userInfo->image .'" class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 55px; height: 55px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="'. $userInfo->user->name .'">';
                         } else {
-                        $output .= '<img src="../stisla/assets/img/example-image.jpg" class="img-fluid rounded-circle"
-                            style="width: 55px; height: 55px;" alt="'. $userInfo->user->name .'">';
+                        $output .= '<img src="../stisla/assets/img/example-image.jpg" class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 55px; height: 55px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="'. $userInfo->user->name .'">';
                         }
                         $output .= '<div>
                             <p class="my-0 mx-3 text-secondary text-xs font-weight-bold">'. $userInfo->user->name .'</p>';
@@ -189,7 +185,12 @@ class ReviewController extends Controller
                     foreach ($order->orderItems as $orderitem) {
                         foreach ($orderitem->product->review as $review) {
                             if ($review->order_id == $order->id) {
-                                $output .= '<p class="my-0 mx-3 text-secondary text-justify text-xs font-weight-bold">'. $review->review .'</p>';
+                                $output .= '<p class="my-0 mx-md-3 text-secondary text-justify text-xs font-weight-bold">'. $review->review .'</p>';
+                                if ($review->reply_review) {
+                                    $output .= '
+                                        <div class="my-2 mx-md-3 border bg-primary text-white rounded p-2 text-justify text-xs"><p class="text-xs m-0 font-weight-bold pb-1">Respon Penjual :</p>'. $review->reply_review .'</div>
+                                    ';
+                                }
                             }
                         }
                     }
@@ -199,12 +200,12 @@ class ReviewController extends Controller
                 $output .= '<div class="d-flex mb-1 align-items-center py-2 rounded bg-light px-3">';
                         if ($orderitem->product->photo_product->count() > 0) {
                             foreach ($orderitem->product->photo_product->take(1) as $photos) {
-                            $output .= '<img src="../storage/produk/'.$photos->name.'" class="img-fluid"
-                                style="object-fit: contain; width: 60px" alt="'. $orderitem->product->name .'">';
+                            $output .= '<img src="../storage/produk/'.$photos->name.'" class="img-fluid rounded"
+                                style="width: 7rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="'. $orderitem->product->name .'">';
                             }
                         } else {
-                            $output .= '<img src="../img/no-image.png" class="img-fluid"
-                                style="object-fit: contain; width: 60px" alt="'. $orderitem->product->name .'">';
+                            $output .= '<img src="../img/no-image.png" class="img-fluid rounded"
+                                style="width: 7rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="'. $orderitem->product->name .'">';
                         }
                         $output .= '<div>
                             <p class="my-0 mx-3 text-secondary text-xs font-weight-bold text-truncate col-9">

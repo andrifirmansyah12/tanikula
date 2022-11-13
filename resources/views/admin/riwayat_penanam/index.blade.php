@@ -41,7 +41,7 @@
                                     <button type="button" name="filter" id="filter"
                                         class="btn btn-primary shadow-none">Filter</button>
                                     <button type="button" name="refresh" id="refresh"
-                                        class="text-dark btn btn-secondary shadow-none">Refresh</button>
+                                        class="text-white btn btn-secondary shadow-none">Refresh</button>
                                 </div>
                             </div>
                             <p class="d-inline-flex font-weight-bold text-white py-1 px-3 border border-light rounded"
@@ -176,6 +176,7 @@
                         {
                             text: 'Csv',
                             extend: 'csvHtml5',
+                            title: 'Laporan Panen',
                             exportOptions: {
                                 columns: ':visible:not(.not-export-col)'
                             }
@@ -183,6 +184,7 @@
                         {
                             text: 'Excel',
                             extend: 'excelHtml5',
+                            title: 'Laporan Panen',
                             exportOptions: {
                                 columns: ':visible:not(.not-export-col)'
                             }
@@ -190,6 +192,7 @@
                         {
                             text: 'Pdf',
                             extend: 'pdfHtml5',
+                            title: 'Laporan Panen',
                             exportOptions: {
                                 columns: ':visible:not(.not-export-col)'
                             }
@@ -197,6 +200,7 @@
                         {
                             text: 'Print',
                             extend: 'print',
+                            title: 'Laporan Panen',
                             exportOptions: {
                                 columns: ':visible:not(.not-export-col)'
                             }

@@ -48,14 +48,14 @@
     }
 
     .page-error img {
-        width: 30rem;
+        width: 15rem;
     }
 
     .page-error .page-description {
         padding-top: 30px;
-        font-size: 18px;
+        font-size: 15px;
         font-weight: 400;
-        color: color: var(--primary);;
+        color: color: var(--primary);
     }
 
     @media (max-width: 575.98px) {
@@ -64,15 +64,36 @@
         }
     }
 </style>
+<script>
+    var stateObj = { foo: "bar" };
+    // history.pushState(stateObj, "page without extension", "buy-now");
+    history.replaceState(stateObj, '', 'checkout');
+    // if ( window.history.replaceState ) {
+    //     window.history.replaceState( null, null, window.location.href );
+    // }
+</script>
 @endsection
 
 @section('content')
+<!-- Preloader -->
+<div class="preloader">
+    <div class="preloader-inner">
+        <div class="preloader-icon">
+            <span></span>
+            <span></span>
+        </div>
+        {{-- <p class="text-center p-0 m-0 fw-bold">Tanikula</p> --}}
+    </div>
+</div>
+<!-- /End Preloader -->
+
 <!-- Start Item Details -->
 <section class="item-details mt-md-4 section bg-white overflow-hidden">
     <div class="container">
         <div class="bg-white">
             <h2 class="mb-3 fs-3 mb-md-4">Checkout</h2>
-            <form action="{{ url('cart/shipment/place-order') }}" method="POST">
+            <form action="#" method="POST" id="create_orders" accept-charset="utf-8"
+                    enctype="multipart/form-data">
             @csrf
                 <div class="row">
                     <div class="col-12 col-xl-8 mb-3 mb-xl-0 mb-5 mb-md-0">
@@ -133,6 +154,7 @@
                         @endphp
                         @if ($cartItem->count() > 0)
                         @foreach ($cartItem as $item)
+                        <input type="hidden" name="cart_id_order[]" value="{{ $item->id }}" id="checkProductCart">
                         <div class="mb-12 py-3 mt-3 border-top border-bottom" id="product_data">
                             <div class="row align-items-center mb-6 mb-md-3">
                                 <div class="col-12 col-md-12 col-lg-12 mb-6 mb-md-0">
@@ -147,17 +169,17 @@
                                                 @if ($item->product->photo_product->count() > 0)
                                                     @foreach ($item->product->photo_product->take(1) as $photos)
                                                         @if ($photos->name)
-                                                            <img class="img-fluid" style="object-fit: contain;"
+                                                            <img class="img-fluid rounded" style="width: 7rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
                                                                 src="{{ asset('../storage/produk/'.$photos->name) }}"
                                                                 alt="{{ $item->product->name }}">
                                                         @else
-                                                            <img class="img-fluid" style="object-fit: contain;"
+                                                            <img class="img-fluid rounded" style="width: 7rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
                                                                 src="{{ asset('img/no-image.png') }}"
                                                                 alt="{{ $item->product->name }}">
                                                         @endif
                                                     @endforeach
                                                 @else
-                                                    <img class="img-fluid" style="object-fit: contain;"
+                                                    <img class="img-fluid rounded" style="width: 7rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
                                                         src="{{ asset('img/no-image.png') }}"
                                                         alt="{{ $item->product->name }}">
                                                 @endif
@@ -315,21 +337,21 @@
                                     @endif
                                 @endif
                                 @if (!$result_cost)
-                                    <button disabled class="btn border col-12" style="background: #16A085; color: white;" data-bs-toggle="modal" data-bs-target="#PilihPembayaran">
+                                    <button disabled class="btn border col-12" style="background: #16A085; color: white;">
                                         Buat Pesanan
                                     </button>
                                 @else
                                     @if ($address->count() < 1 )
-                                        <button disabled class="btn border col-12" style="background: #16A085; color: white;" data-bs-toggle="modal" data-bs-target="#PilihPembayaran">
+                                        <button disabled class="btn border col-12" style="background: #16A085; color: white;">
                                             Buat Pesanan
                                         </button>
                                     @else
                                         @if ($cartItem->count() > 0)
-                                            <button type="submit" class="btn border col-12" style="background: #16A085; color: white;" data-bs-toggle="modal" data-bs-target="#PilihPembayaran">
+                                            <button id="create_orders_btn" type="submit" class="btn border col-12" style="background: #16A085; color: white;">
                                                 Buat Pesanan
                                             </button>
                                         @else
-                                            <button disabled class="btn border col-12" style="background: #16A085; color: white;" data-bs-toggle="modal" data-bs-target="#PilihPembayaran">
+                                            <button disabled class="btn border col-12" style="background: #16A085; color: white;">
                                                 Buat Pesanan
                                             </button>
                                         @endif
@@ -344,7 +366,7 @@
     </div>
 </section>
 
-<!-- Modal Pilih Alamat -->
+<!-- Modal Pilih Kurir -->
 <div class="modal fade" id="PilihCourier" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
@@ -363,10 +385,13 @@
                         </select>
                     </div>
                     @else --}}
-                    <form action="{{ url('/cart/shipment') }}" method="post">
+                    <form action="{{ url('/checkout') }}" method="post">
                         @csrf
                         @foreach ($address as $item)
                             <input type="hidden" name="destination_costumer" id="destination_costumer" value="{{ $item->city_id }}">
+                        @endforeach
+                        @foreach ($cartItem as $item)
+                            <input type="hidden" name="cart_id[]" value="{{ $item->id }}" id="checkProductCart">
                         @endforeach
                         <input type="hidden" name="weight_product" id="weight_product" value="{{ $totalWeightProduct }}">
                         <div class="my-2">
@@ -423,13 +448,34 @@
 
 <!-- Modal Edit Alamat -->
 <div class="modal fade" id="EditAlamat" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <style>
+        #style-1::-webkit-scrollbar-track
+        {
+            -webkit-box-shadow: inset 0 0 6px #16A085;
+            border-radius: 10px;
+            background-color: #F5F5F5;
+        }
+
+        #style-1::-webkit-scrollbar
+        {
+            width: 12px;
+            background-color: #F5F5F5;
+        }
+
+        #style-1::-webkit-scrollbar-thumb
+        {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 6px #16A085;
+            background-color: #16A085;
+        }
+    </style>
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Edit Alamat</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" id="style-1">
                 <form action="#" method="POST" id="edit_employee_form" enctype="multipart/form-data">
                     @csrf
                     <div>
@@ -539,13 +585,34 @@
 
 <!-- Modal Tambah Alamat -->
 <div class="modal fade" id="TambahAlamat" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <style>
+        #style-2::-webkit-scrollbar-track
+        {
+            -webkit-box-shadow: inset 0 0 6px #16A085;
+            border-radius: 10px;
+            background-color: #F5F5F5;
+        }
+
+        #style-2::-webkit-scrollbar
+        {
+            width: 12px;
+            background-color: #F5F5F5;
+        }
+
+        #style-2::-webkit-scrollbar-thumb
+        {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 6px #16A085;
+            background-color: #16A085;
+        }
+    </style>
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Tambah Alamat Baru</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" id="style-2">
                 <form action="#" method="POST" id="add_employee_form" accept-charset="utf-8"
                     enctype="multipart/form-data">
                     @csrf
@@ -750,6 +817,36 @@
     $(function() {
 
         // add new employee ajax request
+            $("#create_orders").submit(function(e) {
+                e.preventDefault();
+                var formData = new FormData(this);
+                $("#create_orders_btn").text('Silahkan Tunggu..');
+                $("#create_orders_btn").prop('disabled', true);
+                var id = $("input[name=passingIdProduct]").val();
+                $.ajax({
+                url: '{{ route('place-order-costumer') }}',
+                method: 'post',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status == 401) {
+                        window.location = '{{ route('home') }}';
+                        $("#create_orders_btn").text('Buat Pesanan');
+                        $("#create_orders_btn").prop('disabled', false);
+                    } else if (response.status == 200){
+                        window.location = '/cart/shipment/place-order/received/' + response.id;
+                        $("#create_orders")[0].reset();
+                        $("#create_orders_btn").text('Buat Pesanan');
+                        $("#create_orders_btn").prop('disabled', false);
+                    }
+                }
+                });
+            });
+
+        // add new employee ajax request
             $("#add_employee_form").submit(function(e) {
                 e.preventDefault();
                 var formData = new FormData(this);
@@ -788,7 +885,7 @@
                         $("#add_employee_form")[0].reset();
                         $("#add_employee_btn").text('Simpan');
                         $("#add_employee_btn").prop('disabled', false);
-                        window.setTimeout(function(){location = '{{ route('cart.shipment.pembeli') }}'},1000)
+                        window.setTimeout(function(){location.reload()},1000);
                     }
                 }
                 });
@@ -858,7 +955,7 @@
                         $("#edit_employee_form")[0].reset();
                         $("#edit_employee_btn").text('Simpan');
                         $("#edit_employee_btn").prop('disabled', false);
-                        window.setTimeout(function(){location = '{{ route('cart.shipment.pembeli') }}'},1000)
+                        window.setTimeout(function(){location.reload()},1000);
                     }
                 }
             });
@@ -894,7 +991,7 @@
                             'Berhasil menjadikan alamat utama!',
                             'success'
                         )
-                        window.setTimeout(function(){location = '{{ route('cart.shipment.pembeli') }}'},1000)
+                        window.setTimeout(function(){location.reload()},1000);
                     }
                 }
                 });

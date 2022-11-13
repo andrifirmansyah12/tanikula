@@ -20,7 +20,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('plus-admin/dist/js/demo.js') }}"></script>
-
+<script src="{{ asset('js/function.js') }}"></script>
 @yield('script')
 <script>
     // <-- Route Link -->
@@ -60,6 +60,14 @@
     function admin_hero(url) {
         window.location = url;
     }
+    // Pesanan Masuk
+    function admin_pesanan(url) {
+        window.location = url;
+    }
+    // Reply Review
+    function admin_reply_ulasan(url) {
+        window.location = url;
+    }
     // Akun Poktan
     function admin_daftar_poktan(url) {
         window.location = url;
@@ -96,4 +104,36 @@
     function admin_pengaturan(url) {
         window.location = url;
     }
+
+    $(document).ready(function () {
+
+        LoadReview();
+        LoadOrder();
+
+        function LoadReview()
+        {
+            $.ajax({
+            method: "GET",
+                url: "/admin/load-review",
+                success: function (response) {
+                    $('.review-count').html('');
+                    $('.review-count').html(response.count);
+                    // alert(response.count);
+                }
+            });
+        }
+
+        function LoadOrder()
+        {
+            $.ajax({
+                method: "GET",
+                url: "/admin/load-order",
+                success: function (response) {
+                    $('.order-count').html('');
+                    $('.order-count').html(response.count);
+                    // alert(response.count);
+                }
+            });
+        }
+    });
 </script>

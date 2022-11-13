@@ -98,7 +98,7 @@
                             <!-- End Navbar -->
                             <div class="card-body px-0 pb-2">
                                 <div class="table-responsive p-0">
-                                    <table class="table align-items-center mb-0">
+                                    <table class="table table-borderless align-items-center mb-0">
                                         <thead>
                                             <tr>
                                                 <th
@@ -121,7 +121,7 @@
                                         <tbody>
                                             @php
                                             $total = 0;
-                                            $totalPrice = 0;
+                                            $ongkirTotal = 0;
                                             $totalQty = 0;
                                             $discount = 0;
                                             @endphp
@@ -134,18 +134,18 @@
                                                         $photos)
                                                         @if ($photos->name)
                                                         <img src="{{ asset('../storage/produk/'.$photos->name) }}"
-                                                            class="img-fluid"
-                                                            style="width: 10rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
+                                                            class="img-fluid rounded"
+                                                            style="width: 7rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
                                                             alt="{{ $orderitem->product->name }}">
                                                         @else
-                                                        <img src="{{ asset('img/no-image.png') }}" class="img-fluid"
-                                                            style="width: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
+                                                        <img src="{{ asset('img/no-image.png') }}" class="img-fluid rounded"
+                                                            style="width: 7rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
                                                             alt="{{ $orderitem->product->name }}">
                                                         @endif
                                                         @endforeach
                                                         @else
-                                                        <img src="{{ asset('img/no-image.png') }}" class="img-fluid"
-                                                            style="width: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
+                                                        <img src="{{ asset('img/no-image.png') }}" class="img-fluid rounded"
+                                                            style="width: 7rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
                                                             alt="{{ $orderitem->product->name }}">
                                                         @endif
                                                     </div>
@@ -206,6 +206,7 @@
                         </div>
                     </div>
                 </div>
+                <input type="hidden" name="passingIdOrder" value="{{ $order->id }}">
                 <div class="card-footer border-0 px-4 bg-primary shadow-primary border-radius-lg py-5 d-md-flex align-items-center justify-content-between">
                     <h5 class="text-white text-uppercase mb-0">Total
                         Pembayaran: <span class="d-flex h2 mb-0 text-white text-capitalize">Rp.
@@ -227,8 +228,27 @@
                                     var distance = end - now;
                                     if (distance < 0) {
                                         clearInterval(timer);
-                                        document.getElementById(id).innerHTML = '<b>Pembayaran Sudah Kadaluarsa';
-                                        return;
+                                        // document.getElementById(id).innerHTML = '<b>Pembayaran Sudah Kadaluarsa';
+                                        // return;
+
+                                        return deleteOrders();
+
+                                        function deleteOrders()
+                                        {
+                                            var id = $("input[name=passingIdOrder]").val();
+                                            $.ajax({
+                                                method: "GET",
+                                                url: '/delete-orders/' +id,
+                                                success: function (response) {
+                                                    iziToast.warning({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                                                        title: 'Peringatan',
+                                                        message: 'Maaf pesanan anda sudah kadaluarsa',
+                                                        position: 'topRight'
+                                                    });
+                                                    window.setTimeout(function(){location.reload()},3000);
+                                                }
+                                            });
+                                        }
                                     }
                                     var days = Math.floor(distance / _day);
                                     var hours = Math.floor((distance % _day) / _hour);

@@ -29,28 +29,71 @@
     function pembeli_dashboard(url) {
         window.location = url;
     }
-    // Kategori Wishlist
+    // Halaman Wishlist
     function pembeli_wishlist(url) {
         window.location = url;
     }
-    // Kategori Daftar Transaksi
+    // Halaman Daftar Transaksi
     function pembeli_daftar_transaksi(url) {
         window.location = url;
     }
-    // Kategori Menunggu Pembayaran
+    // Halaman Menunggu Pembayaran
     function pembeli_menunggu_pembayaran(url) {
         window.location = url;
     }
-    // Kategori Ulasan
+    // Halaman Ulasan
     function pembeli_ulasan(url) {
         window.location = url;
     }
-    // Kategori Chat
+    // Halaman Chat
     function pembeli_chat(url) {
         window.location = url;
     }
-    // Kategori Alamat
+    // Halaman Alamat
     function pembeli_alamat(url) {
         window.location = url;
     }
+    // Halaman Pemberitahuan
+    function pembeli_pemberitahuan(url) {
+        window.location = url;
+    }
+
+    $(function() {
+        // delete employee ajax request
+        $(document).on('click', '.deletePhoto', function(e) {
+            e.preventDefault();
+            let id = $(this).attr('id');
+            let csrf = '{{ csrf_token() }}';
+            Swal.fire({
+            title: 'Hapus Foto Profil',
+            text: "Apa kamu yakin Ingin menghapus foto profil?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Hapus!',
+            cancelButtonText: 'Cancel!'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                url: '{{ route('pembeli.delete.profile') }}',
+                method: 'delete',
+                data: {
+                    id: id,
+                    _token: csrf
+                },
+                success: function(response) {
+                    console.log(response);
+                    Swal.fire(
+                    'Berhasil!',
+                    'Foto profil telah dihapus!',
+                    'success'
+                    )
+                    window.setTimeout(function(){location.reload()},1000);
+                }
+                });
+            }
+            })
+        });
+    });
 </script>

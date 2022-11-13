@@ -72,20 +72,10 @@
     </form>
     <ul class="navbar-nav navbar-right">
         @php
-            $countNotificationActivity = App\Models\NotificationActivity::join('activities', 'notification_activities.activity_id', '=', 'activities.id')
-                                                                ->join('users', 'activities.user_id', '=', 'users.id')
-                                                                ->leftJoin('farmers', function ($join) {
-                                                                        $join->on('users.id', '=', 'farmers.user_id');
-                                                                    })
-                                                                ->leftJoin('poktans', function ($join) {
-                                                                        $join->on('farmers.poktan_id', '=', 'poktans.id');
-                                                                    })
-                                                                ->leftJoin('gapoktans', function ($join) {
-                                                                        $join->on('poktans.gapoktan_id', '=', 'gapoktans.id');
-                                                                    })
-                                                                ->where('notification_activities.read_at', '=', null)
-                                                                ->orderBy('notification_activities.updated_at', 'desc')
-                                                                ->count();
+            $authorizedRoles = ['Kegiatan Terbaru', 'Edukasi Terbaru'];
+            $countNotificationActivity = App\Models\PushNotification::where(static function ($query) use ($authorizedRoles) {
+                return $query->whereIn('title', $authorizedRoles);
+            })->count();
         @endphp
         <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
                 class="nav-link notification-toggle nav-link-lg {{ $countNotificationActivity == null ? '' : 'beep' }}"><i class="far fa-bell"></i><span class="position-absolute">{{ $countNotificationActivity }}</span></a>
@@ -97,20 +87,10 @@
                 </div>
                 <div class="dropdown-list-content dropdown-list-icons">
                     @php
-                        $notificationActivity = App\Models\NotificationActivity::join('activities', 'notification_activities.activity_id', '=', 'activities.id')
-                                                                    ->join('users', 'activities.user_id', '=', 'users.id')
-                                                                    ->leftJoin('farmers', function ($join) {
-                                                                            $join->on('users.id', '=', 'farmers.user_id');
-                                                                        })
-                                                                    ->leftJoin('poktans', function ($join) {
-                                                                            $join->on('farmers.poktan_id', '=', 'poktans.id');
-                                                                        })
-                                                                    ->leftJoin('gapoktans', function ($join) {
-                                                                            $join->on('poktans.gapoktan_id', '=', 'gapoktans.id');
-                                                                        })
-                                                                    ->select('notification_activities.*', 'activities.title as name')
-                                                                    ->orderBy('notification_activities.updated_at', 'desc')
-                                                                    ->get();
+                        $authorizedRoles = ['Kegiatan Terbaru', 'Edukasi Terbaru'];
+                        $notificationActivity = App\Models\PushNotification::where(static function ($query) use ($authorizedRoles) {
+                            return $query->whereIn('title', $authorizedRoles);
+                        })->latest()->get();
                     @endphp
 
                     @if ($notificationActivity->count() > 0)
@@ -118,12 +98,12 @@
                     @foreach ($notificationActivity as $item)
                         <div class="dropdown-item {{ $item->read_at == null ? 'dropdown-item-unread' : '' }}">
                             <div class="dropdown-item-icon bg-info text-white">
-                                <i class="fas fa-clipboard"></i>
+                                <i class="{{ $item->img }}"></i>
                             </div>
                             <div class="dropdown-item-desc">
-                                <b>Kegiatan {{ $item->name }}</b> yang akan dilaksanakan pada tanggal {{ date("d F Y", strtotime($item->activity->date)) }}.
+                                <b>{{ $item->title }}</b> {{ $item->body }}.
                                 <div class="time">{{$item->created_at->diffForHumans()}}</div>
-                                <a href="#" id="{{ $item->id }}" class="notifActivity float-right mx-1">Lihat</a>
+                                {{-- <a href="#" id="{{ $item->id }}" class="notifActivity float-right mx-1">Lihat</a> --}}
                             </div>
                         </div>
                     @endforeach
@@ -135,7 +115,7 @@
                                     <div class="page-error-notification">
                                         <div class="page-inner-notification">
                                             <img src="{{ asset('img/undraw_empty_re_opql.svg') }}" alt="">
-                                            <div class="page-description-notification">
+                                            <div class="page-description-notification pb-5">
                                                 Tidak ada notifikasi!
                                             </div>
                                         </div>

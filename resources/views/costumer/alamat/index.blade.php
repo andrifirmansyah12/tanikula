@@ -58,10 +58,10 @@
                 <div class="avatar avatar-xl position-relative">
                     @if ($userInfo->image)
                     <img id="image_preview" src="{{asset('../storage/profile/'. $userInfo->image)}}" alt="profile_image"
-                        class="border-radius-lg rounded-circle shadow-sm" style="width: 92px; height: 72px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                        class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 80px; height: 80px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                     @else
-                    <img id="image_preview" src="{{ asset('stisla/assets/img/example-image.jpg') }}" alt="profile_image"
-                        class="border-radius-lg rounded-circle shadow-sm" style="height: 72px;">
+                    <img id="image_preview" src="{{ asset('../stisla/assets/img/example-image.jpg') }}" alt="profile_image"
+                        class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 80px; height: 80px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                     @endif
                 </div>
             </div>
@@ -75,11 +75,17 @@
                     <div class="custom-file">
                         <input type="file" class="custom-file-input hidden" style="width: 0px;" accept="image/*" id="image" name="image">
                         <label class="custom-file-label" for="image"><i class="bi bi-camera h-4"></i> Ubah foto</label>
+                        <label class="custom-file-label ps-5" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" for="">
+                            <i class="bi bi-three-dots h-4"></i>
+                        </label>
+                        <ul class="dropdown-menu" style="border: 1px solid" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item deletePhoto" id="{{ $userInfo->id }}" style="font-size: 12px; color: red;" href="#"><i class="bi bi-trash"></i> Hapus Foto Profil</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
             <input type="hidden" name="id" id="id" value="{{ $userInfo->id }}">
-            <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
+            <div class="col-lg-5 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
                 <div class="nav-wrapper position-relative end-0">
                     <ul class="nav nav-fill p-1">
                         <li class="nav-item">
@@ -138,13 +144,34 @@
 
 <!-- Modal Edit Alamat -->
 <div class="modal fade" id="EditAlamat" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <style>
+        #style-1::-webkit-scrollbar-track
+        {
+            -webkit-box-shadow: inset 0 0 6px #16A085;
+            border-radius: 10px;
+            background-color: #F5F5F5;
+        }
+
+        #style-1::-webkit-scrollbar
+        {
+            width: 12px;
+            background-color: #F5F5F5;
+        }
+
+        #style-1::-webkit-scrollbar-thumb
+        {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 6px #16A085;
+            background-color: #16A085;
+        }
+    </style>
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Edit Alamat</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" id="style-1">
                 <form action="#" method="POST" id="edit_employee_form" enctype="multipart/form-data">
                     @csrf
                     <div>
@@ -253,13 +280,34 @@
 
 <!-- Modal Tambah Alamat -->
 <div class="modal fade" id="TambahAlamat" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <style>
+        #style-2::-webkit-scrollbar-track
+        {
+            -webkit-box-shadow: inset 0 0 6px #16A085;
+            border-radius: 10px;
+            background-color: #F5F5F5;
+        }
+
+        #style-2::-webkit-scrollbar
+        {
+            width: 12px;
+            background-color: #F5F5F5;
+        }
+
+        #style-2::-webkit-scrollbar-thumb
+        {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 6px #16A085;
+            background-color: #16A085;
+        }
+    </style>
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Tambah Alamat Baru</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" id="style-2">
                 <form action="#" method="POST" id="add_employee_form" accept-charset="utf-8"
                     enctype="multipart/form-data">
                     @csrf
@@ -387,16 +435,16 @@
 
     <!-- JAVASCRIPT -->
     <script>
-    // var path = "{{ route('alamat.autocomplete')  }}";
-    // $('input.typeahead').typeahead({
-    //     source: function (query, process) {
-    //         return $.get(path, {
-    //             term: query
-    //         }, function (data) {
-    //             return process(data);
-    //         });
-    //     }
-    // });
+        var path = "{{ route('alamat.autocomplete')  }}";
+        $('input.typeahead').typeahead({
+            source: function (query, process) {
+                return $.get(path, {
+                    term: query
+                }, function (data) {
+                    return process(data);
+                });
+            }
+        });
 
         function onChangeSelect(url, id, name) {
             // send ajax request to get the cities of the selected province and append to the select tag
@@ -523,7 +571,7 @@
                         $("#add_employee_btn").prop('disabled', false);
                     }
                 }
-                });
+            });
         });
 
         // edit employee ajax request

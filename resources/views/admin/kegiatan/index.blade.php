@@ -65,7 +65,7 @@
                     @csrf
                     <div class="modal-body p-4">
                         <label for="name">Pilih User</label>
-                        <select class="form-control select2" name="user_id" required>
+                        <select class="form-control select2" id="add_user_id" name="user_id">
                             <option selected disabled>Pilih User</option>
                             @foreach ($user as $item)
                                 @if ( old('user_id') == $item->id )
@@ -75,15 +75,19 @@
                                 @endif
                             @endforeach
                         </select>
+                        <div class="invalid-feedback">
+                        </div>
                         <div class="form-group my-2">
                             <label for="title">Judul</label>
-                            <input type="text" name="title" class="titleCheck form-control" placeholder="Judul"
-                                required>
+                            <input type="text" id="add_title" name="title" class="titleCheck form-control" placeholder="Judul"
+                            >
+                                <div class="invalid-feedback">
+                                </div>
                         </div>
                         <div class="form-group my-2">
                             <label>Kategori Kegiatan</label>
                             @if ($category->count() > 0)
-                            <select class="form-control select2" name="category_activity_id" required>
+                            <select class="form-control select2" id="add_category_activity_id" name="category_activity_id">
                                 <option selected disabled>Pilih Kategori</option>
                                 @foreach ($category as $item)
                                     @if ( old('category_activity_id') == $item->id )
@@ -94,10 +98,12 @@
                                 @endforeach
                             </select>
                             @else
-                            <select class="form-control select2" disabled required>
+                            <select class="form-control select2" disabled>
                                     <option selected disabled>Tidak ada kategori</option>
                             </select>
                             @endif
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="my-2 form-group">
                             <label for="date">Tanggal Kegiatan</label>
@@ -107,12 +113,16 @@
                                         <i class="bi bi-calendar"></i>
                                     </div>
                                 </div>
-                                <input type="text" placeholder="Tanggal Kegiatan" name="date" v-model="plating_date" class="form-control datepicker">
+                                <input type="text" id="add_date" placeholder="Tanggal Kegiatan" name="date" v-model="plating_date" class="form-control datepicker">
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                         </div>
                         <div class="my-2 form-group">
                             <label for="desc">Deskripsi</label>
-                            <textarea class="form-control" name="desc" rows="3" placeholder="Deskripsi"></textarea>
+                            <textarea class="form-control" name="desc" id="add_desc" rows="3" placeholder="Deskripsi"></textarea>
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -140,7 +150,7 @@
                     <div class="modal-body p-4">
                         <div class="form-group mb-5">
                             <label for="name">Pilih User</label>
-                            <select class="form-control select2" name="user_id" required>
+                            <select class="form-control select2" name="user_id">
                                 <option selected disabled>Pilih User</option>
                                 @foreach ($user as $item)
                                     @if ( old('user_id') == $item->id )
@@ -153,11 +163,15 @@
                         </div>
                         <div class="form-group my-2">
                             <label for="name">User</label>
-                            <input type="text" disabled id="user_id" class="form-control" required>
+                            <input type="text" disabled id="user_id" class="form-control">
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="form-group my-2">
                             <label for="title">Judul</label>
-                            <input type="text" name="title" id="title" class="form-control titleCheck" placeholder="Judul" required>
+                            <input type="text" name="title" id="title" class="form-control titleCheck" placeholder="Judul">
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="form-group my-2">
                             <label>Kategori Kegiatan</label>
@@ -173,10 +187,12 @@
                                 @endforeach
                             </select>
                             @else
-                            <select class="form-control select2" disabled required>
+                            <select class="form-control select2" disabled>
                                 <option selected disabled>Tidak ada kategori</option>
                             </select>
                             @endif
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="my-2 form-group">
                             <label for="date">Tanggal Kegiatan</label>
@@ -187,11 +203,15 @@
                                     </div>
                                 </div>
                                 <input type="text" name="date" id="date" v-model="plating_date" class="form-control datepicker">
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                         </div>
                         <div class="my-2 form-group">
                             <label for="desc">Deskripsi</label>
                             <textarea class="form-control" name="desc" id="desc" rows="3" placeholder="Deskripsi"></textarea>
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -271,10 +291,13 @@
                 dataType: 'json',
                 success: function(response) {
                     if (response.status == 400) {
-                        showError('title', response.messages.title);
-                        showError('category_activity_id', response.messages.category_activity_id);
-                        showError('desc', response.messages.desc);
-                        showError('date', response.messages.date);
+                        showError('add_user_id', response.messages.user_id);
+                        showError('add_title', response.messages.title);
+                        showError('add_category_activity_id', response.messages.category_activity_id);
+                        showError('add_desc', response.messages.desc);
+                        showError('add_date', response.messages.date);
+                        $("#add_employee_btn").text('Simpan');
+                        $("#add_employee_btn").prop('disabled', false);
                     }
                     else if (response.status == 200) {
                         Swal.fire(
@@ -283,11 +306,11 @@
                             'success'
                         )
                         fetchAllEmployees();
+                        $("#add_employee_btn").text('Simpan');
+                        $("#add_employee_btn").prop('disabled', false);
                         $("#add_employee_form")[0].reset();
                         $("#addEmployeeModal").modal('hide');
                     }
-                    $("#add_employee_btn").text('Simpan');
-                    $("#add_employee_btn").prop('disabled', false);
                 }
                 });
             });
@@ -334,6 +357,8 @@
                         showError('category_activity_id', response.messages.category_activity_id);
                         showError('desc', response.messages.desc);
                         showError('date', response.messages.date);
+                        $("#edit_employee_btn").text('Simpan');
+                        $("#edit_employee_btn").prop('disabled', false);
                     }
                     else if (response.status == 200) {
                         Swal.fire(
@@ -342,11 +367,11 @@
                             'success'
                         )
                         fetchAllEmployees();
+                        $("#edit_employee_btn").text('Simpan');
+                        $("#edit_employee_btn").prop('disabled', false);
                         $("#edit_employee_form")[0].reset();
                         $("#editEmployeeModal").modal('hide');
                     }
-                    $("#edit_employee_btn").text('Simpan');
-                    $("#edit_employee_btn").prop('disabled', false);
                 }
                 });
             });

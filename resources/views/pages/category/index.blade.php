@@ -87,7 +87,7 @@
     <input type="hidden" name="passingNameCategory" value="{{ $category_product->slug }}">
     <section class="section">
         <div class="container">
-            <div class="row" id="show_all_employees">
+            <div class="row mx-4 mx-sm-0" id="show_all_employees">
                 {{-- Content --}}
             </div>
         </div>

@@ -56,7 +56,7 @@
                     <div class="modal-body p-4">
                         <div class="form-group my-2">
                             <label>Gapoktan</label>
-                            <select class="form-control select2" name="gapoktan_id">
+                            <select class="form-control select2" id="add_gapoktan_id" name="gapoktan_id">
                                 <option selected disabled>Pilih Gapoktan</option>
                                 @foreach ($gapoktans as $gapoktan)
                                     @if ( old('gapoktan_id') == $gapoktan->id )
@@ -66,16 +66,34 @@
                                     @endif
                                 @endforeach
                             </select>
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="form-group my-2">
-                            <label>Petani</label>
-                            <select class="form-control select2" name="farmer_id" required>
+                            <label>Pilih Petani</label>
+                            @if ($farmers->count() > 0)
+                            <select class="form-control select2" id="add_farmer_id" name="farmer_id">
+                                <option selected disabled>Pilih Petani</option>
+                                @foreach ($farmers as $farmer)
+                                    @if ( old('farmer_id') == $farmer->id )
+                                        <option value="{{ $farmer->id }}" selected>{{ $farmer->user->name }}</option>
+                                    @else
+                                        <option value="{{ $farmer->id }}">{{ $farmer->user->name }}</option>
+                                    @endif
+                                @endforeach
                             </select>
+                            @else
+                            <select class="form-control select2" disabled required>
+                                <option selected disabled>Tidak ada kategori</option>
+                            </select>
+                            @endif
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="form-group my-2">
                             <label>Kategori Lahan</label>
                             @if ($category->count() > 0)
-                            <select class="form-control select2" name="field_category_id" required>
+                            <select class="form-control select2" id="add_field_category_id" name="field_category_id" required>
                                 <option selected disabled>Pilih Kategori</option>
                                 @foreach ($category as $item)
                                     @if ( old('field_category_id') == $item->id )
@@ -90,6 +108,8 @@
                                     <option selected disabled>Tidak ada kategori</option>
                             </select>
                             @endif
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -118,7 +138,7 @@
                         <div class="form-group my-2">
                             <label>Gapoktan</label>
                             @if ($gapoktans->count() > 0)
-                            <select class="form-control select2" id="edit_gapoktan_id" name="edit_gapoktan_id">
+                            <select class="form-control select2" id="edit_gapoktan_id" name="gapoktan_id">
                                 <option selected disabled>Pilih Kategori</option>
                                 @foreach ($gapoktans as $gapoktan)
                                     @if ( old('gapoktan_id') == $gapoktan->id )
@@ -133,15 +153,29 @@
                                 <option selected disabled>Tidak ada kategori</option>
                             </select>
                             @endif
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="form-group my-2">
-                            <label>Petani</label>
-                            <small class="d-flex text-danger pb-1">*Catatan:
-                                <br>1. Jika tidak ingin ubah Petani biarkan kosong,
-                                <br>2. Dan jika ingin ubah Petani, silahkan pilih Gapoktan kembali.
-                            </small>
-                            <select class="form-control select2" id="edit_farmer_id" name="edit_farmer_id">
+                            <label>Pilih Petani</label>
+                            @if ($farmers->count() > 0)
+                            <select class="form-control select2" id="edit_farmer_id" name="farmer_id">
+                                <option selected disabled>Pilih Petani</option>
+                                @foreach ($farmers as $farmer)
+                                    @if ( old('farmer_id') == $farmer->id )
+                                        <option value="{{ $farmer->id }}" selected>{{ $farmer->user->name }}</option>
+                                    @else
+                                        <option value="{{ $farmer->id }}">{{ $farmer->user->name }}</option>
+                                    @endif
+                                @endforeach
                             </select>
+                            @else
+                            <select class="form-control select2" disabled required>
+                                <option selected disabled>Tidak ada kategori</option>
+                            </select>
+                            @endif
+                            <div class="invalid-feedback">
+                                </div>
                         </div>
                         <div class="form-group my-2">
                             <label>Kategori Lahan</label>
@@ -161,6 +195,8 @@
                                 <option selected disabled>Tidak ada kategori</option>
                             </select>
                             @endif
+                            <div class="invalid-feedback">
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -271,10 +307,9 @@
                 dataType: 'json',
                 success: function(response) {
                     if (response.status == 400) {
-                        showError('gapoktan_id', response.messages.gapoktan_id);
-                        showError('field_category_id', response.messages.field_category_id);
-                        showError('farmer_id', response.messages.farmer_id);
-                        showError('status', response.messages.status);
+                        showError('add_gapoktan_id', response.messages.gapoktan_id);
+                        showError('add_field_category_id', response.messages.field_category_id);
+                        showError('add_farmer_id', response.messages.farmer_id);
                         $("#add_employee_btn").text('Simpan');
                         $("#add_employee_btn").prop('disabled', false);
                     }
@@ -338,7 +373,8 @@
                         showError('gapoktan_id', response.messages.gapoktan_id);
                         showError('field_category_id', response.messages.field_category_id);
                         showError('farmer_id', response.messages.farmer_id);
-                        showError('status', response.messages.status);
+                        $("#edit_employee_btn").text('Simpan');
+                        $("#edit_employee_btn").prop('disabled', false);
                     }
                     else if (response.status == 200) {
                         Swal.fire(
@@ -347,11 +383,11 @@
                             'success'
                         )
                         fetchAllEmployees();
+                        $("#edit_employee_btn").text('Simpan');
+                        $("#edit_employee_btn").prop('disabled', false);
                         $("#edit_employee_form")[0].reset();
                         $("#editEmployeeModal").modal('hide');
                     }
-                    $("#edit_employee_btn").text('Simpan');
-                    $("#edit_employee_btn").prop('disabled', false);
                 }
                 });
             });

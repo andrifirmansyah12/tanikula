@@ -64,8 +64,8 @@ class HeroController extends Controller
             'name' => 'required|max:255',
             'image' => 'required',
         ], [
-            'name.required' => 'Judul edukasi diperlukan!',
-            'name.max' => 'Judul edukasi maksimal 255 karakter!',
+            'name.required' => 'Nama Hero diperlukan!',
+            'name.max' => 'Nama Hero maksimal 255 karakter!',
             'image.required' => 'Foto Hero diperlukan!',
         ]);
 
@@ -103,8 +103,8 @@ class HeroController extends Controller
 		$validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
         ], [
-            'name.required' => 'Judul edukasi diperlukan!',
-            'name.max' => 'Judul edukasi maksimal 255 karakter!',
+            'name.required' => 'Nama Hero diperlukan!',
+            'name.max' => 'Nama Hero maksimal 255 karakter!',
         ]);
 
         if($validator->fails()) {

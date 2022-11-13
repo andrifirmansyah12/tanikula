@@ -53,6 +53,10 @@ integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifw
     function gapoktan_edukasi(url) {
         window.location = url;
     }
+    // Reply Pesanan
+    function gapoktan_reply_ulasan(url) {
+        window.location = url;
+    }
     // Pesanan
     function gapoktan_pesanan(url) {
         window.location = url;
@@ -98,12 +102,42 @@ integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifw
         window.location = url;
     }
 
-    $(document).ready(function () {
+    $(document).ready(function () 
+    {
+        LoadReview();
+        LoadOrder();
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+            function LoadReview()
+            {
+                $.ajax({
+                    method: "GET",
+                    url: "/load-review",
+                    success: function (response) {
+                        $('.review-count').html('');
+                        $('.review-count').html(response.count);
+                        // alert(response.count);
+                    }
+                });
+            }
+
+            function LoadOrder()
+            {
+                $.ajax({
+                    method: "GET",
+                    url: "/load-order",
+                    success: function (response) {
+                        $('.order-count').html('');
+                        $('.order-count').html(response.count);
+                        // alert(response.count);
+                    }
+                });
+            }
 
             $(document).on('click', '.notifUser', function(e) {
                 e.preventDefault();

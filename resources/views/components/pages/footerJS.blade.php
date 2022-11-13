@@ -7,6 +7,8 @@
 <script src="{{ asset('js/tiny-slider.js') }}"></script>
 <script src="{{ asset('js/glightbox.min.js') }}"></script>
 <script src="{{ asset('js/main.js') }}"></script>
+@include('vendor.lara-izitoast.toast')
+    <!-- Page Specific JS File -->
 <script src="{{ asset('js/function.js') }}"></script>
 {{-- <script src="{{ asset('js/market.js') }}"></script> --}}
 @yield('script')
@@ -37,6 +39,14 @@
     }
     // Pembeli Dashboard
     function petani(route) {
+        window.location = route;
+    }
+    // Admin Dashboard
+    function admin(route) {
+        window.location = route;
+    }
+    // Support Dashboard
+    function support(route) {
         window.location = route;
     }
     // Login
@@ -191,6 +201,7 @@
 <script>
     $(document).ready(function () {
 
+    LoadNotif();
     LoadCart();
 
     $.ajaxSetup({
@@ -207,6 +218,19 @@
             success: function (response) {
                 $('.cart-count').html('');
                 $('.cart-count').html(response.count);
+                // alert(response.count);
+            }
+        });
+    }
+
+    function LoadNotif()
+    {
+        $.ajax({
+            method: "GET",
+            url: "/load-notifications",
+            success: function (response) {
+                $('.notif-count').html('');
+                $('.notif-count').html(response.count);
                 // alert(response.count);
             }
         });
@@ -294,6 +318,50 @@
         });
     });
 
+    // $('#idNotif').click(function (e) {
+    //     e.preventDefault();
+
+    //     // var id = $("input[name=passingIdNotif]").val();
+    //     var id = $(this).closest('#style-1').find('#passingIdNotif').val();
+
+    //     $.ajaxSetup({
+    //         headers: {
+    //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //         }
+    //     });
+
+    //     $.ajax({
+    //         method: "POST",
+    //         url: '/read-notif-data',
+    //         data: {
+    //             'id': id,
+    //         },
+    //         success: function (response) {
+    //             window.setTimeout(function(){location.reload()},1000)
+    //         }
+    //     });
+    // });
+
+    // add new employee ajax request
+    $("#readNotif").submit(function(e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        $.ajax({
+            url: '{{ route('read.all.notif') }}',
+            method: 'get',
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: 'json',
+            success: function(response) {
+                if (response.status == 200){
+                    window.setTimeout(function(){location.reload()},1000)
+                }
+            }
+        });
+    });
+
     $('.delete-cart-item').click(function (e) {
         e.preventDefault();
 
@@ -310,6 +378,35 @@
             url: "delete-cart-item",
             data: {
                 'product_id': product_id,
+            },
+            success: function (response) {
+                LoadCart();
+                iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                    title: 'Berhasil',
+                    message: response.status,
+                    position: 'topRight'
+                });
+                window.setTimeout(function(){location.reload()},1000)
+            }
+        });
+    });
+
+    $('.delete-out-of-stock-product').click(function (e) {
+        e.preventDefault();
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        var prod_id_outof_stock = $(this).closest('#product_outof_stock').find('#prod_id_outof_stock').val();
+
+        $.ajax({
+            method: "POST",
+            url: "delete-out-of-stock-product",
+            data: {
+                'prod_id_outof_stock': prod_id_outof_stock,
             },
             success: function (response) {
                 LoadCart();
@@ -347,5 +444,47 @@
             }
         });
     });
+
+    $('.navbarCheckProductCart').click( function()
+        {
+            var totalCheckboxes = $("input#navbarCheckProductCart:checked").length;
+            var sum = 0;
+            var total = 0;
+            if (totalCheckboxes) {
+                var checkedInputs = $("input#navbarCheckProductCart:checked");
+                var sum_qty = 0;
+                var total_price = 0;
+                $.each(checkedInputs, function(i, val) {
+                    var qty = $(this).closest('.navbarCheckProductCart').find("input[name=navbar_cart_qty]").val();
+                    var price = $(this).closest('.navbarCheckProductCart').find("input[name=navbar_cart_total]").val();
+                    sum_qty += parseInt(qty);
+                    total_price += parseInt(price * qty);
+                });
+                sum = sum_qty;
+                total = total_price
+            } else {
+                var qty = 0;
+            }
+            $.ajax({
+                method: "POST",
+                url: "/navbar-keranjang",
+                data: {
+                    'totalCheckboxes': totalCheckboxes,
+                    'sum': sum,
+                    'total': total
+                },
+                success: function (response)
+                {
+                    $('.navbar-beli-keranjang-count').html('');
+                    $('.navbar-beli-keranjang-count').html(response.countCart);
+
+                    $('.navbar-count-product').html('');
+                    $('.navbar-count-product').html(response.countQty);
+
+                    $('.navbar-total-price').html('');
+                    $('.navbar-total-price').html(response.totalPrice);
+                }
+            });
+        });
 });
 </script>

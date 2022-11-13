@@ -66,10 +66,10 @@
                 <div class="avatar avatar-xl position-relative">
                     @if ($userInfo->image)
                     <img id="image_preview" src="{{asset('../storage/profile/'. $userInfo->image)}}" alt="profile_image"
-                        class="border-radius-lg rounded-circle shadow-sm" style="width: 92px; height: 72px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                        class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 80px; height: 80px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                     @else
-                    <img id="image_preview" src="{{ asset('stisla/assets/img/example-image.jpg') }}" alt="profile_image"
-                        class="border-radius-lg rounded-circle shadow-sm" style="height: 72px;">
+                    <img id="image_preview" src="{{ asset('../stisla/assets/img/example-image.jpg') }}" alt="profile_image"
+                        class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 80px; height: 80px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                     @endif
                 </div>
             </div>
@@ -83,11 +83,17 @@
                     <div class="custom-file">
                         <input type="file" class="custom-file-input hidden" style="width: 0px;" accept="image/*" id="image" name="image">
                         <label class="custom-file-label" for="image"><i class="bi bi-camera h-4"></i> Ubah foto</label>
+                        <label class="custom-file-label ps-5" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" for="">
+                            <i class="bi bi-three-dots h-4"></i>
+                        </label>
+                        <ul class="dropdown-menu" style="border: 1px solid" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item deletePhoto" id="{{ $userInfo->id }}" style="font-size: 12px; color: red;" href="#"><i class="bi bi-trash"></i> Hapus Foto Profil</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
             <input type="hidden" name="id" id="id" value="{{ $userInfo->id }}">
-            <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
+            <div class="col-lg-5 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
                 <div class="nav-wrapper position-relative end-0">
                     <ul class="nav nav-fill p-1">
                         <li class="nav-item">
@@ -110,7 +116,7 @@
                     <h6 class="mb-1">Wishlist</h6>
                     <p class="text-sm">Produk favorit yang dipilih.</p>
                 </div>
-                <div class="row WishlistItems">
+                <div class="row mx-4 mx-sm-0 WishlistItems">
                     @if ($wishlist->count())
                     @foreach ($wishlist as $item)
                     <div class="col-xl-3 col-md-6 mb-xl-0 mt-3" id="product_data">

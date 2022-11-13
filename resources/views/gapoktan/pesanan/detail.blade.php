@@ -122,18 +122,18 @@
                                                                     $photos)
                                                                     @if ($photos->name)
                                                                     <img src="{{ asset('../storage/produk/'.$photos->name) }}"
-                                                                        class="img-fluid"
-                                                                        style="width: 10rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
+                                                                        class="img-fluid rounded"
+                                                                        style="width: 7rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
                                                                         alt="{{ $orderitem->product->name }}">
                                                                     @else
-                                                                    <img src="{{ asset('img/no-image.png') }}" class="img-fluid"
-                                                                        style="width: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
+                                                                    <img src="{{ asset('img/no-image.png') }}" class="img-fluid rounded"
+                                                                        style="width: 7rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
                                                                         alt="{{ $orderitem->product->name }}">
                                                                     @endif
                                                                     @endforeach
                                                                     @else
-                                                                    <img src="{{ asset('img/no-image.png') }}" class="img-fluid"
-                                                                        style="width: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
+                                                                    <img src="{{ asset('img/no-image.png') }}" class="img-fluid rounded"
+                                                                        style="width: 7rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
                                                                         alt="{{ $orderitem->product->name }}">
                                                                     @endif
                                                                 </div>
@@ -143,11 +143,11 @@
                                                             </td>
                                                             <td class="align-middle text-center">
                                                                 <span
-                                                                    class="text-secondary text-xs font-weight-bold">{{ $orderitem->qty }}</span>
+                                                                    class="text-xs font-weight-bold">{{ $orderitem->qty }}</span>
                                                             </td>
                                                             <td class="align-middle text-center">
                                                                 <span
-                                                                    class="text-secondary text-xs font-weight-bold">Rp. {{ number_format($orderitem->price, 0) }}</span>
+                                                                    class="text-xs font-weight-bold">Rp. {{ number_format($orderitem->price, 0) }}</span>
                                                             </td>
                                                             @php
                                                                 if ($orderitem->product->discount) {
@@ -163,7 +163,7 @@
                                                             @endphp
                                                             <td class="align-middle text-center">
                                                                 <span
-                                                                    class="text-secondary text-xs font-weight-bold">Rp.{{ number_format($subTotal, 0) }}</span>
+                                                                    class="text-xs font-weight-bold">Rp.{{ number_format($subTotal, 0) }}</span>
                                                             </td>
                                                         </tr>
                                                         @endforeach
@@ -233,12 +233,33 @@
     @endphp
     {{-- Lihat Ulasan --}}
     <div class="modal fade" id="editReviewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <style>
+            #style-1::-webkit-scrollbar-track
+            {
+                -webkit-box-shadow: inset 0 0 6px #16A085;
+                border-radius: 10px;
+                background-color: #F5F5F5;
+            }
+
+            #style-1::-webkit-scrollbar
+            {
+                width: 12px;
+                background-color: #F5F5F5;
+            }
+
+            #style-1::-webkit-scrollbar-thumb
+            {
+                border-radius: 10px;
+                -webkit-box-shadow: inset 0 0 6px #16A085;
+                background-color: #16A085;
+            }
+        </style>
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header border">
                     <h5 class="modal-title" id="exampleModalLabel">Ulasan Pembeli</h5>
                 </div>
-                <div class="modal-body text-start text-black p-4">
+                <div class="modal-body text-start text-black p-4" id="style-1">
                     <form action="#" method="POST" id="add_employee_form" accept-charset="utf-8"
                         enctype="multipart/form-data">
                         @csrf
@@ -248,11 +269,11 @@
                             <div class="d-flex align-items-center pt-3">
                                 @if ($userInfo->image)
                                 <img src="{{asset('../storage/profile/'. $userInfo->image)}}"
-                                    class="img-fluid rounded-circle" style="width: 55px; height: 55px;"
+                                    class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 55px; height: 55px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
                                     alt="{{ $userInfo->user->name }}">
                                 @else
                                 <img src="{{ asset('stisla/assets/img/example-image.jpg') }}"
-                                    class="img-fluid rounded-circle" style="width: 55px; height: 55px;"
+                                    class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 55px; height: 55px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
                                     alt="{{ $userInfo->user->name }}">
                                 @endif
                                 <div>
@@ -260,7 +281,7 @@
                                         @if ($review->hide === 1)
                                         {{ get_starred(strtok($order->user->name, ' ')) }}
                                         @else
-                                        {{ $order->user->name }}
+                                        {{ strtok($order->user->name, ' ') }}
                                         @endif
                                     </p>
                                     <div class="my-0 mx-3 rating-produkView">
@@ -288,16 +309,16 @@
                                 @foreach ($review->product->photo_product->take(1) as
                                 $photos)
                                 @if ($photos->name)
-                                <img src="{{ asset('../storage/produk/'.$photos->name) }}" class="img-fluid"
-                                    style="object-fit: contain; width: 60px" alt="{{ $review->product->name }}">
+                                <img src="{{ asset('../storage/produk/'.$photos->name) }}" class="img-fluid rounded"
+                                    style="width: 7rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="{{ $review->product->name }}">
                                 @else
-                                <img src="{{ asset('img/no-image.png') }}" class="img-fluid"
-                                    style="object-fit: contain; width: 60px" alt="{{ $review->product->name }}">
+                                <img src="{{ asset('img/no-image.png') }}" class="img-fluid rounded"
+                                    style="width: 7rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="{{ $review->product->name }}">
                                 @endif
                                 @endforeach
                                 @else
-                                <img src="{{ asset('img/no-image.png') }}" class="img-fluid"
-                                    style="object-fit: contain; width: 60px" alt="{{ $review->product->name }}">
+                                <img src="{{ asset('img/no-image.png') }}" class="img-fluid rounded"
+                                    style="width: 7rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="{{ $review->product->name }}">
                                 @endif
                                 <div>
                                     <p class="my-0 mx-3 text-xs font-weight-bold text-truncate col-9">

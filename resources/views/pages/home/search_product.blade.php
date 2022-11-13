@@ -5,6 +5,7 @@
 
 @section('style')
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="https://unpkg.com/placeholder-loading/dist/css/placeholder-loading.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
     <style>
         /* 4.3 Page */
@@ -56,24 +57,82 @@
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                 <li>
                     <form action="{{ url('/search-product') }}">
-                        <input type="hidden" name="max_price" id="max_price" value="max_price">
+                        <input type="hidden" name="harga_tertinggi" id="harga_tertinggi" value="harga_tertinggi">
                         <button type="submit" id="max_price_btn" class="dropdown-item">Harga Tertinggi</button>
                     </form>
                 </li>
                 <li>
                     <form action="{{ url('/search-product') }}">
-                        <input type="hidden" name="min_price" id="min_price" value="min_price">
+                        <input type="hidden" name="harga_terendah" id="harga_terendah" value="harga_terendah">
                         <button type="submit" id="min_price_btn" class="dropdown-item">Harga Terendah</button>
                     </form>
                 </li>
             </ul>
         </div>
     </div>
+    <script>
+        var countProductSearch = '{{ $product_new->count() }}';
+    </script>
     <!-- Start Trending Product Area -->
     <section class="section">
         <div class="container">
-            <div class="row">
-                @foreach ($product_new as $item)
+            <div class="row mx-4 mx-sm-0" id="pencarian_product">
+                {{-- Konten Produk --}}
+            </div>
+        </div>
+    </section>
+    <!-- End Trending Product Area -->
+@endsection
+
+@section('script')
+<script type="text/javascript" language="javascript"
+    src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var displayProduct = countProductSearch;
+        var displayProductNull = 4;
+        if (displayProduct > 0) {
+            $('#pencarian_product').html(createSkeleton(displayProduct));
+        } else {
+            $('#pencarian_product').html(createSkeleton(displayProductNull));
+        }
+
+        // jalankan fungsi load content setelah 2 detik
+        function createSkeleton(limit){
+        var skeletonHTML = '';
+        for(var i = 0; i < limit; i++){
+            // skeletonHTML += '<div class="row">';
+                skeletonHTML += '<div class="col-lg-3 mt-4 col-md-6 col-12">';
+                    skeletonHTML += '<div class="ph-item rounded">';
+                        skeletonHTML += '<div class="ph-col-12">';
+                            skeletonHTML += '<div class="ph-picture rounded"></div>';
+                        skeletonHTML += '</div>';
+
+                        skeletonHTML += '<div>';
+                            skeletonHTML += '<div class="ph-row">';
+                                skeletonHTML += '<div class="ph-col-12 rounded"></div>';
+                                skeletonHTML += '<div class="ph-col-12 rounded"></div>';
+                                skeletonHTML += '<div class="ph-col-12 rounded"></div>';
+                                skeletonHTML += '<div class="ph-col-12 empty"></div>';
+                                skeletonHTML += '<div class="ph-col-12 rounded big"></div>';
+                            skeletonHTML += '</div>';
+                        skeletonHTML += '</div>';
+
+                        skeletonHTML += '<div>';
+                            skeletonHTML += '<div class="ph-row">';
+                                skeletonHTML += '<div class="ph-col-12 big rounded"></div>';
+                            skeletonHTML += '</div>';
+                        skeletonHTML += '</div>';
+                    skeletonHTML += '</div>';
+                skeletonHTML += '</div>';
+            // skeletonHTML += '</div>';
+        }
+        return skeletonHTML;
+        }
+
+        setTimeout(function(){
+            $('#pencarian_product').html(`@if ($product_new->count() > 0)
+            @foreach ($product_new as $item)
                 <div class="col-lg-3 col-md-6 col-12">
                     <!-- Start Single Product -->
                     <div class="single-product {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}" style="height: 26">
@@ -153,12 +212,40 @@
                     <!-- End Single Product -->
                 </div>
                 @endforeach
-            </div>
-        </div>
-    </section>
-    <!-- End Trending Product Area -->
-@endsection
-
-@section('script')
-{{--  --}}
+                @else
+                    @if (request('pencarian'))
+                    <div id="app">
+                        <section class="section">
+                            <div class="container">
+                                <div class="page-error">
+                                    <div class="page-inner">
+                                        <img src="img/undraw_empty_re_opql.svg" alt="">
+                                        <div class="page-description">
+                                            Produk yang anda cari tidak ada!
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    @else
+                    <div id="app">
+                        <section class="section">
+                            <div class="container">
+                                <div class="page-error">
+                                    <div class="page-inner">
+                                        <img src="../img/undraw_empty_re_opql.svg" alt="">
+                                        <div class="page-description">
+                                            Tidak ada produk yang diposting!
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    @endif
+                @endif`);
+        }, 2000);
+    });
+</script>
 @endsection

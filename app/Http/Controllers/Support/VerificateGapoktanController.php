@@ -49,9 +49,9 @@ class VerificateGapoktanController extends Controller
                     $output .= '<td><img src="../stisla/assets/img/example-image.jpg" class="img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"></td>';
                 }
                 $output .= '<td>';
-                if ($emp->is_verified === 1) {
+                if ($emp->is_verified == 1) {
                     $output .= '<p class="badge badge-success">Terverifikasi</p>';
-                } elseif ($emp->is_verified === 0){
+                } elseif ($emp->is_verified == 0){
                     $output .= '<p class="badge badge-danger">Belum diverifikasi</p>';
                 }
                 $output .= '</td>

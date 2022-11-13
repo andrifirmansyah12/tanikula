@@ -14,6 +14,22 @@ use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
 {
+    public function countOrder()
+    {
+        $countOrder = Order::join('users', 'orders.user_id', '=', 'users.id')
+            ->join('addresses', 'orders.address_id', '=', 'addresses.id')
+            ->join('order_items', 'order_items.order_id', '=', 'orders.id')
+            ->join('products', '.order_items.product_id', '=', 'products.id')
+            ->select('orders.*', 'addresses.recipients_name as name_billing')
+            ->where('orders.payment_status', '=', 'paid')
+            ->where('products.user_id', '=', auth()->user()->id)
+            ->where('orders.status', '=', 'confirmed')
+            ->orderBy('orders.created_at', 'desc')
+            ->count();
+
+        return response()->json(['count'=> $countOrder]);
+    }
+
     public function index()
     {
         return view('gapoktan.pesanan.index');
@@ -23,8 +39,11 @@ class OrderController extends Controller
     {
 		$emps = Order::join('users', 'orders.user_id', '=', 'users.id')
                     ->join('addresses', 'orders.address_id', '=', 'addresses.id')
+                    ->join('order_items', 'order_items.order_id', '=', 'orders.id')
+                    ->join('products', '.order_items.product_id', '=', 'products.id')
                     ->select('orders.*', 'addresses.recipients_name as name_billing')
                     ->where('orders.payment_status', '=', 'paid')
+                    ->where('products.user_id', '=', auth()->user()->id)
                     ->where('orders.status', '=', 'confirmed')
                     ->orderBy('orders.created_at', 'desc')
                     ->get();
@@ -100,8 +119,11 @@ class OrderController extends Controller
     {
 		$emps = Order::join('users', 'orders.user_id', '=', 'users.id')
                     ->join('addresses', 'orders.address_id', '=', 'addresses.id')
+                    ->join('order_items', 'order_items.order_id', '=', 'orders.id')
+                    ->join('products', '.order_items.product_id', '=', 'products.id')
                     ->select('orders.*', 'addresses.recipients_name as name_billing')
                     ->where('orders.payment_status', '=', 'paid')
+                    ->where('products.user_id', '=', auth()->user()->id)
                     ->where('orders.status', '=', 'delivered')
                     ->orderBy('orders.created_at', 'desc')
                     ->get();
@@ -177,8 +199,11 @@ class OrderController extends Controller
     {
 		$emps = Order::join('users', 'orders.user_id', '=', 'users.id')
                     ->join('addresses', 'orders.address_id', '=', 'addresses.id')
+                    ->join('order_items', 'order_items.order_id', '=', 'orders.id')
+                    ->join('products', '.order_items.product_id', '=', 'products.id')
                     ->select('orders.*', 'addresses.recipients_name as name_billing')
                     ->where('orders.payment_status', '=', 'paid')
+                    ->where('products.user_id', '=', auth()->user()->id)
                     ->where('orders.status', '=', 'completed')
                     ->orderBy('orders.created_at', 'desc')
                     ->get();
@@ -254,7 +279,10 @@ class OrderController extends Controller
     {
         $order = Order::join('users', 'orders.user_id', '=', 'users.id')
                 ->join('addresses', 'orders.address_id', '=', 'addresses.id')
+                ->join('order_items', 'order_items.order_id', '=', 'orders.id')
+                ->join('products', '.order_items.product_id', '=', 'products.id')
                 ->select('orders.*', 'addresses.recipients_name as name_billing')
+                ->where('products.user_id', '=', auth()->user()->id)
                 ->orderBy('orders.created_at', 'desc')
                 ->find($id);
 
@@ -269,7 +297,11 @@ class OrderController extends Controller
         $userInfo = Costumer::with('user')
                 ->first();
 
-        return view('gapoktan.pesanan.detail', compact('order', 'reviews', 'userInfo'));
+        if ($order) {
+            return view('gapoktan.pesanan.detail', compact('order', 'reviews', 'userInfo'));
+        } else {
+            return redirect()->back();
+        }
     }
 
     // handle update an employee ajax request

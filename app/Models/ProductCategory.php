@@ -17,7 +17,7 @@ class ProductCategory extends Model
         return $this->hasMany(Product::class);
     }
 
-    public function sluggable()
+    public function sluggable(): array
     {
         return [
             'slug' => [

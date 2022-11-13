@@ -172,25 +172,25 @@ class PoktanController extends Controller
                 'messages' => $validator->getMessageBag()
             ]);
         } else {
-        $user = User::find($request->user_id);
-        if($request->password) {
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->password = Hash::make($request->password);
-        } else {
-            $user->name = $request->name;
-            $user->email = $request->email;
-        }
+            $user = User::find($request->user_id);
+            if($request->password) {
+                $user->name = $request->name;
+                $user->email = $request->email;
+                $user->password = Hash::make($request->password);
+            } else {
+                $user->name = $request->name;
+                $user->email = $request->email;
+            }
             $user->save();
 
             $emp = Poktan::with('user', 'gapoktan')->find($request->emp_id);
             $emp->gapoktan_id = $request->input('gapoktan_id');
             $emp->chairman = $request->input('chairman');
-            if ($request->is_active == 0) {
+            // if ($request->is_active == 0) {
                 $emp->is_active = $request->is_active ? 1 : 0;
-            } elseif ($request->is_active == 1) {
-                $emp->is_active = $request->is_active ? 0 : 1;
-            }
+            // } elseif ($request->is_active == 1) {
+            //     $emp->is_active = $request->is_active ? 0 : 1;
+            // }
             $emp->save();
 
             return response()->json([

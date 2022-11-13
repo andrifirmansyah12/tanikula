@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Pembeli;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Mail\ForgotPassword;
+use App\Mail\RegisterAccount;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
@@ -20,6 +21,8 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
 use Session;
 use Illuminate\Support\Facades\Auth;
+use Socialite;
+use Exception;
 
 class LoginController extends Controller
 {
@@ -261,10 +264,11 @@ class LoginController extends Controller
                 'token' => $token
             ]);
 
-            Mail::send('costumer.register.emailVerificationEmail', ['token' => $token], function ($message) use ($request) {
-                $message->to($request->email);
-                $message->subject('Verifikasi Email');
-            });
+            Mail::to($request->email)->send(new RegisterAccount($token));
+            // Mail::send('costumer.register.emailVerificationEmail', ['token' => $token], function ($message) use ($request) {
+            //     $message->to($request->email);
+            //     $message->subject('Verifikasi Email');
+            // });
 
             return response()->json([
                 'status' => 200,
@@ -407,5 +411,58 @@ class LoginController extends Controller
         Auth::logout();
 
         return redirect()->route('home');
+    }
+
+    public function redirectToGoogle()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function handleGoogleCallback()
+    {
+        try {
+            $user_google    = Socialite::driver('google')->user();
+            $user           = User::where('email', $user_google->getEmail())->first();
+            //jika user ada maka langsung di redirect ke halaman home
+            //jika user tidak ada maka simpan ke database
+            //$user_google menyimpan data google account seperti email, foto, dsb
+            if($user != null){
+                \auth()->login($user, true);
+                if ($user->hasRole('pembeli')) {
+                    // notify()->success("Berhasil melakukan login!", "Berhasil", "topRight");
+                    return redirect()->route('pembeli');
+                } elseif ($user->hasRole('gapoktan')) {
+                    // notify()->success("Berhasil melakukan login!", "Berhasil", "topRight");
+                    return redirect()->route('gapoktan');
+                } elseif ($user->hasRole('poktan')) {
+                    // notify()->success("Berhasil melakukan login!", "Berhasil", "topRight");
+                    return redirect()->route('poktan');
+                } elseif ($user->hasRole('petani')) {
+                    // notify()->success("Berhasil melakukan login!", "Berhasil", "topRight");
+                    return redirect()->route('petani');
+                }
+            }else{
+                $create = User::Create([
+                    'email'             => $user_google->getEmail(),
+                    'name'              => $user_google->getName(),
+                    'password'          => 0,
+                    'email_verified_at' => now(),
+                ]);
+
+                $create = User::where('id', $create->id)->first();
+                $create->google_id = $create->id;
+                $create->update();
+
+                $create->assignRole('pembeli');
+
+                $costumer = new Costumer();
+                $costumer->user_id = $create->id;
+                $costumer->save();
+                \auth()->login($create, true);
+                return redirect()->route('pembeli');
+            }
+        } catch (\Exception $e) {
+            return redirect()->route('redirectToGoogle');
+        }
     }
 }
