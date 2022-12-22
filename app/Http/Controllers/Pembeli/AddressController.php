@@ -94,6 +94,7 @@ class AddressController extends Controller
                                     }$output .= ''.$emp->postal_code.'.</p>
                                 </div>
                             </div>
+                            <div class="d-flex d-md-inline-flex justify-content-between">
                             <a href="#" id="'.$emp->id.'" class="pt-2 fw-bold editAlamat" type="button"
                                 data-bs-toggle="modal" data-bs-target="#EditAlamat" style="color: #16A085"
                                 data-bs-dismiss="modal">Edit alamat</a>';
@@ -102,7 +103,7 @@ class AddressController extends Controller
                             } else if($emp->main_address == 0) {
                                 $output .= '<a href="#" id="'.$emp->id.'" class="mt-2 ms-md-3 bg-light fw-bold updateMainAddress border px-2 rounded" style="color: #16A085">Jadikan alamat utama</a>';
                             }
-                        $output .= '</div>
+                        $output .= '</div></div>
                     </div>
                 </div>
                 ';

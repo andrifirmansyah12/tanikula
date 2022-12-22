@@ -27,9 +27,11 @@
     @include('components.pages.footer')
 
     <!-- ========================= scroll-top ========================= -->
+    @if (!Request::is('cart'))
     <a href="#" class="scroll-top border border-white">
         <i class="lni lni-chevron-up"></i>
     </a>
+    @endif
 
     @include('components.pages.footerJS')
 </body>

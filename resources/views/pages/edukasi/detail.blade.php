@@ -213,29 +213,53 @@
                                         @endif
                                     @endforeach
                                 </h5>
-                                <div class="d-flex flex-row justify-content-between">
+                                <div class="d-flex flex-row justify-content-between align-items-center">
                                     <p><i class="fas fa-solid fa-calendar-day"></i> {{ date("d F Y", strtotime($education->date))}}</p>
-                                    <p>
-                                        <a href="{{ url('/edukasi?diposting-oleh='.$education->user->name) }}" style="color: var(--primary);">
+                                    <p class="d-none d-sm-block">
+                                        <a href="{{ url('/edukasi?diposting-oleh='.$education->user->name) }}"
+                                            style="color: var(--primary);">
                                             <i class="fa-solid fa-user"></i>
                                             @if (empty($education->user->name))
-                                                Tidak ada author
+                                            Tidak ada author
                                             @else
-                                                {{$education->user->name}}
+                                            {{$education->user->name}}
                                             @endif
                                         </a>
                                     </p>
                                     @if (empty($education->created_at))
-                                        <p>
-                                            <i class="fas fa-solid fa-clock"></i>
-                                            Tidak diketahui
-                                        </p>
+                                    <p class="d-none d-sm-block">
+                                        <i class="fas fa-solid fa-clock"></i>
+                                        Tidak diketahui
+                                    </p>
                                     @else
-                                        <p>
-                                            <i class="fas fa-solid fa-clock"></i>
-                                            {{$education->created_at->diffForHumans()}}
-                                        </p>
+                                    <p class="d-none d-sm-block">
+                                        <i class="fas fa-solid fa-clock"></i>
+                                        {{$education->created_at->diffForHumans()}}
+                                    </p>
                                     @endif
+                                    <div class="d-block d-sm-none">
+                                        <p>
+                                            <a href="{{ url('/edukasi?diposting-oleh='.$education->user->name) }}" style="color: var(--primary);">
+                                                <i class="fa-solid fa-user"></i>
+                                                @if (empty($education->user->name))
+                                                    Tidak ada author
+                                                @else
+                                                    {{$education->user->name}}
+                                                @endif
+                                            </a>
+                                        </p>
+                                        @if (empty($education->created_at))
+                                            <p>
+                                                <i class="fas fa-solid fa-clock"></i>
+                                                Tidak diketahui
+                                            </p>
+                                        @else
+                                            <p>
+                                                <i class="fas fa-solid fa-clock"></i>
+                                                {{$education->created_at->diffForHumans()}}
+                                            </p>
+                                        @endif
+                                    </div>
                                 </div>
                                 <p class="text-edukasi">
                                     {{$education->desc}}
@@ -277,11 +301,11 @@
                                         @if($extMore == 'mp4' || $extMore == 'mov' || $extMore == 'vob' || $extMore == 'mpeg' || $extMore == '3gp' || $extMore == 'avi' || $extMore == 'wmv' || $extMore == 'mov' || $extMore == 'amv' || $extMore == 'svi' || $extMore == 'flv' || $extMore == 'mkv' || $extMore == 'webm' || $extMore == 'gif' || $extMore == 'asf')
                                         <div class="text-center">
                                             <video src="{{ asset('../storage/edukasi/' . $item->file) }}" alt="Video" style="width: 92px; height: 60px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"/>
-                                            <a class="video-popup glightbox" style="color: #16A085;"
+                                            {{-- <a class="video-popup glightbox" style="color: #16A085;"
                                                 href="{{ asset('../storage/edukasi/' . $item->file) }}">
                                                 <i class="lni lni-play"
                                                     style="position: absolute; top: 32%; left: 16%;"></i>
-                                            </a>
+                                            </a> --}}
                                         </div>
                                         @elseif ($extMore == 'PNG' || $extMore == 'png' || $extMore == 'jpg' || $extMore == 'jpeg' || $extMore == 'svg' || $extMore == 'gif' || $extMore == 'tiff' || $extMore == 'psd' || $extMore == 'pdf' || $extMore == 'eps' || $extMore == 'ai' || $extMore == 'indd' || $extMore == 'raw')
                                             <img src="{{ asset('../storage/edukasi/' . $item->file) }}" class="img-responsive" alt="Edukasi" style="width: 92px; height: 60px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"/>

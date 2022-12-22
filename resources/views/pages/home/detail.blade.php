@@ -193,10 +193,17 @@
                                                         var stoke = '{{ $product->stoke }}';
 
                                                     </script>
+                                                    @if ($product->stoke < 1)
+                                                    <button disabled class="input-group-text decrement-btn me-1">-</button>
+                                                    <input disabled type="text" name="quantity"
+                                                        class="form-control qty-input text-center" value="1">
+                                                    <button disabled class="input-group-text increment-btn ms-1">+</button>
+                                                    @else
                                                     <button class="input-group-text decrement-btn me-1">-</button>
                                                     <input type="text" name="quantity"
                                                         class="form-control qty-input text-center" value="1">
                                                     <button class="input-group-text increment-btn ms-1">+</button>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -204,7 +211,7 @@
                                             <div class="form-group">
                                                 <label for="color">Lainnya</label>
                                                 <div class="wish-button">
-                                                    <button class="btn" data-bs-toggle="modal"
+                                                    <button disabled type="button" class="btn" data-bs-toggle="modal"
                                                         data-bs-target="#chatModal"><i class="bi bi-chat-dots"></i>
                                                         Chat</button>
                                                 </div>
@@ -315,15 +322,15 @@
                                     @if ($item->photo_product->count() > 0)
                                         @foreach ($item->photo_product->take(1) as $photos)
                                             @if ($photos->name)
-                                            <img src="{{ asset('../storage/produk/'.$photos->name) }}" alt="{{ $item->name }}" class="me-1"
+                                            <img src="{{ asset('../storage/produk/'.$photos->name) }}" alt="{{ $item->name }}" class="me-1 mb-md-0 mb-1"
                                                 style="width: 60px; height: 60px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                                             @else
-                                            <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->name }}" class="me-1"
+                                            <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->name }}" class="me-1 mb-md-0 mb-1"
                                                 style="width: 60px; height: 60px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                                             @endif
                                         @endforeach
                                     @else
-                                        <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->name }}" class="me-1"
+                                        <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->name }}" class="me-1 mb-md-0 mb-1"
                                             style="width: 60px; height: 60px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                                     @endif
                                 @endforeach
@@ -341,7 +348,7 @@
             <div class="owl-carousel owl-theme">
                 @foreach ($product_new as $item)
                 <!-- Start Single Product -->
-                <div class="mx-2 single-product shadow-none {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}" style="
+                <div class="mx-md-2 mx-2 single-product border border-success shadow-none {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}" style="
                     height: 27rem">
                     <div class="product-image {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}">
                                 <a href=" {{ url('home/'.$item->slug) }}">
@@ -928,6 +935,10 @@
     $('.owl-carousel').owlCarousel({
         loop: false,
         responsiveClass: true,
+        URLhashListener:true,
+        autoplayHoverPause:true,
+        startPosition: 'URLHash',
+        stagePadding: 30,
         responsive: {
             0: {
                 items: 1,

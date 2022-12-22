@@ -89,7 +89,7 @@
                                 <div class="dropdown">
                                     <a style="cursor: pointer; background: #16A085; color: #ffff;" class="btn"
                                         data-toggle="dropdown" aria-expanded="false">Daftar</a>
-                                    <div class="dropdown-menu mt-2">
+                                    <div class="dropdown-menu mt-2 shadow border border-secondary">
                                         <a class="dropdown-item" onclick="register('{{ url('/register') }}')"
                                             href="#">Sebagai Pembeli</a>
                                         <a class="dropdown-item"
@@ -151,7 +151,8 @@
                                 @php
                                 $notificationsSum =
                                 App\Models\PushNotification::where('user_id',Auth::id())->sum('is_read', 0);
-                                $notifications = App\Models\PushNotification::where('user_id', Auth::id())->latest()->get();
+                                $notifications = App\Models\PushNotification::where('user_id',
+                                Auth::id())->latest()->get();
                                 @endphp
                                 <a href="javascript:void(0)" class="main-btn">
                                     <i class="lni lni-alarm"></i>
@@ -164,15 +165,19 @@
                                             <span>Pemberitahuan (<span class="notif-count">0</span>)</span>
                                             <form action="#" id="readNotif" method="get">
                                                 @csrf
-                                                <button style="color:#16A085;" class="p-0 bg-white btn btn-sm shadow-none border-white fw-bold" type="submit">Baca Semua</button>
+                                                <button style="color:#16A085;"
+                                                    class="p-0 bg-white btn btn-sm shadow-none border-white fw-bold"
+                                                    type="submit">Baca Semua</button>
                                             </form>
                                         </div>
                                     </div>
                                     <ul class="shopping-list" id="{{ $notifications->count() > 1 ? 'style-1' : ''}}">
                                         @if ($notifications->count() > 0)
                                         @foreach ($notifications as $notif)
-                                        <li class="border p-2 rounded" style="{{ $notif->is_read == 0 ? 'background: antiquewhite' : '' }}">
-                                            {{-- <input type="hidden" name="passingIdNotif" value="{{ $notif->id }}"> --}}
+                                        <li class="border p-2 rounded"
+                                            style="{{ $notif->is_read == 0 ? 'background: antiquewhite' : '' }}">
+                                            {{-- <input type="hidden" name="passingIdNotif" value="{{ $notif->id }}">
+                                            --}}
                                             <div class="cart-img-head">
                                                 <a class="cart-img" href="">
                                                     <img src="{{ asset('img/'.$notif->img) }}" alt="#"
@@ -207,14 +212,35 @@
                                 </div>
                             </div>
 
-                            {{-- ==================================================================================== Cart ============================================================================ --}}
+                            {{-- ===========
+                                Cart
+                                ============ --}}
 
                             <div class="cart-items">
                                 <!-- Shopping Item -->
                                 @php
-                                $cartItemSum = App\Models\Cart::with('product')->where('user_id',
-                                Auth::id())->sum('product_qty');
-                                $cartItem = App\Models\Cart::with('product')->where('user_id', Auth::id())->get();
+                                $cartItemSum = App\Models\Cart::with('product')
+                                ->join('products', 'carts.product_id', 'products.id')
+                                ->select('carts.*', 'products.name as name')
+                                ->where('carts.user_id', Auth::id())
+                                ->where('products.stoke', '!=', 0)
+                                ->sum('product_qty');
+
+                                $cartItem = App\Models\Cart::with('product')
+                                ->join('products', 'carts.product_id', 'products.id')
+                                ->select('carts.*', 'products.name as name')
+                                ->where('carts.user_id', Auth::id())
+                                ->where('products.stoke', '!=', 0)
+                                ->orderBy('products.updated_at', 'desc')
+                                ->get();
+
+                                $cartItemOutOfStock = App\Models\Cart::with('product')
+                                ->join('products', 'carts.product_id', 'products.id')
+                                ->select('carts.*', 'products.name as name')
+                                ->where('carts.user_id', Auth::id())
+                                ->where('products.stoke', '=', 0)
+                                ->orderBy('products.updated_at', 'desc')
+                                ->get();
                                 @endphp
                                 <a href="javascript:void(0)" class="main-btn">
                                     <i class="lni lni-cart"></i>
@@ -229,16 +255,35 @@
                                     @php
                                     $total = 0;
                                     @endphp
-                                    <form action="{{ route('checkout.pembeli') }}" method="post" enctype="multipart/form-data">
+                                    <form action="{{ route('checkout.pembeli') }}" method="post"
+                                        enctype="multipart/form-data">
                                         @csrf
                                         <ul class="shopping-list" id="{{ $cartItem->count() > 1 ? 'style-2' : ''}}">
-                                            @if ($cartItem->count() > 0)
+                                            @if ($cartItem->count() == 0 && $cartItemOutOfStock->count() == 0)
+                                            <div id="app">
+                                                <div class="container">
+                                                    <div class="page-error-notification">
+                                                        <div class="page-inner-notification">
+                                                            <img src="{{ asset('img/undraw_empty_re_opql.svg') }}"
+                                                                alt="">
+                                                            <div class="page-description-notification">
+                                                                Tidak ada produk dikeranjang!
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @endif
                                             @foreach ($cartItem as $item)
                                             <div class="d-flex navbarCheckProductCart">
-                                                <input class="form-check-input" type="checkbox" name="navbar_cart_id[]" value="{{ $item->id }}" id="navbarCheckProductCart">
-                                                <input class="form-check-input" type="hidden" name="navbar_cart_qty" value="{{ $item->product_qty }}" id="navbarCheckProductQty">
-                                                <input class="form-check-input" type="hidden" name="navbar_cart_total" value="{{ $item->product->price }}" id="navbarCheckProductTotal">
-                                                <p class="fw-bold ps-3 mb-2 col-10" style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; overflow: hidden;">
+                                                <input class="form-check-input" type="checkbox" name="navbar_cart_id[]"
+                                                    value="{{ $item->id }}" id="navbarCheckProductCart">
+                                                <input class="form-check-input" type="hidden" name="navbar_cart_qty"
+                                                    value="{{ $item->product_qty }}" id="navbarCheckProductQty">
+                                                <input class="form-check-input" type="hidden" name="navbar_cart_total"
+                                                    value="{{ $item->product->price }}" id="navbarCheckProductTotal">
+                                                <p class="fw-bold ps-3 mb-2 col-10"
+                                                    style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; overflow: hidden;">
                                                     <i class="bi bi-shop"></i> {{ $item->product->user->name }}
                                                 </p>
                                             </div>
@@ -272,7 +317,8 @@
                                                     <h4><a style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;"
                                                             href="{{ url('home/'.$item->product->slug) }}">
                                                             {{ $item->product->name }}</a></h4>
-                                                    <p class="quantity">{{ $item->product_qty }}x - <span class="amount">Rp.
+                                                    <p class="quantity">{{ $item->product_qty }}x - <span
+                                                            class="amount">Rp.
                                                             {{ number_format($item->product->price, 0) }}</span></p>
                                                 </div>
                                             </li>
@@ -280,32 +326,75 @@
                                             $total += $item->product->price * $item->product_qty;
                                             @endphp
                                             @endforeach
-                                            @else
-                                            <div id="app">
-                                                <div class="container">
-                                                    <div class="page-error-notification">
-                                                        <div class="page-inner-notification">
-                                                            <img src="{{ asset('img/undraw_empty_re_opql.svg') }}" alt="">
-                                                            <div class="page-description-notification">
-                                                                Tidak ada produk dikeranjang!
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+
+                                            {{-- ========================= --}}
+                                            {{-- Jika Stok Kosong --}}
+                                            {{-- ================================== --}}
+                                            @if ($cartItemOutOfStock->count() > 0)
+                                            <div class="mb-2 pb-1 d-flex align-items-center border-bottom fw-bold"><i
+                                                    class="bi bi-bag-x pe-2"></i> Produk tidak valid</div>
                                             @endif
+                                            @foreach ($cartItemOutOfStock as $itemOutOfStock)
+                                            <div style="opacity: 70%;" class="d-flex navbarCheckProductCart">
+                                                <input class="form-check-input" type="checkbox" disabled>
+                                                <p class="fw-bold ps-3 mb-2 col-10"
+                                                    style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; overflow: hidden;">
+                                                    <i class="bi bi-shop"></i>
+                                                    {{ $itemOutOfStock->product->user->name }}
+                                                </p>
+                                            </div>
+                                            <li style="opacity: 70%;">
+                                                <div class="cart-img-head">
+                                                    <a class="cart-img"
+                                                        href="{{ url('home/'.$itemOutOfStock->product->slug) }}">
+                                                        @if ($itemOutOfStock->product->photo_product->count() > 0)
+                                                        @foreach ($itemOutOfStock->product->photo_product->take(1) as
+                                                        $photos)
+                                                        @if ($photos->name)
+                                                        <img src="{{ asset('../storage/produk/'.$photos->name) }}"
+                                                            alt="{{ $itemOutOfStock->product->name }}"
+                                                            style="width: 10rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                                        @else
+                                                        <img src="{{ asset('img/no-image.png') }}"
+                                                            alt="{{ $itemOutOfStock->product->name }}"
+                                                            style="width: 10rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                                        @endif
+                                                        @endforeach
+                                                        @else
+                                                        <img src="{{ asset('img/no-image.png') }}"
+                                                            alt="{{ $itemOutOfStock->product->name }}"
+                                                            style="width: 10rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                                        @endif
+                                                    </a>
+                                                </div>
+
+                                                <div class="content">
+                                                    <h4><a style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;"
+                                                            href="{{ url('home/'.$itemOutOfStock->product->slug) }}">
+                                                            {{ $itemOutOfStock->product->name }}</a></h4>
+                                                    <p class="quantity">{{ $itemOutOfStock->product_qty }}x - <span
+                                                            class="amount">Rp.
+                                                            {{ number_format($itemOutOfStock->product->price, 0) }}</span>
+                                                    </p>
+                                                </div>
+                                            </li>
+                                            @endforeach
                                         </ul>
                                         <div class="bottom">
                                             <div class="total">
                                                 <span>Total</span>
-                                                <span class="total-amount d-flex align-items-center">Rp. <p class="navbar-total-price ps-2 py-0 pe-0 m-0">0</p></span>
+                                                <span class="total-amount d-flex align-items-center">Rp. <p
+                                                        class="navbar-total-price ps-2 py-0 pe-0 m-0">0</p></span>
                                             </div>
                                             <div class="button">
                                                 @if ($cartItem->count())
-                                                <button type="submit" style="background: #16A085" class="btn animate">Checkout (<span class="navbar-beli-keranjang-count">0</span>)</a>
-                                                @else
-                                                <a href="{{ url('new-product') }}" class="btn animate">Belanja Sekarang</a>
-                                                @endif
+                                                <button type="submit" style="background: #16A085"
+                                                    class="btn animate">Checkout (<span
+                                                        class="navbar-beli-keranjang-count">0</span>)</a>
+                                                    @else
+                                                    <a href="{{ url('new-product') }}" class="btn animate">Belanja
+                                                        Sekarang</a>
+                                                    @endif
                                             </div>
                                         </div>
                                     </form>

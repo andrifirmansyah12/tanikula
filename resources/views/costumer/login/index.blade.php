@@ -85,14 +85,14 @@
                             </div>
 
                             <div class="form-group">
-                                <input type="submit" value="Masuk" id="login_btn" style="background: #16A085" class="btn text-white btn-block" tabindex="4">
-                                <a class="btn col-12 mt-3 text-white" style="background: #007bff" href="{{ url('auth/google') }}"><i class="bi bi-google text-white"></i> Google Sign In</a>
+                                <input type="submit" value="Masuk" id="login_btn" style="background: #16A085" class="btn py-2 text-white btn-block" tabindex="4">
+                                <a class="btn col-12 mt-3 text-white py-2" style="background: #007bff" href="{{ url('auth/google') }}"><i class="bi bi-google text-white"></i> Google Sign In</a>
                             </div>
                         </form>
                         <div class="mt-3 text-center">
                             <div class="dropdown">
                                 Belum punya akun? <a style="cursor: pointer" data-toggle="dropdown" aria-expanded="false">Daftar</a>
-                                <div class="dropdown-menu shadow-none border border-light">
+                                <div class="dropdown-menu shadow border border-secondary">
                                     <a class="dropdown-item" onclick="register('{{ url('/register') }}')" href="#">Sebagai Pembeli</a>
                                     <a class="dropdown-item" onclick="registerGapoktan('{{ url('/gapoktan/register') }}')" href="#">Sebagai Gapoktan</a>
                                 </div>

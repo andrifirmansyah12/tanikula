@@ -376,7 +376,11 @@ class ProductController extends Controller
     public function countCart()
     {
         if (Auth::user()) {
-            $countCart = Cart::where('user_id', auth()->user()->id)->sum('product_qty');
+            $countCart = Cart::join('products', 'carts.product_id', 'products.id')
+                            ->select('carts.*', 'products.name as name')
+                            ->where('carts.user_id', auth()->user()->id)
+                            ->where('products.stoke', '!=', 0)
+                            ->sum('product_qty');
         } elseif (Auth::guest()) {
             $countCart = 0;
         }
@@ -1191,7 +1195,7 @@ class ProductController extends Controller
                             foreach ($review->user->costumer as $potoProfile) {
                                 if ($potoProfile->image) {
                                     $output .= '<img src="../storage/profile/'.$potoProfile->image.'"
-                                        class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 70px; height: 67px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
+                                        class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 70px; height: 70px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
                                         alt="">';
                                 } else {
                                     $output .= '<img src="../stisla/assets/img/avatar/avatar-1.png"
@@ -1200,10 +1204,10 @@ class ProductController extends Controller
                                 }
                             }
                             $output .= '';
-                                if ($review->hide === 1) {
-                                    $output .= '<span class="ms-1">'.get_starred(strtok($review->user->name, ' ')).'</span>';
-                                } elseif ($review->hide === 0) {
-                                    $output .= '<span class="ms-1">'. strtok($review->user->name, ' ') .'</span>';
+                                if ($review->hide == 1) {
+                                    $output .= '<span class="ms-3">'.get_starred(strtok($review->user->name, ' ')).'</span>';
+                                } elseif ($review->hide == 0) {
+                                    $output .= '<span class="ms-3">'. strtok($review->user->name, ' ') .'</span>';
                                 }
                             $output .= '
                     </div>
@@ -1261,7 +1265,7 @@ class ProductController extends Controller
                             foreach ($review->user->costumer as $potoProfile) {
                                 if ($potoProfile->image) {
                                     $output .= '<img src="../storage/profile/'.$potoProfile->image.'"
-                                        class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 70px; height: 67px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
+                                        class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 70px; height: 70px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
                                         alt="">';
                                 } else {
                                     $output .= '<img src="../stisla/assets/img/avatar/avatar-1.png"
@@ -1270,10 +1274,10 @@ class ProductController extends Controller
                                 }
                             }
                             $output .= '';
-                                if ($review->hide === 1) {
-                                    $output .= '<span class="ms-1">'.get_starred(strtok($review->user->name, ' ')).'</span>';
-                                } elseif ($review->hide === 0) {
-                                    $output .= '<span class="ms-1">'. strtok($review->user->name, ' ') .'</span>';
+                                if ($review->hide == 1) {
+                                    $output .= '<span class="ms-3">'.get_starred(strtok($review->user->name, ' ')).'</span>';
+                                } elseif ($review->hide == 0) {
+                                    $output .= '<span class="ms-3">'. strtok($review->user->name, ' ') .'</span>';
                                 }
                             $output .= '
                     </div>
@@ -1331,7 +1335,7 @@ class ProductController extends Controller
                             foreach ($review->user->costumer as $potoProfile) {
                                 if ($potoProfile->image) {
                                     $output .= '<img src="../storage/profile/'.$potoProfile->image.'"
-                                        class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 70px; height: 67px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
+                                        class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 70px; height: 70px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
                                         alt="">';
                                 } else {
                                     $output .= '<img src="../stisla/assets/img/avatar/avatar-1.png"
@@ -1340,10 +1344,10 @@ class ProductController extends Controller
                                 }
                             }
                             $output .= '';
-                                if ($review->hide === 1) {
-                                    $output .= '<span class="ms-1">'.get_starred(strtok($review->user->name, ' ')).'</span>';
-                                } elseif ($review->hide === 0) {
-                                    $output .= '<span class="ms-1">'. strtok($review->user->name, ' ') .'</span>';
+                                if ($review->hide == 1) {
+                                    $output .= '<span class="ms-3">'.get_starred(strtok($review->user->name, ' ')).'</span>';
+                                } elseif ($review->hide == 0) {
+                                    $output .= '<span class="ms-3">'. strtok($review->user->name, ' ') .'</span>';
                                 }
                             $output .= '
                     </div>
@@ -1401,7 +1405,7 @@ class ProductController extends Controller
                             foreach ($review->user->costumer as $potoProfile) {
                                 if ($potoProfile->image) {
                                     $output .= '<img src="../storage/profile/'.$potoProfile->image.'"
-                                        class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 70px; height: 67px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
+                                        class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 70px; height: 70px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
                                         alt="">';
                                 } else {
                                     $output .= '<img src="../stisla/assets/img/avatar/avatar-1.png"
@@ -1410,10 +1414,10 @@ class ProductController extends Controller
                                 }
                             }
                             $output .= '';
-                                if ($review->hide === 1) {
-                                    $output .= '<span class="ms-1">'.get_starred(strtok($review->user->name, ' ')).'</span>';
-                                } elseif ($review->hide === 0) {
-                                    $output .= '<span class="ms-1">'. strtok($review->user->name, ' ') .'</span>';
+                                if ($review->hide == 1) {
+                                    $output .= '<span class="ms-3">'.get_starred(strtok($review->user->name, ' ')).'</span>';
+                                } elseif ($review->hide == 0) {
+                                    $output .= '<span class="ms-3">'. strtok($review->user->name, ' ') .'</span>';
                                 }
                             $output .= '
                     </div>
@@ -1471,7 +1475,7 @@ class ProductController extends Controller
                             foreach ($review->user->costumer as $potoProfile) {
                                 if ($potoProfile->image) {
                                     $output .= '<img src="../storage/profile/'.$potoProfile->image.'"
-                                        class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 70px; height: 67px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
+                                        class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 70px; height: 70px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
                                         alt="">';
                                 } else {
                                     $output .= '<img src="../stisla/assets/img/avatar/avatar-1.png"
@@ -1480,10 +1484,10 @@ class ProductController extends Controller
                                 }
                             }
                             $output .= '';
-                                if ($review->hide === 1) {
-                                    $output .= '<span class="ms-1">'.get_starred(strtok($review->user->name, ' ')).'</span>';
-                                } elseif ($review->hide === 0) {
-                                    $output .= '<span class="ms-1">'. strtok($review->user->name, ' ') .'</span>';
+                                if ($review->hide == 1) {
+                                    $output .= '<span class="ms-3">'.get_starred(strtok($review->user->name, ' ')).'</span>';
+                                } elseif ($review->hide == 0) {
+                                    $output .= '<span class="ms-3">'. strtok($review->user->name, ' ') .'</span>';
                                 }
                             $output .= '
                     </div>

@@ -35,12 +35,12 @@
     }
 
     .page-error img {
-        width: 30rem;
+        width: 15rem;
     }
 
     .page-error .page-description {
         padding-top: 30px;
-        font-size: 18px;
+        font-size: 15px;
         font-weight: 400;
         color: color: var(--primary);;
     }
@@ -49,6 +49,23 @@
         .page-error {
             padding-top: 0px;
         }
+    }
+
+    .opacity-90 {
+        opacity: 70%;
+    }
+
+    .keranjang_barang {
+        display: flex;
+        font-size: 16px;
+        background: #fff;
+        position: fixed;
+        bottom: 0px;
+        z-index: 3;
+        cursor: pointer;
+        -webkit-transition: all .3s ease-out 0s;
+        transition: all .3s ease-out 0s;
+        border-radius: 4px;
     }
 </style>
 @endsection
@@ -69,7 +86,22 @@
                                 $totalPrice = 0;
                                 $totalQty = 0;
                             @endphp
-                            @if ($cartItem->count())
+                            @if ($cartItem->count() == 0 && $cartItemOutOfStock->count() == 0)
+                            <div id="app">
+                                <section class="section">
+                                    <div class="container">
+                                        <div class="page-error">
+                                            <div class="page-inner">
+                                                <img src="{{ asset('img/undraw_empty_re_opql.svg') }}" alt="">
+                                                <div class="page-description">
+                                                    Tidak ada produk dikeranjang!
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                            @endif
                             @foreach ($cartItem as $item)
                                 <div class="border-bottom mb-4 pb-4 pb-md-0" id="product_data">
                                     <div class="row align-items-center mb-6 mb-md-3">
@@ -157,25 +189,93 @@
                                     </div>
                                 </div>
                             @endforeach
-                            @else
-                            <div id="app">
-                                <section class="section">
-                                    <div class="container">
-                                        <div class="page-error">
-                                            <div class="page-inner">
-                                                <img src="{{ asset('img/undraw_empty_re_opql.svg') }}" alt="">
-                                                <div class="page-description">
-                                                    Tidak ada produk dikeranjang!
+                            {{-- ========================= --}}
+                                        {{-- Jika Stok Produk Kosong --}}
+                                        {{-- ================================== --}}
+                            @if ($cartItemOutOfStock->count() > 0)
+                                <div class="mb-3 d-flex align-items-center border-bottom fw-bold"><i class="bi bi-bag-x h4 pe-2"></i> Produk tidak valid</div>
+                            @endif
+                            @foreach ($cartItemOutOfStock as $itemOutOfStock)
+                                <div class="opacity-90 mb-4 pb-4 pb-md-0" id="product_outof_stock">
+                                    <div class="row align-items-center mb-6 mb-md-3">
+                                        <div class="col-12 col-md-12 col-lg-12 mb-6 mb-md-0">
+                                            <div class="row align-items-center">
+                                                <div class="d-flex checkProductCart">
+                                                    <input disabled class="form-check-input" type="checkbox">
+                                                    <p class="fw-bold ps-3 mb-2"><i class="bi bi-shop"></i> {{ $itemOutOfStock->product->user->name }}</p>
+                                                </div>
+                                                <div class="col-12 col-md-3 col-lg-3">
+                                                    <div class="d-flex align-items-center justify-content-center bg-light"
+                                                        style="width: 160px; height: 150px;">
+                                                        @if ($itemOutOfStock->product->photo_product->count() > 0)
+                                                            @foreach ($itemOutOfStock->product->photo_product->take(1) as $photos)
+                                                                @if ($photos->name)
+                                                                    <img class="img-fluid rounded" style="width: 9rem; height: 7rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
+                                                                        src="{{ asset('../storage/produk/'.$photos->name) }}" alt="{{ $itemOutOfStock->product->name }}">
+                                                                @else
+                                                                    <img class="img-fluid rounded" style="width: 9rem; height: 7rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
+                                                                        src="{{ asset('img/no-image.png') }}" alt="{{ $itemOutOfStock->product->name }}">
+                                                                @endif
+                                                            @endforeach
+                                                        @else
+                                                            <img class="img-fluid rounded" style="width: 9rem; height: 7rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
+                                                                src="{{ asset('img/no-image.png') }}" alt="{{ $itemOutOfStock->product->name }}">
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-6 mt-2 ms-md-3 mt-md-0">
+                                                    @if ($itemOutOfStock->product->discount != 0)
+                                                        <p class="small mb-2 badge bg-danger">{{ $itemOutOfStock->product->discount }}% OFF</p>
+                                                    @endif
+                                                    <h3 class="mb-2 fs-6 fw-bold"><a style="color:#16A085;" href="{{ url('home/'.$itemOutOfStock->product->slug) }}">{{ $itemOutOfStock->product->name }}</a></h3>
+                                                    <p class="small" style="color:#16A085;">Habis Terjual</p>
+                                                    @if ($itemOutOfStock->product->price_discount)
+                                                        <span class="text-decoration-line-through text-muted text-danger" style="font-size: 13px">Rp. {{ number_format($itemOutOfStock->product->price_discount, 0) }} <span class="fs-6 fw-bold" style="color:#16A085;">Rp. {{ number_format($itemOutOfStock->product->price, 0) }}</span></span>
+                                                    @else
+                                                        <span>Rp. {{ number_format($itemOutOfStock->product->price, 0) }}</span>
+                                                    @endif
+                                                </div>
+                                                <input type="hidden" value="{{ $itemOutOfStock->product_id }}" id="prod_id_outof_stock">
+                                                <div class="col-12 mt-3 mt-md-0">
+                                                    <div class="d-flex flex-md-row flex-column-reverse justify-content-end align-items-end align-items-md-center">
+                                                        <div class="d-flex flex-row mt-2 mt-md-0">
+                                                            <div class="text-black pe-3">
+                                                                <button class="btn" disabled style="background: #16A085; color: white">+
+                                                                    Wishlist</button>
+                                                            </div>
+                                                            <div>
+                                                                <button class="delete-out-of-stock-product btn btn-danger ms-3"><i
+                                                                    class="lni lni-trash-can"></i></button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-8 col-md-3 form-group ps-0 ps-md-3">
+                                                            <div class="d-flex justify-content-between">
+                                                                <button disabled
+                                                                    class="input-group-text changeQuantity me-1" style="background: #16A085; color: white">-</button>
+                                                                <input disabled type="text" name="quantity"
+                                                                    class="form-control qty-input text-center"
+                                                                    value="1">
+                                                                @if ($itemOutOfStock->product->stoke > $itemOutOfStock->product_qty)
+                                                                <button disabled
+                                                                    class="input-group-text changeQuantity ms-1" style="background: #16A085; color: white">+</button>
+                                                                @else
+                                                                <button disabled
+                                                                    class="input-group-text changeQuantity ms-1" style="background: #16A085; color: white">+</button>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </section>
-                            </div>
-                            @endif
+                                </div>
+                            @endforeach
                         </div>
                     </div>
-                    <div class="col-12 col-xl-4">
+
+                    {{-- =============== WEB ==================== --}}
+                    <div class="col-12 col-xl-4 d-none d-sm-block">
                         <div class="m-0 m-xl-4 p-4 shadow border rounded">
                             <h3 class="mb-3 fs-4">Ringkasan Belanja</h3>
                             <div
@@ -194,6 +294,26 @@
                             @endif
                         </div>
                     </div>
+
+                    {{-- ====================== MOBILE ====================== --}}
+                    <div class="keranjang_barang shadow border d-block d-sm-none">
+                        <div class="col-12">
+                            <div class="d-flex pt-3 mb-10 justify-content-between align-items-center">
+                                <div class="f-flex">
+                                    <p class="fw-bold">Total</p>
+                                    <p>(<span class="count-product">0</span> Barang)</p>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-end">
+                                    <span class="me-2 fw-bold">Rp<span class="total-price">0</span></span>
+                                    @if ($cartItem->count())
+                                        <button type="submit" class="btn text-capitalize text-white" style="background: #16A085;" href="{{ url('cart/shipment') }}">Checkout(<span class="beli-keranjang-count">0</span>)</a>
+                                    @else
+                                        <a class="btn text-capitalize text-white" style="background: #16A085;" href="{{ url('new-product') }}">Belanja Sekarang</a>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </form>
             <div class="product-details-info shadow">
@@ -202,7 +322,7 @@
                     <div class="owl-carousel owl-theme">
                         @foreach ($product_new as $item)
                         <!-- Start Single Product -->
-                        <div class="mx-2 single-product shadow-none {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}" style="height: 27rem">
+                        <div class="mx-2 single-product shadow-none border border-success {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}" style="height: 27rem">
                             <div class="product-image {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}">
                                 <a href="{{ url('home/'.$item->slug) }}">
                                     @if ($item->stoke === 0)
@@ -290,20 +410,24 @@
 <script type="text/javascript">
     $( function() {
         $('.owl-carousel').owlCarousel({
-            loop:false,
-            responsiveClass:true,
-            responsive:{
-                0:{
-                    items:1,
+            loop: false,
+            responsiveClass: true,
+            URLhashListener:true,
+            autoplayHoverPause:true,
+            startPosition: 'URLHash',
+            stagePadding: 30,
+            responsive: {
+                0: {
+                    items: 1,
                 },
-                480:{
-                    items:2,
+                480: {
+                    items: 2,
                 },
-                600:{
-                    items:3,
+                600: {
+                    items: 3,
                 },
-                1000:{
-                    items:4,
+                1000: {
+                    items: 4,
                 }
             }
         });

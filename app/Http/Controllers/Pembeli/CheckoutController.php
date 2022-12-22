@@ -32,13 +32,13 @@ class CheckoutController extends Controller
             ->orderBy('addresses.updated_at', 'desc')
             ->take(1)
             ->get();
-        $old_cartItem = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
-        foreach ($old_cartItem as $item) {
-            if (!Product::where('id', $item->product_id)->where('stoke', '>=', $item->product_qty)->exists()) {
-                $removeItem = Cart::where('user_id', Auth::id())->where('product_id', $item->product_id)->first();
-                $removeItem->delete();
-            }
-        }
+        // $old_cartItem = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
+        // foreach ($old_cartItem as $item) {
+        //     if (!Product::where('id', $item->product_id)->where('stoke', '>=', $item->product_qty)->exists()) {
+        //         $removeItem = Cart::where('user_id', Auth::id())->where('product_id', $item->product_id)->first();
+        //         $removeItem->delete();
+        //     }
+        // }
 
         $cart_id =  $request->input('cart_id', []);
         $navbar_cart_id =  $request->input('navbar_cart_id', []);
@@ -56,9 +56,11 @@ class CheckoutController extends Controller
                 return $query->whereIn('id', $navbar_cart_id);
             })->latest()->get();
         } else {
-            $cartItem = Cart::with('product')->where('user_id', '=', auth()->user()->id)->where(static function ($query) use ($cart_id) {
-                return $query->whereIn('id', $cart_id);
-            })->latest()->get();
+            // $cartItem = Cart::with('product')->where('user_id', '=', auth()->user()->id)->where(static function ($query) use ($cart_id) {
+            //     return $query->whereIn('id', $cart_id);
+            // })->latest()->get();
+            notify()->warning("Harap pilih produk!", "Peringatan", "topRight");
+            return redirect()->back();
         }
 
         // $cartItem = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
@@ -92,6 +94,7 @@ class CheckoutController extends Controller
         }
 
         return view('pages.checkout.index', compact('cartItem', 'address', 'result_cost', 'data_service'));
+
     }
 
     //function untuk calculate cost

@@ -5,6 +5,9 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <link rel="stylesheet" href="https://unpkg.com/placeholder-loading/dist/css/placeholder-loading.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+    integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style>
     .featured-categories .section-title {
         margin-top: 60px;
@@ -125,39 +128,104 @@
                 </div>
             </div>
         </div>
-        <div class="row mx-4 mx-sm-0">
+        <div class="row mx-2 mx-sm-0">
             @if ($category_product->count())
             @foreach ($category_product as $item)
-            <div class="col-lg-3 col-md-6 col-12">
-                <div class="single-category shadow border rounded bg-body">
-                    <h4 class="heading"><a style="color:#16A085;" href="{{ url('product-category/'.$item->slug) }}"> {{ $item->name }}</a></h4>
-                    <div class="images d-block">
+            <div class="col-3 col-sm-3 col-md-2">
+                {{-- Web --}}
+                <div class="d-none d-sm-block">
+                    <div class="d-flex justify-content-center align-items-center">
                         @if ($item->id == '1')
-                            <img src="{{ asset('img/kategori-produk/beras.png') }}" class="img-fluid pt-3 pe-4" style="width: 6rem; height: 4rem; margin-right: 70px"
+                        <div class="border rounded p-3 mt-5">
+                            <img src="{{ asset('img/kategori-produk/beras.png') }}" class="img-fluid" style="width: 3rem; height: 3rem;"
                                 alt="{{$item->name}}">
+                        </div>
                         @elseif ($item->id == '2')
-                            <img src="{{ asset('img/kategori-produk/buah.png') }}" class="img-fluid pt-3 pe-4" style="width: 6rem; height: 4rem; margin-right: 70px"
+                        <div class="border rounded p-3 mt-5">
+                            <img src="{{ asset('img/kategori-produk/buah.png') }}" class="img-fluid" style="width: 3rem; height: 3rem;"
                                 alt="{{$item->name}}">
+                        </div>
                         @elseif ($item->id == '3')
-                            <img src="{{ asset('img/kategori-produk/olahan-buah.png') }}" class="img-fluid pt-3 pe-4" style="width: 6rem; height: 4rem; margin-right: 70px"
+                        <div class="border rounded p-3 mt-5">
+                            <img src="{{ asset('img/kategori-produk/olahan-buah.png') }}" class="img-fluid" style="width: 3rem; height: 3rem;"
                                 alt="{{$item->name}}">
+                        </div>
                         @elseif ($item->id == '4')
-                            <img src="{{ asset('img/kategori-produk/bibit-sayuran.png') }}" class="img-fluid pt-3 pe-4" style="width: 6rem; height: 4rem; margin-right: 70px"
+                        <div class="border rounded p-3 mt-5">
+                            <img src="{{ asset('img/kategori-produk/bibit-sayuran.png') }}" class="img-fluid" style="width: 3rem; height: 3rem;"
                                 alt="{{$item->name}}">
+                        </div>
                         @elseif ($item->id == '5')
-                            <img src="{{ asset('img/kategori-produk/sayuran.png') }}" class="img-fluid pt-3 pe-4" style="width: 6rem; height: 4rem; margin-right: 70px"
+                        <div class="border rounded p-3 mt-5">
+                            <img src="{{ asset('img/kategori-produk/sayuran.png') }}" class="img-fluid" style="width: 3rem; height: 3rem;"
                                 alt="{{$item->name}}">
+                        </div>
                         @elseif ($item->id == '6')
-                            <img src="{{ asset('img/kategori-produk/roti.png') }}" class="img-fluid pt-3 pe-4" style="width: 6rem; height: 4rem; margin-right: 70px"
+                        <div class="border rounded p-3 mt-5">
+                            <img src="{{ asset('img/kategori-produk/roti.png') }}" class="img-fluid" style="width: 3rem; height: 3rem;"
                                 alt="{{$item->name}}">
+                        </div>
                         @elseif ($item->id == '7')
-                            <img src="{{ asset('img/kategori-produk/jamu.png') }}" class="img-fluid pt-3 pe-4" style="width: 6rem; height: 4rem; margin-right: 70px"
+                        <div class="border rounded p-3 mt-5">
+                            <img src="{{ asset('img/kategori-produk/jamu.png') }}" class="img-fluid" style="width: 3rem; height: 3rem;"
                                 alt="{{$item->name}}">
+                        </div>
                         @elseif ($item->id == '8')
-                            <img src="{{ asset('img/kategori-produk/suau-kedelai.png') }}" class="img-fluid pt-3 pe-4" style="width: 6rem; height: 4rem; margin-right: 70px"
+                        <div class="border rounded p-3 mt-5">
+                            <img src="{{ asset('img/kategori-produk/suau-kedelai.png') }}" class="img-fluid" style="width: 3rem; height: 3rem;"
                                 alt="{{$item->name}}">
+                        </div>
                         @endif
                     </div>
+                    <p class="text-center pt-1" style="line-height: 19px"><a style="color:#16A085;" href="{{ url('product-category/'.$item->slug) }}"> {{ $item->name }}</a></p>
+                </div>
+
+                {{-- Mobile --}}
+                <div class="d-block d-sm-none">
+                    <div class="d-flex justify-content-center align-items-center">
+                        @if ($item->id == '1')
+                        <div class="border rounded p-2 mt-2">
+                            <img src="{{ asset('img/kategori-produk/beras.png') }}" class="img-fluid" style="width: 2rem; height: 2rem;"
+                                alt="{{$item->name}}">
+                        </div>
+                        @elseif ($item->id == '2')
+                        <div class="border rounded p-2 mt-2">
+                            <img src="{{ asset('img/kategori-produk/buah.png') }}" class="img-fluid" style="width: 2rem; height: 2rem;"
+                                alt="{{$item->name}}">
+                        </div>
+                        @elseif ($item->id == '3')
+                        <div class="border rounded p-2 mt-2">
+                            <img src="{{ asset('img/kategori-produk/olahan-buah.png') }}" class="img-fluid" style="width: 2rem; height: 2rem;"
+                                alt="{{$item->name}}">
+                        </div>
+                        @elseif ($item->id == '4')
+                        <div class="border rounded p-2 mt-2">
+                            <img src="{{ asset('img/kategori-produk/bibit-sayuran.png') }}" class="img-fluid" style="width: 2rem; height: 2rem;"
+                                alt="{{$item->name}}">
+                        </div>
+                        @elseif ($item->id == '5')
+                        <div class="border rounded p-2 mt-4">
+                            <img src="{{ asset('img/kategori-produk/sayuran.png') }}" class="img-fluid" style="width: 2rem; height: 2rem;"
+                                alt="{{$item->name}}">
+                        </div>
+                        @elseif ($item->id == '6')
+                        <div class="border rounded p-2 mt-4">
+                            <img src="{{ asset('img/kategori-produk/roti.png') }}" class="img-fluid" style="width: 2rem; height: 2rem;"
+                                alt="{{$item->name}}">
+                        </div>
+                        @elseif ($item->id == '7')
+                        <div class="border rounded p-2 mt-4">
+                            <img src="{{ asset('img/kategori-produk/jamu.png') }}" class="img-fluid" style="width: 2rem; height: 2rem;"
+                                alt="{{$item->name}}">
+                        </div>
+                        @elseif ($item->id == '8')
+                        <div class="border rounded p-2 mt-4">
+                            <img src="{{ asset('img/kategori-produk/suau-kedelai.png') }}" class="img-fluid" style="width: 2rem; height: 2rem;"
+                                alt="{{$item->name}}">
+                        </div>
+                        @endif
+                    </div>
+                    <p class="text-center pt-1" style="line-height: 19px"><a style="color:#16A085;" href="{{ url('product-category/'.$item->slug) }}"> {{ $item->name }}</a></p>
                 </div>
             </div>
             @endforeach
@@ -192,8 +260,114 @@
                 </div>
             </div>
         </div>
-        <div class="row mx-4 mx-sm-0" id="homeNewProduct">
+        <div class="row mx-4 mx-sm-0 d-none d-sm-flex" id="homeNewProduct">
             {{-- Content --}}
+        </div>
+
+        @php
+            $product_new = App\Models\Product::with('photo_product', 'review')
+                    ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
+                    ->join('users', 'products.user_id', '=', 'users.id')
+                    ->select('products.*', 'product_categories.name as category_name')
+                    ->where('product_categories.is_active', '=', 1)
+                    ->where('products.is_active', '=', 1)
+                    ->orderBy('products.updated_at', 'desc')
+                    ->take(8)
+                    ->get();
+        @endphp
+        <div class="d-block d-sm-none">
+            <div class="owl-carousel owl-theme">
+                @foreach ($product_new as $item)
+                <!-- Start Single Product -->
+                <div class="mx-md-2 mx-3 single-product mt-0 shadow-none {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}"
+                    style="
+                            height: 26rem">
+                    <div class="product-image {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}">
+                        <a href=" {{ url('home/'.$item->slug) }}">
+                            @if ($item->stoke === 0)
+                            <div style="z-index: 3"
+                                class="badge bg-danger px-3 position-absolute top-50 start-50 translate-middle">
+                                <h5 class="text-white">Stok Habis</h5>
+                            </div>
+                            @endif
+                            @if ($item->photo_product->count() > 0)
+                            @foreach ($item->photo_product->take(1) as $photos)
+                            @if ($photos->name)
+                            <img src="{{ asset('../storage/produk/'.$photos->name) }}" alt="{{ $item->name }}"
+                                style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                            @else
+                            <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->name }}"
+                                style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                            @endif
+                            @endforeach
+                            @else
+                            <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->name }}"
+                                style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                            @endif
+                        </a>
+                    </div>
+                    <div class="product-info {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}">
+                        @if ($item->discount != 0)
+                        <div class=" d-flex justify-content-between">
+                            <a href="{{ url('product-category/'.$item->product_category->slug) }}">
+                                <span class="category">{{ $item->category_name }}</span>
+                            </a>
+                            <p class="small category text-white badge bg-danger">{{ $item->discount }}% OFF</p>
+                        </div>
+                        @else
+                        <a href="{{ url('product-category/'.$item->product_category->slug) }}">
+                            <span class="category">{{ $item->category_name }}</span>
+                        </a>
+                        @endif
+                        <p class="small" style="color:#16A085;">Stok tersisa {{ $item->stoke }}</p>
+                        <h4 class="title text-capitalize">
+                            <a href="{{ url('home/'.$item->slug) }}"
+                                style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">{{ $item->name }}</a>
+                        </h4>
+                        <ul class="review">
+                            <div>
+                                @if ($item->stock_out)
+                                <span>{{$item->stock_out}} Terjual</span>
+                                @else
+                                <span>0 Terjual</span>
+                                @endif
+                            </div>
+                            @php
+                            $reviewProduct = App\Models\Review::where('product_id', $item->id)->get();
+                            $ratingProductSum = App\Models\Review::where('product_id', $item->id)->sum('stars_rated');
+                            if ($reviewProduct->count() > 0){
+                            $ratingProductValue = $ratingProductSum / $reviewProduct->count();
+                            } else {
+                            $ratingProductValue = 0;
+                            }
+                            $ratingsProduckAll = number_format($ratingProductValue)
+                            @endphp
+                            @for ($i = 1; $i <= $ratingsProduckAll; $i++) <li><i class="lni lni-star-filled"></i></li>
+                                @endfor
+                                @for ($j = $ratingsProduckAll+1; $j <= 5; $j++) <li><i class="lni lni-star"></i>
+                                    </li>
+                                    @endfor
+                        </ul>
+                        <div class="fw-bold mt-2">
+                            @if ($item->price_discount)
+                            <span class="text-decoration-line-through text-muted " style="font-size: 13px">Rp.
+                                {{ number_format($item->price_discount, 0) }} <span style="color: #16A085">Rp.
+                                    {{ number_format($item->price, 0) }}</span></span>
+                            @else
+                            <span style="color: #16A085">Rp. {{ number_format($item->price, 0) }}</span>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+                <div class="mx-md-2 mx-3 single-product mt-0 shadow-none bg-warning"
+                    style="
+                            height: 26rem">
+                    <div class="text-center" style="padding-top: 70%">
+                        <h5 class="fw-bold text-white"><a href="{{ url('new-product') }}">Lainnya...</a></h5>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -205,13 +379,120 @@
         <div class="row">
             <div class="col-12">
                 <div class="d-flex align-items-center section-title">
-                    <h2>Berdasarkan Pencarianmu</h2>
-                    <a href="{{ url('based-on-your-search') }}">Lihat semua</a>
+                    <h2 class="col-6 col-sm-5">Berdasarkan Pencarianmu</h2>
+                    <a class="col-6 col-sm-0" href="{{ url('based-on-your-search') }}">Lihat semua</a>
                 </div>
             </div>
         </div>
-        <div class="row mx-4 mx-sm-0" id="homeSearchProduct">
+        <div class="row mx-4 mx-sm-0 d-none d-sm-flex" id="homeSearchProduct">
             {{-- Content --}}
+        </div>
+
+        @php
+            $product_search = App\Models\Product::with('photo_product', 'review', 'orderItems')
+                    ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
+                    ->join('users', 'products.user_id', '=', 'users.id')
+                    ->select('products.*', 'product_categories.name as category_name')
+                    ->where('product_categories.is_active', '=', 1)
+                    ->where('products.is_active', '=', 1)
+                    ->orderBy('products.updated_at', 'desc')
+                    ->orderByRaw('RAND()')
+                    ->take(8)
+                    ->get();
+        @endphp
+        <div class="d-block d-sm-none">
+            <div class="owl-carousel owl-theme">
+                @foreach ($product_search as $item)
+                <!-- Start Single Product -->
+                <div class="mx-md-2 mx-3 single-product mt-0 border border-success shadow-none {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}"
+                    style="
+                            height: 26rem">
+                    <div class="product-image {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}">
+                        <a href=" {{ url('home/'.$item->slug) }}">
+                            @if ($item->stoke === 0)
+                            <div style="z-index: 3"
+                                class="badge bg-danger px-3 position-absolute top-50 start-50 translate-middle">
+                                <h5 class="text-white">Stok Habis</h5>
+                            </div>
+                            @endif
+                            @if ($item->photo_product->count() > 0)
+                            @foreach ($item->photo_product->take(1) as $photos)
+                            @if ($photos->name)
+                            <img src="{{ asset('../storage/produk/'.$photos->name) }}" alt="{{ $item->name }}"
+                                style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                            @else
+                            <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->name }}"
+                                style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                            @endif
+                            @endforeach
+                            @else
+                            <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->name }}"
+                                style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                            @endif
+                        </a>
+                    </div>
+                    <div class="product-info {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}">
+                        @if ($item->discount != 0)
+                        <div class=" d-flex justify-content-between">
+                            <a href="{{ url('product-category/'.$item->product_category->slug) }}">
+                                <span class="category">{{ $item->category_name }}</span>
+                            </a>
+                            <p class="small category text-white badge bg-danger">{{ $item->discount }}% OFF</p>
+                        </div>
+                        @else
+                        <a href="{{ url('product-category/'.$item->product_category->slug) }}">
+                            <span class="category">{{ $item->category_name }}</span>
+                        </a>
+                        @endif
+                        <p class="small" style="color:#16A085;">Stok tersisa {{ $item->stoke }}</p>
+                        <h4 class="title text-capitalize">
+                            <a href="{{ url('home/'.$item->slug) }}"
+                                style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">{{ $item->name }}</a>
+                        </h4>
+                        <ul class="review">
+                            <div>
+                                @if ($item->stock_out)
+                                <span>{{$item->stock_out}} Terjual</span>
+                                @else
+                                <span>0 Terjual</span>
+                                @endif
+                            </div>
+                            @php
+                            $reviewProduct = App\Models\Review::where('product_id', $item->id)->get();
+                            $ratingProductSum = App\Models\Review::where('product_id', $item->id)->sum('stars_rated');
+                            if ($reviewProduct->count() > 0){
+                            $ratingProductValue = $ratingProductSum / $reviewProduct->count();
+                            } else {
+                            $ratingProductValue = 0;
+                            }
+                            $ratingsProduckAll = number_format($ratingProductValue)
+                            @endphp
+                            @for ($i = 1; $i <= $ratingsProduckAll; $i++) <li><i class="lni lni-star-filled"></i></li>
+                                @endfor
+                                @for ($j = $ratingsProduckAll+1; $j <= 5; $j++) <li><i class="lni lni-star"></i>
+                                    </li>
+                                    @endfor
+                        </ul>
+                        <div class="fw-bold mt-2">
+                            @if ($item->price_discount)
+                            <span class="text-decoration-line-through text-muted " style="font-size: 13px">Rp.
+                                {{ number_format($item->price_discount, 0) }} <span style="color: #16A085">Rp.
+                                    {{ number_format($item->price, 0) }}</span></span>
+                            @else
+                            <span style="color: #16A085">Rp. {{ number_format($item->price, 0) }}</span>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+                <div class="mx-md-2 mx-3 single-product border border-success mt-0 shadow-none bg-warning"
+                    style="
+                            height: 26rem">
+                    <div class="text-center" style="padding-top: 70%">
+                        <h5 class="fw-bold text-white"><a href="{{ url('based-on-your-search') }}">Lainnya...</a></h5>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -267,8 +548,26 @@
 <!-- End Shipping Info -->
 @endsection
 @section('script')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+    integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <!-- AKHIR LIBARARY JS -->
 <script>
+    $('.owl-carousel').owlCarousel({
+        loop: false,
+        responsiveClass: true,
+        center:true,
+        URLhashListener:true,
+        autoplayHoverPause:true,
+        startPosition: 'URLHash',
+        responsive: {
+            0: {
+                stagePadding: 40,
+                items: 1,
+            },
+        }
+    });
+
     $(document).ready(function() {
         $.ajaxSetup({
             headers: {

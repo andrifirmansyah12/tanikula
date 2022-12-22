@@ -54,21 +54,32 @@ class CartController extends Controller
 
     public function viewCart()
     {
-        $cartItem = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
+        $cartItem = Cart::with('product')
+                    ->join('products', 'carts.product_id', 'products.id')
+                    ->select('carts.*', 'products.name as name')
+                    ->where('carts.user_id', Auth::id())
+                    ->where('products.stoke', '!=', 0)
+                    ->orderBy('products.updated_at', 'desc')
+                    ->get();
 
-        foreach ($cartItem as $item) {
-            $product_new = Product::with('photo_product', 'review')
+        $cartItemOutOfStock = Cart::with('product')
+                    ->join('products', 'carts.product_id', 'products.id')
+                    ->select('carts.*', 'products.name as name')
+                    ->where('carts.user_id', Auth::id())
+                    ->where('products.stoke', '=', 0)
+                    ->orderBy('products.updated_at', 'desc')
+                    ->get();
+
+        $product_new = Product::with('photo_product', 'review')
                     ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
                     ->join('users', 'products.user_id', '=', 'users.id')
                     ->select('products.*', 'product_categories.name as category_name')
                     ->where('product_categories.is_active', '=', 1)
-                    ->where('products.id', '!=',  $item->product_id)
                     ->where('products.is_active', '=', 1)
                     ->orderBy('products.updated_at', 'desc')
                     ->get();
-        }
 
-        return view('pages.bag.index', compact('cartItem', 'product_new'));
+        return view('pages.bag.index', compact('cartItem', 'product_new', 'cartItemOutOfStock'));
     }
 
     public function deleteCartItem(Request $request)
@@ -77,6 +88,20 @@ class CartController extends Controller
             $product_id = $request->input('product_id');
             if (Cart::where('product_id', $product_id)->where('user_id', Auth::id())->exists()) {
                 $cartItem = Cart::where('product_id', $product_id)->where('user_id', Auth::id())->first();
+                $cartItem->delete();
+                return response()->json(['status' => $cartItem->product->name . " berhasil dihapus dari Keranjang!"]);
+            }
+        } else {
+            return response()->json(['status' => "Silahkan login!"]);
+        }
+    }
+
+    public function deleteCartOutOfStockProduct(Request $request)
+    {
+        if (Auth::check() && Auth()->user()->hasRole('pembeli')) {
+            $prod_id_outof_stock = $request->input('prod_id_outof_stock');
+            if (Cart::where('product_id', $prod_id_outof_stock)->where('user_id', Auth::id())->exists()) {
+                $cartItem = Cart::where('product_id', $prod_id_outof_stock)->where('user_id', Auth::id())->first();
                 $cartItem->delete();
                 return response()->json(['status' => $cartItem->product->name . " berhasil dihapus dari Keranjang!"]);
             }
