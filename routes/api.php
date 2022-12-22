@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\Customer\CartApiController;
 use App\Http\Controllers\Api\Customer\ChatApiController;
 use App\Http\Controllers\Api\Customer\CheckoutApiController;
 use App\Http\Controllers\Api\Customer\CustomerApiController;
+use App\Http\Controllers\Api\Customer\DependantDropdownApiController;
 use App\Http\Controllers\Api\Customer\ForgetPasswordApiController;
 use App\Http\Controllers\Api\Customer\HeroesApiController;
 use App\Http\Controllers\Api\Customer\LoginCustomerApiController;
@@ -78,7 +79,10 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/cart/shipment/place-order', [CheckoutApiController::class, 'placeOrder']);
     Route::get('transaction_list/{user_id}', [TransactionListApiController::class, 'index']);
     Route::post('/transaction_list/detail_transaction/{id}', [TransactionListApiController::class, 'detailPesanan']);
+    Route::post('/transaction_list/order_completed', [TransactionListApiController::class, 'orderCompleted']);
+    Route::post('/transaction_list/order_cancel', [TransactionListApiController::class, 'cancelOrder']);
     Route::resource('review', ReviewApiController::class);
+    Route::post('/review_multiple', [ReviewApiController::class, 'addReview']);
     Route::get('notification_list/{user_id}', [PushNotificationController::class, 'indexByid']);
     Route::get('notification_list/delete-all/{user_id}', [PushNotificationController::class, 'deleteall']);
 
@@ -168,3 +172,9 @@ Route::post('login-petani', [LoginPetaniApiController::class, 'login']);
 
 // Tes notifikasi
 Route::post('send-notification', [PushNotificationController::class, 'tesApi']);
+
+// Laravolt Indonesia
+Route::get('provinces', [DependantDropdownApiController::class, 'provinces'])->name('provinces');
+Route::post('cities', [DependantDropdownApiController::class, 'cities']);
+Route::post('districts', [DependantDropdownApiController::class, 'districts'])->name('districts');
+Route::post('villages', [DependantDropdownApiController::class, 'villages'])->name('villages');

@@ -185,7 +185,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="d-md-flex justify-content-between pt-2">
                         <div>
                             <p class="fw-bold mb-0">Rincian Pesanan</p>
