@@ -54,6 +54,19 @@
     .opacity-90 {
         opacity: 70%;
     }
+
+    .keranjang_barang {
+        display: flex;
+        font-size: 16px;
+        background: #fff;
+        position: fixed;
+        bottom: 0px;
+        z-index: 3;
+        cursor: pointer;
+        -webkit-transition: all .3s ease-out 0s;
+        transition: all .3s ease-out 0s;
+        border-radius: 4px;
+    }
 </style>
 @endsection
 
@@ -260,7 +273,9 @@
                             @endforeach
                         </div>
                     </div>
-                    <div class="col-12 col-xl-4">
+
+                    {{-- =============== WEB ==================== --}}
+                    <div class="col-12 col-xl-4 d-none d-sm-block">
                         <div class="m-0 m-xl-4 p-4 shadow border rounded">
                             <h3 class="mb-3 fs-4">Ringkasan Belanja</h3>
                             <div
@@ -279,6 +294,26 @@
                             @endif
                         </div>
                     </div>
+
+                    {{-- ====================== MOBILE ====================== --}}
+                    <div class="keranjang_barang shadow border d-block d-sm-none">
+                        <div class="col-12">
+                            <div class="d-flex pt-3 mb-10 justify-content-between align-items-center">
+                                <div class="f-flex">
+                                    <p class="fw-bold">Total</p>
+                                    <p>(<span class="count-product">0</span> Barang)</p>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-end">
+                                    <span class="me-2 fw-bold">Rp<span class="total-price">0</span></span>
+                                    @if ($cartItem->count())
+                                        <button type="submit" class="btn text-capitalize text-white" style="background: #16A085;" href="{{ url('cart/shipment') }}">Checkout(<span class="beli-keranjang-count">0</span>)</a>
+                                    @else
+                                        <a class="btn text-capitalize text-white" style="background: #16A085;" href="{{ url('new-product') }}">Belanja Sekarang</a>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </form>
             <div class="product-details-info shadow">
@@ -287,7 +322,7 @@
                     <div class="owl-carousel owl-theme">
                         @foreach ($product_new as $item)
                         <!-- Start Single Product -->
-                        <div class="mx-2 single-product shadow-none {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}" style="height: 27rem">
+                        <div class="mx-2 single-product shadow-none border border-success {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}" style="height: 27rem">
                             <div class="product-image {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}">
                                 <a href="{{ url('home/'.$item->slug) }}">
                                     @if ($item->stoke === 0)
@@ -375,20 +410,24 @@
 <script type="text/javascript">
     $( function() {
         $('.owl-carousel').owlCarousel({
-            loop:false,
-            responsiveClass:true,
-            responsive:{
-                0:{
-                    items:1,
+            loop: false,
+            responsiveClass: true,
+            URLhashListener:true,
+            autoplayHoverPause:true,
+            startPosition: 'URLHash',
+            stagePadding: 30,
+            responsive: {
+                0: {
+                    items: 1,
                 },
-                480:{
-                    items:2,
+                480: {
+                    items: 2,
                 },
-                600:{
-                    items:3,
+                600: {
+                    items: 3,
                 },
-                1000:{
-                    items:4,
+                1000: {
+                    items: 4,
                 }
             }
         });

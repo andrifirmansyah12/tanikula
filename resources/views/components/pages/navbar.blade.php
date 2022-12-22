@@ -89,7 +89,7 @@
                                 <div class="dropdown">
                                     <a style="cursor: pointer; background: #16A085; color: #ffff;" class="btn"
                                         data-toggle="dropdown" aria-expanded="false">Daftar</a>
-                                    <div class="dropdown-menu mt-2">
+                                    <div class="dropdown-menu mt-2 shadow border border-secondary">
                                         <a class="dropdown-item" onclick="register('{{ url('/register') }}')"
                                             href="#">Sebagai Pembeli</a>
                                         <a class="dropdown-item"

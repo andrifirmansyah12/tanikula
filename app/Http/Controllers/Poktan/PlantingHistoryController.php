@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Plant;
 use App\Models\Poktan;
+use App\Models\Gapoktan;
 use App\Models\FieldRecapHarvest;
 use App\Models\FieldCategory;
 use Illuminate\Support\Facades\DB;
@@ -22,14 +23,17 @@ class PlantingHistoryController extends Controller
 	}
 
     // handle fetch all eamployees ajax request
-	public function fetchAll(Request $request) {
+	public function fetchAll(Request $request)
+    {
 		if(!empty($request->from_date))
         {
-            $poktan = Poktan::where('user_id', auth()->user()->id)->first();
+            $gapoktans = Gapoktan::join('poktans', 'gapoktans.id', '=', 'poktans.gapoktan_id')
+                    ->where('poktans.user_id', auth()->user()->id)
+                    ->first();
             $emps = FieldRecapHarvest::join('field_recap_plantings', 'field_recap_harvests.planting_id', '=', 'field_recap_plantings.id')
                     ->join('farmers', 'field_recap_harvests.farmer_id', '=', 'farmers.id')
                     ->select('field_recap_harvests.*', 'farmers.user_id as name')
-                    ->where('fields.gapoktan_id', $poktan->gapoktan_id)
+                    ->where('farmers.gapoktan_id', '=', $gapoktans->id)
                     ->where('field_recap_harvests.status', 'panen')
                     ->whereBetween('field_recap_harvests.date_harvest', array($request->from_date, $request->to_date))
                     ->orderBy('field_recap_harvests.updated_at', 'desc')
@@ -37,39 +41,43 @@ class PlantingHistoryController extends Controller
         }
             else
         {
-            $poktan = Poktan::where('user_id', auth()->user()->id)->first();
+            $gapoktans = Gapoktan::join('poktans', 'gapoktans.id', '=', 'poktans.gapoktan_id')
+                    ->where('poktans.user_id', auth()->user()->id)
+                    ->first();
             $emps = FieldRecapHarvest::join('field_recap_plantings', 'field_recap_harvests.planting_id', '=', 'field_recap_plantings.id')
                     ->join('farmers', 'field_recap_harvests.farmer_id', '=', 'farmers.id')
                     ->select('field_recap_harvests.*', 'farmers.user_id as name')
-                    ->where('fields.gapoktan_id', $poktan->gapoktan_id)
+                    ->where('farmers.gapoktan_id', '=', $gapoktans->id)
                     ->where('field_recap_harvests.status', 'panen')
                     ->orderBy('field_recap_harvests.updated_at', 'desc')
                     ->get();
         }
 		$output = '';
 		if ($emps->count() > 0) {
-			$output .= '<table class="table table-striped table-sm text-center align-middle">
+			$output .= '<table class="table table-bordered table-sm text-center align-middle">
             <thead>
               <tr>
-                <th>No</th>
-                <th>Lahan</th>
-                <th>Gapoktan</th>
-                <th>Petani</th>
-                <th>Status</th>
+                <th class="align-middle text-center">No</th>
+                <th class="align-middle text-center">Lahan</th>
+                <th class="align-middle text-center">Petani</th>
+                <th class="align-middle text-center">Tanggal Tandur</th>
+                <th class="align-middle text-center">Tanggal Panen</th>
+                <th class="align-middle text-center">Status</th>
               </tr>
             </thead>
             <tbody>';
             $nomor=1;
 			foreach ($emps as $emp) {
 				$output .= '<tr>';
-                $output .= '<td>' . $nomor++ . '</td>';
-                $output .= '<td>' . $emp->fieldCategory->name . '</td>';
-                $output .= '<td>' . $emp->gapoktan->user->name . '</td>
-                <td>' . $emp->farmer->user->name . '</td>';
+                $output .= '<td class="align-middle text-center">' . $nomor++ . '</td>';
+                $output .= '<td class="align-middle text-center">' . $emp->fieldRecapPlanting->field->fieldCategory->name . '</td>';
+                $output .= '<td class="align-middle text-center">' . $emp->farmer->user->name . '</td>
+                <td class="align-middle text-center">' . date("d-F-Y", strtotime($emp->fieldRecapPlanting->date_planting)) . '</td>
+                <td class="align-middle text-center">' . date("d-F-Y", strtotime($emp->date_harvest)) . '</td>';
                 if ($emp->status) {
-                    $output .= '<td><span class="text-capitalize">' . $emp->status . '</span></td>';
+                    $output .= '<td class="align-middle text-center"><span class="text-capitalize">' . $emp->status . '</span></td>';
                 } else {
-                    $output .= '<td><span class="text-danger">Belum ada status</span></td>';
+                    $output .= '<td class="align-middle text-center"><span class="text-danger">Belum ada status</span></td>';
                 }
                 $output .= '
               </tr>';

@@ -56,9 +56,11 @@ class CheckoutController extends Controller
                 return $query->whereIn('id', $navbar_cart_id);
             })->latest()->get();
         } else {
-            $cartItem = Cart::with('product')->where('user_id', '=', auth()->user()->id)->where(static function ($query) use ($cart_id) {
-                return $query->whereIn('id', $cart_id);
-            })->latest()->get();
+            // $cartItem = Cart::with('product')->where('user_id', '=', auth()->user()->id)->where(static function ($query) use ($cart_id) {
+            //     return $query->whereIn('id', $cart_id);
+            // })->latest()->get();
+            notify()->warning("Harap pilih produk!", "Peringatan", "topRight");
+            return redirect()->back();
         }
 
         // $cartItem = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
@@ -92,6 +94,7 @@ class CheckoutController extends Controller
         }
 
         return view('pages.checkout.index', compact('cartItem', 'address', 'result_cost', 'data_service'));
+
     }
 
     //function untuk calculate cost
