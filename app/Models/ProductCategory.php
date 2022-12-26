@@ -30,4 +30,9 @@ class ProductCategory extends Model
     {
         return 'slug';
     }
+
+    public function gapoktan()
+    {
+        return $this->belongsTo(Gapoktan::class);
+    }
 }

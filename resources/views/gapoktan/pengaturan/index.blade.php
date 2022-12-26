@@ -161,7 +161,7 @@
     </div>
 
 <!-- Main Content -->
-<div class="main-content">
+{{-- <div class="main-content">
     <section class="section">
         <div class="section-header">
             <h1>@yield('title')</h1>
@@ -175,14 +175,6 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        {{-- <div class="card-body">
-                            <ul class="nav nav-tabs">
-                                <li class="nav-item">
-                                    <a class="nav-link text-white" style="background: #16A085" href="{{ url('gapotkan/pengaturan') }}">Biodata
-                                        Gapoktan</a>
-                                </li>
-                            </ul>
-                        </div> --}}
                         <div class="card-body pt-4 px-4">
                             <h4 class="border p-3 text-center rounded">Biodata Gapoktan</h4>
                         </div>
@@ -298,8 +290,124 @@
             </div>
         </div>
     </section>
-</div>
+</div> --}}
+<div class="main-content">
+    <section class="section">
+        <div class="section-header">
+            <h1>@yield('title')</h1>
+            <div class="section-header-breadcrumb">
+                <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
+                <div class="breadcrumb-item"><a href="#">@yield('title')</a></div>
+            </div>
+        </div>
 
+        <div class="section-body">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="card mb-4">
+                        <div class="card-body text-center">
+                            @if ($userInfo->image)
+                            <img alt="image" id="image_preview" src="../storage/profile/{{ $userInfo->image }}"
+                                class="rounded-circle img-fluid"
+                                style="width: 150px; height: 150px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                @else
+                                    <img alt=" image" id="image_preview"
+                                src="{{ asset('stisla/assets/img/example-image.jpg') }}"
+                                class="rounded-circle img-fluid"
+                                style="width: 150px; height: 150px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                @endif
+                                <h5 class=" my-3">@if ($userInfo->chairman)
+                            {{ $userInfo->chairman }}
+                            @else
+                            <span class="text-danger">Belum diisi</span>
+                            @endif</h5>
+                            <p class="text-muted mb-4">Ketua {{ $userInfo->user->name }}</p>
+                            <div class="d-flex justify-content-center mb-2">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input hidden" style="width: 0px; opacity: 0%"
+                                        accept="image/*" id="image" name="image">
+                                    <label class="custom-file-label" for="image"><i class="bi bi-camera h-4"></i> Ubah
+                                        foto</label>
+                                    {{-- <input type="file" class="custom-file-input" accept="image/*" id="image" name="image">
+                                        <label class="custom-file-label" for="image">Ubah Profile</label> --}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="user_id" id="user_id" value="{{ $userInfo->id }}">
+                <div class="col-lg-8">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Email</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">{{ $userInfo->user->email }}</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">No Telp</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">
+                                        @if ($userInfo->phone)
+                                        (+62) {{ $userInfo->phone }}
+                                        @else
+                                        <span class="text-danger">Belum diisi</span>
+                                        @endif</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Address</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">@if ($userInfo->street && $userInfo->number)
+                                        {{ $userInfo->street }}, No {{ $userInfo->number }}.
+                                        @if ($userInfo->village_id &&
+                                        $userInfo->district_id && $userInfo->city_id &&
+                                        $userInfo->province_id != null)
+                                        {{ $userInfo->village->name }}, Kecamatan
+                                        {{ $userInfo->district->name }},
+                                        {{ $userInfo->city->name }}, Provinsi
+                                        {{ $userInfo->province->name }}.
+                                        @endif
+                                        @else
+                                        <span class="text-danger">Belum diisi</span>
+                                        @endif</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Status Akun</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">@if ($userInfo->is_active)
+                                        <span class="badge bg-primary text-white">Terverifikasi</span>
+                                        @else
+                                        <span class="badge bg-danger text-white">Belum diverifikasi</span>
+                                        @endif</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer row align-items-center justify-content-end mb-3">
+                            <input type="button" value="Ubah Password" class="btn shadow-none border"
+                                style="background: #FFFACD;" data-toggle="modal" data-target="#editEmployeeModal">
+                            <input type="button" value="Ubah Biodata Poktan" class="btn btn-primary shadow-none m-1"
+                                data-toggle="modal" data-target="#exampleModal">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
 @endsection
 
 @section('script')

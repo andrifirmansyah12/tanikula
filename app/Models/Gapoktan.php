@@ -55,4 +55,9 @@ class Gapoktan extends Model
     {
         return $this->hasMany(Farmer::class);
     }
+
+    public function productCategory()
+    {
+        return $this->hasMany(ProductCategory::class);
+    }
 }

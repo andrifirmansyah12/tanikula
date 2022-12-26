@@ -202,8 +202,8 @@
         $( function() {
             $( ".datepicker" ).datepicker({
                 dateFormat: 'dd-M-yy',
-                minDate: 0,
-                timepicker:false,
+                // minDate: 0,
+                // timepicker:false,
             });
         });
 
@@ -260,6 +260,14 @@
                         showError('status_edit', response.messages.status);
                         $("#edit_panen_btn").text('Simpan');
                         $("#edit_panen_btn").prop('disabled', false);
+                    } else if (response.status == 401) {
+                        Swal.fire(
+                            'Peringatan!',
+                            'Tanggal panen tidak boleh mendahului tanggal tandur!',
+                            'warning'
+                        )
+                        $("#edit_panen_btn ").text('Simpan');
+                        $("#edit_panen_btn ").prop('disabled', false);
                     } else if (response.status == 200) {
                         Swal.fire(
                             'Memperbarui!',
@@ -315,6 +323,14 @@
                     if (response.status == 400) {
                         showError('date_harvest', response.messages.date_harvest);
                         showError('status', response.messages.status);
+                        $("#edit_employee_btn").text('Simpan');
+                        $("#edit_employee_btn").prop('disabled', false);
+                    } else if (response.status == 401) {
+                        Swal.fire(
+                            'Peringatan!',
+                            'Tanggal panen tidak boleh mendahului tanggal tandur!',
+                            'warning'
+                        )
                         $("#edit_employee_btn").text('Simpan');
                         $("#edit_employee_btn").prop('disabled', false);
                     } else if (response.status == 200) {

@@ -108,7 +108,19 @@ class HarvestController extends Controller
                 $harvest = FieldRecapHarvest::find($request->emp_id);
                 $harvest->planting_id = $request->plant_id;
                 $harvest->farmer_id = $request->farmer_id;
-                $harvest->date_harvest = Carbon::createFromFormat('d-M-Y', $request->date_harvest)->format('Y-m-d h:i:s');
+
+                $checkPlanting = FieldRecapPlanting::where('id', $request->plant_id)->first();
+                // dd($checkPlanting);
+
+                if (date('d F Y', strtotime($checkPlanting->date_planting)) >= date('d F Y', strtotime($request->date_harvest))) {
+                    return response()->json([
+                        'status' => 401,
+                        'messages' => $validator->getMessageBag()
+                    ]);
+                } else {
+                    $harvest->date_harvest = Carbon::createFromFormat('d-M-Y', $request->date_harvest)->format('Y-m-d h:i:s');
+                }
+
                 $harvest->status = $request->status;
                 $harvest->save();
 
@@ -123,7 +135,19 @@ class HarvestController extends Controller
                 $harvest = FieldRecapHarvest::find($request->emp_id);
                 $harvest->planting_id = $request->plant_id;
                 $harvest->farmer_id = $request->farmer_id;
-                $harvest->date_harvest = Carbon::createFromFormat('d-M-Y', $request->date_harvest)->format('Y-m-d h:i:s');
+
+                $checkPlanting = FieldRecapPlanting::where('id', $request->plant_id)->first();
+                // dd($checkPlanting);
+
+                if (date('d F Y', strtotime($checkPlanting->date_planting)) >= date('d F Y', strtotime($request->date_harvest))) {
+                    return response()->json([
+                        'status' => 401,
+                        'messages' => $validator->getMessageBag()
+                    ]);
+                } else {
+                    $harvest->date_harvest = Carbon::createFromFormat('d-M-Y', $request->date_harvest)->format('Y-m-d h:i:s');
+                }
+
                 $harvest->status = $request->status;
                 $harvest->save();
 
@@ -217,7 +241,19 @@ class HarvestController extends Controller
                 $harvest = new FieldRecapHarvest();
                 $harvest->planting_id = $request->plant_id;
                 $harvest->farmer_id = $request->farmer_id;
-                $harvest->date_harvest = Carbon::createFromFormat('d-M-Y', $request->date_harvest)->format('Y-m-d h:i:s');
+
+                $checkPlanting = FieldRecapPlanting::where('id', $request->plant_id)->first();
+                // dd($checkPlanting);
+
+                if (date('d F Y', strtotime($checkPlanting->date_planting)) >= date('d F Y', strtotime($request->date_harvest))) {
+                    return response()->json([
+                        'status' => 401,
+                        'messages' => $validator->getMessageBag()
+                    ]);
+                } else {
+                    $harvest->date_harvest = Carbon::createFromFormat('d-M-Y', $request->date_harvest)->format('Y-m-d h:i:s');
+                }
+
                 $harvest->status = $request->status;
                 $harvest->save();
 
@@ -232,7 +268,19 @@ class HarvestController extends Controller
                 $harvest = new FieldRecapHarvest();
                 $harvest->planting_id = $request->plant_id;
                 $harvest->farmer_id = $request->farmer_id;
-                $harvest->date_harvest = Carbon::createFromFormat('d-M-Y', $request->date_harvest)->format('Y-m-d h:i:s');
+
+                $checkPlanting = FieldRecapPlanting::where('id', $request->plant_id)->first();
+                // dd($checkPlanting);
+
+                if (date('d F Y', strtotime($checkPlanting->date_planting)) >= date('d F Y', strtotime($request->date_harvest))) {
+                    return response()->json([
+                        'status' => 401,
+                        'messages' => $validator->getMessageBag()
+                    ]);
+                } else {
+                    $harvest->date_harvest = Carbon::createFromFormat('d-M-Y', $request->date_harvest)->format('Y-m-d h:i:s');
+                }
+
                 $harvest->status = $request->status;
                 $harvest->save();
 

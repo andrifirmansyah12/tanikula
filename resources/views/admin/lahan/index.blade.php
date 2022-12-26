@@ -409,7 +409,7 @@
                 }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                    url: '{{ route('gapoktan-lahan-recycleField') }}',
+                    url: '{{ route('admin-lahan-recycleField') }}',
                     method: 'post',
                     data: {
                         id: id,

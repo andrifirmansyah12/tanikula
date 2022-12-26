@@ -261,19 +261,22 @@
                                         @endif
                                     @endforeach
                                 </h5>
-                                <span><i class="fas fa-solid fa-calendar-day"></i>
-                                    {{ date("d F Y", strtotime($item->date))}}</span>
-                                <span>
-                                    <a href="{{ url('/edukasi?diposting-oleh='.$item->user->name) }}"
-                                        style="color: var(--primary);">
-                                        <i class="fas fa-solid fa-user"></i>
-                                        @if (empty($item->user->name))
-                                        Tidak ada author
-                                        @else
-                                        {{ strtok($item->user->name, ' ') }}
-                                        @endif
-                                    </a>
-                                </span>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p class="col-6 me-2"><i class="fas fa-solid fa-calendar-day"></i>
+                                        {{ date("d F Y", strtotime($item->date))}}</p>
+                                    <p class="col-6 me-2">
+                                        <a href="{{ url('/edukasi?diposting-oleh='.$item->user->name) }}"
+                                            style="color: var(--primary); display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; overflow: hidden;">
+                                            <i class="fas fa-solid fa-user"></i>
+                                            @if (empty($item->user->name))
+                                            Tidak ada author
+                                            @else
+                                            {{ $item->user->name }} Harapan
+                                            {{-- {{ strtok($item->user->name, ' ') }} --}}
+                                            @endif
+                                        </a>
+                                    </p>
+                                </div>
                                 <p class="text-edukasi"
                                     style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;">
                                     {{$item->desc}}

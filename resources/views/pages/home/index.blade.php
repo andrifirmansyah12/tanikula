@@ -134,96 +134,24 @@
             <div class="col-3 col-sm-3 col-md-2">
                 {{-- Web --}}
                 <div class="d-none d-sm-block">
+                    <a href="{{ url('product-category/'.$item->slug) }}">
                     <div class="d-flex justify-content-center align-items-center">
-                        @if ($item->id == '1')
                         <div class="border rounded p-3 mt-5">
-                            <img src="{{ asset('img/kategori-produk/beras.png') }}" class="img-fluid" style="width: 3rem; height: 3rem;"
+                            <img src="{{ asset('../storage/icon/'.$item->icon) }}" class="img-fluid" style="width: 3rem; height: 3rem;"
                                 alt="{{$item->name}}">
                         </div>
-                        @elseif ($item->id == '2')
-                        <div class="border rounded p-3 mt-5">
-                            <img src="{{ asset('img/kategori-produk/buah.png') }}" class="img-fluid" style="width: 3rem; height: 3rem;"
-                                alt="{{$item->name}}">
-                        </div>
-                        @elseif ($item->id == '3')
-                        <div class="border rounded p-3 mt-5">
-                            <img src="{{ asset('img/kategori-produk/olahan-buah.png') }}" class="img-fluid" style="width: 3rem; height: 3rem;"
-                                alt="{{$item->name}}">
-                        </div>
-                        @elseif ($item->id == '4')
-                        <div class="border rounded p-3 mt-5">
-                            <img src="{{ asset('img/kategori-produk/bibit-sayuran.png') }}" class="img-fluid" style="width: 3rem; height: 3rem;"
-                                alt="{{$item->name}}">
-                        </div>
-                        @elseif ($item->id == '5')
-                        <div class="border rounded p-3 mt-5">
-                            <img src="{{ asset('img/kategori-produk/sayuran.png') }}" class="img-fluid" style="width: 3rem; height: 3rem;"
-                                alt="{{$item->name}}">
-                        </div>
-                        @elseif ($item->id == '6')
-                        <div class="border rounded p-3 mt-5">
-                            <img src="{{ asset('img/kategori-produk/roti.png') }}" class="img-fluid" style="width: 3rem; height: 3rem;"
-                                alt="{{$item->name}}">
-                        </div>
-                        @elseif ($item->id == '7')
-                        <div class="border rounded p-3 mt-5">
-                            <img src="{{ asset('img/kategori-produk/jamu.png') }}" class="img-fluid" style="width: 3rem; height: 3rem;"
-                                alt="{{$item->name}}">
-                        </div>
-                        @elseif ($item->id == '8')
-                        <div class="border rounded p-3 mt-5">
-                            <img src="{{ asset('img/kategori-produk/suau-kedelai.png') }}" class="img-fluid" style="width: 3rem; height: 3rem;"
-                                alt="{{$item->name}}">
-                        </div>
-                        @endif
                     </div>
-                    <p class="text-center pt-1" style="line-height: 19px"><a style="color:#16A085;" href="{{ url('product-category/'.$item->slug) }}"> {{ $item->name }}</a></p>
+                    <p class="text-center pt-1" style="line-height: 19px; color:#16A085;">{{ $item->name }}</p>
+                    </a>
                 </div>
 
                 {{-- Mobile --}}
                 <div class="d-block d-sm-none">
                     <div class="d-flex justify-content-center align-items-center">
-                        @if ($item->id == '1')
                         <div class="border rounded p-2 mt-2">
-                            <img src="{{ asset('img/kategori-produk/beras.png') }}" class="img-fluid" style="width: 2rem; height: 2rem;"
+                            <img src="{{ asset('../storage/icon/'.$item->icon) }}" class="img-fluid" style="width: 2rem; height: 2rem;"
                                 alt="{{$item->name}}">
                         </div>
-                        @elseif ($item->id == '2')
-                        <div class="border rounded p-2 mt-2">
-                            <img src="{{ asset('img/kategori-produk/buah.png') }}" class="img-fluid" style="width: 2rem; height: 2rem;"
-                                alt="{{$item->name}}">
-                        </div>
-                        @elseif ($item->id == '3')
-                        <div class="border rounded p-2 mt-2">
-                            <img src="{{ asset('img/kategori-produk/olahan-buah.png') }}" class="img-fluid" style="width: 2rem; height: 2rem;"
-                                alt="{{$item->name}}">
-                        </div>
-                        @elseif ($item->id == '4')
-                        <div class="border rounded p-2 mt-2">
-                            <img src="{{ asset('img/kategori-produk/bibit-sayuran.png') }}" class="img-fluid" style="width: 2rem; height: 2rem;"
-                                alt="{{$item->name}}">
-                        </div>
-                        @elseif ($item->id == '5')
-                        <div class="border rounded p-2 mt-4">
-                            <img src="{{ asset('img/kategori-produk/sayuran.png') }}" class="img-fluid" style="width: 2rem; height: 2rem;"
-                                alt="{{$item->name}}">
-                        </div>
-                        @elseif ($item->id == '6')
-                        <div class="border rounded p-2 mt-4">
-                            <img src="{{ asset('img/kategori-produk/roti.png') }}" class="img-fluid" style="width: 2rem; height: 2rem;"
-                                alt="{{$item->name}}">
-                        </div>
-                        @elseif ($item->id == '7')
-                        <div class="border rounded p-2 mt-4">
-                            <img src="{{ asset('img/kategori-produk/jamu.png') }}" class="img-fluid" style="width: 2rem; height: 2rem;"
-                                alt="{{$item->name}}">
-                        </div>
-                        @elseif ($item->id == '8')
-                        <div class="border rounded p-2 mt-4">
-                            <img src="{{ asset('img/kategori-produk/suau-kedelai.png') }}" class="img-fluid" style="width: 2rem; height: 2rem;"
-                                alt="{{$item->name}}">
-                        </div>
-                        @endif
                     </div>
                     <p class="text-center pt-1" style="line-height: 19px"><a style="color:#16A085;" href="{{ url('product-category/'.$item->slug) }}"> {{ $item->name }}</a></p>
                 </div>
