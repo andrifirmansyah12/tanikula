@@ -415,20 +415,20 @@
                     <!-- Start Mega Category Menu -->
                     <div class="mega-category-menu">
                         @php
-                        $category_product = App\Models\ProductCategory::where('is_active', '=', 1)->get();
+                        $category_product = App\Models\ProductCategory::where('is_active', '=', 1)->take(15)->latest()->get();
                         @endphp
                         <a href="#" class="nav-link text-black fw-bold" data-bs-display="static"
                             data-bs-toggle="dropdown"><i class="lni lni-menu text-black fw-bold pe-2"></i>Semua
                             Kategori</a>
                         <div class="dropdown-menu">
-                            <div class="row" style="width: 32rem">
+                            <div class="row" style="width: 46rem">
                                 @foreach ($category_product as $item)
-                                <div class="col-4">
+                                <div class="col-3">
                                     <a href="{{ url('product-category/'.$item->slug) }}"
                                         class="dropdown-item">{{ $item->name }}</a>
                                 </div>
                                 @endforeach
-                                <div class="col-4">
+                                <div class="col-3">
                                     <a href="{{ url('product-category/all-category') }}" class="dropdown-item">Semua
                                         Kategori</a>
                                 </div>

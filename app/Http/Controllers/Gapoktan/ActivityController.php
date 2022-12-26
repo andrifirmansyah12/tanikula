@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Gapoktan;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Activity;
+use App\Models\Poktan;
 use App\Models\ActivityCategory;
 use App\Models\PushNotification;
 use Illuminate\Support\Facades\Storage;
@@ -75,10 +76,25 @@ class ActivityController extends Controller
     // handle fetch all eamployees ajax request
     public function fetchDraftActivity()
     {
+        $poktan = Poktan::join('gapoktans', 'poktans.gapoktan_id', '=', 'gapoktans.id')
+                ->join('users', 'poktans.user_id', '=', 'users.id')
+                ->select('poktans.*', 'users.name as name')
+                ->where('gapoktans.user_id', auth()->user()->id)
+                ->orderBy('poktans.updated_at', 'desc')
+                ->get();
+        foreach($poktan as $poktan){
+            $userIdPoktan = $poktan['user_id'];
+            $checkPosted[] = $userIdPoktan;
+        }
+        $checkPosted[] = auth()->user()->id;
+        // dd($checkPosted);
         $emps = Activity::join('activity_categories', 'activities.category_activity_id', '=', 'activity_categories.id')
             ->join('users', 'activities.user_id', '=', 'users.id')
             ->select('activities.*', 'activity_categories.name as name')
             ->where('activity_categories.is_active', '=', 1)
+            ->where(static function ($query) use ($checkPosted) {
+                return $query->whereIn('user_id', $checkPosted);
+            })
             ->orderBy('activities.updated_at', 'desc')
             ->get();
         $output = '';

@@ -135,8 +135,8 @@
         $( function() {
             $( ".datepicker" ).datepicker({
                 dateFormat: 'dd-M-yy',
-                minDate: 0,
-                timepicker:false,
+                // minDate: 0,
+                // timepicker:false,
             });
         });
 

@@ -139,7 +139,7 @@
                 @endphp
                 @if ($poktan->image)
                     <img alt="image" src="../storage/profile/{{ $poktan->image }}"
-                        class="border rounded-circle border-white shadow-sm mr-1" style="width: 43px; height: 40px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                        class="border rounded-circle border-white shadow-sm mr-1" style="width: 43px; height: 43px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                 @else
                     <img alt="image" src="{{ asset('assets/img/avatar/avatar-1.png') }}"
                         class="rounded-circle mr-1">

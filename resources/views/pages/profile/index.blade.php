@@ -41,9 +41,17 @@
                             <div class="rounded-top text-white d-flex flex-row"
                                 style="background-color: #16A085; height:200px;">
                                 <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
-                                    <img src="{{ $gapoktan->image === null ? '../assets/img/avatar/avatar-1.png' : '../storage/profile/'. $gapoktan->image .'' }}"
-                                        alt="Generic placeholder image" class="border rounded-circle border-white shadow-sm mt-4 mb-2"
-                                        style="width: 150px; z-index: 1">
+                                    @if ($gapoktan->image)
+                                    <div class="mt-4 mb-2" style="z-index: 1">
+                                        <img src="{{ asset('../storage/profile/'.$gapoktan->image) }}"
+                                            alt="Generic placeholder image" class="border rounded-circle border-white img-fluid"
+                                            style="width: 150px; height: 150px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                    </div>
+                                    @else
+                                        <img src="../assets/img/avatar/avatar-1.png"
+                                            alt="Generic placeholder image" class="border rounded-circle border-white shadow-sm mt-4 mb-2"
+                                            style="width: 150px; z-index: 1; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                    @endif
                                 </div>
                                 <div class="ms-3" style="margin-top: 130px;">
                                     <h6 style="font-weight: bold">{{ $gapoktan->user->name }}</h6>

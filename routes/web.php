@@ -15,12 +15,12 @@ use Illuminate\Support\Facades\Route;
 
 // Login Admin
 Route::group(['middleware' => ['guest']], function() {
-    Route::get('/tanikula/login', [App\Http\Controllers\Admin\LoginController::class, 'login'])->name('login-admin');
-    Route::post('/tanikula/login', [App\Http\Controllers\Admin\LoginController::class, 'loginAdmin'])->name('login-admin');
-    Route::get('/tanikula/forgot-password', [App\Http\Controllers\Admin\LoginController::class, 'forgotPassword'])->name('forgotPassword-admin');
-    Route::post('/tanikula/forgot-password', [App\Http\Controllers\Admin\LoginController::class, 'forgotPasswordEmail'])->name('forgotPasswordEmail-admin');
-    Route::get('/tanikula/reset-password/{email}/{token}', [App\Http\Controllers\Admin\LoginController::class, 'reset'])->name('resetPass-admin');
-    Route::post('/tanikula/reset-password', [App\Http\Controllers\Admin\LoginController::class, 'resetPassword'])->name('resetPassword-admin');
+    Route::get('/admin/login', [App\Http\Controllers\Admin\LoginController::class, 'login'])->name('login-admin');
+    Route::post('/admin/login', [App\Http\Controllers\Admin\LoginController::class, 'loginAdmin'])->name('login-admin');
+    Route::get('/admin/forgot-password', [App\Http\Controllers\Admin\LoginController::class, 'forgotPassword'])->name('forgotPassword-admin');
+    Route::post('/admin/forgot-password', [App\Http\Controllers\Admin\LoginController::class, 'forgotPasswordEmail'])->name('forgotPasswordEmail-admin');
+    Route::get('/admin/reset-password/{email}/{token}', [App\Http\Controllers\Admin\LoginController::class, 'reset'])->name('resetPass-admin');
+    Route::post('/admin/reset-password', [App\Http\Controllers\Admin\LoginController::class, 'resetPassword'])->name('resetPassword-admin');
 });
 
 // Support
@@ -91,6 +91,7 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:admin']], function ()
     Route::post('admin/lahan/store', [App\Http\Controllers\Admin\FieldController::class, 'store'])->name('admin-lahan-store');
     Route::get('admin/lahan/fetchall', [App\Http\Controllers\Admin\FieldController::class, 'fetchAll'])->name('admin-lahan-fetchAll');
     Route::delete('admin/lahan/delete', [App\Http\Controllers\Admin\FieldController::class, 'delete'])->name('admin-lahan-delete');
+    Route::post('admin/lahan/recycleField', [App\Http\Controllers\Admin\FieldController::class, 'recycleField'])->name('admin-lahan-recycleField');
     Route::get('admin/lahan/edit', [App\Http\Controllers\Admin\FieldController::class, 'edit'])->name('admin-lahan-edit');
     Route::post('admin/lahan/update', [App\Http\Controllers\Admin\FieldController::class, 'update'])->name('admin-lahan-update');
     Route::get('dropdown-farmer/{id}', [App\Http\Controllers\Admin\FieldController::class, 'farmer']);

@@ -279,7 +279,7 @@
                                 @if ($gapoktan->city_id)
                                     <p style="font-size: 12px"><i class="bi bi-geo-alt me-1"></i> {{ $gapoktan->city->name }}</p>
                                 @endif
-                                <a class="rounded mt-1" style="background: #16A085" href="/profile/{{ $nama_gapoktan }}">
+                                <a class="rounded mt-1" style="background: #16A085" href="/profile/{{ str_replace(" ", "-", $nama_gapoktan) }}">
                                     <p class="m-0 px-2 text-white text-uppercase"><i class="bi bi-shop me-2"></i> <span
                                         class="small text-white">Kunjungi Toko</span></p>
                                 </a>

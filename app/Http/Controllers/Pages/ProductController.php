@@ -52,7 +52,7 @@ class ProductController extends Controller
 
     public function index()
     {
-        $category_product = ProductCategory::where('is_active', '=', 1)->latest()->get();
+        $category_product = ProductCategory::where('is_active', '=', 1)->take(12)->latest()->get();
         return view('pages.home.index', compact('category_product'));
     }
 
@@ -1561,6 +1561,8 @@ class ProductController extends Controller
 
     public function profileGapoktan($name)
     {
+        $name = str_replace("-", " ", $name);
+        // dd($name);
         if (User::where('name', $name)->exists())
         {
             $user = User::where('name', $name)->first();
