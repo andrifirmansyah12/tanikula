@@ -4,14 +4,17 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Gapoktan;
 use App\Models\FieldCategory;
 use Illuminate\Support\Facades\Validator;
 
 class FieldCategoryController extends Controller
 {
     // set index page view
-	public function index() {
-		return view('admin.lahan-kategori.index');
+	public function index()
+    {
+        $user = Gapoktan::latest()->get();
+		return view('admin.lahan-kategori.index', compact('user'));
 	}
 
     // handle fetch all eamployees ajax request
@@ -26,6 +29,7 @@ class FieldCategoryController extends Controller
                 <th>No</th>
                 <th>Nama Lahan</th>
                 <th>Keterangan Lahan</th>
+                <th>Dibuat</th>
                 <th>Aksi</th>
               </tr>
             </thead>
@@ -36,6 +40,8 @@ class FieldCategoryController extends Controller
                 <td>' . $nomor++ . '</td>
                 <td>' . $emp->name . '</td>
                 <td>' . $emp->details . '</td>';
+                $output .= '</td>
+                <td>' . $emp->gapoktan->user->name . '</td>';
                 $output .= '<td>
                   <a href="#" id="' . $emp->id . '" class="text-success mx-1 editIcon" data-toggle="modal" data-target="#editEmployeeModal"><i class="bi-pencil-square h4"></i></a>
                 </td>
@@ -54,7 +60,9 @@ class FieldCategoryController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:50',
             'details' => 'required|max:255',
+            'gapoktan_id' => 'required',
         ], [
+            'gapoktan_id.required' => 'Gapoktan diperlukan!',
             'name.required' => 'Nama Lahan diperlukan!',
             'name.max' => 'Nama lahan maksimal 50 karakter!',
             'details.required' => 'Nama keterangan lahan diperlukan!',
@@ -67,7 +75,7 @@ class FieldCategoryController extends Controller
                 'messages' => $validator->getMessageBag()
             ]);
         } else {
-            $empData = ['name' => $request->name, 'details' => $request->details];
+            $empData = ['gapoktan_id' => $request->gapoktan_id, 'name' => $request->name, 'details' => $request->details];
 
             FieldCategory::create($empData);
             return response()->json([
@@ -104,7 +112,11 @@ class FieldCategoryController extends Controller
             ]);
         } else {
             $emp = FieldCategory::find($request->emp_id);
-            $empData = ['name' => $request->name, 'details' => $request->details];
+            if ($request->gapoktan_id) {
+                $empData = ['gapoktan_id' => $request->gapoktan_id, 'name' => $request->name, 'details' => $request->details];
+            } else {
+                $empData = ['name' => $request->name, 'details' => $request->details];
+            }
             $emp->update($empData);
 
             return response()->json([

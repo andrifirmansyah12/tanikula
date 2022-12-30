@@ -17,4 +17,9 @@ class FieldCategory extends Model
     {
         return $this->hasMany(Field::class);
     }
+
+    public function gapoktan()
+    {
+        return $this->belongsTo(Gapoktan::class);
+    }
 }

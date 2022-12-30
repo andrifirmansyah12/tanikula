@@ -20,12 +20,14 @@ class FieldSeeder extends Seeder
 
         $datas = [
             [
+                "gapoktan_id" => 1,
                 "name" => 'Sawah',
                 "details" => 'Padi',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
+                "gapoktan_id" => 1,
                 "name" => 'Kebun',
                 "details" => 'Jagung',
                 'created_at' => Carbon::now(),

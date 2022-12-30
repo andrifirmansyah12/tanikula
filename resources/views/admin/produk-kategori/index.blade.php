@@ -249,6 +249,7 @@
                 dataType: 'json',
                 success: function(response) {
                     if (response.status == 400) {
+                        showError('add_gapoktan_id', response.messages.gapoktan_id);
                         showError('add_name', response.messages.name);
                         showError('addFiles', response.messages.icon);
                         $("#add_employee_btn").text('Simpan');

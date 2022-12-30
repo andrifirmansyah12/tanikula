@@ -19,8 +19,10 @@ use Illuminate\Support\Facades\Http;
 class ActivityController extends Controller
 {
     // set index page view
-	public function index() {
-		$category = ActivityCategory::where('is_active', '=', 1)->get();
+	public function index()
+    {
+        $poktan = Poktan::where('user_id', auth()->user()->id)->first();
+		$category = ActivityCategory::where('is_active', '=', 1)->where('gapoktan_id', $poktan->gapoktan_id)->latest()->get();
 		return view('poktan.kegiatan.index', compact('category'));
 	}
 

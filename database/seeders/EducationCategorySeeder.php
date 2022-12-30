@@ -19,6 +19,7 @@ class EducationCategorySeeder extends Seeder
 
         $datas = [
             [
+                "gapoktan_id" => 1,
                 "name" => "Pupuk Organik",
                 "slug" => "pupuk-organik",
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),

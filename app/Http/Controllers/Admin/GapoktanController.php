@@ -180,13 +180,13 @@ class GapoktanController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:50',
             'email' => 'required|email|max:100',
-            'chairman' => 'required',
+            // 'chairman' => 'required',
         ], [
             'name.required' => 'Nama Gapoktan diperlukan!',
             'name.max' => 'Nama Gapoktan maksimal 50 karakter!',
             'email.required' => 'Email diperlukan!',
             'email.max' => 'Email maksimal 100 karakter!',
-            'chairman.required' => 'Nama ketua Gapoktan diperlukan!',
+            // 'chairman.required' => 'Nama ketua Gapoktan diperlukan!',
         ]);
 
         if($validator->fails()) {

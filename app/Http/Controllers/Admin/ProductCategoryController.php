@@ -73,7 +73,9 @@ class ProductCategoryController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:product_categories|max:50',
             'icon' => 'required',
+            'gapoktan_id' => 'required',
         ], [
+            'gapoktan_id.required' => 'Gapoktan diperlukan!',
             'name.required' => 'Nama kategori produk diperlukan!',
             'name.max' => 'Nama kategori produk maksimal 50 karakter!',
             'name.unique' => 'Nama Kategori Produk yang anda masukkan sudah ada!',
