@@ -60,4 +60,19 @@ class Gapoktan extends Model
     {
         return $this->hasMany(ProductCategory::class);
     }
+
+    public function educationCategory()
+    {
+        return $this->hasMany(EducationCategory::class);
+    }
+
+    public function activityCategory()
+    {
+        return $this->hasMany(ActivityCategory::class);
+    }
+
+    public function fieldCategory()
+    {
+        return $this->hasMany(FieldCategory::class);
+    }
 }

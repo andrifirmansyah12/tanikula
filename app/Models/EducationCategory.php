@@ -17,6 +17,11 @@ class EducationCategory extends Model
         return $this->hasMany(Education::class);
     }
 
+    public function gapoktan()
+    {
+        return $this->belongsTo(Gapoktan::class);
+    }
+
     public function sluggable(): array
     {
         return [

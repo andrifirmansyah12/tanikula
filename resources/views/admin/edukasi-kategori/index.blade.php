@@ -48,6 +48,19 @@
                 <form action="#" method="POST" id="add_employee_form" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body p-4">
+                        <label for="name">Pilih Gapoktan</label>
+                        <select class="form-control select2" name="gapoktan_id" id="add_gapoktan_id">
+                            <option selected disabled>Pilih Gapoktan</option>
+                            @foreach ($user as $item)
+                                @if ( old('gapoktan_id') == $item->id )
+                                    <option value="{{ $item->id }}" selected>{{ $item->user->name }}</option>
+                                @else
+                                    <option value="{{ $item->id }}">{{ $item->user->name }}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                        <div class="invalid-feedback">
+                        </div>
                         <div class="row">
                             <div class="col-lg">
                                 <label for="name">Nama</label>
@@ -89,6 +102,25 @@
                     @csrf
                     <input type="hidden" name="emp_id" id="emp_id">
                     <div class="modal-body p-4">
+                        <div class="form-group mb-5">
+                            <label for="name">Ubah Gapoktan</label>
+                            <small class="d-flex text-danger pb-1">*Catatan:
+                                <br>1. Jika tidak ingin ubah Gapoktan biarkan kosong,
+                                <br>2. Dan jika ingin ubah Gapoktan, silahkan pilih Gapoktan.
+                            </small>
+                            <select class="form-control select2" name="gapoktan_id">
+                                <option selected disabled>Pilih Gapoktan</option>
+                                @foreach ($user as $item)
+                                @if ( old('gapoktan_id') == $item->id )
+                                <option value="{{ $item->id }}" selected>{{ $item->user->name }}</option>
+                                @else
+                                <option value="{{ $item->id }}">{{ $item->user->name }}</option>
+                                @endif
+                                @endforeach
+                            </select>
+                            <div class="invalid-feedback">
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-lg">
                                 <label for="name">Nama</label>
@@ -172,6 +204,7 @@
                 dataType: 'json',
                 success: function(response) {
                     if (response.status == 400) {
+                        showError('add_gapoktan_id', response.messages.gapoktan_id);
                         showError('add_name', response.messages.name);
                         $("#add_employee_btn").text('Simpan');
                         $("#add_employee_btn").prop('disabled', false);
@@ -187,7 +220,7 @@
                         $("#add_employee_form")[0].reset();
                         $("#addEmployeeModal").modal('hide');
                     }
-                    
+
                 }
                 });
             });

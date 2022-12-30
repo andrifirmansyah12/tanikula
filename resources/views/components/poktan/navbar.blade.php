@@ -74,8 +74,28 @@
     </form>
     <ul class="navbar-nav navbar-right">
         @php
+            $gapoktan = App\Models\Gapoktan::join('poktans', 'gapoktans.id', '=', 'poktans.gapoktan_id')
+                    ->join('users', 'poktans.user_id', '=', 'users.id')
+                    ->select('gapoktans.*', 'users.name as name')
+                    ->where('poktans.user_id', auth()->user()->id)
+                    ->orderBy('gapoktans.updated_at', 'desc')
+                    ->first();
+            $poktan = App\Models\Poktan::join('gapoktans', 'poktans.gapoktan_id', '=', 'gapoktans.id')
+                    ->join('users', 'poktans.user_id', '=', 'users.id')
+                    ->select('poktans.*', 'users.name as name')
+                    ->where('gapoktans.id', $gapoktan->id)
+                    ->orderBy('poktans.updated_at', 'desc')
+                    ->get();
+            foreach($poktan as $poktan){
+                $userIdPoktan = $poktan['user_id'];
+                $checkPosted[] = $userIdPoktan;
+            }
+            $checkPosted[] = $gapoktan->user_id;
+            // dd($checkPosted);
             $authorizedRoles = ['Kegiatan Terbaru', 'Edukasi Terbaru'];
-            $countNotificationActivity = App\Models\PushNotification::where(static function ($query) use ($authorizedRoles) {
+            $countNotificationActivity = App\Models\PushNotification::where(static function ($query) use ($checkPosted) {
+                return $query->whereIn('user_id', $checkPosted);
+            })->where(static function ($query) use ($authorizedRoles) {
                 return $query->whereIn('title', $authorizedRoles);
             })->count();
         @endphp
@@ -89,8 +109,28 @@
                 </div>
                 <div class="dropdown-list-content dropdown-list-icons">
                     @php
+                        $gapoktan = App\Models\Gapoktan::join('poktans', 'gapoktans.id', '=', 'poktans.gapoktan_id')
+                                ->join('users', 'poktans.user_id', '=', 'users.id')
+                                ->select('gapoktans.*', 'users.name as name')
+                                ->where('poktans.user_id', auth()->user()->id)
+                                ->orderBy('gapoktans.updated_at', 'desc')
+                                ->first();
+                        $poktan = App\Models\Poktan::join('gapoktans', 'poktans.gapoktan_id', '=', 'gapoktans.id')
+                                ->join('users', 'poktans.user_id', '=', 'users.id')
+                                ->select('poktans.*', 'users.name as name')
+                                ->where('gapoktans.id', $gapoktan->id)
+                                ->orderBy('poktans.updated_at', 'desc')
+                                ->get();
+                        foreach($poktan as $poktan){
+                            $userIdPoktan = $poktan['user_id'];
+                            $checkPosted[] = $userIdPoktan;
+                        }
+                        $checkPosted[] = $gapoktan->user_id;
+                        // dd($checkPosted);
                         $authorizedRoles = ['Kegiatan Terbaru', 'Edukasi Terbaru'];
-                        $notificationActivity = App\Models\PushNotification::where(static function ($query) use ($authorizedRoles) {
+                        $notificationActivity = App\Models\PushNotification::where(static function ($query) use ($checkPosted) {
+                            return $query->whereIn('user_id', $checkPosted);
+                        })->where(static function ($query) use ($authorizedRoles) {
                             return $query->whereIn('title', $authorizedRoles);
                         })->latest()->get();
                     @endphp

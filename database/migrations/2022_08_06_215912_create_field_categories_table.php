@@ -15,6 +15,7 @@ class CreateFieldCategoriesTable extends Migration
     {
         Schema::create('field_categories', function (Blueprint $table) {
             $table->id();
+            $table->foreignId("gapoktan_id")->nullable();
             $table->string('name')->nullable();
             $table->string('details')->nullable();
             $table->timestamps();

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Gapoktan;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ActivityCategory;
+use App\Models\Gapoktan;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Support\Facades\Validator;
 
@@ -18,7 +19,8 @@ class ActivityCategoryController extends Controller
     // handle fetch all eamployees ajax request
 	public function fetchAll()
     {
-		$emps = ActivityCategory::latest()->get();
+        $gapoktan = Gapoktan::where('user_id', auth()->user()->id)->first();
+		$emps = ActivityCategory::where('gapoktan_id', $gapoktan->id)->latest()->get();
 		$output = '';
 		if ($emps->count() > 0) {
 			$output .= '<table class="table table-striped table-sm text-center align-middle">
@@ -70,8 +72,9 @@ class ActivityCategoryController extends Controller
                 'messages' => $validator->getMessageBag()
             ]);
         } else {
+            $gapoktan = Gapoktan::where('user_id', auth()->user()->id)->first();
             $is_active = $request->is_active ? 1 : 0;
-            $empData = ['name' => $request->name, 'slug' => $request->slug, 'is_active' => $is_active];
+            $empData = ['gapoktan_id' => $gapoktan->id, 'name' => $request->name, 'slug' => $request->slug, 'is_active' => $is_active];
 
             ActivityCategory::create($empData);
             return response()->json([
@@ -104,9 +107,11 @@ class ActivityCategoryController extends Controller
                 'messages' => $validator->getMessageBag()
             ]);
         } else {
+            $gapoktan = Gapoktan::where('user_id', auth()->user()->id)->first();
             $emp = ActivityCategory::find($request->emp_id);
 
             $emp->is_active = $request->is_active ? 1 : 0;
+            $emp->gapoktan_id = $gapoktan->id;
             $emp->name = $request->name;
             $emp->slug = $request->slug;
 

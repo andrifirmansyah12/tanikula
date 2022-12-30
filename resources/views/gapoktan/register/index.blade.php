@@ -71,8 +71,8 @@
                         <form method="POST" action="#" id="register_form" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
-                                <label for="name">Nama</label>
-                                <input id="name" type="name" class="form-control" name="name" placeholder="Nama" autofocus>
+                                <label for="name">Nama Gapoktan</label>
+                                <input id="name" type="name" class="form-control" name="name" placeholder="Nama Gapoktan" autofocus>
                                 <div class="invalid-feedback">
                                 </div>
                             </div>

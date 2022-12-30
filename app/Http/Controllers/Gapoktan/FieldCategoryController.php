@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Gapoktan;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\FieldCategory;
+use App\Models\Gapoktan;
 use Illuminate\Support\Facades\Validator;
 
 class FieldCategoryController extends Controller
@@ -17,7 +18,8 @@ class FieldCategoryController extends Controller
     // handle fetch all eamployees ajax request
 	public function fetchAll()
     {
-		$emps = FieldCategory::latest()->get();
+        $gapoktan = Gapoktan::where('user_id', auth()->user()->id)->first();
+		$emps = FieldCategory::where('gapoktan_id', $gapoktan->id)->latest()->get();
 		$output = '';
 		if ($emps->count() > 0) {
 			$output .= '<table class="table table-striped table-sm text-center align-middle">
@@ -67,7 +69,8 @@ class FieldCategoryController extends Controller
                 'messages' => $validator->getMessageBag()
             ]);
         } else {
-            $empData = ['name' => $request->name, 'details' => $request->details];
+            $gapoktan = Gapoktan::where('user_id', auth()->user()->id)->first();
+            $empData = ['gapoktan_id' => $gapoktan->id, 'name' => $request->name, 'details' => $request->details];
 
             FieldCategory::create($empData);
             return response()->json([
@@ -103,8 +106,9 @@ class FieldCategoryController extends Controller
                 'messages' => $validator->getMessageBag()
             ]);
         } else {
+            $gapoktan = Gapoktan::where('user_id', auth()->user()->id)->first();
             $emp = FieldCategory::find($request->emp_id);
-            $empData = ['name' => $request->name, 'details' => $request->details];
+            $empData = ['gapoktan_id' => $gapoktan->id, 'name' => $request->name, 'details' => $request->details];
             $emp->update($empData);
 
             return response()->json([

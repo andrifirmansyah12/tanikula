@@ -17,6 +17,11 @@ class ActivityCategory extends Model
         return $this->hasMany(Activity::class);
     }
 
+    public function gapoktan()
+    {
+        return $this->belongsTo(Gapoktan::class);
+    }
+
     public function sluggable(): array
     {
         return [

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Gapoktan;
 use App\Models\EducationCategory;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Support\Facades\Validator;
@@ -11,8 +12,10 @@ use Illuminate\Support\Facades\Validator;
 class EducationCategoryController extends Controller
 {
     // set index page view
-	public function index() {
-		return view('admin.edukasi-kategori.index');
+	public function index()
+    {
+        $user = Gapoktan::latest()->get();
+		return view('admin.edukasi-kategori.index', compact('user'));
 	}
 
     // handle fetch all eamployees ajax request
@@ -27,6 +30,7 @@ class EducationCategoryController extends Controller
                 <th>No</th>
                 <th>Nama Kategori</th>
                 <th>Status Kategori</th>
+                <th>Dibuat</th>
                 <th>Aksi</th>
               </tr>
             </thead>
@@ -41,6 +45,8 @@ class EducationCategoryController extends Controller
                 } elseif ($emp->is_active == 0) {
                     $output .= '<td><div class="badge badge-danger">Tidak Aktif</div></td>';
                 }
+                $output .= '</td>
+                <td>' . $emp->gapoktan->user->name . '</td>';
                 $output .= '<td>
                   <a href="#" id="' . $emp->id . '" class="text-success mx-1 editIcon" data-toggle="modal" data-target="#editEmployeeModal"><i class="bi-pencil-square h4"></i></a>
                 </td>
@@ -58,7 +64,9 @@ class EducationCategoryController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:education_categories|max:50',
+            'gapoktan_id' => 'required',
         ], [
+            'gapoktan_id.required' => 'Gapoktan diperlukan!',
             'name.required' => 'Nama kategori edukasi diperlukan!',
             'name.max' => 'Nama kategori edukasi maksimal 50 karakter!',
             'name.unique' => 'Nama kategori edukasi yang anda masukkan sudah ada!',
@@ -71,7 +79,7 @@ class EducationCategoryController extends Controller
             ]);
         } else {
             $is_active = $request->is_active ? 1 : 0;
-            $empData = ['name' => $request->name, 'slug' => $request->slug, 'is_active' => $is_active];
+            $empData = ['gapoktan_id' => $request->gapoktan_id, 'name' => $request->name, 'slug' => $request->slug, 'is_active' => $is_active];
 
             EducationCategory::create($empData);
             return response()->json([
@@ -109,7 +117,9 @@ class EducationCategoryController extends Controller
             $emp->is_active = $request->is_active ? 1 : 0;
             $emp->name = $request->name;
             $emp->slug = $request->slug;
-
+            if ($request->gapoktan_id) {
+                $emp->gapoktan_id = $request->gapoktan_id;
+            }
             $emp->update();
             return response()->json([
                 'status' => 200,
