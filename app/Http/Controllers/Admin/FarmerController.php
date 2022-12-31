@@ -17,7 +17,8 @@ use Illuminate\Support\Str;
 class FarmerController extends Controller
 {
     // set index page view
-	public function index() {
+	public function index()
+    {
         $gapoktans = Gapoktan::all();
 		return view('admin.petani.index', compact('gapoktans'));
 	}
@@ -32,7 +33,8 @@ class FarmerController extends Controller
     }
 
     // handle fetch all eamployees ajax request
-	public function fetchAll(Request $request) {
+	public function fetchAll(Request $request)
+    {
 		// $emps = Poktan::with('user', 'gapoktan')->latest()->get();
         $emps = Farmer::join('poktans', 'farmers.poktan_id', '=', 'poktans.id')
                     ->join('gapoktans', 'poktans.gapoktan_id', '=', 'gapoktans.id')
@@ -112,7 +114,8 @@ class FarmerController extends Controller
             'email' => 'required|email|unique:users|max:100',
             'gapoktan_id' => 'required',
             'poktan_id' => 'required',
-            'password' => 'required',
+            'password' => 'required|min:6',
+            'cpassword' => 'required|same:password',
         ], [
             'name.required' => 'Nama petani diperlukan!',
             'name.max' => 'Nama petani maksimal 50 karakter!',
@@ -122,7 +125,9 @@ class FarmerController extends Controller
             'email.max' => 'Email maksimal 100 karakter!',
             'password.required' => 'Kata sandi diperlukan!',
             'password.min' => 'Kata sandi harus minimal 6 karakter!',
-            'password.max' => 'Kata sandi maksimal 50 karakter!',
+            'cpassword.same' => 'Konfirmasi kata sandi tidak cocok!',
+            'cpassword.required' => 'Konfirmasi kata sandi diperlukan!',
+            'cpassword.min' => 'Kata sandi harus minimal 6 karakter!',
             'poktan_id.required' => 'Nama poktan diperlukan!',
             'gapoktan_id.required' => 'Nama Gapoktan diperlukan!',
         ]);
@@ -156,7 +161,8 @@ class FarmerController extends Controller
 	}
 
     // handle edit an employee ajax request
-	public function edit(Request $request) {
+	public function edit(Request $request)
+    {
 		$id = $request->id;
 		$emp = Farmer::join('poktans', 'farmers.poktan_id', '=', 'poktans.id')
                     ->join('gapoktans', 'poktans.gapoktan_id', '=', 'gapoktans.id')
@@ -174,11 +180,13 @@ class FarmerController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:50',
             'email' => 'required|email|max:100',
+            'cpassword' => 'same:password',
         ], [
             'name.required' => 'Nama petani diperlukan!',
             'name.max' => 'Nama petani maksimal 50 karakter!',
             'email.required' => 'Email diperlukan!',
             'email.max' => 'Email maksimal 100 karakter!',
+            'cpassword.same' => 'Konfirmasi kata sandi tidak cocok!',
         ]);
 
         if($validator->fails()) {

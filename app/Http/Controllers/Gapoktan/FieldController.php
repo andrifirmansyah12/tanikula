@@ -18,7 +18,8 @@ class FieldController extends Controller
 {
     // set index page view
 	public function index() {
-		$category = FieldCategory::latest()->get();
+        $gapoktans = Gapoktan::where('user_id', auth()->user()->id)->first();
+		$category = FieldCategory::where('gapoktan_id', $gapoktans->id)->latest()->get();
         $farmers = Farmer::join('poktans', 'farmers.poktan_id', '=', 'poktans.id')
                     ->join('gapoktans', 'poktans.gapoktan_id', '=', 'gapoktans.id')
                     ->join('users', 'farmers.user_id', '=', 'users.id')

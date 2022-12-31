@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Gapoktan;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Education;
+use App\Models\Gapoktan;
 use App\Models\EducationCategory;
 use App\Models\PushNotification;
 use Illuminate\Support\Facades\Storage;
@@ -17,8 +18,10 @@ use Illuminate\Support\Facades\Http;
 class EducationController extends Controller
 {
     // set index page view
-	public function index() {
-		$category = EducationCategory::where('is_active', '=', 1)->get();
+	public function index()
+    {
+        $gapoktans = Gapoktan::where('user_id', auth()->user()->id)->first();
+		$category = EducationCategory::where('gapoktan_id', $gapoktans->id)->where('is_active', '=', 1)->get();
 		return view('gapoktan.edukasi.index', compact('category'));
 	}
 

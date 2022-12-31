@@ -93,6 +93,12 @@
                                 </div>
                         </div>
                         <div class="my-2 form-group">
+                            <label for="password">Konfirmasi Password</label>
+                            <input type="password" id="cpassword" name="cpassword" class="form-control" placeholder="Konfirmasi Password" required>
+                            <div class="invalid-feedback">
+                            </div>
+                        </div>
+                        <div class="my-2 form-group">
                             <label for="is_active">Status Akun</label>
                             <div>
                                 <label class="custom-switch">
@@ -166,6 +172,12 @@
                             </div>
                         </div>
                         <div class="my-2 form-group">
+                            <label for="password">Konfirmasi Password</label>
+                            <div id="cpassword_edit">
+
+                            </div>
+                        </div>
+                        <div class="my-2 form-group">
                             <label for="is_active">Status Akun</label>
                             <div id="is_active">
 
@@ -235,6 +247,7 @@
                         showError('add_poktan_id', response.messages.poktan_id);
                         showError('add_email', response.messages.email);
                         showError('add_password', response.messages.password);
+                        showError('cpassword', response.messages.cpassword);
                         $("#add_employee_btn").text('Simpan');
                         $("#add_employee_btn").prop('disabled', false);
                     } else if (response.status == 200) {
@@ -273,7 +286,13 @@
                             <br>1. Jika tidak ingin ubah password biarkan kosong,
                             <br>2. Dan jika ingin ubah password, silahkan masukkan password.
                         </small>
-                        <input type="password" name="password" class="form-control" placeholder="Password">`);
+                        <input type="password" name="password" id="password" class="form-control" placeholder="Password">
+                        <div class="invalid-feedback">
+                            </div>`);
+                    $("#cpassword_edit").html(
+                        `<input type="password" id="editcpassword" name="cpassword" class="form-control" placeholder="Konfirmasi Password">
+                        <div class="invalid-feedback">
+                            </div>`);
                     $("#is_active").html(
                         `<label class="custom-switch">
                             <input type="checkbox" name="is_active" ${response.is_active ? 'checked' : ''} class="custom-switch-input">
@@ -303,6 +322,8 @@
                     if (response.status == 400) {
                         showError('name', response.messages.name);
                         showError('email', response.messages.email);
+                        showError('password', response.messages.password);
+                        showError('editcpassword', response.messages.cpassword);
                         $("#edit_employee_btn").text('Simpan');
                         $("#edit_employee_btn").prop('disabled', false);
                     } else if (response.status == 200) {

@@ -34,7 +34,13 @@
                                 <br>1. Jika tidak ingin ubah password biarkan kosong,
                                 <br>2. Dan jika ingin ubah password, silahkan masukkan password.
                             </small>
-                            <input type="password" required id="password" name="password" class="form-control" placeholder="Password">
+                            <input type="password" id="password" name="password" class="form-control" placeholder="Password">
+                            <div class="invalid-feedback">
+                            </div>
+                        </div>
+                        <div class="my-2 form-group">
+                            <label for="password">Konfirmasi Password</label>
+                            <input type="password" id="cpassword" name="cpassword" class="form-control" placeholder="Konfirmasi Password">
                             <div class="invalid-feedback">
                             </div>
                         </div>
@@ -399,7 +405,7 @@
                         <div class="card-footer row align-items-center justify-content-end mb-3">
                             <input type="button" value="Ubah Password" class="btn shadow-none border"
                                 style="background: #FFFACD;" data-toggle="modal" data-target="#editEmployeeModal">
-                            <input type="button" value="Ubah Biodata Poktan" class="btn btn-primary shadow-none m-1"
+                            <input type="button" value="Ubah Biodata Gapoktan" class="btn btn-primary shadow-none m-1"
                                 data-toggle="modal" data-target="#exampleModal">
                         </div>
                     </div>
@@ -550,6 +556,7 @@
                     success: function(res){
                         if (res.status == 400) {
                             showError('password', res.messages.password);
+                            showError('cpassword', res.messages.cpassword);
                             $("#password_btn").val('Ubah Password');
                             $("#password_btn").prop('disabled', false);
                         } else if (res.status == 200) {

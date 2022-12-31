@@ -92,6 +92,12 @@
                             <div class="invalid-feedback">
                             </div>
                         </div>
+                        <div class="my-2 form-group">
+                            <label for="password">Konfirmasi Password</label>
+                            <input type="password" id="cpassword" name="cpassword" class="form-control" placeholder="Konfirmasi Password" required>
+                            <div class="invalid-feedback">
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label for="images">Unggah Bukti</label>
                             <small class="d-flex text-danger pb-1">*Unggah berupa bukti Gapoktan</small>
@@ -103,7 +109,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <input type="file" id="imagesEdit" name="images[]" multiple class="imagesEdit form-control">
+                            <input type="file" id="imagesEdit" name="images[]" multiple class="imagesEdit form-control" required>
                             <div class="invalid-feedback">
                             </div>
                         </div>
@@ -165,6 +171,12 @@
 
                             </div>
                             <div class="invalid-feedback">
+                            </div>
+                        </div>
+                        <div class="my-2 form-group">
+                            <label for="password">Konfirmasi Password</label>
+                            <div id="cpassword_edit">
+
                             </div>
                         </div>
                         <div class="my-2 form-group">
@@ -355,6 +367,7 @@
                         showError('add_chairman', response.messages.chairman);
                         showError('add_email', response.messages.email);
                         showError('add_password', response.messages.password);
+                        showError('cpassword', response.messages.cpassword);
                         $("#add_employee_btn").text('Simpan');
                         $("#add_employee_btn").prop('disabled', false);
                     } else if (response.status == 200) {
@@ -394,7 +407,13 @@
                             <br>1. Jika tidak ingin ubah password biarkan kosong,
                             <br>2. Dan jika ingin ubah password, silahkan masukkan password.
                         </small>
-                        <input type="password" name="password" class="form-control" placeholder="Password">`);
+                        <input type="password" name="password" class="form-control" placeholder="Password">
+                        <div class="invalid-feedback">
+                            </div>`);
+                    $("#cpassword_edit").html(
+                        `<input type="password" id="editcpassword" name="cpassword" class="form-control" placeholder="Konfirmasi Password">
+                        <div class="invalid-feedback">
+                            </div>`);
                     $("#is_verified").html(
                         `<label class="custom-switch">
                             <input type="checkbox" name="is_verified" ${response.is_verified ? 'checked' : ''} class="custom-switch-input">
@@ -431,6 +450,7 @@
                         showError('chairman', response.messages.chairman);
                         showError('email', response.messages.email);
                         showError('password', response.messages.password);
+                        showError('editcpassword', response.messages.cpassword);
                         $("#edit_employee_btn").text('Simpan');
                         $("#edit_employee_btn").prop('disabled', false);
                     } else if (response.status == 200) {

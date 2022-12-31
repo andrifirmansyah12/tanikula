@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Activity;
 use App\Models\Poktan;
+use App\Models\Gapoktan;
 use App\Models\ActivityCategory;
 use App\Models\PushNotification;
 use Illuminate\Support\Facades\Storage;
@@ -20,7 +21,8 @@ class ActivityController extends Controller
     // set index page view
     public function index()
     {
-        $category = ActivityCategory::where('is_active', '=', 1)->get();
+        $gapoktans = Gapoktan::where('user_id', auth()->user()->id)->first();
+        $category = ActivityCategory::where('gapoktan_id', $gapoktans->id)->where('is_active', '=', 1)->get();
         return view('gapoktan.kegiatan.index', compact('category'));
     }
 
