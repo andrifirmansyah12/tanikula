@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Poktan;
 use App\Models\Farmer;
+use App\Models\Gapoktan;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -16,13 +17,16 @@ use Illuminate\Support\Str;
 class FarmerController extends Controller
 {
     // set index page view
-	public function index() {
-        $poktan = Poktan::all();
+	public function index()
+    {
+        $gapoktans = Gapoktan::where('user_id', auth()->user()->id)->first();
+        $poktan = Poktan::where('gapoktan_id', $gapoktans->id)->latest()->get();
 		return view('gapoktan.petani.index', compact('poktan'));
 	}
 
     // handle fetch all eamployees ajax request
-	public function fetchAll(Request $request) {
+	public function fetchAll(Request $request)
+    {
 		// $emps = Poktan::with('user', 'gapoktan')->latest()->get();
         $emps = Farmer::join('poktans', 'farmers.poktan_id', '=', 'poktans.id')
                     ->join('gapoktans', 'poktans.gapoktan_id', '=', 'gapoktans.id')
@@ -102,7 +106,8 @@ class FarmerController extends Controller
             'name' => 'required|unique:users|max:50',
             'email' => 'required|email|unique:users|max:100',
             'poktan_id' => 'required',
-            'password' => 'required',
+            'password' => 'required|min:6',
+            'cpassword' => 'required|same:password',
         ], [
             'name.required' => 'Nama petani diperlukan!',
             'name.max' => 'Nama petani maksimal 50 karakter!',
@@ -112,7 +117,9 @@ class FarmerController extends Controller
             'email.max' => 'Email maksimal 100 karakter!',
             'password.required' => 'Kata sandi diperlukan!',
             'password.min' => 'Kata sandi harus minimal 6 karakter!',
-            'password.max' => 'Kata sandi maksimal 50 karakter!',
+            'cpassword.same' => 'Konfirmasi kata sandi tidak cocok!',
+            'cpassword.required' => 'Konfirmasi kata sandi diperlukan!',
+            'cpassword.min' => 'Kata sandi harus minimal 6 karakter!',
             'poktan_id.required' => 'Nama poktan diperlukan!',
         ]);
 
@@ -131,9 +138,11 @@ class FarmerController extends Controller
 
             $poktan_id = $request->poktan_id;
             $is_active = $request->is_active ? 1 : 0;
+
+            $gapoktans = Gapoktan::where('user_id', auth()->user()->id)->first();
             Farmer::create([
                 'user_id' => $user->id,
-                'gapoktan_id' => auth()->user()->id,
+                'gapoktan_id' => $gapoktans->id,
                 'poktan_id' => $poktan_id,
                 'is_active' => $is_active,
             ]);
@@ -144,7 +153,8 @@ class FarmerController extends Controller
 	}
 
     // handle edit an employee ajax request
-	public function edit(Request $request) {
+	public function edit(Request $request)
+    {
 		$id = $request->id;
 		$emp = Farmer::join('poktans', 'farmers.poktan_id', '=', 'poktans.id')
                     ->join('gapoktans', 'poktans.gapoktan_id', '=', 'gapoktans.id')
@@ -162,11 +172,13 @@ class FarmerController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:50',
             'email' => 'required|email|max:100',
+            'cpassword' => 'same:password',
         ], [
             'name.required' => 'Nama petani diperlukan!',
             'name.max' => 'Nama petani maksimal 50 karakter!',
             'email.required' => 'Email diperlukan!',
             'email.max' => 'Email maksimal 100 karakter!',
+            'cpassword.same' => 'Konfirmasi kata sandi tidak cocok!',
         ]);
 
         if($validator->fails()) {
@@ -201,7 +213,8 @@ class FarmerController extends Controller
                 //     $emp->is_active = $request->is_active ? 0 : 1;
                 // }
             }
-            $emp->gapoktan_id = auth()->user()->id;
+            $gapoktans = Gapoktan::where('user_id', auth()->user()->id)->first();
+            $emp->gapoktan_id = $gapoktans->id;
             $emp->save();
 
             return response()->json([

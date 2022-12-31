@@ -104,7 +104,8 @@ class GapoktanController extends Controller
             'name' => 'required|unique:users|max:50',
             'email' => 'required|email|unique:users|max:100',
             'chairman' => 'required',
-            'password' => 'required',
+            'password' => 'required|min:6',
+            'cpassword' => 'required|same:password',
         ], [
             'name.required' => 'Nama Gapoktan diperlukan!',
             'name.max' => 'Nama Gapoktan maksimal 50 karakter!',
@@ -114,7 +115,9 @@ class GapoktanController extends Controller
             'email.max' => 'Email maksimal 100 karakter!',
             'password.required' => 'Kata sandi diperlukan!',
             'password.min' => 'Kata sandi harus minimal 6 karakter!',
-            'password.max' => 'Kata sandi maksimal 50 karakter!',
+            'cpassword.same' => 'Konfirmasi kata sandi tidak cocok!',
+            'cpassword.required' => 'Konfirmasi kata sandi diperlukan!',
+            'cpassword.min' => 'Kata sandi harus minimal 6 karakter!',
             'chairman.required' => 'Nama ketua Gapoktan diperlukan!',
         ]);
 
@@ -181,12 +184,14 @@ class GapoktanController extends Controller
             'name' => 'required|max:50',
             'email' => 'required|email|max:100',
             // 'chairman' => 'required',
+            'cpassword' => 'same:password',
         ], [
             'name.required' => 'Nama Gapoktan diperlukan!',
             'name.max' => 'Nama Gapoktan maksimal 50 karakter!',
             'email.required' => 'Email diperlukan!',
             'email.max' => 'Email maksimal 100 karakter!',
             // 'chairman.required' => 'Nama ketua Gapoktan diperlukan!',
+            'cpassword.same' => 'Konfirmasi kata sandi tidak cocok!',
         ]);
 
         if($validator->fails()) {

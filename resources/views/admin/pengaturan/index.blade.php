@@ -38,6 +38,12 @@
                             <div class="invalid-feedback">
                             </div>
                         </div>
+                        <div class="my-2 form-group">
+                            <label for="password">Konfirmasi Password</label>
+                            <input type="password" id="cpassword" name="cpassword" class="form-control" placeholder="Konfirmasi Password">
+                            <div class="invalid-feedback">
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
@@ -146,7 +152,7 @@
     </div>
 
     <!-- Main Content -->
-    <section class="content">
+    {{-- <section class="content">
         <div class="container-fluid">
             <div class="section">
                 <div class="section-body">
@@ -190,9 +196,6 @@
                                     <input type="hidden" name="user_id" id="user_id" value="{{ $userInfo->id }}">
                                     <div class="col-12 col-md-12 col-lg-7">
                                         <div>
-                                            {{-- <div class="pb-2">
-                                                <h4 class="text-center">Biodata Admin</h4>
-                                            </div> --}}
                                             <div class="table-responsive">
                                                 <table class="table table-borderless">
                                                     <thead>
@@ -247,6 +250,111 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> --}}
+    <section class="content">
+        <div class="container-fluid">
+            <div class="section">
+                <div class="section-body">
+                    <div class="row">
+                        <div class="col-lg-4 mt-3">
+                            <div class="card">
+                                <div class="card-body pt-4 px-4">
+                                    <h4 class="p-3 text-center rounded">FOTO PROFILE</h4>
+                                </div>
+                                <div class="card-body text-center">
+                                    @if ($userInfo->image)
+                                    <img alt="image" id="image_preview" src="../storage/profile/{{ $userInfo->image }}"
+                                        class="rounded-circle img-fluid"
+                                        style="width: 150px; height: 150px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                        @else
+                                            <img alt=" image" id="image_preview"
+                                        src="{{ asset('stisla/assets/img/example-image.jpg') }}"
+                                        class="rounded-circle img-fluid"
+                                        style="width: 150px; height: 150px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                        @endif
+                                        <h5 class=" my-3">@if ($userInfo->user->name)
+                                     {{ $userInfo->user->name }}
+                                    @else
+                                    <span class="text-danger">Belum diisi</span>
+                                    @endif</h5>
+                                    <p class="text-muted mb-4">Admin Tanikula</p>
+                                    <div class="d-flex justify-content-center mb-2">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input hidden" style="width: 0px; opacity: 0%"
+                                                accept="image/*" id="image" name="image">
+                                            <label class="custom-file-label" for="image"><i class="bi bi-camera h-4"></i> Ubah
+                                                foto</label>
+                                            {{-- <input type="file" class="custom-file-input" accept="image/*" id="image" name="image">
+                                                <label class="custom-file-label" for="image">Ubah Profile</label> --}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="user_id" id="user_id" value="{{ $userInfo->id }}">
+                        <div class="col-lg-8 mt-3">
+                            <div class="card-body pt-4 px-4">
+                                    <h4 class="border p-3 text-center rounded">Biodata Admin</h4>
+                                </div>
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">Email</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <p class="text-muted mb-0">{{ $userInfo->user->email }}</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">No Telp</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <p class="text-muted mb-0">
+                                                @if ($userInfo->phone)
+                                                (+62) {{ $userInfo->phone }}
+                                                @else
+                                                <span class="text-danger">Belum diisi</span>
+                                                @endif</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">Address</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <p class="text-muted mb-0">@if ($userInfo->street && $userInfo->number)
+                                                {{ $userInfo->street }}, No {{ $userInfo->number }}.
+                                                @if ($userInfo->village_id &&
+                                                $userInfo->district_id && $userInfo->city_id &&
+                                                $userInfo->province_id != null)
+                                                {{ $userInfo->village->name }}, Kecamatan
+                                                {{ $userInfo->district->name }},
+                                                {{ $userInfo->city->name }}, Provinsi
+                                                {{ $userInfo->province->name }}.
+                                                @endif
+                                                @else
+                                                <span class="text-danger">Belum diisi</span>
+                                                @endif</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                </div>
+                                <div class="card-footer row align-items-center justify-content-end mb-3">
+                                    <input type="button" value="Ubah Password" class="btn shadow-none border"
+                                        style="background: #FFFACD;" data-toggle="modal" data-target="#editEmployeeModal">
+                                    <input type="button" value="Ubah Biodata Poktan" class="btn btn-primary shadow-none m-1"
+                                        data-toggle="modal" data-target="#exampleModal">
                                 </div>
                             </div>
                         </div>
@@ -399,6 +507,7 @@
                     success: function(res){
                         if (res.status == 400) {
                             showError('password', res.messages.password);
+                            showError('cpassword', res.messages.cpassword);
                             $("#password_btn").val('Ubah Password');
                             $("#password_btn").prop('disabled', false);
                         } else if (res.status == 200) {

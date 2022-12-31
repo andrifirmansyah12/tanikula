@@ -34,7 +34,13 @@
                                 <br>1. Jika tidak ingin ubah password biarkan kosong,
                                 <br>2. Dan jika ingin ubah password, silahkan masukkan password.
                             </small>
-                            <input type="password"  id="password" name="password" class="form-control" placeholder="Password" required>
+                            <input type="password" id="password" name="password" class="form-control" placeholder="Password">
+                            <div class="invalid-feedback">
+                            </div>
+                        </div>
+                        <div class="my-2 form-group">
+                            <label for="password">Konfirmasi Password</label>
+                            <input type="password" id="cpassword" name="cpassword" class="form-control" placeholder="Konfirmasi Password">
                             <div class="invalid-feedback">
                             </div>
                         </div>
@@ -552,6 +558,7 @@
                     success: function(res){
                         if (res.status == 400) {
                             showError('password', res.messages.password);
+                            showError('cpassword', res.messages.cpassword);
                             $("#password_btn").val('Ubah Password');
                             $("#password_btn").prop('disabled', false);
                         } else if (res.status == 200) {

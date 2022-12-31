@@ -16,13 +16,15 @@ use Illuminate\Support\Str;
 class FarmerController extends Controller
 {
     // set index page view
-	public function index() {
+	public function index()
+    {
         $poktan = Poktan::all();
 		return view('poktan.petani.index', compact('poktan'));
 	}
 
     // handle fetch all eamployees ajax request
-	public function fetchAll(Request $request) {
+	public function fetchAll(Request $request)
+    {
 		// $emps = Poktan::with('user', 'gapoktan')->latest()->get();
         $emps = Farmer::join('poktans', 'farmers.poktan_id', '=', 'poktans.id')
                     ->join('users', 'farmers.user_id', '=', 'users.id')
@@ -100,7 +102,8 @@ class FarmerController extends Controller
             'name' => 'required|unique:users|max:50',
             'email' => 'required|email|unique:users|max:100',
             'poktan_id' => 'required',
-            'password' => 'required',
+            'password' => 'required|min:6',
+            'cpassword' => 'required|same:password',
         ], [
             'name.required' => 'Nama petani diperlukan!',
             'name.max' => 'Nama petani maksimal 50 karakter!',
@@ -110,7 +113,9 @@ class FarmerController extends Controller
             'email.max' => 'Email maksimal 100 karakter!',
             'password.required' => 'Kata sandi diperlukan!',
             'password.min' => 'Kata sandi harus minimal 6 karakter!',
-            'password.max' => 'Kata sandi maksimal 50 karakter!',
+            'cpassword.same' => 'Konfirmasi kata sandi tidak cocok!',
+            'cpassword.required' => 'Konfirmasi kata sandi diperlukan!',
+            'cpassword.min' => 'Kata sandi harus minimal 6 karakter!',
             'poktan_id.required' => 'Nama poktan diperlukan!',
         ]);
 
@@ -154,11 +159,13 @@ class FarmerController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:50',
             'email' => 'required|email|max:100',
+            'cpassword' => 'same:password',
         ], [
             'name.required' => 'Nama petani diperlukan!',
             'name.max' => 'Nama petani maksimal 50 karakter!',
             'email.required' => 'Email diperlukan!',
             'email.max' => 'Email maksimal 100 karakter!',
+            'cpassword.same' => 'Konfirmasi kata sandi tidak cocok!',
         ]);
 
         if($validator->fails()) {
