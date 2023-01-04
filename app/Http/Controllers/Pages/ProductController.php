@@ -73,10 +73,10 @@ class ProductController extends Controller
 				$output .= '
                 <div class="col-lg-3 col-md-6 col-12">';
                     if ($item->stoke === 0) {
-                        $output .= '<div class="single-product bg-light opacity-90" style="height: 26rem">
+                        $output .= '<div class="single-product bg-light opacity-90" style="height: 26rem; border: 1px solid #16A085;">
                         <div class="product-image bg-light opacity-90">';
                     } else {
-                        $output .= '<div class="single-product" style="height: 26rem">
+                        $output .= '<div class="single-product" style="height: 26rem; border: 1px solid #16A085;">
                         <div class="product-image">';
                     }
                         $output .= '
@@ -212,10 +212,10 @@ class ProductController extends Controller
 				$output .= '
                 <div class="col-lg-3 col-md-6 col-12">';
                     if ($item->stoke === 0) {
-                        $output .= '<div class="single-product bg-light opacity-90" style="height: 26rem">
+                        $output .= '<div class="single-product bg-light opacity-90" style="height: 26rem; border: 1px solid #16A085;">
                         <div class="product-image bg-light opacity-90">';
                     } else {
-                        $output .= '<div class="single-product" style="height: 26rem">
+                        $output .= '<div class="single-product" style="height: 26rem; border: 1px solid #16A085;">
                         <div class="product-image">';
                     }
                         $output .= '
@@ -514,10 +514,10 @@ class ProductController extends Controller
 				$output .= '
                 <div class="col-lg-3 col-md-6 col-12">';
                     if ($item->stoke === 0) {
-                        $output .= '<div class="single-product bg-light opacity-90" style="height: 26rem">
+                        $output .= '<div class="single-product bg-light opacity-90" style="height: 26rem; border: 1px solid #16A085;">
                         <div class="product-image bg-light opacity-90">';
                     } else {
-                        $output .= '<div class="single-product" style="height: 26rem">
+                        $output .= '<div class="single-product" style="height: 26rem; border: 1px solid #16A085;">
                         <div class="product-image">';
                     }
                         $output .= '
@@ -692,10 +692,10 @@ class ProductController extends Controller
 				$output .= '
                 <div class="col-lg-3 col-md-6 col-12">';
                     if ($item->stoke === 0) {
-                        $output .= '<div class="single-product bg-light opacity-90" style="height: 26rem">
+                        $output .= '<div class="single-product bg-light opacity-90" style="height: 26rem; border: 1px solid #16A085;">
                         <div class="product-image bg-light opacity-90">';
                     } else {
-                        $output .= '<div class="single-product" style="height: 26rem">
+                        $output .= '<div class="single-product" style="height: 26rem; border: 1px solid #16A085;">
                         <div class="product-image">';
                     }
                         $output .= '
@@ -850,10 +850,10 @@ class ProductController extends Controller
 				$output .= '
                 <div class="col-lg-3 col-md-6 col-12">';
                     if ($item->stoke === 0) {
-                        $output .= '<div class="single-product bg-light opacity-90" style="height: 26rem">
+                        $output .= '<div class="single-product bg-light opacity-90" style="height: 26rem; border: 1px solid #16A085;">
                         <div class="product-image bg-light opacity-90">';
                     } else {
-                        $output .= '<div class="single-product" style="height: 26rem">
+                        $output .= '<div class="single-product" style="height: 26rem; border: 1px solid #16A085;">
                         <div class="product-image">';
                     }
                         $output .= '
@@ -884,13 +884,13 @@ class ProductController extends Controller
                         }
                             if ($item->discount != 0) {
                                 $output .= '<div class="d-flex justify-content-between">
-                                    <a href="product-category/'.$item->product_category->slug.'">
+                                    <a href="../product-category/'.$item->product_category->slug.'">
                                         <span class="category">'. $item->category_name .'</span>
                                     </a>
                                     <p class="small badge bg-danger">'. $item->discount .'% OFF</p>
                                 </div>';
                             } else {
-                                $output .= '<a href="product-category/'.$item->product_category->slug.'">
+                                $output .= '<a href="../product-category/'.$item->product_category->slug.'">
                                     <span class="category">'. $item->category_name .'</span>
                                 </a>';
                             }
@@ -1031,10 +1031,10 @@ class ProductController extends Controller
 				$output .= '
                 <div class="col-lg-3 col-md-6 col-12">';
                     if ($item->stoke === 0) {
-                        $output .= '<div class="single-product bg-light opacity-90" style="height: 26rem">
+                        $output .= '<div class="single-product bg-light opacity-90" style="height: 26rem; border: 1px solid #16A085;">
                         <div class="product-image bg-light opacity-90">';
                     } else {
-                        $output .= '<div class="single-product" style="height: 26rem">
+                        $output .= '<div class="single-product" style="height: 26rem; border: 1px solid #16A085;">
                         <div class="product-image">';
                     }
                         $output .= '
@@ -1065,13 +1065,13 @@ class ProductController extends Controller
                         }
                             if ($item->discount != 0) {
                                 $output .= '<div class="d-flex justify-content-between">
-                                    <a href="product-category/'.$item->product_category->slug.'">
+                                    <a href="../product-category/'.$item->product_category->slug.'">
                                         <span class="category">'. $item->category_name .'</span>
                                     </a>
                                     <p class="small badge bg-danger">'. $item->discount .'% OFF</p>
                                 </div>';
                             } else {
-                                $output .= '<a href="product-category/'.$item->product_category->slug.'">
+                                $output .= '<a href="../product-category/'.$item->product_category->slug.'">
                                     <span class="category">'. $item->category_name .'</span>
                                 </a>';
                             }
@@ -1626,10 +1626,10 @@ class ProductController extends Controller
 				$output .= '
                 <div class="col-lg-3 col-md-6 col-12">';
                     if ($item->stoke === 0) {
-                        $output .= '<div class="single-product bg-light opacity-90" style="height: 26rem">
+                        $output .= '<div class="single-product bg-light opacity-90" style="height: 26rem; border: 1px solid #16A085;">
                         <div class="product-image bg-light opacity-90">';
                     } else {
-                        $output .= '<div class="single-product" style="height: 26rem">
+                        $output .= '<div class="single-product" style="height: 26rem; border: 1px solid #16A085;">
                         <div class="product-image">';
                     }
                         $output .= '

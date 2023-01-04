@@ -2,7 +2,7 @@
 <header class="header navbar-area shadow">
     <!-- Start Topbar -->
     @if (Request::is('/', 'home'))
-    <div class="topbar" style="border-bottom: 1px solid #eee;">
+    <div class="topbar" style="border-bottom: 1px solid #16A085;">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-4 col-md-4 col-12">
@@ -108,7 +108,7 @@
     @endif
     <!-- End Topbar -->
     <!-- Start Header Middle -->
-    <div class="header-middle">
+    <div class="header-middle" style="border-bottom: 1px solid #16A085;">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-3 col-md-3 col-7">
@@ -125,7 +125,7 @@
                         <form action="{{ url('/search-product') }}">
                             <div class="navbar-search search-style-5">
                                 <div class="search-input">
-                                    <input type="search" class="form-control typeaheadProduct"
+                                    <input type="search" style="border: 1px solid #16A085;" class="form-control typeaheadProduct"
                                         value="{{ request('pencarian') }}" name="pencarian"
                                         placeholder="Pencarian produk" autocomplete="off">
                                 </div>
@@ -160,7 +160,7 @@
                                 </a>
 
                                 <div class="shopping-item">
-                                    <div class="dropdown-cart-header">
+                                    <div class="dropdown-cart-header" style="border-bottom: 1px solid #16A085;">
                                         <div class="d-flex align-items-center justify-content-between">
                                             <span>Pemberitahuan (<span class="notif-count">0</span>)</span>
                                             <form action="#" id="readNotif" method="get">
@@ -174,8 +174,8 @@
                                     <ul class="shopping-list" id="{{ $notifications->count() > 1 ? 'style-1' : ''}}">
                                         @if ($notifications->count() > 0)
                                         @foreach ($notifications as $notif)
-                                        <li class="border p-2 rounded"
-                                            style="{{ $notif->is_read == 0 ? 'background: antiquewhite' : '' }}">
+                                        <li class="p-2 rounded"
+                                            style="{{ $notif->is_read == 0 ? 'background: antiquewhite' : '' }}; border: 1px solid #16A085;">
                                             {{-- <input type="hidden" name="passingIdNotif" value="{{ $notif->id }}">
                                             --}}
                                             <div class="cart-img-head">
@@ -248,7 +248,7 @@
                                 </a>
 
                                 <div class="shopping-item">
-                                    <div class="dropdown-cart-header">
+                                    <div class="dropdown-cart-header" style="border-bottom: 1px solid #16A085;">
                                         <span>Keranjang (<span class="cart-count">0</span>)</span>
                                         <a style="color:#16A085;" href="{{ url('cart') }}">Lihat Sekarang</a>
                                     </div>
@@ -413,7 +413,7 @@
             <div class="col-lg-8 col-md-6 col-12">
                 <div class="nav-inner">
                     <!-- Start Mega Category Menu -->
-                    <div class="mega-category-menu">
+                    <div class="mega-category-menu" style="border-right: 1px solid #16A085;">
                         @php
                         $category_product = App\Models\ProductCategory::where('is_active', '=', 1)->take(15)->latest()->get();
                         @endphp

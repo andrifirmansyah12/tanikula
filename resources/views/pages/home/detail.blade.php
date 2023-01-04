@@ -93,7 +93,7 @@
     <div class="container">
         <form action="{{ url('/buy-now') }}" method="post" enctype="multipart/form-data">
             @csrf
-            <div class="top-area border" id="product_data">
+            <div class="top-area" style="border: 1px solid #16A085;" id="product_data">
                 <div class="row align-items-center">
                     <div class="col-lg-6 col-md-12 col-12">
                         <div class="product-images">
@@ -171,7 +171,7 @@
                                     <h3 class="price" style="color:#16A085;">Rp. {{ number_format($product->price, 0) }}
                                     </h3>
                                     @endif
-                                    <p class="info-text">{{ $product->desc }}</p>
+                                    <p class="info-text" style="border-bottom: 1px solid #16A085;">{{ $product->desc }}</p>
                                     <div class="row">
                                         {{-- <div class="col-lg-4 col-md-4 col-12">
                                         <div class="form-group">
@@ -263,7 +263,7 @@
     </form>
 
     <div class="product-details-info">
-        <div class="single-block border">
+        <div class="single-block" style="border: 1px solid #16A085;">
             <div class="row">
                 <div class="col-12">
                     <div class="card-body row align-items-center">
@@ -343,7 +343,7 @@
     </div>
 
     <div class="product-details-info">
-        <div class="single-block border">
+        <div class="single-block" style="border: 1px solid #16A085;">
             <h5 class="mx-2 fw-bold" style="color:#16A085;">Produk Lainnnya</h5>
             <div class="owl-carousel owl-theme">
                 @foreach ($product_new as $item)
@@ -432,7 +432,7 @@
     </div>
     </div>
     <div class="product-details-info">
-        <div class="single-block border">
+        <div class="single-block" style="border: 1px solid #16A085;">
             <div class="row">
                 <div class="col-lg-6 col-12">
                     <div class="info-body custom-responsive-margin">

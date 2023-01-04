@@ -98,7 +98,7 @@
                 <div class="row">
                     <div class="col-12 col-xl-8 mb-3 mb-xl-0 mb-5 mb-md-0">
                         <h6 class="">Alamat Pengiriman</h6>
-                        <div class="mb-12 py-3 mt-3 border-top border-bottom" id="product_data">
+                        <div class="mb-12 py-3 mt-3" style="border-top: 1px solid #16A085; border-bottom: 1px solid #16A085;" id="product_data">
                             <div class="row align-items-center mb-6 mb-md-3">
                                 <div class="col-12 col-md-12 col-lg-12 mb-6 mb-md-0">
                                     @if ($address->count() > 0)
@@ -142,7 +142,7 @@
                             </div>
                         </div>
                         <div class="mt-3">
-                            <button type="button" class="btn border btn-light" data-bs-toggle="modal" data-bs-target="#PilihAlamat">
+                            <button type="button" class="btn border btn-warning text-white" data-bs-toggle="modal" data-bs-target="#PilihAlamat">
                                 Pilih Alamat Lain
                             </button>
                         </div>
@@ -155,7 +155,7 @@
                         @if ($cartItem->count() > 0)
                         @foreach ($cartItem as $item)
                         <input type="hidden" name="cart_id_order[]" value="{{ $item->id }}" id="checkProductCart">
-                        <div class="mb-12 py-3 mt-3 border-top border-bottom" id="product_data">
+                        <div class="mb-12 py-3 mt-3" style="border-top: 1px solid #16A085; border-bottom: 1px solid #16A085;" id="product_data">
                             <div class="row align-items-center mb-6 mb-md-3">
                                 <div class="col-12 col-md-12 col-lg-12 mb-6 mb-md-0">
                                     <div class="row align-items-center">
@@ -245,10 +245,10 @@
                         @endif
                     </div>
                     <div class="col-12 col-xl-4">
-                        <div class="m-0 m-xl-4 p-4 border">
+                        <div class="m-0 m-xl-4 p-4" style="border: 1px solid #16A085;">
                             <h3 class="mb-3 fs-4">Ringkasan Belanja</h3>
                             <div
-                                class="mb-8 pb-3 border-bottom border-info-light">
+                                class="mb-8 pb-3" style="border-bottom: 1px solid #16A085;">
                                 <div class="d-flex align-items-center justify-content-between">
                                     <span class="">Total Harga({{$totalQty}} Barang)</span>
                                     <span class="fs-6 fw-bold">Rp. {{ number_format($total, 0) }}</span>
@@ -286,7 +286,7 @@
                                 @if($result_cost)
                                 <div>
                                     <p for="courier" class="py-2 fw-bold">Estimasi</p>
-                                    <div class="border p-2 mb-2 rounded">
+                                    <div class="p-2 mb-2 rounded" style="border: 1px solid #16A085;">
                                     @foreach($result_cost as $result)
                                         @if ($result['service'] == $data_service)
                                             <input type="hidden" name="priceService" value="{{$result['cost'][0]['value']}}">
