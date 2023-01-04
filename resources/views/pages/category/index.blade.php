@@ -114,7 +114,12 @@
         // fetchAllEmployees();
 
         var displayProduct = countProductNameCategory;
-        $('#show_all_employees').html(createSkeleton(displayProduct));
+        var displayProductNull = 4;
+        if (displayProduct > 0) {
+            $('#show_all_employees').html(createSkeleton(displayProduct));
+        } else {
+            $('#show_all_employees').html(createSkeleton(displayProductNull));
+        }
 
         // jalankan fungsi load content setelah 2 detik
         function createSkeleton(limit){

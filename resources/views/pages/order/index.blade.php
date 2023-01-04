@@ -62,7 +62,7 @@
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-lg-10 col-xl-12">
-                <div class="card shadow rounded">
+                <div class="card rounded" style="border: 1px solid #16A085;">
                     <div class="d-md-flex flex-row justify-content-between align-items-center card-header px-4 py-5" style="background: #16A085;">
                         @if (!$order->isPaid())
                         <div>
@@ -138,7 +138,7 @@
                             <p class="fw-normal mb-0" style="font-size: 18px">Invoice ID :</p>
                             <p class="fw-bold mb-0" style="font-size: 18px">#{{ $order->code }}</p>
                         </div>
-                        <div class="card shadow-0 border mb-4">
+                        <div class="card mb-4" style="border: 1px solid #16A085;">
                             <div class="card-body">
                                 <h5>Pesanan Anda</h5>
                                 <hr style="background-color: #e0e0e0; opacity: 1;">
@@ -178,7 +178,7 @@
                                 </div> --}}
                             </div>
                         </div>
-                        <div class="card shadow-0 border mb-4">
+                        <div class="card mb-4" style="border: 1px solid #16A085;">
                             <div class="card-body">
                                 <!-- End Navbar -->
                                 <div class="card-body px-0 pb-2">

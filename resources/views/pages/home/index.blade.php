@@ -136,7 +136,7 @@
                 <div class="d-none d-sm-block">
                     <a href="{{ url('product-category/'.$item->slug) }}">
                     <div class="d-flex justify-content-center align-items-center">
-                        <div class="border rounded p-3 mt-5">
+                        <div class="rounded p-3 mt-5" style="border: 1px solid #16A085;">
                             <img src="{{ asset('../storage/icon/'.$item->icon) }}" class="img-fluid" style="width: 3rem; height: 3rem;"
                                 alt="{{$item->name}}">
                         </div>
@@ -148,7 +148,7 @@
                 {{-- Mobile --}}
                 <div class="d-block d-sm-none">
                     <div class="d-flex justify-content-center align-items-center">
-                        <div class="border rounded p-2 mt-2">
+                        <div class="rounded p-2 mt-2" style="border: 1px solid #16A085;">
                             <img src="{{ asset('../storage/icon/'.$item->icon) }}" class="img-fluid" style="width: 2rem; height: 2rem;"
                                 alt="{{$item->name}}">
                         </div>
@@ -332,9 +332,9 @@
             <div class="owl-carousel owl-theme">
                 @foreach ($product_search as $item)
                 <!-- Start Single Product -->
-                <div class="mx-md-2 mx-3 single-product mt-0 border border-success shadow-none {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}"
+                <div class="mx-md-2 mx-3 single-product mt-0 shadow-none {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}"
                     style="
-                            height: 26rem">
+                            height: 26rem; border: 1px solid #16A085;">
                     <div class="product-image {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}">
                         <a href=" {{ url('home/'.$item->slug) }}">
                             @if ($item->stoke === 0)
@@ -413,9 +413,9 @@
                     </div>
                 </div>
                 @endforeach
-                <div class="mx-md-2 mx-3 single-product border border-success mt-0 shadow-none bg-warning"
+                <div class="mx-md-2 mx-3 single-product mt-0 shadow-none bg-warning"
                     style="
-                            height: 26rem">
+                            height: 26rem; border: 1px solid #16A085;">
                     <div class="text-center" style="padding-top: 70%">
                         <h5 class="fw-bold text-white"><a href="{{ url('based-on-your-search') }}">Lainnya...</a></h5>
                     </div>

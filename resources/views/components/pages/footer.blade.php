@@ -1,6 +1,6 @@
 <footer class="footer shadow">
     <!-- Start Footer Top -->
-    <div class="footer-top border-bottom" style="border-color: #16A085">
+    <div class="footer-top" style="border-bottom: 1px solid #16A085;">
         <div class="container">
             <div class="inner-content">
                 <div class="row">

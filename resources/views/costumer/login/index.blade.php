@@ -82,6 +82,10 @@
                                 <input id="password" type="password" class="form-control" name="password" placeholder="Password">
                                 <div class="invalid-feedback">
                                 </div>
+                                <div class="custom-control custom-checkbox view_password">
+                                    <input type="checkbox" class="custom-control-input" tabindex="3">
+                                    <label class="custom-control-label" style="font-size: 12px" for="remember-me">Lihat Password</label>
+                                </div>
                             </div>
 
                             <div class="form-group">
@@ -110,13 +114,22 @@
 
 @section('script')
 <!-- LIBARARY JS -->
-
-
-
 <!-- AKHIR LIBARARY JS -->
-
 <!-- JAVASCRIPT -->
 <script>
+        $('.view_password').on('click', function () {
+            var x = document.getElementById("password");
+            if (x.type === "password") {
+                x.type = "text";
+                $(this).html(`<input type="checkbox" checked class="custom-control-input" tabindex="3">
+                                    <label class="custom-control-label" style="font-size: 12px" for="remember-me">Tutup Password</label>`);
+            } else {
+                x.type = "password";
+                $(this).html(`<input type="checkbox" class="custom-control-input" tabindex="3">
+                                    <label class="custom-control-label" style="font-size: 12px" for="remember-me">Lihat Password</label>`);
+            }
+        });
+
     $(function() {
         $("#login_form").submit(function(e) {
             e.preventDefault();

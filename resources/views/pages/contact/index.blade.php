@@ -12,7 +12,7 @@
 @section('content')
 <section class="item-details section bg-white overflow-hidden">
     <div class="container">
-        <div class="row justify-content-center shadow rounded">
+        <div class="row justify-content-center rounded" style="border: 1px solid #16A085;">
             <div class="col-md-12 p-5">
                 <div class="wrapper">
                     <div class="row no-gutters">
