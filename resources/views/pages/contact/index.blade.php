@@ -10,7 +10,7 @@
 @endsection
 
 @section('content')
-<section class="item-details section bg-white overflow-hidden">
+<section class="item-details section bg-white overflow-hidden mt-5">
     <div class="container">
         <div class="row justify-content-center rounded" style="border: 1px solid #16A085;">
             <div class="col-md-12 p-5">

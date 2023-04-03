@@ -75,17 +75,39 @@
 @endsection
 
 @section('content')
-<!-- Preloader -->
-<div class="preloader">
-    <div class="preloader-inner">
-        <div class="preloader-icon">
-            <span>Tanikula</span>
-            <span></span>
-        </div>
-        {{-- <p class="text-center p-0 m-0 fw-bold">Tanikula</p> --}}
+{{-- Load Spinner --}}
+<div class="body-spinner" id="spinner_login">
+    <div class="content-spinner">
+        <svg class="pl" width="240" height="240" viewBox="0 0 240 240">
+            <circle class="pl__ring pl__ring--a" cx="120" cy="120" r="105" fill="none" stroke="#000"
+                stroke-width="20" stroke-dasharray="0 660" stroke-dashoffset="-330" stroke-linecap="round"></circle>
+            <circle class="pl__ring pl__ring--b" cx="120" cy="120" r="35" fill="none" stroke="#000"
+                stroke-width="20" stroke-dasharray="0 220" stroke-dashoffset="-110" stroke-linecap="round"></circle>
+            <circle class="pl__ring pl__ring--c" cx="85" cy="120" r="70" fill="none"
+                stroke="#000" stroke-width="20" stroke-dasharray="0 440" stroke-linecap="round"></circle>
+            <circle class="pl__ring pl__ring--d" cx="155" cy="120" r="70" fill="none"
+                stroke="#000" stroke-width="20" stroke-dasharray="0 440" stroke-linecap="round"></circle>
+        </svg>
+        <p style="text-align: center; color: white; font-weight: bold">Harap Tunggu ...</p>
     </div>
 </div>
-<!-- /End Preloader -->
+
+<div class="before-body-spinner" id="spinner_login">
+    <div class="content-spinner">
+        <svg class="pl" width="240" height="240" viewBox="0 0 240 240">
+            <circle class="pl__ring pl__ring--a" cx="120" cy="120" r="105" fill="none" stroke="#000"
+                stroke-width="20" stroke-dasharray="0 660" stroke-dashoffset="-330" stroke-linecap="round"></circle>
+            <circle class="pl__ring pl__ring--b" cx="120" cy="120" r="35" fill="none" stroke="#000"
+                stroke-width="20" stroke-dasharray="0 220" stroke-dashoffset="-110" stroke-linecap="round"></circle>
+            <circle class="pl__ring pl__ring--c" cx="85" cy="120" r="70" fill="none"
+                stroke="#000" stroke-width="20" stroke-dasharray="0 440" stroke-linecap="round"></circle>
+            <circle class="pl__ring pl__ring--d" cx="155" cy="120" r="70" fill="none"
+                stroke="#000" stroke-width="20" stroke-dasharray="0 440" stroke-linecap="round"></circle>
+        </svg>
+        <p style="text-align: center; color: white; font-weight: bold">Harap Tunggu ...</p>
+    </div>
+</div>
+{{-- End Load Spinner --}}
 
 <!-- Start Item Details -->
 <section class="item-details mt-md-4 section bg-white overflow-hidden">
@@ -820,6 +842,7 @@
             $("#create_orders").submit(function(e) {
                 e.preventDefault();
                 var formData = new FormData(this);
+                document.querySelector('.before-body-spinner').style.display = 'block';
                 $("#create_orders_btn").text('Silahkan Tunggu..');
                 $("#create_orders_btn").prop('disabled', true);
                 var id = $("input[name=passingIdProduct]").val();
@@ -834,11 +857,13 @@
                 success: function(response) {
                     if (response.status == 401) {
                         window.location = '{{ route('home') }}';
+                        document.querySelector('.before-body-spinner').style.display = 'none';
                         $("#create_orders_btn").text('Buat Pesanan');
                         $("#create_orders_btn").prop('disabled', false);
                     } else if (response.status == 200){
                         window.location = '/cart/shipment/place-order/received/' + response.id;
                         $("#create_orders")[0].reset();
+                        document.querySelector('.before-body-spinner').style.display = 'none';
                         $("#create_orders_btn").text('Buat Pesanan');
                         $("#create_orders_btn").prop('disabled', false);
                     }

@@ -93,7 +93,12 @@ class CheckoutController extends Controller
             $result_cost = null;
         }
 
-        return view('pages.checkout.index', compact('cartItem', 'address', 'result_cost', 'data_service'));
+        return view('pages.checkout.index', compact(
+            'cartItem',
+            'address',
+            'result_cost',
+            'data_service'
+        ));
 
     }
 

@@ -63,8 +63,10 @@
                             <p class="text-muted">Kami akan mengirimkan tautan untuk mengatur ulang kata sandi Anda</p>
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input id="email" type="email" class="form-control" name="email" placeholder="E-mail" tabindex="1" required
+                                <input id="email" type="email" class="form-control" name="email" placeholder="E-mail" tabindex="1"
                                     autofocus>
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
 
                             <div class="form-group">
@@ -95,6 +97,7 @@
     $(function() {
         $("#forgot_form").submit(function(e) {
             e.preventDefault();
+            document.querySelector('.body-spinner').style.display = 'block';
             $("#forgot_btn").val('Silahkan Tunggu..');
             $("#forgot_btn").prop('disabled', true);
             $.ajax({
@@ -105,6 +108,7 @@
                 success: function(res){
                     if (res.status == 400) {
                         showError('email', res.messages.email);
+                        document.querySelector('.body-spinner').style.display = 'none';
                         $("#forgot_btn").val("Reset Password");
                         $("#forgot_btn").prop('disabled', false);
                     } else if (res.status == 200){
@@ -114,11 +118,13 @@
                             message: res.messages,
                             position: 'topRight'
                         });
+                        document.querySelector('.body-spinner').style.display = 'none';
                         $("#forgot_btn").val("Reset Password");
                         $("#forgot_btn").prop('disabled', false);
                         removeValidationClasses("#forgot_form");
                         $("#forgot_form")[0].reset();
                     } else {
+                        document.querySelector('.body-spinner').style.display = 'none';
                         $("#forgot_btn").val("Reset Password");
                         $("#forgot_btn").prop('disabled', false);
                         // $("#forgot_alert").html(showMessage('danger', res.messages));
