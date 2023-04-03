@@ -182,7 +182,7 @@ class ProductController extends Controller
                             <div class="page-error">
                                 <div class="page-inner">
                                     <img src="../img/undraw_empty_re_opql.svg" alt="">
-                                    <div class="page-description">
+                                    <div class="page-description text-white">
                                         Tidak ada produk yang diposting!
                                     </div>
                                 </div>

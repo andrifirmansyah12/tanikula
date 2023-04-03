@@ -109,10 +109,14 @@ class PengaturanController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'password' => 'required|min:6|max:50',
+            'cpassword' => 'required|min:6|max:50|same:password',
         ], [
             'password.required' => 'Kata sandi diperlukan!',
             'password.min' => 'Kata sandi harus minimal 6 karakter!',
             'password.max' => 'Kata sandi maksimal 50 karakter!',
+            'cpassword.required' => 'Konfirmasi Kata sandi diperlukan!',
+            'cpassword.min' => 'Kata sandi harus minimal 6 karakter!',
+            'cpassword.max' => 'Kata sandi maksimal 50 karakter!',
         ]);
 
         if($validator->fails()) {

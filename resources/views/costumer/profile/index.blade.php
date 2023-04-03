@@ -267,8 +267,21 @@
                                 <br>1. Jika tidak ingin ubah password biarkan kosong,
                                 <br>2. Dan jika ingin ubah password, silahkan masukkan password.
                             </small>
-                            <input type="password" id="password" name="password" class="form-control border px-3" placeholder="Password" required>
-                            <div class="invalid-feedback">
+                            <div class="my-2">
+                                <input type="password" id="password" name="password" class="form-control border px-3" placeholder="Password">
+                                <div class="invalid-feedback">
+                                </div>
+                            </div>
+
+                            <div class="my-2">
+                                <input type="password" id="cpassword" name="cpassword" class="form-control border px-3" placeholder="Konfirmasi Password">
+                                <div class="invalid-feedback">
+                                </div>
+                                <div class="custom-control custom-checkbox view_password p-1">
+                                    <input type="checkbox" class="custom-control-input" tabindex="3">
+                                    <label class="custom-control-label" style="font-size: 12px" for="remember-me">Lihat
+                                        Password</label>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -309,6 +322,26 @@
             });
         });
 
+        $('.view_password').on('click', function() {
+            var x = document.getElementById("password");
+            var y = document.getElementById("cpassword");
+            if (x.type === "password" && y.type === "password") {
+                x.type = "text";
+                y.type = "text";
+                $(this).html(
+                    `<input type="checkbox" checked class="custom-control-input" tabindex="3">
+                                    <label class="custom-control-label" style="font-size: 12px" for="remember-me">Tutup Password</label>`
+                );
+            } else {
+                x.type = "password";
+                y.type = "password";
+                $(this).html(
+                    `<input type="checkbox" class="custom-control-input" tabindex="3">
+                                    <label class="custom-control-label" style="font-size: 12px" for="remember-me">Lihat Password</label>`
+                );
+            }
+        });
+
         $(function() {
             $("#image").change(function(e) {
                 const file = e.target.files[0];
@@ -318,6 +351,7 @@
                 fd.append('image', file);
                 fd.append('id', $("#id").val());
                 fd.append('_token', '{{ csrf_token() }}');
+                document.querySelector('.body-spinner').style.display = 'block';
                 $.ajax({
                     url: '{{ route('pembeli.pengaturan.image') }}',
                     method: 'POST',
@@ -328,6 +362,7 @@
                     dataType: 'json',
                     success: function(res){
                         if(res.status == 200) {
+                            document.querySelector('.body-spinner').style.display = 'none';
                             // $("#profile_alert").html(showMessage('success', res.messages));
                             iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
                                 title: 'Berhasil',
@@ -343,6 +378,7 @@
             $("#profile_form").submit(function(e) {
                 e.preventDefault();
                 let id = $("#id").val();
+                document.querySelector('.body-spinner').style.display = 'block';
                 $("#profile_btn").val('Silahkan tunggu..');
                 $("#profile_btn").prop('disabled', true);
                 $.ajax({
@@ -357,6 +393,7 @@
                             showError('telp', res.messages.telp);
                             showError('birth', res.messages.birth);
                             showError('gender', res.messages.gender);
+                            document.querySelector('.body-spinner').style.display = 'none';
                             $("#profile_btn").val('Perbarui Biodata');
                             $("#profile_btn").prop('disabled', false);
                         } else if (res.status == 200) {
@@ -367,6 +404,7 @@
                                 position: 'topRight'
                             });
                             $("#editProfile").modal('hide');
+                            document.querySelector('.body-spinner').style.display = 'none';
                             $("#profile_btn").val('Update Biodata Diri');
                             $("#profile_btn").prop('disabled', false);
                             window.setTimeout(function(){location.reload()},1000);
@@ -378,6 +416,7 @@
             $("#editPasswordForm").submit(function(e) {
                 e.preventDefault();
                 let id = $("#id").val();
+                document.querySelector('.body-spinner').style.display = 'block';
                 $("#password_btn").val('Silahkan tunggu..');
                 $("#password_btn").prop('disabled', true);
                 $.ajax({
@@ -388,6 +427,8 @@
                     success: function(res){
                         if (res.status == 400) {
                             showError('password', res.messages.password);
+                            showError('cpassword', res.messages.cpassword);
+                            document.querySelector('.body-spinner').style.display = 'none';
                             $("#password_btn").val('Ubah Password');
                             $("#password_btn").prop('disabled', false);
                         } else if (res.status == 200) {
@@ -398,6 +439,7 @@
                                 position: 'topRight'
                             });
                             $("#editPassword").modal('hide');
+                            document.querySelector('.body-spinner').style.display = 'none';
                             $("#password_btn").val('Ubah Password');
                             $("#password_btn").prop('disabled', false);
                             window.setTimeout(function(){location.reload()},1000);

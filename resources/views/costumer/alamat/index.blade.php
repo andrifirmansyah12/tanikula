@@ -508,6 +508,7 @@
             fd.append('image', file);
             fd.append('id', $("#id").val());
             fd.append('_token', '{{ csrf_token() }}');
+            document.querySelector('.body-spinner').style.display = 'block';
             $.ajax({
                 url: '{{ route('pembeli.pengaturan.image') }}',
                 method: 'POST',
@@ -518,6 +519,7 @@
                 dataType: 'json',
                 success: function(res){
                     if(res.status == 200) {
+                        document.querySelector('.body-spinner').style.display = 'none';
                         // $("#profile_alert").html(showMessage('success', res.messages));
                         iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
                             title: 'Berhasil',
@@ -534,6 +536,7 @@
         $("#add_employee_form").submit(function(e) {
                 e.preventDefault();
                 var formData = new FormData(this);
+                document.querySelector('.body-spinner').style.display = 'block';
                 $("#add_employee_btn").text('Tunggu..');
                 $("#add_employee_btn").prop('disabled', true);
                 $.ajax({
@@ -556,6 +559,7 @@
                         showError('add_postal_code', response.messages.postal_code);
                         showError('add_complete_address', response.messages.complete_address);
                         // showError('note_for_courier', response.messages.note_for_courier);
+                        document.querySelector('.body-spinner').style.display = 'none';
                         $("#add_employee_btn").text('Simpan');
                         $("#add_employee_btn").prop('disabled', false);
                     } else if (response.status == 200){
@@ -567,6 +571,7 @@
                         fetchAllEmployees();
                         $("#TambahAlamat").modal('hide');
                         $("#add_employee_form")[0].reset();
+                        document.querySelector('.body-spinner').style.display = 'none';
                         $("#add_employee_btn").text('Simpan');
                         $("#add_employee_btn").prop('disabled', false);
                     }
@@ -607,6 +612,7 @@
             e.preventDefault();
 
             var formData = new FormData(this);
+            document.querySelector('.body-spinner').style.display = 'block';
             $("#edit_employee_btn").text('Tunggu..');
             $("#edit_employee_btn").prop('disabled', true);
             $.ajax({
@@ -625,6 +631,7 @@
                         showError('postal_code', response.messages.postal_code);
                         showError('complete_address', response.messages.complete_address);
                         // showError('note_for_courier', response.messages.note_for_courier);
+                        document.querySelector('.body-spinner').style.display = 'none';
                         $("#edit_employee_btn").text('Simpan');
                         $("#edit_employee_btn").prop('disabled', false);
                     } else if (response.status == 200) {
@@ -636,6 +643,7 @@
                         fetchAllEmployees();
                         $("#EditAlamat").modal('hide');
                         $("#edit_employee_form")[0].reset();
+                        document.querySelector('.body-spinner').style.display = 'none';
                         $("#edit_employee_btn").text('Simpan');
                         $("#edit_employee_btn").prop('disabled', false);
                     }
@@ -659,6 +667,7 @@
             cancelButtonText: 'Kembali!'
             }).then((result) => {
             if (result.isConfirmed) {
+                document.querySelector('.body-spinner').style.display = 'block';
                 $.ajax({
                 url: '{{ route('updateMainAddress.pembeli.alamat') }}',
                 method: 'POST',
@@ -668,6 +677,7 @@
                 },
                 success: function(response) {
                     if (response.status == 200) {
+                        document.querySelector('.body-spinner').style.display = 'none';
                         Swal.fire(
                             'Berhasil!',
                             'Berhasil menjadikan alamat utama!',

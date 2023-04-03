@@ -75,6 +75,7 @@
             cancelButtonText: 'Cancel!'
             }).then((result) => {
             if (result.isConfirmed) {
+                document.querySelector('.body-spinner').style.display = 'block';
                 $.ajax({
                 url: '{{ route('pembeli.delete.profile') }}',
                 method: 'delete',
@@ -83,11 +84,12 @@
                     _token: csrf
                 },
                 success: function(response) {
-                    console.log(response);
+                    // console.log(response);
+                    document.querySelector('.body-spinner').style.display = 'none';
                     Swal.fire(
-                    'Berhasil!',
-                    'Foto profil telah dihapus!',
-                    'success'
+                        'Berhasil!',
+                        'Foto profil telah dihapus!',
+                        'success'
                     )
                     window.setTimeout(function(){location.reload()},1000);
                 }
