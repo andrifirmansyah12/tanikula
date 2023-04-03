@@ -31,7 +31,7 @@
     var countProductPenjual = '{{ $koleksiProduk }}';
 </script>
 <input type="hidden" name="passingIdPenjualProduct" value="{{ $name }}">
-<section class="">
+<section class="mt-5">
     <div class="container">
         <div class="">
             <div class="">
@@ -39,7 +39,7 @@
                     <div class="col-12">
                         <div class="card-body row align-items-center">
                             <div class="rounded-top text-white d-flex flex-row"
-                                style="background-color: #16A085; height:200px;">
+                                style="background-image: url('https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80'); height:200px;">
                                 <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
                                     @if ($gapoktan->image)
                                     <div class="mt-4 mb-2" style="z-index: 1">
@@ -48,7 +48,7 @@
                                             style="width: 150px; height: 150px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                                     </div>
                                     @else
-                                        <img src="../assets/img/avatar/avatar-1.png"
+                                        <img src="../img/user.png"
                                             alt="Generic placeholder image" class="border rounded-circle border-white shadow-sm mt-4 mb-2"
                                             style="width: 150px; z-index: 1; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                                     @endif

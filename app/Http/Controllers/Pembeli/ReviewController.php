@@ -54,7 +54,7 @@ class ReviewController extends Controller
                         if ($userInfo->image) {
                         $output .= '<img src="../storage/profile/'. $userInfo->image .'" class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 55px; height: 55px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="'. $userInfo->user->name .'">';
                         } else {
-                        $output .= '<img src="../stisla/assets/img/example-image.jpg" class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 55px; height: 55px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="'. $userInfo->user->name .'">';
+                        $output .= '<img src="../img/user.png" class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 55px; height: 55px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="'. $userInfo->user->name .'">';
                         }
                         $output .= '<div>
                             <p class="my-0 mx-3 text-secondary text-xs font-weight-bold">'. $userInfo->user->name .'</p>';
@@ -151,7 +151,7 @@ class ReviewController extends Controller
                         if ($userInfo->image) {
                         $output .= '<img src="../storage/profile/'. $userInfo->image .'" class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 55px; height: 55px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="'. $userInfo->user->name .'">';
                         } else {
-                        $output .= '<img src="../stisla/assets/img/example-image.jpg" class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 55px; height: 55px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="'. $userInfo->user->name .'">';
+                        $output .= '<img src="../img/user.png" class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 55px; height: 55px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="'. $userInfo->user->name .'">';
                         }
                         $output .= '<div>
                             <p class="my-0 mx-3 text-secondary text-xs font-weight-bold">'. $userInfo->user->name .'</p>';

@@ -632,6 +632,7 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function 
     // Crud Address
     Route::post('/cart/shipment/addAddress', [App\Http\Controllers\Pembeli\CheckoutController::class, 'addAlamat'])->name('add-alamat-costumer');
     Route::get('/cart/shipment/fetchallAddress', [App\Http\Controllers\Pembeli\CheckoutController::class, 'fetchAll'])->name('alamat-fetchAll');
+    Route::get('/cart/shipment/fetchMainAddress', [App\Http\Controllers\Pembeli\CheckoutController::class, 'mainAdrress'])->name('alamat-mainAdrress');
     Route::get('/cart/shipment/editAddress', [App\Http\Controllers\Pembeli\CheckoutController::class, 'editAddress'])->name('edit.alamat.costumer');
     Route::post('/cart/shipment/updateAddress', [App\Http\Controllers\Pembeli\CheckoutController::class, 'updateAddress'])->name('update.alamat.costumer');
     Route::post('/cart/shipment/updateMainAddress', [App\Http\Controllers\Pembeli\CheckoutController::class, 'updateMainAddress'])->name('updateMainAddress.pembeli.alamat');

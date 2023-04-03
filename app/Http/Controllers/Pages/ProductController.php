@@ -1198,7 +1198,7 @@ class ProductController extends Controller
                                         class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 70px; height: 70px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
                                         alt="">';
                                 } else {
-                                    $output .= '<img src="../stisla/assets/img/avatar/avatar-1.png"
+                                    $output .= '<img src="../img/user.png"
                                         style="max-width: 4rem;" class="img-fluid img-thumbnail rounded-circle"
                                         alt="">';
                                 }
@@ -1268,7 +1268,7 @@ class ProductController extends Controller
                                         class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 70px; height: 70px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
                                         alt="">';
                                 } else {
-                                    $output .= '<img src="../stisla/assets/img/avatar/avatar-1.png"
+                                    $output .= '<img src="../img/user.png"
                                         style="max-width: 4rem;" class="img-fluid img-thumbnail rounded-circle"
                                         alt="">';
                                 }
@@ -1338,7 +1338,7 @@ class ProductController extends Controller
                                         class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 70px; height: 70px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
                                         alt="">';
                                 } else {
-                                    $output .= '<img src="../stisla/assets/img/avatar/avatar-1.png"
+                                    $output .= '<img src="../img/user.png"
                                         style="max-width: 4rem;" class="img-fluid img-thumbnail rounded-circle"
                                         alt="">';
                                 }
@@ -1408,7 +1408,7 @@ class ProductController extends Controller
                                         class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 70px; height: 70px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
                                         alt="">';
                                 } else {
-                                    $output .= '<img src="../stisla/assets/img/avatar/avatar-1.png"
+                                    $output .= '<img src="../img/user.png"
                                         style="max-width: 4rem;" class="img-fluid img-thumbnail rounded-circle"
                                         alt="">';
                                 }
@@ -1478,7 +1478,7 @@ class ProductController extends Controller
                                         class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 70px; height: 70px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
                                         alt="">';
                                 } else {
-                                    $output .= '<img src="../stisla/assets/img/avatar/avatar-1.png"
+                                    $output .= '<img src="../img/user.png"
                                         style="max-width: 4rem;" class="img-fluid img-thumbnail rounded-circle"
                                         alt="">';
                                 }
@@ -1648,7 +1648,7 @@ class ProductController extends Controller
                                         }
                                     }
                                 } else {
-                                $output .= '<img src="img/no-image.png" alt="'. $item->name .'"
+                                $output .= '<img src="../img/no-image.png" alt="'. $item->name .'"
                                     style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
                                 }
                             $output .= '</a>

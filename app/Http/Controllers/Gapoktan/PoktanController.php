@@ -52,9 +52,9 @@ class PoktanController extends Controller
                     $output .= '<tr>';
                     $output .= '<td>' . $nomor++ . '</td>';
                     if (empty($emp->image)) {
-                        $output .= '<td><img alt="image" src="../assets/img/avatar/avatar-5.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Wildan Ahdian"></td>';
+                        $output .= '<td><img alt="image" src="../img/user.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Wildan Ahdian"></td>';
                     } else {
-                        $output .= '<td><img alt="image" src="../assets/img/avatar/avatar-5.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Wildan Ahdian"></td>';
+                        $output .= '<td><img alt="image" src="../img/user.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Wildan Ahdian"></td>';
                     }
                     $output .= '
                     <td>' . $emp->poktan_name . '</td>

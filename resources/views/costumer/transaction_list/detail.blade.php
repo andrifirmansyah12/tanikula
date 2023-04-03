@@ -656,7 +656,7 @@
                         @if ($userInfo->image)
                         <img src="{{asset('../storage/profile/'. $userInfo->image)}}" class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 55px; height: 55px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="{{ $userInfo->user->name }}">
                         @else
-                        <img src="{{ asset('stisla/assets/img/example-image.jpg') }}" class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 55px; height: 55px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="{{ $userInfo->user->name }}">
+                        <img src="{{ asset('img/user.png') }}" class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 55px; height: 55px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="{{ $userInfo->user->name }}">
                         @endif
                         <div>
                             <p class="my-0 mx-3 text-secondary text-xs font-weight-bold">
@@ -1019,6 +1019,7 @@
             e.preventDefault();
 
             var formData = new FormData(this);
+            document.querySelector('.body-spinner').style.display = 'block';
             $("#cancelled_orders_btn").text('Tunggu..');
             $("#cancelled_orders_btn").prop('disabled', true);
             $.ajax({
@@ -1032,6 +1033,7 @@
                 success: function (response) {
                     if (response.status == 400) {
                         showError('cancellation_note', response.messages.cancellation_note);
+                        document.querySelector('.body-spinner').style.display = 'none';
                         $("#cancelled_orders_btn").text('Konfirmasi');
                         $("#cancelled_orders_btn").prop('disabled', false);
                     } else if (response.status == 200) {
@@ -1042,6 +1044,7 @@
                         )
                         $("#cancelledOrderModal").modal('hide');
                         $("#cancelled_orders_form")[0].reset();
+                        document.querySelector('.body-spinner').style.display = 'none';
                         $("#cancelled_orders_btn").text('Konfirmasi');
                         $("#cancelled_orders_btn").prop('disabled', false);
                         window.setTimeout(function(){location.reload()},1000)
@@ -1054,6 +1057,7 @@
         $("#add_employee_form").submit(function(e) {
             e.preventDefault();
             var formData = new FormData(this);
+            document.querySelector('.body-spinner').style.display = 'block';
             $("#add_employee_btn").text('Tunggu..');
             $("#add_employee_btn").prop('disabled', true);
             $.ajax({
@@ -1068,6 +1072,7 @@
                 if (response.status == 400) {
                     showError('stars_rated', response.messages.stars_rated);
                     showError('message-text', response.messages.review);
+                    document.querySelector('.body-spinner').style.display = 'none';
                     $("#add_employee_btn").text('Kirim');
                     $("#add_employee_btn").prop('disabled', false);
                 } else if (response.status == 200){
@@ -1078,6 +1083,7 @@
                     )
                     $("#reviewModal").modal('hide');
                     $("#add_employee_form")[0].reset();
+                    document.querySelector('.body-spinner').style.display = 'none';
                     $("#add_employee_btn").text('Kirim');
                     $("#add_employee_btn").prop('disabled', false);
                     window.setTimeout(function(){location.reload()},1000)
@@ -1091,6 +1097,7 @@
             e.preventDefault();
 
             var formData = new FormData(this);
+            document.querySelector('.body-spinner').style.display = 'block';
             $("#edit_employee_btn").text('Tunggu..');
             $("#edit_employee_btn").prop('disabled', true);
             $.ajax({
@@ -1105,6 +1112,7 @@
                     if (response.status == 400) {
                         showError('reviewed_stars_rated', response.messages.stars_rated);
                         showError('reviewed_message-text', response.messages.review);
+                        document.querySelector('.body-spinner').style.display = 'none';
                         $("#edit_employee_btn").text('Kirim');
                         $("#edit_employee_btn").prop('disabled', false);
                     } else if (response.status == 200) {
@@ -1115,6 +1123,7 @@
                         )
                         $("#editUlasanModal").modal('hide');
                         $("#edit_employee_form")[0].reset();
+                        document.querySelector('.body-spinner').style.display = 'none';
                         $("#edit_employee_btn").text('Kirim');
                         $("#edit_employee_btn").prop('disabled', false);
                         window.setTimeout(function(){location.reload()},1000)

@@ -31,12 +31,12 @@
     <div class="card card-body mx-3 mx-md-4 mt-n6">
         <div class="row gx-4 mb-2">
             <div class="col-auto">
-                <div class="avatar avatar-xl position-relative">
+                <div class="position-relative">
                     @if ($userInfo->image)
                     <img id="image_preview" src="{{asset('../storage/profile/'. $userInfo->image)}}" alt="profile_image"
                         class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 80px; height: 80px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
-                    @else
-                    <img id="image_preview" src="{{ asset('../stisla/assets/img/example-image.jpg') }}" alt="profile_image"
+                    @elseif ($userInfo->image == null)
+                    <img id="image_preview" src="{{ asset('../img/user.png') }}" alt="profile_image"
                         class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 80px; height: 80px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                     @endif
                 </div>
