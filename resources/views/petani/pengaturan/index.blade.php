@@ -294,7 +294,7 @@
                                 style="width: 150px; height: 150px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"">
                                 @else
                                     <img alt=" image" id="image_preview"
-                                src="{{ asset('stisla/assets/img/example-image.jpg') }}"
+                                src="{{ asset('img/user.png') }}"
                                 class="rounded-circle img-fluid"
                                 style="width: 150px; height: 150px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"">
                                 @endif

@@ -125,8 +125,8 @@
                         <h6 class="">Alamat Pengiriman</h6>
                         <div class="mb-12 py-3 mt-3" style="border-top: 1px solid #16A085; border-bottom: 1px solid #16A085;" id="product_data">
                             <div class="row align-items-center mb-6 mb-md-3">
-                                <div class="col-12 col-md-12 col-lg-12 mb-6 mb-md-0">
-                                    @if ($address->count() > 0)
+                                <div class="col-12 col-md-12 col-lg-12 mb-6 mb-md-0" id="show_address_main">
+                                    {{-- @if ($address->count() > 0)
                                     @foreach ($address as $item)
                                     <div class="row align-items-center">
                                         <div>
@@ -162,12 +162,12 @@
                                             </div>
                                         </section>
                                     </div>
-                                    @endif
+                                    @endif --}}
                                 </div>
                             </div>
                         </div>
                         <div class="mt-3">
-                            <button type="button" class="btn border btn-light" data-bs-toggle="modal" data-bs-target="#PilihAlamat">
+                            <button type="button" class="btn border btn-warning text-white" data-bs-toggle="modal" data-bs-target="#PilihAlamat">
                                 Pilih Alamat Lain
                             </button>
                         </div>
@@ -854,6 +854,7 @@
             $("#add_employee_form").submit(function(e) {
                 e.preventDefault();
                 var formData = new FormData(this);
+                document.querySelector('.before-body-spinner').style.display = 'block';
                 $("#add_employee_btn").text('Tunggu..');
                 $("#add_employee_btn").prop('disabled', true);
                 $.ajax({
@@ -876,6 +877,7 @@
                         showError('add_postal_code', response.messages.postal_code);
                         showError('add_complete_address', response.messages.complete_address);
                         // showError('note_for_courier', response.messages.note_for_courier);
+                        document.querySelector('.before-body-spinner').style.display = 'none';
                         $("#add_employee_btn").text('Simpan');
                         $("#add_employee_btn").prop('disabled', false);
                     } else if (response.status == 200){
@@ -885,11 +887,12 @@
                             'success'
                         )
                         fetchAllEmployees();
+                        fetchAddressMain();
                         $("#TambahAlamat").modal('hide');
                         $("#add_employee_form")[0].reset();
+                        document.querySelector('.before-body-spinner').style.display = 'none';
                         $("#add_employee_btn").text('Simpan');
                         $("#add_employee_btn").prop('disabled', false);
-                        window.setTimeout(function(){location.reload()},1000);
                     }
                 }
                 });
@@ -928,6 +931,7 @@
             e.preventDefault();
 
             var formData = new FormData(this);
+            document.querySelector('.before-body-spinner').style.display = 'block';
             $("#edit_employee_btn").text('Tunggu..');
             $("#edit_employee_btn").prop('disabled', true);
             $.ajax({
@@ -946,6 +950,7 @@
                         showError('postal_code', response.messages.postal_code);
                         showError('complete_address', response.messages.complete_address);
                         // showError('note_for_courier', response.messages.note_for_courier);
+                        document.querySelector('.before-body-spinner').style.display = 'none';
                         $("#edit_employee_btn").text('Simpan');
                         $("#edit_employee_btn").prop('disabled', false);
                     } else if (response.status == 200) {
@@ -955,11 +960,12 @@
                             'success'
                         )
                         fetchAllEmployees();
+                        fetchAddressMain();
                         $("#EditAlamat").modal('hide');
                         $("#edit_employee_form")[0].reset();
+                        document.querySelector('.before-body-spinner').style.display = 'none';
                         $("#edit_employee_btn").text('Simpan');
                         $("#edit_employee_btn").prop('disabled', false);
-                        window.setTimeout(function(){location.reload()},1000);
                     }
                 }
             });
@@ -981,6 +987,7 @@
             cancelButtonText: 'Kembali!'
             }).then((result) => {
             if (result.isConfirmed) {
+                document.querySelector('.before-body-spinner').style.display = 'block';
                 $.ajax({
                 url: '{{ route('updateMainAddress.pembeli.alamat') }}',
                 method: 'POST',
@@ -990,12 +997,15 @@
                 },
                 success: function(response) {
                     if (response.status == 200) {
+                        document.querySelector('.before-body-spinner').style.display = 'none';
+                        $("#PilihAlamat").modal('hide');
                         Swal.fire(
                             'Berhasil!',
                             'Berhasil menjadikan alamat utama!',
                             'success'
                         )
-                        window.setTimeout(function(){location.reload()},1000);
+                        fetchAllEmployees();
+                        fetchAddressMain();
                     }
                 }
                 });
@@ -1005,6 +1015,7 @@
 
         // fetch all employees ajax request
         fetchAllEmployees();
+        fetchAddressMain();
 
         function fetchAllEmployees() {
             $.ajax({
@@ -1013,6 +1024,16 @@
             success: function(response) {
                 $("#show_all_employees").html(response);
             }
+            });
+        }
+
+        function fetchAddressMain() {
+            $.ajax({
+                url: '{{ route('alamat-mainAdrress') }}',
+                method: 'get',
+                success: function(response) {
+                    $("#show_address_main").html(response);
+                }
             });
         }
     });

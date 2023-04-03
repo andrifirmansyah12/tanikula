@@ -33,22 +33,22 @@
     }
 
     .pl__ring--a {
-        stroke: #f42f25;
+        stroke: #16A085;
     }
 
     .pl__ring--b {
         animation-name: ringB;
-        stroke: #f49725;
+        stroke: #ffff;
     }
 
     .pl__ring--c {
         animation-name: ringC;
-        stroke: #255ff4;
+        stroke: #ffff;
     }
 
     .pl__ring--d {
         animation-name: ringD;
-        stroke: #f42582;
+        stroke: #16A085;
     }
 
     /* Animations */
@@ -242,15 +242,18 @@
         }
     }
 </style>
+
 <body class="g-sidenav-show bg-gray-100">
     {{-- Load Spinner --}}
     <div class="body-spinner" id="spinner_login">
         <div class="content-spinner">
             <svg class="pl" width="240" height="240" viewBox="0 0 240 240">
-                <circle class="pl__ring pl__ring--a" cx="120" cy="120" r="105" fill="none" stroke="#000"
-                    stroke-width="20" stroke-dasharray="0 660" stroke-dashoffset="-330" stroke-linecap="round"></circle>
-                <circle class="pl__ring pl__ring--b" cx="120" cy="120" r="35" fill="none" stroke="#000"
-                    stroke-width="20" stroke-dasharray="0 220" stroke-dashoffset="-110" stroke-linecap="round"></circle>
+                <circle class="pl__ring pl__ring--a" cx="120" cy="120" r="105" fill="none"
+                    stroke="#000" stroke-width="20" stroke-dasharray="0 660" stroke-dashoffset="-330"
+                    stroke-linecap="round"></circle>
+                <circle class="pl__ring pl__ring--b" cx="120" cy="120" r="35" fill="none"
+                    stroke="#000" stroke-width="20" stroke-dasharray="0 220" stroke-dashoffset="-110"
+                    stroke-linecap="round"></circle>
                 <circle class="pl__ring pl__ring--c" cx="85" cy="120" r="70" fill="none"
                     stroke="#000" stroke-width="20" stroke-dasharray="0 440" stroke-linecap="round"></circle>
                 <circle class="pl__ring pl__ring--d" cx="155" cy="120" r="70" fill="none"

@@ -369,6 +369,7 @@
             e.preventDefault();
 
             var formData = new FormData(this);
+            document.querySelector('.body-spinner').style.display = 'block';
             $("#edit_employee_btn").text('Tunggu..');
             $("#edit_employee_btn").prop('disabled', true);
             $.ajax({
@@ -382,6 +383,7 @@
                 success: function (response) {
                     if (response.status == 400) {
                         showError('cancellation_note', response.messages.cancellation_note);
+                        document.querySelector('.body-spinner').style.display = 'none';
                         $("#edit_employee_btn").text('Konfirmasi');
                         $("#edit_employee_btn").prop('disabled', false);
                     } else if (response.status == 200) {
@@ -392,6 +394,7 @@
                         )
                         $("#showOrderModal").modal('hide');
                         $("#edit_employee_form")[0].reset();
+                        document.querySelector('.body-spinner').style.display = 'none';
                         $("#edit_employee_btn").text('Konfirmasi');
                         $("#edit_employee_btn").prop('disabled', false);
                         window.location = '{{ route('pembeli.waitingPayment') }}';

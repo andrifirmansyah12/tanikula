@@ -9,7 +9,7 @@
             @if ($support->image)
                 <img src="{{ asset('../storage/profile/'. $support->image) }}" class="border rounded-circle border-white shadow-sm mr-1" style="width: 43px; height: 43px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="User Image">
             @else
-                <img src="{{ asset('assets/img/avatar/avatar-1.png') }}" class="img-circle elevation-2" alt="User Image">
+                <img src="{{ asset('img/user.png') }}" class="img-circle elevation-2" alt="User Image">
             @endif
         </div>
         <div class="info">

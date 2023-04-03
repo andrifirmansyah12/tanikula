@@ -53,22 +53,22 @@
         }
 
         .pl__ring--a {
-            stroke: #f42f25;
+            stroke: #16A085;
         }
 
         .pl__ring--b {
             animation-name: ringB;
-            stroke: #f49725;
+            stroke: #ffff;
         }
 
         .pl__ring--c {
             animation-name: ringC;
-            stroke: #255ff4;
+            stroke: #ffff;
         }
 
         .pl__ring--d {
             animation-name: ringD;
-            stroke: #f42582;
+            stroke: #16A085;
         }
 
         /* Animations */

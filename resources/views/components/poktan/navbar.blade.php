@@ -181,7 +181,7 @@
                     <img alt="image" src="../storage/profile/{{ $poktan->image }}"
                         class="border rounded-circle border-white shadow-sm mr-1" style="width: 43px; height: 43px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                 @else
-                    <img alt="image" src="{{ asset('assets/img/avatar/avatar-1.png') }}"
+                    <img alt="image" src="{{ asset('img/user.png') }}"
                         class="rounded-circle mr-1">
                 @endif
                 <div class="d-sm-none d-lg-inline-block">{{ strtok(Auth::user()->name, ' ') }}</div>

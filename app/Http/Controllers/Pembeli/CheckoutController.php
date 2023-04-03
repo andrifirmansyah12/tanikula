@@ -324,6 +324,71 @@ class CheckoutController extends Controller
         ]);
     }
 
+    public function mainAdrress()
+    {
+        $emps = Address::with('user')
+            ->join('users', 'addresses.user_id', '=', 'users.id')
+            ->select('addresses.*', 'users.email as email')
+            ->where('user_id', auth()->user()->id)
+            ->where('addresses.main_address', 1)
+            ->orderBy('addresses.updated_at', 'desc')
+            ->take(1)
+            ->get();
+        $output = '';
+        if ($emps->count() > 0) {
+            foreach ($emps as $emp) {
+                $output .= '
+                    <div class="row align-items-center">
+                        <div>
+                            <p class="fw-bold text-black mb-2">' . $emp->recipients_name . '
+                                <span class="fw-normal">('. $emp->address_label .') </span>
+                                <svg class="text-success" xmlns="http://www.w3.org/2000/svg"
+                                    width="16" height="16" fill="currentColor"
+                                    class="bi bi-patch-check-fill" viewBox="0 0 16 16">
+                                    <path
+                                        d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z" />
+                                </svg>
+                            </p>
+                        </div>
+                        <div class="col-12 mt-2 mt-md-0">
+                            <p class="mb-2 fw-bold text-black">'. $emp->telp .'</p>
+                            <p>';
+                                if ($emp->village_id && $emp->district_id && $emp->city_id && $emp->province_id != null) {
+                                    $output .= ''. $emp->village->name .', Kecamatan
+                                    '. $emp->district->name .', '. $emp->city->name .',
+                                    Provinsi '. $emp->province->name .'';
+                                }$output .= ', '. $emp->postal_code .'. [TaniKula
+                                    Note: '. $emp->complete_address .'
+                                    '. $emp->note_for_courier .'].
+                            </p>
+                            <p class="pt-3">';
+                                if ($emp->district_id != null) {
+                                    $output .= ''. $emp->district->name .',';
+                                }$output .= ''. $emp->postal_code .'.
+                            </p>
+                        </div>
+                    </div>
+                ';
+            }
+            echo $output;
+        } else {
+            echo '<div id="app">
+                <section class="section p-5">
+                    <div class="container">
+                        <div class="page-error-address">
+                            <div class="page-inner-address">
+                                <div class="page-description-address">
+                                    Alamat belum ada, silahkan pilih alamat!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            ';
+        }
+    }
+
     // handle fetch all eamployees ajax request
     public function fetchAll()
     {
