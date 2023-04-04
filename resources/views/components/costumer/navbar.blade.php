@@ -84,6 +84,24 @@
                         </li>
                         @endforeach
                         @else
+                        <style>
+                            .page-error-notification {
+                                height: 30vh;
+                                width: 40vh;
+                                text-align: center;
+                                display: table;
+                            }
+
+                            .page-error-notification .page-inner-notification {
+                                display: table-cell;
+                                width: 100%;
+                                vertical-align: middle;
+                            }
+
+                            .page-error-notification img {
+                                width: 10rem;
+                            }
+                        </style>
                         <div id="app">
                             <div class="container">
                                 <div class="page-error-notification">
