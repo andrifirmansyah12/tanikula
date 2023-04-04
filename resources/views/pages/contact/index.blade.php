@@ -72,7 +72,7 @@
                                                 <label for="name" class="col-form-label text-md-right">{{ __('Upload Foto') }}</label>
                                                 <div class="pb-2">
                                                     <img id="addPreview" class="img-fluid img-thumbnail image"
-                                                        src="{{ asset('stisla/assets/img/example-image.jpg') }}" alt="edukasi"
+                                                        src="{{ asset('img/no-data.jpg') }}" alt="edukasi"
                                                         style="width: 20rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                                                 </div>
                                                 <input type="file" accept="image/*" class="form-control @error('screenshot') is-invalid @enderror" id="screenshot" name="screenshot" autofocus>

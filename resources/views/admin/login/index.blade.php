@@ -258,6 +258,7 @@ body {
 
         $("#login_form").submit(function(e) {
             e.preventDefault();
+            document.querySelector('.body-spinner').style.display = 'block';
             $("#login_btn").val('Silahkan Tunggu...');
             $("#login_btn").prop('disabled', true);
             $.ajax({
@@ -269,6 +270,7 @@ body {
                     if (res.status == 400) {
                         showError('email', res.messages.email);
                         showError('password', res.messages.password);
+                        document.querySelector('.body-spinner').style.display = 'none';
                         $("#login_btn").val('Masuk');
                         $("#login_btn").prop('disabled', false);
                     } else if (res.status == 401) {
@@ -278,11 +280,14 @@ body {
                             message: res.messages,
                             position: 'topRight'
                         });
+                        document.querySelector('.body-spinner').style.display = 'none';
                         $("#login_btn").val('Masuk');
                         $("#login_btn").prop('disabled', false);
                     } else if(res.status == 200) {
+                        document.querySelector('.body-spinner').style.display = 'none';
                         window.location = '{{ route('admin') }}';
                     } else if(res.status == 201) {
+                        document.querySelector('.body-spinner').style.display = 'none';
                         window.location = '{{ route('support') }}';
                     }
                 }

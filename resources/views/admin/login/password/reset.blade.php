@@ -270,6 +270,7 @@ body {
 
         $("#reset_form").submit(function(e) {
             e.preventDefault();
+            document.querySelector('.body-spinner').style.display = 'block';
             $("#reset_btn").val('Silahkan Tunggu..');
             $("#reset_btn").prop('disabled', true);
             $.ajax({
@@ -281,6 +282,7 @@ body {
                     if (res.status == 400) {
                         showError('npass', res.messages.npass);
                         showError('cnpass', res.messages.cnpass);
+                        document.querySelector('.body-spinner').style.display = 'none';
                         $("#reset_btn").val("Perbarui Password");
                         $("#reset_btn").prop('disabled', false);
                     } else if (res.status == 401){
@@ -290,6 +292,7 @@ body {
                             message: res.messages,
                             position: 'topRight'
                         });
+                        document.querySelector('.body-spinner').style.display = 'none';
                         $("#reset_btn").val("Perbarui Password");
                         $("#reset_btn").prop('disabled', false);
                         removeValidationClasses("#reset_form");
@@ -301,6 +304,7 @@ body {
                             message: res.messages,
                             position: 'topRight'
                         });
+                        document.querySelector('.body-spinner').style.display = 'none';
                         $("#reset_btn").val("Perbarui Password");
                         $("#reset_btn").prop('disabled', false);
                     }

@@ -248,6 +248,7 @@
             }
         });
 
+        document.querySelector('.body-spinner').style.display = 'block';
         $("#addToCartBtn").prop('disabled', true);
         $.ajax({
             method: "POST",
@@ -258,12 +259,23 @@
             },
             success: function (response) {
                 if (response.status == 'Silahkan login!') {
-                    window.location = '/login';
+                    document.querySelector('.body-spinner').style.display = 'none';
+                    $("#addToCartBtn").prop('disabled', false);
+                    // window.location = '/login';
+                    window.setTimeout(function(){
+                        location = '/login';
+                    }, 1000);
+                    iziToast.warning({
+                        title: 'Gagal',
+                        message: "Anda harus login!",
+                        position: 'topRight'
+                    });
                 } else {
                     if (response.status == 'Kuantiti tidak boleh melebihi stok')
                     {
+                        document.querySelector('.body-spinner').style.display = 'none';
                         $("#addToCartBtn").prop('disabled', false);
-                        iziToast.warning({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                        iziToast.warning({
                             title: 'Gagal',
                             message: response.status,
                             position: 'topRight'
@@ -271,8 +283,9 @@
                     }
                         else
                     {
+                        document.querySelector('.body-spinner').style.display = 'none';
                         $("#addToCartBtn").prop('disabled', false);
-                        iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                        iziToast.success({
                             title: 'Berhasil',
                             message: response.status,
                             position: 'topRight'
@@ -295,6 +308,7 @@
             }
         });
 
+        document.querySelector('.body-spinner').style.display = 'block';
         $("#addToWishlistBtn").prop('disabled', true);
         $.ajax({
             method: "POST",
@@ -304,11 +318,22 @@
             },
             success: function (response) {
                 if (response.status == 'Silahkan login!') {
-                    window.location = '/login';
+                    document.querySelector('.body-spinner').style.display = 'none';
+                    $("#addToWishlistBtn").prop('disabled', false);
+                    // window.location = '/login';
+                    window.setTimeout(function(){
+                        location = '/login';
+                    }, 1000);
+                    iziToast.warning({
+                        title: 'Gagal',
+                        message: "Anda harus login!",
+                        position: 'topRight'
+                    });
                 } else {
                     // window.location.reload();
+                    document.querySelector('.body-spinner').style.display = 'none';
                     $("#addToWishlistBtn").prop('disabled', false);
-                    iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                    iziToast.success({
                         title: 'Berhasil',
                         message: response.status,
                         position: 'topRight'
@@ -381,7 +406,7 @@
             },
             success: function (response) {
                 LoadCart();
-                iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                iziToast.success({
                     title: 'Berhasil',
                     message: response.status,
                     position: 'topRight'
@@ -410,7 +435,7 @@
             },
             success: function (response) {
                 LoadCart();
-                iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                iziToast.success({
                     title: 'Berhasil',
                     message: response.status,
                     position: 'topRight'
