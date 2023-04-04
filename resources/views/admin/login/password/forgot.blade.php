@@ -226,6 +226,7 @@ body {
     $(function() {
         $("#forgot_form").submit(function(e) {
             e.preventDefault();
+            document.querySelector('.body-spinner').style.display = 'block';
             $("#forgot_btn").val('Silahkan Tunggu..');
             $("#forgot_btn").prop('disabled', true);
             $.ajax({
@@ -236,6 +237,7 @@ body {
                 success: function(res){
                     if (res.status == 400) {
                         showError('email', res.messages.email);
+                        document.querySelector('.body-spinner').style.display = 'none';
                         $("#forgot_btn").val("Reset Password");
                         $("#forgot_btn").prop('disabled', false);
                     } else if (res.status == 200){
@@ -245,11 +247,13 @@ body {
                             message: res.messages,
                             position: 'topRight'
                         });
+                        document.querySelector('.body-spinner').style.display = 'none';
                         $("#forgot_btn").val("Reset Password");
                         $("#forgot_btn").prop('disabled', false);
                         removeValidationClasses("#forgot_form");
                         $("#forgot_form")[0].reset();
                     } else {
+                        document.querySelector('.body-spinner').style.display = 'none';
                         $("#forgot_btn").val("Reset Password");
                         $("#forgot_btn").prop('disabled', false);
                         // $("#forgot_alert").html(showMessage('danger', res.messages));

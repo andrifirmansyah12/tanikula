@@ -303,6 +303,7 @@
         var product_id = $(this).closest('#product_data').find('#prod_id').val();
         var product_qty = $(this).closest('#product_data').find('.qty-input').val();
 
+        document.querySelector('.body-spinner').style.display = 'block';
         $("#addToCartBtn").prop('disabled', true);
             $.ajax({
                 method: "POST",
@@ -313,10 +314,12 @@
                 },
                 success: function (response) {
                     if (response.status == 'Silahkan login!') {
+                        document.querySelector('.body-spinner').style.display = 'none';
                         window.location = '/login';
                     } else {
                         if (response.status == 'Kuantiti tidak boleh melebihi stok')
                         {
+                            document.querySelector('.body-spinner').style.display = 'none';
                             $("#addToCartBtn").prop('disabled', false);
                             iziToast.warning({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
                                 title: 'Gagal',
@@ -326,13 +329,14 @@
                         }
                             else
                         {
+                            document.querySelector('.body-spinner').style.display = 'none';
                             $("#addToCartBtn").prop('disabled', false);
                             iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
                                 title: 'Berhasil',
                                 message: response.status,
                                 position: 'topRight'
                             });
-                            window.setTimeout(function(){location.reload()},1000)
+                            // window.setTimeout(function(){location.reload()},1000)
                         }
                     }
                 }
@@ -351,6 +355,7 @@
 
             var product_id = $(this).closest('#product_data').find('#prod_id').val();
 
+            document.querySelector('.body-spinner').style.display = 'block';
             $.ajax({
                 method: "POST",
                 url: "/delete-cart-wishlist",
@@ -359,6 +364,7 @@
                 },
                 success: function (response) {
                     // $('.WishlistItems').load(location.href + '.WishlistItems');
+                    document.querySelector('.body-spinner').style.display = 'none';
                     iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
                         title: 'Berhasil',
                         message: response.status,
