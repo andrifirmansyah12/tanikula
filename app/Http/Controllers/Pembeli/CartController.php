@@ -15,35 +15,41 @@ class CartController extends Controller
         $product_id = $request->input('product_id');
         $product_qty = $request->input('product_qty');
 
-        if (Auth::check() && Auth()->user()->hasRole('pembeli')) {
-            $prod_check = Product::where('id', $product_id)->first();
+        if (Auth::check()) {
+            if (Auth()->user()->hasRole('pembeli')) {
+                $prod_check = Product::where('id', $product_id)->first();
 
-            if ($prod_check) {
-                if (Cart::where('product_id', $product_id)->where('user_id', Auth::id())->exists()) {
-                    $checkCart = Cart::where('product_id', $product_id)->where('user_id', Auth::id())->get();
-                    foreach ($checkCart as $cart) {
-                        $qtyProduct = $cart->product_qty + $product_qty;
-                        if ($qtyProduct > $cart->product->stoke) {
-                            return response()->json([
-                                'status' => "Kuantiti tidak boleh melebihi stok"
-                            ]);
-                        } else {
-                            $updateCart = Cart::where('id', $cart->id)->first();
-                            $updateCart->product_qty = $updateCart->product_qty + $product_qty;
-                            $updateCart->update();
-                            return response()->json([
-                                'status' => $prod_check->name . " ditambahkan ke Keranjang"
-                            ]);
+                if ($prod_check) {
+                    if (Cart::where('product_id', $product_id)->where('user_id', Auth::id())->exists()) {
+                        $checkCart = Cart::where('product_id', $product_id)->where('user_id', Auth::id())->get();
+                        foreach ($checkCart as $cart) {
+                            $qtyProduct = $cart->product_qty + $product_qty;
+                            if ($qtyProduct > $cart->product->stoke) {
+                                return response()->json([
+                                    'status' => "Kuantiti tidak boleh melebihi stok"
+                                ]);
+                            } else {
+                                $updateCart = Cart::where('id', $cart->id)->first();
+                                $updateCart->product_qty = $updateCart->product_qty + $product_qty;
+                                $updateCart->update();
+                                return response()->json([
+                                    'status' => $prod_check->name . " ditambahkan ke Keranjang"
+                                ]);
+                            }
                         }
+                    } else {
+                        $cartItem = new Cart();
+                        $cartItem->product_id = $product_id;
+                        $cartItem->user_id = Auth::id();
+                        $cartItem->product_qty = $product_qty;
+                        $cartItem->save();
+                        return response()->json(['status' => $prod_check->name . " ditambahkan ke Keranjang"]);
                     }
-                } else {
-                    $cartItem = new Cart();
-                    $cartItem->product_id = $product_id;
-                    $cartItem->user_id = Auth::id();
-                    $cartItem->product_qty = $product_qty;
-                    $cartItem->save();
-                    return response()->json(['status' => $prod_check->name . " ditambahkan ke Keranjang"]);
                 }
+            } else {
+                return response()->json([
+                    'status' => "Hanya bisa dilakukan akun pembeli!",
+                ]);
             }
         } else {
             return response()->json([

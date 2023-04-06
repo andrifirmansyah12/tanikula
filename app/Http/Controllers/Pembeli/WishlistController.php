@@ -275,28 +275,36 @@ class WishlistController extends Controller
     {
         $product_id = $request->input('product_id');
 
-        if(Auth::check() && Auth()->user()->hasRole('pembeli')) {
+        if(Auth::check()) {
 
-            $prod_check = Product::where('id', $product_id)->first();
-            if ($prod_check) {
-                if (Wishlist::where('product_id', $product_id)->where('user_id', Auth::id())->exists()) {
-                    return response()->json([
-                        'message' => 'gagal',
-                        'status' => $prod_check->name . " sudah ditambahkan ke Wishlist!"]
-                    );
-                } else {
-                    $wishlist = new Wishlist();
-                    $wishlist->user_id = Auth::id();
-                    $wishlist->product_id = $product_id;
-                    $wishlist->save();
-                    return response()->json([
-                        'message' => 'berhasil',
-                        'status' => $prod_check->name . " ditambahkan ke Wishlist"
-                    ]);
+            if (Auth()->user()->hasRole('pembeli')) {
+                $prod_check = Product::where('id', $product_id)->first();
+                if ($prod_check) {
+                    if (Wishlist::where('product_id', $product_id)->where('user_id', Auth::id())->exists()) {
+                        return response()->json([
+                            'message' => 'gagal',
+                            'status' => $prod_check->name . " sudah ditambahkan ke Wishlist!"]
+                        );
+                    } else {
+                        $wishlist = new Wishlist();
+                        $wishlist->user_id = Auth::id();
+                        $wishlist->product_id = $product_id;
+                        $wishlist->save();
+                        return response()->json([
+                            'message' => 'berhasil',
+                            'status' => $prod_check->name . " ditambahkan ke Wishlist"
+                        ]);
+                    }
                 }
+            } else {
+                return response()->json([
+                    'status' => "Hanya bisa dilakukan akun pembeli!",
+                ]);
             }
         } else {
-            return response()->json(['status' => "Silahkan login!"]);
+            return response()->json([
+                'status' => "Silahkan login!",
+            ]);
         }
     }
 

@@ -122,7 +122,20 @@
                                     <div class="page-error">
                                         <div class="page-inner">
                                             <div class="page-description">
-                                                Silahkan tunggu ..
+                                                <div class="spinner-loader spinner-center">
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -138,7 +151,20 @@
                                     <div class="page-error">
                                         <div class="page-inner">
                                             <div class="page-description">
-                                                Silahkan tunggu ..
+                                                <div class="spinner-loader spinner-center">
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -154,7 +180,20 @@
                                     <div class="page-error">
                                         <div class="page-inner">
                                             <div class="page-description">
-                                                Silahkan tunggu ..
+                                                <div class="spinner-loader spinner-center">
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -170,7 +209,20 @@
                                     <div class="page-error">
                                         <div class="page-inner">
                                             <div class="page-description">
-                                                Silahkan tunggu ..
+                                                <div class="spinner-loader spinner-center">
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -186,7 +238,20 @@
                                     <div class="page-error">
                                         <div class="page-inner">
                                             <div class="page-description">
-                                                Silahkan tunggu ..
+                                                <div class="spinner-loader spinner-center">
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                    <div class="spinner-loader-blade"></div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
