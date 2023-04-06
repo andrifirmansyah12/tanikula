@@ -111,7 +111,7 @@
                                     <div class="tab-pane fade show active" id="home3" role="tabpanel"
                                         aria-labelledby="home-tab3">
                                         <img id="addPreview" class="img-fluid img-thumbnail image"
-                                        src="{{ asset('stisla/assets/img/example-image.jpg') }}" alt="edukasi"
+                                        src="{{ asset('img/no-data.jpg') }}" alt="edukasi"
                                         style="width: 20rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                                     </div>
                                     <div class="tab-pane fade" id="profile3" role="tabpanel"
@@ -349,7 +349,7 @@
                             `<div class="tab-pane fade show active" id="home2" role="tabpanel"
                                 aria-labelledby="home-tab2">
                                 <img id="preview" class="img-fluid img-thumbnail image"
-                                src="../stisla/assets/img/example-image.jpg" alt="edukasi"
+                                src="../img/no-data.jpg" alt="edukasi"
                                 style="width: 20rem; height: 10rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                             </div>
                         `);

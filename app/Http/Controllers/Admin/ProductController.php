@@ -66,10 +66,10 @@ class ProductController extends Controller
                     if ($photos->name) {
                         $output .= '<img src="../storage/produk/' . $photos->name . '" class="img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
                     } else {
-                        $output .= '<img src="../stisla/assets/img/example-image.jpg" class="img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
+                        $output .= '<img src="../img/no-data.jpg" class="img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
                     }
                 } else {
-                    $output .= '<img src="../stisla/assets/img/example-image.jpg" class="img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
+                    $output .= '<img src="../img/no-data.jpg" class="img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
                 }
                 $output .= '</td>';
                 $output .= '
@@ -186,7 +186,7 @@ class ProductController extends Controller
 	}
 
 	// handle update an employee ajax request
-	public function update(Request $request) 
+	public function update(Request $request)
     {
 		$validator = Validator::make($request->all(), [
             // 'gapoktan_id' => 'required',

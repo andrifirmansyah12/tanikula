@@ -183,7 +183,7 @@
                                                         class="img-fluid img-thumbnail" style="width: 30rem; height: 14rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"">
                                                     @else
                                                     <img alt="image" id="image_preview"
-                                                        src="{{ asset('stisla/assets/img/example-image.jpg') }}"
+                                                        src="{{ asset('img/no-data.jpg') }}"
                                                         class="img-fluid img-thumbnail" style="width: 30rem; height: 14rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"">
                                                     @endif
                                                 </div>

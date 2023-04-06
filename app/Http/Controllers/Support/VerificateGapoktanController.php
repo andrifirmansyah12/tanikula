@@ -40,13 +40,13 @@ class VerificateGapoktanController extends Controller
                 if ($emp->certificateGapoktan->count() > 0) {
                     foreach ($emp->certificateGapoktan->take(1) as $photos) {
                         if (empty($photos->evidence)) {
-                            $output .= '<td><img src="../stisla/assets/img/example-image.jpg" class="img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"></td>';
+                            $output .= '<td><img src="../img/no-data.jpg" class="img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"></td>';
                         } else {
                             $output .= '<td><img src="../storage/sertifikat/' . $photos->evidence . '" class="img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"></td>';
                         }
                     }
                 } else {
-                    $output .= '<td><img src="../stisla/assets/img/example-image.jpg" class="img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"></td>';
+                    $output .= '<td><img src="../img/no-data.jpg" class="img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"></td>';
                 }
                 $output .= '<td>';
                 if ($emp->is_verified == 1) {

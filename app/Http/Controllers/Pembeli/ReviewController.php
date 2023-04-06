@@ -49,7 +49,10 @@ class ReviewController extends Controller
             if ($orders->count() > 0) {
                 foreach ($orders as $order) {
                 $output .= '<div class="border-bottom mb-2 pb-2">
-                    <a href="/pembeli/daftar-transaksi/detail-order/'.$order->id.'" class="my-0 text-secondary text-xs font-weight-bold">'. $order->code .'</a>';
+                    <div class="d-flex justify-content-between align-items-center>
+                        <a href="/pembeli/daftar-transaksi/detail-order/'.$order->id.'" class="my-0 text-secondary text-xs font-weight-bold">'. $order->code .'</a>
+                        <a href="/pembeli/daftar-transaksi/detail-order/'.$order->id.'" class="my-0 text-secondary text-xs font-weight-bold">Berikan Ulasan</a>
+                    </div>';
                     $output .= '<div class="d-flex align-items-center pt-3">';
                         if ($userInfo->image) {
                         $output .= '<img src="../storage/profile/'. $userInfo->image .'" class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 55px; height: 55px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="'. $userInfo->user->name .'">';
@@ -146,7 +149,10 @@ class ReviewController extends Controller
             if ($orders->count() > 0) {
                 foreach ($orders as $order) {
                 $output .= '<div class="border-bottom mb-2 pb-2">
-                    <a href="/pembeli/daftar-transaksi/detail-order/'.$order->id.'" class="my-0 text-secondary text-xs font-weight-bold">'. $order->code .'</a>';
+                    <div class="d-flex justify-content-between align-items-center>
+                        <a href="/pembeli/daftar-transaksi/detail-order/'.$order->id.'" class="my-0 text-secondary text-xs font-weight-bold">'. $order->code .'</a>
+                        <a href="/pembeli/daftar-transaksi/detail-order/'.$order->id.'" class="my-0 text-secondary text-xs font-weight-bold">Edit Ulasan</a>
+                    </div>';
                     $output .= '<div class="d-flex align-items-center pt-3">';
                         if ($userInfo->image) {
                         $output .= '<img src="../storage/profile/'. $userInfo->image .'" class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 55px; height: 55px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;" alt="'. $userInfo->user->name .'">';
