@@ -51,7 +51,7 @@ class ProductCategoryController extends Controller
                 if ($emp->icon) {
                         $output .= '<img src="../storage/icon/' . $emp->icon . '" class="img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
                     } else {
-                        $output .= '<img src="../stisla/assets/img/example-image.jpg" class="img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
+                        $output .= '<img src="../img/no-data.jpg" class="img-fluid img-thumbnail" style="width: 100px; height: 65px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
                     }
                 $output .= '</td>
                 <td>' . $emp->gapoktan->user->name . '</td>';

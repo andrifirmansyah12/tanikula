@@ -272,7 +272,7 @@
                                     class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 55px; height: 55px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
                                     alt="{{ $userInfo->user->name }}">
                                 @else
-                                <img src="{{ asset('stisla/assets/img/example-image.jpg') }}"
+                                <img src="{{ asset('img/user.png') }}"
                                     class="rounded-circle shadow-sm" style="border: 1px solid #16A085; width: 55px; height: 55px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;"
                                     alt="{{ $userInfo->user->name }}">
                                 @endif
