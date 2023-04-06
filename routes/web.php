@@ -614,6 +614,7 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:pembeli']], function 
 
     // Wishlist
     Route::get('/pembeli/wishlist', [App\Http\Controllers\Pembeli\WishlistController::class, 'index'])->name('pembeli.wishlist');
+    Route::get('/pembeli/wishlist/fetchAllWishlist', [App\Http\Controllers\Pembeli\WishlistController::class, 'fetchAllWishlist'])->name('fetchAllWishlist');
 
     // Keranjang dan Order
     Route::get('/cart', [App\Http\Controllers\Pembeli\CartController::class, 'viewCart']);
