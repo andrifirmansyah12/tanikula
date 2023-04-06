@@ -57,13 +57,63 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="table-responsive" id="add_activity">
-                                                <h1 class="text-center text-secondary my-5">Memuat..</h1>
+                                                <div id="app">
+                                                    <section class="section">
+                                                        <div class="container">
+                                                            <div class="page-error">
+                                                                <div class="page-inner">
+                                                                    <div class="page-description">
+                                                                        <div class="spinner-loader spinner-center">
+                                                                            <div class="spinner-loader-blade"></div>
+                                                                            <div class="spinner-loader-blade"></div>
+                                                                            <div class="spinner-loader-blade"></div>
+                                                                            <div class="spinner-loader-blade"></div>
+                                                                            <div class="spinner-loader-blade"></div>
+                                                                            <div class="spinner-loader-blade"></div>
+                                                                            <div class="spinner-loader-blade"></div>
+                                                                            <div class="spinner-loader-blade"></div>
+                                                                            <div class="spinner-loader-blade"></div>
+                                                                            <div class="spinner-loader-blade"></div>
+                                                                            <div class="spinner-loader-blade"></div>
+                                                                            <div class="spinner-loader-blade"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </section>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="card mt-4 table-responsive" id="draftActivity">
                                         {{-- Table --}}
-                                        <h5 class="text-center text-secondary my-5">Memuat..</h5>
+                                        <div id="app">
+                                            <section class="section">
+                                                <div class="container">
+                                                    <div class="page-error">
+                                                        <div class="page-inner">
+                                                            <div class="page-description">
+                                                                <div class="spinner-loader spinner-center">
+                                                                    <div class="spinner-loader-blade"></div>
+                                                                    <div class="spinner-loader-blade"></div>
+                                                                    <div class="spinner-loader-blade"></div>
+                                                                    <div class="spinner-loader-blade"></div>
+                                                                    <div class="spinner-loader-blade"></div>
+                                                                    <div class="spinner-loader-blade"></div>
+                                                                    <div class="spinner-loader-blade"></div>
+                                                                    <div class="spinner-loader-blade"></div>
+                                                                    <div class="spinner-loader-blade"></div>
+                                                                    <div class="spinner-loader-blade"></div>
+                                                                    <div class="spinner-loader-blade"></div>
+                                                                    <div class="spinner-loader-blade"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -260,7 +260,15 @@
                     'product_qty': product_qty,
                 },
                 success: function(response) {
-                    if (response.status == 'Silahkan login!') {
+                    if (response.status == 'Hanya bisa dilakukan akun pembeli!') {
+                        document.querySelector('.body-spinner').style.display = 'none';
+                        $("#addToCartBtn").prop('disabled', false);
+                        iziToast.warning({
+                            title: 'Gagal',
+                            message: "Hanya bisa dilakukan akun pembeli!",
+                            position: 'topRight'
+                        });
+                    } else if (response.status == 'Silahkan login!') {
                         document.querySelector('.body-spinner').style.display = 'none';
                         $("#addToCartBtn").prop('disabled', false);
                         // window.location = '/login';
@@ -318,7 +326,15 @@
                     'product_id': product_id,
                 },
                 success: function(response) {
-                    if (response.status == 'Silahkan login!') {
+                    if (response.status == 'Hanya bisa dilakukan akun pembeli!') {
+                        document.querySelector('.body-spinner').style.display = 'none';
+                        $("#addToCartBtn").prop('disabled', false);
+                        iziToast.warning({
+                            title: 'Gagal',
+                            message: "Hanya bisa dilakukan akun pembeli!",
+                            position: 'topRight'
+                        });
+                    } else if (response.status == 'Silahkan login!') {
                         document.querySelector('.body-spinner').style.display = 'none';
                         $("#addToWishlistBtn").prop('disabled', false);
                         // window.location = '/login';

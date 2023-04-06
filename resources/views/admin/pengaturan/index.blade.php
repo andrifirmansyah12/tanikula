@@ -6,8 +6,7 @@
     <!-- MULAI STYLE CSS -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
-    <link rel='stylesheet'
-        href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css' />
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css' />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.css"
         integrity="sha256-pODNVtK3uOhL8FUNWWvFQK0QoQoV3YA9wGGng6mbZ0E=" crossorigin="anonymous" />
     <!-- AKHIR STYLE CSS -->
@@ -34,13 +33,15 @@
                                 <br>1. Jika tidak ingin ubah password biarkan kosong,
                                 <br>2. Dan jika ingin ubah password, silahkan masukkan password.
                             </small>
-                            <input type="password"  id="password" name="password" class="form-control" placeholder="Password">
+                            <input type="password" id="password" name="password" class="form-control"
+                                placeholder="Password">
                             <div class="invalid-feedback">
                             </div>
                         </div>
                         <div class="my-2 form-group">
                             <label for="password">Konfirmasi Password</label>
-                            <input type="password" id="cpassword" name="cpassword" class="form-control" placeholder="Konfirmasi Password">
+                            <input type="password" id="cpassword" name="cpassword" class="form-control"
+                                placeholder="Konfirmasi Password">
                             <div class="invalid-feedback">
                             </div>
                         </div>
@@ -90,7 +91,7 @@
                                         <span>+62</span>
                                     </div>
                                 </div>
-                                <input type="number" name="phone" id="phone" value="{{ $userInfo->phone}}"
+                                <input type="number" name="phone" id="phone" value="{{ $userInfo->phone }}"
                                     class="form-control phone-number">
                             </div>
                             <div class="invalid-feedback">
@@ -99,13 +100,13 @@
                         <div class="form-group my-2">
                             <label class="col-form-label" for="provinsi">Provinsi</label>
                             @php
-                            $provinces = new App\Http\Controllers\Pages\DependantDropdownController;
-                            $provinces = $provinces->provinces();
+                                $provinces = new App\Http\Controllers\Pages\DependantDropdownController();
+                                $provinces = $provinces->provinces();
                             @endphp
                             <select class="form-control" name="province_id" id="provinsi">
                                 <option disabled selected>==Pilih Salah Satu==</option>
                                 @foreach ($provinces as $item)
-                                <option value="{{ $item->id ?? '' }}">{{ $item->name ?? '' }}</option>
+                                    <option value="{{ $item->id ?? '' }}">{{ $item->name ?? '' }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -226,9 +227,7 @@
                                                             <td class="text-capitalize">
                                                                 @if ($userInfo->street && $userInfo->number)
                                                                 {{ $userInfo->street }}, No {{ $userInfo->number }}.
-                                                                    @if ($userInfo->village_id &&
-                                                                        $userInfo->district_id && $userInfo->city_id &&
-                                                                        $userInfo->province_id != null)
+                                                                    @if ($userInfo->village_id && $userInfo->district_id && $userInfo->city_id && $userInfo->province_id != null)
                                                                         {{ $userInfo->village->name }}, Kecamatan
                                                                         {{ $userInfo->district->name }},
                                                                         {{ $userInfo->city->name }}, Provinsi
@@ -270,26 +269,30 @@
                                 </div>
                                 <div class="card-body text-center">
                                     @if ($userInfo->image)
-                                    <img alt="image" id="image_preview" src="../storage/profile/{{ $userInfo->image }}"
-                                        class="rounded-circle img-fluid"
-                                        style="width: 150px; height: 150px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
-                                        @else
-                                            <img alt=" image" id="image_preview"
-                                        src="{{ asset('stisla/assets/img/example-image.jpg') }}"
-                                        class="rounded-circle img-fluid"
-                                        style="width: 150px; height: 150px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
-                                        @endif
-                                        <h5 class=" my-3">@if ($userInfo->user->name)
-                                     {{ $userInfo->user->name }}
+                                        <img alt="image" id="image_preview"
+                                            src="../storage/profile/{{ $userInfo->image }}"
+                                            class="rounded-circle img-fluid"
+                                            style="width: 150px; height: 150px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                                     @else
-                                    <span class="text-danger">Belum diisi</span>
-                                    @endif</h5>
+                                        <img alt=" image" id="image_preview" src="{{ asset('img/user.png') }}"
+                                            class="rounded-circle img-fluid"
+                                            style="width: 150px; height: 150px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                    @endif
+                                    <h5 class=" my-3">
+                                        @if ($userInfo->user->name)
+                                            {{ $userInfo->user->name }}
+                                        @else
+                                            <span class="text-danger">Belum diisi</span>
+                                        @endif
+                                    </h5>
                                     <p class="text-muted mb-4">Admin Tanikula</p>
                                     <div class="d-flex justify-content-center mb-2">
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input hidden" style="width: 0px; opacity: 0%"
-                                                accept="image/*" id="image" name="image">
-                                            <label class="custom-file-label" for="image"><i class="bi bi-camera h-4"></i> Ubah
+                                            <input type="file" class="custom-file-input hidden"
+                                                style="width: 0px; opacity: 0%" accept="image/*" id="image"
+                                                name="image">
+                                            <label class="custom-file-label" for="image"><i
+                                                    class="bi bi-camera h-4"></i> Ubah
                                                 foto</label>
                                             {{-- <input type="file" class="custom-file-input" accept="image/*" id="image" name="image">
                                                 <label class="custom-file-label" for="image">Ubah Profile</label> --}}
@@ -301,8 +304,8 @@
                         <input type="hidden" name="user_id" id="user_id" value="{{ $userInfo->id }}">
                         <div class="col-lg-8 mt-3">
                             <div class="card-body pt-4 px-4">
-                                    <h4 class="border p-3 text-center rounded">Biodata Admin</h4>
-                                </div>
+                                <h4 class="border p-3 text-center rounded">Biodata Admin</h4>
+                            </div>
                             <div class="card mb-4">
                                 <div class="card-body">
                                     <div class="row">
@@ -321,10 +324,11 @@
                                         <div class="col-sm-9">
                                             <p class="text-muted mb-0">
                                                 @if ($userInfo->phone)
-                                                (+62) {{ $userInfo->phone }}
+                                                    (+62) {{ $userInfo->phone }}
                                                 @else
-                                                <span class="text-danger">Belum diisi</span>
-                                                @endif</p>
+                                                    <span class="text-danger">Belum diisi</span>
+                                                @endif
+                                            </p>
                                         </div>
                                     </div>
                                     <hr>
@@ -333,28 +337,30 @@
                                             <p class="mb-0">Address</p>
                                         </div>
                                         <div class="col-sm-9">
-                                            <p class="text-muted mb-0">@if ($userInfo->street && $userInfo->number)
-                                                {{ $userInfo->street }}, No {{ $userInfo->number }}.
-                                                @if ($userInfo->village_id &&
-                                                $userInfo->district_id && $userInfo->city_id &&
-                                                $userInfo->province_id != null)
-                                                {{ $userInfo->village->name }}, Kecamatan
-                                                {{ $userInfo->district->name }},
-                                                {{ $userInfo->city->name }}, Provinsi
-                                                {{ $userInfo->province->name }}.
-                                                @endif
+                                            <p class="text-muted mb-0">
+                                                @if ($userInfo->street && $userInfo->number)
+                                                    {{ $userInfo->street }}, No {{ $userInfo->number }}.
+                                                    @if ($userInfo->village_id && $userInfo->district_id && $userInfo->city_id && $userInfo->province_id != null)
+                                                        {{ $userInfo->village->name }}, Kecamatan
+                                                        {{ $userInfo->district->name }},
+                                                        {{ $userInfo->city->name }}, Provinsi
+                                                        {{ $userInfo->province->name }}.
+                                                    @endif
                                                 @else
-                                                <span class="text-danger">Belum diisi</span>
-                                                @endif</p>
+                                                    <span class="text-danger">Belum diisi</span>
+                                                @endif
+                                            </p>
                                         </div>
                                     </div>
                                     <hr>
                                 </div>
                                 <div class="card-footer row align-items-center justify-content-end mb-3">
                                     <input type="button" value="Ubah Password" class="btn shadow-none border"
-                                        style="background: #FFFACD;" data-toggle="modal" data-target="#editEmployeeModal">
-                                    <input type="button" value="Ubah Biodata Poktan" class="btn btn-primary shadow-none m-1"
-                                        data-toggle="modal" data-target="#exampleModal">
+                                        style="background: #FFFACD;" data-toggle="modal"
+                                        data-target="#editEmployeeModal">
+                                    <input type="button" value="Ubah Biodata Admin"
+                                        class="btn btn-primary shadow-none m-1" data-toggle="modal"
+                                        data-target="#exampleModal">
                                 </div>
                             </div>
                         </div>
@@ -386,8 +392,8 @@
 
     <!-- JAVASCRIPT -->
     <script>
-        $( function() {
-            $( ".datepicker" ).datepicker({
+        $(function() {
+            $(".datepicker").datepicker({
                 dateFormat: 'yy-mm-dd'
             });
         });
@@ -400,26 +406,26 @@
                 data: {
                     id: id
                 },
-                success: function (data) {
+                success: function(data) {
                     $('#' + name).empty();
                     $('#' + name).append('<option>==Pilih Salah Satu==</option>');
 
-                    $.each(data, function (key, value) {
+                    $.each(data, function(key, value) {
                         $('#' + name).append('<option value="' + key + '">' + value + '</option>');
                     });
                 }
             });
         }
 
-        $(function () {
-            $('#provinsi').on('change', function () {
-                onChangeSelect('{{ route("cities") }}', $(this).val(), 'kota');
+        $(function() {
+            $('#provinsi').on('change', function() {
+                onChangeSelect('{{ route('cities') }}', $(this).val(), 'kota');
             });
-            $('#kota').on('change', function () {
-                onChangeSelect('{{ route("districts") }}', $(this).val(), 'kecamatan');
+            $('#kota').on('change', function() {
+                onChangeSelect('{{ route('districts') }}', $(this).val(), 'kecamatan');
             })
-            $('#kecamatan').on('change', function () {
-                onChangeSelect('{{ route("villages") }}', $(this).val(), 'desa');
+            $('#kecamatan').on('change', function() {
+                onChangeSelect('{{ route('villages') }}', $(this).val(), 'desa');
             })
         });
 
@@ -440,8 +446,8 @@
                     processData: false,
                     contentType: false,
                     dataType: 'json',
-                    success: function(res){
-                        if(res.status == 200) {
+                    success: function(res) {
+                        if (res.status == 200) {
                             // $("#profile_alert").html(showMessage('success', res.messages));
                             iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
                                 title: 'Berhasil',
@@ -463,9 +469,9 @@
                 $.ajax({
                     url: '{{ route('admin.pengaturan.update') }}',
                     method: 'POST',
-                    data: $(this).serialize()+ `&id=${id}`,
+                    data: $(this).serialize() + `&id=${id}`,
                     dataType: 'json',
-                    success: function(res){
+                    success: function(res) {
                         if (res.status == 400) {
                             showError('name', res.messages.name);
                             showError('email', res.messages.email);
@@ -502,9 +508,9 @@
                 $.ajax({
                     url: '{{ route('admin.pengaturan.updatePassword') }}',
                     method: 'POST',
-                    data: $(this).serialize()+ `&id=${id}`,
+                    data: $(this).serialize() + `&id=${id}`,
                     dataType: 'json',
-                    success: function(res){
+                    success: function(res) {
                         if (res.status == 400) {
                             showError('password', res.messages.password);
                             showError('cpassword', res.messages.cpassword);
