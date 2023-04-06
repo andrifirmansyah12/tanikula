@@ -71,6 +71,22 @@
 @endsection
 
 @section('content')
+<div class="before-body-spinner" id="spinner_login">
+    <div class="content-spinner">
+        <svg class="pl" width="240" height="240" viewBox="0 0 240 240">
+            <circle class="pl__ring pl__ring--a" cx="120" cy="120" r="105" fill="none" stroke="#000"
+                stroke-width="20" stroke-dasharray="0 660" stroke-dashoffset="-330" stroke-linecap="round"></circle>
+            <circle class="pl__ring pl__ring--b" cx="120" cy="120" r="35" fill="none" stroke="#000"
+                stroke-width="20" stroke-dasharray="0 220" stroke-dashoffset="-110" stroke-linecap="round"></circle>
+            <circle class="pl__ring pl__ring--c" cx="85" cy="120" r="70" fill="none"
+                stroke="#000" stroke-width="20" stroke-dasharray="0 440" stroke-linecap="round"></circle>
+            <circle class="pl__ring pl__ring--d" cx="155" cy="120" r="70" fill="none"
+                stroke="#000" stroke-width="20" stroke-dasharray="0 440" stroke-linecap="round"></circle>
+        </svg>
+        <p style="text-align: center; color: white; font-weight: bold">Harap Tunggu ...</p>
+    </div>
+</div>
+
 <!-- Start Item Details -->
 <section class="item-details section bg-white overflow-hidden">
     <div class="container">
@@ -568,6 +584,7 @@
                 }
             });
 
+            document.querySelector('.before-body-spinner').style.display = 'block';
             $.ajax({
                 method: "POST",
                 url: "/add-to-wishlist",
@@ -576,10 +593,12 @@
                 },
                 success: function (response) {
                     if (response.status == 'Silahkan login!') {
+                        document.querySelector('.before-body-spinner').style.display = 'none';
                         window.location = '/login';
                     } else {
                         if (response.message == 'gagal')
                         {
+                            document.querySelector('.before-body-spinner').style.display = 'none';
                             iziToast.warning({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
                                 title: 'Gagal',
                                 message: response.status,
@@ -589,6 +608,7 @@
                             else if(response.message == 'berhasil')
                         {
                             // window.location.reload();
+                            document.querySelector('.body-spinner').style.display = 'none';
                             iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
                                 title: 'Berhasil',
                                 message: response.status,

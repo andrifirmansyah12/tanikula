@@ -1,20 +1,24 @@
 <!-- ========================= JS here ========================= -->
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.js"
-        integrity="sha256-siqh9650JHbYFKyZeTEAhq+3jvkFCG8Iz+MHdr9eKrw=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    integrity="sha256-siqh9650JHbYFKyZeTEAhq+3jvkFCG8Iz+MHdr9eKrw=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+    integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous">
+</script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('js/tiny-slider.js') }}"></script>
 <script src="{{ asset('js/glightbox.min.js') }}"></script>
 <script src="{{ asset('js/main.js') }}"></script>
 @include('vendor.lara-izitoast.toast')
-    <!-- Page Specific JS File -->
+<!-- Page Specific JS File -->
 <script src="{{ asset('js/function.js') }}"></script>
 {{-- <script src="{{ asset('js/market.js') }}"></script> --}}
 @yield('script')
 <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous">
+</script>
 <script type="text/javascript">
     // Route Link
     // Home
@@ -171,12 +175,12 @@
     });
 </script> --}}
 <script>
-    var path = "{{ route('productListAjax')  }}";
+    var path = "{{ route('productListAjax') }}";
     $('input.typeaheadProduct').typeahead({
-        source: function (query, process) {
+        source: function(query, process) {
             return $.get(path, {
                 term: query
-            }, function (data) {
+            }, function(data) {
                 return process(data);
             });
         }
@@ -199,48 +203,10 @@
     // }
 </script>
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
 
-    LoadNotif();
-    LoadCart();
-
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
-    function LoadCart()
-    {
-        $.ajax({
-            method: "GET",
-            url: "/load-cart",
-            success: function (response) {
-                $('.cart-count').html('');
-                $('.cart-count').html(response.count);
-                // alert(response.count);
-            }
-        });
-    }
-
-    function LoadNotif()
-    {
-        $.ajax({
-            method: "GET",
-            url: "/load-notifications",
-            success: function (response) {
-                $('.notif-count').html('');
-                $('.notif-count').html(response.count);
-                // alert(response.count);
-            }
-        });
-    }
-
-    $('#addToCartBtn').click(function (e) {
-        e.preventDefault();
-
-        var product_id = $(this).closest('#product_data').find('#prod_id').val();
-        var product_qty = $(this).closest('#product_data').find('.qty-input').val();
+        LoadNotif();
+        LoadCart();
 
         $.ajaxSetup({
             headers: {
@@ -248,230 +214,286 @@
             }
         });
 
-        document.querySelector('.body-spinner').style.display = 'block';
-        $("#addToCartBtn").prop('disabled', true);
-        $.ajax({
-            method: "POST",
-            url: "/add-to-cart",
-            data: {
-                'product_id': product_id,
-                'product_qty': product_qty,
-            },
-            success: function (response) {
-                if (response.status == 'Silahkan login!') {
-                    document.querySelector('.body-spinner').style.display = 'none';
-                    $("#addToCartBtn").prop('disabled', false);
-                    // window.location = '/login';
-                    window.setTimeout(function(){
-                        location = '/login';
-                    }, 1000);
-                    iziToast.warning({
-                        title: 'Gagal',
-                        message: "Anda harus login!",
-                        position: 'topRight'
-                    });
-                } else {
-                    if (response.status == 'Kuantiti tidak boleh melebihi stok')
-                    {
+        function LoadCart() {
+            $.ajax({
+                method: "GET",
+                url: "/load-cart",
+                success: function(response) {
+                    $('.cart-count').html('');
+                    $('.cart-count').html(response.count);
+                    // alert(response.count);
+                }
+            });
+        }
+
+        function LoadNotif() {
+            $.ajax({
+                method: "GET",
+                url: "/load-notifications",
+                success: function(response) {
+                    $('.notif-count').html('');
+                    $('.notif-count').html(response.count);
+                    // alert(response.count);
+                }
+            });
+        }
+
+        $('#addToCartBtn').click(function(e) {
+            e.preventDefault();
+
+            var product_id = $(this).closest('#product_data').find('#prod_id').val();
+            var product_qty = $(this).closest('#product_data').find('.qty-input').val();
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            document.querySelector('.body-spinner').style.display = 'block';
+            $("#addToCartBtn").prop('disabled', true);
+            $.ajax({
+                method: "POST",
+                url: "/add-to-cart",
+                data: {
+                    'product_id': product_id,
+                    'product_qty': product_qty,
+                },
+                success: function(response) {
+                    if (response.status == 'Silahkan login!') {
                         document.querySelector('.body-spinner').style.display = 'none';
                         $("#addToCartBtn").prop('disabled', false);
+                        // window.location = '/login';
+                        window.setTimeout(function() {
+                            location = '/login';
+                        }, 1000);
                         iziToast.warning({
                             title: 'Gagal',
-                            message: response.status,
+                            message: "Anda harus login!",
                             position: 'topRight'
                         });
-                    }
-                        else
-                    {
-                        document.querySelector('.body-spinner').style.display = 'none';
-                        $("#addToCartBtn").prop('disabled', false);
-                        iziToast.success({
-                            title: 'Berhasil',
-                            message: response.status,
-                            position: 'topRight'
-                        });
-                        window.setTimeout(function(){location.reload()},1000)
+                    } else {
+                        if (response.status == 'Kuantiti tidak boleh melebihi stok') {
+                            document.querySelector('.body-spinner').style.display = 'none';
+                            $("#addToCartBtn").prop('disabled', false);
+                            iziToast.warning({
+                                title: 'Gagal',
+                                message: response.status,
+                                position: 'topRight'
+                            });
+                        } else {
+                            document.querySelector('.body-spinner').style.display = 'none';
+                            $("#addToCartBtn").prop('disabled', false);
+                            iziToast.success({
+                                title: 'Berhasil',
+                                message: response.status,
+                                position: 'topRight'
+                            });
+                            window.setTimeout(function() {
+                                location.reload()
+                            }, 1000)
+                        }
                     }
                 }
-            }
-        });
-    });
-
-    $('#addToWishlistBtn').click(function (e) {
-        e.preventDefault();
-
-        var product_id = $(this).closest('#product_data').find('#prod_id').val();
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
+            });
         });
 
-        document.querySelector('.body-spinner').style.display = 'block';
-        $("#addToWishlistBtn").prop('disabled', true);
-        $.ajax({
-            method: "POST",
-            url: "/add-to-wishlist",
-            data: {
-                'product_id': product_id,
-            },
-            success: function (response) {
-                if (response.status == 'Silahkan login!') {
-                    document.querySelector('.body-spinner').style.display = 'none';
-                    $("#addToWishlistBtn").prop('disabled', false);
-                    // window.location = '/login';
-                    window.setTimeout(function(){
-                        location = '/login';
-                    }, 1000);
-                    iziToast.warning({
-                        title: 'Gagal',
-                        message: "Anda harus login!",
-                        position: 'topRight'
-                    });
-                } else {
-                    // window.location.reload();
-                    document.querySelector('.body-spinner').style.display = 'none';
-                    $("#addToWishlistBtn").prop('disabled', false);
+        $('#addToWishlistBtn').click(function(e) {
+            e.preventDefault();
+
+            var product_id = $(this).closest('#product_data').find('#prod_id').val();
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            document.querySelector('.body-spinner').style.display = 'block';
+            $("#addToWishlistBtn").prop('disabled', true);
+            $.ajax({
+                method: "POST",
+                url: "/add-to-wishlist",
+                data: {
+                    'product_id': product_id,
+                },
+                success: function(response) {
+                    if (response.status == 'Silahkan login!') {
+                        document.querySelector('.body-spinner').style.display = 'none';
+                        $("#addToWishlistBtn").prop('disabled', false);
+                        // window.location = '/login';
+                        window.setTimeout(function() {
+                            location = '/login';
+                        }, 1000);
+                        iziToast.warning({
+                            title: 'Gagal',
+                            message: "Anda harus login!",
+                            position: 'topRight'
+                        });
+                    } else {
+                        if (response.message == 'gagal') {
+                            document.querySelector('.body-spinner').style.display =
+                                'none';
+                            $("#addToWishlistBtn").prop('disabled', false);
+                            iziToast.warning({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                                title: 'Gagal',
+                                message: response.status,
+                                position: 'topRight'
+                            });
+                        } else if (response.message == 'berhasil') {
+                            // window.location.reload();
+                            document.querySelector('.body-spinner').style.display = 'none';
+                            $("#addToWishlistBtn").prop('disabled', false);
+                            iziToast.success({
+                                title: 'Berhasil',
+                                message: response.status,
+                                position: 'topRight'
+                            });
+                        }
+                    }
+                }
+            });
+        });
+
+        // $('#idNotif').click(function (e) {
+        //     e.preventDefault();
+
+        //     // var id = $("input[name=passingIdNotif]").val();
+        //     var id = $(this).closest('#style-1').find('#passingIdNotif').val();
+
+        //     $.ajaxSetup({
+        //         headers: {
+        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //         }
+        //     });
+
+        //     $.ajax({
+        //         method: "POST",
+        //         url: '/read-notif-data',
+        //         data: {
+        //             'id': id,
+        //         },
+        //         success: function (response) {
+        //             window.setTimeout(function(){location.reload()},1000)
+        //         }
+        //     });
+        // });
+
+        // add new employee ajax request
+        $("#readNotif").submit(function(e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            $.ajax({
+                url: '{{ route('read.all.notif') }}',
+                method: 'get',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status == 200) {
+                        window.setTimeout(function() {
+                            location.reload()
+                        }, 1000)
+                    }
+                }
+            });
+        });
+
+        $('.delete-cart-item').click(function(e) {
+            e.preventDefault();
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            var product_id = $(this).closest('#product_data').find('#prod_id').val();
+
+            document.querySelector('.before-body-spinner').style.display = 'block';
+            $.ajax({
+                method: "POST",
+                url: "delete-cart-item",
+                data: {
+                    'product_id': product_id,
+                },
+                success: function(response) {
+                    document.querySelector('.before-body-spinner').style.display = 'none';
+                    LoadCart();
                     iziToast.success({
                         title: 'Berhasil',
                         message: response.status,
                         position: 'topRight'
                     });
+                    window.setTimeout(function() {
+                        location.reload()
+                    }, 1000)
                 }
-            }
+            });
         });
-    });
 
-    // $('#idNotif').click(function (e) {
-    //     e.preventDefault();
+        $('.delete-out-of-stock-product').click(function(e) {
+            e.preventDefault();
 
-    //     // var id = $("input[name=passingIdNotif]").val();
-    //     var id = $(this).closest('#style-1').find('#passingIdNotif').val();
-
-    //     $.ajaxSetup({
-    //         headers: {
-    //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    //         }
-    //     });
-
-    //     $.ajax({
-    //         method: "POST",
-    //         url: '/read-notif-data',
-    //         data: {
-    //             'id': id,
-    //         },
-    //         success: function (response) {
-    //             window.setTimeout(function(){location.reload()},1000)
-    //         }
-    //     });
-    // });
-
-    // add new employee ajax request
-    $("#readNotif").submit(function(e) {
-        e.preventDefault();
-        var formData = new FormData(this);
-        $.ajax({
-            url: '{{ route('read.all.notif') }}',
-            method: 'get',
-            data: formData,
-            cache: false,
-            contentType: false,
-            processData: false,
-            dataType: 'json',
-            success: function(response) {
-                if (response.status == 200){
-                    window.setTimeout(function(){location.reload()},1000)
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
-            }
-        });
-    });
+            });
 
-    $('.delete-cart-item').click(function (e) {
-        e.preventDefault();
+            var prod_id_outof_stock = $(this).closest('#product_outof_stock').find(
+                '#prod_id_outof_stock').val();
 
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        var product_id = $(this).closest('#product_data').find('#prod_id').val();
-
-        $.ajax({
-            method: "POST",
-            url: "delete-cart-item",
-            data: {
-                'product_id': product_id,
-            },
-            success: function (response) {
-                LoadCart();
-                iziToast.success({
-                    title: 'Berhasil',
-                    message: response.status,
-                    position: 'topRight'
-                });
-                window.setTimeout(function(){location.reload()},1000)
-            }
-        });
-    });
-
-    $('.delete-out-of-stock-product').click(function (e) {
-        e.preventDefault();
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
+            document.querySelector('.before-body-spinner').style.display = 'block';
+            $.ajax({
+                method: "POST",
+                url: "delete-out-of-stock-product",
+                data: {
+                    'prod_id_outof_stock': prod_id_outof_stock,
+                },
+                success: function(response) {
+                    document.querySelector('.before-body-spinner').style.display = 'none';
+                    LoadCart();
+                    iziToast.success({
+                        title: 'Berhasil',
+                        message: response.status,
+                        position: 'topRight'
+                    });
+                    window.setTimeout(function() {
+                        location.reload()
+                    }, 1000)
+                }
+            });
         });
 
-        var prod_id_outof_stock = $(this).closest('#product_outof_stock').find('#prod_id_outof_stock').val();
+        $('.changeQuantity').click(function(e) {
+            e.preventDefault();
 
-        $.ajax({
-            method: "POST",
-            url: "delete-out-of-stock-product",
-            data: {
-                'prod_id_outof_stock': prod_id_outof_stock,
-            },
-            success: function (response) {
-                LoadCart();
-                iziToast.success({
-                    title: 'Berhasil',
-                    message: response.status,
-                    position: 'topRight'
-                });
-                window.setTimeout(function(){location.reload()},1000)
-            }
-        });
-    });
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
 
-    $('.changeQuantity').click(function (e) {
-        e.preventDefault();
+            var product_id = $(this).closest('#product_data').find('#prod_id').val();
+            var qty = $(this).closest('#product_data').find('.qty-input').val();
 
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
+            $.ajax({
+                method: "POST",
+                url: "update-cart-item",
+                data: {
+                    'product_id': product_id,
+                    'product_qty': qty,
+                },
+                success: function(response) {
+                    window.location.reload();
+                }
+            });
         });
 
-        var product_id = $(this).closest('#product_data').find('#prod_id').val();
-        var qty = $(this).closest('#product_data').find('.qty-input').val();
-
-        $.ajax({
-            method: "POST",
-            url: "update-cart-item",
-            data: {
-                'product_id': product_id,
-                'product_qty': qty,
-            },
-            success: function (response) {
-                window.location.reload();
-            }
-        });
-    });
-
-    $('.navbarCheckProductCart').click( function()
-        {
+        $('.navbarCheckProductCart').click(function() {
             var totalCheckboxes = $("input#navbarCheckProductCart:checked").length;
             var sum = 0;
             var total = 0;
@@ -498,8 +520,7 @@
                     'sum': sum,
                     'total': total
                 },
-                success: function (response)
-                {
+                success: function(response) {
                     $('.navbar-beli-keranjang-count').html('');
                     $('.navbar-beli-keranjang-count').html(response.countCart);
 
@@ -511,5 +532,5 @@
                 }
             });
         });
-});
+    });
 </script>
