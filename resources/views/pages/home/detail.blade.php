@@ -228,7 +228,7 @@
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-12">
                                             <div class="wish-button">
-                                                <button disabled class="btn">Beli Langsung</button>
+                                                <button disabled class="btn">Belanja</button>
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-12">
@@ -245,7 +245,7 @@
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-12">
                                             <div class="wish-button">
-                                                <button class="btn" id="buyNow">Beli Langsung</button>
+                                                <button class="btn" id="buyNow">Belanja</button>
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-12">
@@ -267,7 +267,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card-body row align-items-center">
-                        <div class="col-md-5 col-12 d-flex align-items-center">
+                        <div class="col-lg-5 col-md-12 col-12 d-flex align-items-center">
                             @php
                                 $gapoktan = App\Models\Gapoktan::where('user_id', $product->user_id)->first();
                                 $nama_gapoktan = strtolower($product->user->name);
@@ -285,7 +285,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="col-md-7 col-12 d-md-flex justify-content-between">
+                        <div class="col-lg-7 col-md-12 col-12 mt-md-5 mt-lg-0 d-xl-flex d-lg-block d-md-flex justify-content-md-between">
                             @php
                                 $koleksiProduk = App\Models\Product::with('photo_product', 'review')
                                     ->join('product_categories', 'products.category_product_id', '=', 'product_categories.id')
