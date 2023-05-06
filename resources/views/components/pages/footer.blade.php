@@ -7,7 +7,7 @@
                     <div class="col-lg-3 col-md-4 col-12">
                         <div class="footer-logo">
                             <a onclick="home('{{ url('home') }}')" href="#">
-                                <h3 style="color: #16A085">TaniKula</h3>
+                                <h3 style="color: #16A085; font-weight: bold; letter-spacing: 2px;">Tanikula</h3>
                             </a>
                         </div>
                     </div>

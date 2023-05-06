@@ -80,7 +80,7 @@
                         </a>
                         @endhasrole
                         @else
-                        <ul class="user-login">
+                        <ul class="user-login d-none d-md-block">
                             <li>
                                 <a class="btn" style="background: #16A085; color: #ffff;"
                                     onclick="login('{{ route('login') }}')" href="#">Masuk</a>
@@ -114,7 +114,7 @@
                 <div class="col-lg-3 col-md-3 col-7">
                     <!-- Start Header Logo -->
                     <a class="navbar-brand" onclick="home('{{ url('home') }}')" href="#">
-                        <h3 style="color: #16A085">TaniKula</h3>
+                        <h3 style="color: #16A085; font-weight: bold; letter-spacing: 2px;">Tanikula</h3>
                     </a>
                     <!-- End Header Logo -->
                 </div>
@@ -143,7 +143,7 @@
                         <div class="nav-hotline">
                             <i class="lni lni-phone"></i>
                             <h3>Hotline:
-                                <span>(+62) 123 456 7890</span>
+                                <span>(+62) 33 169 7720</span>
                             </h3>
                         </div>
                         <div class="navbar-cart">
@@ -457,13 +457,31 @@
                                         class="{{ Request::is('hubungi-kami') ? 'active' : '' }}"
                                         aria-label="Toggle navigation">Hubungi kami</a>
                                 </li>
+                                <li class="nav-item d-block d-md-none">
+                                    <a onclick="hubungi_kami('{{ url('login') }}')" href="#"
+                                        class="{{ Request::is('login') ? 'active' : '' }}"
+                                        aria-label="Toggle navigation">Masuk</a>
+                                </li>
+                                <li class="nav-item d-block d-md-none">
+                                    <div class="dropdown">
+                                        <a style="cursor: pointer; background: none;" class="btn"
+                                            data-toggle="dropdown" aria-expanded="false">Daftar</a>
+                                        <div class="dropdown-menu mt-2 shadow border border-secondary">
+                                            <a class="dropdown-item" onclick="register('{{ url('/register') }}')"
+                                                href="#">Sebagai Pembeli</a>
+                                            <a class="dropdown-item"
+                                                onclick="registerGapoktan('{{ url('/gapoktan/register') }}')"
+                                                href="#">Sebagai Gapoktan</a>
+                                        </div>
+                                    </div>
+                                </li>
                                 <li class="nav-item d-block d-md-none mt-md-0 mt-3">
                                     <div class="main-menu-search-mobile">
                                         <!-- navbar search start -->
                                         <form action="{{ url('/search-product') }}">
                                             <div class="navbar-search-mobile search-style-5">
                                                 <div class="search-input-mobile">
-                                                    <input type="search" class="form-control typeaheadProduct"
+                                                    <input type="search" class="form-control"
                                                         value="{{ request('pencarian') }}" name="pencarian"
                                                         placeholder="Pencarian produk" autocomplete="off">
                                                 </div>

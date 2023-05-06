@@ -4,14 +4,16 @@
 /*======================================
     Normalize CSS
 ========================================*/
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap");
+@import url("//fonts.googleapis.com/css?family=Nunito:400,600,700,800");
+/* @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap"); */
 
 html {
     scroll-behavior: smooth;
 }
 
 body {
-    font-family: "Manrope", sans-serif;
+    font-family: "Nunito", "Segoe UI", arial;
+    /* font-family: "Manrope", sans-serif; */
     font-weight: 500;
     font-style: normal;
     color: #888;
@@ -1455,6 +1457,10 @@ ol {
     .header .topbar .top-left {
         text-align: center;
     }
+
+    .header .topbar {
+        padding: 0;
+    }
 }
 
 .header .topbar .top-left .menu-top-link .select-position {
@@ -1552,7 +1558,7 @@ ol {
         float: none;
         text-align: center;
         display: block;
-        margin-top: 15px;
+        /* margin-top: 15px; */
     }
 }
 
