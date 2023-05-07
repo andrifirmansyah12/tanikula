@@ -13,7 +13,7 @@
     <!-- /End Preloader -->
 
     <!-- Start Header Area -->
-    <header class="header navbar-area">
+    <header class="header navbar-area" style="border-bottom: 1px solid #16A085">
         <!-- Start Header Middle -->
         <div class="header-middle">
             <div class="container">
@@ -54,7 +54,7 @@
     @yield('content')
 
     <!-- Start Footer Area -->
-    <footer class="footer" style="border-top: 1px solid #eee;">
+    <footer class="footer" style="border-top: 1px solid #16A085">
         <!-- Start Footer Middle -->
         <div class="footer-middle">
             <div class="container">

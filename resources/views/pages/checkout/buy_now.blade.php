@@ -782,6 +782,7 @@
         $('#btn-check').click(function (e) {
             e.preventDefault();
 
+            document.querySelector('.before-body-spinner').style.display = 'block';
             let token = $("meta[name='csrf-token']").attr("content");
             let courier = $('select[name=courier]').val();
             let weight_product = $('#weight_product').val();
@@ -801,6 +802,8 @@
                 type: "POST",
                 success: function (response) {
                     if (response) {
+                        document.querySelector('.before-body-spinner').style.display =
+                                'none';
                         $('select[name="service"]').empty();
                         $("#btnDisabled").prop('disabled', false);
                         var increment = 0;

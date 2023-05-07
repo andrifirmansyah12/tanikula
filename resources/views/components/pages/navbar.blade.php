@@ -46,7 +46,7 @@
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4 col-12">
-                    <div class="top-end">
+                    <div class="top-end d-none d-md-block">
                         @auth
                         @hasrole('pembeli')
                         <a onclick="pembeli('{{ route('pembeli') }}')" href="#" class="user">
@@ -457,6 +457,51 @@
                                         class="{{ Request::is('hubungi-kami') ? 'active' : '' }}"
                                         aria-label="Toggle navigation">Hubungi kami</a>
                                 </li>
+                                @auth
+                                @hasrole('pembeli')
+                                <li class="nav-item d-block d-md-none">
+                                    <a onclick="pembeli('{{ route('pembeli') }}')" href="#" class="user d-flex justify-content-start gap-2">
+                                        <i class="lni lni-user"></i>
+                                        {{ auth()->user()->name }}
+                                    </a>
+                                </li>
+                                @elserole('gapoktan')
+                                <li class="nav-item d-block d-md-none">
+                                    <a onclick="gapoktan('{{ route('gapoktan') }}')" href="#" class="user justify-content-start gap-2">
+                                        <i class="lni lni-user"></i>
+                                        {{ auth()->user()->name }}
+                                    </a>
+                                </li>
+                                @elserole('poktan')
+                                <li class="nav-item d-block d-md-none">
+                                    <a onclick="poktan('{{ route('poktan') }}')" href="#" class="user justify-content-start gap-2">
+                                        <i class="lni lni-user"></i>
+                                        {{ auth()->user()->name }}
+                                    </a>
+                                </li>
+                                @elserole('petani')
+                                <li class="nav-item d-block d-md-none">
+                                    <a onclick="petani('{{ route('petani') }}')" href="#" class="user justify-content-start gap-2">
+                                        <i class="lni lni-user"></i>
+                                        {{ auth()->user()->name }}
+                                    </a>
+                                </li>
+                                @elserole('admin')
+                                <li class="nav-item d-block d-md-none">
+                                    <a onclick="admin('{{ route('admin') }}')" href="#" class="user justify-content-start gap-2">
+                                        <i class="lni lni-user"></i>
+                                        {{ auth()->user()->name }}
+                                    </a>
+                                </li>
+                                @elserole('support')
+                                <li class="nav-item d-block d-md-none">
+                                    <a onclick="support('{{ route('support') }}')" href="#" class="user justify-content-start gap-2">
+                                        <i class="lni lni-user"></i>
+                                        {{ auth()->user()->name }}
+                                    </a>
+                                </li>
+                                @endhasrole
+                                @else
                                 <li class="nav-item d-block d-md-none">
                                     <a onclick="hubungi_kami('{{ url('login') }}')" href="#"
                                         class="{{ Request::is('login') ? 'active' : '' }}"
@@ -475,7 +520,8 @@
                                         </div>
                                     </div>
                                 </li>
-                                <li class="nav-item d-block d-md-none mt-md-0 mt-3">
+                                @endauth
+                                <li class="nav-item d-block d-md-none mt-md-0 mt-3 mb-md-0 mb-3">
                                     <div class="main-menu-search-mobile">
                                         <!-- navbar search start -->
                                         <form action="{{ url('/search-product') }}">

@@ -212,7 +212,7 @@
                     @if ($educations->count())
                     @foreach ($educations as $item)
                     <div class="col-lg-6 col-md-6 col-sm-12">
-                        <div class="single-blog blog-edukasi border">
+                        <div class="single-blog blog-edukasi" style="border: 1px solid #16A085">
                             <div class="blog-image-edukasi">
                                 <a href="{{ url('/edukasi'.'/'.$item->slug) }}">
                                     @php
@@ -343,7 +343,7 @@
                 </div>
             </div>
             <div class="col-lg-4 col-md-12 col-sm-12">
-                <div class="card" style="margin-top: 50px">
+                <div class="card" style="margin-top: 50px; border: 1px solid #16A085">
                     <div class="card-body my-3">
                         <p class="card-title fw-bold" style="font-size: 15px;">Pencarian</p>
                         <form action="{{ url('edukasi') }}">
@@ -361,7 +361,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="card" style="margin-top: 30px">
+                <div class="card" style="margin-top: 30px; border: 1px solid #16A085">
                     <div class="card-body my-3">
                         <p class="card-title fw-bold" style="font-size: 15px;">Edukasi Lainnya</p>
                         @if ($educationsMore->count() > 0)
@@ -418,7 +418,7 @@
                         @endif
                     </div>
                 </div>
-                <div class="card" style="margin-top: 30px">
+                <div class="card" style="margin-top: 30px; border: 1px solid #16A085">
                     <div class="card-body my-3">
                         <p class="card-title fw-bold" style="font-size: 15px;">Kategori Edukasi</p>
                         <div class="mt-2 row">
