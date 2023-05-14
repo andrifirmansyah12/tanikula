@@ -65,7 +65,7 @@ class CartController extends Controller
                     ->select('carts.*', 'products.name as name')
                     ->where('carts.user_id', Auth::id())
                     ->where('products.stoke', '!=', 0)
-                    ->orderBy('products.updated_at', 'desc')
+                    ->orderBy('products.updated_at', 'asc')
                     ->get();
 
         $cartItemOutOfStock = Cart::with('product')
@@ -73,7 +73,7 @@ class CartController extends Controller
                     ->select('carts.*', 'products.name as name')
                     ->where('carts.user_id', Auth::id())
                     ->where('products.stoke', '=', 0)
-                    ->orderBy('products.updated_at', 'desc')
+                    ->orderBy('products.updated_at', 'asc')
                     ->get();
 
         $product_new = Product::with('photo_product', 'review')
@@ -82,7 +82,7 @@ class CartController extends Controller
                     ->select('products.*', 'product_categories.name as category_name')
                     ->where('product_categories.is_active', '=', 1)
                     ->where('products.is_active', '=', 1)
-                    ->orderBy('products.updated_at', 'desc')
+                    ->orderBy('products.updated_at', 'asc')
                     ->get();
 
         return view('pages.bag.index', compact('cartItem', 'product_new', 'cartItemOutOfStock'));

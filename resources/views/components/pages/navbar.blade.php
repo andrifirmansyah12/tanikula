@@ -231,7 +231,7 @@
                                 ->select('carts.*', 'products.name as name')
                                 ->where('carts.user_id', Auth::id())
                                 ->where('products.stoke', '!=', 0)
-                                ->orderBy('products.updated_at', 'desc')
+                                ->orderBy('products.updated_at', 'asc')
                                 ->get();
 
                                 $cartItemOutOfStock = App\Models\Cart::with('product')
@@ -239,7 +239,7 @@
                                 ->select('carts.*', 'products.name as name')
                                 ->where('carts.user_id', Auth::id())
                                 ->where('products.stoke', '=', 0)
-                                ->orderBy('products.updated_at', 'desc')
+                                ->orderBy('products.updated_at', 'asc')
                                 ->get();
                                 @endphp
                                 <a href="javascript:void(0)" class="main-btn">

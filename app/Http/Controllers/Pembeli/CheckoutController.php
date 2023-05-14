@@ -49,12 +49,46 @@ class CheckoutController extends Controller
             $cartItem = Cart::with('product')->where('user_id', '=', auth()->user()->id)->where(static function ($query) use ($cart_id) {
                 return $query->whereIn('id', $cart_id);
             })->latest()->get();
+
+            $checkProduct = Cart::with('product')->where('user_id', '=', auth()->user()->id)->where('id', $cart_id)->get();
+            foreach ($checkProduct as $key => $unit) {
+                if ($unit->product_qty > $unit->product->stoke) {
+                    $data = array(
+                        "product_qty" => $unit->product->stoke,
+                        "created_at" => Carbon::now(),
+                        "updated_at" => Carbon::now(),
+                    );
+                    Cart::where('id', $cart_id[$key])->update($data);
+                    notify()->warning("Produk " . $unit->product->name . " melebihi stok!", "Gagal", "topRight");
+                    return redirect()->back();
+                } else {
+                    $cartItem = Cart::with('product')->where('user_id', '=', auth()->user()->id)->where(static function ($query) use ($cart_id) {
+                        return $query->whereIn('id', $cart_id);
+                    })->latest()->get();
+                }
+            }
         }
             elseif ($navbar_cart_id)
         {
-            $cartItem = Cart::with('product')->where('user_id', '=', auth()->user()->id)->where(static function ($query) use ($navbar_cart_id) {
-                return $query->whereIn('id', $navbar_cart_id);
-            })->latest()->get();
+            $checkProduct = Cart::with('product')->where('user_id', '=', auth()->user()->id)->where(static function ($query) use ($navbar_cart_id) {
+                                return $query->whereIn('id', $navbar_cart_id);
+                            })->latest()->get();
+            foreach ($checkProduct as $key => $unit) {
+                if ($unit->product_qty > $unit->product->stoke) {
+                    $data = array(
+                        "product_qty" => $unit->product->stoke,
+                        "created_at" => Carbon::now(),
+                        "updated_at" => Carbon::now(),
+                    );
+                    Cart::where('id', $navbar_cart_id[$key])->update($data);
+                    notify()->warning("Produk " . $unit->product->name . " melebihi stok!", "Gagal", "topRight");
+                    return redirect()->back();
+                } else {
+                    $cartItem = Cart::with('product')->where('user_id', '=', auth()->user()->id)->where(static function ($query) use ($navbar_cart_id) {
+                        return $query->whereIn('id', $navbar_cart_id);
+                    })->latest()->get();
+                }
+            }
         } else {
             // $cartItem = Cart::with('product')->where('user_id', '=', auth()->user()->id)->where(static function ($query) use ($cart_id) {
             //     return $query->whereIn('id', $cart_id);
