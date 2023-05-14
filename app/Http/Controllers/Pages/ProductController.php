@@ -73,10 +73,10 @@ class ProductController extends Controller
 				$output .= '
                 <div class="col-lg-3 col-md-6 col-12">';
                     if ($item->stoke === 0) {
-                        $output .= '<div class="single-product bg-light opacity-90" style="height: 26rem; border: 1px solid #16A085;">
+                        $output .= '<div class="single-product bg-light opacity-90" style="height: 22rem; border: 1px solid #16A085;">
                         <div class="product-image bg-light opacity-90">';
                     } else {
-                        $output .= '<div class="single-product" style="height: 26rem; border: 1px solid #16A085;">
+                        $output .= '<div class="single-product" style="height: 22rem; border: 1px solid #16A085;">
                         <div class="product-image">';
                     }
                         $output .= '
@@ -88,15 +88,15 @@ class ProductController extends Controller
                                     foreach ($item->photo_product->take(1) as $photos) {
                                         if ($photos->name) {
                                         $output .= '<img src="../storage/produk/'.$photos->name.'" alt="'. $item->name .'"
-                                            style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
+                                            style="width: 16rem; height: 9rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
                                         } else {
                                         $output .= '<img src="img/no-image.png" alt="'. $item->name .'"
-                                            style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
+                                            style="width: 16rem; height: 9rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
                                         }
                                     }
                                 } else {
                                 $output .= '<img src="img/no-image.png" alt="'. $item->name .'"
-                                    style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
+                                    style="width: 16rem; height: 9rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
                                 }
                             $output .= '</a>
                         </div>';
@@ -120,7 +120,7 @@ class ProductController extends Controller
                             $output .= '<p class="small" style="color:#16A085;">Stok tersisa '. $item->stoke .'</p>
                             <h4 class="title">
                                 <a href="home/'.$item->slug.'"
-                                    style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">'. $item->name .'</a>
+                                    style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; overflow: hidden;">'. $item->name .'</a>
                             </h4>
                             <ul class="review">
                                 <div>';
@@ -212,10 +212,10 @@ class ProductController extends Controller
 				$output .= '
                 <div class="col-lg-3 col-md-6 col-12">';
                     if ($item->stoke === 0) {
-                        $output .= '<div class="single-product bg-light opacity-90" style="height: 26rem; border: 1px solid #16A085;">
+                        $output .= '<div class="single-product bg-light opacity-90" style="height: 22rem; border: 1px solid #16A085;">
                         <div class="product-image bg-light opacity-90">';
                     } else {
-                        $output .= '<div class="single-product" style="height: 26rem; border: 1px solid #16A085;">
+                        $output .= '<div class="single-product" style="height: 22rem; border: 1px solid #16A085;">
                         <div class="product-image">';
                     }
                         $output .= '
@@ -227,15 +227,15 @@ class ProductController extends Controller
                                     foreach ($item->photo_product->take(1) as $photos) {
                                         if ($photos->name) {
                                         $output .= '<img src="../storage/produk/'.$photos->name.'" alt="'. $item->name .'"
-                                            style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
+                                            style="width: 16rem; height: 9rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
                                         } else {
                                         $output .= '<img src="img/no-image.png" alt="'. $item->name .'"
-                                            style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
+                                            style="width: 16rem; height: 9rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
                                         }
                                     }
                                 } else {
                                 $output .= '<img src="img/no-image.png" alt="'. $item->name .'"
-                                    style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
+                                    style="width: 16rem; height: 9rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
                                 }
                             $output .= '</a>
                         </div>';
@@ -259,7 +259,7 @@ class ProductController extends Controller
                             $output .= '<p class="small" style="color:#16A085;">Stok tersisa '. $item->stoke .'</p>
                             <h4 class="title">
                                 <a href="home/'.$item->slug.'"
-                                    style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">'. $item->name .'</a>
+                                    style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; overflow: hidden;">'. $item->name .'</a>
                             </h4>
                             <ul class="review">
                                 <div>';
@@ -514,10 +514,10 @@ class ProductController extends Controller
 				$output .= '
                 <div class="col-lg-3 col-md-6 col-12">';
                     if ($item->stoke === 0) {
-                        $output .= '<div class="single-product bg-light opacity-90" style="height: 26rem; border: 1px solid #16A085;">
+                        $output .= '<div class="single-product bg-light opacity-90" style="height: 22rem; border: 1px solid #16A085;">
                         <div class="product-image bg-light opacity-90">';
                     } else {
-                        $output .= '<div class="single-product" style="height: 26rem; border: 1px solid #16A085;">
+                        $output .= '<div class="single-product" style="height: 22rem; border: 1px solid #16A085;">
                         <div class="product-image">';
                     }
                         $output .= '
@@ -529,15 +529,15 @@ class ProductController extends Controller
                                     foreach ($item->photo_product->take(1) as $photos) {
                                         if ($photos->name) {
                                         $output .= '<img src="../storage/produk/'.$photos->name.'" alt="'. $item->name .'"
-                                            style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
+                                            style="width: 16rem; height: 9rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
                                         } else {
                                         $output .= '<img src="img/no-image.png" alt="'. $item->name .'"
-                                            style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
+                                            style="width: 16rem; height: 9rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
                                         }
                                     }
                                 } else {
                                 $output .= '<img src="img/no-image.png" alt="'. $item->name .'"
-                                    style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
+                                    style="width: 16rem; height: 9rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
                                 }
                             $output .= '</a>
                         </div>';
@@ -561,7 +561,7 @@ class ProductController extends Controller
                             $output .= '<p class="small" style="color:#16A085;">Stok tersisa '. $item->stoke .'</p>
                             <h4 class="title">
                                 <a href="home/'.$item->slug.'"
-                                    style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">'. $item->name .'</a>
+                                    style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; overflow: hidden;">'. $item->name .'</a>
                             </h4>
                             <ul class="review">
                                 <div>';
@@ -692,10 +692,10 @@ class ProductController extends Controller
 				$output .= '
                 <div class="col-lg-3 col-md-6 col-12">';
                     if ($item->stoke === 0) {
-                        $output .= '<div class="single-product bg-light opacity-90" style="height: 26rem; border: 1px solid #16A085;">
+                        $output .= '<div class="single-product bg-light opacity-90" style="height: 22rem; border: 1px solid #16A085;">
                         <div class="product-image bg-light opacity-90">';
                     } else {
-                        $output .= '<div class="single-product" style="height: 26rem; border: 1px solid #16A085;">
+                        $output .= '<div class="single-product" style="height: 22rem; border: 1px solid #16A085;">
                         <div class="product-image">';
                     }
                         $output .= '
@@ -707,15 +707,15 @@ class ProductController extends Controller
                                     foreach ($item->photo_product->take(1) as $photos) {
                                         if ($photos->name) {
                                         $output .= '<img src="../storage/produk/'.$photos->name.'" alt="'. $item->name .'"
-                                            style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
+                                            style="width: 16rem; height: 9rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
                                         } else {
                                         $output .= '<img src="img/no-image.png" alt="'. $item->name .'"
-                                            style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
+                                            style="width: 16rem; height: 9rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
                                         }
                                     }
                                 } else {
                                 $output .= '<img src="img/no-image.png" alt="'. $item->name .'"
-                                    style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
+                                    style="width: 16rem; height: 9rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
                                 }
                             $output .= '</a>
                         </div>';
@@ -739,7 +739,7 @@ class ProductController extends Controller
                             $output .= '<p class="small" style="color:#16A085;">Stok tersisa '. $item->stoke .'</p>
                             <h4 class="title">
                                 <a href="home/'.$item->slug.'"
-                                    style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">'. $item->name .'</a>
+                                    style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; overflow: hidden;">'. $item->name .'</a>
                             </h4>
                             <ul class="review">
                                 <div>';
@@ -850,10 +850,10 @@ class ProductController extends Controller
 				$output .= '
                 <div class="col-lg-3 col-md-6 col-12">';
                     if ($item->stoke === 0) {
-                        $output .= '<div class="single-product bg-light opacity-90" style="height: 26rem; border: 1px solid #16A085;">
+                        $output .= '<div class="single-product bg-light opacity-90" style="height: 22rem; border: 1px solid #16A085;">
                         <div class="product-image bg-light opacity-90">';
                     } else {
-                        $output .= '<div class="single-product" style="height: 26rem; border: 1px solid #16A085;">
+                        $output .= '<div class="single-product" style="height: 22rem; border: 1px solid #16A085;">
                         <div class="product-image">';
                     }
                         $output .= '
@@ -865,15 +865,15 @@ class ProductController extends Controller
                                     foreach ($item->photo_product->take(1) as $photos) {
                                         if ($photos->name) {
                                         $output .= '<img src="../storage/produk/'.$photos->name.'" alt="'. $item->name .'"
-                                            style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
+                                            style="width: 16rem; height: 9rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
                                         } else {
                                         $output .= '<img src="../img/no-image.png" alt="'. $item->name .'"
-                                            style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
+                                            style="width: 16rem; height: 9rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
                                         }
                                     }
                                 } else {
                                 $output .= '<img src="../img/no-image.png" alt="'. $item->name .'"
-                                    style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
+                                    style="width: 16rem; height: 9rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
                                 }
                             $output .= '</a>
                         </div>';
@@ -897,7 +897,7 @@ class ProductController extends Controller
                             $output .= '<p class="small" style="color:#16A085;">Stok tersisa '. $item->stoke .'</p>
                             <h4 class="title">
                                 <a href="../home/'.$item->slug.'"
-                                    style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">'. $item->name .'</a>
+                                    style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; overflow: hidden;">'. $item->name .'</a>
                             </h4>
                             <ul class="review">
                                 <div>';
@@ -1031,10 +1031,10 @@ class ProductController extends Controller
 				$output .= '
                 <div class="col-lg-3 col-md-6 col-12">';
                     if ($item->stoke === 0) {
-                        $output .= '<div class="single-product bg-light opacity-90" style="height: 26rem; border: 1px solid #16A085;">
+                        $output .= '<div class="single-product bg-light opacity-90" style="height: 22rem; border: 1px solid #16A085;">
                         <div class="product-image bg-light opacity-90">';
                     } else {
-                        $output .= '<div class="single-product" style="height: 26rem; border: 1px solid #16A085;">
+                        $output .= '<div class="single-product" style="height: 22rem; border: 1px solid #16A085;">
                         <div class="product-image">';
                     }
                         $output .= '
@@ -1046,15 +1046,15 @@ class ProductController extends Controller
                                     foreach ($item->photo_product->take(1) as $photos) {
                                         if ($photos->name) {
                                         $output .= '<img src="../storage/produk/'.$photos->name.'" alt="'. $item->name .'"
-                                            style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
+                                            style="width: 16rem; height: 9rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
                                         } else {
                                         $output .= '<img src="../img/no-image.png" alt="'. $item->name .'"
-                                            style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
+                                            style="width: 16rem; height: 9rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
                                         }
                                     }
                                 } else {
                                 $output .= '<img src="../img/no-image.png" alt="'. $item->name .'"
-                                    style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
+                                    style="width: 16rem; height: 9rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
                                 }
                             $output .= '</a>
                         </div>';
@@ -1078,7 +1078,7 @@ class ProductController extends Controller
                             $output .= '<p class="small" style="color:#16A085;">Stok tersisa '. $item->stoke .'</p>
                             <h4 class="title">
                                 <a href="../home/'.$item->slug.'"
-                                    style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">'. $item->name .'</a>
+                                    style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; overflow: hidden;">'. $item->name .'</a>
                             </h4>
                             <ul class="review">
                                 <div>';
@@ -1626,10 +1626,10 @@ class ProductController extends Controller
 				$output .= '
                 <div class="col-lg-3 col-md-6 col-12">';
                     if ($item->stoke === 0) {
-                        $output .= '<div class="single-product bg-light opacity-90" style="height: 26rem; border: 1px solid #16A085;">
+                        $output .= '<div class="single-product bg-light opacity-90" style="height: 22rem; border: 1px solid #16A085;">
                         <div class="product-image bg-light opacity-90">';
                     } else {
-                        $output .= '<div class="single-product" style="height: 26rem; border: 1px solid #16A085;">
+                        $output .= '<div class="single-product" style="height: 22rem; border: 1px solid #16A085;">
                         <div class="product-image">';
                     }
                         $output .= '
@@ -1641,15 +1641,15 @@ class ProductController extends Controller
                                     foreach ($item->photo_product->take(1) as $photos) {
                                         if ($photos->name) {
                                         $output .= '<img src="../storage/produk/'.$photos->name.'" alt="'. $item->name .'"
-                                            style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
+                                            style="width: 16rem; height: 9rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
                                         } else {
                                         $output .= '<img src="img/no-image.png" alt="'. $item->name .'"
-                                            style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
+                                            style="width: 16rem; height: 9rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
                                         }
                                     }
                                 } else {
                                 $output .= '<img src="../img/no-image.png" alt="'. $item->name .'"
-                                    style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
+                                    style="width: 16rem; height: 9rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">';
                                 }
                             $output .= '</a>
                         </div>';
@@ -1673,7 +1673,7 @@ class ProductController extends Controller
                             $output .= '<p class="small" style="color:#16A085;">Stok tersisa '. $item->stoke .'</p>
                             <h4 class="title">
                                 <a href="../home/'.$item->slug.'"
-                                    style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">'. $item->name .'</a>
+                                    style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; overflow: hidden;">'. $item->name .'</a>
                             </h4>
                             <ul class="review">
                                 <div>';

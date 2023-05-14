@@ -209,7 +209,7 @@
                 <!-- Start Single Product -->
                 <div class="mx-md-2 mx-3 single-product mt-0 shadow-none {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}"
                     style="
-                            height: 26rem">
+                            height: 22rem">
                     <div class="product-image {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}">
                         <a href=" {{ url('home/'.$item->slug) }}">
                             @if ($item->stoke === 0)
@@ -222,15 +222,15 @@
                             @foreach ($item->photo_product->take(1) as $photos)
                             @if ($photos->name)
                             <img src="{{ asset('../storage/produk/'.$photos->name) }}" alt="{{ $item->name }}"
-                                style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                style="width: 16rem; height: 9rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                             @else
                             <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->name }}"
-                                style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                style="width: 16rem; height: 9rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                             @endif
                             @endforeach
                             @else
                             <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->name }}"
-                                style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                style="width: 16rem; height: 9rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                             @endif
                         </a>
                     </div>
@@ -250,7 +250,7 @@
                         <p class="small" style="color:#16A085;">Stok tersisa {{ $item->stoke }}</p>
                         <h4 class="title text-capitalize">
                             <a href="{{ url('home/'.$item->slug) }}"
-                                style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">{{ $item->name }}</a>
+                                style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; overflow: hidden;">{{ $item->name }}</a>
                         </h4>
                         <ul class="review">
                             <div>
@@ -290,7 +290,7 @@
                 @endforeach
                 <div class="mx-md-2 mx-3 single-product mt-0 shadow-none bg-warning"
                     style="
-                            height: 26rem">
+                            height: 22rem">
                     <div class="text-center" style="padding-top: 70%">
                         <h5 class="fw-bold text-white"><a href="{{ url('new-product') }}">Lainnya...</a></h5>
                     </div>
@@ -334,7 +334,7 @@
                 <!-- Start Single Product -->
                 <div class="mx-md-2 mx-3 single-product mt-0 shadow-none {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}"
                     style="
-                            height: 26rem; border: 1px solid #16A085;">
+                            height: 22rem; border: 1px solid #16A085;">
                     <div class="product-image {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}">
                         <a href=" {{ url('home/'.$item->slug) }}">
                             @if ($item->stoke === 0)
@@ -347,15 +347,15 @@
                             @foreach ($item->photo_product->take(1) as $photos)
                             @if ($photos->name)
                             <img src="{{ asset('../storage/produk/'.$photos->name) }}" alt="{{ $item->name }}"
-                                style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                style="width: 16rem; height: 9rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                             @else
                             <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->name }}"
-                                style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                style="width: 16rem; height: 9rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                             @endif
                             @endforeach
                             @else
                             <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->name }}"
-                                style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                style="width: 16rem; height: 9rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                             @endif
                         </a>
                     </div>
@@ -375,7 +375,7 @@
                         <p class="small" style="color:#16A085;">Stok tersisa {{ $item->stoke }}</p>
                         <h4 class="title text-capitalize">
                             <a href="{{ url('home/'.$item->slug) }}"
-                                style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">{{ $item->name }}</a>
+                                style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; overflow: hidden;">{{ $item->name }}</a>
                         </h4>
                         <ul class="review">
                             <div>
@@ -415,7 +415,7 @@
                 @endforeach
                 <div class="mx-md-2 mx-3 single-product mt-0 shadow-none bg-warning"
                     style="
-                            height: 26rem; border: 1px solid #16A085;">
+                            height: 22rem; border: 1px solid #16A085;">
                     <div class="text-center" style="padding-top: 70%">
                         <h5 class="fw-bold text-white"><a href="{{ url('based-on-your-search') }}">Lainnya...</a></h5>
                     </div>
