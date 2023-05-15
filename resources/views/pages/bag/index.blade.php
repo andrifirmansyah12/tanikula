@@ -486,20 +486,19 @@
             URLhashListener:true,
             autoplayHoverPause:true,
             startPosition: 'URLHash',
-            stagePadding: 30,
             responsive: {
                 0: {
                     items: 1,
                 },
                 480: {
-                    items: 1,
-                },
-                650: {
                     items: 2,
                 },
-                1000: {
+                600: {
                     items: 3,
-                }
+                },
+                1000: {
+                    items: 4,
+                },
             }
         });
     });
