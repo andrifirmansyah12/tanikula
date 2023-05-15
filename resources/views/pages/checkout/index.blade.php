@@ -790,6 +790,15 @@
         integrity="sha256-siqh9650JHbYFKyZeTEAhq+3jvkFCG8Iz+MHdr9eKrw=" crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="text/javascript">
+        window.onload = function() {
+            window.setTimeout(fadeout, 500);
+        }
+
+        function fadeout() {
+            document.querySelector('.body-spinner').style.opacity = '0';
+            document.querySelector('.body-spinner').style.display = 'none';
+        }
+
         function onChangeSelect(url, id, name) {
             // send ajax request to get the cities of the selected province and append to the select tag
             $.ajax({

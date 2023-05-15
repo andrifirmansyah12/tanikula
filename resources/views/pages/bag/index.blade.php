@@ -61,6 +61,7 @@
         background: #fff;
         position: fixed;
         bottom: 0px;
+        right: 0px;
         z-index: 3;
         cursor: pointer;
         -webkit-transition: all .3s ease-out 0s;
@@ -71,29 +72,14 @@
 @endsection
 
 @section('content')
-<div class="before-body-spinner" id="spinner_login">
-    <div class="content-spinner">
-        <svg class="pl" width="240" height="240" viewBox="0 0 240 240">
-            <circle class="pl__ring pl__ring--a" cx="120" cy="120" r="105" fill="none" stroke="#000"
-                stroke-width="20" stroke-dasharray="0 660" stroke-dashoffset="-330" stroke-linecap="round"></circle>
-            <circle class="pl__ring pl__ring--b" cx="120" cy="120" r="35" fill="none" stroke="#000"
-                stroke-width="20" stroke-dasharray="0 220" stroke-dashoffset="-110" stroke-linecap="round"></circle>
-            <circle class="pl__ring pl__ring--c" cx="85" cy="120" r="70" fill="none"
-                stroke="#000" stroke-width="20" stroke-dasharray="0 440" stroke-linecap="round"></circle>
-            <circle class="pl__ring pl__ring--d" cx="155" cy="120" r="70" fill="none"
-                stroke="#000" stroke-width="20" stroke-dasharray="0 440" stroke-linecap="round"></circle>
-        </svg>
-    </div>
-</div>
-
 <!-- Start Item Details -->
 <section class="item-details section bg-white overflow-hidden">
     <div class="container">
         <div class="bg-white">
             <form action="{{ route('checkout.pembeli') }}" method="post" enctype="multipart/form-data">
                 @csrf
-                <div class="d-flex mb-5">
-                    <div class="mt-md-4 rounded col-12 col-xl-8 mb-3 mb-xl-0" style="border: 1px solid #16A085;">
+                <div class="d-lg-flex mb-5 gap-lg-2 gap-xl-0">
+                    <div class="mt-md-4 rounded col-12 col-lg-8 mb-3 mb-xl-0" style="border: 1px solid #16A085;">
                         <div class="p-5 CartItems">
                             <h2 class="mb-3 fs-3 mb-md-4">Keranjang</h2>
                             @php
@@ -337,7 +323,7 @@
                     </div>
 
                     {{-- =============== WEB ==================== --}}
-                    <div class="col-12 col-xl-4 d-none d-sm-block">
+                    <div class="mt-lg-4 mt-xl-0 col-12 col-lg-4 d-none d-sm-block">
                         <div class="m-0 m-xl-4 p-4 rounded" style="border: 1px solid #16A085;">
                             <h3 class="mb-3 fs-4">Ringkasan Belanja</h3>
                             <div
@@ -470,11 +456,29 @@
         </div>
     </div>
 </section>
+
+<!-- ========================= scroll-top ========================= -->
+<a href="#" class="scroll-top-cart border border-white">
+    <i class="lni lni-chevron-up"></i>
+</a>
 @endsection
 
 @section('script')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script type="text/javascript">
+    window.onscroll = function () {
+        var header_navbar = document.querySelector(".navbar-area");
+        var sticky = header_navbar.offsetTop;
+
+        // show or hide the back-top-top button
+        var backToTo = document.querySelector(".scroll-top-cart");
+        if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+            backToTo.style.display = "flex";
+        } else {
+            backToTo.style.display = "none";
+        }
+    };
+
     $( function() {
         $('.owl-carousel').owlCarousel({
             loop: false,
@@ -488,13 +492,13 @@
                     items: 1,
                 },
                 480: {
+                    items: 1,
+                },
+                650: {
                     items: 2,
                 },
-                600: {
-                    items: 3,
-                },
                 1000: {
-                    items: 4,
+                    items: 3,
                 }
             }
         });

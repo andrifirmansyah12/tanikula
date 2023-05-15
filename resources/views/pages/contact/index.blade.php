@@ -6,14 +6,270 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         /* CSS */
+        /* ================================================== Loading Spinner ================================= */
+
+        .body-spinner {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 999999999;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+
+        .content-spinner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+
+        .pl {
+            width: 6em;
+            height: 6em;
+        }
+
+        .pl__ring {
+            animation: ringA 2s linear infinite;
+        }
+
+        .pl__ring--a {
+            stroke: #16A085;
+        }
+
+        .pl__ring--b {
+            animation-name: ringB;
+            stroke: #ffff;
+        }
+
+        .pl__ring--c {
+            animation-name: ringC;
+            stroke: #ffff;
+        }
+
+        .pl__ring--d {
+            animation-name: ringD;
+            stroke: #16A085;
+        }
+
+        /* Animations */
+        @keyframes ringA {
+
+            from,
+            4% {
+                stroke-dasharray: 0 660;
+                stroke-width: 20;
+                stroke-dashoffset: -330;
+            }
+
+            12% {
+                stroke-dasharray: 60 600;
+                stroke-width: 30;
+                stroke-dashoffset: -335;
+            }
+
+            32% {
+                stroke-dasharray: 60 600;
+                stroke-width: 30;
+                stroke-dashoffset: -595;
+            }
+
+            40%,
+            54% {
+                stroke-dasharray: 0 660;
+                stroke-width: 20;
+                stroke-dashoffset: -660;
+            }
+
+            62% {
+                stroke-dasharray: 60 600;
+                stroke-width: 30;
+                stroke-dashoffset: -665;
+            }
+
+            82% {
+                stroke-dasharray: 60 600;
+                stroke-width: 30;
+                stroke-dashoffset: -925;
+            }
+
+            90%,
+            to {
+                stroke-dasharray: 0 660;
+                stroke-width: 20;
+                stroke-dashoffset: -990;
+            }
+        }
+
+        @keyframes ringB {
+
+            from,
+            12% {
+                stroke-dasharray: 0 220;
+                stroke-width: 20;
+                stroke-dashoffset: -110;
+            }
+
+            20% {
+                stroke-dasharray: 20 200;
+                stroke-width: 30;
+                stroke-dashoffset: -115;
+            }
+
+            40% {
+                stroke-dasharray: 20 200;
+                stroke-width: 30;
+                stroke-dashoffset: -195;
+            }
+
+            48%,
+            62% {
+                stroke-dasharray: 0 220;
+                stroke-width: 20;
+                stroke-dashoffset: -220;
+            }
+
+            70% {
+                stroke-dasharray: 20 200;
+                stroke-width: 30;
+                stroke-dashoffset: -225;
+            }
+
+            90% {
+                stroke-dasharray: 20 200;
+                stroke-width: 30;
+                stroke-dashoffset: -305;
+            }
+
+            98%,
+            to {
+                stroke-dasharray: 0 220;
+                stroke-width: 20;
+                stroke-dashoffset: -330;
+            }
+        }
+
+        @keyframes ringC {
+            from {
+                stroke-dasharray: 0 440;
+                stroke-width: 20;
+                stroke-dashoffset: 0;
+            }
+
+            8% {
+                stroke-dasharray: 40 400;
+                stroke-width: 30;
+                stroke-dashoffset: -5;
+            }
+
+            28% {
+                stroke-dasharray: 40 400;
+                stroke-width: 30;
+                stroke-dashoffset: -175;
+            }
+
+            36%,
+            58% {
+                stroke-dasharray: 0 440;
+                stroke-width: 20;
+                stroke-dashoffset: -220;
+            }
+
+            66% {
+                stroke-dasharray: 40 400;
+                stroke-width: 30;
+                stroke-dashoffset: -225;
+            }
+
+            86% {
+                stroke-dasharray: 40 400;
+                stroke-width: 30;
+                stroke-dashoffset: -395;
+            }
+
+            94%,
+            to {
+                stroke-dasharray: 0 440;
+                stroke-width: 20;
+                stroke-dashoffset: -440;
+            }
+        }
+
+        @keyframes ringD {
+
+            from,
+            8% {
+                stroke-dasharray: 0 440;
+                stroke-width: 20;
+                stroke-dashoffset: 0;
+            }
+
+            16% {
+                stroke-dasharray: 40 400;
+                stroke-width: 30;
+                stroke-dashoffset: -5;
+            }
+
+            36% {
+                stroke-dasharray: 40 400;
+                stroke-width: 30;
+                stroke-dashoffset: -175;
+            }
+
+            44%,
+            50% {
+                stroke-dasharray: 0 440;
+                stroke-width: 20;
+                stroke-dashoffset: -220;
+            }
+
+            58% {
+                stroke-dasharray: 40 400;
+                stroke-width: 30;
+                stroke-dashoffset: -225;
+            }
+
+            78% {
+                stroke-dasharray: 40 400;
+                stroke-width: 30;
+                stroke-dashoffset: -395;
+            }
+
+            86%,
+            to {
+                stroke-dasharray: 0 440;
+                stroke-width: 20;
+                stroke-dashoffset: -440;
+            }
+        }
     </style>
 @endsection
 
 @section('content')
-<section class="item-details section bg-white overflow-hidden mt-5">
+{{-- Load Spinner --}}
+<div class="body-spinner" id="spinner_login">
+    <div class="content-spinner">
+        <svg class="pl" width="240" height="240" viewBox="0 0 240 240">
+            <circle class="pl__ring pl__ring--a" cx="120" cy="120" r="105" fill="none" stroke="#000"
+                stroke-width="20" stroke-dasharray="0 660" stroke-dashoffset="-330" stroke-linecap="round"></circle>
+            <circle class="pl__ring pl__ring--b" cx="120" cy="120" r="35" fill="none" stroke="#000"
+                stroke-width="20" stroke-dasharray="0 220" stroke-dashoffset="-110" stroke-linecap="round"></circle>
+            <circle class="pl__ring pl__ring--c" cx="85" cy="120" r="70" fill="none"
+                stroke="#000" stroke-width="20" stroke-dasharray="0 440" stroke-linecap="round"></circle>
+            <circle class="pl__ring pl__ring--d" cx="155" cy="120" r="70" fill="none"
+                stroke="#000" stroke-width="20" stroke-dasharray="0 440" stroke-linecap="round"></circle>
+        </svg>
+    </div>
+</div>
+
+<section class="item-details section bg-white overflow-hidden mt-md-5 mt-0">
     <div class="container">
-        <div class="row justify-content-center rounded" style="border: 1px solid #16A085;">
-            <div class="col-md-12 p-5">
+        <div class="row justify-content-center rounded mx-1 mx-md-0" style="border: 1px solid #16A085;">
+            <div class="col-md-12 p-md-5 p-2">
                 <div class="wrapper">
                     <div class="row no-gutters">
                         <div class="col-12">
@@ -192,6 +448,7 @@
             $("#contactForm").submit(function(e) {
                 e.preventDefault();
                 const fd = new FormData(this);
+                document.querySelector('.body-spinner').style.display = 'block';
                 $("#send_contact_us").text('Silahkan Tunggu..');
                 $("#send_contact_us").prop('disabled', true);
                 $.ajax({
@@ -211,6 +468,7 @@
                         showError('message', response.messages.message);
                         showError('phone_number', response.messages.phone_number);
                         showError('screenshot', response.messages.screenshot);
+                        document.querySelector('.body-spinner').style.display = 'none';
                         $("#send_contact_us").val('Kirim Pesan');
                         $("#send_contact_us").prop('disabled', false);
                     }
@@ -221,6 +479,7 @@
                             message: response.messages,
                             position: 'topRight'
                         });
+                        document.querySelector('.body-spinner').style.display = 'none';
                         $("#send_contact_us").val('Kirim Pesan');
                         $("#send_contact_us").prop('disabled', false);
                         window.setTimeout(function(){location.reload()},1000);

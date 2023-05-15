@@ -307,8 +307,8 @@
         <div class="row">
             <div class="col-12">
                 <div class="d-flex align-items-center section-title">
-                    <h2 class="col-6 col-sm-5">Berdasarkan Pencarianmu</h2>
-                    <a class="col-6 col-sm-0" href="{{ url('based-on-your-search') }}">Lihat semua</a>
+                    <h2 class="col-6 col-sm-5" style="color: #16A085">Berdasarkan Pencarianmu</h2>
+                    <a class="col-6 col-sm-0" style="color: black" href="{{ url('based-on-your-search') }}">Lihat semua</a>
                 </div>
             </div>
         </div>
