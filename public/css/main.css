@@ -1162,6 +1162,77 @@ ol {
 }
 
 /* One Click Scrool Top Button*/
+.scroll-top-cart {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    background: #16A085;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    font-size: 16px;
+    color: #fff !important;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 9;
+    cursor: pointer;
+    -webkit-transition: all .3s ease-out 0s;
+    transition: all .3s ease-out 0s;
+    border-radius: 4px;
+}
+
+.scroll-top-cart:hover {
+    -webkit-box-shadow: 0 1rem 3rem rgba(35, 38, 45, 0.15) !important;
+    box-shadow: 0 1rem 3rem rgba(35, 38, 45, 0.15) !important;
+    -webkit-transform: translate3d(0, -5px, 0);
+    transform: translate3d(0, -5px, 0);
+    background-color: #081828;
+}
+
+@media only screen and (max-width: 600px) {
+    .scroll-top-cart {
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        background: #16A085;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        font-size: 16px;
+        color: #fff !important;
+        position: fixed;
+        bottom: 90px;
+        right: 30px;
+        z-index: 9;
+        cursor: pointer;
+        -webkit-transition: all .3s ease-out 0s;
+        transition: all .3s ease-out 0s;
+        border-radius: 4px;
+    }
+
+    .scroll-top-cart:hover {
+        -webkit-box-shadow: 0 1rem 3rem rgba(35, 38, 45, 0.15) !important;
+        box-shadow: 0 1rem 3rem rgba(35, 38, 45, 0.15) !important;
+        -webkit-transform: translate3d(0, -5px, 0);
+        transform: translate3d(0, -5px, 0);
+        background-color: #081828;
+    }
+  }
+
+/* One Click Scrool Top Button*/
 .scroll-top {
     width: 40px;
     height: 40px;

@@ -287,16 +287,6 @@
     @endif
 
     @include('components.pages.footerJS')
-    <script>
-        window.onload = function() {
-            window.setTimeout(fadeout, 500);
-        }
-
-        function fadeout() {
-            document.querySelector('.body-spinner').style.opacity = '0';
-            document.querySelector('.body-spinner').style.display = 'none';
-        }
-    </script>
 </body>
 
 </html>
