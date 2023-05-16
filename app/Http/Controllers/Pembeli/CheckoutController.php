@@ -20,10 +20,6 @@ class CheckoutController extends Controller
 {
     public function index(Request $request)
     {
-        //Variabel key dan url API raja ongkir
-        $key = 'f5ed16cb52b0f2936e98e7e22a4a02f5'; //Buat akun atau pakai API akun Tahu Coding
-        $cost_url = 'https://api.rajaongkir.com/starter/cost';
-
         $address = Address::with('user')
             ->join('users', 'addresses.user_id', '=', 'users.id')
             ->select('addresses.*', 'users.email as email')
@@ -32,13 +28,6 @@ class CheckoutController extends Controller
             ->orderBy('addresses.updated_at', 'desc')
             ->take(1)
             ->get();
-        // $old_cartItem = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
-        // foreach ($old_cartItem as $item) {
-        //     if (!Product::where('id', $item->product_id)->where('stoke', '>=', $item->product_qty)->exists()) {
-        //         $removeItem = Cart::where('user_id', Auth::id())->where('product_id', $item->product_id)->first();
-        //         $removeItem->delete();
-        //     }
-        // }
 
         $cart_id =  $request->input('cart_id', []);
         $navbar_cart_id =  $request->input('navbar_cart_id', []);
@@ -50,8 +39,7 @@ class CheckoutController extends Controller
                 return $query->whereIn('id', $cart_id);
             })->latest()->get();
 
-            $checkProduct = Cart::with('product')->where('user_id', '=', auth()->user()->id)->where('id', $cart_id)->get();
-            foreach ($checkProduct as $key => $unit) {
+            foreach ($cartItem as $key => $unit) {
                 if ($unit->product_qty > $unit->product->stoke) {
                     $data = array(
                         "product_qty" => $unit->product->stoke,
@@ -61,19 +49,16 @@ class CheckoutController extends Controller
                     Cart::where('id', $cart_id[$key])->update($data);
                     notify()->warning("Produk " . $unit->product->name . " melebihi stok!", "Gagal", "topRight");
                     return redirect()->back();
-                } else {
-                    $cartItem = Cart::with('product')->where('user_id', '=', auth()->user()->id)->where(static function ($query) use ($cart_id) {
-                        return $query->whereIn('id', $cart_id);
-                    })->latest()->get();
                 }
             }
         }
             elseif ($navbar_cart_id)
         {
-            $checkProduct = Cart::with('product')->where('user_id', '=', auth()->user()->id)->where(static function ($query) use ($navbar_cart_id) {
+            $cartItem = Cart::with('product')->where('user_id', '=', auth()->user()->id)->where(static function ($query) use ($navbar_cart_id) {
                                 return $query->whereIn('id', $navbar_cart_id);
                             })->latest()->get();
-            foreach ($checkProduct as $key => $unit) {
+
+            foreach ($cartItem as $key => $unit) {
                 if ($unit->product_qty > $unit->product->stoke) {
                     $data = array(
                         "product_qty" => $unit->product->stoke,
@@ -83,21 +68,16 @@ class CheckoutController extends Controller
                     Cart::where('id', $navbar_cart_id[$key])->update($data);
                     notify()->warning("Produk " . $unit->product->name . " melebihi stok!", "Gagal", "topRight");
                     return redirect()->back();
-                } else {
-                    $cartItem = Cart::with('product')->where('user_id', '=', auth()->user()->id)->where(static function ($query) use ($navbar_cart_id) {
-                        return $query->whereIn('id', $navbar_cart_id);
-                    })->latest()->get();
                 }
             }
         } else {
-            // $cartItem = Cart::with('product')->where('user_id', '=', auth()->user()->id)->where(static function ($query) use ($cart_id) {
-            //     return $query->whereIn('id', $cart_id);
-            // })->latest()->get();
             notify()->warning("Harap pilih produk!", "Peringatan", "topRight");
             return redirect()->back();
         }
 
-        // $cartItem = Cart::with('product')->where('user_id', Auth::id())->latest()->get();
+        //Variabel key dan url API raja ongkir
+        $key = env('RAJAONGKIR_API_KEY'); //Buat akun atau pakai API akun Tahu Coding
+        $cost_url = 'https://api.rajaongkir.com/starter/cost';
 
         //Variabel yang valuenya didapat dari request()
         if($request->has('service'))
@@ -133,7 +113,6 @@ class CheckoutController extends Controller
             'result_cost',
             'data_service'
         ));
-
     }
 
     //function untuk calculate cost
@@ -155,7 +134,7 @@ class CheckoutController extends Controller
     public function check_ongkir(Request $request)
     {
         // //Variabel key dan url API raja ongkir
-        $key = 'f5ed16cb52b0f2936e98e7e22a4a02f5'; //Buat akun atau pakai API akun Tahu Coding
+        $key = env('RAJAONGKIR_API_KEY'); //Buat akun atau pakai API akun Tahu Coding
         $cost_url = 'https://api.rajaongkir.com/starter/cost';
 
             if($request->courier)

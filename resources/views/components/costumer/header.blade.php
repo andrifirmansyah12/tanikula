@@ -8,7 +8,7 @@
     {{-- <link rel="apple-touch-icon" sizes="76x76" href="{{asset('../costumer/assets/img/apple-icon.png')}}"> --}}
     {{-- <link rel="icon" type="image/png" href="{{asset('../costumer/assets/img/favicon.png')}}"> --}}
     <title>
-        TaniKula | @yield('title')
+        Tanikula | @yield('title')
     </title>
 
     @yield('style')
