@@ -526,6 +526,44 @@
                 return skeletonCategoryProductHTML;
             }
 
+            // ================================================== Produk ====================================
+            var displayProduct = 8;
+            $('#homeNewProduct').html(createSkeleton(displayProduct));
+            $('#homeSearchProduct').html(createSkeleton(displayProduct));
+
+            // jalankan fungsi load content setelah 2 detik
+            function createSkeleton(limit) {
+                var skeletonHTML = '';
+                for (var i = 0; i < limit; i++) {
+                    // skeletonHTML += '<div class="row">';
+                    skeletonHTML += '<div class="col-lg-3 mt-5 col-md-6 col-12">';
+                    skeletonHTML += '<div class="ph-item rounded">';
+                    skeletonHTML += '<div class="ph-col-12">';
+                    skeletonHTML += '<div class="ph-picture rounded"></div>';
+                    skeletonHTML += '</div>';
+
+                    skeletonHTML += '<div>';
+                    skeletonHTML += '<div class="ph-row">';
+                    skeletonHTML += '<div class="ph-col-12 rounded"></div>';
+                    skeletonHTML += '<div class="ph-col-12 rounded"></div>';
+                    skeletonHTML += '<div class="ph-col-12 rounded"></div>';
+                    skeletonHTML += '<div class="ph-col-12 empty"></div>';
+                    skeletonHTML += '<div class="ph-col-12 rounded big"></div>';
+                    skeletonHTML += '</div>';
+                    skeletonHTML += '</div>';
+
+                    skeletonHTML += '<div>';
+                    skeletonHTML += '<div class="ph-row">';
+                    skeletonHTML += '<div class="ph-col-12 big rounded"></div>';
+                    skeletonHTML += '</div>';
+                    skeletonHTML += '</div>';
+                    skeletonHTML += '</div>';
+                    skeletonHTML += '</div>';
+                    // skeletonHTML += '</div>';
+                }
+                return skeletonHTML;
+            }
+
             setTimeout(function() {
                 $('#kategori_produk').html(`
                 @if ($category_product->count())
@@ -575,47 +613,6 @@
                     </div>
                 @endif
                 `);
-            }, 2000);
-
-            // ================================================== Produk ====================================
-            var displayProduct = 8;
-            $('#homeNewProduct').html(createSkeleton(displayProduct));
-            $('#homeSearchProduct').html(createSkeleton(displayProduct));
-
-            // jalankan fungsi load content setelah 2 detik
-            function createSkeleton(limit) {
-                var skeletonHTML = '';
-                for (var i = 0; i < limit; i++) {
-                    // skeletonHTML += '<div class="row">';
-                    skeletonHTML += '<div class="col-lg-3 mt-5 col-md-6 col-12">';
-                    skeletonHTML += '<div class="ph-item rounded">';
-                    skeletonHTML += '<div class="ph-col-12">';
-                    skeletonHTML += '<div class="ph-picture rounded"></div>';
-                    skeletonHTML += '</div>';
-
-                    skeletonHTML += '<div>';
-                    skeletonHTML += '<div class="ph-row">';
-                    skeletonHTML += '<div class="ph-col-12 rounded"></div>';
-                    skeletonHTML += '<div class="ph-col-12 rounded"></div>';
-                    skeletonHTML += '<div class="ph-col-12 rounded"></div>';
-                    skeletonHTML += '<div class="ph-col-12 empty"></div>';
-                    skeletonHTML += '<div class="ph-col-12 rounded big"></div>';
-                    skeletonHTML += '</div>';
-                    skeletonHTML += '</div>';
-
-                    skeletonHTML += '<div>';
-                    skeletonHTML += '<div class="ph-row">';
-                    skeletonHTML += '<div class="ph-col-12 big rounded"></div>';
-                    skeletonHTML += '</div>';
-                    skeletonHTML += '</div>';
-                    skeletonHTML += '</div>';
-                    skeletonHTML += '</div>';
-                    // skeletonHTML += '</div>';
-                }
-                return skeletonHTML;
-            }
-
-            setTimeout(function() {
                 fetchallHomeNewProduct(displayProduct);
                 fetchallHomeSearchProduct(displayProduct);
             }, 2000);

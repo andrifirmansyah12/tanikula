@@ -131,7 +131,7 @@ class EducationController extends Controller
                 'user_id' => auth()->user()->id,
                 "title" => "Edukasi Terbaru",
                 "body" => $request->title,
-                "img" => "fas fa-clapperboard",
+                "img" => "lni lni-invention",
             ]);
 
             Http::withHeaders($headers)->post($url, [

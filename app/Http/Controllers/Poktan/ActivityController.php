@@ -192,7 +192,7 @@ class ActivityController extends Controller
                 'user_id' => auth()->user()->id,
                 "title" => "Kegiatan Terbaru",
                 "body" => $request->title,
-                "img" => "fas fa-clipboard",
+                "img" => "lni lni-invention",
             ]);
 
             Http::withHeaders($headers)->post($url, [

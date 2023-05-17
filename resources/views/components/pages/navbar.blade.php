@@ -179,12 +179,18 @@
                                             {{-- <input type="hidden" name="passingIdNotif" value="{{ $notif->id }}">
                                             --}}
                                             <div class="cart-img-head">
+                                                @if ($notif->title == 'Pemesanan berhasil dibuat' && 'Pembayaran berhasil')
                                                 <a class="cart-img" href="">
-                                                    <img src="{{ asset('img/'.$notif->img) }}" alt="#"
+                                                    <img src="{{ asset('img/'.$notif->img) }}" alt="{{ $notif->title }}"
                                                         style="width: 5rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                                                 </a>
+                                                @else
+                                                <a class="cart-img" href="">
+                                                    <img src="{{ asset('img/invention.svg') }}" alt="{{ $notif->title }}"
+                                                        style="fill:#16A085; width: 5rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                                </a>
+                                                @endif
                                             </div>
-
                                             <div class="content">
                                                 <h4><a style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;"
                                                         href="#">
