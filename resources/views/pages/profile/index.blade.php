@@ -118,15 +118,15 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body mt-2">
+                        <div class="card-body mt-3">
                             <div class="d-flex justify-content-between align-items-center">
                                 <p class="lead fw-bold mb-0" style="color: #16A085">Produk</p>
                                 <div class="dropdown dropstart">
-                                    <button class="btn btn-light dropdown-toggle" style="color:#16A085;" type="button"
+                                    <button class="btn btn-light dropdown-toggle" style="color:#16A085; border: 1px solid #16A085;" type="button"
                                         id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                         Filter Berdasarkan
                                     </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="border: 1px solid #16A085;">
                                         <li>
                                             <input type="hidden" name="max_price" id="max_price" value="max_price">
                                             <button type="button" id="max_price_btn" class="dropdown-item">Harga

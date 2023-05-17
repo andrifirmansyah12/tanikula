@@ -518,7 +518,7 @@
                 for (var i = 0; i < limit; i++) {
                     // Mobile
                     skeletonCategoryProductHTML += '<div class="col-3 mt-sm-5 mt-4 col-sm-3 col-md-2">';
-                        skeletonCategoryProductHTML += '<div class="ph-item rounded skeleton-category">';
+                        skeletonCategoryProductHTML += '<div class="ph-item rounded skeleton-category" style="border: 1px solid #16A085;">';
                                 skeletonCategoryProductHTML += '<div class="ph-picture rounded"></div>';
                         skeletonCategoryProductHTML += '</div>';
                     skeletonCategoryProductHTML += '</div>';
@@ -537,7 +537,7 @@
                 for (var i = 0; i < limit; i++) {
                     // skeletonHTML += '<div class="row">';
                     skeletonHTML += '<div class="col-lg-3 mt-5 col-md-6 col-12">';
-                    skeletonHTML += '<div class="ph-item rounded">';
+                    skeletonHTML += '<div class="ph-item rounded" style="border: 1px solid #16A085;">';
                     skeletonHTML += '<div class="ph-col-12">';
                     skeletonHTML += '<div class="ph-picture rounded"></div>';
                     skeletonHTML += '</div>';

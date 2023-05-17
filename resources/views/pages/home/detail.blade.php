@@ -273,7 +273,7 @@
                                 $nama_gapoktan = strtolower($product->user->name);
                             @endphp
                             <img alt="image" src="{{ $gapoktan->image === null ? '../img/user.png' : '../storage/profile/'. $gapoktan->image .'' }}"
-                                class="border rounded-circle border-white shadow-sm" style="width: 70px; height: 70px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                class="rounded-circle shadow-sm" style="width: 70px; height: 70px; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
                             <div class="ps-3">
                                 <h6>{{ $product->user->name }}</h6>
                                 @if ($gapoktan->city_id)

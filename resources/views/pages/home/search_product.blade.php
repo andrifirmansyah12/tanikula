@@ -50,7 +50,7 @@
 @section('content')
     <div class="container pt-5 d-flex justify-content-end">
         <div class="dropdown dropstart">
-            <button class="btn btn-light dropdown-toggle" style="color:#16A085;" type="button" id="dropdownMenuButton1"
+            <button class="btn btn-light dropdown-toggle" style="color:#16A085; border: 1px solid #16A085;" type="button" id="dropdownMenuButton1"
                 data-bs-toggle="dropdown" aria-expanded="false">
                 Filter Berdasarkan
             </button>
@@ -103,7 +103,7 @@
         for(var i = 0; i < limit; i++){
             // skeletonHTML += '<div class="row">';
                 skeletonHTML += '<div class="col-lg-3 mt-4 col-md-6 col-12">';
-                    skeletonHTML += '<div class="ph-item rounded">';
+                    skeletonHTML += '<div class="ph-item rounded" style="border: 1px solid #16A085;">';
                         skeletonHTML += '<div class="ph-col-12">';
                             skeletonHTML += '<div class="ph-picture rounded"></div>';
                         skeletonHTML += '</div>';
@@ -135,7 +135,7 @@
             @foreach ($product_new as $item)
                 <div class="col-lg-3 col-md-6 col-12">
                     <!-- Start Single Product -->
-                    <div class="single-product {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}" style="height: 22rem">
+                    <div class="single-product {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}" style="height: 22rem; border: 1px solid #16A085;">
                         <div class="product-image {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}">
                             <a href="{{ url('home/'.$item->slug) }}">
                                 @if ($item->stoke === 0)
