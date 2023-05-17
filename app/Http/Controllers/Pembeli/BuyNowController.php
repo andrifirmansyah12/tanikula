@@ -22,7 +22,7 @@ class BuyNowController extends Controller
     public function buyNow(Request $request)
     {
         //Variabel key dan url API raja ongkir
-        $key = 'f5ed16cb52b0f2936e98e7e22a4a02f5'; //Buat akun atau pakai API akun Tahu Coding
+        $key = env('RAJAONGKIR_API_KEY'); //Buat akun atau pakai API akun Tahu Coding
         $cost_url = 'https://api.rajaongkir.com/starter/cost';
 
         $address = Address::with('user')
@@ -108,7 +108,7 @@ class BuyNowController extends Controller
                     return redirect()->back();
                 } else {
                     //Variabel key dan url API raja ongkir
-                    $key = 'f5ed16cb52b0f2936e98e7e22a4a02f5'; //Buat akun atau pakai API akun Tahu Coding
+                    $key = env('RAJAONGKIR_API_KEY'); //Buat akun atau pakai API akun Tahu Coding
                     $cost_url = 'https://api.rajaongkir.com/starter/cost';
 
                     $address = Address::with('user')
@@ -172,7 +172,7 @@ class BuyNowController extends Controller
     public function check_ongkir(Request $request)
     {
         // //Variabel key dan url API raja ongkir
-        $key = 'f5ed16cb52b0f2936e98e7e22a4a02f5'; //Buat akun atau pakai API akun Tahu Coding
+        $key = env('RAJAONGKIR_API_KEY'); //Buat akun atau pakai API akun Tahu Coding
         $cost_url = 'https://api.rajaongkir.com/starter/cost';
 
             if($request->courier)

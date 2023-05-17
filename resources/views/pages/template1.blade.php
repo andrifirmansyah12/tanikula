@@ -449,16 +449,22 @@
                                                 @foreach ($notifications as $notif)
                                                     <li class="p-2 rounded"
                                                         style="{{ $notif->is_read == 0 ? 'background: antiquewhite' : '' }}; border: 1px solid #16A085;">
-                                                        {{-- <input type="hidden" name="passingIdNotif" value="{{ $notif->id }}">
-                                            --}}
+                                                        {{-- <input type="hidden" name="passingIdNotif" value="{{ $notif->id }}">--}}
                                                         <div class="cart-img-head">
-                                                            <a class="cart-img" href="">
-                                                                <img src="{{ asset('img/' . $notif->img) }}"
-                                                                    alt="#"
-                                                                    style="width: 5rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
-                                                            </a>
+                                                            @if ($notif->title == 'Pemesanan berhasil dibuat' && 'Pembayaran berhasil')
+                                                                <a class="cart-img" href="">
+                                                                    <img src="{{ asset('img/' . $notif->img) }}"
+                                                                        alt="{{ $notif->title }}"
+                                                                        style="width: 5rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                                                </a>
+                                                            @else
+                                                                <a class="cart-img" href="">
+                                                                    <img src="{{ asset('img/invention.svg') }}"
+                                                                        alt="{{ $notif->title }}"
+                                                                        style="fill:#16A085; width: 5rem; height: 5rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                                                </a>
+                                                            @endif
                                                         </div>
-
                                                         <div class="content">
                                                             <h4><a style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;"
                                                                     href="#">
@@ -617,7 +623,8 @@
                                                 @if ($cartItemOutOfStock->count() > 0)
                                                     <div
                                                         class="mb-2 pb-1 d-flex align-items-center border-bottom fw-bold">
-                                                        <i class="bi bi-bag-x pe-2"></i> Produk tidak valid</div>
+                                                        <i class="bi bi-bag-x pe-2"></i> Produk tidak valid
+                                                    </div>
                                                 @endif
                                                 @foreach ($cartItemOutOfStock as $itemOutOfStock)
                                                     <div style="opacity: 70%;" class="d-flex navbarCheckProductCart">
@@ -747,68 +754,74 @@
                                             aria-label="Toggle navigation">Hubungi kami</a>
                                     </li>
                                     @auth
-                                    @hasrole('pembeli')
-                                    <li class="nav-item d-block d-md-none">
-                                        <a onclick="pembeli('{{ route('pembeli') }}')" href="#" class="user d-flex justify-content-start gap-2">
-                                            <i class="lni lni-user"></i>
-                                            {{ auth()->user()->name }}
-                                        </a>
-                                    </li>
-                                    @elserole('gapoktan')
-                                    <li class="nav-item d-block d-md-none">
-                                        <a onclick="gapoktan('{{ route('gapoktan') }}')" href="#" class="user justify-content-start gap-2">
-                                            <i class="lni lni-user"></i>
-                                            {{ auth()->user()->name }}
-                                        </a>
-                                    </li>
-                                    @elserole('poktan')
-                                    <li class="nav-item d-block d-md-none">
-                                        <a onclick="poktan('{{ route('poktan') }}')" href="#" class="user justify-content-start gap-2">
-                                            <i class="lni lni-user"></i>
-                                            {{ auth()->user()->name }}
-                                        </a>
-                                    </li>
-                                    @elserole('petani')
-                                    <li class="nav-item d-block d-md-none">
-                                        <a onclick="petani('{{ route('petani') }}')" href="#" class="user justify-content-start gap-2">
-                                            <i class="lni lni-user"></i>
-                                            {{ auth()->user()->name }}
-                                        </a>
-                                    </li>
-                                    @elserole('admin')
-                                    <li class="nav-item d-block d-md-none">
-                                        <a onclick="admin('{{ route('admin') }}')" href="#" class="user justify-content-start gap-2">
-                                            <i class="lni lni-user"></i>
-                                            {{ auth()->user()->name }}
-                                        </a>
-                                    </li>
-                                    @elserole('support')
-                                    <li class="nav-item d-block d-md-none">
-                                        <a onclick="support('{{ route('support') }}')" href="#" class="user justify-content-start gap-2">
-                                            <i class="lni lni-user"></i>
-                                            {{ auth()->user()->name }}
-                                        </a>
-                                    </li>
-                                    @endhasrole
+                                        @hasrole('pembeli')
+                                            <li class="nav-item d-block d-md-none">
+                                                <a onclick="pembeli('{{ route('pembeli') }}')" href="#"
+                                                    class="user d-flex justify-content-start gap-2">
+                                                    <i class="lni lni-user"></i>
+                                                    {{ auth()->user()->name }}
+                                                </a>
+                                            </li>
+                                            @elserole('gapoktan')
+                                            <li class="nav-item d-block d-md-none">
+                                                <a onclick="gapoktan('{{ route('gapoktan') }}')" href="#"
+                                                    class="user justify-content-start gap-2">
+                                                    <i class="lni lni-user"></i>
+                                                    {{ auth()->user()->name }}
+                                                </a>
+                                            </li>
+                                            @elserole('poktan')
+                                            <li class="nav-item d-block d-md-none">
+                                                <a onclick="poktan('{{ route('poktan') }}')" href="#"
+                                                    class="user justify-content-start gap-2">
+                                                    <i class="lni lni-user"></i>
+                                                    {{ auth()->user()->name }}
+                                                </a>
+                                            </li>
+                                            @elserole('petani')
+                                            <li class="nav-item d-block d-md-none">
+                                                <a onclick="petani('{{ route('petani') }}')" href="#"
+                                                    class="user justify-content-start gap-2">
+                                                    <i class="lni lni-user"></i>
+                                                    {{ auth()->user()->name }}
+                                                </a>
+                                            </li>
+                                            @elserole('admin')
+                                            <li class="nav-item d-block d-md-none">
+                                                <a onclick="admin('{{ route('admin') }}')" href="#"
+                                                    class="user justify-content-start gap-2">
+                                                    <i class="lni lni-user"></i>
+                                                    {{ auth()->user()->name }}
+                                                </a>
+                                            </li>
+                                            @elserole('support')
+                                            <li class="nav-item d-block d-md-none">
+                                                <a onclick="support('{{ route('support') }}')" href="#"
+                                                    class="user justify-content-start gap-2">
+                                                    <i class="lni lni-user"></i>
+                                                    {{ auth()->user()->name }}
+                                                </a>
+                                            </li>
+                                        @endhasrole
                                     @else
-                                    <li class="nav-item d-block d-md-none">
-                                        <a onclick="hubungi_kami('{{ url('login') }}')" href="#"
-                                            class="{{ Request::is('login') ? 'active' : '' }}"
-                                            aria-label="Toggle navigation">Masuk</a>
-                                    </li>
-                                    <li class="nav-item d-block d-md-none">
-                                        <div class="dropdown">
-                                            <a style="cursor: pointer; background: none;" class="btn"
-                                                data-toggle="dropdown" aria-expanded="false">Daftar</a>
-                                            <div class="dropdown-menu mt-2 shadow border border-secondary">
-                                                <a class="dropdown-item" onclick="register('{{ url('/register') }}')"
-                                                    href="#">Sebagai Pembeli</a>
-                                                <a class="dropdown-item"
-                                                    onclick="registerGapoktan('{{ url('/gapoktan/register') }}')"
-                                                    href="#">Sebagai Gapoktan</a>
+                                        <li class="nav-item d-block d-md-none">
+                                            <a onclick="hubungi_kami('{{ url('login') }}')" href="#"
+                                                class="{{ Request::is('login') ? 'active' : '' }}"
+                                                aria-label="Toggle navigation">Masuk</a>
+                                        </li>
+                                        <li class="nav-item d-block d-md-none">
+                                            <div class="dropdown">
+                                                <a style="cursor: pointer; background: none;" class="btn"
+                                                    data-toggle="dropdown" aria-expanded="false">Daftar</a>
+                                                <div class="dropdown-menu mt-2 shadow border border-secondary">
+                                                    <a class="dropdown-item" onclick="register('{{ url('/register') }}')"
+                                                        href="#">Sebagai Pembeli</a>
+                                                    <a class="dropdown-item"
+                                                        onclick="registerGapoktan('{{ url('/gapoktan/register') }}')"
+                                                        href="#">Sebagai Gapoktan</a>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </li>
+                                        </li>
                                     @endauth
                                     <li class="nav-item d-block d-md-none mt-md-0 mt-3 mb-md-0 mb-3">
                                         <div class="main-menu-search-mobile">
@@ -821,7 +834,8 @@
                                                             placeholder="Pencarian produk" autocomplete="off">
                                                     </div>
                                                     <div class="search-btn-mobile">
-                                                        <button type="submit"><i class="lni lni-search-alt"></i></button>
+                                                        <button type="submit"><i
+                                                                class="lni lni-search-alt"></i></button>
                                                     </div>
                                                 </div>
                                             </form>

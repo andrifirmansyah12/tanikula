@@ -50,11 +50,11 @@
 @section('content')
     <div class="container pt-5 d-flex justify-content-end">
         <div class="dropdown dropstart">
-            <button class="btn btn-light dropdown-toggle" style="color:#16A085;" type="button" id="dropdownMenuButton1"
+            <button class="btn btn-light dropdown-toggle" style="color:#16A085; border: 1px solid #16A085;" type="button" id="dropdownMenuButton1"
                 data-bs-toggle="dropdown" aria-expanded="false">
                 Filter Berdasarkan
             </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="border: 1px solid #16A085;">
                 <li>
                     <input type="hidden" name="max_price" id="max_price" value="max_price">
                     <button type="button" id="max_price_btn" class="dropdown-item">Harga Tertinggi</button>
@@ -107,7 +107,7 @@
         for(var i = 0; i < limit; i++){
             // skeletonHTML += '<div class="row">';
                 skeletonHTML += '<div class="col-lg-3 mt-4 col-md-6 col-12">';
-                    skeletonHTML += '<div class="ph-item rounded">';
+                    skeletonHTML += '<div class="ph-item rounded" style="border: 1px solid #16A085;">';
                         skeletonHTML += '<div class="ph-col-12">';
                             skeletonHTML += '<div class="ph-picture rounded"></div>';
                         skeletonHTML += '</div>';
