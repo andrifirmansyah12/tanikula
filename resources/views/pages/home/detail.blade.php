@@ -348,11 +348,11 @@
             <div class="owl-carousel owl-theme">
                 @foreach ($product_new as $item)
                 <!-- Start Single Product -->
-                <div class="mx-md-2 mx-2 single-product border border-success shadow-none {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}" style="
+                <div class="mx-md-2 mx-2 single-product border border-success shadow-none {{ $item->stoke == 0 ? 'bg-light opacity-90' : '' }}" style="
                     height: 23rem">
-                    <div class="product-image {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}">
+                    <div class="product-image {{ $item->stoke == 0 ? 'bg-light opacity-90' : '' }}">
                                 <a href=" {{ url('home/'.$item->slug) }}">
-                        @if ($item->stoke === 0)
+                        @if ($item->stoke == 0)
                         <div style="z-index: 3"
                             class="badge bg-danger px-3 position-absolute top-50 start-50 translate-middle">
                             <h5 class="text-white">Stok Habis</h5>
@@ -374,7 +374,7 @@
                         @endif
                         </a>
                     </div>
-                    <div class="product-info {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}">
+                    <div class="product-info {{ $item->stoke == 0 ? 'bg-light opacity-90' : '' }}">
                                 @if ($item->discount != 0)
                                     <div class=" d-flex justify-content-between">
                         <a href="{{ url('product-category/'.$item->product_category->slug) }}">
