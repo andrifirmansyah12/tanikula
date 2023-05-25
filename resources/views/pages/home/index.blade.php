@@ -197,12 +197,12 @@
                 <div class="owl-carousel owl-theme">
                     @foreach ($product_new as $item)
                         <!-- Start Single Product -->
-                        <div class="mx-md-2 mx-3 single-product mt-0 shadow-none {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}"
+                        <div class="mx-md-2 mx-3 single-product mt-0 shadow-none {{ $item->stoke == 0 ? 'bg-light opacity-90' : '' }}"
                             style="
                             height: 22rem">
-                            <div class="product-image {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}">
+                            <div class="product-image {{ $item->stoke == 0 ? 'bg-light opacity-90' : '' }}">
                                 <a href=" {{ url('home/' . $item->slug) }}">
-                                    @if ($item->stoke === 0)
+                                    @if ($item->stoke == 0)
                                         <div style="z-index: 3"
                                             class="badge bg-danger px-3 position-absolute top-50 start-50 translate-middle">
                                             <h5 class="text-white">Stok Habis</h5>
@@ -225,7 +225,7 @@
                                     @endif
                                 </a>
                             </div>
-                            <div class="product-info {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}">
+                            <div class="product-info {{ $item->stoke == 0 ? 'bg-light opacity-90' : '' }}">
                                 @if ($item->discount != 0)
                                     <div class=" d-flex justify-content-between">
                                         <a href="{{ url('product-category/' . $item->product_category->slug) }}">
@@ -326,12 +326,12 @@
                 <div class="owl-carousel owl-theme">
                     @foreach ($product_search as $item)
                         <!-- Start Single Product -->
-                        <div class="mx-md-2 mx-3 single-product mt-0 shadow-none {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}"
+                        <div class="mx-md-2 mx-3 single-product mt-0 shadow-none {{ $item->stoke == 0 ? 'bg-light opacity-90' : '' }}"
                             style="
                             height: 22rem; border: 1px solid #16A085;">
-                            <div class="product-image {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}">
+                            <div class="product-image {{ $item->stoke == 0 ? 'bg-light opacity-90' : '' }}">
                                 <a href=" {{ url('home/' . $item->slug) }}">
-                                    @if ($item->stoke === 0)
+                                    @if ($item->stoke == 0)
                                         <div style="z-index: 3"
                                             class="badge bg-danger px-3 position-absolute top-50 start-50 translate-middle">
                                             <h5 class="text-white">Stok Habis</h5>
@@ -354,7 +354,7 @@
                                     @endif
                                 </a>
                             </div>
-                            <div class="product-info {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}">
+                            <div class="product-info {{ $item->stoke == 0 ? 'bg-light opacity-90' : '' }}">
                                 @if ($item->discount != 0)
                                     <div class=" d-flex justify-content-between">
                                         <a href="{{ url('product-category/' . $item->product_category->slug) }}">

@@ -135,10 +135,10 @@
             @foreach ($product_new as $item)
                 <div class="col-lg-3 col-md-6 col-12">
                     <!-- Start Single Product -->
-                    <div class="single-product {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}" style="height: 22rem; border: 1px solid #16A085;">
-                        <div class="product-image {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}">
+                    <div class="single-product {{ $item->stoke == 0 ? 'bg-light opacity-90' : '' }}" style="height: 22rem; border: 1px solid #16A085;">
+                        <div class="product-image {{ $item->stoke == 0 ? 'bg-light opacity-90' : '' }}">
                             <a href="{{ url('home/'.$item->slug) }}">
-                                @if ($item->stoke === 0)
+                                @if ($item->stoke == 0)
                                 <div style="z-index: 3" class="badge bg-danger px-3 position-absolute top-50 start-50 translate-middle"><h5 class="text-white">Stok Habis</h5></div>
                                 @endif
                                 @if ($item->photo_product->count() > 0)
@@ -157,7 +157,7 @@
                                 @endif
                             </a>
                         </div>
-                        <div class="product-info {{ $item->stoke === 0 ? 'bg-light opacity-90' : '' }}">
+                        <div class="product-info {{ $item->stoke == 0 ? 'bg-light opacity-90' : '' }}">
                             @if ($item->discount != 0)
                                 <div class="d-flex justify-content-between">
                                     <a href="{{ url('product-category/'.$item->product_category->slug) }}">

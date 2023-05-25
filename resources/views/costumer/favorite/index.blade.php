@@ -131,11 +131,11 @@
                         {{-- @if ($wishlist->count())
                             @foreach ($wishlist as $item)
                                 <div class="col-xl-3 col-md-6 mb-xl-0 mt-3" id="product_data">
-                                    <div class="card card-blog border rounded bg-white shadow card-plain {{ $item->product->stoke === 0 ? 'bg-light opacity-90' : '' }}"
+                                    <div class="card card-blog border rounded bg-white shadow card-plain {{ $item->product->stoke == 0 ? 'bg-light opacity-90' : '' }}"
                                         style="height: 26rem">
-                                        <div class="{{ $item->product->stoke === 0 ? 'bg-light opacity-90' : '' }}">
+                                        <div class="{{ $item->product->stoke == 0 ? 'bg-light opacity-90' : '' }}">
                                             <a href="{{ url('home/' . $item->product->slug) }}">
-                                                @if ($item->product->stoke === 0)
+                                                @if ($item->product->stoke == 0)
                                                     <div style="z-index: 3"
                                                         class="badge bg-danger px-3 position-absolute top-30 start-50 translate-middle">
                                                         <h5 class="text-white m-0">Stok Habis</h5>
@@ -161,7 +161,7 @@
                                             </a>
                                         </div>
                                         <div
-                                            class="card-body p-3 {{ $item->product->stoke === 0 ? 'bg-light opacity-90' : '' }}">
+                                            class="card-body p-3 {{ $item->product->stoke == 0 ? 'bg-light opacity-90' : '' }}">
                                             @if ($item->product->discount != 0)
                                                 <div class="d-flex justify-content-between">
                                                     <p class="m-0 text-sm"><a class="text-secondary"
@@ -211,7 +211,7 @@
                                                 class="form-control qty-input text-center" value="1">
                                             <input type="hidden" value="{{ $item->product_id }}" id="prod_id">
                                             <div class="d-flex align-items-center justify-content-between">
-                                                @if ($item->product->stoke === 0)
+                                                @if ($item->product->stoke == 0)
                                                     <button type="button" disabled
                                                         class="btn btn-outline-primary btn-sm mb-0">+
                                                         Keranjang</button>

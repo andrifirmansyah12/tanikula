@@ -72,7 +72,7 @@ class ProductController extends Controller
 			foreach ($product_new as $item) {
 				$output .= '
                 <div class="col-lg-3 col-md-6 col-12">';
-                    if ($item->stoke === 0) {
+                    if ($item->stoke == 0) {
                         $output .= '<div class="single-product bg-light opacity-90" style="height: 22rem; border: 1px solid #16A085;">
                         <div class="product-image bg-light opacity-90">';
                     } else {
@@ -81,7 +81,7 @@ class ProductController extends Controller
                     }
                         $output .= '
                             <a href="home/'.$item->slug.'">';
-                                if ($item->stoke === 0) {
+                                if ($item->stoke == 0) {
                                 $output .= '<div style="z-index: 3" class="badge bg-danger px-3 position-absolute top-50 start-50 translate-middle"><h5 class="text-white">Stok Habis</h5></div>';
                                 }
                                 if ($item->photo_product->count() > 0) {
@@ -100,7 +100,7 @@ class ProductController extends Controller
                                 }
                             $output .= '</a>
                         </div>';
-                        if ($item->stoke === 0) {
+                        if ($item->stoke == 0) {
                         $output .= '<div class="product-info bg-light opacity-90">';
                         } else {
                         $output .= '<div class="product-info">';
@@ -211,7 +211,7 @@ class ProductController extends Controller
 			foreach ($product_search as $item) {
 				$output .= '
                 <div class="col-lg-3 col-md-6 col-12">';
-                    if ($item->stoke === 0) {
+                    if ($item->stoke == 0) {
                         $output .= '<div class="single-product bg-light opacity-90" style="height: 22rem; border: 1px solid #16A085;">
                         <div class="product-image bg-light opacity-90">';
                     } else {
@@ -220,7 +220,7 @@ class ProductController extends Controller
                     }
                         $output .= '
                             <a href="home/'.$item->slug.'">';
-                                if ($item->stoke === 0) {
+                                if ($item->stoke == 0) {
                                 $output .= '<div style="z-index: 3" class="badge bg-danger px-3 position-absolute top-50 start-50 translate-middle"><h5 class="text-white">Stok Habis</h5></div>';
                                 }
                                 if ($item->photo_product->count() > 0) {
@@ -239,7 +239,7 @@ class ProductController extends Controller
                                 }
                             $output .= '</a>
                         </div>';
-                        if ($item->stoke === 0) {
+                        if ($item->stoke == 0) {
                         $output .= '<div class="product-info bg-light opacity-90">';
                         } else {
                         $output .= '<div class="product-info">';
@@ -513,7 +513,7 @@ class ProductController extends Controller
 			foreach ($product_new as $item) {
 				$output .= '
                 <div class="col-lg-3 col-md-6 col-12">';
-                    if ($item->stoke === 0) {
+                    if ($item->stoke == 0) {
                         $output .= '<div class="single-product bg-light opacity-90" style="height: 22rem; border: 1px solid #16A085;">
                         <div class="product-image bg-light opacity-90">';
                     } else {
@@ -522,7 +522,7 @@ class ProductController extends Controller
                     }
                         $output .= '
                             <a href="home/'.$item->slug.'">';
-                                if ($item->stoke === 0) {
+                                if ($item->stoke == 0) {
                                 $output .= '<div style="z-index: 3" class="badge bg-danger px-3 position-absolute top-50 start-50 translate-middle"><h5 class="text-white">Stok Habis</h5></div>';
                                 }
                                 if ($item->photo_product->count() > 0) {
@@ -541,7 +541,7 @@ class ProductController extends Controller
                                 }
                             $output .= '</a>
                         </div>';
-                        if ($item->stoke === 0) {
+                        if ($item->stoke == 0) {
                         $output .= '<div class="product-info bg-light opacity-90">';
                         } else {
                         $output .= '<div class="product-info">';
@@ -691,7 +691,7 @@ class ProductController extends Controller
 			foreach ($based_search as $item) {
 				$output .= '
                 <div class="col-lg-3 col-md-6 col-12">';
-                    if ($item->stoke === 0) {
+                    if ($item->stoke == 0) {
                         $output .= '<div class="single-product bg-light opacity-90" style="height: 22rem; border: 1px solid #16A085;">
                         <div class="product-image bg-light opacity-90">';
                     } else {
@@ -700,7 +700,7 @@ class ProductController extends Controller
                     }
                         $output .= '
                             <a href="home/'.$item->slug.'">';
-                                if ($item->stoke === 0) {
+                                if ($item->stoke == 0) {
                                 $output .= '<div style="z-index: 3" class="badge bg-danger px-3 position-absolute top-50 start-50 translate-middle"><h5 class="text-white">Stok Habis</h5></div>';
                                 }
                                 if ($item->photo_product->count() > 0) {
@@ -719,7 +719,7 @@ class ProductController extends Controller
                                 }
                             $output .= '</a>
                         </div>';
-                        if ($item->stoke === 0) {
+                        if ($item->stoke == 0) {
                         $output .= '<div class="product-info bg-light opacity-90">';
                         } else {
                         $output .= '<div class="product-info">';
@@ -849,7 +849,7 @@ class ProductController extends Controller
 			foreach ($product_new as $item) {
 				$output .= '
                 <div class="col-lg-3 col-md-6 col-12">';
-                    if ($item->stoke === 0) {
+                    if ($item->stoke == 0) {
                         $output .= '<div class="single-product bg-light opacity-90" style="height: 22rem; border: 1px solid #16A085;">
                         <div class="product-image bg-light opacity-90">';
                     } else {
@@ -858,7 +858,7 @@ class ProductController extends Controller
                     }
                         $output .= '
                             <a href="../home/'.$item->slug.'">';
-                                if ($item->stoke === 0) {
+                                if ($item->stoke == 0) {
                                 $output .= '<div style="z-index: 3" class="badge bg-danger px-3 position-absolute top-50 start-50 translate-middle"><h5 class="text-white">Stok Habis</h5></div>';
                                 }
                                 if ($item->photo_product->count() > 0) {
@@ -877,7 +877,7 @@ class ProductController extends Controller
                                 }
                             $output .= '</a>
                         </div>';
-                        if ($item->stoke === 0) {
+                        if ($item->stoke == 0) {
                         $output .= '<div class="product-info bg-light opacity-90">';
                         } else {
                         $output .= '<div class="product-info">';
@@ -1030,7 +1030,7 @@ class ProductController extends Controller
 			foreach ($product as $item) {
 				$output .= '
                 <div class="col-lg-3 col-md-6 col-12">';
-                    if ($item->stoke === 0) {
+                    if ($item->stoke == 0) {
                         $output .= '<div class="single-product bg-light opacity-90" style="height: 22rem; border: 1px solid #16A085;">
                         <div class="product-image bg-light opacity-90">';
                     } else {
@@ -1039,7 +1039,7 @@ class ProductController extends Controller
                     }
                         $output .= '
                             <a href="../home/'.$item->slug.'">';
-                                if ($item->stoke === 0) {
+                                if ($item->stoke == 0) {
                                 $output .= '<div style="z-index: 3" class="badge bg-danger px-3 position-absolute top-50 start-50 translate-middle"><h5 class="text-white">Stok Habis</h5></div>';
                                 }
                                 if ($item->photo_product->count() > 0) {
@@ -1058,7 +1058,7 @@ class ProductController extends Controller
                                 }
                             $output .= '</a>
                         </div>';
-                        if ($item->stoke === 0) {
+                        if ($item->stoke == 0) {
                         $output .= '<div class="product-info bg-light opacity-90">';
                         } else {
                         $output .= '<div class="product-info">';
@@ -1625,7 +1625,7 @@ class ProductController extends Controller
 			foreach ($product_new as $item) {
 				$output .= '
                 <div class="col-lg-3 col-md-6 col-12">';
-                    if ($item->stoke === 0) {
+                    if ($item->stoke == 0) {
                         $output .= '<div class="single-product bg-light opacity-90" style="height: 22rem; border: 1px solid #16A085;">
                         <div class="product-image bg-light opacity-90">';
                     } else {
@@ -1634,7 +1634,7 @@ class ProductController extends Controller
                     }
                         $output .= '
                             <a href="../home/'.$item->slug.'">';
-                                if ($item->stoke === 0) {
+                                if ($item->stoke == 0) {
                                 $output .= '<div style="z-index: 3" class="badge bg-danger px-3 position-absolute top-50 start-50 translate-middle"><h5 class="text-white">Stok Habis</h5></div>';
                                 }
                                 if ($item->photo_product->count() > 0) {
@@ -1653,7 +1653,7 @@ class ProductController extends Controller
                                 }
                             $output .= '</a>
                         </div>';
-                        if ($item->stoke === 0) {
+                        if ($item->stoke == 0) {
                         $output .= '<div class="product-info bg-light opacity-90">';
                         } else {
                         $output .= '<div class="product-info">';
