@@ -29,6 +29,10 @@
     function hubungi_kami(url) {
         window.location = url;
     }
+    // Tentang Kami
+    function tentang_kami(url) {
+        window.location = url;
+    }
     // Pembeli Dashboard
     function pembeli(route) {
         window.location = route;

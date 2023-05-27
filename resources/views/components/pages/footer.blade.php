@@ -41,7 +41,7 @@
                         <div class="single-footer f-link">
                             <h3>Informasi</h3>
                             <ul>
-                                <li><a href="javascript:void(0)">Tentang Kami</a></li>
+                                <li><a onclick="tentang_kami('{{ url('tentang-kami') }}')" href="#" class="{{ Request::is('tentang-kami') ? 'active' : '' }}">Tentang Kami</a></li>
                                 <li><a onclick="hubungi_kami('{{ url('hubungi-kami') }}')" href="#" class="{{ Request::is('hubungi-kami') ? 'active' : '' }}">Hubungi Kami</a></li>
                             </ul>
                         </div>

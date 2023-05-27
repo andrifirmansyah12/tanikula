@@ -219,13 +219,13 @@ Route::group(['middleware' => ['LoginCheck', 'auth', 'role:admin']], function ()
 });
 
 // Login Gapoktan
-// Route::group(['middleware' => ['guest']], function() {
+Route::group(['middleware' => ['guest']], function() {
 //     Route::get('/gapoktan/login', [App\Http\Controllers\Gapoktan\LoginController::class, 'login'])->name('login-gapoktan');
 //     Route::post('/gapoktan/login', [App\Http\Controllers\Gapoktan\LoginController::class, 'loginGapoktan'])->name('login-gapoktan');
 
     Route::get('/gapoktan/register', [App\Http\Controllers\Gapoktan\LoginController::class, 'register'])->name('register-gapoktan');
     Route::post('/gapoktan/register', [App\Http\Controllers\Gapoktan\LoginController::class, 'registerGapoktan'])->name('registerGapoktan-gapoktan');
-// });
+});
 
 // Gapoktan
 Route::group(['middleware' => ['LoginCheck', 'auth', 'role:gapoktan']], function () {
@@ -718,6 +718,9 @@ Route::post('/add-to-cart', [App\Http\Controllers\Pembeli\CartController::class,
 Route::post('/delete-cart-item', [App\Http\Controllers\Pembeli\CartController::class, 'deleteCartItem']);
 Route::post('/delete-out-of-stock-product', [App\Http\Controllers\Pembeli\CartController::class, 'deleteCartOutOfStockProduct']);
 Route::post('/update-cart-item', [App\Http\Controllers\Pembeli\CartController::class, 'updateCartItem']);
+
+// Tentang Kami
+Route::get('/tentang-kami', [App\Http\Controllers\Pages\AboutUsController::class, 'index'])->name('about.us');
 
 // Hubungi Kami
 Route::get('/hubungi-kami', [App\Http\Controllers\Pages\ContactUsController::class, 'index'])->name('contact.us');
