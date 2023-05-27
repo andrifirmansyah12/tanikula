@@ -65,7 +65,7 @@
                                 <div class="form-group">
                                     <label for="email">Email</label>
                                     <input id="email" type="email" class="form-control" name="email" disabled
-                                        value="{{ $email }}" placeholder="E-mail" autofocus>
+                                        value="{{ $email }}" placeholder="E-mail" autofocus autocomplete="off">
                                     <div class="invalid-feedback">
                                     </div>
                                 </div>

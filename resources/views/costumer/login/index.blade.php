@@ -65,7 +65,7 @@
                                 <div class="form-group">
                                     <label for="email">Email</label>
                                     <input id="email" type="email" class="form-control" name="email"
-                                        placeholder="E-mail" autofocus>
+                                        placeholder="E-mail" autofocus autocomplete="off">
                                     <div class="invalid-feedback">
                                     </div>
                                 </div>
@@ -81,7 +81,7 @@
                                         </div>
                                     </div>
                                     <input id="password" type="password" class="form-control" name="password"
-                                        placeholder="Password">
+                                        placeholder="Password" autocomplete="off">
                                     <div class="invalid-feedback">
                                     </div>
                                     <div class="custom-control custom-checkbox view_password">
