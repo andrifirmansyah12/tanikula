@@ -445,6 +445,11 @@ class ProductController extends Controller
                         ->orderBy('products.price', 'asc')
                         ->get();
         }
+        else if ($request->pencarian == '')
+        {
+            notify()->warning("Harap masukkan keyword untuk mencari produk!", "Gagal", "topRight");
+            return redirect()->back();
+        }
         else
         {
             $product_new = Product::with('photo_product')
@@ -1165,7 +1170,7 @@ class ProductController extends Controller
             }
 
         } else {
-            notify()->warning("Tidak ditemukan kategori seperti itu!", "Peringatan", "topRight");
+            notify()->warning("Tidak ditemukan kategori yang dimaksud!", "Peringatan", "topRight");
             return redirect('/');
         }
     }
