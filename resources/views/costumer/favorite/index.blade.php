@@ -419,7 +419,6 @@
                 });
             });
 
-            // $('#delete-cart-wishlistItem').click(function (e) {
             $(document).on('click', '#delete-cart-wishlistItem', function(e) {
                 e.preventDefault();
                 $.ajaxSetup({
@@ -428,38 +427,24 @@
                     }
                 });
                 var product_id = $(this).closest('#product_data').find('#prod_id').val();
-                Swal.fire({
-                    title: 'Apa kamu yakin?',
-                    text: "Ingin menghapus produk dari daftar Wishlist!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Hapus!',
-                    cancelButtonText: 'Kembali!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        document.querySelector('.body-spinner').style.display = 'block';
-                        $.ajax({
-                            method: "POST",
-                            url: "/delete-cart-wishlist",
-                            data: {
-                                'product_id': product_id,
-                            },
-                            success: function(response) {
-                                // $('.WishlistItems').load(location.href + '.WishlistItems');
-                                document.querySelector('.body-spinner').style.display =
-                                    'none';
-                                iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
-                                    title: 'Berhasil',
-                                    message: response.status,
-                                    position: 'topRight'
-                                });
-                                fetchAllWishlist();
-                            }
+                document.querySelector('.body-spinner').style.display = 'block';
+                $.ajax({
+                    method: "POST",
+                    url: "/delete-cart-wishlist",
+                    data: {
+                        'product_id': product_id,
+                    },
+                    success: function(response) {
+                        // $('.WishlistItems').load(location.href + '.WishlistItems');
+                        document.querySelector('.body-spinner').style.display = 'none';
+                        iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                            title: 'Berhasil',
+                            message: response.status,
+                            position: 'topRight'
                         });
+                        fetchAllWishlist();
                     }
-                })
+                });
             });
         });
     </script>
