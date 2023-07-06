@@ -72,7 +72,7 @@
                                 <div class="form-group">
                                     <label for="name">Nama Gapoktan</label>
                                     <input id="name" type="name" class="form-control" name="name"
-                                        placeholder="Nama Gapoktan" autofocus>
+                                        placeholder="Nama Gapoktan" autofocus autocomplete="off">
                                     <div class="invalid-feedback">
                                     </div>
                                 </div>
@@ -80,7 +80,7 @@
                                 <div class="form-group">
                                     <label for="email">Email</label>
                                     <input id="email" type="email" class="form-control" name="email"
-                                        placeholder="E-mail" autofocus>
+                                        placeholder="E-mail" autofocus autocomplete="off">
                                     <div class="invalid-feedback">
                                     </div>
                                 </div>

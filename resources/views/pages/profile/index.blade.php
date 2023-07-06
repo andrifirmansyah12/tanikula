@@ -73,12 +73,12 @@
                 <div class="col-12">
                     <div class="card-body row align-items-center">
                         <div class="rounded-top d-flex flex-row"
-                            style="background-image: url('https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80'); height:200px;">
+                            style="background-image: url('{{ asset('img/corak.png') }}'); height:200px;">
                             <div class="ms-sm-4 mt-5 d-flex flex-column" style="width: 150px;">
                                 @if ($gapoktan->image)
                                     <img src="{{ asset('../storage/profile/' . $gapoktan->image) }}"
                                         alt="Generic placeholder image"
-                                        class="border rounded-circle border-white shadow-sm mt-4 mb-2 image-profile">
+                                        class="border rounded-circle border-white shadow-sm mt-4 mb-2 image-profile" style="background-color: #16A085">
                                 @else
                                     <img src="../img/user.png" alt="Generic placeholder image"
                                         class="border rounded-circle border-white shadow-sm mt-4 mb-2 image-profile">

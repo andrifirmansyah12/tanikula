@@ -64,7 +64,7 @@
                             <div class="form-group">
                                 <label for="email">Email</label>
                                 <input id="email" type="email" class="form-control" name="email" placeholder="E-mail" tabindex="1"
-                                    autofocus>
+                                    autofocus autocomplete="off">
                                 <div class="invalid-feedback">
                                 </div>
                             </div>

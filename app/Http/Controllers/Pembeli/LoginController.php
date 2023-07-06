@@ -83,7 +83,7 @@ class LoginController extends Controller
                             } else {
                                 return response()->json([
                                     'status' => 200,
-                                    'messages' => 'Berhasil Masuk'
+                                    'messages' => 'Login berhasil'
                                 ]);
                             }
                         } else {
@@ -118,7 +118,7 @@ class LoginController extends Controller
                             } else {
                                 return response()->json([
                                     'status' => 201,
-                                    'messages' => 'Berhasil Masuk'
+                                    'messages' => 'Login berhasil'
                                 ]);
                             }
                         } else {
@@ -153,7 +153,7 @@ class LoginController extends Controller
                             } else {
                                 return response()->json([
                                     'status' => 202,
-                                    'messages' => 'Berhasil Masuk'
+                                    'messages' => 'Login berhasil'
                                 ]);
                             }
                         } else {
@@ -188,7 +188,7 @@ class LoginController extends Controller
                             } else {
                                 return response()->json([
                                     'status' => 203,
-                                    'messages' => 'Berhasil Masuk'
+                                    'messages' => 'Login berhasil'
                                 ]);
                             }
                         } else {
