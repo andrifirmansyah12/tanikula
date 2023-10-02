@@ -388,9 +388,16 @@
                                         </ul>
                                         <div class="bottom">
                                             <div class="total">
-                                                <span>Total</span>
-                                                <span class="total-amount d-flex align-items-center">Rp. <p
+                                                <div class="d-flex py-1">
+                                                    <input class="form-check-input" type="checkbox" name="navbar_cart_id[]"
+                                                        id="navbarAllCheckProductCart">
+                                                    <span class="ps-3">Semua</span>
+                                                </div>
+                                                <div>
+                                                    <span>Total</span>
+                                                    <span class="total-amount d-flex align-items-center">Rp. <p
                                                         class="navbar-total-price ps-2 py-0 pe-0 m-0">0</p></span>
+                                                </div>
                                             </div>
                                             <div class="button">
                                                 @if ($cartItem->count())
@@ -456,12 +463,17 @@
                                 <li class="nav-item">
                                     <a onclick="home('{{ url('home') }}')" href="#"
                                         class="{{ Request::is('home') ? 'active' : '' }}"
-                                        aria-label="Toggle navigation">Home</a>
+                                        aria-label="Toggle navigation">Beranda</a>
                                 </li>
                                 <li class="nav-item">
                                     <a onclick="hubungi_kami('{{ url('hubungi-kami') }}')" href="#"
                                         class="{{ Request::is('hubungi-kami') ? 'active' : '' }}"
                                         aria-label="Toggle navigation">Hubungi kami</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a onclick="tentang_kami('{{ url('tentang-kami') }}')" href="#"
+                                        class="{{ Request::is('tentang-kami') ? 'active' : '' }}"
+                                        aria-label="Toggle navigation">Tentang kami</a>
                                 </li>
                                 @auth
                                 @hasrole('pembeli')

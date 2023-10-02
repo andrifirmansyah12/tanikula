@@ -624,6 +624,7 @@
                         'File Anda telah dihapus.',
                         'success'
                         )
+                        $("#viewPhotoProduct").modal('hide');
                         fetchAllEmployees();
                     }
                     });
@@ -690,7 +691,7 @@
                         'success'
                         )
                         $("#viewPhotoProduct").modal('hide');
-                        window.location.reload();
+                        fetchAllEmployees();
                     }
                     });
                 }

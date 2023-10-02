@@ -196,7 +196,7 @@ body {
                 </div>
                 <div class="d-flex align-items-center input-field mb-4">
                     <span class="far fa-user p-2"></span>
-                    <input type="email" name="email" id="email" placeholder="Email" required class="form-control">
+                    <input type="email" name="email" id="email" placeholder="Email" required class="form-control" autocomplete="off">
                 </div>
                 <div class="d-block">
                     <label for="password" class="control-label">Password</label>

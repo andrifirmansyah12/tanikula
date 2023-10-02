@@ -122,8 +122,7 @@
                                     </div>
                                 @endif
                                 @foreach ($cartItem as $item)
-                                    <div class="mb-4 pb-4 pb-md-0" id="product_data"
-                                        style="border-bottom: 1px solid #16A085;">
+                                    <div class="mb-4 pb-4 pb-md-0" id="product_data">
                                         <div class="row align-items-center mb-6 mb-md-3">
                                             <div class="col-12 col-md-12 col-lg-12 mb-6 mb-md-0">
                                                 <div class="row align-items-center">
@@ -134,8 +133,11 @@
                                                             value="{{ $item->product_qty }}" id="checkProductQty">
                                                         <input class="form-check-input" type="hidden" name="cart_total"
                                                             value="{{ $item->product->price }}" id="checkProductTotal">
-                                                        <p class="fw-bold ps-3 mb-2"><i class="bi bi-shop"></i>
-                                                            {{ $item->product->user->name }}</p>
+                                                        @php
+                                                            $nama_gapoktan = strtolower($item->product->user->name);
+                                                        @endphp
+                                                        <a style="color: #16A085" href="/profile/{{ str_replace(" ", "-", $nama_gapoktan) }}" class="fw-bold ps-3 mb-2"><i class="bi bi-shop"></i>
+                                                            {{ $item->product->user->name }}</a>
                                                     </div>
                                                     <div class="col-12 col-md-3 col-lg-3">
                                                         <div class="d-flex align-items-center justify-content-center bg-light"

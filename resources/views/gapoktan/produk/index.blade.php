@@ -642,6 +642,7 @@
                         'success'
                         )
                         $("#viewPhotoProduct").modal('hide');
+                        fetchAllEmployees();
                     }
                     });
                 }

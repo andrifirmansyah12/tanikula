@@ -232,6 +232,7 @@
         }
 
         .redDots {
+            opacity: 50%;
             position: absolute;
             bottom: -350px;
             right: -100px;

@@ -26,10 +26,10 @@
                         <div class="single-footer f-contact">
                             <h3>Hubungi Kami</h3>
                             <p class="phone">Telp: (+62) 33 169 7720</p>
-                            <ul>
+                            {{-- <ul>
                                 <li><span>Senin-Sabtu: </span> 9.00 am - 8.00 pm</li>
                                 <li><span>Minggu: </span> 10.00 am - 6.00 pm</li>
-                            </ul>
+                            </ul> --}}
                             <p class="mail">
                                 <a href="mailto:tanikula.app@gmail.com">tanikula.app@gmail.com</a>
                             </p>
