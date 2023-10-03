@@ -1,5 +1,5 @@
 @extends('pages.template')
-@section('title', 'Menyediakan produk hasil tani organik')
+@section('title', 'Menyediakan Produk Hasil Tani Organik')
 
 @section('style')
     <meta name="csrf-token" content="{{ csrf_token() }}">

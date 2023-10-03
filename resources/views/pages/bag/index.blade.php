@@ -98,7 +98,14 @@
                     <div class="d-lg-flex mb-5 gap-lg-2 gap-xl-0">
                         <div class="mt-md-4 rounded col-12 col-lg-8 mb-3 mb-xl-0" style="border: 1px solid #16A085;">
                             <div class="p-5 CartItems">
-                                <h2 class="mb-3 fs-3 mb-md-4">Keranjang</h2>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h2 class="mb-3 fs-3 mb-md-4">Keranjang</h2>
+                                    <div>
+                                        <input class="form-check-input" type="checkbox" name="navbar_cart_id[]"
+                                            id="AllCheckProductCart">
+                                        <span class="ps-3 fw-bold text-black">Semua</span>
+                                    </div>
+                                </div>
                                 @php
                                     $total = 0;
                                     $totalPrice = 0;
@@ -547,6 +554,49 @@
         });
 
         $(document).ready(function() {
+            $("#AllCheckProductCart").click(function(){
+                $("input[type=checkbox]").prop('checked', $(this).prop('checked'));
+                var totalCheckboxes = $("input#checkProductCart:checked").length;
+                var sum = 0;
+                var total = 0;
+                if (totalCheckboxes) {
+                    var checkedInputs = $("input#checkProductCart:checked");
+                    var sum_qty = 0;
+                    var total_price = 0;
+                    $.each(checkedInputs, function(i, val) {
+                        var qty = $(this).closest('.checkProductCart').find("input[name=cart_qty]")
+                            .val();
+                        var price = $(this).closest('.checkProductCart').find(
+                            "input[name=cart_total]").val();
+                        sum_qty += parseInt(qty);
+                        total_price += parseInt(price * qty);
+                    });
+                    sum = sum_qty;
+                    total = total_price
+                } else {
+                    var qty = 0;
+                }
+                $.ajax({
+                    method: "POST",
+                    url: "/load-beli-keranjang",
+                    data: {
+                        'totalCheckboxes': totalCheckboxes,
+                        'sum': sum,
+                        'total': total
+                    },
+                    success: function(response) {
+                        $('.beli-keranjang-count').html('');
+                        $('.beli-keranjang-count').html(response.countCart);
+
+                        $('.count-product').html('');
+                        $('.count-product').html(response.countQty);
+
+                        $('.total-price').html('');
+                        $('.total-price').html(response.totalPrice);
+                    }
+                });
+            });
+
             $('.checkProductCart').click(function() {
                 var totalCheckboxes = $("input#checkProductCart:checked").length;
                 var sum = 0;

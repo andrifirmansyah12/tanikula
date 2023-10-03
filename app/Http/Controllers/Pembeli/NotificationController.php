@@ -118,7 +118,7 @@ class NotificationController extends Controller
                             <div class="page-error">
                                 <div class="page-inner">
                                     <div class="page-description">
-                                        Tidak ada pesanan!
+                                        Tidak ada pemberitahuan!
                                     </div>
                                 </div>
                             </div>
