@@ -727,12 +727,12 @@
                                     @foreach ($category_product as $item)
                                         <div class="col-3">
                                             <a href="{{ url('product-category/' . $item->slug) }}"
-                                                class="dropdown-item">{{ $item->name }}</a>
+                                                class="dropdown-item" style="font-size: 14px">{{ $item->name }}</a>
                                         </div>
                                     @endforeach
                                     <div class="col-3">
                                         <a href="{{ url('product-category/all-category') }}"
-                                            class="dropdown-item">Semua
+                                            class="dropdown-item" style="font-size: 14px">Semua
                                             Kategori</a>
                                     </div>
                                 </div>

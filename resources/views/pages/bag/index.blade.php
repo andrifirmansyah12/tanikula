@@ -410,92 +410,84 @@
                         <div class="owl-carousel owl-theme">
                             @foreach ($product_new as $item)
                                 <!-- Start Single Product -->
-                                <div class="mx-2 single-product shadow-none {{ $item->stoke == 0 ? 'bg-light opacity-90' : '' }}"
-                                    style="height: 27rem; border: 1px solid #16A085;">
+                                <div class="mx-md-2 mx-2 single-product border border-success shadow-none {{ $item->stoke == 0 ? 'bg-light opacity-90' : '' }}" style="
+                                    height: 23rem">
                                     <div class="product-image {{ $item->stoke == 0 ? 'bg-light opacity-90' : '' }}">
-                                        <a href="{{ url('home/' . $item->slug) }}">
-                                            @if ($item->stoke == 0)
-                                                <div style="z-index: 3"
-                                                    class="badge bg-danger px-3 position-absolute top-50 start-50 translate-middle">
-                                                    <h5 class="text-white">Stok Habis</h5>
-                                                </div>
-                                            @endif
-                                            @if ($item->photo_product->count() > 0)
-                                                @foreach ($item->photo_product->take(1) as $photos)
-                                                    @if ($photos->name)
-                                                        <img src="{{ asset('../storage/produk/' . $photos->name) }}"
-                                                            alt="{{ $item->name }}"
-                                                            style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
-                                                    @else
-                                                        <img src="{{ asset('img/no-image.png') }}"
-                                                            alt="{{ $item->name }}"
-                                                            style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
-                                                    @endif
-                                                @endforeach
-                                            @else
-                                                <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->name }}"
-                                                    style="width: 27rem; height: 12rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
-                                            @endif
+                                                <a href=" {{ url('home/'.$item->slug) }}">
+                                        @if ($item->stoke == 0)
+                                        <div style="z-index: 3"
+                                            class="badge bg-danger px-3 position-absolute top-50 start-50 translate-middle">
+                                            <h5 class="text-white">Stok Habis</h5>
+                                        </div>
+                                        @endif
+                                        @if ($item->photo_product->count() > 0)
+                                        @foreach ($item->photo_product->take(1) as $photos)
+                                        @if ($photos->name)
+                                        <img src="{{ asset('../storage/produk/'.$photos->name) }}" alt="{{ $item->name }}"
+                                            style="width: 17rem; height: 9rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                        @else
+                                        <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->name }}"
+                                            style="width: 17rem; height: 9rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                        @endif
+                                        @endforeach
+                                        @else
+                                        <img src="{{ asset('img/no-image.png') }}" alt="{{ $item->name }}"
+                                            style="width: 17rem; height: 9rem; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;">
+                                        @endif
                                         </a>
                                     </div>
-                                    <div class="product-info {{ $item->stoke == 0 ? 'bg-light opacity-90' : '' }}"">
-                                        @if ($item->discount != 0)
-                                            <div class="d-flex justify-content-between">
-                                                <a href="{{ url('product-category/' . $item->product_category->slug) }}">
-                                                    <span class="category">{{ $item->category_name }}</span>
-                                                </a>
-                                                <p class="small category text-white badge bg-danger">
-                                                    {{ $item->discount }}% OFF</p>
-                                            </div>
-                                        @else
-                                            <a href="{{ url('product-category/' . $item->product_category->slug) }}">
-                                                <span class="category">{{ $item->category_name }}</span>
-                                            </a>
-                                        @endif
-                                        <p class="small" style="color:#16A085;">Stok tersisa {{ $item->stoke }}</p>
-                                        <h4 class="title text-capitalize">
-                                            <a href="{{ url('home/' . $item->slug) }}"
-                                                style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">{{ $item->name }}</a>
-                                        </h4>
-                                        <ul class="review">
-                                            <div>
-                                                @if ($item->stock_out)
-                                                    <span>{{ $item->stock_out }} Terjual</span>
-                                                @else
-                                                    <span>0 Terjual</span>
-                                                @endif
-                                            </div>
-                                            @php
-                                                $reviewProduct = App\Models\Review::where('product_id', $item->id)->get();
-                                                $ratingProductSum = App\Models\Review::where('product_id', $item->id)->sum('stars_rated');
-                                                if ($reviewProduct->count() > 0) {
-                                                    $ratingProductValue = $ratingProductSum / $reviewProduct->count();
-                                                } else {
-                                                    $ratingProductValue = 0;
-                                                }
-                                                $ratingsProduckAll = number_format($ratingProductValue);
-                                            @endphp
-                                            @for ($i = 1; $i <= $ratingsProduckAll; $i++)
-                                                <li><i class="lni lni-star-filled"></i></li>
-                                            @endfor
-                                            @for ($j = $ratingsProduckAll + 1; $j <= 5; $j++)
-                                                <li><i class="lni lni-star"></i>
-                                                </li>
-                                            @endfor
-                                        </ul>
-                                        <div class="fw-bold mt-2">
-                                            @if ($item->price_discount)
-                                                <span class="text-decoration-line-through text-muted "
-                                                    style="font-size: 13px">Rp.
-                                                    {{ number_format($item->price_discount, 0) }} <span
-                                                        style="color: #16A085">Rp.
-                                                        {{ number_format($item->price, 0) }}</span></span>
+                                    <div class="product-info {{ $item->stoke == 0 ? 'bg-light opacity-90' : '' }}">
+                                                @if ($item->discount != 0)
+                                                    <div class=" d-flex justify-content-between">
+                                        <a href="{{ url('product-category/'.$item->product_category->slug) }}">
+                                            <span class="category">{{ $item->category_name }}</span>
+                                        </a>
+                                        <p class="small category text-white badge bg-danger">{{ $item->discount }}% OFF</p>
+                                    </div>
+                                    @else
+                                    <a href="{{ url('product-category/'.$item->product_category->slug) }}">
+                                        <span class="category">{{ $item->category_name }}</span>
+                                    </a>
+                                    @endif
+                                    <p class="small" style="color:#16A085;">Stok tersisa {{ $item->stoke }}</p>
+                                    <h4 class="title text-capitalize">
+                                        <a href="{{ url('home/'.$item->slug) }}"
+                                            style="color:#16A085; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; overflow: hidden;">{{ $item->name }}</a>
+                                    </h4>
+                                    <ul class="review">
+                                        <div>
+                                            @if ($item->stock_out)
+                                            <span>{{$item->stock_out}} Terjual</span>
                                             @else
-                                                <span style="color: #16A085">Rp.
-                                                    {{ number_format($item->price, 0) }}</span>
+                                            <span>0 Terjual</span>
                                             @endif
                                         </div>
+                                        @php
+                                        $reviewProduct = App\Models\Review::where('product_id', $item->id)->get();
+                                        $ratingProductSum = App\Models\Review::where('product_id', $item->id)->sum('stars_rated');
+                                        if ($reviewProduct->count() > 0){
+                                        $ratingProductValue = $ratingProductSum / $reviewProduct->count();
+                                        } else {
+                                        $ratingProductValue = 0;
+                                        }
+                                        $ratingsProduckAll = number_format($ratingProductValue)
+                                        @endphp
+                                        @for ($i = 1; $i <= $ratingsProduckAll; $i++) <li><i class="lni lni-star-filled"></i></li>
+                                            @endfor
+                                            @for ($j = $ratingsProduckAll+1; $j <= 5; $j++) <li><i class="lni lni-star"></i>
+                                                </li>
+                                                @endfor
+                                    </ul>
+                                    <div class="fw-bold mt-2">
+                                        @if ($item->price_discount)
+                                        <span class="text-decoration-line-through text-muted " style="font-size: 13px">Rp.
+                                            {{ number_format($item->price_discount, 0) }} <span style="color: #16A085">Rp.
+                                                {{ number_format($item->price, 0) }}</span></span>
+                                        @else
+                                        <span style="color: #16A085">Rp. {{ number_format($item->price, 0) }}</span>
+                                        @endif
                                     </div>
+                                </div>
                                 </div>
                             @endforeach
                         </div>
