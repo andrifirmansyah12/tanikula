@@ -14,12 +14,10 @@ class CreateChatsTable extends Migration
     public function up()
     {
         Schema::create('chats', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId("sender_id")->nullable();
-            $table->foreignId("receiver_id")->nullable();
-            $table->foreignId("product_id")->nullable();
-            $table->boolean('is_hide')->default(0);
-            $table->boolean('is_read')->default(0);
+            $table->id('chat_id');
+            $table->foreignId('sender_id')->constrained('users');
+            $table->foreignId('receiver_id')->constrained('users');
+            $table->text('message');
             $table->timestamps();
         });
     }

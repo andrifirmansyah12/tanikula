@@ -11,23 +11,5 @@ class Chat extends Model
 
     protected $guarded = ['id'];
 
-    public function roomChat()
-    {
-        return $this->hasMany(RoomChat::class);
-    }
 
-    public function userSender()
-    {
-        return $this->belongsTo('App\Models\User', 'sender_id', 'id');
-    }
-
-    public function userReceiver()
-    {
-        return $this->belongsTo('App\Models\User', 'receiver_id', 'id');
-    }
-
-    public function product()
-    {
-        return $this->belongsTo(Product::class);
-    }
 }
